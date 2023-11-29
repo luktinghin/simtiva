@@ -1,0 +1,3163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SB7ZEFTEVT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SB7ZEFTEVT');
+</script>
+
+	<!--<link rel="stylesheet" href="Chart.css" />-->
+	<link rel="stylesheet" href="styles.css">
+	<link href="css/fontawesome.min.css" rel="stylesheet"> 
+	<link href="css/regular.min.css" rel="stylesheet"> 
+	<link href="css/solid.min.css" rel="stylesheet">
+	<link href="css/brands.min.css" rel="stylesheet"> <!--font awesome-->
+	<meta name="theme-color" content="#7B8092">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+	<link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png" />
+	<link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76x76.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png" />
+	<link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120x120.png" />
+	<link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-144x144.png" />
+	<link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png" />
+	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png" />
+
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+ <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="splash_screens/12.9__iPad_Pro_landscape.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="splash_screens/11__iPad_Pro__10.5__iPad_Pro_landscape.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="splash_screens/10.5__iPad_Air_landscape.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="splash_screens/10.2__iPad_landscape.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="splash_screens/9.7__iPad_Pro__7.9__iPad_mini__9.7__iPad_Air__9.7__iPad_landscape.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="splash_screens/iPhone_13_Pro_Max__iPhone_12_Pro_Max_landscape.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="splash_screens/iPhone_13_Pro__iPhone_13__iPhone_12_Pro__iPhone_12_landscape.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="splash_screens/iPhone_13_mini__iPhone_12_mini__iPhone_11_Pro__iPhone_XS__iPhone_X_landscape.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="splash_screens/iPhone_11_Pro_Max__iPhone_XS_Max_landscape.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="splash_screens/iPhone_11__iPhone_XR_landscape.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="splash_screens/iPhone_8_Plus__iPhone_7_Plus__iPhone_6s_Plus__iPhone_6_Plus_landscape.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="splash_screens/iPhone_8__iPhone_7__iPhone_6s__iPhone_6__4.7__iPhone_SE_landscape.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="splash_screens/4__iPhone_SE__iPod_touch_5th_generation_and_later_landscape.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="splash_screens/12.9__iPad_Pro_portrait.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="splash_screens/11__iPad_Pro__10.5__iPad_Pro_portrait.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="splash_screens/10.5__iPad_Air_portrait.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="splash_screens/10.2__iPad_portrait.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="splash_screens/9.7__iPad_Pro__7.9__iPad_mini__9.7__iPad_Air__9.7__iPad_portrait.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="splash_screens/iPhone_13_Pro_Max__iPhone_12_Pro_Max_portrait.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="splash_screens/iPhone_13_Pro__iPhone_13__iPhone_12_Pro__iPhone_12_portrait.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="splash_screens/iPhone_13_mini__iPhone_12_mini__iPhone_11_Pro__iPhone_XS__iPhone_X_portrait.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="splash_screens/iPhone_11_Pro_Max__iPhone_XS_Max_portrait.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="splash_screens/iPhone_11__iPhone_XR_portrait.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="splash_screens/iPhone_8_Plus__iPhone_7_Plus__iPhone_6s_Plus__iPhone_6_Plus_portrait.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="splash_screens/iPhone_8__iPhone_7__iPhone_6s__iPhone_6__4.7__iPhone_SE_portrait.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="splash_screens/4__iPhone_SE__iPod_touch_5th_generation_and_later_portrait.png">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <link rel="manifest" href="manifest.json">
+    <meta charset="utf-8">
+	<meta name="description" content="Simple and free TIVA simulator">
+    <meta name="keywords" content="simtiva, tiva, tci, free, simulator, terence, luk, cuhk, propofol, app, smartphones, apple, android">
+    <meta name="author" content="Terence Luk">
+    <title>SimTIVA | Free TIVA Simulation App to Simulate Target-Controlled Infusion | Simple TCI Calculator</title>
+</head>
+<body class="" id="windowbody">
+		<div id="rescuebuttons">
+			<a class="button frontpage"  onclick="displayModalOptions();"><i class="fas fa-cog fa-fw" style="padding-right: 6px"></i>Options</a>
+			<a class="button frontpage"  onclick="rescue();"><i class="fas fa-life-ring fa-fw " style="padding-right:6px"></i>Rescue</a>
+			<a class="button frontpage"  onclick="load();"><i class="fas fa-save fa-fw " style="padding-right:6px"></i>Load file</a>
+		</div>
+		<div id="modalAbout" class="modal">
+			<div class="modal-content" id="modalAboutcontent">
+				<div class="modal-header">ABOUT<span class="close" onClick="hidemodal('modalAbout')">&times;</span></div>
+				<div class="modal-body" style="overflow-y:auto; height: 70vh; font-size:90%">
+					<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1>
+					<br><b>Written by Terence Luk, 2023</b>. This work is licensed under a <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Creative Commons BY-NC 4.0 license</a>. Read more about the project <a href='https://simtiva.blogspot.com/' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!
+					<br>
+					<br>Last updated 15/11/2023 (V4) Build 88.
+					<br>
+					<br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i>
+					<br>Coding is done in Javascript. The code to the mathematical calculations are based on "STANPUMP", which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.
+					<br>
+					<br>Contact us via our <a href="https://simtiva.blogspot.com/p/feedback.html" target="_blank">blog</a> page, or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.
+              		<div class="collapsible">Licenses & Legal</div>
+              		<div class="collapsiblecontent">
+              			Acknowledgments: this project is made possible with the following-
+              			<br>
+              			<br><b>STANPUMP by Steven L. Shafer</b>
+              			<br>Freely available at <a href="http://opentci.org/code/stanpump"  target="_blank">OpenTCI-STANPUMP</a>
+              			<br>
+              			<br><b>Chart.js</b>
+              			<br><a href="http://chartjs.org"  target="_blank">Chart.js</a> is open source and available under the MIT license.
+              			<br>
+              			<br><b>Font Awesome Free</b>
+              			<br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href="https://github.com/FortAwesome/Font-Awesome"  target="_blank">Source/License</a>
+              			<br>
+              			<br><b>WHO Child Growth Standards</b>
+              			<br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.
+              			<br>
+              			<br><b>LZ-String</b>
+              			<br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.
+              			<br>
+              			<br><span style="color:#ccc">Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span>
+              		</div>
+					<div style="padding-top:1rem;">
+					<a class="button wide" onclick="hideallmodal();">Back</a>
+					<a class="button muted right" id="btn_disclaimer" onclick="displayDisclaimer();">Disclaimer</a><button onclick="importDialog()">Hi</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--startmodal-->
+
+		<div id="modalInitial" class="modal">
+			<div class="modal-content" id="modalInitialcontent">
+				<div class="modal-header">Enter patient data<!--<span class="close notcondensed" onClick="hideallmodal()">&times;</span>--><img onclick="displayAbout();" src="apple-touch-icon-180x180.png" style="position:absolute;right:6px;width:44px;cursor:pointer"></div>
+				<div class="modal-body">
+					<div class="paedimode_selector">
+						<a class="button_paedimode active" id="paedimode0" onclick="switchpaedimode(0);">Adult</a><!--
+						--><a class="button_paedimode" id="paedimode1" onclick="switchpaedimode(1);">Paediatric</a>
+					</div>
+					<table class="table-Init">
+					<tr class="fr" id="row_age_adultmode">
+						<td >Age (y) <i class="far fa-question-circle tooltip"><span class="tooltiptext" style="width: 80px; line-height:20px">0-100y</span></i></td>
+						<td><input type="number" inputmode="decimal" id="inputAge" min="0.1" max="99" step="0.1" placeholder=" " onkeyup="sendToValidate(0)" required/></td>
+					</tr>
+					<tr class="fr" id="row_age_paedimode" style="display:none">
+						<td>Age <i class="far fa-question-circle tooltip"><span class="tooltiptext">Actual chronological age</span></i></td>
+						<td>
+							<input type="number" inputmode="decimal" id="inputAgePaedi" placeholder=" " onkeyup="sendToValidate(0)"/>
+							<select id="select_age_unit">
+								<option value="d">Days</option>
+								<option value="w">Weeks</option>
+								<option value="m" selected>Months</option>
+								<option value="y">Years</option>
+							</select>
+					</tr>
+					<tr id="row_PMA_paedimode" style="display:none">
+						<td><span style="letter-spacing: -0.5px">Post-menstrual age </span><i class="far fa-question-circle tooltip"><span class="tooltiptext" style="">Covariate for Eleveld; affects clearance in <6mo</span></i>
+						</td>
+						<td>
+							<div id="PMA_td">
+								<div id="PMA_entry"><input type="number" inputmode="decimal" id="inputPMA" placeholder=" "/>weeks</div>
+								<div id="PMA_explanation" onclick="displayWarning('Post-menstrual age', 'Covariate for Eleveld model, affects clearance in <6 months old. Optional entry, omit for full term.')">What's this?</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>Weight (kg) <i class="far fa-question-circle tooltip"><span class="tooltiptext">0-200kg, validation with BMI & weight-for-age</span></i></td>
+						<td><input type="number" inputmode="decimal" id="inputBW" min="0.1" max="200" step="0.01" placeholder=" " onkeyup="sendToValidate(0)" required/></td>
+					</tr>
+					<tr id="row_height">
+						<td>Height (cm) <i class="far fa-question-circle tooltip"><span class="tooltiptext">0-250cm, required for Schnider/Eleveld</span></i></td>
+						<td><input type="number" inputmode="decimal" id="inputBH" min="0.1" max="250" step="0.1" placeholder=" " onkeyup="sendToValidate(0)" ></td>
+					</tr>
+					<tr id="row_gender"><td>Gender</td>
+						<td>
+							<select id="select_gender" onchange="sendToValidate(0)" >
+								<option value="Male">Male</option>
+								<option value="Female">Female</option>
+							</select>
+						</td>
+					</tr>
+					<tr><td>Model <i class="far fa-question-circle tooltip2"><span class="tooltiptext">Paedfusor: for children. Marsh/Schnider/Minto: for adults.</span></i></td>
+						<td>
+							<select id="select_model" onchange="sendToValidate(0)" >
+								
+									<option value="Marsh">Propofol (Marsh)</option>
+									<option value="Schnider">Propofol (Schnider)</option>
+									<option value="Paedfusor">Propofol (Paedfusor)</option>
+									<option value="Eleveld" selected>Propofol (Eleveld)</option>
+								
+								
+									<option value="Minto">Remifentanil (Minto)</option>
+									<option value="Eleveld-Remifentanil">Remifentanil (Eleveld)</option>
+								
+									<option value="Maitre">Alfentanil (Maitre)</option>
+								
+									<option value="Shafer">Fentanyl (Shafer)</option>
+
+									<option value="Complex">Complex (Dual mode)</option>
+								
+							</select>
+
+							<select id="select_model_paedi" onchange="sendToValidate(0)" style="display:none">
+									<option value="Paedfusor">Propofol (Paedfusor)</option>
+									<option value="Eleveld" selected>Propofol (Eleveld)</option>
+									<option value="Eleveld-Remifentanil">Remifentanil (Eleveld)</option>
+									<option value="Complex">Complex (Dual mode)</option>
+							</select>
+						</td>
+					</tr>
+					<tr id="row_remidilution"><td style="letter-spacing:-0.5px">Concentration <span style="font-size: 85%">(mcg/ml)</span></td>
+						<td>
+							<select id="select_remidilution" onchange="change_remidilution(this.value)"> 
+								<option value="5">5mcg/ml</option>
+								<option value="10">10mcg/ml</option>
+								<option value="20" selected>20mcg/ml</option>
+								<option value="25">25mcg/ml</option>
+								<option value="50">50mcg/ml</option>
+								<option value="custom">Custom</option>
+							</select>
+							<div id="custom_remidilution" onclick="popup_dilution('remidilution','remifentanil')">
+								<span id="remidilution">_</span>mcg/ml
+							</div>
+						</td>
+					</tr>
+					<tr id="row_alfendilution"><td style="letter-spacing:-0.5px">Concentration <span style="font-size: 85%">(mcg/ml)</span></td>
+						<td>
+							<select id="select_alfendilution" onchange="change_alfendilution(this.value)"> 
+								<option value="100" selected>100mcg/ml</option>
+								<option value="500">500mcg/ml</option>
+								<option value="custom">Custom</option>
+							</select>
+							<div id="custom_alfendilution" onclick="popup_dilution('alfendilution','alfentanil')">
+								<span id="alfendilution">_</span>mcg/ml
+							</div>
+						</td>
+					</tr>
+					<tr id="row_fen_weightadjusted"><td>Weight adjusted? <i class="far fa-question-circle tooltip3"><span class="tooltiptext">If YES: PK model adjusted to BW according to Shibutani, 2004; recommended for obese.</span></i></td>
+						<td>
+							<select id="select_fen_weightadjusted">
+								<option value="0" >No</option>
+								<option value="1" selected>Yes</option>
+							</select>
+						</td>
+					</tr>
+					<tr id="row_fendilution"><td style="letter-spacing:-0.5px">Concentration <span style="font-size: 85%">(mcg/ml)</span></td>
+						<td>
+							<select id="select_fendilution" onchange="change_fendilution(this.value)">
+								<option value="5">5mcg/ml</option>
+								<option value="10" selected>10mcg/ml</option>
+								<option value="20">20mcg/ml</option>
+								<option value="25">25mcg/ml</option>
+								<option value="50">50mcg/ml</option>
+								<option value="custom">Custom</option>
+							</select>
+							<div id="custom_fendilution" onclick="popup_dilution('fendilution','fentanyl')">
+								<span id="fendilution">_</span>mcg/ml
+							</div>
+						</td>
+					</tr>
+					<tr id="row_dexmededilution"><td>Drug dilution (mcg/ml)</td>
+						<td>
+							<input type="number" inputmode="decimal" id="inputDexmedeDilution" value="4">
+						</td>
+					</tr>
+					<!--
+					<tr><td>File Name</td>
+						<td>
+							<input id="inputFileName1" value="" class="formTextInput" placeholder="Optional, Max 32 char.">
+						</td>
+					</tr>
+				-->
+					<!--<tr><td>Debug: Enter Sim Speed (1=default)</td><td><input type="number" id="simspeed" value="1"></td></tr>-->
+					</table>
+					<div id="valCard" class="translate">
+						<div id="valLeft"></div>
+						<div id="valRight">
+							<div style="position:relative">
+								<div id="valRightContainer1" class="">
+									Waiting for input.
+								</div>
+								<div id="valRightContainer2" class="valClose">
+									BMI: <span id="bmiDisplay"></span><span id="bmiForAgeDisplay"></span>
+									<div id="wfaDiv">Weight for age: <span id="wfaDisplay"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="validationDisplay">
+					</div>
+					
+					<div id="checkmarkDisplay">
+                    <label class="container" style="visibility:hidden;">I confirm the above data are correct.
+                        <input type="checkbox" onChange="sendToValidate(1);checkChecked();" id="checkConfirm"><span class="checkmark"></span>
+                    </label>
+                    <label class="container" style="visibility:hidden;">I agree to the disclaimer.
+                        <input type="checkbox" id="checkDisclaim" onChange="checkChecked();"><span class="checkmark"></span>
+                    </label>
+					</div>
+					<div>
+						<a class="button invert disabled" id="btn_initProceed">Proceed</a>
+						<a class="button muted right" id="btn_disclaimer" onclick="displayDisclaimer();">Disclaimer</a>
+						<a class="button muted right" id="btn_about" onclick="displayAbout();">About</a>
+					</div>
+
+			</div>
+		</div>
+	</div>
+		<div id="modalScreen2" class="modal">
+			<div class="modal-content" id="modalScreen2content">
+
+				<div class="modal-header" id="page2title"><!--<span class="close notcondensed" onClick="hideallmodal()">&times;</span>--></div>
+				<div class="modal-body">
+					<div id="patientCard">
+						<div id="patientLeft">
+						</div>
+						<div id="patientRight">
+						</div>
+						<div id="patientEdit">
+							<div onclick="toPageOne();">EDIT</div>
+						</div>
+					</div>
+					<!--<div id="drugCard">
+						<div id="drugLeft">
+						</div>
+						<div id="drugRight">
+						</div>
+						<div id="drugEdit">
+							<div onclick="toPageTwo();">EDIT</div>
+						</div>
+					</div>
+					-->
+					<div id="simplemodeselection" style="padding-top:1rem; padding-bottom:0.5rem; text-align:center; border:2px solid #ccc; border-radius:9px;box-shadow:inset 0 4px 0 0 rgba(0,0,0,0.15);">Choose one of the following:<br>
+						<a class="button huge" onclick="initcpt();hideallmodal();"><span style="border-bottom:1px solid LightCoral">CP</span> TARGETING<i class="fas fa-tint fa-fw" style="color:LightCoral;"></i></a>
+						<br>
+						<a class="button huge" onclick="initcet();hideallmodal()"><span style="border-bottom:1px solid green">CE</span> TARGETING<i class="fas fa-brain fa-fw" style="color:green;"></i></a>
+						<br>
+						<a class="button huge" onclick="initmanual(0);hideallmodal();">MANUAL<i class="fas fa-syringe fa-fw" style="color:rgb(81 203 238)"></i></a>
+						<br>
+						<a class="button huge" onclick="initcetbolus(0);hideallmodal();">INTERMITTENT BOLUS<i class="fas fa-hourglass-half fa-fw" style="color:#c19f14"></i></a>
+					</div>
+					<div id="complexmodeselection0" style="margin-top: 10px; border:2px solid #ccc; border-radius:9px;box-shadow:inset 0 4px 0 0 rgba(0,0,0,0.15); padding: 0px 5px;">
+						<table class="" style="width:100%">
+							<tr class="fr" style="height: 4rem; vertical-align:bottom">
+								<td style="width:38%">						
+									<div style="font-size: 10px; border-bottom: 2px solid rgb(255,210,80); transform:translateX(-7px); padding-left:7px; width: 50px; background: rgba(255,210,80,0.7)">Drug 1</div>
+									<div style=" font-size: 20px; font-weight:bold;">PROPOFOL</div></td>
+								<td>
+									<select id="model_propofol">
+										<option value="Marsh">Marsh</option>
+										<option value="Schnider">Schnider</option>
+										<option value="Paedfusor">Paedfusor</option>
+										<option value="Eleveld" selected>Eleveld</option>
+									</select>
+								</td>
+							</tr>
+
+							<tr>
+								<td>Infusion mode</td>
+								<td>
+									<select id="mode_propofol">
+										<option value="0">CP Targeting</option>
+										<option value="1" selected>CE Targeting</option>
+										<option value="2">Manual</option>
+										<option value="3">Intermittent Bolus</option>
+									</select>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div id="complexmodeselection1" style="margin-top: 10px;border:2px solid #ccc; border-radius:9px;box-shadow:inset 0 4px 0 0 rgba(0,0,0,0.15); padding: 0px 5px;">
+
+						<table class="" style="width:100%">
+							<tr class="fr" style="height: 4rem; vertical-align:bottom">
+								<td style="width:38%">
+									<div style="font-size: 10px; border-bottom: 2px solid rgb(0,129,255); transform:translateX(-7px); padding-left:7px; width: 50px; background: rgba(0,129,255,0.7)">Drug 2</div>
+									<div style=" font-size: 20px; font-weight:bold; ">OPIOID</div>
+								</td>
+								<td>
+									<select id="model_opioid" onchange="
+										if (this.value==='Shafer') {
+											document.getElementById('row_fen_weightadjusted1').style.display='table-row';
+											document.getElementById('select_opioiddilution').value = 10;
+										} else {
+											if (this.value=='Maitre') {
+												document.getElementById('select_opioiddilution').value = 100;
+											} else {
+												document.getElementById('select_opioiddilution').value = 20;
+											}
+											document.getElementById('row_fen_weightadjusted1').style.display='none';
+										}
+									">
+										<option value="Minto">Remifentanil (Minto)</option>
+										<option value="Eleveld-Remifentanil">Remifentanil (Eleveld)</option>
+										<option value="Maitre">Alfentanil (Maitre)</option>
+										<option value="Shafer">Fentanyl (Shafer)</option>
+									</select>
+								</td>
+							</tr>
+							<tr id="row_opioiddilution"><td>Concentration</td>
+								<td>
+									<select id="select_opioiddilution" onchange="change_opioiddilution(this.value)">
+										<option value="5">5mcg/ml</option>
+										<option value="10">10mcg/ml</option>
+										<option value="20" selected>20mcg/ml</option>
+										<option value="25">25mcg/ml</option>
+										<option value="50">50mcg/ml</option>
+										<option value="100">100mcg/ml</option>
+										<option value="custom">Custom</option>
+									</select>
+									<div id="custom_opioiddilution" onclick="
+											if (document.getElementById('model_opioid').value == 'Shafer') {
+												popup_dilution('opioiddilution','fentanyl');
+											} else if (document.getElementById('model_opioid').value == 'Maitre') {
+												popup_dilution('opioiddilution','alfentanil');
+											} else {
+												popup_dilution('opioiddilution','remifentanil');
+											}
+										">
+										<span id="opioiddilution">_</span>mcg/ml
+									</div>
+								</td>
+							</tr>
+							<tr id="row_fen_weightadjusted1">
+								<td>Weight adjusted?<!--<i class="far fa-question-circle tooltip3"><span class="tooltiptext">If YES: PK model adjusted to BW according to Shibutani, 2004; recommended for obese.</span></i>--></td>
+								<td>
+									<select id="select_fen_weightadjusted1">
+										<option value="0" >No</option>
+										<option value="1" selected>Yes</option>
+									</select> 
+								</td>
+							</tr>
+							<tr>
+								<td>Infusion mode</td>
+								<td>
+									<select id="mode_opioid">
+										<option value="0">CP Targeting</option>
+										<option value="1" selected>CE Targeting</option>
+										<option value="2">Manual</option>
+										<option value="3">Intermittent Bolus</option>
+									</select>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div id="complexbuttons" style="padding-top:10px">
+						<a class="button wide invert" id="btn_proceedComplex" onclick="proceedComplex();">Proceed</a>
+						<a class="button wide muted right" id="btn_backComplex" onclick="toPageOne();">Back</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+		<div id="modalLoad" class="modal">
+			<div class="modal-content" id="modalLoadcontent">
+				<div class="modal-header">LOAD SIM FILE</div>
+				<div class="modal-body" style="padding-bottom:0">
+					Select a SIM-FILE to load:<span id="load_about_btn" onclick="displayloadabout();"><i class="fas fa-question-circle"></i></span>
+					<div id="loadfile_container">
+					</div>
+					<a class="button wide invert" id="btn_load" onclick="init_rescue(selected_uid);">Load Selection</a>
+
+					<a class="button muted right" onclick="toPageOneFromLoad();">Back</a>
+					<a class="button muted right" id="btn_manageFiles" onclick="manageFileList();">Manage</a>
+					<div><a class="button hide" id="btn_export" onclick="exportFunction()">Export all</a></div>
+				</div>
+			</div>
+		</div>
+
+		<div id="modalWarning" class="modal alt">
+			<div class="modal-content alt" id="modalWarningcontent">
+				<div class="modal-header alt"><span class="title">Please wait</span><span class="close alt" onClick="hidewarningmodal()">&times;</span></div>
+				<div class="modal-body alt">SimTIVA is loading up...</div>
+			</div>
+		</div>
+
+		<div id="modalReset" class="modal">
+			<div class="modal-content" id="modalResetcontent">
+				<div class="modal-header">RESET</div>
+				<div class="modal-body" style="">
+					This will reset all patient data and start all over again. Are you sure?
+					<div style="padding-top:1rem; text-align:center">
+					<a class="button wide" onclick="location.reload();">Yes</a>
+					<a class="button wide" onclick="hideallmodal();">No</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="modalRetrospective" class="modal">
+			<div class="modal-content" id="modalRetrospectivecontent">
+				<div class="modal-header">RETROSPECTIVE</div>
+				<div class="modal-body" style="">
+					<div style="padding:10px 0px">COURSE CORRECTION: 
+					<br>This is to confirm that <span id="minsago">_</span> mins ago, i.e. at <span id="timeXago">_</span>...
+					<br> - Bolus <span id="displayRetroBolus">_</span>mg was given, and
+					<br> - Infusion rate was changed to <span id="displayRetroInfusion">_</span>ml/h.</div>
+					<div style="padding:10px 0px">WARNING: 
+					<br>Once you have confirmed this action, the CET/CPT targeting scheme will be automatically cleared. You need to enter a new target in CET/CPT mode as soon as possible.</div>
+					<div style="padding-top:1rem; text-align:center">
+					<a class="button wide invert" onclick="confirmretrospective();">Confirm</a>
+					<a class="button" onclick="hideallmodal();hidemodal('modalRetrospective'">Cancel</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="modalHistory" class="modal">
+			<div class="modal-content" id="modalHistorycontent">
+				<div class="modal-header">PAST SCHEMES</div>
+				<div class="modal-body" id="modalHistorytext">
+				</div>
+			</div>
+		</div>
+		<div id="modalExport" class="modal">
+			<div class="modal-content" id="modalExportcontent">
+				<div class="modal-header">EXPORT</div>
+				<div class="modal-body" id="">
+					This will export data to .CSV (comma-separated values): a file that can be opened in any spreadsheet program. The data can be used to plot graphs.
+					<br>
+					<br>Choose a time resolution (default is 10s) - which is the interval on the x-axis (lower value means more frequent data points). Choose the maximum duration of data capture (default is current time, in seconds); you can set this to up to two hours (7200s) beyond current time.
+					
+					<table class="table-control" style="border-radius:9px; background:rgba(128,128,128,0.2);margin-top:10px">
+						<tr class="fr">
+							<td>Time resolution (s)</td>
+							<td><input type="number" inputmode="decimal" id="inputResolution" value="10" min="0" max="100000" step="1" placeholder=" " ></td>
+						</tr>
+						<tr>
+							<td>Max duration (s)</td>
+							<td><input type="number" inputmode="decimal" id="inputMaxDuration" min="0" max="1000000" step="1" placeholder=" "></td>
+					</table>
+					<br>
+					<div style="padding-top:1rem; text-align:center">
+					<a class="button wide invert" onclick="output(document.getElementById('inputResolution').value*1,document.getElementById('inputMaxDuration').value*1);hideallmodal();">Confirm</a><a class="button" onclick="hideallmodal();">Cancel</a>
+					<a id="downloadfile" style="display:none;">HERE</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="modalHelp" class="modal">
+			<div class="modal-content" id="modalHelpcontent">
+				<div class="modal-header">HELP<span class="close" onClick="hidemodal('modalHelp')">&times;</span></div>
+				<div class="modal-body" style="overflow-y:auto; height:70vh;">
+					<b>Instructions for use</b>
+					<br><b>1.</b> Enter patient data on the first screen you see.
+					<br><b>2.</b> Choose a model
+					<br><b>3.</b> There are four modes: CP targeting, CE targeting, manual infusion, and intermittent bolus.
+					<br>
+					<br><b>CP/CE targeting mode</b>
+					<br><b>1.</b> Enter desired CP/CE target.
+					<br><img src="preview.gif" style="width:100%; max-width:600px" loading="lazy">
+					<br><b>2.</b> While you are entering your target, a <span style="color:blue">blue</span> preview box will appear. This will guide your initial bolus and infusion rate.
+					<br><b>3.</b> Press Start, when your syringe pump setup is ready to go.
+					<br><b>4.</b> The predicted CP and CE will appear on top part of the screen. The 'Graph' section will preview CP/CE of the infusion regimen and the 'Scheme' section will guide you through the next rate changes to achieve and maintain your desired target concentration.
+					<br><img src="preview2.gif" style="width:100%; max-width:600px" loading="lazy">
+					<br><b>5.</b> When the next rate change is imminent, a <span style="color:red">red</span> reminder box will appear to notify you of the changes. Make the necessary change on your syringe pump.
+					<br>
+					<br><b>Intermittent Bolus Mode</b>
+					<br>In some settings, such as a short case in a remote location, or in low resource environment, it may not be possible to use any syringe pump at all. With the intermittent bolus mode, a series of repeated small manual boluses are generated, to simulate a target-controlled infusion as close as possible. The accuracy of the repeated intermittent manual bolus scheme is affected by the fluctuation of CE.
+					<br>
+					<br><b>Complex mode</b>
+					<br>In this mode, you may run two-drug simulations simultaneously. For each drug, the functions for CP or CE targeting, manual infusion, or intermittent bolus mode are preserved. In addition, you may explore the pharmacodynamic (PD) interaction between propofol and opioid, as propofol and opioid demonstrate intense synergism. Probability of tolerance to laryngoscopy (PTOL) is used as a measure of potency of propofol-opioid combination. Isobologram charts illustrate the propofol-opioid combinations to achieve the same pharmacodynamic effect.
+					<br>
+					<br><b>NB.</b> For the <span style="color:blue">blue</span> preview box, dosage recommendations may be slightly inaccurate because TCI is time-dependent: the moment you enter the target concentration, the preview starts to calculate; but this moment lags behind the moment of real target delivery when you click the 'Update Cpt/Cet' button.
+					<div style="padding-top:1rem; text-align:center">
+					<a class="button wide" onclick="hideallmodal();">Back</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="modalDocumentation" class="modal">
+			<div class="modal-content" id="modalDocumentationcontent">
+				<div class="modal-header">DOCUMENTATION<span class="close" onClick="hidemodal('modalDocumentation')">&times;</span></div>
+				<div class="modal-body" style="overflow-y:auto; height:70vh;">
+					<b>Principles of TCI</b>
+					<br>TCI, or target-controlled infusions, allow an anaesthetist to enter a desired 'target' concentration to be achieved in the patient's plasma or brain into a computer-programmed syringe pump that utilizes pharmacokinetic models which receive covariates such as age and body weight and then the pump will deliver the desired 'target' concentration accurately, via typically a bolus followed by a decreasing infusion rate. In this SIMTIVA app, it only recommends a bolus/infusion regimen that simulates TCI, but it does not function as a syringe pump, so you have to manually adjust the drug dosages.
+					<br>
+					<br>The principles, practices and explanations for the pharmacokinetic models are available from this resource: Guidelines for the safe practice of total intravenous anaesthesia (TIVA), by the Association of Anaesthetists and the Society for Intravenous Anaesthesia. <a href="https://doi.org/10.1111/anae.14428" target="_blank">https://doi.org/10.1111/anae.14428</a> 
+					<br>
+					<br>A pharmacokinetic model is a mathematical description of the distribution, metabolism and elimination of a drug in the body. The pharmacokinetic behaviour of most anaesthetic drugs used for TIVA can be predicted with a three‐compartment model. The drug is administered into the central compartment (V1), which represents the initial volume of distribution. The second (V2) and third (V3) compartments are mathematical constructs explaining rapid and slow redistribution of drug from V1 into highly perfused and less well perfused tissues, respectively. Rate constants describe the proportion of drug moving between compartments. A summary of the models used for propofol is available from this resource: Principles of total intravenous anaesthesia: basic pharmacokinetics and model descriptions by Al-Rifai Z et al. <a href="https://doi.org/10.1093/bjaceaccp/mkv021"  target="_blank">https://doi.org/10.1093/bjaceaccp/mkv021</a> In this app, the specific model parameters (vc, v2-3, k10 and other rate constants, ke0) are given in the 'Model parameters' section after initial data entry.
+					<br>
+					<br>List of references for models:
+					<br>Marsh - (BJA 1991;67:41-8), 'fast' ke0 (Anesthesiology 2000;92:399-406)
+					<br>Schnider - (Anesthesiology 1998;88:1170-82)
+					<br>Paedfusor - (BJA 2003;91(4)507-513), Tpeak method (age-dependent: 0.91min-1 at 1y to 0.15min-1 at 16y) (BJA 2008;100(4):509-516)
+					<br>Eleveld (Propofol) - (BJA 2018:120:942-959)
+					<br>Minto - (Anesthesiology 1997;86:10-23)
+					<br>Eleveld (Remifentanil) - (Anesthesiology 2017;126:1005-18)
+					<div class="collapsible">Model calculations in details</div>
+              			<div class="collapsiblecontent">
+              				<b>Marsh</b>
+              				<br>vc = 0.228 * mass;
+							<br>k10 = 0.119;
+							<br>k12 = 0.112;
+							<br>k13 = 0.0419;
+							<br>k21 = 0.055;
+							<br>k31 = 0.0033;
+							<br>ke0 = 1.21;
+							<br>
+							<br><b>Schnider</b>
+							<br>vc = 4.27;
+							<br>v2 = 18.9-0.391*(age-53);
+							<br>v3 = 238;
+							<br>cl1 = 1.89+0.0456*(mass-77)-0.0681*(lbm-59)+0.0264*(height-177);
+							<br>cl2 = 1.29-0.024*(age-53); 
+							<br>cl3 = 0.836;
+							<br>k10 = cl1 / vc;
+							<br>k12 = cl2 / vc;
+							<br>k13 = cl3 / vc;
+							<br>k21 = cl2 / v2;
+							<br>k31 = cl3 / v3;
+							<br>ke0 = 0.456;
+							<br>
+							<br><b>Paedfusor</b>
+							<br>k12 = 0.114;
+							<br>k13 = 0.0419;
+							<br>k21 = 0.055;
+							<br>k31 = 0.0033;
+							<br>ke0 = 1.03*Math.exp(-0.12*age);
+							<br>if (age<13) { vc = 0.458 * mass; k10 = 0.153 * Math.pow(mass, -0.3);}
+							<br>&nbsp;&nbsp;else if (age>=13 && age<14) {vc = 0.4 * mass; k10 = 0.0678;}
+							<br>&nbsp;&nbsp;else if (age>=14 && age<15) {vc = 0.342 * mass; k10 = 0.0792;}	
+							<br>&nbsp;&nbsp;else if (age>=15 && age<16) {vc = 0.284 * mass;	k10 = 0.0954;}
+							<br>&nbsp;&nbsp;else if (age>=16) {vc = 0.229 * mass; k10 = 0.119;}
+							<br>
+							<br><b>Eleveld (Propofol)</b>
+							<div class="imageholder">
+								<img src="eleveld1.gif" class="imagecontent" loading="lazy"><img src="eleveld2.gif" class="imagecontent" loading="lazy">
+							</div>
+							<br>
+							<br><b>Minto</b>
+							<br>vc = 5.1-0.0201*(age-40)+0.072*(lbm-55)
+							<br>v2=9.82-0.0811*(age-40)+0.108*(lbm-55)
+							<br>v3=5.42
+							<br>cl1=2.6-0.0162*(age-40)+0.0191*(lbm-55)
+							<br>cl2=2.05-0.0301*(age-40)
+							<br>cl3=0.076-0.00113*(age-40)
+							<br>ke0=0.595-0.007*(age-40)
+							<br>
+							<br><b>Eleveld (Remifentanil)</b>
+							<div class="imageholder">
+								<img src="eleveld-r.png" class="imagecontent" loading="lazy">
+							</div>
+              			</div>
+					<div style="padding-top:1rem; text-align:center">
+					<a class="button wide" onclick="hideallmodal();">Back</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="modalShare" class="modal">
+			<div class="modal-content" id="modalSharecontent">
+				<div class="modal-header">SHARE / SAVE<span class="close" onClick="hidemodal('modalShare')">&times;</span></div>
+				<div class="modal-body">
+					<div>File Name (Max 32 char.)</div>
+					<div><input id="inputFileName" class="shareinput" onkeyup="updatedatatext()" placeholder="(optional)"></div>
+
+					<div id="sharecontainer">
+
+					<div id="shareimagecontainer">
+						<div style="margin:0; padding:0; height: calc(35vh + 2rem); text-align: center">
+							<span style="font-size:80%; opacity:0.7; letter-spacing: 1px; font-weight: bold">
+								IMAGE PREVIEW
+							</span>
+							<img id="shareimage">
+						</div>
+						<div style="text-align:center; padding-bottom:10px"><a class="button tinybutton" id="btn_shareimg" onclick="outputimage(1,document.getElementById('inputFileName').value);"><i class="fas fa-share-square fa-fw"></i>Share</a><a class="button tinybutton" id="btn_downloadimg" onclick="outputimage(0,document.getElementById('inputFileName').value);"><i class="fas fa-file-download fa-fw"></i>Download</a></div>
+					</div><!--
+
+					--><div id="sharedatacontainer">
+						<div style="margin:0; padding:0; height: calc(35vh + 2rem); text-align: center; position: relative; overflow:hidden">
+							<span style="font-size:80%; opacity:0.7; letter-spacing: 1px; font-weight: bold">
+								DATA/WEB LINK
+							</span>
+							<textarea readonly id="sharedatatext"></textarea>
+							<div id="copycheckmark"><i class="fas fa-check fa-fw"></i>copied</div>
+						</div>
+						<div style="text-align:center; padding-bottom: 10px"><a class="button tinybutton" id="btn_shareweblink" onclick="shareViewURL();"><i class="fas fa-link fa-fw"></i>Share</a><a class="button tinybutton" id="btn_copydatatext"  onclick="copyfunction();"><i class="fas fa-clipboard fa-fw"></i>Copy</a></div>
+					</div>
+
+					</div> <!--end sharecontainer -->
+				</div>
+			</div>
+		</div>
+		<div id="modalAnnotate" class="modal">
+			<div class="modal-content" id="modalAnnotatecontent">
+				<div class="modal-header" id="modalAnnotatetitle">ADD EVENT<span class="close" onClick="hidemodal('modalAnnotate')">&times;</span></div>
+				<div class="modal-body">
+					<div style="font-weight:bold; font-style:italic">
+					Enter time of event:
+					</div>
+					<table class="time-select-container">
+						<tr style="opacity:0.7">
+							<td class="hidehours">Hrs</td>
+							<td class="hidehours"></td>
+							<td>Min</td>
+							<td></td>
+							<td>Sec</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="hidehours" style="cursor: pointer" onclick="deltahours(1);"><i class="fas fa-chevron-up"></i></td>
+							<td class="hidehours"></td>
+							<td style="cursor: pointer" onclick="deltaminutes(1);"><i class="fas fa-chevron-up"></i></td>
+							<td></td>
+							<td style="cursor: pointer" onclick="deltaseconds(1)"><i class="fas fa-chevron-up"></i></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="hidehours">
+								<select id="hh" class="time-select">
+									<option value="0">00</option>
+									<option value="1">01</option>
+									<option value="2">02</option>
+									<option value="3">03</option>
+									<option value="4">04</option>
+									<option value="5">05</option>
+									<option value="6">06</option>
+									<option value="7">07</option>
+									<option value="8">08</option>
+									<option value="9">09</option>
+								</select>
+							</td>
+							<td class="hidehours">&nbsp;:&nbsp;</td>
+							<td>
+								<select id="mm" class="time-select">
+									<option value="0">00</option>
+									<option value="1">01</option>
+									<option value="2">02</option>
+									<option value="3">03</option>
+									<option value="4">04</option>
+									<option value="5">05</option>
+									<option value="6">06</option>
+									<option value="7">07</option>
+									<option value="8">08</option>
+									<option value="9">09</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+									<option value="16">16</option>
+									<option value="17">17</option>
+									<option value="18">18</option>
+									<option value="19">19</option>
+									<option value="20">20</option>
+									<option value="21">21</option>
+									<option value="22">22</option>
+									<option value="23">23</option>
+									<option value="24">24</option>
+									<option value="25">25</option>
+									<option value="26">26</option>
+									<option value="27">27</option>
+									<option value="28">28</option>
+									<option value="29">29</option>
+									<option value="30">30</option>
+									<option value="31">31</option>
+									<option value="32">32</option>
+									<option value="33">33</option>
+									<option value="34">34</option>
+									<option value="35">35</option>
+									<option value="36">36</option>
+									<option value="37">37</option>
+									<option value="38">38</option>
+									<option value="39">39</option>
+									<option value="40">40</option>
+									<option value="41">41</option>
+									<option value="42">42</option>
+									<option value="43">43</option>
+									<option value="44">44</option>
+									<option value="45">45</option>
+									<option value="46">46</option>
+									<option value="47">47</option>
+									<option value="48">48</option>
+									<option value="49">49</option>
+									<option value="50">50</option>
+									<option value="51">51</option>
+									<option value="52">52</option>
+									<option value="53">53</option>
+									<option value="54">54</option>
+									<option value="55">55</option>
+									<option value="56">56</option>
+									<option value="57">57</option>
+									<option value="58">58</option>
+									<option value="59">59</option>
+								</select>
+							</td>
+							<td>&nbsp;:&nbsp;</td>
+							<td>
+								<select id="ss" class="time-select">
+									<option value="0">00</option>
+									<option value="1">01</option>
+									<option value="2">02</option>
+									<option value="3">03</option>
+									<option value="4">04</option>
+									<option value="5">05</option>
+									<option value="6">06</option>
+									<option value="7">07</option>
+									<option value="8">08</option>
+									<option value="9">09</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+									<option value="16">16</option>
+									<option value="17">17</option>
+									<option value="18">18</option>
+									<option value="19">19</option>
+									<option value="20">20</option>
+									<option value="21">21</option>
+									<option value="22">22</option>
+									<option value="23">23</option>
+									<option value="24">24</option>
+									<option value="25">25</option>
+									<option value="26">26</option>
+									<option value="27">27</option>
+									<option value="28">28</option>
+									<option value="29">29</option>
+									<option value="30">30</option>
+									<option value="31">31</option>
+									<option value="32">32</option>
+									<option value="33">33</option>
+									<option value="34">34</option>
+									<option value="35">35</option>
+									<option value="36">36</option>
+									<option value="37">37</option>
+									<option value="38">38</option>
+									<option value="39">39</option>
+									<option value="40">40</option>
+									<option value="41">41</option>
+									<option value="42">42</option>
+									<option value="43">43</option>
+									<option value="44">44</option>
+									<option value="45">45</option>
+									<option value="46">46</option>
+									<option value="47">47</option>
+									<option value="48">48</option>
+									<option value="49">49</option>
+									<option value="50">50</option>
+									<option value="51">51</option>
+									<option value="52">52</option>
+									<option value="53">53</option>
+									<option value="54">54</option>
+									<option value="55">55</option>
+									<option value="56">56</option>
+									<option value="57">57</option>
+									<option value="58">58</option>
+									<option value="59">59</option>
+								</select>
+							</td>
+							<td><a style = "cursor: pointer" onclick="setnow(Math.floor(time_in_s));">&nbsp; Now</a></td>
+						</tr>
+						<tr>
+							<td class="hidehours" style="cursor: pointer" onclick="deltahours(-1)"><i class="fas fa-chevron-down"></i></td>
+							<td class="hidehours"></td>
+							<td style="cursor: pointer" onclick="deltaminutes(-1)"><i class="fas fa-chevron-down"></i></td>
+							<td></td>
+							<td style="cursor: pointer" onclick="deltaseconds(-1)"><i class="fas fa-chevron-down"></i></td>
+							<td></td>
+						</tr>
+					</table>
+					<div style="padding-top: 18px; font-weight:bold; font-style:italic">
+					Enter event note:
+					</div>
+					<textarea id="addeventtext"></textarea>
+					<div style="padding-top:18px">
+						<a class="button invert" id="btn_submitevent" onclick="createEvent2(-1);">SUBMIT</a>
+						<a class="button muted right" onclick="modal=document.getElementById('modalAnnotate');hideallmodal()">CANCEL</a>
+						<a class="button muted right" onclick="deleteevent();" id="btn_deleteevent" style="display:none">DELETE</a>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--endmodal-->
+
+  <!-- start leftbar-->
+  <div class="leftbar propofol hide">
+  	<div class="ptolcontainer">
+  		<div id="">&nbsp;
+  		</div>
+  	</div>
+  	<div class="leftbarlabel">
+  		<div class="druglabelcontainer propofol active" onclick="tabswitch(0);">
+  			<div class="druglabelicon alert hide"><i class="fas fa-bell"></i></div>
+  			<div class="druglabelicon propofol">
+  				P
+  			</div>
+  			<div class="druglabeltext propofol active">
+  				<div class="line1">PROPOFOL</div>
+  				<div class="line2 hide">
+  					<div class="line2text"><i class="fas fa-tint fa-fw"></i>&nbsp;<span id="cp_propo"></span>&nbsp;&nbsp;</div>
+  					<div class="line2text"><i class="fas fa-brain fa-fw"></i>&nbsp;<span id="ce_propo"></span>&nbsp;&nbsp;</div>
+  					<div class="line2text"><i class="fas fa-running fa-fw"></i>&nbsp;<span id="inf_propo"></span></div>
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+  	<div class="spacer">
+  	</div>
+  	<div class="leftbarlabel">
+  		<div class="druglabelcontainer opioid " onclick="tabswitch(1);">
+  			<div class="druglabelicon alert hide"><i class="fas fa-bell"></i></div>
+  			<div class="druglabelicon opioid">
+  				R
+  			</div>
+  			<div class="druglabeltext opioid ">
+  				<div class="line1">REMIFENTANIL</div>
+  				<div class="line2 hide">
+  					<div class="line2text"><i class="fas fa-tint fa-fw"></i>&nbsp;<span id="cp_opioid"></span>&nbsp;&nbsp;</div>
+  					<div class="line2text"><i class="fas fa-brain fa-fw"></i>&nbsp;<span id="ce_opioid"></span>&nbsp;&nbsp;</div>
+  					<div class="line2text"><i class="fas fa-running fa-fw"></i>&nbsp;<span id="inf_opioid"></span></div>
+  				</div>
+  			</div>
+
+  		</div>
+  	</div>
+  </div>
+  <!-- end leftbar-->
+
+	<div id="parallax3"></div>
+    <div class="menuwrapper" id="menu">
+        <div class="menucontent">
+            <!--<a href="#" 
+            onclick="showbaselayer(); window.scrollTo(0,0); togglemenu();" 
+            ontouchstart="showbaselayer(); window.scrollTo(0,0); event.preventDefault(); togglemenu();">Home</a>-->
+            <!--ontouchstart="setmodal('modalAbout'); event.preventDefault(); togglemenu();"-->
+            <a href="#" 
+            onclick="setmodal('modalAbout'); togglemenu();" 
+            >About</a>
+            <a href="#" 
+            onclick="setmodal('modalReset'); togglemenu();" 
+            >Reset</a>
+            <a href="#" 
+            onclick="setmodal('modalHelp'); togglemenu();" 
+            >Help</a>
+            <a href="#" 
+            onclick="setmodal('modalDocumentation'); togglemenu();" 
+            >Documentation</a>
+            <a href="#"
+            onclick="sharefunction(); togglemenu();"
+            >Share</a><!--
+            <a href="#" 
+            onclick="setmodal('modalExport'); togglemenu();" 
+            ontouchstart="document.getElementById('inputMaxDuration').value = Math.floor(time_in_s); setmodal('modalExport'); event.preventDefault(); togglemenu();">Export</a>-->
+            <a href="https://simtiva.blogspot.com/p/feedback.html" target="_blank" 
+            onclick="togglemenu();" 
+            >Contact</a>
+            <!--<a href="#" onclick="setmodal('modaldisclaimer'); togglemenu();" ontouchstart="setmodal('modaldisclaimer'); event.preventDefault(); togglemenu();">Disclaimer</a>-->
+            
+        </div>
+        <!--end of menucontent-->
+        <div class="social"><a href="https://simtiva.blogspot.com" target="_blank" class="item"><i class="fab fa-blogger-b" style="cursor: pointer;padding-right:10px;border-right:1px solid #888" ></i><a href="https://twitter.com/simtiva_app/" target="_blank" class="item"><i class="fab fa-twitter" style="cursor: pointer;padding-left:10px" ></i></a></div>
+    </div>
+
+
+	<div id="bodywrapper" class="">
+
+		<div class="sharebutton" id="sharebutton" onclick="sharefunction();">
+			<i class="fas fa-share-alt fa-fw"></i>
+		</div>
+		<div class="darkmodebutton" id="darkmodebutton" onclick="goDark();">
+			<i class="fas fa-moon fa-fw"></i>
+		</div>
+		<div class="installbutton" id="installbutton">
+			<i class="fas fa-download fa-fw" style="transform: translateY(2px);"></i>
+			<div class="installtext" id="installtext">INSTALL</div>
+			<div class="installclose" id="installclose"><i class="fas fa-times fa-fw"></i></div>
+		</div>
+		<div class="hamburger"  id="hamburger" onclick="togglemenu();">
+          <div class="bar1"></div>
+          <div class="bar2"></div>
+          <div class="bar3"></div>
+    	</div>
+		<div id="parallax2">
+			<div class="top-bar-container">
+				<div class="topleft stop" id="iconplay" onclick="window.scrollTo(0,0);"><i class="fas fa-pause fa-lg"></i></div><!--
+				--><div class="topright">
+					<div class="top_subtitle " id="top_subtitle"><b>SimTIVA</b> - <span style="opacity: 50%; white-space:nowrap;" id="top_subtitle2">Simple TIVA simulator</span></div> 
+					<div class="top_title " id="top_title">
+						<div class="top_title_box cp" id="top_cp"><span id="cp">-</span></div>
+						<div class="top_title_box ce" id="top_ce"><span id="ce">-</span></div>
+						<div class="top_title_box infrate" id="top_infrate"><span id="infrate">-</span></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="parallax1">
+			<!--<div id="parallaxtop" class="propofol">
+				<div class="parallax_left">
+					<div class="parallax_drug_name"><span class="parallax_drug_name1">Propofol</span><div id="parallax_desired">_</div>
+					</div>
+						<div class="parallax_drug_model">
+							<span class="parallax_drug_model_name">Eleveld</span> | <span class="parallax_drug_conc">20mcg/ml</span>
+						</div>
+					</div>
+					
+				<div class="parallax_right">
+					
+						<div class="parallax_conc_box cp"><span id="cp_active">2.9</span>
+						</div>
+						<div class="parallax_conc_box ce"><span id="ce_active">3.3</span>
+						</div>
+						<div class="parallax_conc_box inf"><span id="inf_active">35</span>
+						</div>
+					
+				</div>
+			</div>
+			-->
+			<div id="parallax1container" class="">
+				<div class="displayleft">
+					<div class="clockcontainer"><span id="clock">_</span></div>
+					<div class="VIcontainer">VI: <span id="displayvolume">_</span>ml</div>
+				</div><!--
+				--><div class="displayright">
+					<div class="displaywrapper">
+						<div class="">
+							<span id="drugname"></span> (<span id="modelname"></span>)
+							
+						</div>
+						<div><b>BW:<span id="bw"></span></b>, BH:<span id="bh"></span></div>
+						<div><span id="age"></span>, <span id="gender"></span><!--<span id="temptimedisplay" style="float:right; opacity:50%"></span>--></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--start parallax bottom-->
+		<!--
+		<div id="parallaxbottom">
+			<div id="parallaxbottom_whitebox">&nbsp;</div>
+			<div id="parallaxbottom_container"  class="remifentanil">
+				<div class="parallax_left" >
+					<div class="parallax_drug_name"><span class="parallax_drug_name1">Remifentanil</span>
+						<div id="parallaxbottom_desired">_</div>
+					</div>
+						<div class="parallax_drug_model">
+							<span class="parallax_drug_model_name">Minto</span> | <span class="parallax_drug_conc">20mcg/ml</span>
+						</div>
+					</div>
+					
+				<div class="parallax_right">
+					
+						<div class="parallax_conc_box cp"><span id="cp_alt">2.9</span>
+						</div>
+						<div class="parallax_conc_box ce"><span id="ce_alt">3.3</span>
+						</div>
+						<div class="parallax_conc_box inf"><span id="inf_alt">35</span>
+						</div>
+					
+				</div>
+			</div>
+			<div id="parallaxbottom_message">
+				<div id="parallaxbottom_message1"></div>
+			</div>
+		</div>
+	-->
+		<!-- end parallax bottom-->
+
+		
+		<div id="popupchartdiv" style="display: none;position:fixed;background:black;top:0;left:0;z-index:99;width:100%;height:100%;padding:0">
+				<!--
+				<div id="chartbuttons2" style="display:none">
+					<a id="chartzoomin2" onclick="chartZoomToggle(1);"><i class="fas fa-search-plus"></i></a>
+					<a id="chartoptions2" onclick="chartOptionsToggle();"><i class="fas fa-cog"></i></a>
+					<a id="chartzoomout2" onclick="chartZoomToggle(0);"><i class="fas fa-search-minus"></i></a>
+				</div>
+				-->
+				<div id="chartinfooverlay" class="">
+					<div id="chartinfoleft" onclick="togglePopupInfo();"><i class="fas fa-chevron-circle-right fa-fw"></i></div><!--
+					--><div id="chartinforight">
+						<div id="chartinfotime"><span id="timecopy" class="timespan">0m 0s</span></div>
+						<div id="chartinfodrugline1"><span id="drugnamecopy">DRUG</span><span id="modelnamecopy"></span><span id="conccopy">(_mg/ml)</span></div>
+						<div id="chartinfodrugline2">Awaiting input</div>
+						<div id="chartinfoscheme"><span id="nextratedescriptor">Rate info unavailable </span><span id="nextratecopy"></span><span id="nextratepreposition"></span><span id="timeremaincopy"></span></div>
+						<div id="chartinfoptol">PTOL: __</div>
+					</div>
+				</div>
+				<div id="chartoverlayoptions2" >
+					<div id="chartoverlayoptions2content">
+						<div id="closeoptions2" onclick="togglepopupoptions();">&times;</div>
+						<div id="" style="font-weight:bold; margin-top:6px; margin-bottom:7px">Chart Options</div>
+						<div id="chartoptionscheckbox2">
+				      <label class="container labeloptionscontainer" style="">Automatic time scale
+				          <input type="checkbox" id="isTimeAutomatic2" onChange="toggleautotime();" checked><span class="checkmark"></span>
+				      </label>
+						</div>
+						<div style="padding-left:30px">Custom time range (min):</div>
+						<div id="timerangeslider2">
+							<div id="leftslidercontainer2">
+								<input id="range0copy" value="10" min="0" max="30" step="5" type="range" oninput="processrange(0);">
+								<div class="timerangetext" id="rangetext0copy">0</div>
+							</div>
+							<div id="rightslidercontainer2">
+								<input id="range1copy" value="90" min="30" max="120" step="5" type="range" oninput="processrange(1);">
+								<div class="timerangetext" id="rangetext1copy">30</div>
+							</div>		
+						</div>
+						<div style="margin-top:30px" id="PD_options_group2">
+				      <label class="container labeloptionscontainer" style="margin-bottom:0px">PD Effect estimation
+				          <input type="checkbox" id="isEffectEstimationOn2" onChange="if (document.getElementById('isEffectEstimationOn').checked == true) {document.getElementById('isEffectEstimationOn').checked = false} else {document.getElementById('isEffectEstimationOn').checked = true;}toggleEffectEst();" checked><span class="checkmark"></span>
+				      </label>
+				      <select id="select_effect_measure2" style="margin-left:30px;width:calc(100% - 30px)" onChange="document.getElementById('select_effect_measure').value=document.getElementById('select_effect_measure2').value;toggleEffectEst();">
+				      	<option value="bis">BIS 40-60</option>
+				      	<option value="ptol">PTOL 50-90</option>
+				      	<option value="nsri">NSRI 20-50</option>
+				      </select>
+						</div>
+					</div>
+					<div id="chartoverlayoptionscontentarrow2"></div>
+				</div>
+			<div id="popupchartcontainer" style="width:100%;height:100%;display:block;border-radius:1rem">
+				<div style="display:inline-block;width:calc(100% - 108px);height:100%;"><canvas id="popupchart"></canvas></div><!--
+				--><div style="display:inline-block;width:108px;vertical-align:top;padding:10px;height:100%">
+						<div style="background:#198964; border-radius:0rem 1rem 1rem 1rem;height:100%"> 
+							<!--right container-->
+							<div class="pop_right_elem">
+								<a class="pop_button" id="pop_button_close" onclick="destroypopup();">
+									<i class="fas fa-times"></i>
+								</a>
+							</div>
+
+							<div class="pop_right_elem">
+								<div class="pop_title_box cp" id="pop_cp"><span id="cp_copy">-</span></div>
+							</div>
+							<div class="pop_right_elem">
+								<div class="pop_title_box ce" id="pop_ce"><span id="ce_copy">-</span></div>
+							</div>
+							<div class="pop_right_elem">
+								<div class="pop_title_box infrate" id="pop_infrate"><span id="infrate_copy">-</span></div>
+							</div>
+						
+							<a class="pop_button" id="pop_button_options" onclick="togglepopupoptions();">
+								<i class="fas fa-cog"></i>
+							</a>
+
+						</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div id="controlpanel">
+			<div id="prompts_container">
+				<div class="prompts_card" id="warning" style="border-color:#e4c4c4">
+					<div class="prompts_close" onclick="hide_prompts(this.parentElement); user_hide = 1; userhide();"><i class="fas fa-times-circle"></i></div>
+					<div id="warningleft"><i class="fas fa-exclamation-circle" id="warningicon"></i></div>
+					<div id="warningright">
+						<div style="font-size:80%; font-weight:bold; color:red; border-bottom:1px solid #e4c4c4; padding-bottom:2px"><span id="warningdescriptor">REMINDER - next change in </span><div id="warningcounter">10s</div></div>
+						<div style="padding-top:5px font-size:90%" id="warningprompt">_</div>
+					</div>
+				</div>
+				<div class="prompts_card" id="preview" style="border-color:#a9c5e4">
+					<div class="prompts_close" onclick="hide_prompts(this.parentElement)"><i class="fas fa-times-circle"></i></div>
+					<div id="previewleft"><i class="fas fa-arrow-circle-up" id="previewicon"></i></div>
+					<div id="previewright">
+						<div style="font-size:80%; font-weight:bold; border-bottom:1px solid #a9c5e4; padding-bottom:2px">PREVIEW: To achieve target <div id="preview_cpt"></div></div>
+						<div style="padding-top:5px font-size:90%" id="preview_msg"></div>
+					</div>
+				</div>
+				<div class="prompts_card" id="prompt" style="border-color:#9bc99d">
+
+					<div id="promptleft"><i class="fas fa-info-circle" id="prompticon"></i></div>
+					<div id="promptright">
+						<div style="font-size:80%; font-weight:bold; border-bottom:1px solid #9bc99d; padding-bottom:2px"><span id="prompt_msg2">Current rate</span></div>
+						<div id="progressbar"></div>
+						<div style="padding-top:5px font-size:90%" id="prompt_msg"><span id="status">Waiting to start</span><span id="infusiondescriptor"></span></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="cardscontainer">
+				
+			<!-- start cards container for layout-->
+			<div class="card" id="card_infusion0">
+				<div class="cardtitle">INFUSION</div>
+			<div class="cardcontents">
+				<table class="table-control line" id="tableInfusionRate0">
+					<tr class="fr"><td>Infusion rate (ml/h)</td><td><input type="number" inputmode="decimal" id="inputInfusion0" min="0" max="100" step="0.1" placeholder=" " onchange=""></td></tr>
+				</table>
+				<table class="table-control space" id="tableInitialBolus0">
+					<tr><td>Initial bolus (<span class="infused_units"></span>)</td><td><input type="number" inputmode="decimal" id="inputBolus_initial0" min="0" max="2000" step="0.1" placeholder=" " ></td></tr>
+				</table>
+				<a class="button" id="btn_start0" onclick="start_manual(0);">Start</a>
+				<a class="button" id="btn_pause0" onclick="pause(0);">Pause</a>
+			</div>
+		</div>
+			<div class="card" id="card_infusion1" style="display:none;">
+				<div class="cardtitle">INFUSION.</div>
+			<div class="cardcontents">
+				<table class="table-control line" id="tableInfusionRate1">
+					<tr class="fr"><td>Infusion rate (ml/h)</td><td><input type="number" inputmode="decimal" id="inputInfusion1" min="0" max="100" step="0.1" placeholder=" " onchange=""></td></tr>
+				</table>
+				<table class="table-control space" id="tableInitialBolus1">
+					<tr><td>Initial bolus (<span class="infused_units"></span>)</td><td><input type="number" inputmode="decimal" id="inputBolus_initial1" min="0" max="2000" step="0.1" placeholder=" " ></td></tr>
+				</table>
+				<a class="button" id="btn_start1" onclick="start_manual(1);">Start</a>
+				<a class="button" id="btn_pause1" onclick="pause(1);">Pause</a>
+			</div>
+		</div>
+		<div class="card hide" id="card_reanimate">
+			<div class="cardtitle">RESUME SIMULATION</div>
+			<div class="cardcontents">
+				<div style="color:grey; font-size:90%">The recording of simulation data was suspended at: <br><span id="timestamp_lastdata"></span></div>
+				<table class="table-control space">
+					<tr class="fr">
+						<td>Duration elapsed since simulation suspended:</td>
+						<td>
+							<select id="reanimate_select" onchange="sendtoreanimate(this.value*60);">
+								<option value="0">0min</option>
+								<option value="0.5">&lt;1min</option>
+								<option value="1">1min</option>
+								<option value="2">2mins</option>
+								<option value="3">3mins</option>
+								<option value="4">4mins</option>
+								<option value="5">5mins</option>
+								<option value="6">6mins</option>
+								<option value="7">7mins</option>
+								<option value="8">8mins</option>
+								<option value="9">9mins</option>
+								<option value="10">10mins</option>
+								<option value="11">11mins</option>
+								<option value="12">12mins</option>
+								<option value="13">13mins</option>
+								<option value="14">14mins</option>
+								<option value="15">15mins</option>
+								<option value="16">16mins</option>
+								<option value="17">17mins</option>
+								<option value="18">18mins</option>
+								<option value="19">19mins</option>
+								<option value="20">20mins</option>
+								<option value="21">21mins</option>
+								<option value="22">22mins</option>
+								<option value="23">23mins</option>
+								<option value="24">24mins</option>
+								<option value="25">25mins</option>
+								<option value="26">26mins</option>
+								<option value="27">27mins</option>
+								<option value="28">28mins</option>
+								<option value="29">29mins</option>
+								<option value="30">30mins</option>
+								<option value="35">35mins</option>
+								<option value="40">40mins</option>
+								<option value="45">45mins</option>
+								<option value="50">50mins</option>
+								<option value="55">55mins</option>
+								<option value="60">60mins</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Time point for resuming simulation:</td>
+						<td><span id="timestamp_toberesumed"></span></td>
+				</table>
+				<a class="button" id="btn_reanimate" onclick="submit_reanimate();">Resume simulation</a>
+			</div>
+		</div>
+		<div class="card" id="card_cpt0">
+			<div class="cardtitle">Cp TARGETING</div>
+			<div class="cardcontents">
+				<table class="table-control space" id="tableCpt">
+					<tr class="fr"><td>Enter Cp (<span class="conc_units"></span>/ml)</td><td><input type="number" inputmode="decimal" id="inputDesired0"  min="0.1" max="200" step="0.1" placeholder=" " oninput="displaypreview(this.value,0);"></td></tr>
+				</table>
+				<a class="button" id="btn_startCpt0" onclick="start_cpt();">Start</a>
+				<a class="button" id="btn_pauseCpt0" onclick="pauseCpt(0); drug_sets[0].cpt_active=0.5;">Pause</a>
+			</div>
+		</div>
+		<div class="card" id="card_cpt1" style="display:none;">
+			<div class="cardtitle">Cp TARGETING.</div>
+			<div class="cardcontents">
+				<table class="table-control space" id="tableCpt">
+					<tr class="fr"><td>Enter Cp (<span class="conc_units"></span>/ml)</td><td><input type="number" inputmode="decimal" id="inputDesired1"  min="0.1" max="200" step="0.1" placeholder=" " oninput="displaypreview(this.value,1);"></td></tr>
+				</table>
+				<a class="button" id="btn_startCpt1" onclick="
+				start_cpt_complex(document.getElementById('inputDesired1').value*1,1);
+				">Start</a>
+				<a class="button" id="btn_pauseCpt1" onclick="pauseCpt(1); drug_sets[1].cpt_active=0.5;">Pause</a>
+			</div>
+		</div>
+		<div class="card" id="card_cet0">
+			<div class="cardtitle">Ce TARGETING</div>
+			<div class="cardcontents">
+				<table class="table-control space" id="tableCet">
+					<tr class="fr"><td>Enter Ce (<span class="conc_units"></span>/ml)</td><td><input type="number" inputmode="decimal" style="border-radius:1rem; width:75px; border-width:2px" id="inputDesiredCe0" onfocus="this.nextElementSibling.style.display='inline-block';" min="0.1" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0);this.nextElementSibling.style.display='inline-block';" onblur="x=this;setTimeout(function(){x.nextElementSibling.style.display='none';},300)"><button id="clearCe" class="closeicon" onclick="clearInput('inputDesiredCe0');"></button></td></tr>
+					<tr id="IB_swing_select_row0" class="IB_elements">
+						<td>Peak/trough level</td>
+						<td>
+							<select id="IB_swing_select0" onchange="drug_sets[0].IB_swing=this.value*1">
+								<option value="0.025">±2.5%</option>
+								<option value="0.05" selected>±5%</option>
+								<option value="0.075">±7.5%</option>
+								<option value="0.1">±10%</option>
+								<option value="0.125">±12.5%</option>
+								<option value="0.15">±15%</option>
+							</select>
+						</td>
+					</tr>
+					<tr id="IB_interval_row0" class="IB_elements">
+						<td>Bolus interval
+						</td>
+						<td id="IB_interval0">
+						</td>
+					</tr>
+				</table>
+				<!--
+				<div id="IB_description" class="" style="color:grey; font-size:90%; padding-top:10px; padding-bottom:10px">
+					The peak/trough levels represent the magnitude of fluctuation for Ce. For example, when set to ±5%, the Ce will reach a maximum of 105% of target and then drop to a minimum of 95% of target. At the trough level, another bolus will be administered, and the cycle repeats.
+				</div>
+			-->
+				<a class="button" id="btn_startCet0" onclick="start_cet();">Start</a>
+				<a class="button" id="btn_pauseCet0" onclick="pauseCpt(0); cet_active=0.5;">Pause</a>
+				<span id="IB_about_btn0" onclick="displayIBabout();"><i class="fas fa-question-circle"></i></span>
+				<!--
+				<a class="button muted" id="btn_bolusconverter" onclick="start_cet_bolus();"><i class="fas fa-syringe"></i></a>
+				-->
+			</div>
+		</div>
+		<div class="card" id="card_cet1" style="display:none;">
+			<div class="cardtitle">Ce TARGETING.</div>
+			<div class="cardcontents">
+				<table class="table-control space" id="tableCet1">
+					<tr class="fr"><td>Enter Ce (<span class="conc_units"></span>/ml)</td><td><input type="number" inputmode="decimal" style="border-radius:1rem; width:75px; border-width:2px" id="inputDesiredCe1" onfocus="this.nextElementSibling.style.display='inline-block';" min="0.1" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,1);this.nextElementSibling.style.display='inline-block';" onblur="x=this;setTimeout(function(){x.nextElementSibling.style.display='none';},300)"><button id="clearCe" class="closeicon" onclick="clearInput('inputDesiredCe1');"></button></td></tr>
+					<tr id="IB_swing_select_row1" class="IB_elements">
+						<td>Peak/trough level</td>
+						<td>
+							<select id="IB_swing_select1" onchange="drug_sets[1].IB_swing=this.value*1">
+								<option value="0.025">±2.5%</option>
+								<option value="0.05" selected>±5%</option>
+								<option value="0.075">±7.5%</option>
+								<option value="0.1">±10%</option>
+								<option value="0.125">±12.5%</option>
+								<option value="0.15">±15%</option>
+							</select>
+						</td>
+					</tr>
+					<tr id="IB_interval_row1" class="IB_elements">
+						<td>Bolus interval
+						</td>
+						<td id="IB_interval1">
+						</td>
+					</tr>
+				</table>
+				<!--
+				<div id="IB_description" class="" style="color:grey; font-size:90%; padding-top:10px; padding-bottom:10px">
+					The peak/trough levels represent the magnitude of fluctuation for Ce. For example, when set to ±5%, the Ce will reach a maximum of 105% of target and then drop to a minimum of 95% of target. At the trough level, another bolus will be administered, and the cycle repeats.
+				</div>
+			-->
+				<a class="button" id="btn_startCet1" onclick="start_cet_complex(document.getElementById('inputDesiredCe1').value*1,1);">Start</a>
+				<a class="button" id="btn_pauseCet1" onclick="pauseCpt(1); cet_active=0.5;">Pause</a>
+				<span id="IB_about_btn1" onclick="displayIBabout();"><i class="fas fa-question-circle"></i></span>
+				<!--
+				<a class="button muted" id="btn_bolusconverter" onclick="start_cet_bolus();"><i class="fas fa-syringe"></i></a>
+				-->
+			</div>
+		</div>
+		<div class="card" id="card_bolus0" style="display:none;">
+			<div class="cardtitle">BOLUS</div>
+			<div class="cardcontents">
+				<table class="table-control space">
+					<tr class="fr"><td>Custom bolus (<span class="infused_units"></span>)</td>
+						<td width="30px"><input type="number" id="inputBolus0"></td>
+						<td><a class="button custom" id="" min="0" max="2000" step="0.1" placeholder=" " onclick="bolusadmin(custombolus(0),0);">Go!</button></a></td>
+					</tr></table>
+				
+				<a class="button bolus" id="bolus3" onclick="bolusadmin(30,0);"><div class="bolus_outside">Bolus</div><div class="bolus_inside">30<span class="infused_units"></span></div></a>
+				<a class="button bolus" id="bolus2" onclick="bolusadmin(20,0);"><div class="bolus_outside">Bolus</div><div class="bolus_inside">20<span class="infused_units"></span></div></a>
+				<a class="button bolus" id="bolus1" onclick="bolusadmin(10,0);"><div class="bolus_outside">Bolus</div><div class="bolus_inside">10<span class="infused_units"></span></div></a>
+			</div>
+		</div>
+		<div class="card" id="card_bolus1" style="display:none;">
+			<div class="cardtitle">BOLUS.</div>
+			<div class="cardcontents">
+				<table class="table-control space">
+					<tr class="fr"><td>Custom bolus (<span class="infused_units"></span>)</td>
+						<td width="30px"><input type="number" id="inputBolus1"></td>
+						<td><a class="button custom" id="" min="0" max="2000" step="0.1" placeholder=" " onclick="bolusadmin(custombolus(1),1);">Go!</button></a></td>
+					</tr></table>
+				
+				<a class="button bolus" id="bolus3_1" onclick="bolusadmin(30,1);"><div class="bolus_outside">Bolus</div><div class="bolus_inside">30<span class="infused_units"></span></div></a>
+				<a class="button bolus" id="bolus2_1" onclick="bolusadmin(20,1);"><div class="bolus_outside">Bolus</div><div class="bolus_inside">20<span class="infused_units"></span></div></a>
+				<a class="button bolus" id="bolus1_1" onclick="bolusadmin(10,1);"><div class="bolus_outside">Bolus</div><div class="bolus_inside">10<span class="infused_units"></span></div></a>
+			</div>
+		</div>
+		<div id="outputcontainer">
+			<div id="outputselector">
+				<a class="outputtab active" id="btn_displaychart" onclick="show_graph();">Graph</a>
+				<a class="outputtab" id="btn_displayhistory" onclick="show_history();">History</a>
+			</div>
+			<div id="chartwrapper">
+				<div id="chartoverlay">
+					<div id="chartoverlaytext">Updating chart...</div>
+				</div>
+				<div id="chartbuttons">
+					<a id="chartzoomin" onclick="chartZoomToggle(1);"><i class="fas fa-search-plus"></i></a>
+					<a id="chartoptions" onclick="chartOptionsToggle();"><i class="fas fa-cog"></i></a>
+					<a id="chartzoomout" onclick="chartZoomToggle(0);"><i class="fas fa-search-minus"></i></a>
+				</div>
+				<div id="chartoverlayoptions">
+					<div id="chartoverlayoptionscontent">
+						<div id="closeoptions" onclick="chartOptionsToggle();">&times;</div>
+						<div id="" style="font-weight:bold; margin-top:6px; margin-bottom:7px">Chart Options</div>
+						<div id="chartoptionscheckbox">
+				      <label class="container labeloptionscontainer" style="">Display events
+				          <input type="checkbox" onChange="toggleshowevents();" id="isShowEvents" checked><span class="checkmark"></span>
+				      </label>
+				      <label class="container labeloptionscontainer" style="">Automatic time scale
+				          <input type="checkbox" id="isTimeAutomatic" onChange="toggleautotime();" checked><span class="checkmark"></span>
+				      </label>
+						</div>
+						<div style="padding-left:30px">Custom time range (min):</div>
+						<div id="timerangeslider">
+							<div id="leftslidercontainer">
+								<input id="range0" value="10" min="0" max="30" step="5" type="range" oninput="processrange(0);">
+								<div class="timerangetext" id="rangetext0">0</div>
+							</div>
+							<div id="rightslidercontainer">
+								<input id="range1" value="90" min="30" max="120" step="5" type="range" oninput="processrange(1);">
+								<div class="timerangetext" id="rangetext1">30</div>
+							</div>		
+						</div>
+						<div style="margin-top:30px" id="PD_options_group">
+				      <label class="container labeloptionscontainer" style="margin-bottom:0px">PD Effect estimation
+				          <input type="checkbox" id="isEffectEstimationOn" onChange="toggleEffectEst();" checked><span class="checkmark"></span>
+				      </label>
+				      <select id="select_effect_measure" style="margin-left:30px;width:calc(100% - 30px)" onChange="toggleEffectEst();">
+				      	<option value="bis">BIS 40-60</option>
+				      	<option value="ptol">PTOL 50-90</option>
+				      	<option value="nsri">NSRI 20-50</option>
+				      </select>
+						</div>
+					</div>
+					<div id="chartoverlayoptionscontentarrow"></div>
+				</div>
+				<div id="annotatebutton" style="display:none" onclick="setnow(Math.floor(time_in_s));document.getElementById('modalAnnotatetitle').innerHTML='ADD EVENT';document.getElementById('addeventtext').value='';document.getElementById('btn_submitevent').setAttribute('onclick','createEvent2(-1)');document.getElementById('btn_deleteevent').style.display='none';setmodal('modalAnnotate')">
+					<i class="fas fa-pen"></i>
+				</div>
+				<div id="expandbutton" style="display:none" onclick="openpopupchart();">
+					<i class="fas fa-expand-alt"></i>
+				</div>
+				<div id="chartcontainer">
+					<canvas id="myChart"></canvas>
+				</div>
+			</div>
+			<div id="historywrapper2">
+				<div id="historywrapper">
+				</div>
+			</div>
+				<div id="pastscheme">
+					<a id="pastschemebutton" onclick="displaymodalhistory();"><i class="fas fa-history"></i> Past Schemes</a>
+				</div>
+		</div>
+		<div id="eventscontainer" style="display:block">
+
+		</div>
+
+		<div id="ptolcard" class="">
+			<div id="ptolcard_left" style="padding:0.5rem;flex-basis:70%">
+				<div style="font-size:200%;font-weight:bold;line-height:1" id=""><span id="ptoltitle">PTOL</span><span id="ptoltooltip" onclick="ptolwarning();" style="display:none"><i class="far fa-question-circle"></i></span></div>
+				<div style="font-size:80%;opacity:50%" id="ptoldesc">Probability of tolerance to laryngoscopy (%)</div>
+			</div><!--
+			--><div id="ptolcard_right" style="flex-basis: 25%;text-align:center;font-size:400%;font-weight:bold">
+				-
+			</div><!--
+			--><div id="ptolcard_switch" style="text-align:center;align-self:stretch;padding-top:30px; cursor:pointer" onclick="cycleEffectEst();">
+				<div style="line-height:0.5">
+					<i class="fas fa-caret-up"></i><br>
+					<i class="fas fa-caret-down"></i>
+				</div>
+			</div>
+		</div>
+
+
+		<div id="interactionscontainer">
+			<div id="interactionstabselector">
+				<a class="interactionstab active" id="btn_displayisobologram" onclick="show_isobologram()">Isobologram</a>
+				<a class="interactionstab" id="btn_displaylegend" onclick="show_legend();">PD Interaction</a>
+			</div>
+			<div id="chart2wrapper">
+				
+					
+					<div id="chart2container">
+						<canvas id="myChart2"></canvas>
+					</div>
+					
+
+			</div> <!-- end chart2wrapper -->
+			<div id="legendwrapper">
+				<div class="legendtitle">Propofol-Opioid Interaction</div>
+				<div class="legendcontent">Propofol and opioids such as remifentanil demonstrate intense synergism. The interaction can be quantified using a hypnotic-analgesic endpoint such as ablating response to laryngoscopy. For example, remifenanil concentration of 4ng/ml may reduce propofol concentration associated with loss of response to laryngoscopy by two-thirds (Bouillon 2001). Probability to tolerate laryngoscopy (PTOL) and its derivative, the noxious stimulation response index (NSRI), have been proposed as measures of potency of propofol-remifentanil drug combination (Hannivoort 2016).</div>
+				<div class="legendtitle">Isobologram</div>
+				<div class="legendcontent">Using different combinations of CE-propofol and CE-remifentanil (effect-site concentrations of propofol and remifentanil respectively), all yielding the same predicted response (90% probability to tolerate laryngoscopy, PTOL90), a line (isobole) is drawn connecting all the possible combinations of CE-propofol/CE-remifentanil to achieve the same identical effect (van den Berg 2021). In our simulation programme, the same method is repeated for PTOL80, PTOL70... PTOL10 to generate a total of 9 isoboles on the 2-dimensional chart. The contour of the isoboles is typical of synergism, or supradditive interaction.</div>
+				<div class="legendtitle">Combinations of CEProp/CERemi for PTOL90</div>
+				<div class="legendcontent">Using PTOL90 isobole as an example, the combinations of CE-propofol and CE-remifentanil yielding the identical effect are: {8.6mcg/ml, 1ng/ml}, {5.9mcg/ml, 2ng/ml}, {3.6mcg/ml, 4ng/ml}, {2mcg/ml, 8ng/ml} according to the Bouillon interaction model (van den Berg 2021). Following this, the clinician may decide on using PTOL as a guidance to control different CE of propofol/remifentanil based on haemodynamic, hypnotic, or other consequences while maintaining the same level of pharmacodynamic endpoint.</div>
+			</div>
+
+			<!-- obsolete code for UI interactions toggles
+			<button onclick="complex_mode=1;">COMPLEX</button>
+			<button onclick="readmodel('Minto',1);drug_sets[1].infusate_concentration=20;initcet_complex(1);complexinterface_init();">INIT MINTO CET</button>
+			<button onclick="readmodel('Minto',1);drug_sets[1].infusate_concentration=20;initcpt_complex(1);complexinterface_init();">INIT MINTO CPT</button>
+			<button onclick="readmodel('Minto',1);drug_sets[1].infusate_concentration=20;initmanual(1);complexinterface_init();">INIT MINTO MANUAL</button>
+			<input id="remi_desired">
+			<button onclick="start_cet_complex(getElementById('remi_desired').value*1,1);">DELIVER REMI</button>
+			<button onclick="if (active_drug_set_index == 0) {myChart.data.datasets[6].data = ptol_generate_data_p(0.9);myChart.data.datasets[7].data = ptol_generate_data_p(0.5);} else {myChart.data.datasets[6].data = ptol_generate_data_r(0.9);myChart.data.datasets[7].data = ptol_generate_data_r(0.5)} myChart.update();">REFRESH CHART PTOL</button>
+			<button onclick="setInterval(update_ptol,1000)">UPDATE PTOL 1s</button>
+			<button onclick="testarg = 0; setInterval(function() {tabaltupdate();tabaltdisplaycycle(testarg);if (testarg==0) {testarg = 1} else {testarg = 0};},5000)">UPDATE TAB INFO 5s</button>
+			<button onclick="tabswitch();">SWITCHTAB</button>
+			-->
+
+		</div> <!-- end interactions container -->
+
+				
+				<div style='display:none'>
+					<div>CURRENT: <span id='isobole_chart_current'></span></div>
+					<div>CURSOR: <span id='isobole_chart_description'></span></div>
+					<div><b>PTOL:</b><span id="ptol"></span></div>
+				</div>
+		<div class="card" id="parameters">
+			<div class="cardtitle">MODEL PARAMETERS</div>
+			<div class="cardcontents"><span id="modeldescription"></span></div>
+		</div>
+		<div class="card" id="schemecopy">
+			<div class="cardtitle" id="schemecopytitle">SCHEME</div>
+			<div class="cardcontents" id="schemecopycontainer">
+			
+
+				<div id="historywrapperCOPY">Waiting to start.
+				</div>
+			
+			</div>
+				<div id="pastschemeCOPY">
+					<a id="pastschemebuttonCOPY" onclick="displaymodalhistory();"><i class="fas fa-history"></i> Past Schemes</a>
+				</div>
+		</div>
+		<div class="card" id="card_retrospective">
+			<div class="cardtitle collapsiblecard">RETROSPECTIVE</div>
+			<div class="cardcontents">
+				<i style="color:grey; font-size:90%; padding-top:10px; padding-bottom:10px; display:block;">If you have given a bolus or changed the infusion rate some time ago but forgot to enter into SimTIVA, you can do retrospective correction here.</i>
+				<table class="table-control">
+					<tr class="fr"><td style="width:70%">How many mins ago? (Time X)</td>
+						<td>
+							<select id="retrospectiveTime">
+								<option value="0.5">&lt;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+								<option value="16">16</option>
+								<option value="17">17</option>
+								<option value="18">18</option>
+								<option value="19">19</option>
+								<option value="20">20</option>
+								<option value="21">21</option>
+								<option value="22">22</option>
+								<option value="23">23</option>
+								<option value="24">24</option>
+								<option value="25">25</option>
+								<option value="26">26</option>
+								<option value="27">27</option>
+								<option value="28">28</option>
+								<option value="29">29</option>
+								<option value="30">30</option>
+							</select>
+						</td>
+					</tr>
+					<tr><td>Dose of bolus given at X? (<span class="infused_units"></span>)</td>
+						<td>
+							<input type="number" inputmode="decimal" id="retrospectiveBolus"  min="0" max="400" step="0.1" placeholder=" " >
+						</td>
+					</tr>
+					<tr><td>New infusion rate at X? (ml/h)</td>
+						<td>
+							<input type="number" inputmode="decimal" id="retrospectiveInfusion"  min="0" max="100" step="0.1" placeholder=" " >
+						</td>
+					</tr>
+				</table>
+				<a class="button" id="btn_retrospective" onclick="senddataretrospective();">Apply</a>
+			</div>
+		</div>
+		<div class="card" id="card_TimeEstimation">
+			<div class="cardtitle collapsiblecard">TIME ESTIMATION</div>
+			<div class="cardcontents">
+				<i style="color:grey; font-size:90%; padding-top:10px; padding-bottom:10px; display:block;">You can estimate how long before the infusion ends given a certain volume remaining in the syringe. </i>
+				<table class="table-control">
+					<tr class="fr"><td style="width:70%">Volume to be infused</td>
+						<td>
+							<input type="number" inputmode="decimal" id="inputVolume"  min="0" max="200" step="0.1" placeholder=" " onkeyup="displayTimeEstimation();">
+						</td>
+					</tr>
+					<tr>
+						<td>Ends in</td>
+						<td><span id="timeEstimation_output">___</td>
+					</tr>
+				</table>
+				<a class="button" id="btn_timeEstimation" onclick="displayTimeEstimation();">Apply</a>
+			</div>
+		</div>
+		<div class="card" id="card_VolumeEstimation">
+			<div class="cardtitle collapsiblecard">VOLUME ESTIMATION</div>
+			<div class="cardcontents">
+				<i style="color:grey; font-size:90%; padding-top:10px; padding-bottom:10px; display:block;">You can estimate how much drug volume is required for a certain duration of infusion.</i>
+				<table class="table-control">
+					<tr class="fr"><td style="width:70%">Duration remaining (mins)</td>
+						<td>
+							<input type="number" inputmode="decimal" id="inputTime"  min="0" max="200" step="0.1" placeholder=" " onkeyup="displayVolumeEstimation();">
+						</td>
+					</tr>
+					<tr>
+						<td>Volume required (mls)</td>
+						<td><span id="volumeEstimation_output">___</td>
+					</tr>
+				</table>
+				<a class="button" id="btn_volumeEstimation" onclick="displayVolumeEstimation();">Apply</a>
+			</div>
+		</div>
+		<div class="card" id="card_wakeup">
+			<div class="cardtitle collapsiblecard">WAKE-UP TIME</div>
+			<div class="cardcontents">
+				<i style="color:grey; font-size:90%; padding-top:10px; padding-bottom:10px; display:block;">To predict the wake-up time, or decrement time (time to reach a designated 'wake-up' concentration at the effect site) if the infusion is stopped at the current point. Default is 1mcg/ml.</i>
+				<table class="table-control">
+					<tr class="fr"><td style="width:70%">Wake-up concentration (mcg/ml)</td>
+						<td>
+							<select id="wakeupconc" onchange="sendtowakeup(this.value*1)">
+								<option value="0.7">0.7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+								<option value="0.8">0.8</option>
+								<option value="0.9">0.9</option>
+								<option value="1" selected="selected">1</option>
+								<option value="1.1">1.1</option>
+								<option value="1.2">1.2</option>
+								<option value="1.3">1.3</option>
+								<option value="1.4">1.4</option>
+								<option value="1.5">1.5</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Wake-up time</td>
+						<td><span id="wakeuptime">___</td>
+					</tr>
+				</table>
+				<a class="button" id="btn_wakeup" onclick="sendtowakeup(document.getElementById('wakeupconc').value);">Apply</a>
+			</div>
+		</div>
+		<div class="card" id="card_options">
+			<div class="cardtitle">OPTIONS</div>
+			<div class="cardcontents">
+						<div id="ptolcardoptions">
+      <label class="container labelptolcontainer" style="">Display detailed tab info
+          <input type="checkbox" onChange="toggleshowtabinfo();" id="isTabInfo"><span class="checkmark"></span>
+      </label>
+      <!--<label class="container labelptolcontainer" style="">Display effective dose margins <span style='font-size: 80%'>(PTOL50-90)</span>
+          <input type="checkbox" id="" onChange="toggleshowPTOLmargins();" checked><span class="checkmark"></span>
+      </label>
+    -->
+    </div>
+				<i style="color:grey; font-size:90%; padding-top:10px; padding-bottom:10px; display:block;">Some options are experimental features and available on Android devices only: these include Vibrate, Sound, Wakelock, and Notifications.</i>
+				<table class="table-control">
+					<!--options array-->
+					<!-- 
+					0[0:mg/kg/h, 1:mcg/kg/min],
+					1[0:1x, 1:5x, 2:25x, 3:50x],
+					2[0:auto, 1:lazy, 2:accurate],
+					3[0:wakelockoff, 1:wakelockon],
+					4[0:vibrateoff, 1:vibrateon],
+					5[0:soundoff, 1:soundon],
+					6[0:notifoff, 1:notifon]
+
+					default is:
+					[1,0],
+					[1,0,0,0],
+					[1,0,0],
+					[1,0],
+					[1,0],
+					[1,0],
+					[1,0]
+					-->
+					<!--end options array-->
+					<tr class="fr" id="option_unit_row"><td>Unit for propofol <i class="far fa-question-circle tooltip background"><span class="tooltiptext" style="width:160px">Secondary unit for propofol infusion rate apart from ml/h. Refresh your CPT/CET target after change.</span></i></td>
+						<td>
+							<select id="select_unit">
+								<option value="mgh">mg/kg/h</option>
+								<option value="mcgmin">mcg/kg/m</option>
+							</select>
+						</td>
+					<tr id="option_simspeed_row"><td>Simspeed</td>
+						<td>
+							<select id="select_simspeed">
+								<option value="1">1x (Normal)</option>
+								<option value="5">5x (Fast)</option>
+								<option value="25">25x (Very fast)</option>
+								<option value="50">50x (Super fast)</option>
+							</select>
+						</td>
+					</tr>
+
+					<tr id="option_threshold_row"><td>Threshold <i class="far fa-question-circle tooltip background"><span class="tooltiptext">Adjusts the threshold of CPT/CET infusion schemes. Lazy: less frequent rate changes. Accurate: more frequent rate changes.</span></i></td>
+						<td>
+							<select id="select_threshold">
+								<option value="0">Auto</option>
+								<option value="1">Lazy</option>
+								<option value="2">Accurate</option> <!--0.13, 0.565-->
+							</select>
+						</td>
+					</tr>
+					<tr><td>Wakelock <i class="far fa-question-circle tooltip background"><span class="tooltiptext">Keeps screen on. Experimental. Android & some desktop devices only.</span></i></td>
+						<td>
+							<select id="select_wakelock">
+								<option value="off">Off</option>
+								<option value="on">On</option>
+							</select>
+						</td>
+					</tr>
+					<tr><td>Vibrate</td>
+						<td>
+							<select id="select_vibrate">
+								<option value="off">Off</option>
+								<option value="on">On</option>
+							</select>
+						</td>
+					</tr>
+					<tr><td>Sound</td>
+						<td>
+							<select id="select_sound">
+								<option value="off">Off</option>
+								<option value="on">On</option>
+							</select>
+						</td>
+					</tr>
+
+					<tr><td>Notifications</td>
+						<td>
+							<select id="select_notification">
+								<option value="off">Off</option>
+								<option value="on">On</option>
+							</select>
+						</td>
+					</tr>
+					<!--
+					<tr><td>Intermittent bolus <i style="font-size:70%">(Unstable)</i></td>
+						<td>
+							<select id="select_PPinterval">
+								<option value="120">Q2min</option>
+								<option value="180" selected>Q3min</option>
+								<option value="300">Q5min</option>
+							</select>
+						</td>
+					</tr>
+				-->
+					
+
+					
+				</table>
+				<a class="button" id="btn_apply" onclick="applyoptions();">Apply</a>
+				<a class="button right muted" id="btn_defaultoptions" onclick="loadoptions('default');loadoptions();applyoptions();">Reset settings</a>
+				<!--
+				<a class="button" id="btn_test_alert" onclick="testalert();">Test alert</a>
+				<a class="button" id="btn_test_alertoff" onclick="testalertoff();">Alert Off</a>
+				-->
+			</div>
+		</div>
+		</div><!--end cards container layout-->
+		<div class="bottomcard">
+			<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1>
+		</div>
+
+		</div><!--controlpanel-->
+		<div class="footer">
+			<b>SIMTiva</b>&nbsp;|&nbsp;Terence Luk 2023
+			<ul>
+				<li><a href="#" onclick="setmodal('modalAbout');">About</a></li>
+				<li><a href="https://simtiva.blogspot.com/" target="_blank">Blog</a></li>
+				<li><a href="https://simtiva.blogspot.com/p/readme.html" target="_blank">Readme</a></li>
+				<li><a href="https://simtiva.blogspot.com/p/feedback.html" target="_blank">Contact</a></li>
+			</ul>
+		</div>
+		<!--
+		<div class="ticker" id="ticker">
+				<div id="progressoutside">
+					<div id="progressbar">
+						<div id="progressinside"></div>
+					</div>
+				</div>
+				<div class="tickerleft" id="tickerleft">
+					<div class="A1">
+							<div class="A2">Next bolus:</div>
+							<div class="A3"><span id="PP_bolus_display"></span>mg</div>
+					</div>
+					<div class="B1">
+						<div class="B2">in</div>
+						<div class="B3"><span id="PP_time_display">_</span></div>
+					</div>
+				</div>
+				<div class="tickerright">
+					<div class="A1">
+							<div class="A2">Last bolus: </div>
+						<div class="A3"><span id="PP_lastbolus_display"></span>mg</div>
+					</div>
+					<div class="B1">
+						<div class="B2">at</div>
+						<div class="B3"><span id="PP_lasttime_display">_</span></div>
+					</div>		
+				</div>
+		</div>
+		-->
+	
+	</div><!--bodywrapper-->
+	
+	<script src="main.js"></script>
+	<script src="lz-string.js"></script>
+
+
+	<script>init();</script>
+	<script>
+
+
+// Function that attempts to request a screen wake lock.
+let wakeLock = null; //sentinel
+const requestWakeLock = async () => {
+  try {
+    wakeLock = await navigator.wakeLock.request();
+    wakeLock.addEventListener('release', () => {
+      console.log('Screen Wake Lock released:', wakeLock.released);
+    });
+    console.log('Screen Wake Lock released:', wakeLock.released);
+  } catch (err) {
+    console.error(`${err.name}, ${err.message}`);
+  }
+};
+//check for support
+if (!('wakeLock' in navigator)) {
+	document.getElementById("select_wakelock").disabled = true;
+}
+
+
+document.addEventListener('visibilitychange', async () => {
+  const val = document.getElementById("select_wakelock").value;
+  if (wakeLock !== null && document.visibilityState === 'visible' && val == "on") {
+    requestWakeLock();
+  }
+});
+
+
+// Function for custom install prompt
+
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Prevent the mini-infobar from appearing on mobile
+  e.preventDefault();
+  // Stash the event so it can be triggered later.
+  deferredPrompt = e;
+  // Update UI notify the user they can install the PWA
+  //showInstallPromotion();
+  // Optionally, send analytics event that PWA install promo was shown.
+  console.log(`'beforeinstallprompt' event was fired.`);
+});
+
+window.addEventListener('appinstalled', () => {
+  // Hide the app-provided install promotion
+  hideInstallPromotion();
+  // Clear the deferredPrompt so it can be garbage collected
+  deferredPrompt = null;
+  // Optionally, send analytics event to indicate successful install
+  console.log('PWA was installed');
+});
+
+var t = null;
+
+function showInstallPromotion() {
+	if (deferredPrompt != undefined) {
+	installbutton = document.getElementById("installbutton");
+	installbutton.classList.add("show");
+	clearTimeout(t);
+	t = setTimeout(function() {
+			installbutton.classList.add("hidebutton");
+			installbutton.classList.remove("show");
+		},30*1000);
+	}
+}
+
+document.getElementById("installtext").addEventListener('click', async () => {
+	hideInstallPromotion();
+	deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  // Optionally, send analytics event with outcome of user choice
+  console.log(`User response to the install prompt: ${outcome}`);
+  // We've used the prompt, and can't use it again, throw it away
+  deferredPrompt = null;
+});
+
+document.getElementById("installclose").addEventListener('click', function() {
+	hideInstallPromotion();
+	console.log('user click close install btn');
+  deferredPrompt = null;
+});
+
+function hideInstallPromotion() {
+	document.getElementById("installbutton").classList.remove("show");
+}
+
+
+// function for scroll detection
+var prevScrollpos = 0;
+var scrolldistancetimeout = null;
+let installbutton = document.getElementById("installbutton");
+let sharebutton = document.getElementById("sharebutton");
+let darkmodebutton = document.getElementById("darkmodebutton");
+let footer = document.querySelector(".footer");
+var viewportheight = window.innerHeight;
+
+document.addEventListener('scroll', (event) => {
+  var currentScrollPos = window.pageYOffset;
+  var distance = currentScrollPos - prevScrollpos;
+  var y = footer.offsetTop - viewportheight;
+
+  clearTimeout(scrolldistancetimeout);
+  scrolldistancetimeout = setTimeout(function() {
+
+  	if (currentScrollPos < y) {
+	  	if (distance > 10) {
+	  		installbutton.classList.add("scrollhide");
+	  		sharebutton.classList.add("scrollhide");
+	  		darkmodebutton.classList.add("scrollhide");
+	  	} else {
+	  		installbutton.classList.remove("scrollhide");
+	  		sharebutton.classList.remove("scrollhide");
+	  		darkmodebutton.classList.remove("scrollhide");
+	  	}
+	  } else {
+	  		installbutton.classList.remove("scrollhide");
+	  		sharebutton.classList.remove("scrollhide");
+	  		darkmodebutton.classList.remove("scrollhide");
+	  }
+  	prevScrollpos = currentScrollPos;
+
+  },100)
+
+  /*
+  var distance = currentScrollPos - prevScrollpos;
+  var y = document.getElementById("bottom-bar").offsetTop - window.innerHeight;
+  if (viewportheight > 520) {
+
+    var z = Math.round(currentScrollPos/2.3);//larger denominator = move faster
+    var zz = (currentScrollPos < 150) ? 1 : (250-currentScrollPos)/100;
+    
+    
+
+    if (scrolltimeout) {
+      window.cancelAnimationFrame(scrolltimeout);
+    }
+
+    scrolltimeout = window.requestAnimationFrame( function() {
+        if (currentScrollPos < 300) {
+          document.getElementById("parallax").style.transform = "translateY(" + z +"px)";
+          document.getElementById("parallax").style.opacity = zz;
+        }
+      });
+  }
+
+  clearTimeout(scrolldistancetimeout);
+  scrolldistancetimeout = setTimeout(function() {
+      
+        if (distance > 8) {
+          document.getElementById("navbar").classList.add("hidden");
+          document.getElementById("logo").classList.add("small");
+        } else {
+          if (distance < -8) {
+            document.getElementById("navbar").classList.remove("hidden");
+            document.getElementById("logo").classList.remove("small");
+          }
+        }
+        if (currentScrollPos > y) {
+          document.getElementById("footer1").classList.add("hidden");
+        } else {
+          document.getElementById("footer1").classList.remove("hidden");
+        }
+        prevScrollpos = currentScrollPos;
+      
+
+    }, 50);
+
+*/
+}, false)
+
+	</script>
+	<!-- chart.js from https://cdnjs.com/libraries/Chart.js-->
+	<script src="chart.min.js"></script>
+	<script src="chartjs-plugin-crosshair.min.js"></script>
+	<script>
+
+	setTimeout(
+		function() {
+			var ctx = document.getElementById('myChart2').getContext('2d');
+			myChart2 = new Chart(ctx, {
+				type: 'line',
+				data: {
+					datasets: [{ //dataset 0 - current dot
+						label:'Current Dot',
+						data: [{x:0,y:0}],
+						borderWidth:0,
+						pointRadius:7,
+						pointBorderColor:'red',
+						pointBackgroundColor:'red'
+					},{ // dataset 1
+						label:'History dot 4',
+						data: [],
+						borderWidth:0,
+						pointRadius:2,
+						borderColor:'grey',
+						pointBorderColor:dotColor0,
+						pointBackgroundColor:dotColor0,
+					},{ // dataset 2
+						label:'History dot 3',
+						data: [],
+						borderWidth:0,
+						pointRadius:3,
+						borderColor:'grey',
+						pointBorderColor:dotColor1,
+						pointBackgroundColor:dotColor1,
+					},{ // dataset 3
+						label:'History dot 2',
+						data: [],
+						borderWidth:0,
+						pointRadius:4,
+						borderColor:'grey',
+						pointBorderColor:dotColor2,
+						pointBackgroundColor:dotColor2,
+					},{ // dataset 4
+						label:'History dot 1',
+						data: [],
+						borderWidth:0,
+						pointRadius:5,
+						borderColor:'grey',
+						pointBorderColor:dotColor3,
+						pointBackgroundColor:dotColor3,
+					},{ // dataset 5
+						label:'current, actually',
+						data: [],
+						borderWidth:0,
+						pointRadius:5,
+						borderColor:'red',
+						pointBorderColor:dotColor4,
+						pointBackgroundColor:dotColor4,
+					},{ // dataset 6
+						label:'Future dot 1',
+						data: [],
+						borderWidth:0,
+						pointRadius:5,
+						borderColor:'blue',
+						pointBorderColor:dotColor5,
+						pointBackgroundColor:dotColor5,
+					},{ // dataset 7
+						label:'Future dot 2',
+						data: [],
+						borderWidth:0,
+						pointRadius:4,
+						borderColor:'blue',
+						pointBorderColor:dotColor6,
+						pointBackgroundColor:dotColor6,
+					},{ // dataset 8
+						label:'Future dot 3',
+						data: [],
+						borderWidth:0,
+						pointRadius:3,
+						borderColor:'blue',
+						pointBorderColor:dotColor7,
+						pointBackgroundColor:dotColor7,
+					},{ // dataset 9
+						label:'Future dot 4',
+						data: [],
+						borderWidth:0,
+						pointRadius:2,
+						borderColor:'blue',
+						pointBorderColor:dotColor8,
+						pointBackgroundColor:dotColor8,
+					},{ //dataset 10
+						label:'trend line',
+						data: [],
+						borderWidth:1,
+						pointRadius:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+						             0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6],
+						pointStyle:['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',
+						            '','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',
+						            'triangle'],
+						borderColor:lineColor1,
+						pointBorderColor:lineColor1,
+						pointBackgroundColor:lineColor1,
+						tension:0.4
+					},{ //dataset 11
+						label: 'PTOL90',
+						data: [
+							{x: 0.1, y: 14.732482339267616},
+							{x: 0.2, y: 13.649211579027352},
+							
+							{x: 0.6, y: 10.547118038339317},
+							{x: 0.8, y: 9.470881503814896},
+							{x: 1, y: 8.593948031239442},
+							{x: 1.2, y: 7.865647350625931},
+							
+							{x: 1.6, y: 6.725698459230869},
+							{x: 1.8, y: 6.271259374147702},
+							{x: 2, y: 5.874344223885188},
+							{x: 2.2, y: 5.5246808772253555},
+							
+							{x: 2.6, y: 4.936948869009893},
+							{x: 2.8, y: 4.687608017039696},
+							{x: 3, y: 4.46224224698971},
+							{x: 3.2, y: 4.257552235659907},
+							
+							{x: 3.6, y: 3.8997747368649573},
+							{x: 3.8, y: 3.7425257555397575},
+							{x: 4, y: 3.5974666177281387},
+							{x: 4.2, y: 3.463232788708432},
+							
+							{x: 4.6, y: 3.2227305117147913},
+							{x: 4.8, y: 3.114585192529731},
+							{x: 5, y: 3.013462296668376},
+							{x: 5.2, y: 2.918699331364339},
+							
+							{x: 5.6, y: 2.7459952289167453},
+							{x: 5.8, y: 2.667087320039827},
+							{x: 6, y: 2.5925876742286587},
+							{x: 6.2, y: 2.5221369222115757},
+							
+							{x: 6.6, y: 2.3921298643656184},
+							{x: 6.8, y: 2.3320260989292962},
+							{x: 7, y: 2.2748685965045583},
+							{x: 7.2, y: 2.2204459028082772},
+							
+							{x: 7.6, y: 2.1190556789357533},
+							{x: 7.8, y: 2.071755328959509},
+							{x: 8, y: 2.0265204964494754},
+							{x: 8.2, y: 1.9832187764398717},
+							
+							{x: 8.6, y: 1.9019393183890572},
+							{x: 8.8, y: 1.8637477658109634},
+							{x: 9, y: 1.8270598176650783},
+							{x: 9.2, y: 1.791788392613629},
+							
+							{x: 9.6, y: 1.7251791586874718},
+							{x: 9.8, y: 1.693697787178576},
+							{x: 10, y: 1.6633447802398922}
+						],
+						borderWidth:3,
+						pointRadius:0,
+						borderJoinStyle:'round',
+						borderColor: lineColor1,
+						backgroundColor: bandColor0,
+						fill:'+1'
+					},{ //12
+						label: 'PTOL80',
+						data: [
+							{x: 0.1, y: 11.654377308880333},
+							{x: 0.2, y: 10.797437800874429},
+							{x: 0.4, y: 9.413150903326423},
+							
+							{x: 0.8, y: 7.492099698565929},
+							{x: 1, y: 6.798386763513528},
+							{x: 1.2, y: 6.222252292029331},
+							{x: 1.4, y: 5.73613883171454},
+							
+							{x: 1.8, y: 4.9609849355368985},
+							{x: 2, y: 4.646998547211778},
+							{x: 2.2, y: 4.370391490830125},
+							{x: 2.4, y: 4.124863878985736},
+							
+							{x: 2.8, y: 3.70821096191647},
+							{x: 3, y: 3.5299315887474085},
+							{x: 3.2, y: 3.3680081213736743},
+							{x: 3.4, y: 3.2202884669274607},
+							
+							{x: 3.8, y: 2.96058778411073},
+							{x: 4, y: 2.845836319610314},
+							{x: 4.2, y: 2.739648397236795},
+							{x: 4.4, y: 2.641099893739068},
+							
+							{x: 4.8, y: 2.4638448673136275},
+							{x: 5, y: 2.383849904089159},
+							{x: 5.2, y: 2.308886070627236},
+							{x: 5.4, y: 2.2384932026203077},
+							
+							{x: 5.8, y: 2.109844167986957},
+							{x: 6, y: 2.05090997335045},
+							{x: 6.2, y: 1.9951787240746222},
+							{x: 6.4, y: 1.9423962181467223},
+							
+							{x: 6.8, y: 1.8447883679885955},
+							{x: 7, y: 1.7995729668124045},
+							{x: 7.2, y: 1.7565209819604333},
+							{x: 7.4, y: 1.7154807721015444},
+							
+							{x: 7.8, y: 1.6388968090612972},
+							{x: 8, y: 1.6031130359376877},
+							{x: 8.2, y: 1.5688584838877373},
+							{x: 8.4, y: 1.536037176693433},
+							
+							{x: 8.8, y: 1.4743489366655842},
+							{x: 9, y: 1.4453263198020887},
+							{x: 9.2, y: 1.417424267296257},
+							{x: 9.4, y: 1.390579110718676},
+							
+							{x: 9.8, y: 1.339828048283688},
+							{x: 10, y: 1.3158167929381022}
+						],
+						borderWidth:1,
+						pointRadius:0,
+						borderJoinStyle:'round',
+						backgroundColor: bandColor2,
+						borderColor: lineColor0,
+						fill:'+1'
+					},{ //13
+						label: 'PTOL70',
+						data: [
+							{x: 0.1, y: 9.973210105571793},
+							{x: 0.2, y: 9.23988583310328},
+							{x: 0.4, y: 8.055285085269524},
+							
+							{x: 0.8, y: 6.411349353581867},
+							{x: 1, y: 5.817705894916879},
+							{x: 1.2, y: 5.324679971618839},
+							
+							{x: 1.6, y: 4.552987222108863},
+							{x: 1.8, y: 4.24535295034475},
+							{x: 2, y: 3.9766597256393856},
+							
+							{x: 2.4, y: 3.529844026129343},
+							{x: 2.6, y: 3.342086365165016},
+							{x: 2.8, y: 3.1732941245001163},
+							
+							{x: 3.2, y: 2.88216622316983},
+							{x: 3.4, y: 2.7557554239079955},
+							{x: 3.6, y: 2.6399673808866515},
+
+							{x: 4, y: 2.4353187467093913},
+							{x: 4.2, y: 2.344448644220235},
+							{x: 4.4, y: 2.2601159591763413},
+							
+							{x: 4.8, y: 2.108430324332292},
+							{x: 5, y: 2.039974794321503},
+							{x: 5.2, y: 1.975824643556676},
+							
+							{x: 5.6, y: 1.858911942754506},
+							{x: 5.8, y: 1.8054949329052385},
+							{x: 6, y: 1.7550621135503435},
+							
+							{x: 6.4, y: 1.6622016842619654},
+							{x: 6.6, y: 1.619361434667585},
+							{x: 6.8, y: 1.5786739614347312},
+							
+							{x: 7.2, y: 1.503139322131634},
+							{x: 7.4, y: 1.468019244511736},
+							{x: 7.6, y: 1.4345028234041621},
+							
+							{x: 8, y: 1.371860778714024},
+							{x: 8.2, y: 1.3425475142115877},
+							{x: 8.4, y: 1.3144607461318472},
+							
+							{x: 8.8, y: 1.261671157933781},
+							{x: 9, y: 1.2368351115177618},
+							{x: 9.2, y: 1.2129579858127857},
+							
+							{x: 9.6, y: 1.1678666108755074},
+							{x: 9.8, y: 1.1465551763704798},
+							{x: 10, y: 1.1260075925645574}],
+						borderWidth:1,
+						pointRadius:0,
+						borderJoinStyle:'round',
+						borderColor: lineColor0,
+						backgroundColor: bandColor4,
+						fill:'+1'
+					},{ //14
+						label: 'PTOL60',
+						data: [
+							{x: 0.1, y: 8.777618956368189},
+							{x: 0.2, y: 8.132205797811704},
+							{x: 0.4, y: 7.089615310912767},
+							
+							{x: 0.8, y: 5.64275504337955},
+							{x: 1, y: 5.120277724548109},
+							{x: 1.2, y: 4.686355883484711},
+							
+							{x: 1.6, y: 4.007173871385477},
+							{x: 1.8, y: 3.736418880075648},
+							{x: 2, y: 3.499936672475923},
+							
+							{x: 2.4, y: 3.106685360961775},
+							{x: 2.6, y: 2.9414361396340207},
+							{x: 2.8, y: 2.7928787588444237},
+							
+							{x: 3.2, y: 2.5366513497761276},
+							{x: 3.4, y: 2.4253947116280523},
+							{x: 3.6, y: 2.323487370803344},
+							
+							{x: 4, y: 2.1433720707410693},
+							{x: 4.2, y: 2.0633955009372977},
+							{x: 4.4, y: 1.9891726411913517},
+							
+							{x: 4.8, y: 1.8556711216483082},
+							{x: 5, y: 1.7954220592571293},
+							{x: 5.2, y: 1.7389622460729428},
+							
+							{x: 5.6, y: 1.6360650717491003},
+							{x: 5.8, y: 1.589051707618379},
+							{x: 6, y: 1.5446647884111615},
+							
+							{x: 6.4, y: 1.4629364927280313},
+							{x: 6.6, y: 1.4252319439463812},
+							{x: 6.8, y: 1.3894220961085324},
+							
+							{x: 7.2, y: 1.3229425699789374},
+							{x: 7.4, y: 1.2920326968485885},
+							{x: 7.6, y: 1.262534233450219},
+							
+							{x: 8, y: 1.2074017341729166},
+							{x: 8.2, y: 1.1816025518187947},
+							{x: 8.4, y: 1.1568828331614975},
+							
+							{x: 8.8, y: 1.1104216752032043},
+							{x: 9, y: 1.0885629808094406},
+							{x: 9.2, y: 1.067548251450185},
+							
+							{x: 9.6, y: 1.027862442846089},
+							{x: 9.8, y: 1.00910582892554},
+							{x: 10, y: 0.9910214950738276}],
+						borderWidth:1,
+						pointRadius:0,
+						borderJoinStyle:'round',
+						borderColor: lineColor0,
+						backgroundColor: bandColor6,
+						fill:'+1'
+					},{ //15
+						label: 'PTOL50',
+						data: [
+							{x: 0.1, y: 7.806984126984127},
+							{x: 0.2, y: 7.232941176470589},
+							{x: 0.4, y: 6.305641025641026},
+							
+							{x: 0.8, y: 5.018775510204081},
+							{x: 1, y: 4.554074074074074},
+							{x: 1.2, y: 4.168135593220339},
+							
+							{x: 1.6, y: 3.5640579710144933},
+							{x: 1.8, y: 3.3232432432432435},
+							{x: 2, y: 3.112911392405063},
+							
+							{x: 2.4, y: 2.7631460674157307},
+							{x: 2.6, y: 2.6161702127659576},
+							{x: 2.8, y: 2.484040404040404},
+							
+							{x: 3.2, y: 2.2561467889908258},
+							{x: 3.4, y: 2.1571929824561407},
+							{x: 3.6, y: 2.0665546218487396},
+							
+							{x: 4, y: 1.906356589147287},
+							{x: 4.2, y: 1.835223880597015},
+							{x: 4.4, y: 1.769208633093525},
+							
+							{x: 4.8, y: 1.6504697986577181},
+							{x: 5, y: 1.5968831168831168},
+							{x: 5.2, y: 1.5466666666666666},
+							
+							{x: 5.6, y: 1.455147928994083},
+							{x: 5.8, y: 1.4133333333333333},
+							{x: 6, y: 1.3738547486033519},
+							
+							{x: 6.4, y: 1.3011640211640212},
+							{x: 6.6, y: 1.2676288659793815},
+							{x: 6.8, y: 1.2357788944723618},
+							
+							{x: 7.2, y: 1.1766507177033494},
+							{x: 7.4, y: 1.149158878504673},
+							{x: 7.6, y: 1.1229223744292238},
+							
+							{x: 8, y: 1.073886462882096},
+							{x: 8.2, y: 1.0509401709401711},
+							{x: 8.4, y: 1.0289539748953975},
+							
+							{x: 8.8, y: 0.9876305220883533},
+							{x: 9, y: 0.9681889763779528},
+							{x: 9.2, y: 0.9494980694980696},
+							
+							{x: 9.6, y: 0.9142007434944238},
+							{x: 9.8, y: 0.8975182481751824},
+							{x: 10, y: 0.8814336917562724}],
+						borderWidth:3,
+						pointRadius:0,
+						borderJoinStyle:'round',
+						borderColor: lineColor1,
+						backgroundColor: bandColor8,
+						fill:'+1'
+					},{ //16
+						label: 'PTOL40',
+						data: [
+							{x: 0.1, y: 6.943682730128474},
+							{x: 0.2, y: 6.433117823501381},
+							{x: 0.4, y: 5.60835912818069},
+							
+							{x: 0.8, y: 4.463796040796876},
+							{x: 1, y: 4.0504815925749424},
+							{x: 1.2, y: 3.7072204406618123},
+							
+							{x: 1.6, y: 3.1699421159282166},
+							{x: 1.8, y: 2.9557568378249583},
+							{x: 2, y: 2.7686836202411},
+							
+							{x: 2.4, y: 2.4575955730229992},
+							{x: 2.6, y: 2.3268724042451803},
+							{x: 2.8, y: 2.209353595949969},
+							
+							{x: 3.2, y: 2.0066606054958434},
+							{x: 3.4, y: 1.9186491754302364},
+							{x: 3.6, y: 1.8380336638575372},
+							
+							{x: 4, y: 1.695550434101139},
+							{x: 4.2, y: 1.632283626858559},
+							{x: 4.4, y: 1.573568388482352},
+							
+							{x: 4.8, y: 1.467959771805684},
+							{x: 5, y: 1.4202987402535514},
+							{x: 5.2, y: 1.375635257855641},
+							
+							{x: 5.6, y: 1.2942367218878517},
+							{x: 5.8, y: 1.2570460114887754},
+							{x: 6, y: 1.2219329944080835},
+							
+							{x: 6.4, y: 1.1572804550214122},
+							{x: 6.6, y: 1.127453639170345},
+							{x: 6.8, y: 1.099125658286668},
+							
+							{x: 7.2, y: 1.046535913871038},
+							{x: 7.4, y: 1.0220841401824623},
+							{x: 7.6, y: 0.9987488858403969},
+							
+							{x: 8, y: 0.9551353973757507},
+							{x: 8.2, y: 0.9347265213634485},
+							{x: 8.4, y: 0.9151715732177695},
+							
+							{x: 8.8, y: 0.8784176947752887},
+							{x: 9, y: 0.8611260078702635},
+							{x: 9.2, y: 0.8445019536642738},
+							
+							{x: 9.6, y: 0.8131078289927395},
+							{x: 9.8, y: 0.7982700948870325},
+							{x: 10, y: 0.7839641792080535}],
+						borderWidth:1,
+						pointRadius:0,
+
+						borderJoinStyle:'round',
+						borderColor: lineColor0,
+						backgroundColor: bandColor10,
+						fill:'+1'
+					},{ //17
+						label: 'PTOL30',
+						data: [
+							{x: 0.1, y: 6.1112721494688405},
+							{x: 0.2, y: 5.6619139031843675},
+							{x: 0.4, y: 4.936027505340218},
+							
+							{x: 0.8, y: 3.928674953229969},
+							{x: 1, y: 3.5649087538568236},
+							{x: 1.2, y: 3.2627978425130255},
+							
+							{x: 1.6, y: 2.789928589974906},
+							{x: 1.8, y: 2.6014199014630877},
+							{x: 2, y: 2.436773072256563},
+							
+							{x: 2.4, y: 2.162978345036725},
+							{x: 2.6, y: 2.0479263054071115},
+							{x: 2.8, y: 1.9444956839219039},
+							
+							{x: 3.2, y: 1.7661015844795274},
+							{x: 3.4, y: 1.688640988669022},
+							{x: 3.6, y: 1.617689686624105},
+							
+							{x: 4, y: 1.4922873853354146},
+							{x: 4.2, y: 1.4366050202109588},
+							{x: 4.4, y: 1.3849285806350249},
+							
+							{x: 4.8, y: 1.2919803537467685},
+							{x: 5, y: 1.250032939664081},
+							{x: 5.2, y: 1.210723727724959},
+							
+							{x: 5.6, y: 1.139083270463127},
+							{x: 5.8, y: 1.1063509925762556},
+							{x: 6, y: 1.0754473335657457},
+							
+							{x: 6.4, y: 1.0185453582448067},
+							{x: 6.6, y: 0.9922941892178788},
+							{x: 6.8, y: 0.9673621744134094},
+							
+							{x: 7.2, y: 0.9210769029103756},
+							{x: 7.4, y: 0.8995564145246191},
+							{x: 7.6, y: 0.8790185968414086},
+							
+							{x: 8, y: 0.8406335052762816},
+							{x: 8.2, y: 0.8226712508900363},
+							{x: 8.4, y: 0.8054605552647217},
+							
+							{x: 8.8, y: 0.773112741800275},
+							{x: 9, y: 0.7578939870404271},
+							{x: 9.2, y: 0.7432628289894536},
+							
+							{x: 9.6, y: 0.715632240551184},
+							{x: 9.8, y: 0.702573258059374},
+							{x: 10, y: 0.6899823394561595},
+
+						],
+						borderWidth:1,
+						pointRadius:0,
+						borderJoinStyle:'round',
+						borderColor: lineColor0,
+						backgroundColor: bandColor12,
+						fill:'+1'
+					},{ //18
+						label: 'PTOL20',
+						data: [
+{x: 0.1, y: 5.229708936275862},
+{x: 0.2, y: 4.845171514490873},
+{x: 0.4, y: 4.223995679299734},
+
+{x: 0.8, y: 3.3619557447487685},
+{x: 1, y: 3.0506635461609193},
+{x: 1.2, y: 2.7921327371642315},
+
+{x: 1.6, y: 2.3874758187346328},
+{x: 1.8, y: 2.2261598850363464},
+{x: 2, y: 2.0852636897808816},
+
+{x: 2.4, y: 1.8509643987942659},
+{x: 2.6, y: 1.7525088456669111},
+{x: 2.8, y: 1.663998297905956},
+
+{x: 3.2, y: 1.511337903602657},
+{x: 3.4, y: 1.4450511534446462},
+{x: 3.6, y: 1.3843347184259636},
+
+{x: 4, y: 1.2770219495557336},
+{x: 4.2, y: 1.2293718768111166},
+{x: 4.4, y: 1.1851498668538822},
+
+{x: 4.8, y: 1.1056096073334876},
+{x: 5, y: 1.0697131915109717},
+{x: 5.2, y: 1.0360744119037084},
+
+{x: 5.6, y: 0.9747682336845541},
+{x: 5.8, y: 0.9467576522568371},
+{x: 6, y: 0.9203119077803891},
+
+{x: 6.4, y: 0.8716181560459769},
+{x: 6.6, y: 0.8491537705808745},
+{x: 6.8, y: 0.8278182487069832},
+
+{x: 7.2, y: 0.7882097200607161},
+{x: 7.4, y: 0.7697936051060263},
+{x: 7.6, y: 0.7522184086424185},
+
+{x: 8, y: 0.719370443199518},
+{x: 8.2, y: 0.7039992798832891},
+{x: 8.4, y: 0.6892712614756888},
+
+{x: 8.8, y: 0.6615896847095969},
+{x: 9, y: 0.6485662657192506},
+{x: 9.2, y: 0.6360456814389562},
+
+{x: 9.6, y: 0.6124008605676196},
+{x: 9.8, y: 0.601225662382079},
+{x: 10, y: 0.5904510089343715}
+						],
+						borderWidth:1,
+						pointRadius:0,
+						borderJoinStyle:'round',
+						borderColor: lineColor0,
+						backgroundColor: bandColor14,
+						fill:'+1'
+					},{ //19
+						label: 'PTOL10',
+						data: [
+{x: 0.1, y: 4.137048988447118},
+{x: 0.2, y: 3.83285420988483},
+{x: 0.4, y: 3.3414626445149795},
+
+{x: 0.8, y: 2.659531492573147},
+{x: 1, y: 2.413278576594152},
+{x: 1.2, y: 2.2087634429844782},
+
+{x: 1.6, y: 1.8886527990736843},
+{x: 1.8, y: 1.7610411234605974},
+{x: 2, y: 1.649582824507395},
+
+{x: 2.4, y: 1.4642364397312835},
+{x: 2.6, y: 1.3863515227243002},
+{x: 2.8, y: 1.3163337690513557},
+
+{x: 3.2, y: 1.1955692030833414},
+{x: 3.4, y: 1.1431319573340721},
+{x: 3.6, y: 1.095101202824237},
+
+{x: 4, y: 1.0102096367138311},
+{x: 4.2, y: 0.9725152472842105},
+{x: 4.4, y: 0.9375326844322605},
+
+{x: 4.8, y: 0.8746110277589544},
+{x: 5, y: 0.8462145658187286},
+{x: 5.2, y: 0.8196040448810328},
+
+{x: 5.6, y: 0.7711067641188415},
+{x: 5.8, y: 0.748948523770599},
+{x: 6, y: 0.7280281739446045},
+
+{x: 6.4, y: 0.6895081647411863},
+{x: 6.6, y: 0.6717373357530114},
+{x: 6.8, y: 0.6548595132466544},
+
+{x: 7.2, y: 0.6235265221822212},
+{x: 7.4, y: 0.6089581454957206},
+{x: 7.6, y: 0.595054991488969},
+
+{x: 8, y: 0.5690700573628131},
+{x: 8.2, y: 0.5569104407524966},
+{x: 8.4, y: 0.5452595947116494},
+
+{x: 8.8, y: 0.5233616190204184},
+{x: 9, y: 0.5130592249452134},
+{x: 9.2, y: 0.5031546067030279},
+
+{x: 9.6, y: 0.48444997448358446},
+{x: 9.8, y: 0.4756096464820591},
+{x: 10, y: 0.46708617611499714}],
+						borderWidth:3,
+						pointRadius:0,
+						borderJoinStyle:'round',
+						borderColor: lineColor1,
+						fill:false
+					},{ //dataset 9 - for animation
+					},]
+				},//end data
+				options: {
+
+		    	maintainAspectRatio: false,
+		    	interaction: {
+
+		    	},
+	        animation: {
+	            duration: 0 // general animation time
+	        },
+	        hover: {
+	            animationDuration: 0.1 // duration of animations when hovering an item
+	        },
+	        responsiveAnimationDuration: 0, // animation duration after a resize
+
+		    	scales: {
+		    		y: {
+		    			display: true,
+		    			min: 0,
+		    			max: 10,
+		    			title: {
+		    				display: true,
+		    				text: "Propofol Ce (mcg/ml)"
+		    			}
+		    		},
+		    		x: {
+		    			type: 'linear',
+		    			display: true,
+		    			position:'bottom',
+		    			min:0,
+		    			max:10,
+		    			title: {
+		    				display: true,
+		    				text: "Remifentanil Ce (ng/ml)"
+		    			}
+		    			
+		    		}
+		    	},
+		    	plugins: {
+		    		tooltip: {
+		    			enabled:false,
+		    			//mode: 'nearest',
+		    			//intersect: false
+		    		},
+		    		legend: {
+		    			display:false
+		    		},
+			    	crosshair: {
+			    		line: {
+			    			color: 'rgb(0,0,0,0)',
+			    			width: 0,
+			    			//dashPattern: [20,5]
+			    		},
+				        sync: {
+				          enabled: true,            // enable trace line syncing with other charts
+				          group: 1,                 // chart group
+				          suppressTooltips: false   // suppress tooltips when showing a synced tracer
+				        },
+				        zoom: {
+				        	enabled: false,
+				        }
+			    	}
+			    	
+		    	}
+				}
+			})
+
+
+	/*
+
+			myChart2.canvas.addEventListener('mousemove', (e) => {
+				crosshair(myChart2, e);
+			})
+
+			function crosshair(chart, mousemove) {
+				chart.update('none');
+				//const x = mousemove.offsexX;
+				//const y = mousemove.offsetY;
+				const {ctx, chartArea: {top, bottom, left, right, width, height}} = chart;
+
+
+				if (mousemove.offsetX >= left && mousemove.offsetX <= right && mousemove.offsetY >= top && mousemove.offsetY <= bottom) {
+
+					y = Math.round((mousemove.offsetY - bottom)/(top-bottom) * 10 *10)/10;
+					x = Math.round((mousemove.offsetX - left)/(right-left) * 10 *10)/10;
+					document.getElementById('isobole_chart_description').innerHTML = "CeProp " + y + ", CeRemi " + x + ", PTOL: " + ptol_calculate_pair(y,x);
+				}
+
+			}
+	*/
+
+			function behindPositionDot1(ctx, value) {
+		console.log(myChart2.data.datasets[1].data(p0DataIndex).meta_minute);
+	}
+
+		},200)
+
+	setTimeout(
+
+		function() {
+
+
+		var ctx = document.getElementById('myChart').getContext('2d');
+
+		var y = document.getElementById('chartwrapper').offsetHeight*0.6;
+
+		/*
+		var gradientGreen = ctx.createLinearGradient(0, 100, 0, y+100);  //x0y0x1y1  //y+100 last param
+			gradientGreen.addColorStop(0.4, 'rgba(9, 203, 93,0.4)');   
+			gradientGreen.addColorStop(1, 'rgba(9, 203, 93,0.05)');
+
+			console.log(gradientGreen);
+			*/
+
+
+		/*
+		var gradientRed = ctx.createLinearGradient(0, 0, 0, y); // y last param
+			gradientRed.addColorStop(0.4, 'rgba(231, 50, 39,0.4)');   
+			gradientRed.addColorStop(1, 'rgba(231, 50, 39,0)');
+
+			*/
+
+
+		myChart = new Chart(ctx, {
+	    type: 'line',
+	    data: {
+	    	datasets: [{
+	    		label: 'Cp_', //obsolete
+	    		data: [{x: 0, y: 0}],
+	    		borderWidth:7,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(231, 50, 39,0.7)',
+	    		backgroundColor: 'rgb(231, 50, 39,0.4)',
+	    		pointBorderColor: 'rgb(231, 50, 39,0.8)',
+	    		pointBackgroundColor: 'rgb(231, 50, 39,0.8)',
+	    		fill: true,
+	    		parsing: false
+	    	},{
+	    		label: 'Ce_', //obsolete
+	    		data: [{x:0, y:0}],
+	    		borderWidth:7,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(9, 203, 93,0.7)',
+	    		backgroundColor: 'rgb(9, 203, 93,0.4)',
+	    		pointBorderColor: 'rgb(9, 203, 93,0.8)',
+	    		pointBackgroundColor: 'rgb(9, 203, 93,0.8)',
+	    		fill: true,
+	    		parsing: false
+	    	},{
+	    		label: 'Cp-Prop',
+	    		data: [{x: 0, y: 0}],
+	    		borderWidth:3,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(231, 50, 39,0.5)',
+	    		//borderDash: [2,2],
+	    		//borderColor: yellowSec,
+	    		//backgroundColor: gradientRed,//'rgb(100, 90, 90,0.1)',
+	    		
+	    		backgroundColor: context => {
+	    			const chart = context.chart;
+	    			const { ctx, chartArea, scales } = chart;
+	    			if (!chartArea) {
+	    				return null ;
+	    			}
+	    			return getGradientRed(ctx, chartArea, scales);
+	    		},
+	    		
+	    		//backgroundColor: 'rgb(0,0,0,0)',
+	    		segment: {
+	    			borderColor: ctx => behindPosition(ctx, 'rgb(231,50,39,0.7)'),
+	    			borderWidth: ctx => behindPosition2(ctx, 8)
+	    		},
+	    		
+	    		fill: true,
+	    		hidden: false,
+	    		parsing: false
+	    	},{
+	    		label: 'Ce-Prop',
+	    		data: [{x:0, y:0}],
+	    		borderWidth:3,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(9, 203, 93,0.5)',
+	    		//borderColor: yellowPri50,
+	    		//backgroundColor: gradientGreen,//'rgb(90, 100, 90,0.1)',
+	    		
+	    		backgroundColor: context => {
+	    			const chart = context.chart;
+	    			const { ctx, chartArea, scales } = chart;
+	    			if (!chartArea) {
+	    				return null ;
+	    			}
+	    			return getGradientGreen(ctx, chartArea, scales);
+	    		},
+	    		
+	    		//backgroundColor: 'rgb(0,0,0,0)',
+	    		segment: {
+	    			borderColor: ctx => behindPosition(ctx, 'rgb(9,203,93,0.7)'),
+	    			borderWidth: ctx => behindPosition2(ctx, 8)
+	    		},
+	    		fill: true,
+	    		hidden: false,
+	    		parsing: false
+	    	},{
+	    		label: 'Cp-Remi',
+	    		data: [{x: 0, y: 0}],
+	    		borderWidth:3,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		//borderDash: [2,2],
+	    		borderColor: bluePri,
+	    		//backgroundColor: gradientRed,//'rgb(100, 90, 90,0.1)',
+	    		/*
+	    		backgroundColor: context => {
+	    			const chart = context.chart;
+	    			const { ctx, chartArea, scales } = chart;
+	    			if (!chartArea) {
+	    				return null ;
+	    			}
+	    			return getGradientRed(ctx, chartArea, scales);
+	    		},
+	    		*/
+	    		//backgroundColor: 'rgb(0,0,0,0)',
+	    		segment: {
+	    			borderColor: ctx => behindPosition(ctx, blueLight),
+	    			borderWidth: ctx => behindPosition2(ctx, 8)
+	    		},
+	    		fill: false,
+	    		hidden: true,
+	    		parsing: false
+	    	},{
+	    		label: 'Ce-Remi',
+	    		data: [{x:0, y:0}],
+	    		borderWidth:3,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: blueLight,
+	    		//backgroundColor: gradientGreen,//'rgb(90, 100, 90,0.1)',
+	    		
+	    		backgroundColor: context => {
+	    			const chart = context.chart;
+	    			const { ctx, chartArea, scales } = chart;
+	    			if (!chartArea) {
+	    				return null ;
+	    			}
+	    			return getGradientBlue(ctx, chartArea, scales);
+	    		},
+	    		
+	    		
+	    		segment: {
+	    			borderColor: ctx => behindPosition(ctx, blueSec),
+	    			borderWidth: ctx => behindPosition2(ctx, 8)
+	    		},
+	    		fill: true,
+	    		hidden: true,
+	    		parsing: false
+	    	},{    //index = 6 for propofol margins
+	    		label: 'P(upper)',
+	    		data: [{x:0, y:0}],
+	    		borderWidth:1,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: greenShadeDark,
+	    		backgroundColor: greenShade,
+	    		fill: '+1',
+	    		parsing: false
+	    	},{
+	    		label: 'P(lower)',
+	    		data: [{x:0, y:0}],
+	    		borderWidth:1,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: greenShadeDark,
+	    		fill: false,
+	    		parsing: false
+	    	},{     //index = 8 for remi margins
+	    		label: 'P(upper)',
+	    		data: [{x:0, y:0}],
+	    		borderWidth:1,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: greenShadeDark,
+	    		backgroundColor: greenShade,
+	    		fill: '+1',
+	    		parsing: false
+	    	},{
+	    		label: 'P(lower)',
+	    		data: [{x:0, y:0}],
+	    		borderWidth:1,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: greenShadeDark,
+	    		fill: false,
+	    		parsing: false
+	    	},{    //index = 10 for BIS margins
+	    		label: 'P(upper)',
+	    		data: [{x:0, y:0}],
+	    		borderWidth:1,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: greenShadeDark,
+	    		backgroundColor: greenShade,
+	    		fill: '+1',
+	    		parsing: false
+	    	},{
+	    		label: 'P(lower)',
+	    		data: [{x:0, y:0}],
+	    		borderWidth:1,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: greenShadeDark,
+	    		fill: false,
+	    		parsing: false
+	    	}]
+	    }, //end data
+	    options: {
+	    	maintainAspectRatio: false,
+	    	interaction: {
+
+	    	},
+	    	scales: {
+	    		y: {
+	    			display: true,
+	    			min: 0,
+	    			max: 5
+	    		},
+	    		x: {
+	    			type: 'linear',
+	    			display: true,
+	    			position:'bottom',
+	    			min:0,
+	    			max:20
+	    			
+	    		}
+	    	},
+	        animation: {
+	        	duration: 200
+	        },
+	        transitions: {
+	        	active: {
+	        		animation: {
+	        			duration: 200
+	        		}
+	        	}
+	        },
+
+		    plugins: { //start plugins
+		    	//shadingArea,
+			    legend: {
+			    		onClick: null,
+				    	labels: {
+				    	boxWidth: 20,
+				    	filter: function(item, chart) {
+				    		var index = item.datasetIndex;
+				    		if ((index <= 1) || (index >= drug_sets.length*2+2)) {
+				    			return false;
+				    		} else {
+				    			return true;
+				    		}
+				    	}
+			    	}
+			    },
+			    tooltip: {
+			    	mode: 'index',
+			    	intersect: false,
+			    	footerFont: {
+			    		weight: 'normal',
+			    		size: 10
+			    	},
+	            	filter: function(tooltipItem, data) {
+	            		var index = tooltipItem.datasetIndex;
+	            		if ((index >= 2) && (index <=5)) {
+	            			return true;
+	            		} else {
+	            			return false;
+	            		}
+	            	},
+	            	position: 'nearest',
+	            	caretSize: 0,
+	            	backgroundColor: 'rgba(0,0,0,0.5)',
+					callbacks: {
+						title: function(context) {
+							var title = context[0].parsed.x || "";
+							if (title) {
+								title = title*60; //to s
+								return converttime(title);
+							}
+						},
+						
+	                	label: function(context) {
+	                		
+	                    	var label = context.dataset.label || '';
+
+	                    	if (label) {
+	                    		if ((label == "Cp-Prop") || (label == "Cp-Remi") || (label == "Cp-Fen") || (label == "Cp-Alfen")) label = "Cp:";
+	                    		if ((label == "Ce-Prop") || (label == "Ce-Remi") || (label == "Ce-Fen") || (label == "Ce-Alfen")) label = "Ce:";
+		                    	label += Math.round(context.parsed.y * 100) / 100;
+		                    	return label;
+	                    	}
+	                	},
+
+	                	footer: function(tooltipItems) {
+
+	                		var infrate = "Inf rate: ";
+
+	                		var vitext = "VI: ";
+
+	                		var parsedx = tooltipItems[0].parsed.x;
+
+	                		infrate = infrate + getinfusionrate(parsedx * 60,active_drug_set_index) + "ml/h";
+
+	                		vitext = vitext + Math.round(drug_sets[active_drug_set_index].volinf[Math.round(parsedx*60)]*10)/10 + "ml";
+
+	                		if ((PD_mode == 1) && (active_drug_set_index == 0)) {
+	                			PD_text = "eBIS: " + BIS_array[Math.round(parsedx*60)];
+	                			return [infrate, vitext, PD_text];
+	                		} else if ((PD_mode == 2) && (ptolcouplesarray.length>0)) {
+	                			temp_ptol_elem = ptolcouplesarray[Math.round(parsedx*2)];
+	                			if (temp_ptol_elem == undefined) {
+	                				PD_text = "";
+	                			} else {
+	                				PD_text = "PTOL: " + Math.round(temp_ptol_elem.meta_ptol * 100);
+	                			}
+	                			return [infrate, vitext, PD_text];
+	                		} else {
+	                			return [infrate, vitext];	
+	                		}
+
+	                		
+
+	                	}
+	                	
+	                }
+			    },
+		    	crosshair: {
+		    		line: {
+		    			color: '#66F',
+		    			width: 1,
+		    			//dashPattern: [20,5]
+		    		},
+			        sync: {
+			          enabled: true,            // enable trace line syncing with other charts
+			          group: 1,                 // chart group
+			          suppressTooltips: false   // suppress tooltips when showing a synced tracer
+			        },
+			        zoom: {
+			        	enabled: false,
+			        }
+		    	},
+		    	/*
+		    	annotation: {
+		    		annotations: {
+		    			line0: {
+		    				type: 'line',
+		    				drawTime: 'beforeDatasetsDraw',
+		    				xMin: getEventLine(0),
+		    				xMax: getEventLine(0),
+		    				borderColor: 'rgba(255,0,0,0.2)',
+		    				borderWidth: 2,
+		    				label: {
+		    					content: getEventLabel(0),
+		    					enabled: true
+		    				}
+		    			}
+		    		}
+		    	}
+		    	*/
+		    } //endplugins
+	    } //end options
+	    //, plugins: [multiply],
+
+
+	}//end charting function
+	);
+
+
+
+
+
+		//dark mode for chart activation here
+		if (isDark) {
+				myChart.options.scales.x.grid.color = "rgba(255,255,255,0.2)";
+				myChart.options.scales.y.grid.color = "rgba(255,255,255,0.2)";
+				myChart.options.scales.x.grid.borderColor = "rgba(255,255,255,0.6)";
+				myChart.options.scales.y.grid.borderColor = "rgba(255,255,255,0.6)";
+				myChart.options.scales.x.ticks.color = "rgba(255,255,255,0.6)";
+				myChart.options.scales.y.ticks.color = "rgba(255,255,255,0.6)";
+				myChart2.options.scales.x.grid.color = "rgba(255,255,255,0.2)";
+				myChart2.options.scales.y.grid.color = "rgba(255,255,255,0.2)";
+				myChart2.options.scales.x.grid.borderColor = "rgba(255,255,255,0.6)";
+				myChart2.options.scales.y.grid.borderColor = "rgba(255,255,255,0.6)";
+				myChart2.options.scales.x.ticks.color = "rgba(255,255,255,0.6)";
+				myChart2.options.scales.y.ticks.color = "rgba(255,255,255,0.6)";
+				myChart2.data.datasets[1].pointBackgroundColor = dotColor0dark;
+				myChart2.data.datasets[1].pointBorderColor = dotColor0dark;
+				myChart2.data.datasets[2].pointBackgroundColor = dotColor1dark;
+				myChart2.data.datasets[2].pointBorderColor = dotColor1dark;
+				myChart2.data.datasets[3].pointBackgroundColor = dotColor2dark;
+				myChart2.data.datasets[3].pointBorderColor = dotColor2dark;
+				myChart2.data.datasets[4].pointBackgroundColor = dotColor3dark;
+				myChart2.data.datasets[4].pointBorderColor = dotColor3dark;
+				myChart2.data.datasets[5].pointBackgroundColor = dotColor4dark;
+				myChart2.data.datasets[5].pointBorderColor = dotColor4dark;
+				myChart2.data.datasets[6].pointBackgroundColor = dotColor5dark;
+				myChart2.data.datasets[6].pointBorderColor = dotColor5dark;
+				myChart2.data.datasets[7].pointBackgroundColor = dotColor6dark;
+				myChart2.data.datasets[7].pointBorderColor = dotColor6dark;
+				myChart2.data.datasets[8].pointBackgroundColor = dotColor7dark;
+				myChart2.data.datasets[8].pointBorderColor = dotColor7dark;
+				myChart2.data.datasets[9].pointBackgroundColor = dotColor8dark;
+				myChart2.data.datasets[9].pointBorderColor = dotColor8dark;
+				myChart2.data.datasets[10].pointBorderColor = lineColor1dark;
+				myChart2.data.datasets[10].pointBackgroundColor = lineColor1dark;
+				myChart2.data.datasets[10].borderColor = lineColor1dark;
+
+			}
+
+	},600);
+	</script>
+</body>
+</html>

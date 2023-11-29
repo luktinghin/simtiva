@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css" integrity="sha512-C7hOmCgGzihKXzyPU/z4nv97W0d9bv4ALuuEbSf6hm93myico9qa0hv4dODThvCsqQUmKmLcJmlpRmCaApr83g==" crossorigin="anonymous" />
+	<link rel="stylesheet" href="styles.css">
+	<link href="css/all.css" rel="stylesheet">
+	<meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta charset="utf-8">
+	<meta name="description" content="Simple and free TIVA simulator">
+    <meta name="keywords" content="simtiva, tiva, tci, free, simulator, terence, luk">
+    <meta name="author" content="Terence Luk">
+    <title>SimTIVA - Simple TIVA simulator</title>
+</head>
+<body>
+	<div id="bodywrapper">
+		<div id="parallax2">
+			<div class="top-bar-container">
+				<div class="topleft stop" id="iconplay"><i class="fas fa-pause fa-lg"></i></div><!--
+				--><div class="topright">
+					<div class="top_subtitle"><span id="status">Waiting to start</span> / Propofol (<span id="modelname"></span>)</div>
+					<div class="top_title">Cp <span id="cp">_</span>, Ce <span id="ce">_</span></div>
+				</div>
+			</div>
+		</div>
+		<div id="parallax1">
+			<div class="displayleft">
+				<div><span id="clock">_</span></div>
+				<div>VI: <span id="displayvolume">_</span>ml</div>
+			</div><!--
+			--><div class="displayright">
+				<div class="displaywrapper">
+					<div><b>BW:<span id="bw"></span></b>, BH:<span id="bh"></span></div>
+					<div><span id="age"></span>y, <span id="gender"></span></div>
+				</div>
+			</div>
+		</div>
+
+		<!--<div id="parallax3"></div>-->
+		<div id="controlpanel">
+			<div class="card">
+				<div class="cardtitle">INFUSION</div>
+			<div class="cardcontents">
+				<table class="table-control line" id="tableInfusionRate">
+					<tr><td>Enter infusion rate (ml/h)</td><td><input type="number" inputmode="decimal" id="inputInfusion"></td></tr>
+				</table>
+				<table class="table-control space" id="tableInitialBolus">
+					<tr><td>Enter initial bolus (mg)</td><td><input type="number" inputmode="decimal" id="inputBolus_initial"></td></tr>
+				</table>
+				<a class="button" id="btn_start" onclick="start();">Start</a>
+				<a class="button" id="btn_pause" onclick="pause();">Pause</a>
+			</div>
+		</div>
+		<div class="card hide" id="card_bolus">
+			<div class="cardtitle">BOLUS</div>
+			<table class="table-control space"><tr><td>Enter custom bolus (mg)</td><td width="30px"><input type="number" id="inputBolus"></td><td><a class="button custom" id="btn_custombolus" onclick="bolusadmin(custombolus());">Go!</button></a></tr></table>
+			
+			<a class="button bolus" id="btn_bolus30" onclick="bolusadmin(30);"><div class="bolus_outside">Bolus</div><div class="bolus_inside">30mg</div></a>
+			<a class="button bolus" id="btn_bolus20" onclick="bolusadmin(20);"><div class="bolus_outside">Bolus</div><div class="bolus_inside">20mg</div></a>
+			<a class="button bolus" id="btn_bolus10" onclick="bolusadmin(10);"><div class="bolus_outside">Bolus</div><div class="bolus_inside">10mg</div></a>
+		</div>
+		<div id="outputcontainer">
+			<div id="outputselector">
+				<a class="outputtab active" id="btn_displaychart" onclick="show_graph();">Graphical display</a>
+				<a class="outputtab" id="btn_displayhistory" onclick="show_history();">Historical display</a>
+			</div>
+			<div id="chartwrapper">
+				<div id="chartcontainer">
+					<canvas id="myChart"></canvas>
+				</div>
+			</div>
+			<div id="historywrapper">
+				1234567890
+			</div>
+		</div>
+		<div style="padding-bottom:1000px"></div>
+		<!--startmodal-->
+		<div id="modalInitial" class="modal">
+			<div class="modal-content" id="modalInitialcontent">
+				<div class="modal-header">Enter patient data<!--<span class="close notcondensed" onClick="hideallmodal()">&times;</span>--></div>
+				<div class="modal-body">
+					<table class="table-Init">
+					<tr><td>Enter Age</td><td><input type="number" id="inputAge"></td></tr>
+					<tr><td>Enter BW</td><td><input type="number" id="inputBW"></td></tr>
+					<tr><td>Enter BH</td><td><input type="number" id="inputBH"></td></tr>
+					<tr><td>Enter Gender</td>
+						<td>
+							<select id="select_gender">
+								<option value="Male">Male</option>
+								<option value="Female">Female</option>
+							</select>
+						</td>
+					</tr>
+					<tr><td>Choose model</td>
+						<td>
+							<select id="select_model">
+								<option value="Marsh">Marsh</option>
+								<option value="Schnider">Schnider</option>
+								<option value="Paedfusor">Paedfusor</option>
+								<option value="Eleveld">Eleveld</option>
+							</select>
+						</td>
+					</tr>
+					<tr><td>Debug: Enter Sim Speed (1=default)</td><td><input type="number" id="simspeed" value="1"></td></tr>
+					</table>
+					<a class="button" onclick="initsubmit();hideallmodal();">Submit</a>
+				</div>
+			</div>
+		</div>
+		<!--endmodal-->
+	</div><!--bodywrapper-->
+	<script src="main.js"></script>
+	<script>init();</script>
+	<script src="math.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js" integrity="sha512-hZf9Qhp3rlDJBvAKvmiG+goaaKRZA6LKUO35oK6EsM0/kjPK32Yw7URqrq3Q+Nvbbt8Usss+IekL7CRn83dYmw==" crossorigin="anonymous"></script>
+	<script>
+	setTimeout(function() {
+		var ctx = document.getElementById('myChart').getContext('2d');
+		myChart = new Chart(ctx, {
+	    type: 'line',
+	    data: {
+	    	datasets: [{
+	    		label: 'Cp',
+	    		data: [{x: 0, y: 0}],
+	    		borderColor: 'rgb(255,0,0,0.2)',
+	    		backgroundColor: 'rgb(255,0,0,0.1)',
+	    		pointBorderColor: 'rgb(255,0,0,0.2)',
+	    		pointBackgroundColor: 'rgb(255,0,0,0.2)'
+	    	},{
+	    		label: 'Ce',
+	    		data: [{x:0, y:0}],
+	    		borderColor: 'rgb(0,255,0,0.2)',
+	    		backgroundColor: 'rgb(0,255,0,0.1)',
+	    		pointBorderColor: 'rgb(0,255,0,0.2)',
+	    		pointBackgroundColor: 'rgb(0,255,0,0.2)'
+	    	}]
+	    },
+	    options: {
+	    	maintainAspectRatio: false,
+	    	scales: {
+	    		yAxes: [{
+	    			ticks: {
+	    				min:0,
+	    				max:4
+	    			}
+	    		}],
+	    		xAxes: [{
+	    			type: 'linear',
+	    			position:'bottom',
+	    			ticks: {
+	    				min:0,
+	    				max:10,
+	    				stepSize:1
+	    			}
+	    		}]
+	    	},
+	        animation: {
+	            duration: 0 // general animation time
+	        },
+	        hover: {
+	            animationDuration: 0 // duration of animations when hovering an item
+	        },
+	        responsiveAnimationDuration: 0 // animation duration after a resize
+	    }
+	})},5000);
+	</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+[[redirects]]
+  from = "/.well-known/*"
+  to = "/not-a-dotfile/:splat"
+  status = 200
+  force = true
+
