@@ -7635,13 +7635,24 @@ function toLoadTransition() {
 }
 
 function toPageOneFromLoad() {
-	setTimeout(function(){setmodal("modalInitial")},200);
-  document.getElementById("modalLoad").classList.remove("fadein");
-  document.getElementById("modalLoadcontent").classList.remove("open");
-  document.getElementById("rescuebuttons").style.display="block";
-  if (manageFileListState == 1) {
-  	manageFileList();
-  }
+	setTimeout(function(){
+		setmodal("modalInitial");
+	  	document.getElementById("modalLoadDescription").innerHTML = "Select a SIM-FILE to load:";
+	  	document.getElementById("modalLoadDescription").style.display = "none";
+	  	document.getElementById("fileselection").style.display = "none";
+	  	document.getElementById("loadfile_container").style.display = "none";
+	  	document.getElementById("modalLoadHugeButtons").style.display = "block";
+	  	document.getElementById("modalLoadImportButtons").style.display = "none";
+	  	document.getElementById("modalLoadNormalButtons").style.display = "none";
+	  	document.getElementById("loadfile_container").innerHTML = "";
+	},200);
+  	document.getElementById("modalLoad").classList.remove("fadein");
+  	document.getElementById("modalLoadcontent").classList.remove("open");
+  	document.getElementById("rescuebuttons").style.display="block";
+
+  	if (manageFileListState == 1) {
+  		manageFileList();
+  	}
 }
 
 function displayDisclaimer() {
@@ -7969,13 +7980,21 @@ function confirmretrospective() {
 	hideallmodal();
 }
 
-function init_rescue(input_uid) {
+function init_rescue(input_uid,external_flag) {
+
 	hideallmodal();
 	document.getElementById("card_cpt0").classList.add("hide");
 	document.getElementById("card_cet0").classList.add("hide");
 	document.getElementById("card_infusion0").classList.add("hide");
 	document.getElementById("status").innerHTML = "";
-	parseobject(input_uid);
+	if (external_flag) {
+		tempFileIndex = importDataArray.findIndex((elem) => elem[0]==input_uid);
+		if (tempFileIndex != -1) {
+			parseobject(null,true,importDataArray[tempFileIndex][1]);	
+		}
+	} else {
+		parseobject(input_uid);
+	}
 	var timestamp_lastdatadate = new Date(input_uid*1000 + time_in_s*1000);
 	var timestamp_lastdatatime = timestamp_lastdatadate.toLocaleDateString() + " " + timestamp_lastdatadate.toLocaleTimeString();
 	setTimeout(function() {
@@ -9316,13 +9335,43 @@ function loadobject(input_uid) {
 }
 
 function load() {
+	toLoadTransition();
+}
+
+
+function loadSourceExt() {
+	document.getElementById("modalLoadHugeButtons").style.display = "none";
+	document.getElementById("modalLoadImportButtons").style.display = "block";
+	document.getElementById("fileselection").style.display = "block";
+	document.getElementById("modalLoadDescription").style.display = "inline-block";
+	document.getElementById("modalLoadDescription").innerHTML = "Load from external .CSV file:";
+	document.getElementById("loadfile_container").classList.add("compress");
+	document.getElementById("loadfile_container").style.display = "block";
+	document.getElementById("loadfile_container").innerHTML = 
+	`
+		<div>After loading, the database of external sim-files will appear here.</div>
+	`
+	//document.getElementById("loadfile_container").style.display = "block";
+	//importDialog();
+}
+
+function loadSourceLocal() {
 	if ((localStorage.getItem("keys") == null) || (JSON.parse(localStorage.getItem("keys")).length == 0)) {
 		displayWarning("No saved data", "No previously saved sim-file data.")
 	} else {
 		generateFileKeys();
-		toLoadTransition();
 		document.getElementById("rescuebuttons").style.display = "none";
+		document.getElementById("modalLoadHugeButtons").style.display = "none";
+		document.getElementById("fileselection").style.display = "none";
+		document.getElementById("modalLoadNormalButtons").style.display = "block";
+		document.getElementById("modalLoadDescription").style.display = "inline-block";
+		document.getElementById("loadfile_container").classList.remove("compress");
+		document.getElementById("loadfile_container").style.display = "block";
+
+		importDataArray.length = 0;
+
 	}
+
 }
 
 function rescue() {
@@ -9347,9 +9396,24 @@ function generateFileKeys() {
 }
 
 function renderImportList() {
-	let El1 = document.getElementById("filecontent");
+	let El1 = document.getElementById("loadfile_container");
 	for (impcountr = 0; impcountr<importDataArray.length-1; impcountr++) {
 		createfileelement(importDataArray[impcountr][1],importDataArray[impcountr][0],El1);	
+	}
+	let tempFileBoxes = document.getElementsByClassName("file_outerbox");
+
+	if (tempFileBoxes.length == 1) {
+		document.querySelector(".file_outerbox").classList.add("active");
+		selected_uid = document.querySelector(".file_outerbox").id;
+	} else {
+		for (i=0; i<tempFileBoxes.length; i++) {
+			tempFileBoxes[i].classList.remove("active");
+			tempFileBoxes[i].addEventListener('click', function () {
+				selectFileBox(this.id);
+			});
+		}
+		tempFileBoxes[0].classList.add("active");
+		selected_uid = tempFileBoxes[0].id;
 	}
 }
 
@@ -9358,7 +9422,7 @@ function renderFileList(inputkeysarray) {
 
 	if (typeof inputkeysarray == "number") { //this means only 1 key, not an array of keys
 			tempObject = loadobject(inputkeysarray);
-			if (tempObject != -1) createfileelement(tempObject,inputkeysarray);
+			if (tempObject != -1) createfileelement(tempObject,inputkeysarray,El1);
 	} else {
 		for (i=inputkeysarray.length-1; i>=0; i--) {
 			tempObject = loadobject(inputkeysarray[i]);
@@ -9718,7 +9782,7 @@ let importDataArray = new Array();
 
 function previewFile() {
 	
-  const content = document.getElementById("filecontent");
+  const content = document.getElementById("loadfile_container");
   const [file] = document.getElementById("myFile").files;
   const reader = new FileReader();
 
@@ -9731,6 +9795,8 @@ function previewFile() {
       //iterate through CSV file
       let parseArrayRaw = reader.result.split("\n");
       let impcount;
+      //pop importDataArray
+      importDataArray.length = 0;
       for (impcount = 1; impcount<parseArrayRaw.length-1; impcount++) {
       	let parseArrayComma = parseArrayRaw[impcount].split(",");
       	let parseID = parseArrayComma[0]*1;
@@ -9749,7 +9815,10 @@ function previewFile() {
       alert("Total " + impcount + " records retrieved.\n" + 
       	importDataArray.length + " records read successfully.\n" + 
       	errorCount + " records failed to load.");
+      document.getElementById("loadfile_container").classList.remove("compress");
+      document.getElementById("loadfile_container").innerHTML = '';
       renderImportList();
+
       //console.log("read successfully");
       //console.log(parseArrayObj);
 
@@ -9780,9 +9849,7 @@ function selectFileBox(input_uid) {
 	for (i=0; i<tempFileBoxes.length; i++) {
 		tempFileBoxes[i].classList.remove("active");
 		};
-	
 	document.getElementById(selected_uid).classList.add("active");
-	
 }
 
 function unselectFileBox() {
@@ -9810,11 +9877,11 @@ function hideDeleteIcons() {
 		};
 }
 
-function parseobject(input_uid,external,extString) {
+function parseobject(input_uid,external,extObject) {
 	parseloading = 1;
 	document.getElementById("status").innerHTML = "Loading PK data...";
 	if (external == true) {
-		object = readExternal(extString);
+		object = extObject;
 	} else {
 		if (input_uid != null) {
 			object = loadobject(input_uid);

@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SB7ZEFTEVT"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-SB7ZEFTEVT');
-</script>
 
 	<!--<link rel="stylesheet" href="Chart.css" />-->
 	<link rel="stylesheet" href="styles.css">
@@ -64,7 +55,7 @@
     <link rel="manifest" href="manifest.json">
     <meta charset="utf-8">
 	<meta name="description" content="Simple and free TIVA simulator">
-    <meta name="keywords" content="simtiva, tiva, tci, free, simulator, terence, luk, cuhk, propofol, app, smartphones, apple, android">
+    <meta name="keywords" content="simtiva, tiva, tci, free, simulator, calculator, terence, luk, propofol, remifentanil, alfentanil, app, smartphones, apple, android">
     <meta name="author" content="Terence Luk">
     <title>SimTIVA | Free TIVA Simulation App to Simulate Target-Controlled Infusion | Simple TCI Calculator</title>
 </head>
@@ -448,16 +439,34 @@
 
 		<div id="modalLoad" class="modal">
 			<div class="modal-content" id="modalLoadcontent">
-				<div class="modal-header">LOAD SIM FILE</div>
+				<div class="modal-header" id="modalLoadTitle">LOAD SIM FILE</div>
 				<div class="modal-body" style="padding-bottom:0">
-					Select a SIM-FILE to load:<span id="load_about_btn" onclick="displayloadabout();"><i class="fas fa-question-circle"></i></span>
+					<span id="modalLoadDescription">Select a SIM-FILE to load:</span><span id="load_about_btn" onclick="displayloadabout();"><i class="fas fa-question-circle"></i></span>
+					<div id="fileselection">
+						<input type='file' id='myFile' onchange='previewFile()' style="width: 100%"/>
+					</div>
 					<div id="loadfile_container">
 					</div>
-					<a class="button wide invert" id="btn_load" onclick="init_rescue(selected_uid);">Load Selection</a>
-
-					<a class="button muted right" onclick="toPageOneFromLoad();">Back</a>
-					<a class="button muted right" id="btn_manageFiles" onclick="manageFileList();">Manage</a>
-					<div><a class="button hide" id="btn_export" onclick="exportFunction()">Export all</a></div>
+					<div id="modalLoadHugeButtons">
+						Select source:
+						<a class="button huge" style="width:100%" onclick="loadSourceExt();">LOAD FROM EXTERNAL</a>
+						<div><i>Choose this option if you have previously exported a SimTIVA database .csv file</i></div>
+						<br>
+						<br>
+						<a class="button huge" style="width:100%" onclick="loadSourceLocal()">LOAD LOCAL SIMFILES</a>
+						<div><i>This option will load sim-files automatically saved on your device</i></div>
+						<div style="height:20px"></div>
+					</div>
+					<div id="modalLoadNormalButtons">
+						<a class="button wide invert" id="btn_load" onclick="init_rescue(selected_uid);">Load Selection</a>
+						<a class="button muted right" onclick="toPageOneFromLoad();">Back</a>
+						<a class="button muted right" id="btn_manageFiles" onclick="manageFileList();">Manage</a>
+						<div><a class="button hide" id="btn_export" onclick="exportFunction()">Export all</a></div>
+					</div>
+					<div id="modalLoadImportButtons">
+						<a class="button wide invert" id="btn_load_import" onclick="init_rescue(selected_uid,true)">Load Selection</a>
+						<a class="button muted right" onclick="toPageOneFromLoad();">Back</a>
+					</div>
 				</div>
 			</div>
 		</div>
