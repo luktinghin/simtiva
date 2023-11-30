@@ -1,4 +1,4 @@
-const cacheName = "simtiva-v4-88";
+const cacheName = "simtiva-v4-89";
 const assets = [
 	"/",
 	"/index.html",
@@ -20,7 +20,7 @@ const assets = [
 	"/eleveld2.gif",
 	"/icon.png",
 	"/apple-touch-icon-180x180.png",
-	"/BrandonText-Bold.otf",
+	"/fonts/BrandonText-Bold.otf",
 	"/fonts/SourceSans3-Regular.otf.woff2",
 	"/fonts/SourceSans3-Bold.otf.woff2",
 	"/fonts/SourceSans3-It.otf.woff2",

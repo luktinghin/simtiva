@@ -54,7 +54,7 @@
 */
 @font-face {
   font-family: Brandon Text;
-  src: url(BrandonText-Bold.otf);
+  src: url(fonts/BrandonText-Bold.otf);
   font-weight: bold;
   font-display: swap;
   unicode-range:  U+000-5FF;
