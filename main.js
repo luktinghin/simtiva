@@ -9340,6 +9340,7 @@ function load() {
 
 
 function loadSourceExt() {
+	document.getElementById("rescuebuttons").style.display = "none";
 	document.getElementById("modalLoadHugeButtons").style.display = "none";
 	document.getElementById("modalLoadImportButtons").style.display = "block";
 	document.getElementById("fileselection").style.display = "block";
