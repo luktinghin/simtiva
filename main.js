@@ -1745,7 +1745,7 @@ function displaypreview2(x,ind) {
 			preview_cet(x,ind);
 			document.getElementById("preview_cpt").innerHTML = "CE " + x + drug_sets[ind].conc_units + "/ml";
 			if (drug_sets[ind].preview_bolus > 0) {
-				document.getElementById("preview_msg").innerHTML = "Bolus " + drug_sets[ind].preview_bolus + drug_sets[ind].infused_units + " then pause infusion";
+				document.getElementById("preview_msg").innerHTML = "Bolus " + (drug_sets[ind].preview_bolus / drug_sets[ind].infusate_concentration).toFixed(1) + "ml (" + drug_sets[ind].preview_bolus + drug_sets[ind].infused_units + ") then pause infusion";
 				document.getElementById("previewicon").className = "fas fa-arrow-circle-up";
 			} else if (drug_sets[ind].preview_rate>0) {
 				document.getElementById("preview_msg").innerHTML = "Change infusion rate to " + drug_sets[ind].preview_rate + "ml/h";
