@@ -1817,7 +1817,7 @@ a.interactionstab.active {
   font-size:40px;
 }
 #warningright {
-  padding-left:15px;
+  padding-left:10px;
   flex-basis:calc(100% - 40px);
 }
 #warningcounter {
@@ -2182,7 +2182,7 @@ body.dark .loadduration {
   font-size:40px;
 }
 #previewright {
-  padding-left:15px;
+  padding-left:9px;
   flex-basis:calc(100% - 40px);
 }
 #prompt {
