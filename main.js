@@ -9350,7 +9350,7 @@ function loadSourceExt() {
 	document.getElementById("modalLoadHugeButtons").style.display = "none";
 	document.getElementById("modalLoadImportButtons").style.display = "block";
 	document.getElementById("fileselection").style.display = "block";
-	document.getElementById("modalLoadDescription").style.display = "inline-block";
+	document.getElementById("modalLoadDescription").style.display = "inline";
 	document.getElementById("modalLoadDescription").innerHTML = "Import from external .CSV file:";
 	document.getElementById("loadfile_container").classList.add("collapse");
 	document.getElementById("loadfile_container").classList.remove("compress");
@@ -9372,7 +9372,7 @@ function loadSourceLocal() {
 		document.getElementById("modalLoadHugeButtons").style.display = "none";
 		document.getElementById("fileselection").style.display = "none";
 		document.getElementById("modalLoadNormalButtons").style.display = "block";
-		document.getElementById("modalLoadDescription").style.display = "inline-block";
+		document.getElementById("modalLoadDescription").style.display = "inline";
 		document.getElementById("loadfile_container").classList.remove("collapse");
 		document.getElementById("loadfile_container").classList.remove("compress");
 		document.getElementById("loadfile_container").style.display = "block";
