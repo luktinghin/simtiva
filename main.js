@@ -9900,7 +9900,10 @@ function exportGenerateDownload(input_string,expFileName) {
 	  	link2.click();
 	  	link2.delete;
 
-	  	document.getElementById("fileexportblock").innerHTML = "<i>File export complete. You may close this window</i>";
+	  	document.getElementById("fileexportblock").innerHTML = "<i>File export complete. You may close this window. Click <a id='herelink'>here</a> if you can't find the file in your downloads folder.</i>";
+	  	herelink.target="_blank";
+	  	herelink.download = expFileName;
+	  	herelink.href = jsonObject;
 	  	document.getElementById("btn_exportProceed").classList.add("disabled");
 	  	
 }
