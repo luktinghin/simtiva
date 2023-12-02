@@ -451,13 +451,14 @@
 					</div>
 					<div id="modalLoadHugeButtons">
 						Select source:
-						<a class="button huge" style="width:100%" onclick="loadSourceExt();">LOAD FROM EXTERNAL</a>
-						<div><i>Choose this option if you have previously exported a SimTIVA database .csv file</i></div>
-						<br>
-						<br>
-						<a class="button huge" style="width:100%" onclick="loadSourceLocal()">LOAD LOCAL SIMFILES</a>
-						<div><i>This option will load sim-files automatically saved on your device</i></div>
+						<a class="button huge" style="width:100%" onclick="loadSourceExt();">IMPORT FROM EXTERNAL <i class="fas fa-file-csv fa-fw"></i></a>
+						<div style="padding-left:12px"><i>This will import a previously saved SimTIVA database file (.csv)</i></div>
 						<div style="height:20px"></div>
+						<a class="button huge" style="width:100%" onclick="loadSourceLocal()">LOAD LOCAL SIMFILE <i class="fas fa-file-alt fa-fw"></i></a>
+						<div style="padding-left:12px"><i>This will load sim-files saved on device. You can also manage & export local sim-files.</i></div>
+						<div style="height:20px"></div>
+						<div>&nbsp;<a class="button muted right" onclick="toPageOneFromLoad();">Back</a></div>
+						<div style="height:30px"></div>
 					</div>
 					<div id="modalLoadNormalButtons">
 						<a class="button wide invert" id="btn_load" onclick="init_rescue(selected_uid);">Load Selection</a>
@@ -466,7 +467,7 @@
 						<div><a class="button hide" id="btn_export" onclick="exportFunction()">Export all</a></div>
 					</div>
 					<div id="modalLoadImportButtons">
-						<a class="button wide invert" id="btn_load_import" onclick="init_rescue(selected_uid,true)">Load Selection</a>
+						<a class="button wide invert disabled" id="btn_load_import" onclick="init_rescue(selected_uid,true)">Load Selection</a> &nbsp;
 						<a class="button muted right" onclick="toPageOneFromLoad();">Back</a>
 					</div>
 				</div>

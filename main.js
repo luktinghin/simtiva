@@ -7637,6 +7637,7 @@ function toLoadTransition() {
 function toPageOneFromLoad() {
 	setTimeout(function(){
 		setmodal("modalInitial");
+		//reset styles
 	  	document.getElementById("modalLoadDescription").innerHTML = "Select a SIM-FILE to load:";
 	  	document.getElementById("modalLoadDescription").style.display = "none";
 	  	document.getElementById("fileselection").style.display = "none";
@@ -7645,6 +7646,9 @@ function toPageOneFromLoad() {
 	  	document.getElementById("modalLoadImportButtons").style.display = "none";
 	  	document.getElementById("modalLoadNormalButtons").style.display = "none";
 	  	document.getElementById("loadfile_container").innerHTML = "";
+	  	document.getElementById("btn_load_import").classList.add("disabled");
+	  	document.getElementById("loadfile_container").classList.remove("compress");
+	  	document.getElementById("loadfile_container").classList.remove("collapse");
 	},200);
   	document.getElementById("modalLoad").classList.remove("fadein");
   	document.getElementById("modalLoadcontent").classList.remove("open");
@@ -7674,7 +7678,7 @@ function ptolwarning() {
 }
 
 function displayloadabout() {
-	text = "The sim-files are saved automatically when simulation is running. To save with a file name for easier access later on, simply type a file name in the share/save popup module. All the data in the sim-files are stored locally on your device via the local-storage API and will never be accessed or stored by our server in any way.";
+	text = "The sim-files are saved automatically when simulation is running. To save with a file name for easier access later on, simply type a file name in the share/save popup module. All the data in the sim-files are stored locally on your device via the local-storage API and will never be accessed or stored by our server in any way.<br><br><b>Exporting sim-file database</b><br>You may export local sim-files by clicking 'Manage' -> 'Export all'. This will generate a .CSV (comma-seperated values) file which you may access with a spreadsheet program or with SimTIVA.<br><br><b>Importing database (.CSV)</b><br>You may import a previously exported database file by choosing this option in the 'Load' menu. The database will be loaded and the sim-files stored in the database can be accessed.";
 	displayWarning("About Sim-Files", text);
 }
 
@@ -7983,6 +7987,8 @@ function confirmretrospective() {
 function init_rescue(input_uid,external_flag) {
 
 	hideallmodal();
+	hidemodal("modalInitial");
+	hidemodal("modalLoad");
 	document.getElementById("card_cpt0").classList.add("hide");
 	document.getElementById("card_cet0").classList.add("hide");
 	document.getElementById("card_infusion0").classList.add("hide");
@@ -9345,8 +9351,9 @@ function loadSourceExt() {
 	document.getElementById("modalLoadImportButtons").style.display = "block";
 	document.getElementById("fileselection").style.display = "block";
 	document.getElementById("modalLoadDescription").style.display = "inline-block";
-	document.getElementById("modalLoadDescription").innerHTML = "Load from external .CSV file:";
-	document.getElementById("loadfile_container").classList.add("compress");
+	document.getElementById("modalLoadDescription").innerHTML = "Import from external .CSV file:";
+	document.getElementById("loadfile_container").classList.add("collapse");
+	document.getElementById("loadfile_container").classList.remove("compress");
 	document.getElementById("loadfile_container").style.display = "block";
 	document.getElementById("loadfile_container").innerHTML = 
 	`
@@ -9366,6 +9373,7 @@ function loadSourceLocal() {
 		document.getElementById("fileselection").style.display = "none";
 		document.getElementById("modalLoadNormalButtons").style.display = "block";
 		document.getElementById("modalLoadDescription").style.display = "inline-block";
+		document.getElementById("loadfile_container").classList.remove("collapse");
 		document.getElementById("loadfile_container").classList.remove("compress");
 		document.getElementById("loadfile_container").style.display = "block";
 
@@ -9398,7 +9406,7 @@ function generateFileKeys() {
 
 function renderImportList() {
 	let El1 = document.getElementById("loadfile_container");
-	for (impcountr = 0; impcountr<importDataArray.length-1; impcountr++) {
+	for (impcountr = 0; impcountr<importDataArray.length; impcountr++) {
 		createfileelement(importDataArray[impcountr][1],importDataArray[impcountr][0],El1);	
 	}
 	let tempFileBoxes = document.getElementsByClassName("file_outerbox");
@@ -9772,13 +9780,6 @@ function exportKeys() {
 	exportGenerateDownload(testString);
 }
 
-function importDialog() {
-	displayWarning("Import",`
-			<input type='file' id='myFile' onchange='previewFile()' /><br />
-			<p class='filecontent' id='filecontent'></p>
-		`);
-}
-
 let importDataArray = new Array();
 
 function previewFile() {
@@ -9790,45 +9791,71 @@ function previewFile() {
   reader.addEventListener(
     "load",
     () => {
-      errorCount = 0;
       //crosschecking code to see whether file type is correct
-      //...
-      //iterate through CSV file
-      let parseArrayRaw = reader.result.split("\n");
-      let impcount;
-      //pop importDataArray
-      importDataArray.length = 0;
-      for (impcount = 1; impcount<parseArrayRaw.length-1; impcount++) {
-      	let parseArrayComma = parseArrayRaw[impcount].split(",");
-      	let parseID = parseArrayComma[0]*1;
-      	let parseArrayURL = parseArrayComma[parseArrayComma.length-1];
-      	let parseArrayObj = parseArrayURL.slice(32);
-      	obj = readExternal(parseArrayObj);
-      	if (obj != -1) {
-      		importDataArray.push([parseID,obj]);	
-      	} else {
-      		errorCount += 1;
-      	}
-      	console.log(obj);
-      	console.log(errorCount);
+      errorMessage = "";
+      console.log(reader.fileName);
+      if (!(reader.fileName.slice(-4) == ".csv" || reader.fileName.slice(-4) == ".CSV" )) {
+      	errorMessage += "Not a CSV file." + "<br>";
+      	console.log(errorMessage);
       }
-      impcount -= 1;
-      alert("Total " + impcount + " records retrieved.\n" + 
-      	importDataArray.length + " records read successfully.\n" + 
-      	errorCount + " records failed to load.");
-      document.getElementById("loadfile_container").classList.remove("compress");
-      document.getElementById("loadfile_container").innerHTML = '';
-      renderImportList();
+      if (errorMessage != "") {
+      	let tempRaw = reader.result.split("\n"); //last record is 2nd last line. last line is an empty line.
+      	
+      	if (tempRaw != undefined) {
+		      if (reader.result.slice(0,26) != "UID,Timestamp,Duration,Nam") {
+		      	errorMessage += "Cannot read file. Does not seem to be a SimTIVA .csv database file." + "<br>";
+		      } else {
+		      	//preview first record and see if it's fine
+		      	let parseArrayComma = parseArrayRaw[1].split(",");
+		      	let parseArrayURL = parseArrayComma[parseArrayComma.length-1];
+		      	if (parseArrayURL.slice(0,19) != "https://simtiva.app") {
+		      		errorMessage += "Wrong weblink reference. Possible corrupted database.";
+		      	}
+		      }
+      	} else {
+      		errorMessage += "Cannot read file. Does not seem to be a SimTIVA .csv database file.";
+      	}
+      }
+      console.log(errorMessage);
+      if (errorMessage != "") {
+      	displayWarning("Failed import",errorMessage);
+      } else {
+	      errorCount = 0;
 
-      //console.log("read successfully");
-      //console.log(parseArrayObj);
-
+	      //iterate through CSV file
+	      let parseArrayRaw = reader.result.split("\n");
+	      let impcount;
+	      //pop importDataArray
+	      importDataArray.length = 0;
+	      for (impcount = 1; impcount<parseArrayRaw.length-1; impcount++) { //last line is empty line. so impcount max is -1
+	      	let parseArrayComma = parseArrayRaw[impcount].split(",");
+	      	let parseID = parseArrayComma[0]*1;
+	      	let parseArrayURL = parseArrayComma[parseArrayComma.length-1];
+	      	let parseArrayObj = parseArrayURL.slice(32);
+	      	obj = readExternal(parseArrayObj);
+	      	if (obj != -1) {
+	      		importDataArray.push([parseID,obj]);	
+	      	} else {
+	      		errorCount += 1;
+	      	}
+	      }
+	      impcount -= 1;
+	      displayWarning("Database Imported","Total " + impcount + " records retrieved. <br>" + 
+	      	importDataArray.length + " records read successfully. <br>" + 
+	      	errorCount + " records failed to load.");
+	      document.getElementById("btn_load_import").classList.remove("disabled");
+	      document.getElementById("loadfile_container").classList.remove("collapse");
+	      document.getElementById("loadfile_container").classList.add("compress");
+	      document.getElementById("loadfile_container").innerHTML = '';
+	      renderImportList();
+      }
     },
     false,
   );
 
   if (file) {
     reader.readAsText(file);
+    reader.fileName = file.name;
   }
 }
 
