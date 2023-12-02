@@ -4305,8 +4305,6 @@ body.dark #progressbar {
   float: right;
   font-size: 150%;
   position: relative;
-  top: -5px;
-  color: rgba(128,128,128,0.8);
   cursor: pointer;
 }
 
