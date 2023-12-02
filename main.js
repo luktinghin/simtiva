@@ -3397,7 +3397,7 @@ function apply_fentanyl_correction(ind) {
 		//myChart.data.datasets[3].data[counterfen].y = cpt_ce[counterfen][0] + cpt_ce[counterfen][1] + cpt_ce[counterfen][2] + cpt_ce[counterfen][3];
 	}
 	//find beginning of elem of chart of working clock
-	chartBeginIndex = myChart.data.datasets[ind*2+2].data.findIndex((element)=>element.x>=working_clock/60);
+	chartBeginIndex = myChart.data.datasets[ind*2+2].data.findIndex((element)=>element.x>=working_clock/60) ;
 
 	for (counterfen=chartBeginIndex; counterfen<myChart.data.datasets[ind*2+2].data.length; counterfen++) {
 		//myChart.data.datasets[ind*2+2].data[counterfen].y = getcp(Math.floor(myChart.data.datasets[ind*2+2].data[counterfen].x * 60),ind);
@@ -7670,7 +7670,7 @@ function displayDisclaimer() {
 }
 
 function displayAbout() {
-	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk, 2023</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 2/12/2023 (V4.1) Build 90.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
+	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk, 2023</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 2/12/2023 (V4.2) Build 91.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
 	displayWarning("About", text);
 }
 
@@ -8164,6 +8164,7 @@ function reanimate(arg_time) {
 	//copy from common start calls
 	document.getElementById("top_subtitle").classList.add("topClose");
 	document.getElementById("top_title").classList.add("topOpen");
+	document.getElementById("expandbutton").style.display = "block";
 	if (complex_mode == 0) {
 		var argument = object.P_hx[0][0];
 		// 0 is manual
@@ -9721,7 +9722,7 @@ function exportFunction() {
 	if (testKeys.length>=1) {
 		displayWarning("Export sim-files to CSV",
 		`
-			<div>This will export all ${testKeys.length-1} sim-files on device to a .csv (comma-separated values) file. You can then open this file in Excel or other spreadsheet application. You may also import this database file into SimTIVA for viewing.</div>
+			<div>This will export all ${testKeys.length} sim-files on device to a .csv (comma-separated values) file. You can then open this file in Excel or other spreadsheet application. You may also import this database file into SimTIVA for viewing.</div>
 			<div style='height:40px'></div>
 			<div id='fileexportblock'>
 				<div style='display:inline-block;font-size:250%;width:15%;text-align:right;padding-right:10px;color:#ccc'><i class='fas fa-file-csv'></i></div>
@@ -9733,11 +9734,7 @@ function exportFunction() {
 			<div style='height:50px'></div>
 			<div><a class='button invert' onclick='exportKeys(inputname,testKeys)' id='btn_exportProceed'>Proceed</a><a class='button muted right' onclick='hidewarningmodal()'>Cancel</a></div>
 		`)
-		//exportKeys(inputname,testKeys)
 	}
-	//if (confirm("This will export all the Sim-Files on device to a .csv (comma-separated values) file. You can then open this file in Excel or other spreadsheet application.")) {
-	//	exportKeys();
-	//}
 }
 
 function exportDataFile(input_uid) {
@@ -11008,7 +11005,8 @@ function parsedisplay(t,sex,model,VI,d,mode) {
 		
 		const gradientBgRed = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
 		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
-		if ((position<=0) || (position>=1)) position = 0;
+		if (position<=0) position = 0;
+		if (position>=1) position = 1;
 		gradientBgRed.addColorStop(0, 'rgba(231,50,39,0.4)');
 		gradientBgRed.addColorStop(position, 'rgba(231,50,39,0.4)');
 		gradientBgRed.addColorStop(position, 'rgba(231,50,39,0.1');
@@ -11021,7 +11019,8 @@ function parsedisplay(t,sex,model,VI,d,mode) {
 
 		const gradientBgYellow = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
 		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
-		if ((position<=0) || (position>=1)) position = 0;
+		if (position<=0) position = 0;
+		if (position>=1) position = 1;
 		gradientBgYellow.addColorStop(0, yellowPri50);
 		gradientBgYellow.addColorStop(position, yellowPri50);
 		gradientBgYellow.addColorStop(position, yellowSec10);
@@ -11034,7 +11033,8 @@ function parsedisplay(t,sex,model,VI,d,mode) {
 
 		const gradientBgBlue = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
 		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
-		if ((position<=0) || (position>=1)) position = 0;
+		if (position<=0) position = 0;
+		if (position>=1) position = 1;
 		gradientBgBlue.addColorStop(0, blueLight50);
 		gradientBgBlue.addColorStop(position, blueLight50);
 		gradientBgBlue.addColorStop(position, blueSec10);
@@ -11047,7 +11047,8 @@ function parsedisplay(t,sex,model,VI,d,mode) {
 		
 		const gradientBgGreen = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
 		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
-		if ((position<=0) || (position>=1)) position = 0;
+		if (position<=0) position = 0;
+		if (position>=1) position = 1;
 		gradientBgGreen.addColorStop(0, 'rgba(9,203,93,0.7)');
 		gradientBgGreen.addColorStop(position, 'rgba(9,203,93,0.7)');
 		gradientBgGreen.addColorStop(position, 'rgba(9,203,93,0.1');
@@ -12713,10 +12714,12 @@ function preparerange() {
 		El0.max = current_time;
 		El0.step = 5;
 	}
+	
 	El1.min = Math.floor(current_time/5)*5; //round down to nearest 5
 	El1.max = Math.floor(max_time/10)*10 - 10;
+
 	El0.dataMax = xmin+5;
-	El1.dataMin = xmax-5;
+	El1.dataMin = xmax-10;
 	El0.value = myChart.scales.x.min;
 	El1.value = myChart.scales.x.max;
 
