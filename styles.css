@@ -2183,7 +2183,7 @@ body.dark .loadduration {
   font-size:40px;
 }
 #previewright {
-  padding-left:9px;
+  padding-left:8px;
   flex-basis:calc(100% - 40px);
 }
 #prompt {

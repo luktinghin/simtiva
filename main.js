@@ -220,7 +220,12 @@ screen.orientation.addEventListener("change", (event) => {
 //for tooltip destruction on touchend for mobile devices
 document.addEventListener('touchend', function(event) {
     if (event.target && event.target.tagName.toLowerCase() !== "canvas") {
-        myChart.canvas.dispatchEvent(new Event("mouseout"));
+    	if (popupon) {
+    		popupchart.canvas.dispatchEvent(new Event("mouseout"));
+    	} else {
+    		myChart.canvas.dispatchEvent(new Event("mouseout"));	
+    	}
+        
     }
 })
 
@@ -1723,7 +1728,7 @@ function displaypreview2(x,ind) {
 			preview_cpt(x,ind);
 			document.getElementById("preview_cpt").innerHTML = "CP " + x + drug_sets[ind].conc_units + "/ml";
 			if (drug_sets[ind].preview_bolus>0) {
-				document.getElementById("preview_msg").innerHTML = "Bolus " + drug_sets[ind].preview_bolus + drug_sets[ind].infused_units + " (" + Math.round(drug_sets[ind].preview_bolus / drug_sets[ind].infusate_concentration * 10)/10 +  "ml) then infuse at " + drug_sets[ind].preview_rate + "ml/h";
+				document.getElementById("preview_msg").innerHTML = "Bolus " + drug_sets[ind].preview_bolus + drug_sets[ind].infused_units + " (" + Math.round(drug_sets[ind].preview_bolus / drug_sets[ind].infusate_concentration * 10)/10 +  "ml) " + "<i class='fas fa-arrow-alt-circle-right'></i>" + " Infuse at " + drug_sets[ind].preview_rate + "ml/h";
 				document.getElementById("previewicon").className = "fas fa-arrow-circle-up";
 			} else if (drug_sets[ind].preview_rate>0) {
 				document.getElementById("preview_msg").innerHTML = "Change infusion rate to " + drug_sets[ind].preview_rate + "ml/h";
@@ -9707,10 +9712,28 @@ async function downloadExcel() {
 }
 */
 
+let inputname = "";
+
 function exportFunction() {
-	if (confirm("This will export all the Sim-Files on device to a .csv (comma-separated values) file. You can then open this file in Excel or other spreadsheet application.")) {
-		exportKeys();
+	testKeys = JSON.parse(localStorage.getItem("keys"));
+	if (testKeys.length>=1) {
+		displayWarning("Export sim-files to CSV",
+		`
+			<div>This will export all ${testKeys.length-1} sim-files on device to a .csv (comma-separated values) file. You can then open this file in Excel or other spreadsheet application. You may also import this database file into SimTIVA for viewing.</div>
+			<div style='height:40px'></div>
+			<div style='display:inline-block;font-size:250%;width:15%;text-align:right;padding-right:10px;color:#ccc'><i class='fas fa-file-csv'></i></div>
+			<div style='display:inline-block;width:84%'>
+				<i>Save as file name:</i><br>
+				<input id='inputnamefield' placeholder='export' style='width:80%;border:2px solid #ccc;border-radius:4px' onkeyup='inputname=this.value'>.csv
+			</div>
+			<div style='height:50px'></div>
+			<div><a class='button invert' onclick='exportKeys(inputname,testKeys);hidewarningmodal();'>Proceed</a><a class='button muted right' onclick='hidewarningmodal()'>Cancel</a></div>
+		`)
+		//exportKeys(inputname,testKeys)
 	}
+	//if (confirm("This will export all the Sim-Files on device to a .csv (comma-separated values) file. You can then open this file in Excel or other spreadsheet application.")) {
+	//	exportKeys();
+	//}
 }
 
 function exportDataFile(input_uid) {
@@ -9770,14 +9793,14 @@ function exportDataFile(input_uid) {
 	}
 }
 
-function exportKeys() {
-	testKeys = JSON.parse(localStorage.getItem("keys"));
+function exportKeys(filenameentry,testKeys) {
+	
 	testString = "UID,Timestamp,Duration,Name,Age,Sex,BW,BH,Mode,Model description,Weblink\n";
 	for (kc = 0; kc < testKeys.length; kc++) {
 		temp = exportDataFile(testKeys[kc]);
 		if (temp != undefined) testString += temp;
 	}
-	exportGenerateDownload(testString);
+	exportGenerateDownload(testString,filenameentry);
 }
 
 let importDataArray = new Array();
@@ -9859,15 +9882,23 @@ function previewFile() {
   }
 }
 
-function exportGenerateDownload(input_string) {
+function exportGenerateDownload(input_string,expFileName) {
 	jsonObject = "data:text/csv;charset=utf-8," + encodeURIComponent(input_string);
-	
+	if (expFileName.length>0) {
+		expFileName += ".csv";
+	} else {
+		expFileName = "export.csv";
+	}
 		const link2 = document.createElement('a');
 			link2.target = "_blank";
-			link2.download = 'export.csv';
+			link2.download = expFileName;
 	  	link2.href = jsonObject;
 	  	link2.click();
 	  	link2.delete;
+
+	  	setTimeout(function() {
+	  		displayWarning('Export','Export is complete. Please check your download folder.')
+	  	},1000)
 	  	
 }
 
