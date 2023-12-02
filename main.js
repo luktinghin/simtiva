@@ -9715,19 +9715,23 @@ async function downloadExcel() {
 let inputname = "";
 
 function exportFunction() {
+	//reset inputname
+	inputname = "";
 	testKeys = JSON.parse(localStorage.getItem("keys"));
 	if (testKeys.length>=1) {
 		displayWarning("Export sim-files to CSV",
 		`
 			<div>This will export all ${testKeys.length-1} sim-files on device to a .csv (comma-separated values) file. You can then open this file in Excel or other spreadsheet application. You may also import this database file into SimTIVA for viewing.</div>
 			<div style='height:40px'></div>
-			<div style='display:inline-block;font-size:250%;width:15%;text-align:right;padding-right:10px;color:#ccc'><i class='fas fa-file-csv'></i></div>
-			<div style='display:inline-block;width:84%'>
-				<i>Save as file name:</i><br>
-				<input id='inputnamefield' placeholder='export' style='width:80%;border:2px solid #ccc;border-radius:4px' onkeyup='inputname=this.value'>.csv
+			<div id='fileexportblock'>
+				<div style='display:inline-block;font-size:250%;width:15%;text-align:right;padding-right:10px;color:#ccc'><i class='fas fa-file-csv'></i></div>
+				<div style='display:inline-block;width:84%'>
+					<i>Save as file name:</i><br>
+					<input id='inputnamefield' placeholder='export' style='width:80%;border:2px solid #ccc;border-radius:4px' onkeyup='inputname=this.value'>.csv
+				</div>
 			</div>
 			<div style='height:50px'></div>
-			<div><a class='button invert' onclick='exportKeys(inputname,testKeys);hidewarningmodal();'>Proceed</a><a class='button muted right' onclick='hidewarningmodal()'>Cancel</a></div>
+			<div><a class='button invert' onclick='exportKeys(inputname,testKeys)' id='btn_exportProceed'>Proceed</a><a class='button muted right' onclick='hidewarningmodal()'>Cancel</a></div>
 		`)
 		//exportKeys(inputname,testKeys)
 	}
@@ -9896,9 +9900,8 @@ function exportGenerateDownload(input_string,expFileName) {
 	  	link2.click();
 	  	link2.delete;
 
-	  	setTimeout(function() {
-	  		displayWarning('Export','Export is complete. Please check your download folder.')
-	  	},1000)
+	  	document.getElementById("fileexportblock").innerHTML = "<i>File export complete. You may close this window</i>";
+	  	document.getElementById("btn_exportProceed").classList.add("disabled");
 	  	
 }
 
