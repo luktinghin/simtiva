@@ -4,7 +4,9 @@
  [https://simtiva.app](http://simtiva.app)
 
 ### About
-SimTIVA is a computer simulation program to simulate the delivery of TCI/TIVA. It is a progressive web app and can be run in desktop and mobile browsers across all platforms. Broad cross platform support based on modern web technology means it can be accessed on a wide range of devices. In addition, a simple installation process enables SimTIVA to be run like a native app on your device, and even without internet access. This is an open source project.
+SimTIVA is a computer simulation program to simulate the delivery of TCI/TIVA. It is a progressive web app and can be run in desktop and mobile browsers across all platforms. Broad cross platform support based on modern web technology means it can be accessed on a wide range of devices. In addition, a simple installation process enables SimTIVA to be run like a native app on your device, and even without internet access. 
+
+This is an open source project; created by Terence Luk 2023; licensed under GNU General Public License v3.0.
 
 Coding is done in JavaScript. The code to mathematical calculations are based on STANPUMP, created by Dr. Steven Shafer, freely available on [OpenTCI](http://opentci.org/code/stanpump).
 
