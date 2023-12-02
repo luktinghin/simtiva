@@ -146,6 +146,7 @@ body {
   margin: 0px;
   background:#7B8092;
   overscroll-behavior-y: contain;
+  touch-action: pan-y, pan-x;
 }
 
 
