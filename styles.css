@@ -4333,7 +4333,7 @@ body.dark #progressbar {
   background: transparent;
   border: 2px solid rgb(220,220,220);
   display: flex;
-  padding: 0.5rem 3px 0.5rem 3px;
+  padding: 0.4rem 3px 0.5rem 3px;
   margin-bottom: 0.5rem;
   height: 72px;
   transform: scale(1);

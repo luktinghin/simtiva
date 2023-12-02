@@ -9559,13 +9559,13 @@ function renderFileList(inputkeysarray) {
 		El2.setAttribute('data-duration', tempDuration);
 		if (isComplex == 0) {
 			if (tempObject.name != "") {
-				El2.setAttribute('style', 'height:88px');
+				El2.setAttribute('style', 'height:90px');
 			}
 		} else {
 			if (tempObject.name != "") {
-				El2.setAttribute('style', 'height:104px');
+				El2.setAttribute('style', 'height:107px');
 			} else {
-				El2.setAttribute('style', 'height:88px');	
+				El2.setAttribute('style', 'height:90px');	
 			}
 		}
 		if (isComplex == 0) {
