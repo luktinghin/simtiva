@@ -220,7 +220,12 @@ screen.orientation.addEventListener("change", (event) => {
 //for tooltip destruction on touchend for mobile devices
 document.addEventListener('touchend', function(event) {
     if (event.target && event.target.tagName.toLowerCase() !== "canvas") {
-        myChart.canvas.dispatchEvent(new Event("mouseout"));
+    	if (popupon) {
+    		popupchart.canvas.dispatchEvent(new Event("mouseout"));
+    	} else {
+    		myChart.canvas.dispatchEvent(new Event("mouseout"));	
+    	}
+        
     }
 })
 
@@ -1723,7 +1728,7 @@ function displaypreview2(x,ind) {
 			preview_cpt(x,ind);
 			document.getElementById("preview_cpt").innerHTML = "CP " + x + drug_sets[ind].conc_units + "/ml";
 			if (drug_sets[ind].preview_bolus>0) {
-				document.getElementById("preview_msg").innerHTML = "Bolus " + drug_sets[ind].preview_bolus + drug_sets[ind].infused_units + " (" + Math.round(drug_sets[ind].preview_bolus / drug_sets[ind].infusate_concentration * 10)/10 +  "ml) then infuse at " + drug_sets[ind].preview_rate + "ml/h";
+				document.getElementById("preview_msg").innerHTML = "Bolus " + drug_sets[ind].preview_bolus + drug_sets[ind].infused_units + " (" + Math.round(drug_sets[ind].preview_bolus / drug_sets[ind].infusate_concentration * 10)/10 +  "ml) " + "<i class='fas fa-arrow-alt-circle-right'></i>" + " Infuse at " + drug_sets[ind].preview_rate + "ml/h";
 				document.getElementById("previewicon").className = "fas fa-arrow-circle-up";
 			} else if (drug_sets[ind].preview_rate>0) {
 				document.getElementById("preview_msg").innerHTML = "Change infusion rate to " + drug_sets[ind].preview_rate + "ml/h";
@@ -3392,7 +3397,7 @@ function apply_fentanyl_correction(ind) {
 		//myChart.data.datasets[3].data[counterfen].y = cpt_ce[counterfen][0] + cpt_ce[counterfen][1] + cpt_ce[counterfen][2] + cpt_ce[counterfen][3];
 	}
 	//find beginning of elem of chart of working clock
-	chartBeginIndex = myChart.data.datasets[ind*2+2].data.findIndex((element)=>element.x>=working_clock/60);
+	chartBeginIndex = myChart.data.datasets[ind*2+2].data.findIndex((element)=>element.x>=working_clock/60) ;
 
 	for (counterfen=chartBeginIndex; counterfen<myChart.data.datasets[ind*2+2].data.length; counterfen++) {
 		//myChart.data.datasets[ind*2+2].data[counterfen].y = getcp(Math.floor(myChart.data.datasets[ind*2+2].data[counterfen].x * 60),ind);
@@ -7635,13 +7640,28 @@ function toLoadTransition() {
 }
 
 function toPageOneFromLoad() {
-	setTimeout(function(){setmodal("modalInitial")},200);
-  document.getElementById("modalLoad").classList.remove("fadein");
-  document.getElementById("modalLoadcontent").classList.remove("open");
-  document.getElementById("rescuebuttons").style.display="block";
-  if (manageFileListState == 1) {
-  	manageFileList();
-  }
+	setTimeout(function(){
+		setmodal("modalInitial");
+		//reset styles
+	  	document.getElementById("modalLoadDescription").innerHTML = "Select a SIM-FILE to load:";
+	  	document.getElementById("modalLoadDescription").style.display = "none";
+	  	document.getElementById("fileselection").style.display = "none";
+	  	document.getElementById("loadfile_container").style.display = "none";
+	  	document.getElementById("modalLoadHugeButtons").style.display = "block";
+	  	document.getElementById("modalLoadImportButtons").style.display = "none";
+	  	document.getElementById("modalLoadNormalButtons").style.display = "none";
+	  	document.getElementById("loadfile_container").innerHTML = "";
+	  	document.getElementById("btn_load_import").classList.add("disabled");
+	  	document.getElementById("loadfile_container").classList.remove("compress");
+	  	document.getElementById("loadfile_container").classList.remove("collapse");
+	},200);
+  	document.getElementById("modalLoad").classList.remove("fadein");
+  	document.getElementById("modalLoadcontent").classList.remove("open");
+  	document.getElementById("rescuebuttons").style.display="block";
+
+  	if (manageFileListState == 1) {
+  		manageFileList();
+  	}
 }
 
 function displayDisclaimer() {
@@ -7650,7 +7670,7 @@ function displayDisclaimer() {
 }
 
 function displayAbout() {
-	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk, 2023</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 2/12/2023 (V4.1) Build 90.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
+	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk, 2023</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 2/12/2023 (V4.2) Build 91.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
 	displayWarning("About", text);
 }
 
@@ -7663,7 +7683,7 @@ function ptolwarning() {
 }
 
 function displayloadabout() {
-	text = "The sim-files are saved automatically when simulation is running. To save with a file name for easier access later on, simply type a file name in the share/save popup module. All the data in the sim-files are stored locally on your device via the local-storage API and will never be accessed or stored by our server in any way.";
+	text = "The sim-files are saved automatically when simulation is running. To save with a file name for easier access later on, simply type a file name in the share/save popup module. All the data in the sim-files are stored locally on your device via the local-storage API and will never be accessed or stored by our server in any way.<br><br><b>Exporting sim-file database</b><br>You may export local sim-files by clicking 'Manage' -> 'Export all'. This will generate a .CSV (comma-seperated values) file which you may access with a spreadsheet program or with SimTIVA.<br><br><b>Importing database (.CSV)</b><br>You may import a previously exported database file by choosing this option in the 'Load' menu. The database will be loaded and the sim-files stored in the database can be accessed.";
 	displayWarning("About Sim-Files", text);
 }
 
@@ -7969,13 +7989,23 @@ function confirmretrospective() {
 	hideallmodal();
 }
 
-function init_rescue(input_uid) {
+function init_rescue(input_uid,external_flag) {
+
 	hideallmodal();
+	hidemodal("modalInitial");
+	hidemodal("modalLoad");
 	document.getElementById("card_cpt0").classList.add("hide");
 	document.getElementById("card_cet0").classList.add("hide");
 	document.getElementById("card_infusion0").classList.add("hide");
 	document.getElementById("status").innerHTML = "";
-	parseobject(input_uid);
+	if (external_flag) {
+		tempFileIndex = importDataArray.findIndex((elem) => elem[0]==input_uid);
+		if (tempFileIndex != -1) {
+			parseobject(null,true,importDataArray[tempFileIndex][1]);	
+		}
+	} else {
+		parseobject(input_uid);
+	}
 	var timestamp_lastdatadate = new Date(input_uid*1000 + time_in_s*1000);
 	var timestamp_lastdatatime = timestamp_lastdatadate.toLocaleDateString() + " " + timestamp_lastdatadate.toLocaleTimeString();
 	setTimeout(function() {
@@ -8134,6 +8164,7 @@ function reanimate(arg_time) {
 	//copy from common start calls
 	document.getElementById("top_subtitle").classList.add("topClose");
 	document.getElementById("top_title").classList.add("topOpen");
+	document.getElementById("expandbutton").style.display = "block";
 	if (complex_mode == 0) {
 		var argument = object.P_hx[0][0];
 		// 0 is manual
@@ -9316,13 +9347,46 @@ function loadobject(input_uid) {
 }
 
 function load() {
+	toLoadTransition();
+}
+
+
+function loadSourceExt() {
+	document.getElementById("rescuebuttons").style.display = "none";
+	document.getElementById("modalLoadHugeButtons").style.display = "none";
+	document.getElementById("modalLoadImportButtons").style.display = "block";
+	document.getElementById("fileselection").style.display = "block";
+	document.getElementById("modalLoadDescription").style.display = "inline";
+	document.getElementById("modalLoadDescription").innerHTML = "Import from external .CSV file:";
+	document.getElementById("loadfile_container").classList.add("collapse");
+	document.getElementById("loadfile_container").classList.remove("compress");
+	document.getElementById("loadfile_container").style.display = "block";
+	document.getElementById("loadfile_container").innerHTML = 
+	`
+		<div>After loading, the database of external sim-files will appear here.</div>
+	`
+	//document.getElementById("loadfile_container").style.display = "block";
+	//importDialog();
+}
+
+function loadSourceLocal() {
 	if ((localStorage.getItem("keys") == null) || (JSON.parse(localStorage.getItem("keys")).length == 0)) {
 		displayWarning("No saved data", "No previously saved sim-file data.")
 	} else {
 		generateFileKeys();
-		toLoadTransition();
 		document.getElementById("rescuebuttons").style.display = "none";
+		document.getElementById("modalLoadHugeButtons").style.display = "none";
+		document.getElementById("fileselection").style.display = "none";
+		document.getElementById("modalLoadNormalButtons").style.display = "block";
+		document.getElementById("modalLoadDescription").style.display = "inline";
+		document.getElementById("loadfile_container").classList.remove("collapse");
+		document.getElementById("loadfile_container").classList.remove("compress");
+		document.getElementById("loadfile_container").style.display = "block";
+
+		importDataArray.length = 0;
+
 	}
+
 }
 
 function rescue() {
@@ -9347,9 +9411,24 @@ function generateFileKeys() {
 }
 
 function renderImportList() {
-	let El1 = document.getElementById("filecontent");
-	for (impcountr = 0; impcountr<importDataArray.length-1; impcountr++) {
+	let El1 = document.getElementById("loadfile_container");
+	for (impcountr = 0; impcountr<importDataArray.length; impcountr++) {
 		createfileelement(importDataArray[impcountr][1],importDataArray[impcountr][0],El1);	
+	}
+	let tempFileBoxes = document.getElementsByClassName("file_outerbox");
+
+	if (tempFileBoxes.length == 1) {
+		document.querySelector(".file_outerbox").classList.add("active");
+		selected_uid = document.querySelector(".file_outerbox").id;
+	} else {
+		for (i=0; i<tempFileBoxes.length; i++) {
+			tempFileBoxes[i].classList.remove("active");
+			tempFileBoxes[i].addEventListener('click', function () {
+				selectFileBox(this.id);
+			});
+		}
+		tempFileBoxes[0].classList.add("active");
+		selected_uid = tempFileBoxes[0].id;
 	}
 }
 
@@ -9358,7 +9437,7 @@ function renderFileList(inputkeysarray) {
 
 	if (typeof inputkeysarray == "number") { //this means only 1 key, not an array of keys
 			tempObject = loadobject(inputkeysarray);
-			if (tempObject != -1) createfileelement(tempObject,inputkeysarray);
+			if (tempObject != -1) createfileelement(tempObject,inputkeysarray,El1);
 	} else {
 		for (i=inputkeysarray.length-1; i>=0; i--) {
 			tempObject = loadobject(inputkeysarray[i]);
@@ -9486,13 +9565,13 @@ function renderFileList(inputkeysarray) {
 		El2.setAttribute('data-duration', tempDuration);
 		if (isComplex == 0) {
 			if (tempObject.name != "") {
-				El2.setAttribute('style', 'height:88px');
+				El2.setAttribute('style', 'height:90px');
 			}
 		} else {
 			if (tempObject.name != "") {
-				El2.setAttribute('style', 'height:104px');
+				El2.setAttribute('style', 'height:107px');
 			} else {
-				El2.setAttribute('style', 'height:88px');	
+				El2.setAttribute('style', 'height:90px');	
 			}
 		}
 		if (isComplex == 0) {
@@ -9634,9 +9713,27 @@ async function downloadExcel() {
 }
 */
 
+let inputname = "";
+
 function exportFunction() {
-	if (confirm("This will export all the Sim-Files on device to a .csv (comma-separated values) file. You can then open this file in Excel or other spreadsheet application.")) {
-		exportKeys();
+	//reset inputname
+	inputname = "";
+	testKeys = JSON.parse(localStorage.getItem("keys"));
+	if (testKeys.length>=1) {
+		displayWarning("Export sim-files to CSV",
+		`
+			<div>This will export all ${testKeys.length} sim-files on device to a .csv (comma-separated values) file. You can then open this file in Excel or other spreadsheet application. You may also import this database file into SimTIVA for viewing.</div>
+			<div style='height:40px'></div>
+			<div id='fileexportblock'>
+				<div style='display:inline-block;font-size:250%;width:15%;text-align:right;padding-right:10px;color:#ccc'><i class='fas fa-file-csv'></i></div>
+				<div style='display:inline-block;width:84%'>
+					<i>Save as file name:</i><br>
+					<input id='inputnamefield' placeholder='export' style='width:80%;border:2px solid #ccc;border-radius:4px' onkeyup='inputname=this.value'>.csv
+				</div>
+			</div>
+			<div style='height:50px'></div>
+			<div><a class='button invert' onclick='exportKeys(inputname,testKeys)' id='btn_exportProceed'>Proceed</a><a class='button muted right' onclick='hidewarningmodal()'>Cancel</a></div>
+		`)
 	}
 }
 
@@ -9697,80 +9794,114 @@ function exportDataFile(input_uid) {
 	}
 }
 
-function exportKeys() {
-	testKeys = JSON.parse(localStorage.getItem("keys"));
+function exportKeys(filenameentry,testKeys) {
+	
 	testString = "UID,Timestamp,Duration,Name,Age,Sex,BW,BH,Mode,Model description,Weblink\n";
 	for (kc = 0; kc < testKeys.length; kc++) {
 		temp = exportDataFile(testKeys[kc]);
 		if (temp != undefined) testString += temp;
 	}
-	exportGenerateDownload(testString);
-}
-
-function importDialog() {
-	displayWarning("Import",`
-			<input type='file' id='myFile' onchange='previewFile()' /><br />
-			<p class='filecontent' id='filecontent'></p>
-		`);
+	exportGenerateDownload(testString,filenameentry);
 }
 
 let importDataArray = new Array();
 
 function previewFile() {
 	
-  const content = document.getElementById("filecontent");
+  const content = document.getElementById("loadfile_container");
   const [file] = document.getElementById("myFile").files;
   const reader = new FileReader();
 
   reader.addEventListener(
     "load",
     () => {
-      errorCount = 0;
       //crosschecking code to see whether file type is correct
-      //...
-      //iterate through CSV file
-      let parseArrayRaw = reader.result.split("\n");
-      let impcount;
-      for (impcount = 1; impcount<parseArrayRaw.length-1; impcount++) {
-      	let parseArrayComma = parseArrayRaw[impcount].split(",");
-      	let parseID = parseArrayComma[0]*1;
-      	let parseArrayURL = parseArrayComma[parseArrayComma.length-1];
-      	let parseArrayObj = parseArrayURL.slice(32);
-      	obj = readExternal(parseArrayObj);
-      	if (obj != -1) {
-      		importDataArray.push([parseID,obj]);	
-      	} else {
-      		errorCount += 1;
-      	}
-      	console.log(obj);
-      	console.log(errorCount);
+      errorMessage = "";
+      console.log(reader.fileName);
+      if (!(reader.fileName.slice(-4) == ".csv" || reader.fileName.slice(-4) == ".CSV" )) {
+      	errorMessage += "Not a CSV file." + "<br>";
+      	console.log(errorMessage);
       }
-      impcount -= 1;
-      alert("Total " + impcount + " records retrieved.\n" + 
-      	importDataArray.length + " records read successfully.\n" + 
-      	errorCount + " records failed to load.");
-      renderImportList();
-      //console.log("read successfully");
-      //console.log(parseArrayObj);
+      if (errorMessage != "") {
+      	let tempRaw = reader.result.split("\n"); //last record is 2nd last line. last line is an empty line.
+      	
+      	if (tempRaw != undefined) {
+		      if (reader.result.slice(0,26) != "UID,Timestamp,Duration,Nam") {
+		      	errorMessage += "Cannot read file. Does not seem to be a SimTIVA .csv database file." + "<br>";
+		      } else {
+		      	//preview first record and see if it's fine
+		      	let parseArrayComma = parseArrayRaw[1].split(",");
+		      	let parseArrayURL = parseArrayComma[parseArrayComma.length-1];
+		      	if (parseArrayURL.slice(0,19) != "https://simtiva.app") {
+		      		errorMessage += "Wrong weblink reference. Possible corrupted database.";
+		      	}
+		      }
+      	} else {
+      		errorMessage += "Cannot read file. Does not seem to be a SimTIVA .csv database file.";
+      	}
+      }
+      console.log(errorMessage);
+      if (errorMessage != "") {
+      	displayWarning("Failed import",errorMessage);
+      } else {
+	      errorCount = 0;
 
+	      //iterate through CSV file
+	      let parseArrayRaw = reader.result.split("\n");
+	      let impcount;
+	      //pop importDataArray
+	      importDataArray.length = 0;
+	      for (impcount = 1; impcount<parseArrayRaw.length-1; impcount++) { //last line is empty line. so impcount max is -1
+	      	let parseArrayComma = parseArrayRaw[impcount].split(",");
+	      	let parseID = parseArrayComma[0]*1;
+	      	let parseArrayURL = parseArrayComma[parseArrayComma.length-1];
+	      	let parseArrayObj = parseArrayURL.slice(32);
+	      	obj = readExternal(parseArrayObj);
+	      	if (obj != -1) {
+	      		importDataArray.push([parseID,obj]);	
+	      	} else {
+	      		errorCount += 1;
+	      	}
+	      }
+	      impcount -= 1;
+	      displayWarning("Database Imported","Total " + impcount + " records retrieved. <br>" + 
+	      	importDataArray.length + " records read successfully. <br>" + 
+	      	errorCount + " records failed to load.");
+	      document.getElementById("btn_load_import").classList.remove("disabled");
+	      document.getElementById("loadfile_container").classList.remove("collapse");
+	      document.getElementById("loadfile_container").classList.add("compress");
+	      document.getElementById("loadfile_container").innerHTML = '';
+	      renderImportList();
+      }
     },
     false,
   );
 
   if (file) {
     reader.readAsText(file);
+    reader.fileName = file.name;
   }
 }
 
-function exportGenerateDownload(input_string) {
+function exportGenerateDownload(input_string,expFileName) {
 	jsonObject = "data:text/csv;charset=utf-8," + encodeURIComponent(input_string);
-	
+	if (expFileName.length>0) {
+		expFileName += ".csv";
+	} else {
+		expFileName = "export.csv";
+	}
 		const link2 = document.createElement('a');
 			link2.target = "_blank";
-			link2.download = 'export.csv';
+			link2.download = expFileName;
 	  	link2.href = jsonObject;
 	  	link2.click();
 	  	link2.delete;
+
+	  	document.getElementById("fileexportblock").innerHTML = "<i>File export complete. You may close this window. Click <a id='herelink'>here</a> if you can't find the file in your downloads folder.</i>";
+	  	herelink.target="_blank";
+	  	herelink.download = expFileName;
+	  	herelink.href = jsonObject;
+	  	document.getElementById("btn_exportProceed").classList.add("disabled");
 	  	
 }
 
@@ -9780,9 +9911,7 @@ function selectFileBox(input_uid) {
 	for (i=0; i<tempFileBoxes.length; i++) {
 		tempFileBoxes[i].classList.remove("active");
 		};
-	
 	document.getElementById(selected_uid).classList.add("active");
-	
 }
 
 function unselectFileBox() {
@@ -9810,11 +9939,11 @@ function hideDeleteIcons() {
 		};
 }
 
-function parseobject(input_uid,external,extString) {
+function parseobject(input_uid,external,extObject) {
 	parseloading = 1;
 	document.getElementById("status").innerHTML = "Loading PK data...";
 	if (external == true) {
-		object = readExternal(extString);
+		object = extObject;
 	} else {
 		if (input_uid != null) {
 			object = loadobject(input_uid);
@@ -10876,7 +11005,8 @@ function parsedisplay(t,sex,model,VI,d,mode) {
 		
 		const gradientBgRed = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
 		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
-		if ((position<=0) || (position>=1)) position = 0;
+		if (position<=0) position = 0;
+		if (position>=1) position = 1;
 		gradientBgRed.addColorStop(0, 'rgba(231,50,39,0.4)');
 		gradientBgRed.addColorStop(position, 'rgba(231,50,39,0.4)');
 		gradientBgRed.addColorStop(position, 'rgba(231,50,39,0.1');
@@ -10889,7 +11019,8 @@ function parsedisplay(t,sex,model,VI,d,mode) {
 
 		const gradientBgYellow = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
 		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
-		if ((position<=0) || (position>=1)) position = 0;
+		if (position<=0) position = 0;
+		if (position>=1) position = 1;
 		gradientBgYellow.addColorStop(0, yellowPri50);
 		gradientBgYellow.addColorStop(position, yellowPri50);
 		gradientBgYellow.addColorStop(position, yellowSec10);
@@ -10902,7 +11033,8 @@ function parsedisplay(t,sex,model,VI,d,mode) {
 
 		const gradientBgBlue = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
 		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
-		if ((position<=0) || (position>=1)) position = 0;
+		if (position<=0) position = 0;
+		if (position>=1) position = 1;
 		gradientBgBlue.addColorStop(0, blueLight50);
 		gradientBgBlue.addColorStop(position, blueLight50);
 		gradientBgBlue.addColorStop(position, blueSec10);
@@ -10915,7 +11047,8 @@ function parsedisplay(t,sex,model,VI,d,mode) {
 		
 		const gradientBgGreen = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
 		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
-		if ((position<=0) || (position>=1)) position = 0;
+		if (position<=0) position = 0;
+		if (position>=1) position = 1;
 		gradientBgGreen.addColorStop(0, 'rgba(9,203,93,0.7)');
 		gradientBgGreen.addColorStop(position, 'rgba(9,203,93,0.7)');
 		gradientBgGreen.addColorStop(position, 'rgba(9,203,93,0.1');
@@ -12581,10 +12714,12 @@ function preparerange() {
 		El0.max = current_time;
 		El0.step = 5;
 	}
+	
 	El1.min = Math.floor(current_time/5)*5; //round down to nearest 5
 	El1.max = Math.floor(max_time/10)*10 - 10;
+
 	El0.dataMax = xmin+5;
-	El1.dataMin = xmax-5;
+	El1.dataMin = xmax-10;
 	El0.value = myChart.scales.x.min;
 	El1.value = myChart.scales.x.max;
 

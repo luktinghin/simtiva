@@ -1584,6 +1584,7 @@ a.button.disabled:hover, a.button.disabled:active {
   color:rgb(190,190,190);
   background-color:rgb(240,240,240);
   cursor:not-allowed;
+  pointer-events: none;
 }
 
 a.button.tinybutton {
@@ -2182,7 +2183,7 @@ body.dark .loadduration {
   font-size:40px;
 }
 #previewright {
-  padding-left:9px;
+  padding-left:8px;
   flex-basis:calc(100% - 40px);
 }
 #prompt {
@@ -4251,7 +4252,25 @@ body.dark #progressbar {
   border-color:#ddd;
 }
 
+#modalLoadDescription {
+  display: none;
+}
 
+#modalLoadNormalButtons {
+  display: none;
+}
+
+#modalLoadImportButtons {
+  display: none;
+  padding-bottom: 15px;
+}
+
+#fileselection {
+  display: none;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  
+}
 
 #loadfile_container {
   width: 100%;
@@ -4260,6 +4279,20 @@ body.dark #progressbar {
   margin-bottom: 10px;
   overflow-y: auto;
   height: 60dvh;
+  display: none;
+  /*transition: all ease 1s;*/
+}
+
+#loadfile_container.collapse {
+  height: 200px;
+  padding-top: 70px;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#loadfile_container.compress {
+  height: 50dvh;
 }
 
 #filecontent {
@@ -4272,8 +4305,6 @@ body.dark #progressbar {
   float: right;
   font-size: 150%;
   position: relative;
-  top: -5px;
-  color: rgba(128,128,128,0.8);
   cursor: pointer;
 }
 
@@ -4302,7 +4333,7 @@ body.dark #progressbar {
   background: transparent;
   border: 2px solid rgb(220,220,220);
   display: flex;
-  padding: 0.5rem 3px 0.5rem 3px;
+  padding: 0.4rem 3px 0.5rem 3px;
   margin-bottom: 0.5rem;
   height: 72px;
   transform: scale(1);

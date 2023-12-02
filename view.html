@@ -424,25 +424,31 @@
 		<!-- end parallax bottom-->
 
 		
-		<div id="popupchartdiv" style="display: none;position:fixed;background:black;top:0;left:0;z-index:99;width:100%;height:100%;padding:0.5rem">
-				<button onclick="destroypopup()" style="position:fixed;top:0;left:0">CLOSE</button>
-				<button onclick="updatechart(popupchart);mirrorpopup();" style="position:fixed;top:0;left:90px">REFRESH</button>
-
+		<div id="popupchartdiv" style="display: none;position:fixed;background:black;top:0;left:0;z-index:99;width:100%;height:100%;padding:0">
+				<!--
 				<div id="chartbuttons2" style="display:none">
 					<a id="chartzoomin2" onclick="chartZoomToggle(1);"><i class="fas fa-search-plus"></i></a>
 					<a id="chartoptions2" onclick="chartOptionsToggle();"><i class="fas fa-cog"></i></a>
 					<a id="chartzoomout2" onclick="chartZoomToggle(0);"><i class="fas fa-search-minus"></i></a>
 				</div>
-				<div id="chartoverlayoptions2" style="display:none">
+				-->
+				<div id="chartinfooverlay" class="">
+					<div id="chartinfoleft" onclick="togglePopupInfo();"><i class="fas fa-chevron-circle-right fa-fw"></i></div><!--
+					--><div id="chartinforight">
+						<div id="chartinfotime"><span id="timecopy" class="timespan">0m 0s</span></div>
+						<div id="chartinfodrugline1"><span id="drugnamecopy">DRUG</span><span id="modelnamecopy"></span><span id="conccopy">(_mg/ml)</span></div>
+						<div id="chartinfodrugline2">Awaiting input</div>
+						<div id="chartinfoscheme"><span id="nextratedescriptor">Rate info unavailable </span><span id="nextratecopy"></span><span id="nextratepreposition"></span><span id="timeremaincopy"></span></div>
+						<div id="chartinfoptol">PTOL: __</div>
+					</div>
+				</div>
+				<div id="chartoverlayoptions2" >
 					<div id="chartoverlayoptions2content">
-						<div id="closeoptions2" onclick="chartOptionsToggle();">&times;</div>
-						<div id="" style="font-weight:bold; margin-top:6px; margin-bottom:9px">Chart Options</div>
+						<div id="closeoptions2" onclick="togglepopupoptions();">&times;</div>
+						<div id="" style="font-weight:bold; margin-top:6px; margin-bottom:7px">Chart Options</div>
 						<div id="chartoptionscheckbox2">
-				      <label class="container labeloptionscontainer" style="">Display events
-				          <input type="checkbox" onChange="toggleshowevents();" id="isShowEvents2" ><span class="checkmark"></span>
-				      </label>
 				      <label class="container labeloptionscontainer" style="">Automatic time scale
-				          <input type="checkbox" id="isTimeAutomatic2" onChange="toggleautotime();" ><span class="checkmark"></span>
+				          <input type="checkbox" id="isTimeAutomatic2" onChange="toggleautotime();" checked><span class="checkmark"></span>
 				      </label>
 						</div>
 						<div style="padding-left:30px">Custom time range (min):</div>
@@ -457,10 +463,10 @@
 							</div>		
 						</div>
 						<div style="margin-top:30px" id="PD_options_group2">
-				      <label class="container labeloptionscontainer" style="">PD Effect estimation
-				          <input type="checkbox" id="isEffectEstimationOn2" onChange="toggleEffectEst();" checked><span class="checkmark"></span>
+				      <label class="container labeloptionscontainer" style="margin-bottom:0px">PD Effect estimation
+				          <input type="checkbox" id="isEffectEstimationOn2" onChange="if (document.getElementById('isEffectEstimationOn').checked == true) {document.getElementById('isEffectEstimationOn').checked = false} else {document.getElementById('isEffectEstimationOn').checked = true;}toggleEffectEst();" checked><span class="checkmark"></span>
 				      </label>
-				      <select id="select_effect_measure2" style="margin-left:30px;width:calc(100% - 30px)" onChange="toggleEffectEst();">
+				      <select id="select_effect_measure2" style="margin-left:30px;width:calc(100% - 30px)" onChange="document.getElementById('select_effect_measure').value=document.getElementById('select_effect_measure2').value;toggleEffectEst();">
 				      	<option value="bis">BIS 40-60</option>
 				      	<option value="ptol">PTOL 50-90</option>
 				      	<option value="nsri">NSRI 20-50</option>
@@ -469,12 +475,33 @@
 					</div>
 					<div id="chartoverlayoptionscontentarrow2"></div>
 				</div>
-			<div id="popupchartcontainer" style="width:100%;height:100%;background: white;display:block;border-radius:1rem">
-				<div style="display:inline-block;width:calc(100% - 80px);height:100%"><canvas id="popupchart"></canvas></div><!--
-				--><div style="display:inline-block;width:80px;vertical-align:top">
-						<div class="pop_title_box cp" id="pop_cp"><span id="cp_copy">-</span></div>
-						<div class="pop_title_box ce" id="pop_ce"><span id="ce_copy">-</span></div>
-						<div class="pop_title_box infrate" id="pop_infrate"><span id="infrate_copy">-</span></div>
+			<div id="popupchartcontainer" style="width:100%;height:100%;display:block;border-radius:1rem">
+				<div style="display:inline-block;width:calc(100% - 108px);height:100%;"><canvas id="popupchart"></canvas></div><!--
+				--><div style="display:inline-block;width:108px;vertical-align:top;padding:10px;height:100%">
+						<div style="background:#198964; border-radius:0rem 1rem 1rem 1rem;height:100%"> 
+							<!--right container-->
+							<div class="pop_right_elem">
+								<a class="pop_button" id="pop_button_close" onclick="destroypopup();">
+									<i class="fas fa-times"></i>
+								</a>
+							</div>
+
+							<div class="pop_right_elem">
+								<div class="pop_title_box cp" id="pop_cp"><span id="cp_copy">-</span></div>
+							</div>
+							<div class="pop_right_elem">
+								<div class="pop_title_box ce" id="pop_ce"><span id="ce_copy">-</span></div>
+							</div>
+							<div class="pop_right_elem">
+								<div class="pop_title_box infrate" id="pop_infrate"><span id="infrate_copy">-</span></div>
+							</div>
+						
+							<a class="pop_button" id="pop_button_options" onclick="togglepopupoptions();">
+								<i class="fas fa-cog"></i>
+							</a>
+
+						</div>
+
 				</div>
 			</div>
 		</div>
@@ -486,15 +513,15 @@
 					<div id="warningleft"><i class="fas fa-exclamation-circle" id="warningicon"></i></div>
 					<div id="warningright">
 						<div style="font-size:80%; font-weight:bold; color:red; border-bottom:1px solid #e4c4c4; padding-bottom:2px"><span id="warningdescriptor">REMINDER - next change in </span><div id="warningcounter">10s</div></div>
-						<div style="padding-top:5px font-size:90%" id="warningprompt">_</div>
+						<div style="" id="warningprompt">_</div>
 					</div>
 				</div>
 				<div class="prompts_card" id="preview" style="border-color:#a9c5e4">
 					<div class="prompts_close" onclick="hide_prompts(this.parentElement)"><i class="fas fa-times-circle"></i></div>
 					<div id="previewleft"><i class="fas fa-arrow-circle-up" id="previewicon"></i></div>
 					<div id="previewright">
-						<div style="font-size:80%; font-weight:bold; border-bottom:1px solid #a9c5e4; padding-bottom:2px">PREVIEW: To achieve target <div id="preview_cpt"></div></div>
-						<div style="padding-top:5px font-size:90%" id="preview_msg"></div>
+						<div style="font-size:80%; font-weight:bold; border-bottom:1px solid #a9c5e4; padding-bottom:2px;line-height:1.2">PREVIEW: To achieve target <div id="preview_cpt"></div></div>
+						<div style="line-height:1.2;padding-top:2px;font-size:95%" id="preview_msg"></div>
 					</div>
 				</div>
 				<div class="prompts_card" id="prompt" style="border-color:#9bc99d">
@@ -503,7 +530,7 @@
 					<div id="promptright">
 						<div style="font-size:80%; font-weight:bold; border-bottom:1px solid #9bc99d; padding-bottom:2px"><span id="prompt_msg2">Current rate</span></div>
 						<div id="progressbar"></div>
-						<div style="padding-top:5px font-size:90%" id="prompt_msg"><span id="status">Waiting to start</span><span id="infusiondescriptor"></span></div>
+						<div style="" id="prompt_msg"><span id="status">Waiting to start</span><span id="infusiondescriptor"></span></div>
 					</div>
 				</div>
 			</div>
@@ -772,6 +799,9 @@
 				</div>
 				<div id="annotatebutton" style="display:none" onclick="setnow(Math.floor(time_in_s));document.getElementById('modalAnnotatetitle').innerHTML='ADD EVENT';document.getElementById('addeventtext').value='';document.getElementById('btn_submitevent').setAttribute('onclick','createEvent2(-1)');document.getElementById('btn_deleteevent').style.display='none';setmodal('modalAnnotate')">
 					<i class="fas fa-pen"></i>
+				</div>
+				<div id="expandbutton" style="" onclick="openpopupchart();">
+					<i class="fas fa-expand-alt"></i>
 				</div>
 				<div id="chartcontainer">
 					<canvas id="myChart"></canvas>

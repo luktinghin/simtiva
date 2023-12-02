@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SB7ZEFTEVT"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-SB7ZEFTEVT');
-</script>
 
 	<!--<link rel="stylesheet" href="Chart.css" />-->
 	<link rel="stylesheet" href="styles.css">
@@ -64,7 +55,7 @@
     <link rel="manifest" href="manifest.json">
     <meta charset="utf-8">
 	<meta name="description" content="Simple and free TIVA simulator">
-    <meta name="keywords" content="simtiva, tiva, tci, free, simulator, terence, luk, cuhk, propofol, app, smartphones, apple, android">
+    <meta name="keywords" content="simtiva, tiva, tci, free, simulator, calculator, terence, luk, propofol, remifentanil, alfentanil, app, smartphones, apple, android">
     <meta name="author" content="Terence Luk">
     <title>SimTIVA | Free TIVA Simulation App to Simulate Target-Controlled Infusion | Simple TCI Calculator</title>
 </head>
@@ -82,7 +73,7 @@
 					<br><b>Written by Terence Luk, 2023</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!
 					<br>
 					<br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.
-					<br>Last updated 1/11/2023 (V4.1) Build 90.
+					<br>Last updated 1/12/2023 (V4.2) Build 91.
 					<br>
 					<br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i>
 					<br>Coding is done in Javascript. The code to the mathematical calculations are based on "STANPUMP", which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.
@@ -450,16 +441,35 @@
 
 		<div id="modalLoad" class="modal">
 			<div class="modal-content" id="modalLoadcontent">
-				<div class="modal-header">LOAD SIM FILE</div>
+				<div class="modal-header" id="modalLoadTitle">LOAD SIM FILE<span id="load_about_btn" style="display: inline" onclick="displayloadabout();"><i class="fas fa-question-circle"></i></span></div>
 				<div class="modal-body" style="padding-bottom:0">
-					Select a SIM-FILE to load:<span id="load_about_btn" onclick="displayloadabout();"><i class="fas fa-question-circle"></i></span>
+					<span id="modalLoadDescription">Select a SIM-FILE to load:</span>
+					<div id="fileselection">
+						<input type='file' id='myFile' onchange='previewFile()' style='width: 100%' accept='.csv,.CSV,text/csv'/>
+					</div>
 					<div id="loadfile_container">
 					</div>
-					<a class="button wide invert" id="btn_load" onclick="init_rescue(selected_uid);">Load Selection</a>
-
-					<a class="button muted right" onclick="toPageOneFromLoad();">Back</a>
-					<a class="button muted right" id="btn_manageFiles" onclick="manageFileList();">Manage</a>
-					<div><a class="button hide" id="btn_export" onclick="exportFunction()">Export all</a></div>
+					<div id="modalLoadHugeButtons">
+						Select source:
+						<a class="button huge" style="width:100%" onclick="loadSourceExt();">IMPORT FROM EXTERNAL <i class="fas fa-file-csv fa-fw"></i></a>
+						<div style="padding-left:12px"><i>This will import a previously saved SimTIVA database file (.csv)</i></div>
+						<div style="height:20px"></div>
+						<a class="button huge" style="width:100%" onclick="loadSourceLocal()">LOAD LOCAL SIMFILE <i class="fas fa-file-alt fa-fw"></i></a>
+						<div style="padding-left:12px"><i>This will load sim-files saved on device. You can also manage & export local sim-files.</i></div>
+						<div style="height:20px"></div>
+						<div>&nbsp;<a class="button muted right" onclick="toPageOneFromLoad();">Back</a></div>
+						<div style="height:30px"></div>
+					</div>
+					<div id="modalLoadNormalButtons">
+						<a class="button wide invert" id="btn_load" onclick="init_rescue(selected_uid);">Load Selection</a>
+						<a class="button muted right" onclick="toPageOneFromLoad();">Back</a>
+						<a class="button muted right" id="btn_manageFiles" onclick="manageFileList();">Manage</a>
+						<div><a class="button hide" id="btn_export" onclick="exportFunction()">Export all</a></div>
+					</div>
+					<div id="modalLoadImportButtons">
+						<a class="button wide invert disabled" id="btn_load_import" onclick="init_rescue(selected_uid,true)">Load Selection</a> &nbsp;
+						<a class="button muted right" onclick="toPageOneFromLoad();">Back</a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -1144,7 +1154,7 @@
 					<div id="warningleft"><i class="fas fa-exclamation-circle" id="warningicon"></i></div>
 					<div id="warningright">
 						<div style="font-size:80%; font-weight:bold; color:red; border-bottom:1px solid #e4c4c4; padding-bottom:2px"><span id="warningdescriptor">REMINDER - next change in </span><div id="warningcounter">10s</div></div>
-						<div style="padding-top:5px font-size:90%" id="warningprompt">_</div>
+						<div style="" id="warningprompt">_</div>
 					</div>
 				</div>
 				<div class="prompts_card" id="preview" style="border-color:#a9c5e4">
@@ -1152,7 +1162,7 @@
 					<div id="previewleft"><i class="fas fa-arrow-circle-up" id="previewicon"></i></div>
 					<div id="previewright">
 						<div style="font-size:80%; font-weight:bold; border-bottom:1px solid #a9c5e4; padding-bottom:2px; line-height:1.2">PREVIEW: To achieve target <div id="preview_cpt"></div></div>
-						<div style="padding-top:5px; font-size:90%; line-height:1.2" id="preview_msg"></div>
+						<div style="line-height:1.2;padding-top:2px;font-size:95%" id="preview_msg"></div>
 					</div>
 				</div>
 				<div class="prompts_card" id="prompt" style="border-color:#9bc99d">
@@ -1161,7 +1171,7 @@
 					<div id="promptright">
 						<div style="font-size:80%; font-weight:bold; border-bottom:1px solid #9bc99d; padding-bottom:2px"><span id="prompt_msg2">Current rate</span></div>
 						<div id="progressbar"></div>
-						<div style="padding-top:5px font-size:90%" id="prompt_msg"><span id="status">Waiting to start</span><span id="infusiondescriptor"></span></div>
+						<div style="" id="prompt_msg"><span id="status">Waiting to start</span><span id="infusiondescriptor"></span></div>
 					</div>
 				</div>
 			</div>
