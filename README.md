@@ -24,6 +24,8 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
  Version 4.2 (Build 91) Current
  - Export/Import functions: handling of external .CSV database
  - Bolus dose in CPT/CET now includes ML in preview
+ - Fentanyl CPT/CET: calculation bugfix
+ - Chart: labels for axes
  
  Version 4.1 (Build 89)
  - Fullscreen mode, ability to explore the infusion rates over time
