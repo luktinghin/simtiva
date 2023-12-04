@@ -1780,7 +1780,7 @@ function displaypreview2(x,ind) {
 function hidepreview() {
 	document.getElementById("preview").style.display="none";
 }
-function deliver_cpt(x, effect_flag, compensation, ind) {
+function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weightadj_flag) {
 	//compensation is for compensating "lost CE" with CE downtrend and CP undershoot
 	drug_sets[ind].desired = x;
 	//backup the time at this point, in S
@@ -1846,7 +1846,17 @@ function deliver_cpt(x, effect_flag, compensation, ind) {
 		}
 	}
 
-
+	//special scenario when CPT is invoked from CP approximates CE in CET mode of Fen-Wt adjusted program
+	//here the p_ and e_states are continued from next_time and these need to be upscaled before use
+	if (continuation_fen_weightadj_flag==1) {
+			p_state[1] *= 1/drug_sets[ind].fentanyl_weightadjusted_factor;
+			p_state[2] *= 1/drug_sets[ind].fentanyl_weightadjusted_factor;
+			p_state[3] *= 1/drug_sets[ind].fentanyl_weightadjusted_factor;
+			e_state[1] *= 1/drug_sets[ind].fentanyl_weightadjusted_factor;
+			e_state[2] *= 1/drug_sets[ind].fentanyl_weightadjusted_factor;
+			e_state[3] *= 1/drug_sets[ind].fentanyl_weightadjusted_factor;
+			e_state[4] *= 1/drug_sets[ind].fentanyl_weightadjusted_factor;
+	}
 
 
 	p_state2[1] = p_state[1];
@@ -3130,10 +3140,20 @@ function deliver_cet_real(x, ind) {
 	//if CET gets very close to desired, it is better to target CPT (STANPUMP 1952)
 	if ((Math.abs(drug_sets[ind].desired - est_ce) < drug_sets[ind].desired * 0.05) && (Math.abs(est_ce-est_cp) < est_ce * 0.1) && (working_clock>drug_sets[ind].cet_lockdowntime)) {
 		console.log("CET gets too close to Desired; escaped; to CPT -----");
-		drug_sets[ind].historytext = "<div class='schemecet' data-time='" + working_clock + "'>" + "At " + converttime(working_clock) + " - Ce target (" + conc_units + "/ml): " + drug_sets[ind].desired + "</div>";
+		if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
+			drug_sets[ind].historytext = "<div class='schemecet' data-time='" + working_clock + "'>" + "At " + converttime(working_clock) + " - Ce target (" + conc_units + "/ml): " + drug_sets[ind].fentanyl_weightadjusted_target_uncorrected + "</div>";
+		} else {
+			drug_sets[ind].historytext = "<div class='schemecet' data-time='" + working_clock + "'>" + "At " + converttime(working_clock) + " - Ce target (" + conc_units + "/ml): " + drug_sets[ind].desired + "</div>";
+		}
+		
 		next_time = working_clock ; 
-		drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].desired]);
-		deliver_cpt(drug_sets[ind].desired,1,0,ind);
+		if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
+			drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].fentanyl_weightadjusted_target_uncorrected]);
+		} else {
+			drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].desired]);
+		}
+		
+		deliver_cpt(drug_sets[ind].desired,1,0,ind,1); // continuation flag for fen-wt, CP approximating CE, because p_ and e_states will need upscaling correction
 	} else { //normal CET mode 
 
 		/* should the pump be off? until after this drops below Ce*/
@@ -3400,10 +3420,10 @@ function apply_fentanyl_correction(ind) {
 	chartBeginIndex = myChart.data.datasets[ind*2+2].data.findIndex((element)=>element.x>=working_clock/60) ;
 
 	for (counterfen=chartBeginIndex; counterfen<myChart.data.datasets[ind*2+2].data.length; counterfen++) {
-		//myChart.data.datasets[ind*2+2].data[counterfen].y = getcp(Math.floor(myChart.data.datasets[ind*2+2].data[counterfen].x * 60),ind);
-		//myChart.data.datasets[ind*2+3].data[counterfen].y = getce(Math.floor(myChart.data.datasets[ind*2+2].data[counterfen].x * 60),ind);
-		myChart.data.datasets[ind*2+2].data[counterfen].y *= drug_sets[ind].fentanyl_weightadjusted_factor;
-		myChart.data.datasets[ind*2+3].data[counterfen].y *= drug_sets[ind].fentanyl_weightadjusted_factor;;
+		myChart.data.datasets[ind*2+2].data[counterfen].y = getcp(Math.floor(myChart.data.datasets[ind*2+2].data[counterfen].x * 60),ind);
+		myChart.data.datasets[ind*2+3].data[counterfen].y = getce(Math.floor(myChart.data.datasets[ind*2+2].data[counterfen].x * 60),ind);
+		//myChart.data.datasets[ind*2+2].data[counterfen].y *= drug_sets[ind].fentanyl_weightadjusted_factor;
+		//myChart.data.datasets[ind*2+3].data[counterfen].y *= drug_sets[ind].fentanyl_weightadjusted_factor;;
 	}
 	myChart.update();
 }
@@ -4688,7 +4708,7 @@ function update() {
 				if (drug_sets[active_drug_set_index].cet_bolus>0) {
 					document.getElementById("prompt_msg2").innerHTML = "Last bolus given: " + drug_sets[active_drug_set_index].cet_bolus + drug_sets[active_drug_set_index].infused_units + " at " + converttime(document.querySelector(".schemecet").getAttribute("data-time")*1);
 				} else { //otherwise bug if desired CET goes down
-					if (drug_sets[active_drug_set_index].fentanyl_weightadjusted_flag==0) {
+					if (drug_sets[active_drug_set_index].fentanyl_weightadjusted_flag==1) {
 						document.getElementById("prompt_msg2").innerHTML = "Current target: " + drug_sets[active_drug_set_index].fentanyl_weightadjusted_target_uncorrected + drug_sets[active_drug_set_index].conc_units + "/ml";
 					} else {
 						document.getElementById("prompt_msg2").innerHTML = "Current target: " + drug_sets[active_drug_set_index].desired + drug_sets[active_drug_set_index].conc_units + "/ml";
@@ -7670,7 +7690,7 @@ function displayDisclaimer() {
 }
 
 function displayAbout() {
-	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk, 2023</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 2/12/2023 (V4.2) Build 91.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
+	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk, 2023</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 4/12/2023 (V4.2) Build 92.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
 	displayWarning("About", text);
 }
 
@@ -8149,9 +8169,6 @@ function reanimate(arg_time) {
 		offset = Date.now();
 	}
 
-	
-
-
 	//start by doing drug_sets[0] first
 	//load result // this will affect deliver_cpt to avoid inadvertant bolus
 	result = getcp(Math.floor(time_in_s),0);
@@ -8239,14 +8256,18 @@ function reanimate(arg_time) {
 		}
 		document.getElementById("btn_displayhistory").innerHTML = "Scheme";
 		drug_sets[0].cpt_active = 1;
-		deliver_cpt(drug_sets[0].desired,0,0,0);
+		if (drug_sets[0].fentanyl_weightadjusted_flag == 1) {
+			desired = drug_sets[0].fentanyl_weightadjusted_target_uncorrected;
+			drug_sets[0].desired = 0;
+			deliver_cpt(desired,0,0,0);
+		} else {
+			deliver_cpt(drug_sets[0].desired,0,0,0);	
+		}
 		drug_sets[0].running = 1;
 	}
 	if (argument == 2) {
 		if (drug_sets[0].IB_active == 1) { //intermittent bolus active
 			drug_sets[0].cet_active = 1;
-				
-					
 					document.getElementById("btn_displayhistory").innerHTML = "Scheme";
 					document.getElementById("progressbar").style.display = "block";
 					//UI change
@@ -8306,13 +8327,17 @@ function reanimate(arg_time) {
 			}
 			document.getElementById("btn_displayhistory").innerHTML = "Scheme";
 			drug_sets[0].cet_active = 1;
-			deliver_cet(drug_sets[0].desired,0);
+			if (drug_sets[0].fentanyl_weightadjusted_flag == 1) {
+				alert("uncorrected is 1");
+				desired = drug_sets[0].fentanyl_weightadjusted_target_uncorrected;
+				drug_sets[0].desired = 0;
+				deliver_cet(1,0);
+			} else {
+				deliver_cet(drug_sets[0].desired,0);	
+			}
 			drug_sets[0].running = 1;
 		}
 		if (complex_mode == 0) parseloading = 0;
-
-
-
 	}// end of simple mode block
 	ptol_generate_margins(0,0.9,0.5);
 
@@ -8324,10 +8349,6 @@ function reanimate(arg_time) {
 		//load result // this will affect deliver_cpt to avoid inadvertant bolus
 		result = getcp(Math.floor(time_in_s),1);
 		result_e = getce(Math.floor(time_in_s),1);
-
-		if (drug_sets[1].fentanyl_weightadjusted_flag == 1) {
-			drug_sets[1].desired = drug_sets[1].fentanyl_weightadjusted_target_uncorrected;
-		}
 
 		//start of complex mode reanimation		
 		if (argument1 == 0) {
@@ -8371,7 +8392,13 @@ function reanimate(arg_time) {
 			document.getElementById("card_cpt1").style.display = "";
 			
 			drug_sets[1].cpt_active = 1;
-			deliver_cpt(drug_sets[1].desired,0,0,1);
+			if (drug_sets[1].fentanyl_weightadjusted_flag == 1) {
+				desired = drug_sets[1].fentanyl_weightadjusted_target_uncorrected;
+				drug_sets[1].desired = 0;
+				deliver_cpt(desired,0,0,1);
+			} else {
+				deliver_cpt(drug_sets[1].desired,0,0,1);
+			}
 			drug_sets[1].running = 1;
 			if (orig_drug_set_index == 1) {
 				document.getElementById("card_cpt1").classList.remove("hide");
@@ -8422,7 +8449,13 @@ function reanimate(arg_time) {
 					document.getElementById("card_cet1").classList.add("hide");
 				}
 				drug_sets[1].cet_active = 1;
-				deliver_cet(drug_sets[1].desired,1);
+				if (drug_sets[1].fentanyl_weightadjusted_flag == 1) {
+					desired = drug_sets[0].fentanyl_weightadjusted_target_uncorrected;
+					drug_sets[0].desired = 0;
+					deliver_cet(desired,1);
+				} else {
+					deliver_cet(drug_sets[1].desired,1);
+				}
 				drug_sets[1].running = 1;
 			}
 
