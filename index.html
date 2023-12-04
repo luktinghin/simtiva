@@ -505,7 +505,7 @@
 					<br>Once you have confirmed this action, the CET/CPT targeting scheme will be automatically cleared. You need to enter a new target in CET/CPT mode as soon as possible.</div>
 					<div style="padding-top:1rem; text-align:center">
 					<a class="button wide invert" onclick="confirmretrospective();">Confirm</a>
-					<a class="button" onclick="hideallmodal();hidemodal('modalRetrospective'">Cancel</a>
+					<a class="button" onclick="hideallmodal();hidemodal('modalRetrospective')">Cancel</a>
 					</div>
 				</div>
 			</div>
@@ -2977,15 +2977,22 @@ document.addEventListener('scroll', (event) => {
 	    		y: {
 	    			display: true,
 	    			min: 0,
-	    			max: 5
+	    			max: 5,
+					title: {
+						display: true,
+						text:'Concentration'
+					}
 	    		},
 	    		x: {
 	    			type: 'linear',
 	    			display: true,
 	    			position:'bottom',
 	    			min:0,
-	    			max:20
-	    			
+	    			max:20,
+					title: {
+						display: true,
+						text:'Time (minutes)'
+					}
 	    		}
 	    	},
 	        animation: {
