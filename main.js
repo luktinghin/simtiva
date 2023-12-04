@@ -3156,11 +3156,13 @@ function deliver_cet_real(x, ind) {
 		next_time = working_clock ; 
 		if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
 			drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].fentanyl_weightadjusted_target_uncorrected]);
+			deliver_cpt(drug_sets[ind].desired,1,0,ind,1); // continuation flag for fen-wt, CP approximating CE, because p_ and e_states will need upscaling correction
 		} else {
 			drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].desired]);
+			deliver_cpt(drug_sets[ind].desired,1,0,ind,0); 
 		}
 		
-		deliver_cpt(drug_sets[ind].desired,1,0,ind,1); // continuation flag for fen-wt, CP approximating CE, because p_ and e_states will need upscaling correction
+		
 	} else { //normal CET mode 
 
 		/* should the pump be off? until after this drops below Ce*/
