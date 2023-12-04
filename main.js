@@ -10929,6 +10929,11 @@ function parsedisplay(t,sex,model,VI,d,mode) {
   	document.getElementById("drugname").innerHTML = "Alfentanil <span style='opacity:0.5'>(" + drug_sets[0].infusate_concentration + "mcg/ml)</span>";
   }
 
+  	if (drug_sets[0].drug_name == "Propofol") {
+		myChart.options.scales.y.title.text = "Concentration (mcg/ml)";
+	} else {
+		myChart.options.scales.y.title.text = "Concentration (ng/ml)";
+	}
   if (modal != undefined) hideallmodal();
 }
 
