@@ -2729,7 +2729,7 @@ input[type=range]:focus::-ms-fill-upper {
 #chartbuttons {
   display:flex;
   position:absolute;
-  bottom:40px;
+  bottom:60px;
   right:20px;
   height: 30px;
   background:#ccc;
