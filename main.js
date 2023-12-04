@@ -8157,10 +8157,6 @@ function reanimate(arg_time) {
 	result = getcp(Math.floor(time_in_s),0);
 	result_e = getce(Math.floor(time_in_s),0);
 
-	if (drug_sets[0].fentanyl_weightadjusted_flag == 1) {
-		drug_sets[0].desired = drug_sets[0].fentanyl_weightadjusted_target_uncorrected;
-	}
-
 	//copy from common start calls
 	document.getElementById("top_subtitle").classList.add("topClose");
 	document.getElementById("top_title").classList.add("topOpen");
