@@ -1260,7 +1260,7 @@ body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom
 .modal {
     display: block; 
     position: fixed; 
-    z-index: 97; 
+    z-index: 90; 
     padding-top: 15vh; 
     left: 0;
     top: 0;
@@ -3020,7 +3020,159 @@ body.dark .modal-body a.button_paedimode:hover {
   font-size:80%;
 }
 
-/* END TCI STYLES
+/* END TCI STYLES*/
+
+/* start numpad styles*/
+
+#numpadBackground {
+  top: 0;
+  left: 0;
+  width: calc(100% - 98px);
+  height: 100%;
+  z-index: 97;
+  background: rgb(0,0,0,0.5);
+  position: absolute;
+  display: none;
+}
+#numpadPreview {
+  top: 12px;
+  right: 128px;
+  font-size: 0.85rem;
+  width: 220px;
+  height: 69px;
+  background: #333;
+  z-index: 98;
+  position: absolute;
+  color: white;
+  display: none;
+  padding: 8px 5px 5px 5px;
+  border: 1px solid #666;
+  border-radius: 9px;
+  border-left: 10px solid #666;
+}
+#numpad_preview_msg {
+  font-style: italic;
+}
+#numpadLine {
+  height: 3px;
+  width: 34px;
+  background: #fff;
+  position: absolute;
+  display: block;
+  right: 95px;
+  top: 155px;
+  z-index: 99;
+  display: none;
+}
+#numpadLine.ce {
+  display: block;
+}
+#numpadLine.cp {
+  display: block;
+  top: 102px;
+}
+#numpadContainer {
+  width: 220px;
+  position: absolute;
+  top: 89px;
+  right: 128px;
+  z-index: 99;
+  display: none;
+}
+
+#numpadTitle {
+  width: 100%;
+  padding: 8px 10px 2px 10px;
+  border-radius: 9px 9px 0 0;
+  background-color: #4cAF50;
+  color: white;
+  font-weight: bold;
+  line-height: 28px;
+  font-size: 0.9rem;
+}
+
+#numpadBody {
+  width: 100%;
+  background: white;
+  color: black;
+  border-radius: 0 0 9px 9px;
+}
+
+#numpadOutput {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  background: #ddd;
+  font-size: 150%;
+  justify-content: center;
+}
+
+#numpadOutputDisplay {
+  flex-basis: 40%;
+  align-self: center;
+  text-align: center;
+  background: #fff;
+  overflow-x: hidden;
+}
+
+#numpadOutputDisplayMinus {
+  flex-basis: 30px;
+  text-align: right;
+  align-self: center;
+  background: white;
+  border-radius: 1rem 0 0 1rem;
+  cursor: pointer;
+}
+
+#numpadOutputDisplayPlus {
+  flex-basis: 30px;
+  text-align: left;
+  align-self: center;
+  background: white;
+  border-radius: 0 1rem 1rem 0;
+  cursor: pointer;
+}
+
+#numpadInput {
+  width: 100%;
+}
+
+.numkeyRow {
+  width: 100%;
+  display: flex;
+  height: 35px;
+  justify-content: center;
+}
+
+.numkey {
+  flex-basis: 32.5%;
+  color: black;
+  align-self: center;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 9px;
+  border: 1px solid #eee;
+  line-height: 31px;
+}
+
+.numkey.numactive {
+  box-shadow:inset 1px 4px 6px 0px rgb(0 0 0 / 30%);
+}
+
+.numkey:hover {
+  background: #eee;
+}
+
+#funcBackspace {
+
+}
+#numpadButtons {
+  font-size: 0.9rem;
+  line-height: 1.1;
+  padding-top: 6px;
+}
+/* end numpad styles*/
+
 
 @media screen {
 #headerarea {font-size:10.5pt;}
@@ -3632,6 +3784,61 @@ tr.subheading7 {
   right: 32px;
   bottom: 32px;
 }
+#pop_right_edit_cp {
+  text-align: center;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  background: rgba(0,0,0,0.2);
+  width: 82px;
+  margin: 0 auto;
+  position: relative;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-radius: 0 0 9px 9px;
+  display: none;
+  cursor: pointer;
+}
+#pop_right_edit_cp::after {
+  width: 80px;
+  background: transparent;
+  position: absolute;
+  top: -10px;
+  left: -1px;
+  content: '';
+  height: 10px;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+#pop_right_edit_ce {
+  text-align: center;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  background: rgba(0,0,0,0.2);
+  width: 82px;
+  margin: 0 auto;
+  position: relative;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-radius: 0 0 9px 9px;
+  display: none;
+  cursor: pointer;
+}
+#pop_right_edit_ce::after {
+  width: 80px;
+  background: transparent;
+  position: absolute;
+  top: -10px;
+  left: -1px;
+  content: '';
+  height: 10px;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+
+}
 .pop_title_box {
   border: 1px solid;
   border-color: #fff;
@@ -3771,7 +3978,7 @@ tr.subheading7 {
   font-size: 20px;
   border: 1px solid #bbb;
   cursor: pointer;
-  z-index: 98; /*higher than modal*/
+  z-index: 91; /*higher than modal*/
   transition: 0.3s opacity ease;
   pointer-events: none;
 }
@@ -3798,7 +4005,7 @@ tr.subheading7 {
   font-size: 20px;
   border: 1px solid #bbb;
   cursor: pointer;
-  z-index: 98; /*higher than modal*/
+  z-index: 91; /*higher than modal*/
   transition: 0.3s all ease;
   pointer-events: none;
 }
@@ -3825,7 +4032,7 @@ tr.subheading7 {
   font-size: 20px;
   border: 1px solid #bbb;
   cursor: pointer;
-  z-index: 98; /*higher than modal*/
+  z-index: 91; /*higher than modal*/
   transition: 0.3s opacity ease;
   pointer-events: none;
 }

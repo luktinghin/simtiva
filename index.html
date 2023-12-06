@@ -107,6 +107,57 @@
 				</div>
 			</div>
 		</div>
+
+		<!--start numpad -->
+		<div id="numpadContainer">
+			<div id="numpadTitle">
+				Numpad
+			</div>
+			<div id="numpadBody">
+				<div id="numpadOutput">
+					<div id="numpadOutputDisplayMinus" onclick="step(this.id)"><i class="fas fa-minus-circle"></i></div>
+					<div id="numpadOutputDisplay">123</div>
+					<div id="numpadOutputDisplayPlus" onclick="step(this.id)"><i class="fas fa-plus-circle"></i></div>
+				</div>
+				<div id="numpadInput">
+					<div class="numkeyRow">
+						<div class="numkey" id="7" onclick="keypress(this.id)">7</div>
+						<div class="numkey" id="8" onclick="keypress(this.id)">8</div>
+						<div class="numkey" id="9" onclick="keypress(this.id)">9</div>
+					</div>
+					<div class="numkeyRow">
+						<div class="numkey" id="4" onclick="keypress(this.id)">4</div>
+						<div class="numkey" id="5" onclick="keypress(this.id)">5</div>
+						<div class="numkey" id="6" onclick="keypress(this.id)">6</div>
+					</div>
+					<div class="numkeyRow">
+						<div class="numkey" id="1" onclick="keypress(this.id)">1</div>
+						<div class="numkey" id="2" onclick="keypress(this.id)">2</div>
+						<div class="numkey" id="3" onclick="keypress(this.id)">3</div>
+					</div>
+					<div class="numkeyRow">
+						<div class="numkey" id="funcDot" onclick="decimal()">.</div>
+						<div class="numkey" id="0" onclick="keypress(this.id)">0</div>
+						<div class="numkey" id="funcBackspace" onclick="backspace();"><i class="fas fa-backspace"></i></div>
+					</div>
+				</div>
+			</div>
+			<div id="numpadButtons">
+				<a class="button invert" onclick="" id="btn_confirm_numpad">Enter</a>
+				<a class="button muted right" onclick="hideNumpad()">Cancel</a>
+			</div>
+		</div>
+
+		<div id="numpadPreview">
+			<div>Preview:</div>
+			<div id="numpad_preview_msg">Waiting for input</div>
+		</div>
+
+		<div id="numpadLine">
+		</div>
+		<div id="numpadBackground">
+		</div>
+
 		<!--startmodal-->
 
 		<div id="modalInitial" class="modal">
@@ -1065,7 +1116,7 @@
 		<!-- end parallax bottom-->
 
 		
-		<div id="popupchartdiv" style="display: none;position:fixed;background:black;top:0;left:0;z-index:99;width:100%;height:100%;padding:0">
+		<div id="popupchartdiv" style="display: none;position:fixed;background:black;top:0;left:0;z-index:96;width:100%;height:100%;padding:0">
 				<!--
 				<div id="chartbuttons2" style="display:none">
 					<a id="chartzoomin2" onclick="chartZoomToggle(1);"><i class="fas fa-search-plus"></i></a>
@@ -1130,12 +1181,20 @@
 							<div class="pop_right_elem">
 								<div class="pop_title_box cp" id="pop_cp"><span id="cp_copy">-</span></div>
 							</div>
+							<div id="pop_right_edit_cp">
+								Edit Cp
+							</div>
 							<div class="pop_right_elem">
 								<div class="pop_title_box ce" id="pop_ce"><span id="ce_copy">-</span></div>
+							</div>
+							<div id="pop_right_edit_ce">
+								Edit Ce
 							</div>
 							<div class="pop_right_elem">
 								<div class="pop_title_box infrate" id="pop_infrate"><span id="infrate_copy">-</span></div>
 							</div>
+
+
 						
 							<a class="pop_button" id="pop_button_options" onclick="togglepopupoptions();">
 								<i class="fas fa-cog"></i>
