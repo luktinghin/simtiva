@@ -3038,14 +3038,14 @@ body.dark .modal-body a.button_paedimode:hover {
   top: 12px;
   right: 128px;
   font-size: 0.85rem;
-  width: 220px;
+  width: 250px;
   height: 69px;
   background: #333;
   z-index: 98;
   position: absolute;
   color: white;
   display: none;
-  padding: 8px 5px 5px 5px;
+  padding: 8px 4px 5px 4px;
   border: 1px solid #666;
   border-radius: 9px;
   border-left: 10px solid #666;
@@ -3072,9 +3072,9 @@ body.dark .modal-body a.button_paedimode:hover {
   top: 102px;
 }
 #numpadContainer {
-  width: 220px;
+  width: 250px;
   position: absolute;
-  top: 89px;
+  top: 86px;
   right: 128px;
   z-index: 99;
   display: none;
@@ -3087,8 +3087,8 @@ body.dark .modal-body a.button_paedimode:hover {
   background-color: #4cAF50;
   color: white;
   font-weight: bold;
-  line-height: 28px;
-  font-size: 0.9rem;
+  line-height: 20px;
+  font-size: 0.85rem;
 }
 
 #numpadBody {
@@ -3167,9 +3167,9 @@ body.dark .modal-body a.button_paedimode:hover {
 
 }
 #numpadButtons {
-  font-size: 0.9rem;
-  line-height: 1.1;
-  padding-top: 6px;
+  font-size: 0.85rem;
+  line-height: 1;
+  padding-top: 4px;
 }
 /* end numpad styles*/
 
