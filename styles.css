@@ -3035,18 +3035,18 @@ body.dark .modal-body a.button_paedimode:hover {
   display: none;
 }
 #numpadPreview {
-  top: 12px;
-  right: 128px;
+  top: 10px;
+  right: 97px;
   font-size: 0.85rem;
-  width: 250px;
-  height: 69px;
+  width: 281px;
+  height: 55px;
   background: #333;
   z-index: 98;
   position: absolute;
   color: white;
   display: none;
   padding: 6px;
-  border: 1px solid #666;
+  border: 1px solid #198964;
   border-radius: 9px;
 }
 #numpad_preview_msg {
@@ -3073,7 +3073,7 @@ body.dark .modal-body a.button_paedimode:hover {
 #numpadContainer {
   width: 250px;
   position: absolute;
-  top: 86px;
+  top: 75px;
   right: 128px;
   z-index: 99;
   display: none;
@@ -3164,12 +3164,11 @@ body.dark .modal-body a.button_paedimode:hover {
   border: 1px solid #bbb;
   font-size: 0.85rem;
   font-weight: bold;
-  
 }
 
 #btn_confirm_numpad {
   background: #4CAF50;
-  border: 1px solid #777;
+  border: 1px solid #187f18;
   color: white;
 }
 
