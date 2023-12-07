@@ -13386,29 +13386,29 @@ function openpopupchart() {
 		//reset edit boxes and display edit cp or ce button
 		document.getElementById("pop_right_edit_cp").style.display = "none";
 		document.getElementById("pop_right_edit_cp").style.display = "none";
-		document.getElementById("pop_right_edit_cp").classList.remove("shadow");
-		document.getElementById("pop_right_edit_ce").classList.remove("shadow");
+		document.getElementById("pop_cp").classList.remove("shadow");
+		document.getElementById("pop_ce").classList.remove("shadow");
 		if (active_drug_set_index == 0 && drug_sets[0].cpt_active > 0) {
 			document.getElementById("pop_right_edit_cp").style.display = "block";
-			document.getElementById("pop_right_edit_cp").classList.add("shadow");
+			document.getElementById("pop_cp").classList.add("shadow");
 			document.getElementById("pop_right_edit_cp").setAttribute('onclick','displayNumpad("cp")');
 			document.getElementById('btn_confirm_numpad').setAttribute('onclick','confirmNumpad("inputDesired0")');
 		}
 		if (active_drug_set_index == 0 && drug_sets[0].cet_active > 0 && drug_sets[0].IB_active == 0) {
 			document.getElementById("pop_right_edit_ce").style.display = "block";
-			document.getElementById("pop_right_edit_ce").classList.add("shadow");
+			document.getElementById("pop_ce").classList.add("shadow");
 			document.getElementById("pop_right_edit_ce").setAttribute('onclick','displayNumpad("ce")');
 			document.getElementById('btn_confirm_numpad').setAttribute('onclick','confirmNumpad("inputDesiredCe0")');
 		}
 		if (active_drug_set_index == 1 && drug_sets[1].cpt_active > 1) {
 			document.getElementById("pop_right_edit_cp").style.display = "block";
-			document.getElementById("pop_right_edit_cp").classList.add("shadow");
+			document.getElementById("pop_rp").classList.add("shadow");
 			document.getElementById("pop_right_edit_cp").setAttribute('click','displayNumpad("cp")');
 			document.getElementById('btn_confirm_numpad').setAttribute('click','confirmNumpad("inputDesired1")');
 		}
 		if (active_drug_set_index == 1 && drug_sets[1].cpt_active > 1 && drug_sets[1].IB_active == 0) {
 			document.getElementById("pop_right_edit_ce").style.display = "block";
-			document.getElementById("pop_right_edit_ce").classList.add("shadow");
+			document.getElementById("pop_ce").classList.add("shadow");
 			document.getElementById("pop_right_edit_ce").setAttribute('click','displayNumpad("ce")');
 			document.getElementById('btn_confirm_numpad').setAttribute('click','confirmNumpad("inputDesiredCe1")');
 		}
@@ -13769,6 +13769,11 @@ function displayNumpad(parameter) {
 		document.getElementById("numpadLine").classList.add("cp");
 		document.getElementById("numpadTitle").innerHTML = "Quick Edit CP";
 	}
+}
+
+function resetNumpad() {
+		numpadValue = Math.round(drug_sets[active_drug_set_index].desired*10)/10;
+		document.getElementById("numpadOutputDisplay").innerHTML = numpadValue;
 }
 
 function confirmNumpad(parameter) {

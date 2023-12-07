@@ -3152,24 +3152,27 @@ body.dark .modal-body a.button_paedimode:hover {
   border-radius: 9px;
   border: 1px solid #eee;
   line-height: 31px;
+  margin: 1px;
 }
 
 .numkey.numactive {
   box-shadow:inset 1px 4px 6px 0px rgb(0 0 0 / 30%);
 }
 
-.numkey:hover {
-  background: #eee;
-}
-
-#funcBackspace {
-
-}
-#numpadButtons {
+.numkey.special {
+  background: #ddd;
+  border: 1px solid #bbb;
   font-size: 0.85rem;
-  line-height: 1;
-  padding-top: 4px;
+  font-weight: bold;
+  
 }
+
+#btn_confirm_numpad {
+  background: #4CAF50;
+  border: 1px solid #777;
+  color: white;
+}
+
 /* end numpad styles*/
 
 
@@ -3792,7 +3795,7 @@ tr.subheading7 {
   width: 82px;
   margin: 0 auto;
   position: relative;
-  border-radius: 9px
+  border-radius: 9px;
   display: none;
   cursor: pointer;
   box-shadow: inset 0px -1px 0px #fff6;

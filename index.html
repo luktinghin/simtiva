@@ -1049,11 +1049,12 @@
 							<div class="numkey" id="0" onclick="keypress(this.id)">0</div>
 							<div class="numkey" id="funcBackspace" onclick="backspace();"><i class="fas fa-backspace"></i></div>
 						</div>
+						<div class="numkeyRow">
+							<div class="numkey special" id="btn_confirm_numpad">Enter</div>
+							<div class="numkey special" onclick="resetNumpad();">Reset</div>
+							<div class="numkey special" onclick="hideNumpad();">Cancel</div>
+						</div>
 					</div>
-				</div>
-				<div id="numpadButtons">
-					<a class="button invert" onclick="" id="btn_confirm_numpad">Enter</a>
-					<a class="button muted right" onclick="hideNumpad()">Cancel</a>
 				</div>
 			</div>
 
