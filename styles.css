@@ -4135,7 +4135,7 @@ tr.subheading7 {
 
 .hamburger {
   position:fixed;
-  z-index:90;
+  z-index:89;
   cursor: pointer;
   top:22px;
   right:10px;

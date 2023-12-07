@@ -108,56 +108,6 @@
 			</div>
 		</div>
 
-		<!--start numpad -->
-		<div id="numpadContainer">
-			<div id="numpadTitle">
-				Numpad
-			</div>
-			<div id="numpadBody">
-				<div id="numpadOutput">
-					<div id="numpadOutputDisplayMinus" onclick="step(this.id)"><i class="fas fa-minus-circle"></i></div>
-					<div id="numpadOutputDisplay">123</div>
-					<div id="numpadOutputDisplayPlus" onclick="step(this.id)"><i class="fas fa-plus-circle"></i></div>
-				</div>
-				<div id="numpadInput">
-					<div class="numkeyRow">
-						<div class="numkey" id="7" onclick="keypress(this.id)">7</div>
-						<div class="numkey" id="8" onclick="keypress(this.id)">8</div>
-						<div class="numkey" id="9" onclick="keypress(this.id)">9</div>
-					</div>
-					<div class="numkeyRow">
-						<div class="numkey" id="4" onclick="keypress(this.id)">4</div>
-						<div class="numkey" id="5" onclick="keypress(this.id)">5</div>
-						<div class="numkey" id="6" onclick="keypress(this.id)">6</div>
-					</div>
-					<div class="numkeyRow">
-						<div class="numkey" id="1" onclick="keypress(this.id)">1</div>
-						<div class="numkey" id="2" onclick="keypress(this.id)">2</div>
-						<div class="numkey" id="3" onclick="keypress(this.id)">3</div>
-					</div>
-					<div class="numkeyRow">
-						<div class="numkey" id="funcDot" onclick="decimal()">.</div>
-						<div class="numkey" id="0" onclick="keypress(this.id)">0</div>
-						<div class="numkey" id="funcBackspace" onclick="backspace();"><i class="fas fa-backspace"></i></div>
-					</div>
-				</div>
-			</div>
-			<div id="numpadButtons">
-				<a class="button invert" onclick="" id="btn_confirm_numpad">Enter</a>
-				<a class="button muted right" onclick="hideNumpad()">Cancel</a>
-			</div>
-		</div>
-
-		<div id="numpadPreview">
-			<div>Preview:</div>
-			<div id="numpad_preview_msg">Waiting for input</div>
-		</div>
-
-		<div id="numpadLine">
-		</div>
-		<div id="numpadBackground">
-		</div>
-
 		<!--startmodal-->
 
 		<div id="modalInitial" class="modal">
@@ -1045,27 +995,6 @@
 			</div>
 		</div>
 		<div id="parallax1">
-			<!--<div id="parallaxtop" class="propofol">
-				<div class="parallax_left">
-					<div class="parallax_drug_name"><span class="parallax_drug_name1">Propofol</span><div id="parallax_desired">_</div>
-					</div>
-						<div class="parallax_drug_model">
-							<span class="parallax_drug_model_name">Eleveld</span> | <span class="parallax_drug_conc">20mcg/ml</span>
-						</div>
-					</div>
-					
-				<div class="parallax_right">
-					
-						<div class="parallax_conc_box cp"><span id="cp_active">2.9</span>
-						</div>
-						<div class="parallax_conc_box ce"><span id="ce_active">3.3</span>
-						</div>
-						<div class="parallax_conc_box inf"><span id="inf_active">35</span>
-						</div>
-					
-				</div>
-			</div>
-			-->
 			<div id="parallax1container" class="">
 				<div class="displayleft">
 					<div class="clockcontainer"><span id="clock">_</span></div>
@@ -1083,47 +1012,63 @@
 				</div>
 			</div>
 		</div>
-		<!--start parallax bottom-->
-		<!--
-		<div id="parallaxbottom">
-			<div id="parallaxbottom_whitebox">&nbsp;</div>
-			<div id="parallaxbottom_container"  class="remifentanil">
-				<div class="parallax_left" >
-					<div class="parallax_drug_name"><span class="parallax_drug_name1">Remifentanil</span>
-						<div id="parallaxbottom_desired">_</div>
-					</div>
-						<div class="parallax_drug_model">
-							<span class="parallax_drug_model_name">Minto</span> | <span class="parallax_drug_conc">20mcg/ml</span>
-						</div>
-					</div>
-					
-				<div class="parallax_right">
-					
-						<div class="parallax_conc_box cp"><span id="cp_alt">2.9</span>
-						</div>
-						<div class="parallax_conc_box ce"><span id="ce_alt">3.3</span>
-						</div>
-						<div class="parallax_conc_box inf"><span id="inf_alt">35</span>
-						</div>
-					
-				</div>
-			</div>
-			<div id="parallaxbottom_message">
-				<div id="parallaxbottom_message1"></div>
-			</div>
-		</div>
-	-->
-		<!-- end parallax bottom-->
+
 
 		
 		<div id="popupchartdiv" style="display: none;position:fixed;background:black;top:0;left:0;z-index:96;width:100%;height:100%;padding:0">
-				<!--
-				<div id="chartbuttons2" style="display:none">
-					<a id="chartzoomin2" onclick="chartZoomToggle(1);"><i class="fas fa-search-plus"></i></a>
-					<a id="chartoptions2" onclick="chartOptionsToggle();"><i class="fas fa-cog"></i></a>
-					<a id="chartzoomout2" onclick="chartZoomToggle(0);"><i class="fas fa-search-minus"></i></a>
+
+			<!--start numpad -->
+			<div id="numpadContainer">
+				<div id="numpadTitle">
+					Numpad
 				</div>
-				-->
+				<div id="numpadBody">
+					<div id="numpadOutput">
+						<div id="numpadOutputDisplayMinus" onclick="step(this.id)"><i class="fas fa-minus-circle"></i></div>
+						<div id="numpadOutputDisplay">123</div>
+						<div id="numpadOutputDisplayPlus" onclick="step(this.id)"><i class="fas fa-plus-circle"></i></div>
+					</div>
+					<div id="numpadInput">
+						<div class="numkeyRow">
+							<div class="numkey" id="7" onclick="keypress(this.id)">7</div>
+							<div class="numkey" id="8" onclick="keypress(this.id)">8</div>
+							<div class="numkey" id="9" onclick="keypress(this.id)">9</div>
+						</div>
+						<div class="numkeyRow">
+							<div class="numkey" id="4" onclick="keypress(this.id)">4</div>
+							<div class="numkey" id="5" onclick="keypress(this.id)">5</div>
+							<div class="numkey" id="6" onclick="keypress(this.id)">6</div>
+						</div>
+						<div class="numkeyRow">
+							<div class="numkey" id="1" onclick="keypress(this.id)">1</div>
+							<div class="numkey" id="2" onclick="keypress(this.id)">2</div>
+							<div class="numkey" id="3" onclick="keypress(this.id)">3</div>
+						</div>
+						<div class="numkeyRow">
+							<div class="numkey" id="funcDot" onclick="decimal()">.</div>
+							<div class="numkey" id="0" onclick="keypress(this.id)">0</div>
+							<div class="numkey" id="funcBackspace" onclick="backspace();"><i class="fas fa-backspace"></i></div>
+						</div>
+					</div>
+				</div>
+				<div id="numpadButtons">
+					<a class="button invert" onclick="" id="btn_confirm_numpad">Enter</a>
+					<a class="button muted right" onclick="hideNumpad()">Cancel</a>
+				</div>
+			</div>
+
+			<div id="numpadPreview">
+				<div>Preview:</div>
+				<div id="numpad_preview_msg">Waiting for input</div>
+			</div>
+
+			<div id="numpadLine">
+			</div>
+			<div id="numpadBackground">
+			</div>
+
+			<!--end numpad -->
+
 				<div id="chartinfooverlay" class="">
 					<div id="chartinfoleft" onclick="togglePopupInfo();"><i class="fas fa-chevron-circle-right fa-fw"></i></div><!--
 					--><div id="chartinforight">
