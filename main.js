@@ -13759,6 +13759,7 @@ function displayNumpad(parameter) {
 	document.getElementById("numpadBackground").style.display = "block";
 	document.getElementById("numpadContainer").style.display = "block";
 	document.getElementById("chartinfooverlay").classList.remove("open");
+	document.getElementById("numpad_preview_msg").innerHTML = "Waiting for input";
 	if (parameter == "ce") {
 		numpadValue = Math.round(drug_sets[active_drug_set_index].desired*10)/10;
 		document.getElementById("numpadOutputDisplay").innerHTML = numpadValue;
@@ -13776,6 +13777,7 @@ function displayNumpad(parameter) {
 function resetNumpad() {
 		numpadValue = numpadOrig;
 		document.getElementById("numpadOutputDisplay").innerHTML = numpadValue;
+		document.getElementById("numpad_preview_msg").innerHTML = "Waiting for input"
 }
 
 function confirmNumpad(parameter) {
