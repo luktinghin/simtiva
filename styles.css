@@ -3788,55 +3788,28 @@ tr.subheading7 {
   color: white;
   font-size: 0.7rem;
   font-weight: bold;
-  background: rgba(0,0,0,0.2);
+  background: #4CAF50;
   width: 82px;
   margin: 0 auto;
   position: relative;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  border-radius: 0 0 9px 9px;
+  border-radius: 9px
   display: none;
   cursor: pointer;
-}
-#pop_right_edit_cp::after {
-  width: 80px;
-  background: transparent;
-  position: absolute;
-  top: -10px;
-  left: -1px;
-  content: '';
-  height: 10px;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
+  box-shadow: inset 0px -1px 0px #fff6;
 }
 #pop_right_edit_ce {
   text-align: center;
   color: white;
   font-size: 0.7rem;
   font-weight: bold;
-  background: rgba(0,0,0,0.2);
+  background: #4CAF50;
   width: 82px;
   margin: 0 auto;
   position: relative;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  border-radius: 0 0 9px 9px;
+  border-radius: 9px;
   display: none;
   cursor: pointer;
-}
-#pop_right_edit_ce::after {
-  width: 80px;
-  background: transparent;
-  position: absolute;
-  top: -10px;
-  left: -1px;
-  content: '';
-  height: 10px;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-
+  box-shadow: inset 0px -1px 0px #fff6;
 }
 .pop_title_box {
   border: 1px solid;
@@ -3874,14 +3847,19 @@ tr.subheading7 {
 .pop_title_box.ce {
   /*border-color: rgb(155,201,157);*/
 }
+.pop_title_box.shadow {
+  box-shadow: 0px 20px 0px #4caf50
+}
 .pop_title_box.infrate {
   /*border-color: #ddd;*/
 }
 .pop_title_box.cp::after {
   content: 'Cp';
+  border-radius: 9px;
 }
 .pop_title_box.ce::after {
   content: 'Ce';
+  border-radius: 9px;
 }
 .pop_title_box.infrate::after {
   content: 'ml/h';
