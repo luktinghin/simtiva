@@ -13774,7 +13774,7 @@ function displayNumpad(parameter) {
 }
 
 function resetNumpad() {
-		numpadValue = Math.round(drug_sets[active_drug_set_index].desired*10)/10;
+		numpadValue = numpadOrig;
 		document.getElementById("numpadOutputDisplay").innerHTML = numpadValue;
 }
 

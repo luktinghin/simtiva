@@ -3047,7 +3047,7 @@ body.dark .modal-body a.button_paedimode:hover {
   display: none;
   padding: 6px;
   border: 1px solid #198964;
-  border-radius: 9px;
+  border-radius: 9px 0 0 9px;
 }
 #numpad_preview_msg {
   font-style: italic;
