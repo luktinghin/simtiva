@@ -13644,6 +13644,7 @@ function popupUpdateFunction(dur) {
 //numpad code goes here
 
 var numpadValue = 0;
+var numpadOrig;
 
 function keypress(num) {
 	let numString = document.getElementById("numpadOutputDisplay").innerHTML;
@@ -13762,13 +13763,14 @@ function displayNumpad(parameter) {
 		numpadValue = Math.round(drug_sets[active_drug_set_index].desired*10)/10;
 		document.getElementById("numpadOutputDisplay").innerHTML = numpadValue;
 		document.getElementById("numpadLine").classList.add("ce");
-		document.getElementById("numpadTitle").innerHTML = "Quick Edit CE";
+		document.getElementById("numpadTitle").innerHTML = "Quick Edit CE Target";
 	} else if (parameter == "cp") {
 		numpadValue = Math.round(drug_sets[active_drug_set_index].desired*10)/10;
 		document.getElementById("numpadOutputDisplay").innerHTML = numpadValue;
 		document.getElementById("numpadLine").classList.add("cp");
-		document.getElementById("numpadTitle").innerHTML = "Quick Edit CP";
+		document.getElementById("numpadTitle").innerHTML = "Quick Edit CP Target";
 	}
+	numpadOrig = numpadValue;
 }
 
 function resetNumpad() {
