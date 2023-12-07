@@ -13767,9 +13767,33 @@ function displayNumpad(parameter) {
 
 function confirmNumpad(parameter) {
 	document.getElementById(parameter).value = numpadValue;
-	//just CET code for now
-	start_cet();
-	document.getElementById("chartinfodrugline2").innerHTML = "CET mode - Target " + numpadValue + drug_sets[active_drug_set_index].conc_units + "/ml"; 
+	//first see if zero
+	if (numpadValue == 0) {
+		if (parameter == "inputDesiredCe0") {
+			pauseCpt(0);
+		} else if (parameter == "inputDesiredCe1") {
+			pauseCpt(1);
+		} else if (parameter == "inputDesired0") {
+			pauseCpt(0);
+		} else if (parameter == "inputDesired1") {
+			pauseCpt(1);
+		}
+	} else {
+		if (parameter == "inputDesiredCe0") {
+			start_cet();
+		} else if (parameter == "inputDesiredCe1") {
+			start_cet_complex(numpadValue,1);
+		} else if (parameter == "inputDesired0") {
+			start_cpt();
+		} else if (parameter == "inputDesired1") {
+			start_cpt_complex(numpadValue,1);
+		}
+	}
+	if (parameter == "inputDesiredCe0" || parameter == "inputDesiredCe1") {
+		document.getElementById("chartinfodrugline2").innerHTML = "CET mode - Target " + numpadValue + drug_sets[active_drug_set_index].conc_units + "/ml"; 
+	} else {
+		document.getElementById("chartinfodrugline2").innerHTML = "CPT mode - Target " + numpadValue + drug_sets[active_drug_set_index].conc_units + "/ml"; 
+	}
 	generateBoxes();
 	hideNumpad();
 }
