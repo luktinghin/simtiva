@@ -13402,11 +13402,11 @@ function openpopupchart() {
 		}
 		if (active_drug_set_index == 1 && drug_sets[1].cpt_active > 1) {
 			document.getElementById("pop_right_edit_cp").style.display = "block";
-			document.getElementById("pop_rp").classList.add("shadow");
+			document.getElementById("pop_cp").classList.add("shadow");
 			document.getElementById("pop_right_edit_cp").setAttribute('click','displayNumpad("cp")');
 			document.getElementById('btn_confirm_numpad').setAttribute('click','confirmNumpad("inputDesired1")');
 		}
-		if (active_drug_set_index == 1 && drug_sets[1].cpt_active > 1 && drug_sets[1].IB_active == 0) {
+		if (active_drug_set_index == 1 && drug_sets[1].cet_active > 1 && drug_sets[1].IB_active == 0) {
 			document.getElementById("pop_right_edit_ce").style.display = "block";
 			document.getElementById("pop_ce").classList.add("shadow");
 			document.getElementById("pop_right_edit_ce").setAttribute('click','displayNumpad("ce")');
