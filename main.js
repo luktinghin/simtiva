@@ -13659,12 +13659,6 @@ function keypress(num) {
 	} else {
 		numString = numString + num;	
 	}
-	
-	//animate
-	document.getElementById(num).classList.add("numactive");
-	setTimeout(function() {
-		document.getElementById(num).classList.remove("numactive");
-	},200);
 
 	//write to values
 	document.getElementById("numpadOutputDisplay").innerHTML = numString;
@@ -13692,12 +13686,6 @@ function backspace() {
 		}
 	}
 
-	//animate
-	document.getElementById("funcBackspace").classList.add("numactive");
-	setTimeout(function() {
-		document.getElementById("funcBackspace").classList.remove("numactive");
-	},200);
-
 	//write to values
 	document.getElementById("numpadOutputDisplay").innerHTML = numString;
 	numpadValue = numString * 1;
@@ -13715,12 +13703,6 @@ function decimal() {
 	} else {
 		//dot found, do nothing
 	}
-
-	//animate
-	document.getElementById("funcDot").classList.add("numactive");
-	setTimeout(function() {
-		document.getElementById("funcDot").classList.remove("numactive");
-	},200);
 
 	//write to values
 	document.getElementById("numpadOutputDisplay").innerHTML = numString;
@@ -13766,10 +13748,12 @@ function displayNumpad(parameter) {
 		numpadValue = Math.round(drug_sets[active_drug_set_index].desired*10)/10;
 	}
 	if (parameter == "ce") {
+		document.getElementById("pop_ce").classList.add("active");
 		document.getElementById("numpadOutputDisplay").innerHTML = numpadValue;
 		document.getElementById("numpadLine").classList.add("ce");
 		document.getElementById("numpadTitle").innerHTML = "Quick Edit CE Target";
 	} else if (parameter == "cp") {
+		document.getElementById("pop_cp").classList.add("active");
 		document.getElementById("numpadOutputDisplay").innerHTML = numpadValue;
 		document.getElementById("numpadLine").classList.add("cp");
 		document.getElementById("numpadTitle").innerHTML = "Quick Edit CP Target";
@@ -13822,8 +13806,9 @@ function hideNumpad() {
 	document.getElementById("chartinfooverlay").classList.add("open");
 	
 		document.getElementById("numpadLine").classList.remove("ce");
-	
 		document.getElementById("numpadLine").classList.remove("cp");
+		document.getElementById("pop_ce").classList.remove("active");
+		document.getElementById("pop_ce").classList.remove("active");
 		//reset popup bg
 		if (!isDark) {
 			document.getElementById("popupchartcontainer").style.background = "white";
