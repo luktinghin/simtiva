@@ -21,7 +21,10 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
 - To help deliver TCI in a setting where TCI pumps are not available
 
 ### Changelog
- Version 4.2 (Build 91) Current
+ Version 4.3 (Build 94) Current
+ - Added CeT and CpT quick edit function in Fullscreen mode 
+ 
+ Version 4.2 (Build 91)
  - Export/Import functions: handling of external .CSV database
  - Bolus dose in CPT/CET now includes ML in preview
  - Fentanyl CPT/CET: calculation bugfix
