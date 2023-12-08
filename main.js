@@ -13385,9 +13385,11 @@ function openpopupchart() {
 
 		//reset edit boxes and display edit cp or ce button
 		document.getElementById("pop_right_edit_cp").style.display = "none";
-		document.getElementById("pop_right_edit_cp").style.display = "none";
+		document.getElementById("pop_right_edit_ce").style.display = "none";
 		document.getElementById("pop_cp").classList.remove("shadow");
 		document.getElementById("pop_ce").classList.remove("shadow");
+		document.getElementById("pop_cp").classList.remove("active");
+		document.getElementById("pop_ce").classList.remove("active");
 		if (active_drug_set_index == 0 && drug_sets[0].cpt_active > 0) {
 			document.getElementById("pop_right_edit_cp").style.display = "block";
 			document.getElementById("pop_cp").classList.add("shadow");
@@ -13807,7 +13809,7 @@ function hideNumpad() {
 	
 		document.getElementById("numpadLine").classList.remove("ce");
 		document.getElementById("numpadLine").classList.remove("cp");
-		document.getElementById("pop_ce").classList.remove("active");
+		document.getElementById("pop_cp").classList.remove("active");
 		document.getElementById("pop_ce").classList.remove("active");
 		//reset popup bg
 		if (!isDark) {
