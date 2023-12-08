@@ -1260,7 +1260,7 @@ body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom
 .modal {
     display: block; 
     position: fixed; 
-    z-index: 97; 
+    z-index: 90; 
     padding-top: 15vh; 
     left: 0;
     top: 0;
@@ -3020,7 +3020,165 @@ body.dark .modal-body a.button_paedimode:hover {
   font-size:80%;
 }
 
-/* END TCI STYLES
+/* END TCI STYLES*/
+
+/* start numpad styles*/
+
+#numpadBackground {
+  top: 0;
+  left: 0;
+  width: calc(100% - 98px);
+  height: 100%;
+  z-index: 97;
+  background: rgb(0,0,0,0.5);
+  position: absolute;
+  display: none;
+}
+#numpadPreview {
+  top: 10px;
+  right: 97px;
+  font-size: 0.85rem;
+  width: 281px;
+  height: 55px;
+  background: #333;
+  z-index: 98;
+  position: absolute;
+  color: white;
+  display: none;
+  padding: 6px;
+  border: 1px solid #198964;
+  border-radius: 9px 0 0 9px;
+}
+#numpad_preview_msg {
+  font-style: italic;
+}
+#numpadLine {
+  height: 3px;
+  width: 34px;
+  background: #fff;
+  position: absolute;
+  display: block;
+  right: 95px;
+  top: 155px;
+  z-index: 99;
+  display: none;
+}
+#numpadLine.ce {
+  display: block;
+}
+#numpadLine.cp {
+  display: block;
+  top: 102px;
+}
+#numpadContainer {
+  width: 250px;
+  position: absolute;
+  top: 75px;
+  right: 128px;
+  z-index: 99;
+  display: none;
+}
+
+#numpadTitle {
+  width: 100%;
+  padding: 8px 10px 2px 10px;
+  border-radius: 9px 9px 0 0;
+  background-color: #4cAF50;
+  color: white;
+  font-weight: bold;
+  line-height: 20px;
+  font-size: 0.85rem;
+}
+
+#numpadBody {
+  width: 100%;
+  background: white;
+  color: black;
+  border-radius: 0 0 9px 9px;
+}
+
+#numpadOutput {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  background: #ddd;
+  font-size: 150%;
+  justify-content: center;
+}
+
+#numpadOutputDisplay {
+  flex-basis: 40%;
+  align-self: center;
+  text-align: center;
+  background: #fff;
+  overflow-x: hidden;
+}
+
+#numpadOutputDisplayMinus {
+  flex-basis: 30px;
+  text-align: right;
+  align-self: center;
+  background: white;
+  border-radius: 1rem 0 0 1rem;
+  cursor: pointer;
+}
+
+#numpadOutputDisplayPlus {
+  flex-basis: 30px;
+  text-align: left;
+  align-self: center;
+  background: white;
+  border-radius: 0 1rem 1rem 0;
+  cursor: pointer;
+}
+
+#numpadInput {
+  width: 100%;
+}
+
+.numkeyRow {
+  width: 100%;
+  display: flex;
+  height: 35px;
+  justify-content: center;
+}
+
+.numkey {
+  flex-basis: 32.5%;
+  color: black;
+  align-self: center;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 9px;
+  border: 1px solid #eee;
+  line-height: 31px;
+  margin: 1px;
+}
+
+.numkey:hover {
+  border: 1px solid #ccc;
+}
+.numkey:active {
+  box-shadow:inset 1px 1px 2px 0px rgb(0 0 0 / 30%);
+  transform: translateX(1px) translateY(1px);
+  border: 1px solid #bbb;
+}
+
+.numkey.special {
+  background: #ddd;
+  border: 1px solid #bbb;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+#btn_confirm_numpad {
+  background: #4CAF50;
+  border: 1px solid #187f18;
+  color: white;
+}
+
+/* end numpad styles*/
+
 
 @media screen {
 #headerarea {font-size:10.5pt;}
@@ -3632,6 +3790,34 @@ tr.subheading7 {
   right: 32px;
   bottom: 32px;
 }
+#pop_right_edit_cp {
+  text-align: center;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  background: #4CAF50;
+  width: 82px;
+  margin: 0 auto;
+  position: relative;
+  border-radius: 9px;
+  display: none;
+  cursor: pointer;
+  box-shadow: inset 0px -1px 0px #fff6;
+}
+#pop_right_edit_ce {
+  text-align: center;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  background: #4CAF50;
+  width: 82px;
+  margin: 0 auto;
+  position: relative;
+  border-radius: 9px;
+  display: none;
+  cursor: pointer;
+  box-shadow: inset 0px -1px 0px #fff6;
+}
 .pop_title_box {
   border: 1px solid;
   border-color: #fff;
@@ -3668,14 +3854,22 @@ tr.subheading7 {
 .pop_title_box.ce {
   /*border-color: rgb(155,201,157);*/
 }
+.pop_title_box.shadow {
+  box-shadow: 0px 20px 0px #4caf50
+}
+.pop_title_box.shadow.active {
+  box-shadow: inset 0px 4px 6px #0c4432, 0 20px 0 #4caf50, inset 0px 0px 6px 1px #d1e7e0
+}
 .pop_title_box.infrate {
   /*border-color: #ddd;*/
 }
 .pop_title_box.cp::after {
   content: 'Cp';
+  border-radius: 9px;
 }
 .pop_title_box.ce::after {
   content: 'Ce';
+  border-radius: 9px;
 }
 .pop_title_box.infrate::after {
   content: 'ml/h';
@@ -3771,7 +3965,7 @@ tr.subheading7 {
   font-size: 20px;
   border: 1px solid #bbb;
   cursor: pointer;
-  z-index: 98; /*higher than modal*/
+  z-index: 91; /*higher than modal*/
   transition: 0.3s opacity ease;
   pointer-events: none;
 }
@@ -3798,7 +3992,7 @@ tr.subheading7 {
   font-size: 20px;
   border: 1px solid #bbb;
   cursor: pointer;
-  z-index: 98; /*higher than modal*/
+  z-index: 91; /*higher than modal*/
   transition: 0.3s all ease;
   pointer-events: none;
 }
@@ -3825,7 +4019,7 @@ tr.subheading7 {
   font-size: 20px;
   border: 1px solid #bbb;
   cursor: pointer;
-  z-index: 98; /*higher than modal*/
+  z-index: 91; /*higher than modal*/
   transition: 0.3s opacity ease;
   pointer-events: none;
 }
@@ -3928,7 +4122,7 @@ tr.subheading7 {
 
 .hamburger {
   position:fixed;
-  z-index:90;
+  z-index:89;
   cursor: pointer;
   top:22px;
   right:10px;

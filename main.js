@@ -1164,12 +1164,7 @@ function start_cet() {
 			}
 			drug_sets[active_drug_set_index].cet_active = 1;
 
-			
-
 			deliver_cet(desired, active_drug_set_index);
-
-			
-
 			
 			//UI code goes here
 			drug_sets[active_drug_set_index].running = 1;
@@ -13341,7 +13336,6 @@ suitableForBoxes = false;
 isFullscreen = false;
 
 function openpopupchart() {
-
 	
 	//check if it's really running first
 	if (drug_sets[active_drug_set_index].cpt_rates_real.length>0) {
@@ -13385,11 +13379,39 @@ function openpopupchart() {
 			isFullscreen = true;
 		}
 		*/
-		
-
 			
 		document.getElementById("popupchartdiv").style.display = "block";
 		popupon = true;
+
+		//reset edit boxes and display edit cp or ce button
+		document.getElementById("pop_right_edit_cp").style.display = "none";
+		document.getElementById("pop_right_edit_cp").style.display = "none";
+		document.getElementById("pop_cp").classList.remove("shadow");
+		document.getElementById("pop_ce").classList.remove("shadow");
+		if (active_drug_set_index == 0 && drug_sets[0].cpt_active > 0) {
+			document.getElementById("pop_right_edit_cp").style.display = "block";
+			document.getElementById("pop_cp").classList.add("shadow");
+			document.getElementById("pop_right_edit_cp").setAttribute('onclick','displayNumpad("cp")');
+			document.getElementById('btn_confirm_numpad').setAttribute('onclick','confirmNumpad("inputDesired0")');
+		}
+		if (active_drug_set_index == 0 && drug_sets[0].cet_active > 0 && drug_sets[0].IB_active == 0) {
+			document.getElementById("pop_right_edit_ce").style.display = "block";
+			document.getElementById("pop_ce").classList.add("shadow");
+			document.getElementById("pop_right_edit_ce").setAttribute('onclick','displayNumpad("ce")');
+			document.getElementById('btn_confirm_numpad').setAttribute('onclick','confirmNumpad("inputDesiredCe0")');
+		}
+		if (active_drug_set_index == 1 && drug_sets[1].cpt_active > 0) {
+			document.getElementById("pop_right_edit_cp").style.display = "block";
+			document.getElementById("pop_cp").classList.add("shadow");
+			document.getElementById("pop_right_edit_cp").setAttribute('onclick','displayNumpad("cp")');
+			document.getElementById('btn_confirm_numpad').setAttribute('onclick','confirmNumpad("inputDesired1")');
+		}
+		if (active_drug_set_index == 1 && drug_sets[1].cet_active > 0 && drug_sets[1].IB_active == 0) {
+			document.getElementById("pop_right_edit_ce").style.display = "block";
+			document.getElementById("pop_ce").classList.add("shadow");
+			document.getElementById("pop_right_edit_ce").setAttribute('onclick','displayNumpad("ce")');
+			document.getElementById('btn_confirm_numpad').setAttribute('onclick','confirmNumpad("inputDesiredCe1")');
+		}
 		if (!isDark) {
 			document.getElementById("popupchartcontainer").style.background = "white";
 			//document.getElementById("popupchartcontainer").style.border = "0px solid transparent";
@@ -13550,6 +13572,8 @@ function destroypopup() {
 		document.getElementById("popupchartdiv").style.display = "none";
 		popupon = false;
 	},200);
+
+	hideNumpad();
 }
 
 function mirrorpopup() {
@@ -13616,6 +13640,193 @@ function popupUpdateFunction(dur) {
 		mirrorpopup();
 	}, dur);
 }
+
+//numpad code goes here
+
+var numpadValue = 0;
+var numpadOrig;
+
+function keypress(num) {
+	let numString = document.getElementById("numpadOutputDisplay").innerHTML;
+	//case: check preceding zero
+	if (numString == "0") {
+		if (num == "0") {
+			//do nothing, don't add more zeroes
+		} else {
+			//delete this digit, i.e. the zero
+			numString = num;
+		}
+	} else {
+		numString = numString + num;	
+	}
+
+	//write to values
+	document.getElementById("numpadOutputDisplay").innerHTML = numString;
+	numpadValue = numString * 1;
+
+	//compute displaypreview
+	mirrorPreview();
+}
+
+function backspace() {
+	let numString = document.getElementById("numpadOutputDisplay").innerHTML;
+	//case: only digit
+	if (numString.length == 1) {
+		if (numString == "0") {
+			//no change if already zero
+		} else {
+			numString = "0";	
+		}
+	} else {
+		//case: 2nd last digit is dot	
+		if (numString[numString.length-2] == ".") {
+			numString = numString.slice(0,-2);
+		} else {
+			numString = numString.slice(0,-1);
+		}
+	}
+
+	//write to values
+	document.getElementById("numpadOutputDisplay").innerHTML = numString;
+	numpadValue = numString * 1;
+
+	//compute displaypreview
+	mirrorPreview();
+}
+
+function decimal() {
+	let numString = document.getElementById("numpadOutputDisplay").innerHTML;
+	//case: see if there's a decimal point first
+	if (numString.indexOf(".") == -1) {
+		//dot not found
+		numString = numString + ".";
+	} else {
+		//dot found, do nothing
+	}
+
+	//write to values
+	document.getElementById("numpadOutputDisplay").innerHTML = numString;
+	numpadValue = numString * 1;
+
+	//compute displaypreview
+	mirrorPreview();
+}
+
+function step(parameter) {
+	let numString = document.getElementById("numpadOutputDisplay").innerHTML;
+	//determine step size
+	let stepSize = 0.1;
+	if (drug_sets[active_drug_set_index].drug_name == "Alfentanil") {
+		stepSize = 1;
+	}
+	if (parameter == "numpadOutputDisplayMinus") {
+		//for step minus
+		numpadValue = numpadValue - stepSize;
+		if (numpadValue < 0) numpadValue = 0;
+	} else {
+		//for step plus
+		numpadValue = numpadValue + stepSize;
+	}
+	numpadValue = Math.round(numpadValue * 10)/10;
+	//write to values
+	document.getElementById("numpadOutputDisplay").innerHTML = numpadValue;
+
+	//compute displaypreview
+	mirrorPreview();
+}
+
+function displayNumpad(parameter) {
+	document.getElementById("popupchartcontainer").style.background = "#222";
+	document.getElementById("numpadPreview").style.display = "block";
+	document.getElementById("numpadBackground").style.display = "block";
+	document.getElementById("numpadContainer").style.display = "block";
+	document.getElementById("chartinfooverlay").classList.remove("open");
+	document.getElementById("numpad_preview_msg").innerHTML = "Waiting for user input";
+	if (drug_sets[active_drug_set_index].fentanyl_weightadjusted_flag == 1) {
+		numpadValue = Math.round(drug_sets[active_drug_set_index].fentanyl_weightadjusted_target_uncorrected*10)/10;
+	} else {
+		numpadValue = Math.round(drug_sets[active_drug_set_index].desired*10)/10;
+	}
+	if (parameter == "ce") {
+		document.getElementById("pop_ce").classList.add("active");
+		document.getElementById("numpadOutputDisplay").innerHTML = numpadValue;
+		document.getElementById("numpadLine").classList.add("ce");
+		document.getElementById("numpadTitle").innerHTML = "Quick Edit CE Target";
+	} else if (parameter == "cp") {
+		document.getElementById("pop_cp").classList.add("active");
+		document.getElementById("numpadOutputDisplay").innerHTML = numpadValue;
+		document.getElementById("numpadLine").classList.add("cp");
+		document.getElementById("numpadTitle").innerHTML = "Quick Edit CP Target";
+	}
+	numpadOrig = numpadValue;
+}
+
+function resetNumpad() {
+		numpadValue = numpadOrig;
+		document.getElementById("numpadOutputDisplay").innerHTML = numpadValue;
+		document.getElementById("numpad_preview_msg").innerHTML = "Waiting for user input"
+}
+
+function confirmNumpad(parameter) {
+	document.getElementById(parameter).value = numpadValue;
+	//first see if zero
+	if (numpadValue == 0) {
+		if (parameter == "inputDesiredCe0") {
+			pauseCpt(0);
+		} else if (parameter == "inputDesiredCe1") {
+			pauseCpt(1);
+		} else if (parameter == "inputDesired0") {
+			pauseCpt(0);
+		} else if (parameter == "inputDesired1") {
+			pauseCpt(1);
+		}
+	} else {
+		if (parameter == "inputDesiredCe0") {
+			start_cet();
+		} else if (parameter == "inputDesiredCe1") {
+			start_cet_complex(numpadValue,1);
+		} else if (parameter == "inputDesired0") {
+			start_cpt();
+		} else if (parameter == "inputDesired1") {
+			start_cpt_complex(numpadValue,1);
+		}
+	}
+	if (parameter == "inputDesiredCe0" || parameter == "inputDesiredCe1") {
+		document.getElementById("chartinfodrugline2").innerHTML = "CET mode - Target " + numpadValue + drug_sets[active_drug_set_index].conc_units + "/ml"; 
+	} else {
+		document.getElementById("chartinfodrugline2").innerHTML = "CPT mode - Target " + numpadValue + drug_sets[active_drug_set_index].conc_units + "/ml"; 
+	}
+	generateBoxes();
+	hideNumpad();
+}
+function hideNumpad() {
+	document.getElementById("numpadPreview").style.display = "none";
+	document.getElementById("numpadBackground").style.display = "none";
+	document.getElementById("numpadContainer").style.display = "none";
+	document.getElementById("chartinfooverlay").classList.add("open");
+	
+		document.getElementById("numpadLine").classList.remove("ce");
+		document.getElementById("numpadLine").classList.remove("cp");
+		document.getElementById("pop_ce").classList.remove("active");
+		document.getElementById("pop_ce").classList.remove("active");
+		//reset popup bg
+		if (!isDark) {
+			document.getElementById("popupchartcontainer").style.background = "white";
+			//document.getElementById("popupchartcontainer").style.border = "0px solid transparent";
+		} else {
+			document.getElementById("popupchartcontainer").style.background = "#222";
+		}
+	
+}
+
+function mirrorPreview() {
+	displaypreview2(numpadValue,active_drug_set_index);
+	//need timeout?
+	setTimeout(function() {
+		document.getElementById("numpad_preview_msg").innerHTML = document.getElementById("preview_msg").innerHTML;
+	},500);
+}
+
 /* failed code below 
 
 let arrLines = new Array();
