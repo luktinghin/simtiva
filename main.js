@@ -13575,7 +13575,7 @@ function destroypopup() {
 		popupon = false;
 	},200);
 
-	hideNumpad();
+	cancelNumpad();
 }
 
 function mirrorpopup() {
@@ -13764,9 +13764,9 @@ function displayNumpad(parameter) {
 }
 
 function resetNumpad() {
-		numpadValue = numpadOrig;
-		document.getElementById("numpadOutputDisplay").innerHTML = numpadValue;
-		document.getElementById("numpad_preview_msg").innerHTML = "Waiting for user input"
+	numpadValue = numpadOrig;
+	document.getElementById("numpadOutputDisplay").innerHTML = numpadValue;
+	document.getElementById("numpad_preview_msg").innerHTML = "Waiting for user input";
 }
 
 function confirmNumpad(parameter) {
@@ -13798,10 +13798,26 @@ function confirmNumpad(parameter) {
 	} else {
 		document.getElementById("chartinfodrugline2").innerHTML = "CPT mode - Target " + numpadValue + drug_sets[active_drug_set_index].conc_units + "/ml"; 
 	}
+
+	//update numpadOrig
+	numpadOrig = numpadValue;
+	
 	generateBoxes();
 	hideNumpad();
 }
-function hideNumpad() {
+
+function cancelNumpad() {
+	//need to reset original desired conc too to prevent error
+	if (drug_sets[active_drug_set_index].fentanyl_weightadjusted_flag == 1) {
+		drug_sets[active_drug_set_index].fentanyl_weightadjusted_target_uncorrected = numpadOrig;
+	} else {
+		drug_sets[active_drug_set_index].desired = numpadOrig;
+	}
+
+	hideNumpad();
+}
+function hideNumpad() { // 
+	
 	document.getElementById("numpadPreview").style.display = "none";
 	document.getElementById("numpadBackground").style.display = "none";
 	document.getElementById("numpadContainer").style.display = "none";
