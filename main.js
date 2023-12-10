@@ -3058,9 +3058,6 @@ function deliver_cet_real(x, ind) {
 	drug_sets[ind].cpt_ce.length = working_clock;
 	drug_sets[ind].volinf.length = working_clock;
 
-
-
-
 	//debug: log current state
 	console.log("--debug-- CET delivery");
 	console.log("time is " + working_clock);
@@ -3113,8 +3110,6 @@ function deliver_cet_real(x, ind) {
 			}
 		}
 
-
-
 		working_clock = drug_sets[ind].cet_lockdowntime;
 		//update e_state2		
 		p_state2[1] = p_state3[1];
@@ -3159,7 +3154,8 @@ function deliver_cet_real(x, ind) {
 		
 		
 	} else { //normal CET mode 
-
+		//set compensation to zero
+		compensation = 0;
 		/* should the pump be off? until after this drops below Ce*/
 		if (est_ce >= drug_sets[ind].desired) {
 			/*
@@ -3203,7 +3199,13 @@ function deliver_cet_real(x, ind) {
 				est_ce = virtual_model(e_state2[1],e_state2[2],e_state2[3],e_state2[4],cet_pause,1,ind);
 			}
 			console.log("cet_pause" + cet_pause);
-			breakpoint = Math.floor((cet_pause - cpt_pause)*0.2 + cpt_pause);
+			//optimize breakpoint - if cet_pause is long, allow later start of deliverCPT
+			//new formula, see wikipedia - sigmoid curve - use that formula - normalize the curve, center on 300, x axis varies from -6 to +6
+			sigmoidx = (cet_pause - 300)/50;
+			sigmoid = 1/(1+Math.exp(-sigmoidx));
+			sigmoidcorrfactor = 0.5 * sigmoid + 0.3; //this will make sure the corrfactor min = 0.3, max = 0.8
+			breakpoint = Math.floor((cet_pause - cpt_pause)*sigmoidcorrfactor + cpt_pause);
+			
 			console.log("entering breakpoint -- " + breakpoint);
 			for (i=0; i<breakpoint; i++) {
 
