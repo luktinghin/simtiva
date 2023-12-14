@@ -2147,7 +2147,7 @@ function start_manual(ind) { //this is new
 			drug_sets[ind].inf_rate_mls = document.getElementById("inputInfusion" + ind).value *1; 
 		} else {
 			//otherwise convert to ml/h first
-			drug_sets[ind].inf_rate_mls = document.getElementById("inputInfusion" + ind).value*drug_sets[active_drug_set_index].infusate_concentration*drug_sets[active_drug_set_index].inf_rate_permass_factor/mass;
+			drug_sets[ind].inf_rate_mls = document.getElementById("inputInfusion" + ind).value/drug_sets[active_drug_set_index].infusate_concentration/drug_sets[active_drug_set_index].inf_rate_permass_factor*mass;
 		}
 
 		//special code to account for "lost time" for delayed start in complex mode
@@ -2204,7 +2204,7 @@ function start_manual(ind) { //this is new
 			drug_sets[ind].inf_rate_mls = document.getElementById("inputInfusion" + ind).value *1; 
 		} else {
 			//otherwise convert to ml/h first
-			drug_sets[ind].inf_rate_mls = document.getElementById("inputInfusion" + ind).value*drug_sets[active_drug_set_index].infusate_concentration*drug_sets[active_drug_set_index].inf_rate_permass_factor/mass;
+			drug_sets[ind].inf_rate_mls = document.getElementById("inputInfusion" + ind).value/drug_sets[active_drug_set_index].infusate_concentration/drug_sets[active_drug_set_index].inf_rate_permass_factor*mass;
 		}
 		document.getElementById("status").innerHTML="Running";
 		document.getElementById("iconplay").classList.remove("stop");
@@ -9286,7 +9286,7 @@ function prepare_environment(input_uid) {
 
 function displayModalOptions() {
 	loadoptions();
-	
+	temp_unit = document.getElementById("select_defaultrateunit").options[1].textContent;
 	text = `
 		<table class="table-control">
 					<tr class="fr" id=""><td>Unit <i class="far fa-question-circle tooltip2"><span class="tooltiptext">Preferred secondary unit for propofol infusion.</span></i></td>
@@ -9296,6 +9296,14 @@ function displayModalOptions() {
 								<option value="mcgmin" ${(optionsarray[0][1]==1) ? 'selected':''}>mcg/kg/m</option>
 							</select>
 						</td>
+					<tr class="" id=""><td>Default rate unit</td>
+						<td>
+							<select id="" onchange="document.getElementById('select_defaultrateunit').value=this.value">
+								<option value="mlh" ${(optionsarray_infusionunit[0][0]==1) ? 'selected':''}>ml/h</option>
+								<option value="unitkgtime" ${(optionsarray_infusionunit[0][0]!=1) ? 'selected':''}>${temp_unit}</option>
+							</select>
+						</td>
+					</tr>
 					<tr id=""><td>Simspeed</td>
 						<td>
 							<select id="" onchange="document.getElementById('select_simspeed').value=this.value">
@@ -9843,16 +9851,6 @@ function show_legend() {
 //other options code goes here
 
 function loadoptions(reset) {
-	if ((localStorage.getItem("OPTIONSINFUSIONUNIT")==null) || (reset == "default")) {
-		optionsarray_infusionunit[0] = [1,0];
-	} else {
-		optionsarray_infusionunit[0] = JSON.parse(localStorage.getItem("OPTIONSINFUSIONUNIT"));
-		if (optionsarray_infusionunit[0][0] == 1) {
-			document.getElementById("select_defaultrateunit") = "mlh";
-		} else {
-			document.getElementById("select_defaultrateunit") = "unitkgtime";
-		}
-	}
 	if ((localStorage.getItem("OPTIONS") === null) || (reset == "default")) {
 		optionsarray = 
 			[
@@ -9941,6 +9939,75 @@ function loadoptions(reset) {
 			notificationactive = 1;
 		}
 	}
+	if ((localStorage.getItem("OPTIONSINFUSIONUNIT")==null) || (reset == "default")) {
+		optionsarray_infusionunit[0] = [1,0];
+	} else {
+		optionsarray_infusionunit = JSON.parse(localStorage.getItem("OPTIONSINFUSIONUNIT"));
+		if (optionsarray_infusionunit[0][0] == 1) {
+			document.getElementById("select_defaultrateunit").value = "mlh";
+			document.getElementById("infusionratedescription0").innerHTML = "Infusion rate (ml/h)";
+			if (drug_sets.length == 0) {
+				//make a guess
+				if (
+					 (paedi_mode == 0 
+					  &&
+					  (document.getElementById("select_model").value == "Marsh"
+					   || document.getElementById("select_model").value == "Schnider"
+					   || document.getElementById("select_model").value == "Eleveld"
+					   || document.getElementById("select_model").value == "Paedfusor"
+					  )
+					 ) || (
+					  paedi_mode == 1
+					  &&
+					  (document.getElementById("select_model_paedi").value == "Paedfusor"
+					   || document.getElementById("select_model_paedi").value == "Eleveld"
+					  )
+					 )
+					) { // this is propofol
+						temp_unit = "mg/kg/h";
+						if (document.getElementById("select_unit").value == "mcgmin") temp_unit = "mcg/kg/m";
+				} else {
+					temp_unit = "mcg/kg/m";
+				}
+				document.getElementById("select_defaultrateunit").options[1].textContent = temp_unit;
+				//document.getElementById("infusionratedescription0").innerHTML = "Infusion rate (" + temp_unit + ")";	
+			}
+			if (complex_mode == 1) document.getElementById("infusionratedescription1").innerHTML = "Infusion rate (ml/h)";
+		} else {
+			document.getElementById("select_defaultrateunit").value = "unitkgtime";
+			if (drug_sets.length == 0) {
+				//make a guess
+				if (
+					 (paedi_mode == 0 
+					  &&
+					  (document.getElementById("select_model").value == "Marsh"
+					   || document.getElementById("select_model").value == "Schnider"
+					   || document.getElementById("select_model").value == "Eleveld"
+					   || document.getElementById("select_model").value == "Paedfusor"
+					  )
+					 ) || (
+					  paedi_mode == 1
+					  &&
+					  (document.getElementById("select_model_paedi").value == "Paedfusor"
+					   || document.getElementById("select_model_paedi").value == "Eleveld"
+					  )
+					 )
+					) { // this is propofol
+						temp_unit = "mg/kg/h";
+						if (document.getElementById("select_unit").value == "mcgmin") temp_unit = "mcg/kg/m";
+				} else {
+					temp_unit = "mcg/kg/m";
+				}
+				document.getElementById("select_defaultrateunit").options[1].textContent = temp_unit;
+				document.getElementById("infusionratedescription0").innerHTML = "Infusion rate (" + temp_unit + ")";	
+			} else {
+				document.getElementById("select_defaultrateunit").options[1].textContent = drug_sets[0].inf_rate_permass_unit;
+				document.getElementById("infusionratedescription0").innerHTML = "Infusion rate (" + drug_sets[0].inf_rate_permass_unit + ")";	
+			}
+			
+			if (complex_mode == 1) document.getElementById("infusionratedescription1").innerHTML = "Infusion rate (" + drug_sets[1].inf_rate_permass_unit + ")";
+		}
+	}	
 }
 function applyoptions() {
 	//PP_interval = document.getElementById("select_PPinterval").value*1;
@@ -10042,11 +10109,13 @@ function applyoptions() {
 		optionsarray.push([0,1]);
 	}
 	localStorage.setItem("OPTIONS",JSON.stringify(optionsarray));
-
+	optionsarray_infusionunit.length = 0;
 	if (document.getElementById("select_defaultrateunit").value == "mlh") {
-		optionsarray_infusionunit[0] = [1,0];
+		optionsarray_infusionunit.push([1,0]);
+		setInfusionUnit(0);
 	} else {
-		optionsarray_infusionunit[0] = [0,1];
+		optionsarray_infusionunit.push([0,1]);
+		setInfusionUnit(1);
 	}
 	localStorage.setItem("OPTIONSINFUSIONUNIT",JSON.stringify(optionsarray_infusionunit));
 }
@@ -15129,7 +15198,6 @@ function setInfusionUnit(parameter) {
 		//update the input field(s)
 		elem = document.getElementById("inputInfusion" + active_drug_set_index);
 		if (elem.value*1 > 0) {
-			alert(elem.value);
 			elem.value = Math.round(elem.value*drug_sets[active_drug_set_index].infusate_concentration*drug_sets[active_drug_set_index].inf_rate_permass_factor/mass*drug_sets[active_drug_set_index].inf_rate_permass_dp)/drug_sets[active_drug_set_index].inf_rate_permass_dp;
 		}
 		if (complex_mode == 1) {
