@@ -178,6 +178,9 @@ var ptolcouplesarray = new Array(); //ptol couples over time
 
 var loop6 = null; //this is setinterval function
 
+
+var eventArray = new Array();
+
 const arrBodyIcons = [
 	["baby","<i class='fas fa-baby fa-fw tooltip bodyicon'><span class='tooltiptext'>BMI-for-age reference range from WHO</span></i>"],
 	["child","<i class='fas fa-child fa-fw tooltip bodyicon'><span class='tooltiptext'>BMI-for-age & weight-for-age reference range from WHO</span></i>"],
@@ -13259,8 +13262,6 @@ function cycleEffectEst() {
 }
 
 // event creation 
-
-var eventArray = new Array();
 
 function createEvent2(arg_isEdit) {
 	var relativetime;
