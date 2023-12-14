@@ -7452,7 +7452,7 @@ function retrospective(Tminus, r_bolus, r_infratemls, ind) {
 
 //z score calculated by : ((BMI/M)^L - 1) / (S * L)
 
-let timeoutVal = null;
+var timeoutVal = null;
 
 
 function sendToValidate(arg) {
