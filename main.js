@@ -136,6 +136,7 @@ var previewtimeout;
 var user_hide=0; // for warning prompt - NOT hide by default
 var timeout2 = null; // for delay display cpt prompt
 var optionsarray = new Array();
+var optionsarray_infusionunit = new Array();
 
 var PD_mode = 0 ; //PD effect estimtation: 0 is off, 1 is BIS, 2 is PTOL, 3 is NSRI
 
@@ -959,7 +960,12 @@ function start_manual(ind) { //this is new
 		//document.getElementById("top_title").classList.add("topOpen");
 		//initshare();
 		offset = Date.now();
-		drug_sets[ind].inf_rate_mls = document.getElementById("inputInfusion" + ind).value *1; 
+		if (optionsarray_infusionunit[0][0] == 1) {
+			drug_sets[ind].inf_rate_mls = document.getElementById("inputInfusion" + ind).value *1; 
+		} else {
+			//otherwise convert to ml/h first
+			drug_sets[ind].inf_rate_mls = document.getElementById("inputInfusion" + ind).value*drug_sets[active_drug_set_index].infusate_concentration*drug_sets[active_drug_set_index].inf_rate_permass_factor/mass;
+		}
 
 		//special code to account for "lost time" for delayed start in complex mode
 		if (complex_mode == 1) {
@@ -1011,7 +1017,12 @@ function start_manual(ind) { //this is new
 		}
 	} else {
 		document.getElementById("prompt_msg2").innerHTML = "Current rate";
-		drug_sets[ind].inf_rate_mls = document.getElementById("inputInfusion" + ind).value *1; 
+		if (optionsarray_infusionunit[0][0] == 1) {
+			drug_sets[ind].inf_rate_mls = document.getElementById("inputInfusion" + ind).value *1; 
+		} else {
+			//otherwise convert to ml/h first
+			drug_sets[ind].inf_rate_mls = document.getElementById("inputInfusion" + ind).value*drug_sets[active_drug_set_index].infusate_concentration*drug_sets[active_drug_set_index].inf_rate_permass_factor/mass;
+		}
 		document.getElementById("status").innerHTML="Running";
 		document.getElementById("iconplay").classList.remove("stop");
 		document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
@@ -8649,6 +8660,16 @@ function show_legend() {
 //other options code goes here
 
 function loadoptions(reset) {
+	if ((localStorage.getItem("OPTIONSINFUSIONUNIT")==null) || (reset == "default")) {
+		optionsarray_infusionunit[0] = [1,0];
+	} else {
+		optionsarray_infusionunit[0] = JSON.parse(localStorage.getItem("OPTIONSINFUSIONUNIT"));
+		if (optionsarray_infusionunit[0][0] == 1) {
+			document.getElementById("select_defaultrateunit") = "mlh";
+		} else {
+			document.getElementById("select_defaultrateunit") = "unitkgtime";
+		}
+	}
 	if ((localStorage.getItem("OPTIONS") === null) || (reset == "default")) {
 		optionsarray = 
 			[
@@ -8661,7 +8682,6 @@ function loadoptions(reset) {
 					[1,0]
 			];
 		localStorage.setItem("OPTIONS",JSON.stringify(optionsarray));
-
 	} else {
 		optionsarray = JSON.parse(localStorage.getItem("OPTIONS"));
 		if (optionsarray[0].indexOf(1) == 0) {
@@ -8839,6 +8859,13 @@ function applyoptions() {
 		optionsarray.push([0,1]);
 	}
 	localStorage.setItem("OPTIONS",JSON.stringify(optionsarray));
+
+	if (document.getElementById("select_defaultrateunit").value == "mlh") {
+		optionsarray_infusionunit[0] = [1,0];
+	} else {
+		optionsarray_infusionunit[0] = [0,1];
+	}
+	localStorage.setItem("OPTIONSINFUSIONUNIT",JSON.stringify(optionsarray_infusionunit));
 }
 
 function activateWakeLock() {
@@ -13845,6 +13872,94 @@ function mirrorPreview() {
 	setTimeout(function() {
 		document.getElementById("numpad_preview_msg").innerHTML = document.getElementById("preview_msg").innerHTML;
 	},500);
+}
+
+//custom select dropdown code
+
+function dropdownshow(ind) {
+	//load option and load unit
+	temp_unit = drug_sets[active_drug_set_index].inf_rate_permass_unit;
+	temp_parameter = (optionsarray_infusionunit[0][0] == 1) ? 0 : 1;
+	if (ind == 0) {
+		if (temp_parameter == 0) { // this means ml/h
+			document.getElementById("infusionrateoption0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ml/h';
+			document.getElementById("infusionrateoption1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+		} else {
+			document.getElementById("infusionrateoption0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml/h';
+			document.getElementById("infusionrateoption1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+		}
+	} else {
+		if (temp_parameter == 0) { // this means ml/h
+			document.getElementById("infusionrateoptioncopy0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ml/h';
+			document.getElementById("infusionrateoptioncopy1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+		} else {
+			document.getElementById("infusionrateoptioncopy0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml/h';
+			document.getElementById("infusionrateoptioncopy1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+		}
+	}
+	document.getElementById("infusionrateselector" + ind).classList.add("active");
+	document.getElementById("infusionratedropdown" + ind).style.display = "block";	
+	document.getElementById("infusionrateselector" + ind).setAttribute("onclick", "dropdownhide()");
+}
+
+function dropdownhide() {
+	document.getElementById("infusionrateselector0").classList.remove("active");
+    document.getElementById("infusionratedropdown0").style.display = "none";
+    if (complex_mode == 1) {
+		document.getElementById("infusionrateselector1").classList.remove("active");
+    	document.getElementById("infusionratedropdown1").style.display = "none";
+    }		
+    document.getElementById("infusionrateselector0").setAttribute("onclick", "dropdownshow(0)");
+    document.getElementById("infusionrateselector1").setAttribute("onclick", "dropdownshow(1)");
+}
+
+function setInfusionUnit(parameter) {
+	//parameter is ml/h vs unit/kg/time
+	//optionsarray_infusionunit[0] is [1,0] when ml/h
+	if (parameter == 0) {
+		//visual changes
+		document.getElementById("infusionrateoption0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ml/h';
+		document.getElementById("infusionrateoption1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + drug_sets[0].inf_rate_permass_unit;
+		//change description
+		document.getElementById("infusionratedescription0").innerHTML = "Infusion rate (ml/h)";
+		if (complex_mode == 1) {
+			document.getElementById("infusionrateoptioncopy0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ml/h';
+			document.getElementById("infusionrateoptioncopy1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + drug_sets[1].inf_rate_permass_unit;
+			document.getElementById("infusionratedescription1").innerHTML = "Infusion rate (ml/h)";
+		}
+		//update the input field(s)
+		elem = document.getElementById("inputInfusion" + active_drug_set_index);
+		if (elem.value*1 > 0) {
+			elem.value = Math.round(elem.value/drug_sets[active_drug_set_index].infusate_concentration/drug_sets[active_drug_set_index].inf_rate_permass_factor*mass*10)/10;
+		}
+		if (complex_mode == 1) {
+			elem = document.getElementById("inputInfusion" + alt_drug_set_index);
+			if (elem.value > 0) elem.value = Math.round(elem.value/drug_sets[alt_drug_set_index].infusate_concentration/drug_sets[alt_drug_set_index].inf_rate_permass_factor*mass*10)/10;
+		}
+	} else {
+		document.getElementById("infusionrateoption0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml/h';
+		document.getElementById("infusionrateoption1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + drug_sets[0].inf_rate_permass_unit;
+		document.getElementById("infusionratedescription0").innerHTML = "Infusion rate (" + drug_sets[0].inf_rate_permass_unit + ")";
+		if (complex_mode == 1) {
+			document.getElementById("infusionrateoptioncopy0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml/h';
+			document.getElementById("infusionrateoptioncopy1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + drug_sets[1].inf_rate_permass_unit;
+			document.getElementById("infusionratedescription1").innerHTML = "Infusion rate (" + drug_sets[1].inf_rate_permass_unit + ")";
+		}
+		//update the input field(s)
+		elem = document.getElementById("inputInfusion" + active_drug_set_index);
+		if (elem.value*1 > 0) {
+			alert(elem.value);
+			elem.value = Math.round(elem.value*drug_sets[active_drug_set_index].infusate_concentration*drug_sets[active_drug_set_index].inf_rate_permass_factor/mass*drug_sets[active_drug_set_index].inf_rate_permass_dp)/drug_sets[active_drug_set_index].inf_rate_permass_dp;
+		}
+		if (complex_mode == 1) {
+			elem = document.getElementById("inputInfusion" + alt_drug_set_index);
+			if (elem.value > 0) elem.value = Math.round(elem.value*drug_sets[alt_drug_set_index].infusate_concentration*drug_sets[alt_drug_set_index].inf_rate_permass_factor/mass*drug_sets[alt_drug_set_index].inf_rate_permass_dp)/drug_sets[alt_drug_set_index].inf_rate_permass_dp;
+		}
+	}
+	//set the option
+	optionsarray_infusionunit[0] = (parameter == 0) ? [1,0] : [0,1];
+	//close the dropdown
+	dropdownhide();
 }
 
 /* failed code below 

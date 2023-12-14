@@ -1196,7 +1196,17 @@
 				<div class="cardtitle">INFUSION</div>
 			<div class="cardcontents">
 				<table class="table-control line" id="tableInfusionRate0">
-					<tr class="fr"><td>Infusion rate (ml/h)</td><td><input type="number" inputmode="decimal" id="inputInfusion0" min="0" max="100" step="0.1" placeholder=" " onchange=""></td></tr>
+					<tr class="fr">
+						<td>
+							<div id="infusionratecontainer0"><span id="infusionratedescription0">Infusion rate (ml/h)</span> 
+								<span id="infusionrateselector0" onclick="dropdownshow(0)"><i class="fas fa-chevron-down"></i></span>
+								<div id="infusionratedropdown0">
+									<a class="infusionratedropdownitem" id="infusionrateoption0" onclick="setInfusionUnit(0)"><i class="far fa-check-circle infusioncheck"></i>&nbsp; ml/h</a>
+									<a class="infusionratedropdownitem" id="infusionrateoption1" onclick="setInfusionUnit(1)"><i class="far fa-circle infusioncheck"></i>&nbsp; mg/kg/h</a>
+								</div>
+							</div>
+						</td>
+						<td><input type="number" inputmode="decimal" id="inputInfusion0" min="0" max="1200" step="0.01" placeholder=" " onchange=""></td></tr>
 				</table>
 				<table class="table-control space" id="tableInitialBolus0">
 					<tr><td>Initial bolus (<span class="infused_units"></span>)</td><td><input type="number" inputmode="decimal" id="inputBolus_initial0" min="0" max="2000" step="0.1" placeholder=" " ></td></tr>
@@ -1209,7 +1219,17 @@
 				<div class="cardtitle">INFUSION.</div>
 			<div class="cardcontents">
 				<table class="table-control line" id="tableInfusionRate1">
-					<tr class="fr"><td>Infusion rate (ml/h)</td><td><input type="number" inputmode="decimal" id="inputInfusion1" min="0" max="100" step="0.1" placeholder=" " onchange=""></td></tr>
+					<tr class="fr">
+						<td>
+							<div id="infusionratecontainer1"><span id="infusionratedescription1">Infusion rate (ml/h)</span> 
+								<span id="infusionrateselector1" onclick="dropdownshow(1)"><i class="fas fa-chevron-down"></i></span>
+								<div id="infusionratedropdown1">
+									<a class="infusionratedropdownitem" id="infusionrateoptioncopy0" onclick="setInfusionUnit(0)"><i class="far fa-check-circle infusioncheck"></i>&nbsp; ml/h</a>
+									<a class="infusionratedropdownitem" id="infusionrateoptioncopy1" onclick="setInfusionUnit(1)"><i class="far fa-circle infusioncheck"></i>&nbsp; mg/kg/h</a>
+								</div>
+							</div>
+						</td>
+						<td><input type="number" inputmode="decimal" id="inputInfusion1" min="0" max="1200" step="0.01" placeholder=" " onchange=""></td></tr>
 				</table>
 				<table class="table-control space" id="tableInitialBolus1">
 					<tr><td>Initial bolus (<span class="infused_units"></span>)</td><td><input type="number" inputmode="decimal" id="inputBolus_initial1" min="0" max="2000" step="0.1" placeholder=" " ></td></tr>
@@ -1712,6 +1732,15 @@
 								<option value="mcgmin">mcg/kg/m</option>
 							</select>
 						</td>
+					</tr>
+					<tr class="" id="option_defaultrateunit"><td>Default rate unit</td>
+						<td>
+							<select id="select_defaultrateunit">
+								<option value="mlh">ml/h</option>
+								<option value="unitkgtime">mg/kg/h</option>
+							</select>
+						</td>
+					</tr>
 					<tr id="option_simspeed_row"><td>Simspeed</td>
 						<td>
 							<select id="select_simspeed">

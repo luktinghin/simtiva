@@ -4859,6 +4859,74 @@ body.dark .file_outerbox.active {
   display: inline-block;
 }
 
+/*custom select dropdown for unit change*/
+
+#infusionratecontainer0 {
+  position: relative;
+}
+
+#infusionrateselector0 {
+  transition: 0.3s transform ease;
+  display: inline-block;
+}
+
+#infusionrateselector0.active {
+  transform: rotate(180deg);
+}
+
+#infusionratedropdown0 {
+  position: absolute;
+  width: 150px;
+  background: rgba(213,237,214,1);
+  border: 2px solid #4caf50;
+  box-shadow: 4px 4px 4px 0px #0004;
+  border-radius: 9px;
+  color: black;
+  padding: 4px;
+  margin-top: 2px;
+  display: none;
+}
+
+#infusionratecontainer1 {
+  position: relative;
+}
+
+#infusionrateselector1 {
+  transition: 0.3s transform ease;
+  display: inline-block;
+}
+
+#infusionrateselector1.active {
+  transform: rotate(180deg);
+}
+
+#infusionratedropdown1 {
+  position: absolute;
+  width: 150px;
+  background: rgba(213,237,214,1);
+  border: 2px solid #4caf50;
+  box-shadow: 4px 4px 4px 0px #0004;
+  color: black;
+  border-radius: 9px;
+  padding: 4px;
+  margin-top: 2px;
+  display: none;
+}
+
+.infusionratedropdownitem {
+  display: block;
+  border-radius: 9px;
+  background: transparent;
+  line-height: 1.8;
+}
+
+.infusionratedropdownitem:hover {
+  background: white;
+}
+
+.infusioncheck {
+  font-size:120%; position:relative; top: 2px; display:inline-block
+}
 
 
 @media screen and (min-width:768px) { /*small screen - tablet*/
@@ -5155,6 +5223,7 @@ body.dark .file_outerbox.active {
   #historywrapper2 {
     display:none;
   }
+
 
 
 
