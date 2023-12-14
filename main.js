@@ -12,7 +12,7 @@ var lbm, height, gender;
 var conc1;
 var conc2;
 var conc3;
-let drug_sets = new Array();
+var drug_sets = new Array();
 var drug_name = "Propofol";
 var conc_units = "mcg";
 var infused_units = "mg";
@@ -6011,7 +6011,7 @@ function update() {
 	document.getElementById("historywrapperCOPY").innerHTML = document.getElementById("historywrapper").innerHTML;
 }
 
-let timeoutptol = null;
+var timeoutptol = null;
 function ptol_generate_margins(ind,param1,param2) {
 	//this is resource intensive
 	//Need to breakup tasks into smaller parts
@@ -7988,7 +7988,7 @@ function BIS_charting() {
 
 }
 
-let updateBIS = null;
+var updateBIS = null;
 
 function BIS_update(interval) {
 	updateBIS = setInterval(function() {
@@ -10049,8 +10049,8 @@ function sound(src) {
 }
 
 
-let ringtimeout = null;
-let ringactive = 0;
+var ringtimeout = null;
+var ringactive = 0;
 
 function ringbell(duration) {
 	let El1 = document.querySelector(".topleft");
@@ -10928,7 +10928,7 @@ async function downloadExcel() {
 }
 */
 
-let inputname = "";
+var inputname = "";
 
 function exportFunction() {
 	//reset inputname
@@ -11019,7 +11019,7 @@ function exportKeys(filenameentry,testKeys) {
 	exportGenerateDownload(testString,filenameentry);
 }
 
-let importDataArray = new Array();
+var importDataArray = new Array();
 
 function previewFile() {
 	
