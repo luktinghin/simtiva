@@ -8333,7 +8333,7 @@ function lookahead(bolusgiven, duration, ind) {
 
 	if (bolusgiven == 1) {
 		var working_clock = Math.floor(time_in_s) + 1;
-		drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div>" + "<div class='timespan'>" + converttime(working_clock-1) + "</div> Rate: " + drug_sets[ind].inf_rate_mls + "ml/h</div>");
+		drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div>" + "<div class='timespan'>" + converttime(working_clock-1) + "</div> Rate: " + Math.round(drug_sets[ind].inf_rate_mls*100)/100 + "ml/h</div>");
 		drug_sets[ind].historyarrays.push([0,2,working_clock-1,drug_sets[ind].inf_rate_mls]);
 	} else {
 		var working_clock = Math.floor(time_in_s);
@@ -8342,7 +8342,7 @@ function lookahead(bolusgiven, duration, ind) {
 		drug_sets[ind].volinf.length = working_clock;	
 		drug_sets[ind].cpt_rates_real.length = working_clock;
 
-		drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div>" + "<div class='timespan'>" + converttime(working_clock) + "</div> Rate: " + drug_sets[ind].inf_rate_mls + "ml/h</div>");
+		drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div>" + "<div class='timespan'>" + converttime(working_clock) + "</div> Rate: " + Math.round(drug_sets[ind].inf_rate_mls*100/100) + "ml/h</div>");
 		drug_sets[ind].historyarrays.push([0,2,working_clock,drug_sets[ind].inf_rate_mls]);
 		document.getElementById("historywrapper").innerHTML = drug_sets[ind].historytext;
 
