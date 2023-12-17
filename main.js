@@ -1590,8 +1590,7 @@ function initsubmit() {
 			PD_mode = 1;
 			document.getElementById("chartoverlayoptionscontent").classList.add("PDoptions");
 			document.getElementById("select_effect_measure").value = "bis";
-			document.getElementById("select_effect_measure").options[1].remove(); //removes PTOL option
-			setTimeout(function() {document.getElementById("select_effect_measure").options[1].remove();},100);//removes NSRI
+			document.getElementById("select_effect_measure").disabled = true;
 			 
 			BIS40 = BIS_Ce_for_BIS(40);
 			BIS60 = BIS_Ce_for_BIS(60);
@@ -8812,6 +8811,10 @@ function toPageOne() {
 		El5.parentElement.style.borderBottomColor = "transparent";
 		El6.classList.add("disabled");
 		El6.removeEventListener("click", toPageTwo);
+
+	if (document.getElementById("rescuebuttons").style.display=="none") {
+		document.getElementById("rescuebuttons").style.display="block";
+	}
 }
 
 function toPageTwo() {
