@@ -21,6 +21,10 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
 - To help deliver TCI in a setting where TCI pumps are not available
 
 ### Changelog
+ Version 4.4 (Build 95) Current
+ - Bug fixes
+ - Infusion unit function: manual mode - can change infusion unit from "ml/h" to "mg/kg/h" (or "mcg/kg/min"... where appropriate)
+   
  Version 4.3 (Build 94) Current
  - Added CeT and CpT quick edit function in Fullscreen mode 
  
