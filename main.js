@@ -9944,6 +9944,7 @@ function loadoptions(reset) {
 	}
 	if ((localStorage.getItem("OPTIONSINFUSIONUNIT")==null) || (reset == "default")) {
 		optionsarray_infusionunit = [[1,0]];
+		localStorage.setItem("OPTIONSINFUSIONUNIT",JSON.stringify(optionsarray_infusionunit));
 	} else {
 		optionsarray_infusionunit = JSON.parse(localStorage.getItem("OPTIONSINFUSIONUNIT"));
 		//make a guess for infusion unit
