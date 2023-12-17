@@ -128,10 +128,10 @@
    -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
            box-sizing: border-box;
-  /*-webkit-user-select: none;
+  -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
-          user-select: none;*/
+          user-select: none;
           
 }
 
@@ -2215,7 +2215,7 @@ body.dark .loadduration {
   margin-bottom: 0.5rem;
 }
 .table-control td:first-child {
-  width:60%;
+  width:66%;
 }
 #outputcontainer {
   position:relative;
@@ -4859,6 +4859,96 @@ body.dark .file_outerbox.active {
   display: inline-block;
 }
 
+/*custom select dropdown for unit change*/
+
+#infusionratecontainer0 {
+  position: relative;
+}
+
+#infusionrateselector0 {
+  transition: 0.3s transform ease;
+  display: inline-block;
+  cursor: pointer;
+}
+
+#infusionrateselector0.active {
+  transform: rotate(180deg);
+}
+
+#infusionratedropdown0 {
+  position: absolute;
+  width: 150px;
+  background: rgba(213,237,214,1);
+  border: 2px solid #4caf50;
+  box-shadow: 2px 6px 7px 0px rgba(0,0,0,0.15);
+  border-radius: 9px;
+  color: black;
+  padding: 4px;
+  margin-top: 2px;
+  display: none;
+}
+
+body.dark #infusionratedropdown0 {
+  border: 2px solid #506150;
+  background: #555;
+  color: #eee;
+  box-shadow: 2px 4px 6px 0px #000;
+}
+
+#infusionratecontainer1 {
+  position: relative;
+}
+
+#infusionrateselector1 {
+  transition: 0.3s transform ease;
+  display: inline-block;
+  cursor: pointer;
+}
+
+#infusionrateselector1.active {
+  transform: rotate(180deg);
+}
+
+#infusionratedropdown1 {
+  position: absolute;
+  width: 150px;
+  background: rgba(213,237,214,1);
+  border: 2px solid #4caf50;
+  box-shadow: 2px 6px 7px 0px rgba(0,0,0,0.15);
+  color: black;
+  border-radius: 9px;
+  padding: 4px;
+  margin-top: 2px;
+  display: none;
+}
+
+body.dark #infusionratedropdown1 {
+  border: 2px solid #506150;
+  background: #555;
+  color: #eee;
+  box-shadow: 2px 4px 6px 0px #000;
+}
+
+.infusionratedropdownitem {
+  display: block;
+  border-radius: 9px;
+  background: transparent;
+  line-height: 1.8;
+  cursor: pointer;
+}
+
+.infusionratedropdownitem:hover {
+  background: white;
+}
+
+body.dark .infusionratedropdownitem:hover {
+  background: #777;
+  color: white;
+}
+
+.infusioncheck {
+  font-size:120%; position:relative; top: 2px; display:inline-block
+}
 
 
 @media screen and (min-width:768px) { /*small screen - tablet*/
@@ -5159,6 +5249,7 @@ body.dark .file_outerbox.active {
 
 
 
+
 body.dark #historywrapperCOPY .past {
   color: #777;
 }
@@ -5440,14 +5531,7 @@ body.dark #pastschemeCOPY {
     margin-left:auto;
     margin-right:auto;
   }
-  .contentrow {
-          -webkit-user-select: auto;
-     -moz-user-select: auto;
-      -ms-user-select: auto;
-          user-select: auto;
-  }
-  #rescuebuttons {
-    
+  #rescuebuttons { 
     left: 12px;
   }
   .button.frontpage {
