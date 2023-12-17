@@ -4868,6 +4868,7 @@ body.dark .file_outerbox.active {
 #infusionrateselector0 {
   transition: 0.3s transform ease;
   display: inline-block;
+  cursor: pointer;
 }
 
 #infusionrateselector0.active {
@@ -4879,12 +4880,19 @@ body.dark .file_outerbox.active {
   width: 150px;
   background: rgba(213,237,214,1);
   border: 2px solid #4caf50;
-  box-shadow: 4px 4px 4px 0px #0004;
+  box-shadow: 2px 6px 7px 0px rgba(0,0,0,0.15);
   border-radius: 9px;
   color: black;
   padding: 4px;
   margin-top: 2px;
   display: none;
+}
+
+body.dark #infusionratedropdown0 {
+  border: 2px solid #506150;
+  background: #555;
+  color: #eee;
+  box-shadow: 2px 4px 6px 0px #000;
 }
 
 #infusionratecontainer1 {
@@ -4894,6 +4902,7 @@ body.dark .file_outerbox.active {
 #infusionrateselector1 {
   transition: 0.3s transform ease;
   display: inline-block;
+  cursor: pointer;
 }
 
 #infusionrateselector1.active {
@@ -4905,7 +4914,7 @@ body.dark .file_outerbox.active {
   width: 150px;
   background: rgba(213,237,214,1);
   border: 2px solid #4caf50;
-  box-shadow: 4px 4px 4px 0px #0004;
+  box-shadow: 2px 6px 7px 0px rgba(0,0,0,0.15);
   color: black;
   border-radius: 9px;
   padding: 4px;
@@ -4913,15 +4922,28 @@ body.dark .file_outerbox.active {
   display: none;
 }
 
+body.dark #infusionratedropdown1 {
+  border: 2px solid #506150;
+  background: #555;
+  color: #eee;
+  box-shadow: 2px 4px 6px 0px #000;
+}
+
 .infusionratedropdownitem {
   display: block;
   border-radius: 9px;
   background: transparent;
   line-height: 1.8;
+  cursor: pointer;
 }
 
 .infusionratedropdownitem:hover {
   background: white;
+}
+
+body.dark .infusionratedropdownitem:hover {
+  background: #777;
+  color: white;
 }
 
 .infusioncheck {
