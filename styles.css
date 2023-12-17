@@ -128,10 +128,10 @@
    -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
            box-sizing: border-box;
-  /*-webkit-user-select: none;
+  -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
-          user-select: none;*/
+          user-select: none;
           
 }
 
@@ -5531,14 +5531,7 @@ body.dark #pastschemeCOPY {
     margin-left:auto;
     margin-right:auto;
   }
-  .contentrow {
-          -webkit-user-select: auto;
-     -moz-user-select: auto;
-      -ms-user-select: auto;
-          user-select: auto;
-  }
-  #rescuebuttons {
-    
+  #rescuebuttons { 
     left: 12px;
   }
   .button.frontpage {
