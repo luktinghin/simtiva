@@ -10,7 +10,7 @@ This is an open source project; created by Terence Luk 2023; licensed under GNU 
 
 Coding is done in JavaScript. The code to mathematical calculations are based on STANPUMP, created by Dr. Steven Shafer, freely available on [OpenTCI](http://opentci.org/code/stanpump).
 
-The pharmacological models include Marsh, Schnider, Paedfusor and Eleveld for propofol, Minto & Eleveld for remifentanil, and Maitre for alfentanil.
+The pharmacological models include Marsh, Schnider, Paedfusor and Eleveld for propofol, Minto & Eleveld for remifentanil, Shafer for fentanyl, and Maitre for alfentanil.
 
 Several modes are available on SimTIVA app. CP/CE targeting is useful if you want to emulate the behavior of a TCI pump. An infusion scheme will be generated to guide you to achieve a CP or CE target using any ordinary syringe pump without TCI functionality. Manual mode allows you to input bolus and infusion doses and SimTIVA will calculate the CE/CP in response to these doses and plot the result over time. 
 
