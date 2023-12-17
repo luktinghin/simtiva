@@ -9299,7 +9299,7 @@ function displayModalOptions() {
 								<option value="mcgmin" ${(optionsarray[0][1]==1) ? 'selected':''}>mcg/kg/m</option>
 							</select>
 						</td>
-					<tr class="" id=""><td>Default rate unit</td>
+					<tr class="" id=""><td>Default rate unit  <i class="far fa-question-circle tooltip background"><span class="tooltiptext" style="width:160px">Unit for entering manual mode infusion rate, e.g. "ml/h" vs "mg/kg/h" (or appropriate units)</span></i></td>
 						<td>
 							<select id="" onchange="document.getElementById('select_defaultrateunit').value=this.value">
 								<option value="mlh" ${(optionsarray_infusionunit[0][0]==1) ? 'selected':''}>ml/h</option>
@@ -9943,7 +9943,7 @@ function loadoptions(reset) {
 		}
 	}
 	if ((localStorage.getItem("OPTIONSINFUSIONUNIT")==null) || (reset == "default")) {
-		optionsarray_infusionunit[0] = [1,0];
+		optionsarray_infusionunit = [[1,0]];
 	} else {
 		optionsarray_infusionunit = JSON.parse(localStorage.getItem("OPTIONSINFUSIONUNIT"));
 		//make a guess for infusion unit
@@ -15200,11 +15200,9 @@ function setInfusionUnit(parameter) {
 	//only perform the change if the param is different from existing param
 	if (optionsarray_infusionunit[0][parameter] != 1) {
 
-		
-		
-
-		//set the option
+		//set the option & write to storage
 		optionsarray_infusionunit[0] = (parameter == 0) ? [1,0] : [0,1];
+		localStorage.setItem("OPTIONSINFUSIONUNIT",JSON.stringify(optionsarray_infusionunit));
 
 		//get drug_sets infusion unit, if available, if not, get it from the option value
 		if (drug_sets.length>0) {
