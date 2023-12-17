@@ -23,7 +23,7 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
 ### Changelog
  Version 4.4 (Build 95) Current
  - Bug fixes
- - Infusion unit function: manual mode - can change infusion unit from "ml/h" to "mg/kg/h" (or "mcg/kg/min"... where appropriate)
+ - Bolus/Infusion unit function: manual mode - can change infusion unit from "ml/h" to "mg/kg/h" (or appropriate units) & change the bolus unit from "mg" to "mg/kg" or "ml" (or appropriate units)
    
  Version 4.3 (Build 94) Current
  - Added CeT and CpT quick edit function in Fullscreen mode 
