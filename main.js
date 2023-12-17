@@ -2172,7 +2172,15 @@ function start_manual(ind) { //this is new
 		drug_sets[ind].running = 1;
 
 		if (document.getElementById("inputBolus_initial" + ind).value>0) {
-			bolusadmin(document.getElementById("inputBolus_initial" + ind).value * 1,ind);
+			temp_bolus = document.getElementById("inputBolus_initial" + ind).value * 1;
+			if (optionsarray_infusionunit[1][0] == 1) {
+				bolusadmin(temp_bolus,ind);	
+			} else if (optionsarray_infusionunit[1][1] == 1) {
+				bolusadmin(temp_bolus * mass,ind);	
+			} else {
+				bolusadmin(temp_bolus * drug_sets[ind].infusate_concentration,ind);	
+			}
+			
 		} else {
 			lookahead(0,7200,ind);
 		}
@@ -7254,7 +7262,14 @@ function runinfusion_old() { //this will be obsolete
 	prior_infuse_time = infuse_time; // last sentence
 }
 function custombolus(arg) {
-	return document.getElementById("inputBolus" + arg).value*1;
+	if (optionsarray_infusionunit[1][0] == 1) {
+		return document.getElementById("inputBolus" + arg).value * 1;	
+	} else if (optionsarray_infusionunit[1][1] == 1) {
+		return document.getElementById("inputBolus" + arg).value * mass;	
+	} else {
+		return document.getElementById("inputBolus" + arg).value * drug_sets[active_drug_set_index].infusate_concentration;	
+	}
+	
 }
 
 function bolusadmin(x, ind) {
@@ -8894,7 +8909,7 @@ function displayDisclaimer() {
 }
 
 function displayAbout() {
-	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk, 2023</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 17/12/2023 (V4.4) Build 95.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
+	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk, 2023</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 17/12/2023 (V4.4) Build 96.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
 	displayWarning("About", text);
 }
 
@@ -9290,6 +9305,7 @@ function prepare_environment(input_uid) {
 function displayModalOptions() {
 	loadoptions();
 	temp_unit = document.getElementById("select_defaultrateunit").options[1].textContent;
+	temp_unit_bolus = document.getElementById("select_defaultbolusunit").options[0].textContent;
 	text = `
 		<table class="table-control">
 					<tr class="fr" id=""><td>Unit <i class="far fa-question-circle tooltip2"><span class="tooltiptext">Preferred secondary unit for propofol infusion.</span></i></td>
@@ -9304,6 +9320,15 @@ function displayModalOptions() {
 							<select id="" onchange="document.getElementById('select_defaultrateunit').value=this.value">
 								<option value="mlh" ${(optionsarray_infusionunit[0][0]==1) ? 'selected':''}>ml/h</option>
 								<option value="unitkgtime" ${(optionsarray_infusionunit[0][0]!=1) ? 'selected':''}>${temp_unit}</option>
+							</select>
+						</td>
+					</tr>
+					<tr class="" id=""><td>Default bolus unit  <i class="far fa-question-circle tooltip background"><span class="tooltiptext" style="width:160px">Unit for entering manual mode bolus, e.g. "mg" vs "mg/kg" vs "ml" (or appropriate units)</span></i></td>
+						<td>
+							<select id="" onchange="document.getElementById('select_defaultbolusunit').value=this.value">
+								<option value="mg" ${(optionsarray_infusionunit[1][0]==1) ? 'selected':''}>${temp_unit_bolus}</option>
+								<option value="mgkg" ${(optionsarray_infusionunit[1][1]==1) ? 'selected':''}>${temp_unit_bolus}/kg</option>
+								<option value="ml" ${(optionsarray_infusionunit[1][2]==1) ? 'selected':''}>ml</option>
 							</select>
 						</td>
 					</tr>
@@ -9943,7 +9968,7 @@ function loadoptions(reset) {
 		}
 	}
 	if ((localStorage.getItem("OPTIONSINFUSIONUNIT")==null) || (reset == "default")) {
-		optionsarray_infusionunit = [[1,0]];
+		optionsarray_infusionunit = [[1,0],[1,0,0]];
 		localStorage.setItem("OPTIONSINFUSIONUNIT",JSON.stringify(optionsarray_infusionunit));
 	} else {
 		optionsarray_infusionunit = JSON.parse(localStorage.getItem("OPTIONSINFUSIONUNIT"));
@@ -9954,6 +9979,7 @@ function loadoptions(reset) {
 
 function guessInfusionUnit() {
 	let temp_unit = "mg/kg/h";
+	let temp_unit_bolus = "mg";
 	//first, determine the context. is drug_sets initialized?
 	//if yes, use initialized variables.
 	//if not, get model name from startscreen.
@@ -9976,9 +10002,11 @@ function guessInfusionUnit() {
 			 )
 			) { // this is propofol
 			temp_unit = "mg/kg/h";
+			temp_unit_bolus = "mg";
 			if (document.getElementById("select_unit").value == "mcgmin") temp_unit = "mcg/kg/m";
 		} else if (paedi_mode == 0 && document.getElementById("select_model").value == "Shafer") {
 			temp_unit = "mcg/kg/h";
+			temp_unit_bolus = "mcg";
 		} else if ((paedi_mode == 0 && document.getElementById("select_model").value == "Complex") ||
 				   (paedi_mode == 1 && document.getElementById("select_model_paedi").value == "Complex")) {
 			//this is complex mode
@@ -9988,19 +10016,24 @@ function guessInfusionUnit() {
 			} else {
 				temp_unit = "mg/kg/h";
 			}
+			temp_unit_bolus = "mg";
 		} else {
 			//all others is mcg/kg/m
 			temp_unit = "mcg/kg/m";
+			temp_unit_bolus = "mcg";
 		}
 	} else {
 		//this has already been initiated.
 		temp_unit = drug_sets[0].inf_rate_permass_unit;
+		temp_unit_bolus = drug_sets[0].infused_units;
 	}
 	//if there's complex mode and see if it's been initiated.
 	if (complex_mode == 1 && drug_sets.length>0) {
-		temp_unit1 = drug_sets[1].inf_rate_permass_unit;	
+		temp_unit1 = drug_sets[1].inf_rate_permass_unit;
+		temp_unit_bolus1 = "mcg";	
 	} else if (complex_mode == 1 && drug_sets.length==0) {
 		temp_unit1 = "mcg/kg/m";
+		temp_unit_bolus1 = "mcg";
 	}
 	//get whether mode is ml/h or unit/kg/time mode.
 	//write temp_unit to (1) infusion0 box and infusion1 box descriptions, (2) option item of options dialog
@@ -10010,6 +10043,7 @@ function guessInfusionUnit() {
 			document.getElementById("infusionratedescription0").innerHTML = "Infusion rate (ml/h)";
 			document.getElementById("select_defaultrateunit").options[1].textContent = temp_unit;	
 		} else {
+			document.getElementById("infusionratedescription0").innerHTML = "Infusion rate (ml/h)";
 			document.getElementById("infusionratedescription1").innerHTML = "Infusion rate (ml/h)";
 			if (active_drug_set_index == 0) {
 				document.getElementById("select_defaultrateunit").options[1].textContent = temp_unit;	
@@ -10024,11 +10058,74 @@ function guessInfusionUnit() {
 			document.getElementById("infusionratedescription0").innerHTML = "Infusion rate (" + temp_unit + ")";
 			document.getElementById("select_defaultrateunit").options[1].textContent = temp_unit;	
 		} else {
+			document.getElementById("infusionratedescription0").innerHTML = "Infusion rate (" + temp_unit + ")";
 			document.getElementById("infusionratedescription1").innerHTML = "Infusion rate (" + temp_unit1 + ")";
 			if (active_drug_set_index == 0) {
 				document.getElementById("select_defaultrateunit").options[1].textContent = temp_unit;	
 			} else {
 				document.getElementById("select_defaultrateunit").options[1].textContent = temp_unit1;	
+			}
+		}
+	}
+	//then deal with bolus modes
+	if (optionsarray_infusionunit[1][0] == 1) {
+		document.getElementById("select_defaultbolusunit").value = "mg";
+		if (complex_mode == 0) {
+			document.getElementById("bolusdescription0").innerHTML = "Initial bolus (" + temp_unit_bolus + ")";
+			document.getElementById("bolusdescriptioncopy0").innerHTML = "Custom bolus (" + temp_unit_bolus + ")";
+			document.getElementById("select_defaultbolusunit").options[0].textContent = temp_unit_bolus;
+			document.getElementById("select_defaultbolusunit").options[1].textContent = temp_unit_bolus + "/kg";
+		} else {
+			document.getElementById("bolusdescription0").innerHTML = "Initial bolus (" + temp_unit_bolus + ")";
+			document.getElementById("bolusdescriptioncopy0").innerHTML = "Custom bolus (" + temp_unit_bolus + ")";
+			document.getElementById("bolusdescription1").innerHTML = "Initial bolus (" + temp_unit_bolus1 + ")";
+			document.getElementById("bolusdescriptioncopy1").innerHTML = "Custom bolus (" + temp_unit_bolus1 + ")";
+			if (active_drug_set_index == 0) {
+				document.getElementById("select_defaultbolusunit").options[0].textContent = temp_unit_bolus;
+				document.getElementById("select_defaultbolusunit").options[1].textContent = temp_unit_bolus + "/kg";
+			} else {
+				document.getElementById("select_defaultbolusunit").options[0].textContent = temp_unit_bolus1;
+				document.getElementById("select_defaultbolusunit").options[1].textContent = temp_unit_bolus1 + "/kg";
+			}
+		}
+	} else if (optionsarray_infusionunit[1][1] == 1) {
+		document.getElementById("select_defaultbolusunit").value = "mgkg";
+		if (complex_mode == 0) {
+			document.getElementById("bolusdescription0").innerHTML = "Initial bolus (" + temp_unit_bolus + "/kg)";
+			document.getElementById("bolusdescriptioncopy0").innerHTML = "Custom bolus (" + temp_unit_bolus + "/kg)";
+			document.getElementById("select_defaultbolusunit").options[0].textContent = temp_unit_bolus;
+			document.getElementById("select_defaultbolusunit").options[1].textContent = temp_unit_bolus + "/kg";
+		} else {
+			document.getElementById("bolusdescription0").innerHTML = "Initial bolus (" + temp_unit_bolus + "/kg)";
+			document.getElementById("bolusdescriptioncopy0").innerHTML = "Custom bolus (" + temp_unit_bolus + "/kg)";
+			document.getElementById("bolusdescription1").innerHTML = "Initial bolus (" + temp_unit_bolus1 + "/kg)";
+			document.getElementById("bolusdescriptioncopy1").innerHTML = "Custom bolus (" + temp_unit_bolus1 + "/kg)";
+			if (active_drug_set_index == 0) {
+				document.getElementById("select_defaultbolusunit").options[0].textContent = temp_unit_bolus;
+				document.getElementById("select_defaultbolusunit").options[1].textContent = temp_unit_bolus + "/kg";
+			} else {
+				document.getElementById("select_defaultbolusunit").options[0].textContent = temp_unit_bolus1;
+				document.getElementById("select_defaultbolusunit").options[1].textContent = temp_unit_bolus1 + "/kg";
+			}
+		}
+	} else {
+		document.getElementById("select_defaultbolusunit").value = "ml";
+		if (complex_mode == 0) {
+			document.getElementById("bolusdescription0").innerHTML = "Initial bolus (ml)";
+			document.getElementById("bolusdescriptioncopy0").innerHTML = "Custom bolus (ml)";
+			document.getElementById("select_defaultbolusunit").options[0].textContent = temp_unit_bolus;
+			document.getElementById("select_defaultbolusunit").options[1].textContent = temp_unit_bolus + "/kg";
+		} else {
+			document.getElementById("bolusdescription0").innerHTML = "Initial bolus (ml)";
+			document.getElementById("bolusdescriptioncopy0").innerHTML = "Custom bolus (ml)";
+			document.getElementById("bolusdescription1").innerHTML = "Initial bolus (ml)";
+			document.getElementById("bolusdescriptioncopy1").innerHTML = "Custom bolus (ml)";
+			if (active_drug_set_index == 0) {
+				document.getElementById("select_defaultbolusunit").options[0].textContent = temp_unit_bolus;
+				document.getElementById("select_defaultbolusunit").options[1].textContent = temp_unit_bolus + "/kg";
+			} else {
+				document.getElementById("select_defaultbolusunit").options[0].textContent = temp_unit_bolus1;
+				document.getElementById("select_defaultbolusunit").options[1].textContent = temp_unit_bolus1 + "/kg";
 			}
 		}
 	}
@@ -10139,6 +10236,13 @@ function applyoptions() {
 		setInfusionUnit(0);
 	} else {
 		setInfusionUnit(1);
+	}
+	if (document.getElementById("select_defaultbolusunit").value == "mg") {
+		setBolusUnit(0)
+	} else if (document.getElementById("select_defaultbolusunit").value == "mgkg") {
+		setBolusUnit(1)
+	} else {
+		setBolusUnit(2)
 	}
 	localStorage.setItem("OPTIONSINFUSIONUNIT",JSON.stringify(optionsarray_infusionunit));
 }
@@ -15158,6 +15262,8 @@ function mirrorPreview() {
 //custom select dropdown code
 
 function dropdownshow(ind) {
+	dropdownhide();
+
 	//load option and load unit
 	temp_unit = drug_sets[active_drug_set_index].inf_rate_permass_unit;
 	temp_parameter = (optionsarray_infusionunit[0][0] == 1) ? 0 : 1;
@@ -15183,15 +15289,61 @@ function dropdownshow(ind) {
 	document.getElementById("infusionrateselector" + ind).setAttribute("onclick", "dropdownhide()");
 }
 
+function dropdownshowbolus(ind, source) {
+	dropdownhide();
+
+	//load option and load unit
+	temp_unit = drug_sets[active_drug_set_index].infused_units;
+	if (optionsarray_infusionunit[1][0] == 1) {
+		temp_parameter = 0;
+	} else if (optionsarray_infusionunit[1][1] == 1) {
+		temp_parameter = 1;
+	} else {
+		temp_parameter = 2;
+	}
+	if (ind == 0) {
+		if (temp_parameter == 0) { // this means mg
+			document.getElementById("bolusoption" + source + "0_" + ind).innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+			document.getElementById("bolusoption" + source + "1_" + ind).innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
+			document.getElementById("bolusoption" + source + "2_" + ind).innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
+		} else if (temp_parameter == 1) {
+			document.getElementById("bolusoption" + source + "0_" + ind).innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+			document.getElementById("bolusoption" + source + "1_" + ind).innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
+			document.getElementById("bolusoption" + source + "2_" + ind).innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
+		} else {
+			document.getElementById("bolusoption" + source + "0_" + ind).innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+			document.getElementById("bolusoption" + source + "1_" + ind).innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
+			document.getElementById("bolusoption" + source + "2_" + ind).innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ml';
+		}
+	} 
+	document.getElementById("bolusselector" + source + ind).classList.add("active");
+	document.getElementById("bolusdropdown" + source + ind).style.display = "block";	
+	document.getElementById("bolusselector" + source + ind).setAttribute("onclick", "dropdownhide()");
+}
+
 function dropdownhide() {
 	document.getElementById("infusionrateselector0").classList.remove("active");
     document.getElementById("infusionratedropdown0").style.display = "none";
+    document.getElementById("infusionrateselector0").setAttribute("onclick", "dropdownshow(0)");
+    //hide bolus
+	document.getElementById("bolusselector0").classList.remove("active");
+	document.getElementById("bolusdropdown0").style.display = "none";	
+	document.getElementById("bolusselector0").setAttribute("onclick", "dropdownshowbolus(0,'')");
+	document.getElementById("bolusselectorcopy0").classList.remove("active");
+	document.getElementById("bolusdropdowncopy0").style.display = "none";	
+	document.getElementById("bolusselectorcopy0").setAttribute("onclick", "dropdownshowbolus(0,'copy')");
+
     if (complex_mode == 1) {
 		document.getElementById("infusionrateselector1").classList.remove("active");
     	document.getElementById("infusionratedropdown1").style.display = "none";
-    }		
-    document.getElementById("infusionrateselector0").setAttribute("onclick", "dropdownshow(0)");
-    document.getElementById("infusionrateselector1").setAttribute("onclick", "dropdownshow(1)");
+    	document.getElementById("infusionrateselector1").setAttribute("onclick", "dropdownshow(1)");
+		document.getElementById("bolusselector1").classList.remove("active");
+		document.getElementById("bolusdropdown1").style.display = "none";	
+		document.getElementById("bolusselector1").setAttribute("onclick", "dropdownshowbolus(1,'')");
+		document.getElementById("bolusselectorcopy1").classList.remove("active");
+		document.getElementById("bolusdropdowncopy1").style.display = "none";	
+		document.getElementById("bolusselectorcopy1").setAttribute("onclick", "dropdownshowbolus(1,'copy')");
+    }	
 }
 
 function setInfusionUnit(parameter) {
@@ -15207,7 +15359,7 @@ function setInfusionUnit(parameter) {
 
 		//get drug_sets infusion unit, if available, if not, get it from the option value
 		if (drug_sets.length>0) {
-			temp_unit = drug_sets[active_drug_set_index].inf_rate_permass_unit;	
+			temp_unit = drug_sets[0].inf_rate_permass_unit;	
 		} else {
 			temp_unit = document.getElementById("select_defaultrateunit").options[1].textContent;
 		}
@@ -15252,6 +15404,219 @@ function setInfusionUnit(parameter) {
 			if (complex_mode == 1) {
 				elem = document.getElementById("inputInfusion" + alt_drug_set_index);
 				if (elem.value > 0) elem.value = Math.round(elem.value*drug_sets[alt_drug_set_index].infusate_concentration*drug_sets[alt_drug_set_index].inf_rate_permass_factor/mass*drug_sets[alt_drug_set_index].inf_rate_permass_dp)/drug_sets[alt_drug_set_index].inf_rate_permass_dp;
+			}
+		}
+	}
+	//close the dropdown
+	dropdownhide();
+}
+
+function setBolusUnit(parameter) {
+	//parameter is mg vs mg/kg vs ml
+	//optionsarray_infusionunit[1] is [1,0,0] when mg
+
+	//get original parameter
+	if (optionsarray_infusionunit[1][0] == 1) {
+		orig_param = 0;
+	} else if (optionsarray_infusionunit[1][1] == 1) {
+		orig_param = 1;
+	} else {
+		orig_param = 2;
+	}
+
+	//only perform the change if the param is different from existing param
+	if (optionsarray_infusionunit[1][parameter] != 1) {
+
+		//set the option & write to storage
+		if (parameter == 0) {
+			optionsarray_infusionunit[1] = [1,0,0];
+		} else if (parameter == 1) {
+			optionsarray_infusionunit[1] = [0,1,0];
+		} else {
+			optionsarray_infusionunit[1] = [0,0,1];
+		}
+		localStorage.setItem("OPTIONSINFUSIONUNIT",JSON.stringify(optionsarray_infusionunit));
+
+		//get drug_sets infusion unit, if available, if not, get it from the option value
+		if (drug_sets.length>0) {
+			temp_unit = drug_sets[active_drug_set_index].infused_units;	
+		} else {
+			temp_unit = document.getElementById("select_defaultbolusunit").options[0].textContent;
+		}
+		
+		if (parameter == 0) {
+			//this is mg
+			//make sure the display of the select dropdown in options is correct, otherwise bug
+			document.getElementById("select_defaultbolusunit").value = "mg";
+			//visual changes
+			document.getElementById("bolusoption0_0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+			document.getElementById("bolusoption1_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
+			document.getElementById("bolusoption2_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
+			document.getElementById("bolusoptioncopy0_0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+			document.getElementById("bolusoptioncopy1_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
+			document.getElementById("bolusoptioncopy2_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
+			//change description
+			document.getElementById("bolusdescription0").innerHTML = "Initial bolus (" + temp_unit + ")";
+			document.getElementById("bolusdescriptioncopy0").innerHTML = "Custom bolus (" + temp_unit + ")";
+			if (complex_mode == 1) {
+				temp_unit = drug_sets[1].infused_units;
+				document.getElementById("bolusoption0_1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+				document.getElementById("bolusoption1_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
+				document.getElementById("bolusoption2_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
+				document.getElementById("bolusoptioncopy0_1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+				document.getElementById("bolusoptioncopy1_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
+				document.getElementById("bolusoptioncopy2_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
+				document.getElementById("bolusdescription1").innerHTML = "Initial bolus (" + temp_unit + ")";
+				document.getElementById("bolusdescriptioncopy1").innerHTML = "Custom bolus (" + temp_unit + ")";
+			}
+			//update the input field(s)
+			if (document.getElementById("tableInitialBolus0").style.display != "none") {
+				//initial bolus not yet hidden
+				elem = document.getElementById("inputBolus_initial0");
+			} else {
+				elem = document.getElementById("inputBolus0");
+			}
+			if (elem.value*1 > 0) {
+				if (orig_param == 1) {
+					//from mg/kg to mg
+					elem.value = Math.round(elem.value * mass * 100)/100;
+				} else {
+					//from ml to mg
+					elem.value = Math.round(elem.value * drug_sets[0].infusate_concentration * 100)/100;
+				}
+			}
+			if (complex_mode == 1) {
+				if (document.getElementById("tableInitialBolus1").style.display != "none") {
+					//initial bolus not yet hidden
+					elem = document.getElementById("inputBolus_initial1");
+				} else {
+					elem = document.getElementById("inputBolus1");
+				}
+				if (elem.value > 0) {
+					if (orig_param == 1) {
+						//from mg/kg to mg
+						elem.value = Math.round(elem.value * mass * 100)/100;
+					} else {
+						//from ml to mg
+						elem.value = Math.round(elem.value * drug_sets[1].infusate_concentration * 100)/100;
+					}
+				}
+			}
+		} else if (parameter == 1) {
+			//this is mg/kg
+			//make sure the display of the select dropdown in options is correct, otherwise bug
+			document.getElementById("select_defaultbolusunit").value = "mgkg";
+			//visual changes
+			document.getElementById("bolusoption0_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+			document.getElementById("bolusoption1_0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
+			document.getElementById("bolusoption2_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
+			document.getElementById("bolusoptioncopy0_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+			document.getElementById("bolusoptioncopy1_0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
+			document.getElementById("bolusoptioncopy2_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
+			//change description
+			document.getElementById("bolusdescription0").innerHTML = "Initial bolus (" + temp_unit + "/kg)";
+			document.getElementById("bolusdescriptioncopy0").innerHTML = "Custom bolus (" + temp_unit + "/kg)";
+			if (complex_mode == 1) {
+				temp_unit = drug_sets[1].infused_units;
+				document.getElementById("bolusoption0_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+				document.getElementById("bolusoption1_1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
+				document.getElementById("bolusoption2_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
+				document.getElementById("bolusoptioncopy0_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+				document.getElementById("bolusoptioncopy1_1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
+				document.getElementById("bolusoptioncopy2_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
+				document.getElementById("bolusdescription1").innerHTML = "Initial bolus (" + temp_unit + "/kg)";
+				document.getElementById("bolusdescriptioncopy1").innerHTML = "Custom bolus (" + temp_unit + "/kg)";
+			}
+			//update the input field(s)
+			if (document.getElementById("tableInitialBolus0").style.display != "none") {
+				//initial bolus not yet hidden
+				elem = document.getElementById("inputBolus_initial0");
+			} else {
+				elem = document.getElementById("inputBolus0");
+			}
+			if (elem.value*1 > 0) {
+				if (orig_param == 0) {
+					//from mg to mg/kg
+					elem.value = Math.round(elem.value / mass * 100)/100;
+				} else {
+					//from ml to mg/kg
+					elem.value = Math.round(elem.value * drug_sets[0].infusate_concentration / mass * 100)/100;
+				}
+			}
+			if (complex_mode == 1) {
+				if (document.getElementById("tableInitialBolus1").style.display != "none") {
+					//initial bolus not yet hidden
+					elem = document.getElementById("inputBolus_initial1");
+				} else {
+					elem = document.getElementById("inputBolus1");
+				}
+				if (elem.value > 0) {
+					if (orig_param == 0) {
+						//from mg to mg/kg
+						elem.value = Math.round(elem.value / mass * 100)/100;
+					} else {
+						//from ml to mg/kg
+						elem.value = Math.round(elem.value * drug_sets[1].infusate_concentration / mass * 100)/100;
+					}
+				}
+			}
+		} else {
+			//this is ml
+			//make sure the display of the select dropdown in options is correct, otherwise bug
+			document.getElementById("select_defaultbolusunit").value = "ml";
+			//visual changes
+			document.getElementById("bolusoption0_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+			document.getElementById("bolusoption1_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
+			document.getElementById("bolusoption2_0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ml';
+			document.getElementById("bolusoptioncopy0_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+			document.getElementById("bolusoptioncopy1_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
+			document.getElementById("bolusoptioncopy2_0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ml';
+			//change description
+			document.getElementById("bolusdescription0").innerHTML = "Initial bolus (ml)";
+			document.getElementById("bolusdescriptioncopy0").innerHTML = "Custom bolus (ml)";
+			if (complex_mode == 1) {
+				temp_unit = drug_sets[1].infused_units;
+				document.getElementById("bolusoption0_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+				document.getElementById("bolusoption1_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
+				document.getElementById("bolusoption2_1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ml';
+				document.getElementById("bolusoptioncopy0_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+				document.getElementById("bolusoptioncopy1_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
+				document.getElementById("bolusoptioncopy2_1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ml';
+				document.getElementById("bolusdescription1").innerHTML = "Initial bolus (ml)";
+				document.getElementById("bolusdescriptioncopy1").innerHTML = "Custom bolus (ml)";
+			}
+			//update the input field(s)
+			if (document.getElementById("tableInitialBolus0").style.display != "none") {
+				//initial bolus not yet hidden
+				elem = document.getElementById("inputBolus_initial0");
+			} else {
+				elem = document.getElementById("inputBolus0");
+			}
+			if (elem.value*1 > 0) {
+				if (orig_param == 0) {
+					//from mg to ml
+					elem.value = Math.round(elem.value / drug_sets[0].infusate_concentration * 100)/100;
+				} else {
+					//from mg/kg to ml
+					elem.value = Math.round(elem.value * mass / drug_sets[0].infusate_concentration * 100)/100;
+				}
+			}
+			if (complex_mode == 1) {
+				if (document.getElementById("tableInitialBolus1").style.display != "none") {
+					//initial bolus not yet hidden
+					elem = document.getElementById("inputBolus_initial1");
+				} else {
+					elem = document.getElementById("inputBolus1");
+				}
+				if (elem.value > 0) {
+					if (orig_param == 0) {
+						//from mg to ml
+						elem.value = Math.round(elem.value / drug_sets[1].infusate_concentration * 100)/100;
+					} else {
+						//from mg/kg to ml
+						elem.value = Math.round(elem.value * mass / drug_sets[1].infusate_concentration * 100)/100;
+					}
+				}
 			}
 		}
 	}

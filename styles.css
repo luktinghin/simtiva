@@ -4861,21 +4861,21 @@ body.dark .file_outerbox.active {
 
 /*custom select dropdown for unit change*/
 
-#infusionratecontainer0 {
+.infusionratecontainer {
   position: relative;
 }
 
-#infusionrateselector0 {
+.infusionrateselector {
   transition: 0.3s transform ease;
   display: inline-block;
   cursor: pointer;
 }
 
-#infusionrateselector0.active {
+.infusionrateselector.active {
   transform: rotate(180deg);
 }
 
-#infusionratedropdown0 {
+.infusionratedropdown {
   position: absolute;
   width: 150px;
   background: rgba(213,237,214,1);
@@ -4886,15 +4886,17 @@ body.dark .file_outerbox.active {
   padding: 4px;
   margin-top: 2px;
   display: none;
+  z-index: 19; /*below menu*/
 }
 
-body.dark #infusionratedropdown0 {
+body.dark .infusionratedropdown {
   border: 2px solid #506150;
   background: #555;
   color: #eee;
   box-shadow: 2px 4px 6px 0px #000;
 }
 
+/*
 #infusionratecontainer1 {
   position: relative;
 }
@@ -4928,6 +4930,7 @@ body.dark #infusionratedropdown1 {
   color: #eee;
   box-shadow: 2px 4px 6px 0px #000;
 }
+*/
 
 .infusionratedropdownitem {
   display: block;
