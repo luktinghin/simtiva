@@ -3022,6 +3022,9 @@ body.dark .modal-body a.button_paedimode:hover {
 
 /* END TCI STYLES*/
 
+
+
+
 /* start numpad styles*/
 
 #numpadBackground {
@@ -6209,3 +6212,79 @@ body.dark #addeventtext{
     right: calc((100% - 968px)/2 + 2px);
   }
 }
+
+
+/* new input styles */
+
+.input-container {
+  width: 100%;
+  display: flex;
+  margin: 9px;
+}
+
+.input-left {
+  flex-basis: 45%;
+  display: flex;
+}
+
+.input-description {
+  flex-grow: 1;
+  font-size: 0.65rem;
+  align-self: center;
+  text-align: center;
+  margin-top: 18px;
+}
+
+.input-entry {
+  margin-top: 18px;
+}
+
+.input-right {
+  flex-basis: 55%;
+  display: flex;
+}
+
+.icon {
+  font-size: 80%;
+  background: #fff4;
+  border-radius: 1rem;
+  flex-basis: 23px;
+  height: 23px;
+  line-height: 23px;
+  text-align: center;
+}
+
+input[type=number].input-entry-field {
+  border-radius: 1rem 0 0 1rem;
+  border: 1px solid #aaa;
+  margin: 0;
+  width: 110px;
+  height: 36px;
+}
+
+a.input-button {
+  color: white;
+  font-size: 90%;
+  min-width: 85px;
+  height: 36px;
+  display: flex;
+  margin-top: 18px;
+}
+
+#btn_startCet0 {
+  border-radius: 0 1rem 1rem 0;
+  background: #4CAF50;
+}
+
+#btn_pauseCet0 {
+  border: 1px solid red;
+  background: red;
+}
+
+.input-button-text {
+  flex-grow: 1;
+  align-self: center;
+}
+
+
+/* end new input styles */

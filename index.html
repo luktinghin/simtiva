@@ -1340,11 +1340,25 @@
 				<a class="button" id="btn_pauseCpt1" onclick="pauseCpt(1); drug_sets[1].cpt_active=0.5;">Pause</a>
 			</div>
 		</div>
-		<div class="card" id="card_cet0">
+
+					<div class="input-container" id="card_cet0">
+						<div class="input-left">
+							<div class="input-description"><span style="font-size: 1.5rem;line-height:14px;font-weight:bold">CeT</span><br>(<span class="conc_units"></span>/ml)</div>
+							<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesiredCe0" onfocus="this.nextElementSibling.style.display='inline-block';" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0)"></div>
+						</div>
+						<div class="input-right">
+							<div class=""><a class="button input-button" id="btn_startCet0" onclick="start_cet();"><div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Start</div></a></div>
+							<div class=""><a class="button input-button" id="btn_pauseCet0" onclick="pauseCpt(0);"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
+						</div>
+					</div>
+
+
+		<div class="card" id="" style="display:none">
 			<div class="cardtitle">Ce TARGETING</div>
 			<div class="cardcontents">
+				
+
 				<table class="table-control space" id="tableCet">
-					<tr class="fr"><td>Enter Ce (<span class="conc_units"></span>/ml)</td><td><input type="number" inputmode="decimal" style="border-radius:1rem; width:75px; border-width:2px" id="inputDesiredCe0" onfocus="this.nextElementSibling.style.display='inline-block';" min="0.1" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0);this.nextElementSibling.style.display='inline-block';" onblur="x=this;setTimeout(function(){x.nextElementSibling.style.display='none';},300)"><button id="clearCe" class="closeicon" onclick="clearInput('inputDesiredCe0');"></button></td></tr>
 					<tr id="IB_swing_select_row0" class="IB_elements">
 						<td>Peak/trough level</td>
 						<td>
@@ -1370,8 +1384,8 @@
 					The peak/trough levels represent the magnitude of fluctuation for Ce. For example, when set to ±5%, the Ce will reach a maximum of 105% of target and then drop to a minimum of 95% of target. At the trough level, another bolus will be administered, and the cycle repeats.
 				</div>
 			-->
-				<a class="button" id="btn_startCet0" onclick="start_cet();">Start</a>
-				<a class="button" id="btn_pauseCet0" onclick="pauseCpt(0);">Pause</a>
+				
+				
 				<span id="IB_about_btn0" onclick="displayIBabout();"><i class="fas fa-question-circle"></i></span>
 				<!--
 				<a class="button muted" id="btn_bolusconverter" onclick="start_cet_bolus();"><i class="fas fa-syringe"></i></a>
