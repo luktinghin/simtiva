@@ -2370,7 +2370,7 @@ function start_cet() {
 			//UI code goes here
 			drug_sets[active_drug_set_index].running = 1;
 			document.getElementById("status").innerHTML="";
-			document.getElementById("btn_startCet0").innerHTML = "Update Cet";
+			document.getElementById("btn_startCet0").innerHTML = `<div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Enter</div></a>`;
 			document.getElementById("iconplay").classList.remove("stop");
 			document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
 			document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
