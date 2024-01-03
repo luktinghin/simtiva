@@ -6220,6 +6220,7 @@ body.dark #addeventtext{
   width: 100%;
   display: flex;
   padding: 1rem 9px;
+  animation: fadeeffect 1s;
 }
 
 .input-container.hide {
@@ -6281,7 +6282,7 @@ input[type=number].input-entry-field {
 }
 
 .input-button-container {
-  flex-basis: 50%;
+  flex-basis: calc(50% - 2px);
 }
 a.input-button {
   color: white;
@@ -6300,10 +6301,22 @@ a.input-button {
   #input-description-ce-line1:after {
     content: 'CeT';
   }
+  #input-description-ce1-line1 span {
+    display: none;
+  }
+  #input-description-ce1-line1:after {
+    content: 'CeT';
+  }
   #input-description-cp-line1 span {
     display: none;
   }
   #input-description-cp-line1:after {
+    content: 'CpT';
+  }
+  #input-description-cp1-line1 span {
+    display: none;
+  }
+  #input-description-cp1-line1:after {
     content: 'CpT';
   }
 }
@@ -6315,10 +6328,22 @@ a.input-button {
   #input-description-ce-line1:after {
     content: 'CeT';
   }
+  #input-description-ce1-line1 span {
+    display: none;
+  }
+  #input-description-ce1-line1:after {
+    content: 'CeT';
+  }
   #input-description-cp-line1 span {
     display: none;
   }
   #input-description-cp-line1:after {
+    content: 'CpT';
+  }
+  #input-description-cp1-line1 span {
+    display: none;
+  }
+  #input-description-cp1-line1:after {
     content: 'CpT';
   }
 }
@@ -6339,6 +6364,22 @@ a.input-button {
   background: rgba(128,128,128,0.4);
 }
 
+#btn_startCet1_new {
+  border-radius: 0 1rem 1rem 0;
+  background: #4CAF50;
+}
+
+#btn_pauseCet1_new {
+  border: 1px solid rgb(128,128,128,0.5);
+  background: transparent;
+  color: rgb(128,128,128,0.8);
+  margin-left: 4px;
+}
+
+#btn_pauseCet1_new > .icon {
+  background: rgba(128,128,128,0.4);
+}
+
 #btn_startCpt0_new {
   border-radius: 0 1rem 1rem 0;
   background: #4CAF50;
@@ -6352,6 +6393,22 @@ a.input-button {
 }
 
 #btn_pauseCpt0_new > .icon {
+  background: rgba(128,128,128,0.4);
+}
+
+#btn_startCpt1_new {
+  border-radius: 0 1rem 1rem 0;
+  background: #4CAF50;
+}
+
+#btn_pauseCpt1_new {
+  border: 1px solid rgb(128,128,128,0.5);
+  background: transparent;
+  color: rgb(128,128,128,0.8);
+  margin-left: 4px;
+}
+
+#btn_pauseCpt1_new > .icon {
   background: rgba(128,128,128,0.4);
 }
 

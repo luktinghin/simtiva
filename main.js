@@ -2300,7 +2300,7 @@ function start_cpt() {
 		//UI code goes here
 			
 			document.getElementById("status").innerHTML="";
-			document.getElementById("btn_startCpt0").innerHTML = "Update Cpt";
+			document.getElementById("btn_startCpt0_new").innerHTML = `<div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Enter</div></a>`;
 			document.getElementById("iconplay").classList.remove("stop");
 			document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
 			document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
@@ -2425,7 +2425,7 @@ function start_cpt_complex(cpt_complex_desired, active_drug_set_index) {
 		//UI code goes here
 			
 			document.getElementById("status").innerHTML="";
-			document.getElementById("btn_startCpt1").innerHTML = "Update Cpt";
+			document.getElementById("btn_startCpt1_new").innerHTML = `<div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Enter</div></a>`;
 			document.getElementById("iconplay").classList.remove("stop");
 			document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
 			document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
@@ -13857,6 +13857,7 @@ function tabswitch(index) {
 		if (parseloading == 0) {
 			document.getElementById("card_cpt0").classList.add("hide");
 			document.getElementById("card_cet0").classList.add("hide");
+			document.getElementById("card_cet0_new").classList.add("hide");
 			document.getElementById("card_bolus0").classList.add("hide");
 			document.getElementById("card_infusion0").classList.add("hide");
 			document.getElementById("card_cpt1").classList.remove("hide");
