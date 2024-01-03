@@ -8853,9 +8853,9 @@ function toPageTwo() {
 		El9.innerHTML = El9.innerHTML.concat("<div style='font-size:70%; border-top:1px solid rgb(167 203 168); padding-top:3px; margin-top:3px; margin-right:5px'>" + document.getElementById("valRightContainer2").innerHTML + "</div>");
 
 		toPageTwoTransition();
+		document.getElementById("rescuebuttons").style.display="none";
 		loadoptions();
 		if (complex_mode==0) applyoptions();
-		document.getElementById("rescuebuttons").style.display="none";
 	} else {
 		El4 = document.getElementById("checkConfirm");
 		El5 = document.getElementById("checkDisclaim");
