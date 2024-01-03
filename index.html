@@ -1318,16 +1318,18 @@
 				<a class="button" id="btn_reanimate" onclick="submit_reanimate();">Resume simulation</a>
 			</div>
 		</div>
-		<div class="card" id="card_cpt0">
+		<!--obsolete-->
+		<div class="card" id="" style="display:none">
 			<div class="cardtitle">Cp TARGETING</div>
 			<div class="cardcontents">
 				<table class="table-control space" id="tableCpt">
-					<tr class="fr"><td>Enter Cp (<span class="conc_units"></span>/ml)</td><td><input type="number" inputmode="decimal" id="inputDesired0"  min="0.1" max="200" step="0.1" placeholder=" " oninput="displaypreview(this.value,0);"></td></tr>
+					<tr class="fr"><td>Enter Cp (<span class="conc_units"></span>/ml)</td><td><input type="number" inputmode="decimal" id=""  min="0.1" max="200" step="0.1" placeholder=" " oninput="displaypreview(this.value,0);"></td></tr>
 				</table>
 				<a class="button" id="btn_startCpt0" onclick="start_cpt();">Start</a>
 				<a class="button" id="btn_pauseCpt0" onclick="pauseCpt(0); drug_sets[0].cpt_active=0.5;">Pause</a>
 			</div>
 		</div>
+		<!-- end obsolete-->
 		<div class="card" id="card_cpt1" style="display:none;">
 			<div class="cardtitle">Cp TARGETING.</div>
 			<div class="cardcontents">
@@ -1341,20 +1343,34 @@
 			</div>
 		</div>
 
-					<div class="input-container" id="card_cet0_new">
-						<div class="input-left">
-							<div class="input-target-icon"><i class="fas fa-brain fa-fw"></i></div>
-							<div class="input-description"><span id="input-description-ce-line1" style="font-size: 1.3rem;font-weight:bold;display:block"><span>Ce Target</span></span>(<span class="conc_units"></span>/ml)</div>
-							<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesiredCe0_new" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0)"></div>
-						</div>
-						<div class="input-right">
-							<div class="input-button-container"><a class="button input-button" id="btn_startCet0_new" onclick="start_cet();"><div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Start</div></a></div>
-							<div class="input-button-container"><a class="button input-button" id="btn_pauseCet0_new" onclick="pauseCpt(0);"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
-						</div>
-					</div>
+		<!-- new interface styles update 2024 -->
+
+		<div class="input-container" id="card_cpt0" style="">
+			<div class="input-left">
+				<div class="input-target-icon"><i class="fas fa-tint fa-fw"></i></div>
+				<div class="input-description"><span id="input-description-cp-line1" style="font-size: 1.3rem;font-weight:bold;display:block"><span>Cp Target</span></span>(<span class="conc_units"></span>/ml)</div>
+				<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesired0" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0)"></div>
+			</div>
+			<div class="input-right">
+				<div class="input-button-container"><a class="button input-button" id="btn_startCpt0_new" onclick="start_cpt();"><div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Start</div></a></div>
+				<div class="input-button-container"><a class="button input-button" id="btn_pauseCpt0_new" onclick="pauseCpt(0);drug_sets[0].cpt_active=0.5;"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
+			</div>
+		</div>
+
+		<div class="input-container" id="card_cet0_new" style="">
+			<div class="input-left">
+				<div class="input-target-icon"><i class="fas fa-brain fa-fw"></i></div>
+				<div class="input-description"><span id="input-description-ce-line1" style="font-size: 1.3rem;font-weight:bold;display:block"><span>Ce Target</span></span>(<span class="conc_units"></span>/ml)</div>
+				<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesired0_new" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0)"></div>
+			</div>
+			<div class="input-right">
+				<div class="input-button-container"><a class="button input-button" id="btn_startCet0_new" onclick="start_cet();"><div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Start</div></a></div>
+				<div class="input-button-container"><a class="button input-button" id="btn_pauseCet0_new" onclick="pauseCpt(0);"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
+			</div>
+		</div>
 
 
-		<div class="card" id="card_cet0" style="display:none">
+		<div class="card" id="card_cet0" style="">
 			<div class="cardtitle">Ce TARGETING</div>
 			<div class="cardcontents">
 				
@@ -1386,7 +1402,8 @@
 					The peak/trough levels represent the magnitude of fluctuation for Ce. For example, when set to ±5%, the Ce will reach a maximum of 105% of target and then drop to a minimum of 95% of target. At the trough level, another bolus will be administered, and the cycle repeats.
 				</div>
 			-->
-				
+				<a class="button" id="btn_startCet0" onclick="start_cet();">Start</a>
+				<a class="button" id="btn_pauseCet0" onclick="pauseCpt(0);">Pause</a>
 				
 				<span id="IB_about_btn0" onclick="displayIBabout();"><i class="fas fa-question-circle"></i></span>
 				<!--

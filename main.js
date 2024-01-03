@@ -1787,6 +1787,7 @@ function initsubmit() {
 function initcpt() {
 	document.getElementById("card_infusion0").style.display = "none";
 	document.getElementById("card_cet0").style.display = "none";
+	document.getElementById("card_cet0_new").style.display = "none";
 	document.getElementById("btn_displayhistory").innerHTML = "Scheme";
 	
 	document.getElementById("status").innerHTML="Waiting to start";
@@ -1830,8 +1831,8 @@ function initcpt() {
 function initcet() {
 	document.getElementById("card_infusion0").style.display = "none";
 	document.getElementById("card_cpt0").style.display = "none";
+	document.getElementById("card_cet0").style.display = "none";
 	document.getElementById("btn_displayhistory").innerHTML = "Scheme";
-	
 	document.getElementById("status").innerHTML="Waiting to start";
 
 	//moved from start_cpt
@@ -1962,6 +1963,7 @@ function initcpt_complex(drug_sets_index) {
 function initcetbolus(ind) {
 	document.getElementById("card_infusion" + ind).style.display = "none";
 	document.getElementById("card_cpt" + ind).style.display = "none";
+	document.getElementById("card_cet" + ind + "_new").style.display = "none";
 	document.getElementById("card_cet" + ind).style.display = "";
 	document.getElementById("card_cet" + ind).classList.add("hide");
 	document.getElementById("btn_displayhistory").innerHTML = "Scheme";
@@ -2101,6 +2103,7 @@ function initmanual(ind) {
 		document.getElementById("card_bolus" + ind).classList.add("hide");
 		document.getElementById('card_cpt' + ind).style.display = 'none';
 		document.getElementById('card_cet' + ind).style.display = 'none';
+		document.getElementById('card_cet' + ind + "_new").style.display = 'none';
 		//document.getElementById('card_TimeEstimation').style.display = 'none';
 		//document.getElementById('card_VolumeEstimation').style.display = 'none';
 		document.getElementById("schemecopytitle").innerHTML = "HISTORY";
@@ -13785,6 +13788,7 @@ function tabswitch(index) {
 		if (parseloading == 0) {
 			document.getElementById("card_cpt0").classList.remove("hide");
 			document.getElementById("card_cet0").classList.remove("hide");
+			document.getElementById("card_cet0_new").classList.remove("hide");
 			document.getElementById("card_bolus0").classList.remove("hide");
 			document.getElementById("card_infusion0").classList.remove("hide");
 			document.getElementById("card_cpt1").classList.add("hide");

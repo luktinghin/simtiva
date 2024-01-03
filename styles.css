@@ -6222,6 +6222,10 @@ body.dark #addeventtext{
   padding: 1rem 9px;
 }
 
+.input-container.hide {
+  display: none;
+}
+
 .input-left {
   flex-basis: 55%;
   display: flex;
@@ -6296,6 +6300,12 @@ a.input-button {
   #input-description-ce-line1:after {
     content: 'CeT';
   }
+  #input-description-cp-line1 span {
+    display: none;
+  }
+  #input-description-cp-line1:after {
+    content: 'CpT';
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -6304,6 +6314,12 @@ a.input-button {
   }
   #input-description-ce-line1:after {
     content: 'CeT';
+  }
+  #input-description-cp-line1 span {
+    display: none;
+  }
+  #input-description-cp-line1:after {
+    content: 'CpT';
   }
 }
 
@@ -6320,6 +6336,22 @@ a.input-button {
 }
 
 #btn_pauseCet0_new > .icon {
+  background: rgba(128,128,128,0.4);
+}
+
+#btn_startCpt0_new {
+  border-radius: 0 1rem 1rem 0;
+  background: #4CAF50;
+}
+
+#btn_pauseCpt0_new {
+  border: 1px solid rgb(128,128,128,0.5);
+  background: transparent;
+  color: rgb(128,128,128,0.8);
+  margin-left: 4px;
+}
+
+#btn_pauseCpt0_new > .icon {
   background: rgba(128,128,128,0.4);
 }
 
