@@ -1345,11 +1345,11 @@
 						<div class="input-left">
 							<div class="input-target-icon"><i class="fas fa-brain fa-fw"></i></div>
 							<div class="input-description"><span id="input-description-ce-line1" style="font-size: 1.3rem;font-weight:bold;display:block"><span>Ce Target</span></span>(<span class="conc_units"></span>/ml)</div>
-							<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesiredCe0" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0)"></div>
+							<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesiredCe0_new" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0)"></div>
 						</div>
 						<div class="input-right">
-							<div class="input-button-container"><a class="button input-button" id="btn_startCet0" onclick="start_cet();"><div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Start</div></a></div>
-							<div class="input-button-container"><a class="button input-button" id="btn_pauseCet0" onclick="pauseCpt(0);"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
+							<div class="input-button-container"><a class="button input-button" id="btn_startCet0_new" onclick="start_cet();"><div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Start</div></a></div>
+							<div class="input-button-container"><a class="button input-button" id="btn_pauseCet0_new" onclick="pauseCpt(0);"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
 						</div>
 					</div>
 
@@ -1360,6 +1360,7 @@
 				
 
 				<table class="table-control space" id="tableCet">
+					<tr class="fr"><td>Enter Ce (<span class="conc_units"></span>/ml)</td><td><input type="number" inputmode="decimal" style="border-radius:1rem; width:75px; border-width:2px" id="inputDesiredCe0" onfocus="this.nextElementSibling.style.display='inline-block';" min="0.1" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0);this.nextElementSibling.style.display='inline-block';" onblur="x=this;setTimeout(function(){x.nextElementSibling.style.display='none';},300)"><button id="clearCe" class="closeicon" onclick="clearInput('inputDesiredCe0');"></button></td></tr>
 					<tr id="IB_swing_select_row0" class="IB_elements">
 						<td>Peak/trough level</td>
 						<td>

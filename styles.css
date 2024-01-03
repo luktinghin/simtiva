@@ -6307,19 +6307,19 @@ a.input-button {
   }
 }
 
-#btn_startCet0 {
+#btn_startCet0_new {
   border-radius: 0 1rem 1rem 0;
   background: #4CAF50;
 }
 
-#btn_pauseCet0 {
+#btn_pauseCet0_new {
   border: 1px solid rgb(128,128,128,0.5);
   background: transparent;
   color: rgb(128,128,128,0.8);
   margin-left: 4px;
 }
 
-#btn_pauseCet0 > .icon {
+#btn_pauseCet0_new > .icon {
   background: rgba(128,128,128,0.4);
 }
 

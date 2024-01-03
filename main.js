@@ -2354,14 +2354,14 @@ function start_cet() {
 	}
 
 	if (drug_sets[active_drug_set_index].firstrun == -1) {
-		if (document.getElementById("inputDesiredCe0").value>0) {
+		if (document.getElementById("inputDesiredCe0_new").value>0) {
 			drug_sets[active_drug_set_index].desired = 0;
 			drug_sets[active_drug_set_index].firstrun = 0;
 			drug_sets[active_drug_set_index].running = 1;
 
 			offset = Date.now();
-			if (document.getElementById("inputDesiredCe0").value>0) {
-				desired = document.getElementById("inputDesiredCe0").value *1;
+			if (document.getElementById("inputDesiredCe0_new").value>0) {
+				desired = document.getElementById("inputDesiredCe0_new").value *1;
 			}
 			drug_sets[active_drug_set_index].cet_active = 1;
 
@@ -2370,18 +2370,18 @@ function start_cet() {
 			//UI code goes here
 			drug_sets[active_drug_set_index].running = 1;
 			document.getElementById("status").innerHTML="";
-			document.getElementById("btn_startCet0").innerHTML = `<div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Enter</div></a>`;
+			document.getElementById("btn_startCet0_new").innerHTML = `<div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Enter</div></a>`;
 			document.getElementById("iconplay").classList.remove("stop");
 			document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
 			document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
 			document.getElementById("pastscheme").classList.add("show");
 		} else {
 			displayWarning("Warning","CE Target Invalid.");
-			document.getElementById("inputDesiredCe0").value = "";
+			document.getElementById("inputDesiredCe0_new").value = "";
 		}
 	} else {
-		if (document.getElementById("inputDesiredCe0").value>0) {
-			desired = document.getElementById("inputDesiredCe0").value *1;
+		if (document.getElementById("inputDesiredCe0_new").value>0) {
+			desired = document.getElementById("inputDesiredCe0_new").value *1;
 			drug_sets[active_drug_set_index].running = 1;
 			document.getElementById("status").innerHTML="";
 			document.getElementById("iconplay").classList.remove("stop");
@@ -2391,7 +2391,7 @@ function start_cet() {
 			deliver_cet(desired,0);
 		} else {
 			displayWarning("Warning","CE Target Invalid.");
-			document.getElementById("inputDesiredCe0").value = "";
+			document.getElementById("inputDesiredCe0_new").value = "";
 		}
 	}
 	alert_api(0);
@@ -5511,7 +5511,7 @@ function pause(ind) {
 function pauseCpt(ind) {
 	drug_sets[ind].desired = 0;
 	document.getElementById("inputDesired" + ind).value = "0";
-	document.getElementById("inputDesiredCe" + ind).value = "0";
+	document.getElementById("inputDesiredCe" + ind + "_new").value = "0";
 	drug_sets[ind].running=0;
 
 	var working_clock = Math.floor(time_in_s);
@@ -9222,7 +9222,7 @@ function confirmretrospective() {
 	temp3 = document.getElementById("retrospectiveInfusion").value *1;
 	retrospective(temp1, temp2, temp3, active_drug_set_index);
 	drug_sets[active_drug_set_index].desired = 0;
-	document.getElementById("inputDesiredCe" + active_drug_set_index).value = "";
+	document.getElementById("inputDesiredCe" + active_drug_set_index + "_new").value = "";
 	document.getElementById("inputDesired" + active_drug_set_index).value = "";
 	window.scrollTo(0,0);
 	hideallmodal();
@@ -14813,7 +14813,7 @@ function openpopupchart() {
 				document.getElementById("pop_right_edit_ce").style.display = "block";
 				document.getElementById("pop_ce").classList.add("shadow");
 				document.getElementById("pop_right_edit_ce").setAttribute('onclick','displayNumpad("ce")');
-				document.getElementById('btn_confirm_numpad').setAttribute('onclick','confirmNumpad("inputDesiredCe0")');
+				document.getElementById('btn_confirm_numpad').setAttribute('onclick','confirmNumpad("inputDesiredCe0_new")');
 			}
 			if (active_drug_set_index == 1 && drug_sets[1].cpt_active > 0) {
 				document.getElementById("pop_right_edit_cp").style.display = "block";
@@ -15187,7 +15187,7 @@ function confirmNumpad(parameter) {
 	document.getElementById(parameter).value = numpadValue;
 	//first see if zero
 	if (numpadValue == 0) {
-		if (parameter == "inputDesiredCe0") {
+		if (parameter == "inputDesiredCe0_new") {
 			pauseCpt(0);
 		} else if (parameter == "inputDesiredCe1") {
 			pauseCpt(1);
@@ -15197,7 +15197,7 @@ function confirmNumpad(parameter) {
 			pauseCpt(1);
 		}
 	} else {
-		if (parameter == "inputDesiredCe0") {
+		if (parameter == "inputDesiredCe0_new") {
 			start_cet();
 		} else if (parameter == "inputDesiredCe1") {
 			start_cet_complex(numpadValue,1);
@@ -15207,7 +15207,7 @@ function confirmNumpad(parameter) {
 			start_cpt_complex(numpadValue,1);
 		}
 	}
-	if (parameter == "inputDesiredCe0" || parameter == "inputDesiredCe1") {
+	if (parameter == "inputDesiredCe0_new" || parameter == "inputDesiredCe1") {
 		document.getElementById("chartinfodrugline2").innerHTML = "CET mode - Target " + numpadValue + drug_sets[active_drug_set_index].conc_units + "/ml"; 
 	} else {
 		document.getElementById("chartinfodrugline2").innerHTML = "CPT mode - Target " + numpadValue + drug_sets[active_drug_set_index].conc_units + "/ml"; 
