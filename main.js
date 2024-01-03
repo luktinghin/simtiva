@@ -1879,8 +1879,8 @@ function initcet() {
 }
 
 function initcet_complex(drug_sets_index) {
-	document.getElementById("card_cet" + drug_sets_index).style.display = "";
-	document.getElementById("card_cet" + drug_sets_index).classList.add("hide");
+	document.getElementById("card_cet" + drug_sets_index + "_new").style.display = "";
+	document.getElementById("card_cet" + drug_sets_index + "_new").classList.add("hide");
 	document.getElementById("card_infusion" + drug_sets_index).style.display = "none";
 	document.getElementById("card_cpt" + drug_sets_index).style.display = "none";
 	document.getElementById("btn_displayhistory").innerHTML = "Scheme";
@@ -1924,6 +1924,7 @@ function initcpt_complex(drug_sets_index) {
 	document.getElementById("card_cpt" + drug_sets_index).classList.add("hide");
 	document.getElementById("card_infusion" + drug_sets_index).style.display = "none";
 	document.getElementById("card_cet" + drug_sets_index).style.display = "none";
+	document.getElementById("card_cet" + drug_sets_index +" _new").style.display = "none";
 	document.getElementById("btn_displayhistory").innerHTML = "Scheme";
 	
 	document.getElementById("status").innerHTML="Waiting to start";
