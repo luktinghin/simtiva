@@ -13793,6 +13793,7 @@ function tabswitch(index) {
 			document.getElementById("card_infusion0").classList.remove("hide");
 			document.getElementById("card_cpt1").classList.add("hide");
 			document.getElementById("card_cet1").classList.add("hide");
+			document.getElementById("card_cet1_new").classList.add("hide");
 			document.getElementById("card_bolus1").classList.add("hide");
 			document.getElementById("card_infusion1").classList.add("hide");
 			document.getElementById("card_wakeup").classList.remove("hide");
@@ -13862,6 +13863,7 @@ function tabswitch(index) {
 			document.getElementById("card_infusion0").classList.add("hide");
 			document.getElementById("card_cpt1").classList.remove("hide");
 			document.getElementById("card_cet1").classList.remove("hide");
+			document.getElementById("card_cet1_new").classList.remove("hide");
 			document.getElementById("card_bolus1").classList.remove("hide");
 			document.getElementById("card_infusion1").classList.remove("hide");
 			document.getElementById("card_wakeup").classList.add("hide");
