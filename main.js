@@ -2529,7 +2529,7 @@ function start_cet_complex(cet_complex_desired, active_drug_set_index) {
 			document.getElementById("pastscheme").classList.add("show");
 		} else {
 			displayWarning("Warning","CE Target Invalid.");
-			document.getElementById("inputDesiredCe1").value = "";
+			document.getElementById("inputDesiredCe1_new").value = "";
 		}
 	} else {
 		// if (document.getElementById("inputDesiredCe").value>0) {
@@ -2547,7 +2547,7 @@ function start_cet_complex(cet_complex_desired, active_drug_set_index) {
 			},500);
 		} else {
 			displayWarning("Warning","CE Target Invalid.");
-			document.getElementById("inputDesiredCe1").value = "";
+			document.getElementById("inputDesiredCe1_new").value = "";
 		}
 	}
 }
@@ -14830,7 +14830,7 @@ function openpopupchart() {
 				document.getElementById("pop_right_edit_ce").style.display = "block";
 				document.getElementById("pop_ce").classList.add("shadow");
 				document.getElementById("pop_right_edit_ce").setAttribute('onclick','displayNumpad("ce")');
-				document.getElementById('btn_confirm_numpad').setAttribute('onclick','confirmNumpad("inputDesiredCe1")');
+				document.getElementById('btn_confirm_numpad').setAttribute('onclick','confirmNumpad("inputDesiredCe1_new")');
 			}
 		}
 		if (!isDark) {
@@ -15194,7 +15194,7 @@ function confirmNumpad(parameter) {
 	if (numpadValue == 0) {
 		if (parameter == "inputDesiredCe0_new") {
 			pauseCpt(0);
-		} else if (parameter == "inputDesiredCe1") {
+		} else if (parameter == "inputDesiredCe1_new") {
 			pauseCpt(1);
 		} else if (parameter == "inputDesired0") {
 			pauseCpt(0);
@@ -15204,7 +15204,7 @@ function confirmNumpad(parameter) {
 	} else {
 		if (parameter == "inputDesiredCe0_new") {
 			start_cet();
-		} else if (parameter == "inputDesiredCe1") {
+		} else if (parameter == "inputDesiredCe1_new") {
 			start_cet_complex(numpadValue,1);
 		} else if (parameter == "inputDesired0") {
 			start_cpt();
@@ -15212,7 +15212,7 @@ function confirmNumpad(parameter) {
 			start_cpt_complex(numpadValue,1);
 		}
 	}
-	if (parameter == "inputDesiredCe0_new" || parameter == "inputDesiredCe1") {
+	if (parameter == "inputDesiredCe0_new" || parameter == "inputDesiredCe1_new") {
 		document.getElementById("chartinfodrugline2").innerHTML = "CET mode - Target " + numpadValue + drug_sets[active_drug_set_index].conc_units + "/ml"; 
 	} else {
 		document.getElementById("chartinfodrugline2").innerHTML = "CPT mode - Target " + numpadValue + drug_sets[active_drug_set_index].conc_units + "/ml"; 
