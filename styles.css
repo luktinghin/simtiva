@@ -1807,48 +1807,6 @@ a.interactionstab.active {
   width:calc(100% - 1.5rem - 30px);
 }
 
-#preview-expand-button {
-  position: absolute;
-  right: 1rem;
-  z-index: 1;
-  top: 82px;
-  text-align: center;
-  height: 20px;
-  width: 100px;
-  font-weight: bold;
-  background: #a9c5e4;
-  font-size: 75%;
-  color: black;
-  border-radius: 0px 0px 9px 9px;
-  display: none;
-}
-
-#preview-expand-box {
-  position: absolute;
-  background: #eee;
-  height: 0px;
-  width: calc(100% - 2rem - 42px);
-  box-shadow: 0px 6px 8px -5px rgba(0,0,0,0.15);
-  top: 82px;
-  right: 1rem;
-  border-radius: 0px 0px 9px 9px;
-  z-index: 0;
-  border: 1px solid #ccc;
-  border-top: 0;
-  font-size: 0.85rem;
-  /* padding: 10px; -> removed to avoid animation got height bug */
-  overflow-y: scroll;
-  transition: 0.3s all ease;
-}
-
-#preview-expand-box.expand {
-  height: 220px;
-}
-
-#preview-expand-box > div:first-child {
-  margin-top: 26px;
-}
-
 #warning {
   background: rgb(246,224,224);
   background: linear-gradient(90deg, rgba(255,255,255,1) 48px, rgba(246,224,224,1) 48px);
@@ -6519,6 +6477,65 @@ body.dark #btn_pauseCpt1_new {
 .input-button-text {
   flex-grow: 1;
   align-self: center;
+}
+
+
+
+#preview-expand-button {
+  position: absolute;
+  right: 1rem;
+  z-index: 1;
+  top: 82px;
+  text-align: center;
+  height: 20px;
+  width: 100px;
+  font-weight: bold;
+  background: #a9c5e4;
+  font-size: 75%;
+  color: black;
+  border-radius: 0px 0px 9px 9px;
+  padding-top: 2px;
+  display: none;
+}
+
+#preview-expand-box {
+  position: absolute;
+  background: #eee;
+  height: 0px;
+  width: calc(100% - 2rem - 41px);
+  box-shadow: 0px 6px 8px -5px rgba(0,0,0,0.15);
+  top: 82px;
+  right: 1rem;
+  border-radius: 0px 0px 9px 9px;
+  z-index: 0;
+  border: 1px solid #ccc;
+  border-top: 0;
+  font-size: 0.85rem;
+  /* padding: 10px; -> removed to avoid animation got height bug */
+  overflow-y: scroll;
+  transition: 0.3s all ease;
+}
+
+#preview-expand-box.expand {
+  height: 220px;
+}
+
+#preview-expand-box > div:first-child {
+  margin-top: 26px;
+}
+
+#preview-expand-box > div > div.timespan {
+  background: #ddd;
+  border-color: #ccc;
+}
+
+body.dark #preview-expand-box {
+  background: #303030;
+}
+
+body.dark #preview-expand-box > div > div.timespan {
+  background: #303030;
+  border-color: #999;
 }
 
 
