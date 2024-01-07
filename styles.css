@@ -1782,10 +1782,15 @@ a.interactionstab.active {
 #prompts_container {
   height:86px;
   display:block;
+  position: relative;
+  transition: 0.3s all ease;
+}
+#prompts_container.expand {
+  height: 310px;
 }
 .prompts_card {
   position:absolute;
-  width:calc(100% - 2rem);
+  width:calc(100% - 1rem);
   margin:1rem 0.5rem;
   border-radius:9px;
   border:1px solid #ccc;
@@ -1802,7 +1807,45 @@ a.interactionstab.active {
   width:calc(100% - 1.5rem - 30px);
 }
 
+#preview-expand-button {
+  position: absolute;
+  right: 1rem;
+  z-index: 3;
+  top: 83px;
+  text-align: center;
+  height: 20px;
+  width: 100px;
+  font-weight: bold;
+  background: #a9c5e4;
+  font-size: 75%;
+  color: black;
+  border-radius: 0px 0px 9px 9px;
+}
 
+#preview-expand-box {
+  position: absolute;
+  background: #eee;
+  height: 0px;
+  width: calc(100% - 2rem);
+  top: 83px;
+  right: 1rem;
+  border-radius: 0px 0px 9px 9px;
+  z-index: 2;
+  border: 1px solid #ccc;
+  border-top: 0;
+  font-size: 0.85rem;
+  /* padding: 10px; -> removed to avoid animation got height bug */
+  overflow-y: scroll;
+  transition: 0.3s all ease;
+}
+
+#preview-expand-box.expand {
+  height: 220px;
+}
+
+#preview-expand-box > div:first-child {
+  margin-top: 10px;
+}
 
 #warning {
   background: rgb(246,224,224);
@@ -5041,6 +5084,7 @@ body.dark .infusionratedropdownitem:hover {
     margin:0;
     border-width:2px;
     box-shadow:none;
+    min-height: 76px;
   }
   #prompts_container {
     position:fixed;
@@ -6262,6 +6306,11 @@ body.dark #addeventtext{
   text-align: center;
 }
 
+body.dark .input-target-icon {
+  background: #303030;
+  color: #cecece;
+}
+
 .icon {
   color: white;
   font-size: 80%;
@@ -6281,9 +6330,14 @@ input[type=number].input-entry-field {
   height: 36px;
 }
 
+body.dark input[type=number].input-entry-field {
+  border-right: 0;
+}
+
 .input-button-container {
   flex-basis: calc(50% - 2px);
 }
+
 a.input-button {
   color: white;
   font-size: 90%;
@@ -6411,6 +6465,51 @@ a.input-button {
 #btn_pauseCpt1_new > .icon {
   background: rgba(128,128,128,0.4);
 }
+
+body.dark #btn_startCet0_new {
+  border-left: 0;
+  background: rgb(16, 86, 63);
+  color: #cecece;
+}
+
+body.dark #btn_startCet1_new {
+  border-left: 0;
+  background: rgb(16, 86, 63);
+  color: #cecece;
+}
+
+body.dark #btn_startCpt0_new {
+  border-left: 0;
+  background: rgb(16, 86, 63);
+  color: #cecece;
+}
+
+body.dark #btn_startCpt1_new {
+  border-left: 0;
+  background: rgb(16, 86, 63);
+  color: #cecece;
+}
+
+body.dark #btn_pauseCet0_new {
+  background: #303030;
+  color: #cecece;
+}
+
+body.dark #btn_pauseCet1_new {
+  background: #303030;
+  color: #cecece;
+}
+
+body.dark #btn_pauseCpt0_new {
+  background: #303030;
+  color: #cecece;
+}
+
+body.dark #btn_pauseCpt1_new {
+  background: #303030;
+  color: #cecece;
+}
+
 
 .input-button-text {
   flex-grow: 1;
