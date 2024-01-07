@@ -1785,9 +1785,12 @@ a.interactionstab.active {
   position: relative;
   transition: 0.3s all ease;
 }
-#prompts_container.expand {
-  height: 310px;
+@media screen and (max-width:767px) {
+  #prompts_container.expand {
+    height: 310px;
+  }
 }
+
 .prompts_card {
   position:absolute;
   width:calc(100% - 1rem);
@@ -2162,9 +2165,6 @@ body.dark .loadduration {
   top:2px;
   cursor:pointer;
 }
-#preview.expand > div.prompts_close {
-  display: none;
-}
 .animate {
   animation: progress 12s ease infinite;
 }
@@ -2174,6 +2174,15 @@ body.dark .loadduration {
   90%{opacity:1;}
   98%{background-position:100% 50%; opacity:0;}
   100%{background-position:100% 50%; opacity:0;}
+}
+.animate2 {
+  animation: progress2 12s ease infinite; 
+}
+@keyframes progress2 {
+  0%{opacity:1;}
+  90%{opacity:1;}
+  97%{opacity:0;}
+  100%{opacity:0;}
 }
 #previewicon {
   color:rgb(117,149,185);
@@ -5025,7 +5034,7 @@ body.dark .infusionratedropdownitem:hover {
     box-shadow:0px 6px 8px -5px rgb(0 0 0 / 15%);
     border-radius: 9px 0 0 0;
     background:#fff;
-    width:300px;
+    width:340px;
     height:95px;
     border-bottom:2px solid #ddd;
   }
@@ -5043,7 +5052,7 @@ body.dark .infusionratedropdownitem:hover {
     margin:auto;
   }  
   .prompts_card {
-    width:calc(768px - 300px - 1.5rem);
+    width:calc(768px - 340px - 1.5rem);
     margin:0;
     border-width:2px;
     box-shadow:none;
@@ -5053,8 +5062,8 @@ body.dark .infusionratedropdownitem:hover {
     position:fixed;
     top:80px;
     z-index:10;
-    left:calc((100% - 768px)/2 + 300px);
-    width:calc(768px - 300px - 0.5rem);
+    left:calc((100% - 768px)/2 + 340px);
+    width:calc(768px - 340px - 0.5rem);
     padding-right:0.5rem;
     padding-left:0.5rem;
     padding-top:0.5rem;
@@ -5485,16 +5494,16 @@ body.dark #pastschemeCOPY {
     background:#eee;
     border-radius: 9px 0 0 0;
     box-shadow:none;
-    width:300px;
+    width:340px;
     height:92px;
     border-bottom:2px solid #ddd;
   }
   #prompts_container {
     border-radius: 0 9px 0 0 ;
-    width:calc(768px - 300px - 1rem);
+    width:calc(768px - 340px - 1rem);
     /*transform:translate(300px,-90px);*/
     position:absolute;
-    left:calc((100% - 768px)/2 + 300px + 0.5rem);
+    left:calc((100% - 768px)/2 + 340px + 0.5rem);
     top:80px;
     height:92px;
     box-shadow:none;
@@ -5509,7 +5518,7 @@ body.dark #pastschemeCOPY {
   }
   .prompts_card {
     margin-top:0.5rem;
-    width:calc(768px - 300px - 1.5rem);
+    width:calc(768px - 340px - 1.5rem);
   }
   .darkmodebutton {
     opacity: 0;
@@ -6496,6 +6505,7 @@ body.dark #btn_pauseCpt1_new {
   border-radius: 0px 0px 9px 9px;
   padding-top: 2px;
   display: none;
+  cursor: pointer;
 }
 
 #preview-expand-box {

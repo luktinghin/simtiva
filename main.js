@@ -2634,9 +2634,10 @@ function preview_cpt(x,ind) {
 	drug_sets[ind].desired = x;
 	drug_sets[ind].preview_bolus = 0;
 	drug_sets[ind].preview_rate = 0;
+	if (drug_sets[ind].previewhistoryarray == undefined) drug_sets[ind].previewhistoryarray = new Array();
 	//new code
 	drug_sets[ind].historytext = "";
-	drug_sets[ind].historyarray.length = 0;
+	drug_sets[ind].previewhistoryarray.length = 0;
 	if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
 		drug_sets[ind].fentanyl_weightadjusted_target_uncorrected = drug_sets[ind].desired;
 		drug_sets[ind].desired = drug_sets[ind].desired * 1/drug_sets[ind].fentanyl_weightadjusted_factor;
@@ -2670,7 +2671,7 @@ function preview_cpt(x,ind) {
 		drug_sets[ind].cpt_bolus = (drug_sets[ind].desired-est_cp)/drug_sets[ind].p_udf[1];
 		test_rate = drug_sets[ind].cpt_rates_real[working_clock-1];
 	}
-	if (cpt_bolus>=70) {
+	if (drug_sets[ind].cpt_bolus>=70) {
 		drug_sets[ind].cpt_bolus = Math.round(drug_sets[ind].cpt_bolus/10)*10;
 	} else if (drug_sets[ind].cpt_bolus>1) {
 			if ((mass>15) && (drug_sets[ind].cpt_bolus>=15)) {
@@ -2809,6 +2810,7 @@ function preview_cpt(x,ind) {
 	var prior_timestamp = 0; //unit is iteration number (1=120s)
 	test_rate = Math.round(cpt_rates[0]*roundingfactor)/roundingfactor;
 	var firstcycle = -1;
+	var wait_pause = 1;
 	var wait_peak = 0;
 	var wait_cpt_avg = 0;
 
@@ -2891,13 +2893,13 @@ function preview_cpt(x,ind) {
 						drug_sets[ind].cpt_times.push(wait_peak);
 						
 						drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>" + Math.round(wait_rate_avg_begin*3600/drug_sets[ind].infusate_concentration*10)/10 + "ml/h " + "<span style='opacity:0.5'>(" + Math.round(wait_rate_avg_begin*3600*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
-						drug_sets[ind].historyarray.push([working_clock, wait_rate_avg_begin]);
+						drug_sets[ind].previewhistoryarray.push([working_clock, wait_rate_avg_begin]);
 						
 
 						if (wait_rate_avg_end > wait_rate_avg_begin) {
 							relativetime = working_clock + breakpoint*120;
 							drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" + converttime(relativetime) + "</div>" + Math.round(wait_rate_avg_end*3600/drug_sets[ind].infusate_concentration*10)/10 + "ml/h " + "<span style='opacity:0.5'>(" + Math.round(wait_rate_avg_end*3600*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
-							drug_sets[ind].historyarray.push([relativetime, wait_rate_avg_end]);
+							drug_sets[ind].previewhistoryarray.push([relativetime, wait_rate_avg_end]);
 						}
 
 					} else { // so this is then wait_peak <=5
@@ -2913,7 +2915,7 @@ function preview_cpt(x,ind) {
 						drug_sets[ind].cpt_times.push(wait_peak);
 						
 						drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>" + Math.round(wait_temp1*3600/drug_sets[ind].infusate_concentration*10)/10 + "ml/h " + "<span style='opacity:0.5'>(" + Math.round(wait_temp1*3600*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
-						drug_sets[ind].historyarray.push([working_clock, wait_temp1]);
+						drug_sets[ind].previewhistoryarray.push([working_clock, wait_temp1]);
 					}
 
 				} else { // this means cpt_rates[0] is zero -> infusion stopped for 2 min
@@ -2992,13 +2994,13 @@ function preview_cpt(x,ind) {
 						relativetime = working_clock + wait_pause*120;
 						drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Paused for " + wait_pause*2 + " mins </div>");
 						drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" + converttime(relativetime) + "</div>" + Math.round(wait_rate_avg_begin*3600/drug_sets[ind].infusate_concentration*10)/10 + "ml/h " + "<span style='opacity:0.5'>(" + Math.round(wait_rate_avg_begin*3600*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
-						drug_sets[ind].historyarray.push([working_clock, 0]);
-						drug_sets[ind].historyarray.push([relativetime, wait_rate_avg_begin]);
+						drug_sets[ind].previewhistoryarray.push([working_clock, 0]);
+						drug_sets[ind].previewhistoryarray.push([relativetime, wait_rate_avg_begin]);
 
 						if (wait_rate_avg_end > wait_rate_avg_begin) {
 							relativetime = working_clock + breakpoint*120;
 							drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" +  converttime(relativetime) + "</div>" + Math.round(wait_rate_avg_end*3600/drug_sets[ind].infusate_concentration*10)/10 + "ml/h " + "<span style='opacity:0.5'>(" + Math.round(wait_rate_avg_end*3600*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
-							drug_sets[ind].historyarray.push([relativetime, wait_rate_avg_end]);
+							drug_sets[ind].previewhistoryarray.push([relativetime, wait_rate_avg_end]);
 						}
 
 					} else { // so this is then wait_peak <=5
@@ -3017,8 +3019,8 @@ function preview_cpt(x,ind) {
 						relativetime = working_clock + wait_pause*120;
 						drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + working_clock + "'>" + "<div class='timespan'>" +  converttime(working_clock) + "</div>Paused for " + wait_pause*2 + " mins </div>");
 						drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" +  converttime(relativetime) + "</div>" + Math.round(wait_temp1*3600/drug_sets[ind].infusate_concentration*10)/10 + "ml/h " + "<span style='opacity:0.5'>(" + Math.round(wait_temp1*3600*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
-						drug_sets[ind].historyarray.push([working_clock, 0]);
-						drug_sets[ind].historyarray.push([relativetime, wait_temp1]);
+						drug_sets[ind].previewhistoryarray.push([working_clock, 0]);
+						drug_sets[ind].previewhistoryarray.push([relativetime, wait_temp1]);
 					}
 
 				}// end else - the wait-pause wait-peak algorithm
@@ -3049,10 +3051,10 @@ function preview_cpt(x,ind) {
 
 					if ((drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1) && (drug_sets[ind].cpt_rates[0]>drug_sets[ind].cpt_rates[1])) {
 						drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");	
-						drug_sets[ind].historyarray.push([working_clock, test_rate]);
+						drug_sets[ind].previewhistoryarray.push([working_clock, test_rate]);
 					} else {
 						drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" + converttime(relativetime) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");	
-						drug_sets[ind].historyarray.push([relativetime, test_rate]);
+						drug_sets[ind].previewhistoryarray.push([relativetime, test_rate]);
 					}
 
 					drug_sets[ind].cpt_times.push(j);
@@ -3065,7 +3067,7 @@ function preview_cpt(x,ind) {
 					var rate1 = Math.round(test_rate*3600/drug_sets[ind].infusate_concentration*10)/10;
 					var rate2 = Math.round(rate1*drug_sets[ind].infusate_concentration*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp;
 					drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" + converttime(relativetime) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");	
-					drug_sets[ind].historyarray.push([relativetime, test_rate]);
+					drug_sets[ind].previewhistoryarray.push([relativetime, test_rate]);
 					//for (k=drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120; k<7200; k++) {
 					//		drug_sets[ind].cpt_rates_real.push(test_rate);
 					//}
@@ -3081,7 +3083,7 @@ function preview_cpt(x,ind) {
 
 
 	drug_sets[ind].preview_bolus = drug_sets[ind].cpt_bolus;
-	drug_sets[ind].preview_rate = Math.round(drug_sets[ind].historyarray[0][1]*3600/drug_sets[ind].infusate_concentration*10)/10;
+	drug_sets[ind].preview_rate = Math.round(drug_sets[ind].previewhistoryarray[0][1]*3600/drug_sets[ind].infusate_concentration*10)/10;
 	drug_sets[ind].preview_downtrend = (drug_sets[ind].cpt_rates_real[working_clock-1] > test_rate);
 }
 
@@ -3098,8 +3100,12 @@ function displaypreview2(x,ind) {
 		if (previewtimeout != null) {clearTimeout(previewtimeout);}
 		object.style.display="flex";
 		if (object.classList.contains('animate')) {object.classList.remove('animate');}
-		setTimeout(function(){object.classList.add('animate')},400);
-			previewtimeout = setTimeout(function(){
+		if (document.getElementById("preview-expand-button").classList.contains("animate2")) document.getElementById("preview-expand-button").classList.remove("animate2");
+		setTimeout(function() {
+				object.classList.add('animate');
+				document.getElementById("preview-expand-button").classList.add('animate2');
+			},400);
+		previewtimeout = setTimeout(function(){
 				object.style.display="none";
 				document.getElementById("preview-expand-button").style.display = "none";
 			},12000);
@@ -3171,6 +3177,7 @@ function displaypreview_expand() {
 	document.getElementById("preview-expand-box").innerHTML = drug_sets[active_drug_set_index].historytext;
 	document.getElementById("prompts_container").classList.add("expand");
 	document.getElementById("preview").classList.remove("animate");
+	document.getElementById("preview-expand-button").classList.remove("animate2");
 	document.getElementById("preview").style.display = "flex";
 	document.getElementById("preview").classList.add("expand");
 	clearTimeout(previewtimeout);
@@ -3184,6 +3191,10 @@ function displaypreview_expand() {
 
 function displaypreview_hide() {	
 	document.getElementById("preview-expand-box").classList.remove("expand");
+	document.getElementById("preview").classList.add("animate");
+	document.getElementById("preview-expand-button").classList.add("animate2");
+	//document.getElementById("preview").style.display = "flex";
+	document.getElementById("preview").classList.remove("expand");
 	setTimeout(function() {
 		document.getElementById("prompts_container").classList.remove("expand");
 	},300);
@@ -3191,7 +3202,20 @@ function displaypreview_hide() {
 		document.getElementById("preview-expand-button").innerHTML = `<i class="fas fa-angle-double-down"></i> &nbsp; <span>EXPAND</span>`;
 		document.getElementById("preview-expand-button").setAttribute("onclick","displaypreview_expand()");
 	},500);
-	
+	if (document.getElementById("preview").classList.contains('animate')) {document.getElementById("preview").classList.remove('animate');}
+	if (document.getElementById("preview-expand-button").classList.contains("animate2")) document.getElementById("preview-expand-button").classList.remove("animate2");
+	setTimeout(function() {
+				document.getElementById("preview").classList.add('animate');
+				document.getElementById("preview-expand-button").classList.add('animate2');
+			},400);
+	previewtimeout = setTimeout(function() {
+		document.getElementById("preview").style.display = "none";
+		document.getElementById("preview-expand-button").style.display = "none";
+	},12000);
+}
+
+function displaypreview_close() {
+
 }
 
 function hidepreview() {
@@ -4092,6 +4116,7 @@ function preview_cet(x,ind) {
 	drug_sets[ind].desired = x;
 	drug_sets[ind].preview_bolus = 0;
 	drug_sets[ind].preview_rate = 0;
+	if (drug_sets[ind].previewhistoryarray == undefined) drug_sets[ind].previewhistoryarray = new Array();
 	if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
 		drug_sets[ind].fentanyl_weightadjusted_target_uncorrected = drug_sets[ind].desired;
 		drug_sets[ind].desired = drug_sets[ind].desired * 1/drug_sets[ind].fentanyl_weightadjusted_factor;
@@ -4312,7 +4337,7 @@ function preview_cet(x,ind) {
 			drug_sets[ind].preview_rate = 0;
 			drug_sets[ind].preview_bolus = 0;
 			drug_sets[ind].historytext = "";
-			drug_sets[ind].historyarray.length = 0;
+			drug_sets[ind].previewhistoryarray.length = 0;
 			//preview_cetpause = 0;
 			//new find breakpoint code
 			//we want cp and ce to drop below desired
@@ -4377,7 +4402,7 @@ function preview_cet(x,ind) {
 				//	drug_sets[ind].historytext = "<div class='schemecet' data-time='" + Math.floor(time_in_s) + "'>" + "At " + converttime(Math.floor(time_in_s)) + " - Ce target (" + conc_units + "/ml): " + drug_sets[ind].desired + "</div>";
 				//}
 				drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemepause' data-time='" + Math.floor(time_in_s) + "'>" + "<div class='timespan'>" + converttime(Math.floor(time_in_s)) + "</div>Paused for " + converttime(remaining+breakpoint) + "</div>");
-				drug_sets[ind].historyarray.push([Math.floor(time_in_s),0]); 
+				drug_sets[ind].previewhistoryarray.push([Math.floor(time_in_s),0]); 
 				//if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
 				//	drug_sets[ind].historyarrays.push([2,0,Math.floor(time_in_s),drug_sets[ind].fentanyl_weightadjusted_target_uncorrected]);
 				//} else {
@@ -4392,7 +4417,7 @@ function preview_cet(x,ind) {
 				//}
 				drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemepause' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Paused for " + converttime(breakpoint) + "</div>");
 				//this line is necessary for scheme display
-				drug_sets[ind].historyarray.push([Math.floor(working_clock),0]); 
+				drug_sets[ind].previewhistoryarray.push([Math.floor(working_clock),0]); 
 				//if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
 				//	drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].fentanyl_weightadjusted_target_uncorrected]);
 				//} else {
@@ -4446,7 +4471,7 @@ function preview_cet(x,ind) {
 			if (drug_sets[ind].preview_bolus > 0) scheme_bolusadmin(drug_sets[ind].preview_bolus,ind);
 
 			drug_sets[ind].historytext = "";
-			drug_sets[ind].historyarray.length = 0;
+			drug_sets[ind].previewhistoryarray.length = 0;
 
 			if (drug_sets[ind].preview_bolus > 0) {
 				drug_sets[ind].cet_lockdowntime = working_clock + temp_peak -1;
@@ -4511,7 +4536,7 @@ function preview_cet(x,ind) {
 			
 			//drug_sets[ind].cet_priordesired = drug_sets[ind].desired;
 			//this line is necessary for scheme display
-			drug_sets[ind].historyarray.push([working_clock,0]); //write 0,0 first as I don't know what to write
+			drug_sets[ind].previewhistoryarray.push([working_clock,0]); //write 0,0 first as I don't know what to write
 			
 			//insert deliverCPT code at this point
 			//pass on states to deliverCPT
@@ -4665,10 +4690,10 @@ function preview_cet(x,ind) {
 					relativetime = working_clock+drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120;
 					if ((drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1)) {
 						drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");	
-						drug_sets[ind].historyarray.push([working_clock, test_rate]);
+						drug_sets[ind].previewhistoryarray.push([working_clock, test_rate]);
 					} else {
 						drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" + converttime(relativetime) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
-						drug_sets[ind].historyarray.push([relativetime, test_rate]);
+						drug_sets[ind].previewhistoryarray.push([relativetime, test_rate]);
 					}
 
 					drug_sets[ind].cpt_times.push(j);
@@ -4682,13 +4707,13 @@ function preview_cet(x,ind) {
 					var rate2 = Math.round(rate1*drug_sets[ind].infusate_concentration*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp;
 					if ((drug_sets[ind].cpt_times.length == 1) && (drug_sets[ind].cpt_times[0] == 1)) { //special scenario for 1 rate till the end, need to fill up first 2mins
 						drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
-						drug_sets[ind].historyarray.push([working_clock, test_rate]);
+						drug_sets[ind].previewhistoryarray.push([working_clock, test_rate]);
 						//for (k=0; k<7200; k++) {
 						//		drug_sets[ind].cpt_rates_real.push(test_rate);
 						//}
 					} else {
 						drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" + converttime(relativetime) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
-						drug_sets[ind].historyarray.push([relativetime, test_rate]);
+						drug_sets[ind].previewhistoryarray.push([relativetime, test_rate]);
 						//for (k=drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120; k<7200; k++) {
 						//		drug_sets[ind].cpt_rates_real.push(test_rate);
 						//}
@@ -10325,6 +10350,10 @@ for (i=0; i<tops.length; i++) {
 
 function hide_prompts(object) {
 	object.style.display="none";
+	if (document.getElementById("prompts_container").classList.contains("expand")) {
+		document.getElementById("preview-expand-button").classList.remove("animate2");
+		document.getElementById("preview-expand-button").style.display = "none";
+	}
 }
 
 
