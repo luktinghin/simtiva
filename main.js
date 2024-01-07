@@ -3101,7 +3101,7 @@ function displaypreview2(x,ind) {
 		setTimeout(function(){object.classList.add('animate')},400);
 			previewtimeout = setTimeout(function(){
 				object.style.display="none";
-				document.getElementById("preview-expand-button").style.display = "block";
+				document.getElementById("preview-expand-button").style.display = "none";
 			},12000);
 	}  
 	x=x*1;
