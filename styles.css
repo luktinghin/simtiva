@@ -1810,8 +1810,8 @@ a.interactionstab.active {
 #preview-expand-button {
   position: absolute;
   right: 1rem;
-  z-index: 3;
-  top: 83px;
+  z-index: 1;
+  top: 82px;
   text-align: center;
   height: 20px;
   width: 100px;
@@ -1820,17 +1820,18 @@ a.interactionstab.active {
   font-size: 75%;
   color: black;
   border-radius: 0px 0px 9px 9px;
+  display: none;
 }
 
 #preview-expand-box {
   position: absolute;
   background: #eee;
   height: 0px;
-  width: calc(100% - 2rem);
-  top: 83px;
+  width: calc(100% - 2rem - 44px);
+  top: 82px;
   right: 1rem;
   border-radius: 0px 0px 9px 9px;
-  z-index: 2;
+  z-index: 0;
   border: 1px solid #ccc;
   border-top: 0;
   font-size: 0.85rem;
@@ -2201,6 +2202,9 @@ body.dark .loadduration {
   right:4px;
   top:2px;
   cursor:pointer;
+}
+#preview.expand > div.prompts_close {
+  display: none;
 }
 .animate {
   animation: progress 12s ease infinite;
@@ -6263,7 +6267,7 @@ body.dark #addeventtext{
 .input-container {
   width: 100%;
   display: flex;
-  padding: 1rem 9px;
+  padding: 2rem 9px 2rem 9px;
   animation: fadeeffect 1s;
 }
 

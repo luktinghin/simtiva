@@ -3091,13 +3091,19 @@ function displaypreview(x,ind) {
 }
 
 function displaypreview2(x,ind) {
-	if (previewtimeout != null) {clearTimeout(previewtimeout);}
+	//check if expanded first
 	var object = document.getElementById("preview");
-	object.style.display="flex";
-	if (object.classList.contains('animate')) {object.classList.remove('animate');}
-	setTimeout(function(){object.classList.add('animate')},400);
-	previewtimeout = setTimeout(function(){
-		object.style.display="none"},12000);
+	document.getElementById("preview-expand-button").style.display = "block";
+	if (!object.classList.contains("expand")) {
+		if (previewtimeout != null) {clearTimeout(previewtimeout);}
+		object.style.display="flex";
+		if (object.classList.contains('animate')) {object.classList.remove('animate');}
+		setTimeout(function(){object.classList.add('animate')},400);
+			previewtimeout = setTimeout(function(){
+				object.style.display="none";
+				document.getElementById("preview-expand-button").style.display = "block";
+			},12000);
+	}  
 	x=x*1;
 
 	if (drug_sets[ind].cpt_active > 0) {
@@ -3118,6 +3124,9 @@ function displaypreview2(x,ind) {
 				document.getElementById("preview_msg").innerHTML = "Pause infusion";
 				document.getElementById("previewicon").className = "fas fa-pause-circle";
 			}
+			if (object.classList.contains("expand")) {
+				document.getElementById("preview-expand-box").innerHTML = drug_sets[active_drug_set_index].historytext;
+			}
 		} else {
 			document.getElementById("preview_cpt").innerHTML = "...";
 			document.getElementById("preview_msg").innerHTML = "Waiting for user input"
@@ -3135,6 +3144,9 @@ function displaypreview2(x,ind) {
 			} else {
 				document.getElementById("preview_msg").innerHTML = "Pause infusion";
 				document.getElementById("previewicon").className = "fas fa-pause-circle";
+			}
+			if (object.classList.contains("expand")) {
+				document.getElementById("preview-expand-box").innerHTML = drug_sets[active_drug_set_index].historytext;
 			}
 		} else {
 			document.getElementById("preview_cpt").innerHTML = "...";
@@ -3158,6 +3170,11 @@ function displaypreview2(x,ind) {
 function displaypreview_expand() {
 	document.getElementById("preview-expand-box").innerHTML = drug_sets[active_drug_set_index].historytext;
 	document.getElementById("prompts_container").classList.add("expand");
+	document.getElementById("preview").classList.remove("animate");
+	document.getElementById("preview").style.display = "flex";
+	document.getElementById("preview").classList.add("expand");
+	clearTimeout(previewtimeout);
+	previewtimeout = null;
 	setTimeout(function() {
 		document.getElementById("preview-expand-box").classList.add("expand");
 		document.getElementById("preview-expand-button").innerHTML = `<i class="fas fa-angle-double-up"></i> &nbsp; <span>HIDE</span>`;
