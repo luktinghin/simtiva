@@ -10353,6 +10353,12 @@ function hide_prompts(object) {
 	if (document.getElementById("prompts_container").classList.contains("expand")) {
 		document.getElementById("preview-expand-button").classList.remove("animate2");
 		document.getElementById("preview-expand-button").style.display = "none";
+		document.getElementById("prompts_container").classList.remove("expand");
+		document.getElementById("preview").classList.remove("expand");
+		document.getElementById("preview-expand-box").classList.remove("expand");
+		document.getElementById("preview-expand-button").innerHTML = `<i class="fas fa-angle-double-down"></i> &nbsp; <span>EXPAND</span>`;
+		document.getElementById("preview-expand-button").setAttribute("onclick","displaypreview_expand()");
+
 	}
 }
 
