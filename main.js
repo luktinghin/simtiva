@@ -2328,7 +2328,7 @@ function start_cpt() {
 		
 	}
 	alert_api(0);
-	
+	displaypreview_hide_onsubmit();
 }
 
 
@@ -2400,6 +2400,7 @@ function start_cet() {
 		}
 	}
 	alert_api(0);
+	displaypreview_hide_onsubmit();
 }
 
 function start_cpt_complex(cpt_complex_desired, active_drug_set_index) {
@@ -2460,6 +2461,7 @@ function start_cpt_complex(cpt_complex_desired, active_drug_set_index) {
 			document.getElementById("inputDesired1").value = "";
 		}
 	}
+	displaypreview_hide_onsubmit();
 
 }
 
@@ -2552,6 +2554,7 @@ function start_cet_complex(cet_complex_desired, active_drug_set_index) {
 			document.getElementById("inputDesiredCe1_new").value = "";
 		}
 	}
+	displaypreview_hide_onsubmit();
 }
 
 function start_cet_bolus() {
@@ -3224,11 +3227,16 @@ function displaypreview_hide_onsubmit() {
 		document.getElementById("preview-expand-button").style.display = "none";
 	if (!document.getElementById("preview").classList.contains("animate"))	{
 		document.getElementById("preview").classList.add("animate");
+		previewtimeout = null;
+		clearTimeout(previewtimeout);
+		previewtimeout = setTimeout(function() {
+			document.getElementById("preview").style.display = "none";
+		},12000);
+	} else {
+
 	}
-	clearTimeout(previewtimeout);
-	previewtimeout = setTimeout(function() {
-		document.getElementById("preview").style.display = "none";
-	},12000);
+
+
 }
 	
 
@@ -14258,6 +14266,10 @@ function resetPtolLabels() {
 // complex mode functions
 
 function tabswitch(index) {
+
+	if (document.getElementById("preview").style.display != "none") {
+		displaypreview_hide_onsubmit();
+	}
 
 	if (index == undefined) index = 1-active_drug_set_index;
 
