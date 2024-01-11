@@ -173,6 +173,8 @@ var manageFileListState = 0;
 
 var modal = undefined;
 
+var prior_half_minute_clock = 0;
+
 window.ptolcouplesarray = []; //ptol couples over time
 //var ptol0overtime = new Array(); //ptol chart data for 0 over time, series based on chart data
 //var ptol1overtime = new Array(); //ptol chart data for 1 over time
@@ -1098,7 +1100,7 @@ var parseloading = 0; //suppress function calls during parseobject loading when 
 		console.log(myChart2.data.datasets[1].data(p0DataIndex).meta_minute);
 	}
 
-		},600)
+		},1500)
 
 	setTimeout(
 
@@ -1530,7 +1532,7 @@ var parseloading = 0; //suppress function calls during parseobject loading when 
 
 			}
 
-	},1000);
+	},1300);
 
 
 
@@ -7135,7 +7137,6 @@ function ptol_generate_ptol_based_on_couples() { //this creates ptol over time c
 	}
 }
 
-var prior_half_minute_clock = 0;
 
 function ptol_fill_history_future_dots(force_redraw) {
 	var half_minute_clock = Math.floor(time_in_s/30);
