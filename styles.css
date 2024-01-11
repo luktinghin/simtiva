@@ -135,6 +135,13 @@
           
 }
 
+input, select, textarea {
+  -webkit-user-select: auto;
+     -moz-user-select: auto;
+      -ms-user-select: auto;
+          user-select: auto;
+}
+
 html {
 	-webkit-text-size-adjust:100%; /*fix iphone landscape font-size 20px bug */
   overscroll-behavior: none;
