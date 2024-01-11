@@ -205,7 +205,32 @@ var texttimeout = null;
 
 var parseloading = 0; //suppress function calls during parseobject loading when equals 1
 
+var popupon = false;
 
+var isDark = false;
+var timeoutptol = null;
+var chartviewarray = [0,30,10];
+var ringbell2active = 0;
+var ringbell2timeout = null;
+var alert_sound_2 = null;
+var alert_vibrate_2 = null;
+var updateBIS = null;
+var timeoutVal = null;
+var ringtimeout = null;
+var ringactive = 0;
+var inputname = "";
+var importDataArray = new Array();
+var canvasUpdateInterval = null;
+var textheight = 0;
+var newCanvas = document.createElement('canvas');
+var newCanvasReady = 0;
+var popupchart;
+var boxesArray = new Array();
+var suitableForBoxes = false;
+var isFullscreen = false;
+var popupUpdateInterval;
+var numpadValue = 0;
+var numpadOrig;
 
 //global colors / charting script initiation
 
@@ -1589,7 +1614,7 @@ window.addEventListener('hashchange', function(event) {
 
 
 //dark mode activation
-	var isDark = false;
+	
 	if (localStorage.getItem("colourMode") == "dark") {
 		isDark = true;
 		var metaThemeColor = document.querySelector("meta[name=theme-color]");
@@ -6701,7 +6726,7 @@ function update() {
 	document.getElementById("historywrapperCOPY").innerHTML = document.getElementById("historywrapper").innerHTML;
 }
 
-var timeoutptol = null;
+
 function ptol_generate_margins(ind,param1,param2) {
 	//this is resource intensive
 	//Need to breakup tasks into smaller parts
@@ -7584,7 +7609,7 @@ function updatechart(chart) {
 
 }
 
-var chartviewarray = [0,30,10];
+
 function updatechartview(chart) {
 	chart.options.scales.x.min = chartviewarray[0];
 	chart.options.scales.x.max = chartviewarray[1];
@@ -7697,10 +7722,6 @@ function runinfusion2() {
 
 
 
-var ringbell2active = 0;
-var ringbell2timeout = null;
-var alert_sound_2 = null;
-var alert_vibrate_2 = null;
 
 function runinfusion_complex() {
 	
@@ -8682,7 +8703,6 @@ function BIS_charting() {
 
 }
 
-var updateBIS = null;
 
 function BIS_update(interval) {
 	updateBIS = setInterval(function() {
@@ -9327,7 +9347,7 @@ function retrospective(Tminus, r_bolus, r_infratemls, ind) {
 
 //z score calculated by : ((BMI/M)^L - 1) / (S * L)
 
-var timeoutVal = null;
+
 
 
 function sendToValidate(arg) {
@@ -10397,6 +10417,9 @@ function togglemenu() {
 
 }
 
+
+
+
 var collapsibles = document.getElementsByClassName("collapsible");
 var i;
 
@@ -10958,9 +10981,6 @@ function sound(src) {
   }
 }
 
-
-var ringtimeout = null;
-var ringactive = 0;
 
 function ringbell(duration) {
 	let El1 = document.querySelector(".topleft");
@@ -11838,7 +11858,7 @@ async function downloadExcel() {
 }
 */
 
-var inputname = "";
+
 
 function exportFunction() {
 	//reset inputname
@@ -11929,7 +11949,6 @@ function exportKeys(filenameentry,testKeys) {
 	exportGenerateDownload(testString,filenameentry);
 }
 
-var importDataArray = new Array();
 
 function previewFile() {
 	
@@ -13471,10 +13490,7 @@ async function shareViewURL() {
 	}
 }
 
-canvasUpdateInterval = null;
-var textheight = 0;
-var newCanvas = document.createElement('canvas');
-var newCanvasReady = 0;
+
 
 function canvasUpdate(oldCanvas, filename) {
 	newCanvas = cloneCanvas(oldCanvas,filename);
@@ -14601,8 +14617,6 @@ function tabaltdisplaycycle(inputArg) {
 	}
 }
 
-var popupon = false;
-
 function preparerange() {
 	var corX = time_in_s/60;
 
@@ -14927,8 +14941,7 @@ function popup_dilution(targetid,targetname) {
 		`)
 }
 
-var popupchart;
-var boxesArray = new Array();
+
 
 function generateBoxes() {
 	if (drug_sets[active_drug_set_index].manualmode_active == 1) {
@@ -15293,9 +15306,7 @@ const chartInfRateLayer = {
 	}
 };
 
-suitableForBoxes = false;
 
-isFullscreen = false;
 
 function openpopupchart() {
 	
@@ -15598,7 +15609,6 @@ function mirrorpopup() {
 
 }
 
-var popupUpdateInterval;
 
 function popupUpdateFunction(dur) {
 	clearInterval(popupUpdateInterval);
@@ -15610,8 +15620,8 @@ function popupUpdateFunction(dur) {
 
 //numpad code goes here
 
-var numpadValue = 0;
-var numpadOrig;
+
+
 
 function keypress(num) {
 	let numString = document.getElementById("numpadOutputDisplay").innerHTML;
