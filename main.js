@@ -179,8 +179,8 @@ var ptolcouplesarray = new Array(); //ptol couples over time
 
 var loop6 = null; //this is setinterval function
 
-
-var eventArray = new Array();
+window.BIS_array = [];
+window.eventArray = [];
 
 const arrBodyIcons = [
 	["baby","<i class='fas fa-baby fa-fw tooltip bodyicon'><span class='tooltiptext'>BMI-for-age reference range from WHO</span></i>"],
@@ -8512,8 +8512,6 @@ function BIS_estimated(Ceinput) {
 	return 93 * (1-BIS_effect(Ceinput));
 	// don't know what the residual error +8.03 * epsilon is about, omit
 }
-
-BIS_array = new Array();
 
 function BIS_solve_eBIS(paramfrom, paramto) {
 	BIS_array.length = 0;
