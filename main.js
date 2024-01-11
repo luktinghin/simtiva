@@ -15123,7 +15123,7 @@ function generateBoxes() {
 	} // end else: not manual mode
 }
 
-const chartInfRateLayer = {
+var chartInfRateLayer = {
 	id: 'chartInfRateLayer',
 	afterDraw(chart, args, options) {
 		if (suitableForBoxes && boxesArray.length>0) {
