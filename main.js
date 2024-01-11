@@ -382,6 +382,191 @@ var numpadOrig;
 
 
 
+const chartInfRateLayer = {
+	id: 'chartInfRateLayer',
+	afterDraw(chart, args, options) {
+		if (suitableForBoxes && boxesArray.length>0) {
+			const {ctx, chartArea: {top, right, bottom, left, width, height }, scales} = chart;
+			//load history array
+			//define corr_factor for y scale as % of cp scale
+			if (drug_sets[active_drug_set_index].drug_name == "Fentanyl") {
+				ymax = 3;
+			} else if (drug_sets[active_drug_set_index].drug_name == "Alfentanil") {
+				ymax = 90;
+			} else {
+				ymax = 5;
+			}
+			corr_factor = 1 * 3600 / drug_sets[active_drug_set_index].infusate_concentration / 200 * ymax;
+			xmargin = scales.x.getPixelForValue(scales.x.min);
+
+			//determine text size
+			textsize = 16 * (width / popupchart.width);
+
+			/*
+			x0 = scales.x.getPixelForValue(0);
+			x1 = scales.x.getPixelForValue(5) - x0;
+			y0 = scales.y.getPixelForValue(3);
+			y1 = scales.y.getPixelForValue(0) - y0;
+
+			console.log("***");
+			console.log(scales.x.getPixelForValue(scales.x.max));
+			console.log(scales.x.getPixelForValue(scales.x.min));
+			console.log(scales.x.getPixelForValue(5));
+			console.log(scales.x.getPixelForValue(10));
+			console.log(scales.x.getPixelForValue(15));
+			console.log(scales.x.getPixelForValue(20));
+			console.log("###");
+			console.log(scales.y.getPixelForValue(scales.y.max));
+			console.log(scales.y.getPixelForValue(scales.y.min));
+			*/
+			
+			ctx.save();
+			
+
+			for (icount = 0; icount < boxesArray.length; icount++) {
+				if (boxesArray[icount][1] > 0) {
+					ctx.fillStyle = 'rgba(128,128,128,0.5)';
+
+						x0 = scales.x.getPixelForValue(boxesArray[icount][0] / 60) + 2;
+						y0 = scales.y.getPixelForValue(boxesArray[icount][1] * corr_factor);
+						x1 = scales.x.getPixelForValue(boxesArray[icount][2] / 60) - x0 - 2;
+						y1 = scales.y.getPixelForValue(scales.y.min) - y0;
+						ctx.fillRect(x0,y0,x1,y1);
+					
+					if (!isDark) {
+						ctx.fillStyle = "black";
+					} else {
+						ctx.fillStyle = "white";
+					}
+						ctx.font = "bold " + textsize + "px SourceSans";
+						ctx.fillText(Math.round(boxesArray[icount][1]*3600/drug_sets[active_drug_set_index].infusate_concentration*10)/10 + "ml/h", x0, y0 - textsize/3);
+				
+				}
+
+			}
+			// bolus
+			bolustext = "";
+			bolustime = -1;
+			bolusArray = new Array();
+			textheight = 0;
+			if ((drug_sets[active_drug_set_index].manualmode_active > 0) || (drug_sets[active_drug_set_index].cpt_active > 0) || ((drug_sets[active_drug_set_index].cet_active > 0) && (drug_sets[active_drug_set_index].IB_active == 0))) {
+				for (icount = 0; icount<drug_sets[active_drug_set_index].historyarrays.length; icount++) {
+					if (drug_sets[active_drug_set_index].historyarrays[icount][1] == 1) {
+						bolustime = drug_sets[active_drug_set_index].historyarrays[icount][2]; 
+						if (drug_sets[active_drug_set_index].historyarrays[icount][3]>0) {
+							bolustext = drug_sets[active_drug_set_index].historyarrays[icount][3] + drug_sets[active_drug_set_index].infused_units;
+						} else {
+							bolustext = "";
+						}
+
+						if (bolustext != "") {
+							bolusArray.push(bolustime);
+							x0 = scales.x.getPixelForValue(bolustime/60);
+							ctx.font = "bold " + textsize + "px SourceSans";
+							if (!isDark) {
+								ctx.fillStyle = "black";
+							} else {
+								ctx.fillStyle = "white";
+							}
+							
+							if (bolusArray.length>1) {
+								//if this is 10mins close to previous
+								if (bolusArray[bolusArray.length-1] - bolusArray[bolusArray.length-2] < 600) {
+									if (textheight < textsize * 6) {
+										textheight = textheight + textsize * 1.33;
+										ctx.fillText(bolustext, x0+10, 50+textheight);	
+										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
+										ctx.fillText("\uf063", x0-5, 50+textheight);	
+									} else {
+										textheight = 0;
+										ctx.fillText(bolustext, x0+10, 50);
+										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
+										ctx.fillText("\uf063", x0-5, 50);	
+									}
+								} else {
+									ctx.fillText(bolustext, x0+10, 50);
+									textheight = 0;
+									ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
+									ctx.fillText("\uf063", x0-5, 50);	
+								}
+							} else {
+								ctx.fillText(bolustext, x0+10, 50);
+								ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
+								ctx.fillText("\uf063", x0-5, 50);	
+							}
+						}
+					} else {
+						bolustext = "";
+					}
+				} // end for loop
+			} // end if manual/cpt/cet block
+		//end "suitableForBoxes"  check
+		} else {
+			if ((drug_sets[active_drug_set_index].cet_active > 0) && (drug_sets[active_drug_set_index].IB_active == 1)) {
+				//load chart context
+				const {ctx, chartArea: {width}, scales} = chart;
+
+				//determine text size
+				textsize = 14 * (width / popupchart.width);
+			
+				ctx.save();
+
+				// bolus
+				bolustext = "";
+				bolustime = -1;
+				bolusArray = new Array();
+				textheight = 0;
+				for (icount = 0; icount<drug_sets[active_drug_set_index].historyarray.length; icount++) {
+						bolustime = drug_sets[active_drug_set_index].historyarray[icount][0]; 
+						if (drug_sets[active_drug_set_index].historyarray[icount][2]>0) {
+							bolustext = drug_sets[active_drug_set_index].historyarray[icount][2] + drug_sets[active_drug_set_index].infused_units;
+						} else {
+							bolustext = "";
+						}
+
+						if (bolustext != "") {
+							bolusArray.push(bolustime);
+							x0 = scales.x.getPixelForValue(bolustime/60);
+							ctx.font = "bold " + textsize + "px SourceSans";
+							if (!isDark) {
+								ctx.fillStyle = "rgba(0,0,0,0.7)";
+							} else {
+								ctx.fillStyle = "rgba(255,255,255,0.7)";
+							}
+							if (bolusArray.length>1) {
+								//if this is 10mins close to previous
+								if (bolusArray[bolusArray.length-1] - bolusArray[bolusArray.length-2] < 660) {
+									if (textheight < textsize * 7) {
+										textheight = textheight + textsize * 1.33;
+										ctx.fillText(bolustext, x0+10, 50+textheight);		
+										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
+										ctx.fillText("\uf063", x0-5, 50+textheight);	
+									} else {
+										textheight = 0;
+										ctx.fillText(bolustext, x0+10, 50);
+										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
+										ctx.fillText("\uf063", x0-5, 50);	
+									}
+								} else {
+									ctx.fillText(bolustext, x0+10, 50);
+									textheight = 0;
+									ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
+									ctx.fillText("\uf063", x0-5, 50);	
+								}
+							} else {
+								ctx.fillText(bolustext, x0+10, 50);
+								ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
+								ctx.fillText("\uf063", x0-5, 50);	
+							}
+						}
+				} // end for loop
+			} // end if IB block
+		} 
+	}
+};
+
+
+
 //charting scripts
 
 
@@ -15122,189 +15307,6 @@ function generateBoxes() {
 		} // end of running = 0 block
 	} // end else: not manual mode
 }
-
-var chartInfRateLayer = {
-	id: 'chartInfRateLayer',
-	afterDraw(chart, args, options) {
-		if (suitableForBoxes && boxesArray.length>0) {
-			const {ctx, chartArea: {top, right, bottom, left, width, height }, scales} = chart;
-			//load history array
-			//define corr_factor for y scale as % of cp scale
-			if (drug_sets[active_drug_set_index].drug_name == "Fentanyl") {
-				ymax = 3;
-			} else if (drug_sets[active_drug_set_index].drug_name == "Alfentanil") {
-				ymax = 90;
-			} else {
-				ymax = 5;
-			}
-			corr_factor = 1 * 3600 / drug_sets[active_drug_set_index].infusate_concentration / 200 * ymax;
-			xmargin = scales.x.getPixelForValue(scales.x.min);
-
-			//determine text size
-			textsize = 16 * (width / popupchart.width);
-
-			/*
-			x0 = scales.x.getPixelForValue(0);
-			x1 = scales.x.getPixelForValue(5) - x0;
-			y0 = scales.y.getPixelForValue(3);
-			y1 = scales.y.getPixelForValue(0) - y0;
-
-			console.log("***");
-			console.log(scales.x.getPixelForValue(scales.x.max));
-			console.log(scales.x.getPixelForValue(scales.x.min));
-			console.log(scales.x.getPixelForValue(5));
-			console.log(scales.x.getPixelForValue(10));
-			console.log(scales.x.getPixelForValue(15));
-			console.log(scales.x.getPixelForValue(20));
-			console.log("###");
-			console.log(scales.y.getPixelForValue(scales.y.max));
-			console.log(scales.y.getPixelForValue(scales.y.min));
-			*/
-			
-			ctx.save();
-			
-
-			for (icount = 0; icount < boxesArray.length; icount++) {
-				if (boxesArray[icount][1] > 0) {
-					ctx.fillStyle = 'rgba(128,128,128,0.5)';
-
-						x0 = scales.x.getPixelForValue(boxesArray[icount][0] / 60) + 2;
-						y0 = scales.y.getPixelForValue(boxesArray[icount][1] * corr_factor);
-						x1 = scales.x.getPixelForValue(boxesArray[icount][2] / 60) - x0 - 2;
-						y1 = scales.y.getPixelForValue(scales.y.min) - y0;
-						ctx.fillRect(x0,y0,x1,y1);
-					
-					if (!isDark) {
-						ctx.fillStyle = "black";
-					} else {
-						ctx.fillStyle = "white";
-					}
-						ctx.font = "bold " + textsize + "px SourceSans";
-						ctx.fillText(Math.round(boxesArray[icount][1]*3600/drug_sets[active_drug_set_index].infusate_concentration*10)/10 + "ml/h", x0, y0 - textsize/3);
-				
-				}
-
-			}
-			// bolus
-			bolustext = "";
-			bolustime = -1;
-			bolusArray = new Array();
-			textheight = 0;
-			if ((drug_sets[active_drug_set_index].manualmode_active > 0) || (drug_sets[active_drug_set_index].cpt_active > 0) || ((drug_sets[active_drug_set_index].cet_active > 0) && (drug_sets[active_drug_set_index].IB_active == 0))) {
-				for (icount = 0; icount<drug_sets[active_drug_set_index].historyarrays.length; icount++) {
-					if (drug_sets[active_drug_set_index].historyarrays[icount][1] == 1) {
-						bolustime = drug_sets[active_drug_set_index].historyarrays[icount][2]; 
-						if (drug_sets[active_drug_set_index].historyarrays[icount][3]>0) {
-							bolustext = drug_sets[active_drug_set_index].historyarrays[icount][3] + drug_sets[active_drug_set_index].infused_units;
-						} else {
-							bolustext = "";
-						}
-
-						if (bolustext != "") {
-							bolusArray.push(bolustime);
-							x0 = scales.x.getPixelForValue(bolustime/60);
-							ctx.font = "bold " + textsize + "px SourceSans";
-							if (!isDark) {
-								ctx.fillStyle = "black";
-							} else {
-								ctx.fillStyle = "white";
-							}
-							
-							if (bolusArray.length>1) {
-								//if this is 10mins close to previous
-								if (bolusArray[bolusArray.length-1] - bolusArray[bolusArray.length-2] < 600) {
-									if (textheight < textsize * 6) {
-										textheight = textheight + textsize * 1.33;
-										ctx.fillText(bolustext, x0+10, 50+textheight);	
-										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-										ctx.fillText("\uf063", x0-5, 50+textheight);	
-									} else {
-										textheight = 0;
-										ctx.fillText(bolustext, x0+10, 50);
-										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-										ctx.fillText("\uf063", x0-5, 50);	
-									}
-								} else {
-									ctx.fillText(bolustext, x0+10, 50);
-									textheight = 0;
-									ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-									ctx.fillText("\uf063", x0-5, 50);	
-								}
-							} else {
-								ctx.fillText(bolustext, x0+10, 50);
-								ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-								ctx.fillText("\uf063", x0-5, 50);	
-							}
-						}
-					} else {
-						bolustext = "";
-					}
-				} // end for loop
-			} // end if manual/cpt/cet block
-		//end "suitableForBoxes"  check
-		} else {
-			if ((drug_sets[active_drug_set_index].cet_active > 0) && (drug_sets[active_drug_set_index].IB_active == 1)) {
-				//load chart context
-				const {ctx, chartArea: {width}, scales} = chart;
-
-				//determine text size
-				textsize = 14 * (width / popupchart.width);
-			
-				ctx.save();
-
-				// bolus
-				bolustext = "";
-				bolustime = -1;
-				bolusArray = new Array();
-				textheight = 0;
-				for (icount = 0; icount<drug_sets[active_drug_set_index].historyarray.length; icount++) {
-						bolustime = drug_sets[active_drug_set_index].historyarray[icount][0]; 
-						if (drug_sets[active_drug_set_index].historyarray[icount][2]>0) {
-							bolustext = drug_sets[active_drug_set_index].historyarray[icount][2] + drug_sets[active_drug_set_index].infused_units;
-						} else {
-							bolustext = "";
-						}
-
-						if (bolustext != "") {
-							bolusArray.push(bolustime);
-							x0 = scales.x.getPixelForValue(bolustime/60);
-							ctx.font = "bold " + textsize + "px SourceSans";
-							if (!isDark) {
-								ctx.fillStyle = "rgba(0,0,0,0.7)";
-							} else {
-								ctx.fillStyle = "rgba(255,255,255,0.7)";
-							}
-							if (bolusArray.length>1) {
-								//if this is 10mins close to previous
-								if (bolusArray[bolusArray.length-1] - bolusArray[bolusArray.length-2] < 660) {
-									if (textheight < textsize * 7) {
-										textheight = textheight + textsize * 1.33;
-										ctx.fillText(bolustext, x0+10, 50+textheight);		
-										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-										ctx.fillText("\uf063", x0-5, 50+textheight);	
-									} else {
-										textheight = 0;
-										ctx.fillText(bolustext, x0+10, 50);
-										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-										ctx.fillText("\uf063", x0-5, 50);	
-									}
-								} else {
-									ctx.fillText(bolustext, x0+10, 50);
-									textheight = 0;
-									ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-									ctx.fillText("\uf063", x0-5, 50);	
-								}
-							} else {
-								ctx.fillText(bolustext, x0+10, 50);
-								ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-								ctx.fillText("\uf063", x0-5, 50);	
-							}
-						}
-				} // end for loop
-			} // end if IB block
-		} 
-	}
-};
 
 
 
