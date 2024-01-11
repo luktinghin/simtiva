@@ -173,7 +173,7 @@ var manageFileListState = 0;
 
 var modal = undefined;
 
-var ptolcouplesarray = new Array(); //ptol couples over time
+window.ptolcouplesarray = []; //ptol couples over time
 //var ptol0overtime = new Array(); //ptol chart data for 0 over time, series based on chart data
 //var ptol1overtime = new Array(); //ptol chart data for 1 over time
 
@@ -353,7 +353,7 @@ var parseloading = 0; //suppress function calls during parseobject loading when 
 		
 	}
 
-	
+
 
 //charting scripts
 
