@@ -3226,6 +3226,7 @@ function displaypreview_hide_onsubmit() {
 		document.getElementById("preview-expand-button").setAttribute("onclick","displaypreview_expand()");	
 		document.getElementById("preview-expand-button").style.display = "none";
 	if (!document.getElementById("preview").classList.contains("animate"))	{
+		//situation where preview animation fade is NOT active, i.e. the hiding of preview is not yet active
 		document.getElementById("preview").classList.add("animate");
 		previewtimeout = null;
 		clearTimeout(previewtimeout);
