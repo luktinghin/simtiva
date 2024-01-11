@@ -204,6 +204,157 @@ var texttimeout = null;
 var parseloading = 0; //suppress function calls during parseobject loading when equals 1
 
 
+
+//global colors / charting script initiation
+
+
+		//band colors from column 200 of material design 1-10 hues, for myChart2
+		var bandColor0 = 'rgb(239,154,154,0.2)';//red
+		var bandColor1 = 'rgb(244,143,177,0.2)';//pink
+		var bandColor2 = 'rgb(206,147,216,0.2)';//purple
+		var bandColor3 = 'rgb(179,157,219,0.2)';
+		var bandColor4 = 'rgb(159,168,218,0.2)';
+		var bandColor5 = 'rgb(144,202,249,0.2)';
+		var bandColor6 = 'rgb(129,212,250,0.2)';
+		var bandColor7 = 'rgb(128,222,234,0.2)';
+		var bandColor8 = 'rgb(128,203,196,0.2)';
+		var bandColor9 = 'rgb(165,214,167,0.2)';
+		var bandColor10 = 'rgb(197,225,165,0.2)';
+		var bandColor11 = 'rgb(230,238,156,0.2)';//lime
+		var bandColor12 = 'rgb(255,245,157,0.2)';//yellow
+		var bandColor13 = 'rgb(255,224,130,0.2)';//amber
+		var bandColor14= 'rgb(255,204,128,0.2)'//orange
+
+		var dotColor0 = 'rgb(158,158,158,1)';
+		var dotColor1 = 'rgb(117,117,117,1)';
+		var dotColor2 = 'rgb(97,97,97,1)';
+		var dotColor3 = 'rgb(66,66,66,1)';
+		var dotColor4 = 'rgb(33,33,33,1)';
+		var dotColor5 = 'rgb(66,66,66,1)';
+		var dotColor6 = 'rgb(97,97,97,1)';
+		var dotColor7 = 'rgb(117,117,117,1)';
+		var dotColor8 = 'rgb(158,158,158,1)';
+
+		var dotColor0dark = 'rgb(185,185,185,0.7)';
+		var dotColor1dark = 'rgb(200,200,200,0.8)';
+		var dotColor2dark = 'rgb(215,215,215,0.8)';
+		var dotColor3dark = 'rgb(230,230,230,0.8)';
+		var dotColor4dark = 'rgb(245,245,245,1)';
+		var dotColor5dark = 'rgb(230,230,230,0.8)';
+		var dotColor6dark = 'rgb(215,215,215,0.8)';
+		var dotColor7dark = 'rgb(200,200,200,0.8)';
+		var dotColor8dark = 'rgb(185,185,185,0.7)';
+
+		/*
+		const dotColor0 = 'rgb(0,96,100,1)'//cyan
+		const dotColor1 = 'rgb(1,87,155,1)'; // lightblue
+		const dotColor2 = 'rgb(26,35,126,1)'; //indigo
+		const dotColor3 = 'rgb(74,20,140,1)'; //purple
+		const dotColor4 = 'rgb(183,28,28,1)';//red
+		const dotColor5 = 'rgb(230,81,0,1)';//orange
+		const dotColor6 = 'rgb(245,127,23,1)';//yellow
+		const dotColor7 = 'rgb(51,105,30,1)';//lightgreen
+		const dotColor8 = 'rgb(0,77,64,1)';//teal
+		*/
+
+		//line colors from blue-grey row
+		var lineColor0 = 'rgba(84,110,122,0.75)';
+		var lineColor1 = 'rgba(120,144,156,1)';
+		var lineColor1dark = 'rgba(210,235,250,1)';
+
+		var yellowPri = 'rgba(251,192,45,1)';
+		var yellowPri50 = 'rgba(251,192,45,0.58)';
+		var yellowPri10 = 'rgba(251,192,45,0.1)';
+		var yellowPri70 = 'rgba(251,192,45,0.7)';
+		var yellowPri30 = 'rgba(251,192,45,0.3)';
+		var yellowLight = 'rgba(255,242,99,1)';
+		var yellowLight10 = 'rgba(255,242,99,0.1)';
+		var yellowLight70 = 'rgba(255,242,99,0.7)';
+		var yellowDark = 'rgba(196,144,0,1)';
+		var yellowSec = 'rgba(255,202,40,1)';
+		var yellowSec10 = 'rgba(255,202,40,0.11)';
+		var yellowSecLight = 'rgba(255,253,97,1)';
+		var yellowSecDark = 'rgba(199,154,0,1)';
+		var orangeShadeLight = 'rgba(255,204,128,0.2)';
+		var orangeShadeDark = 'rgba(255,152,0,0.2)';
+
+		var bluePri = 'rgba(21,101,192,1)';
+		var bluePri50 = 'rgba(21,101,192,0.5)';
+		var blueLight = 'rgba(94,146,243,1)';
+		var blueLight10 = 'rgba(94,146,243,0.1)';
+		var blueLight70 = 'rgba(94,146,243,0.7)';
+		var blueLight50 = 'rgba(94,146,243,0.58)';
+		var blueDark = 'rgba(0,60,143,1)';
+		var blueSec = 'rgba(3,169,244,1)';
+		var blueSec10 = 'rgba(3,169,244,0.11)';
+		var blueSecLight = 'rgba(103,218,255,1)';
+		var blueSecDark = 'rgba(0,122,193,1)';
+		var blueShadeDark = 'rgba(3,169,244,0.2)';
+
+		var greenShade = 'rgba(102, 177, 105, 0.25)';
+		var greenShadeDark = 'rgba(102, 177, 105, 0.35)';
+
+
+
+
+	function getGradientRed(ctx, chartArea, scales) {
+		
+		const gradientBgRed = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
+		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
+		if (position<=0) position = 0;
+		if (position>=1) position = 1;
+		gradientBgRed.addColorStop(0, 'rgba(231,50,39,0.4)');
+		gradientBgRed.addColorStop(position, 'rgba(231,50,39,0.4)');
+		gradientBgRed.addColorStop(position, 'rgba(231,50,39,0.1');
+		gradientBgRed.addColorStop(1, 'rgba(231,50,39,0.1)');
+		return gradientBgRed;
+		
+	}
+
+	function getGradientYellow(ctx, chartArea, scales) {
+
+		const gradientBgYellow = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
+		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
+		if (position<=0) position = 0;
+		if (position>=1) position = 1;
+		gradientBgYellow.addColorStop(0, 'rgba(251,192,45,0.58)');
+		gradientBgYellow.addColorStop(position, 'rgba(251,192,45,0.58)');
+		gradientBgYellow.addColorStop(position, 'rgba(255,202,40,0.11)');
+		gradientBgYellow.addColorStop(1, 'rgba(255,202,40,0.11)');
+		return gradientBgYellow;
+
+	}
+
+	function getGradientBlue(ctx, chartArea, scales) {
+
+		const gradientBgBlue = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
+		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
+		if (position<=0) position = 0;
+		if (position>=1) position = 1;
+		gradientBgBlue.addColorStop(0, 'rgba(94,146,243,0.58)');
+		gradientBgBlue.addColorStop(position, 'rgba(94,146,243,0.58)');
+		gradientBgBlue.addColorStop(position, 'rgba(3,169,244,0.11)');
+		gradientBgBlue.addColorStop(1, 'rgba(3,169,244,0.11)');
+		return gradientBgBlue;
+
+	}
+
+	function getGradientGreen(ctx, chartArea, scales) {
+		
+		const gradientBgGreen = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
+		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
+		if (position<=0) position = 0;
+		if (position>=1) position = 1;
+		gradientBgGreen.addColorStop(0, 'rgba(9,203,93,0.7)');
+		gradientBgGreen.addColorStop(position, 'rgba(9,203,93,0.7)');
+		gradientBgGreen.addColorStop(position, 'rgba(9,203,93,0.1');
+		gradientBgGreen.addColorStop(1, 'rgba(9,203,93,0.1)');
+		return gradientBgGreen;
+		
+	}
+
+	
+
 //charting scripts
 
 
@@ -12874,92 +13025,6 @@ function parsedisplay(t,sex,model,VI,d,mode) {
   if (modal != undefined) hideallmodal();
 }
 
-		//band colors from column 200 of material design 1-10 hues, for myChart2
-		var bandColor0 = 'rgb(239,154,154,0.2)';//red
-		var bandColor1 = 'rgb(244,143,177,0.2)';//pink
-		var bandColor2 = 'rgb(206,147,216,0.2)';//purple
-		var bandColor3 = 'rgb(179,157,219,0.2)';
-		var bandColor4 = 'rgb(159,168,218,0.2)';
-		var bandColor5 = 'rgb(144,202,249,0.2)';
-		var bandColor6 = 'rgb(129,212,250,0.2)';
-		var bandColor7 = 'rgb(128,222,234,0.2)';
-		var bandColor8 = 'rgb(128,203,196,0.2)';
-		var bandColor9 = 'rgb(165,214,167,0.2)';
-		var bandColor10 = 'rgb(197,225,165,0.2)';
-		var bandColor11 = 'rgb(230,238,156,0.2)';//lime
-		var bandColor12 = 'rgb(255,245,157,0.2)';//yellow
-		var bandColor13 = 'rgb(255,224,130,0.2)';//amber
-		var bandColor14= 'rgb(255,204,128,0.2)'//orange
-
-		var dotColor0 = 'rgb(158,158,158,1)';
-		var dotColor1 = 'rgb(117,117,117,1)';
-		var dotColor2 = 'rgb(97,97,97,1)';
-		var dotColor3 = 'rgb(66,66,66,1)';
-		var dotColor4 = 'rgb(33,33,33,1)';
-		var dotColor5 = 'rgb(66,66,66,1)';
-		var dotColor6 = 'rgb(97,97,97,1)';
-		var dotColor7 = 'rgb(117,117,117,1)';
-		var dotColor8 = 'rgb(158,158,158,1)';
-
-		var dotColor0dark = 'rgb(185,185,185,0.7)';
-		var dotColor1dark = 'rgb(200,200,200,0.8)';
-		var dotColor2dark = 'rgb(215,215,215,0.8)';
-		var dotColor3dark = 'rgb(230,230,230,0.8)';
-		var dotColor4dark = 'rgb(245,245,245,1)';
-		var dotColor5dark = 'rgb(230,230,230,0.8)';
-		var dotColor6dark = 'rgb(215,215,215,0.8)';
-		var dotColor7dark = 'rgb(200,200,200,0.8)';
-		var dotColor8dark = 'rgb(185,185,185,0.7)';
-
-		/*
-		const dotColor0 = 'rgb(0,96,100,1)'//cyan
-		const dotColor1 = 'rgb(1,87,155,1)'; // lightblue
-		const dotColor2 = 'rgb(26,35,126,1)'; //indigo
-		const dotColor3 = 'rgb(74,20,140,1)'; //purple
-		const dotColor4 = 'rgb(183,28,28,1)';//red
-		const dotColor5 = 'rgb(230,81,0,1)';//orange
-		const dotColor6 = 'rgb(245,127,23,1)';//yellow
-		const dotColor7 = 'rgb(51,105,30,1)';//lightgreen
-		const dotColor8 = 'rgb(0,77,64,1)';//teal
-		*/
-
-		//line colors from blue-grey row
-		var lineColor0 = 'rgba(84,110,122,0.75)';
-		var lineColor1 = 'rgba(120,144,156,1)';
-		var lineColor1dark = 'rgba(210,235,250,1)';
-
-		var yellowPri = 'rgba(251,192,45,1)';
-		var yellowPri50 = 'rgba(251,192,45,0.58)';
-		var yellowPri10 = 'rgba(251,192,45,0.1)';
-		var yellowPri70 = 'rgba(251,192,45,0.7)';
-		var yellowPri30 = 'rgba(251,192,45,0.3)';
-		var yellowLight = 'rgba(255,242,99,1)';
-		var yellowLight10 = 'rgba(255,242,99,0.1)';
-		var yellowLight70 = 'rgba(255,242,99,0.7)';
-		var yellowDark = 'rgba(196,144,0,1)';
-		var yellowSec = 'rgba(255,202,40,1)';
-		var yellowSec10 = 'rgba(255,202,40,0.11)';
-		var yellowSecLight = 'rgba(255,253,97,1)';
-		var yellowSecDark = 'rgba(199,154,0,1)';
-		var orangeShadeLight = 'rgba(255,204,128,0.2)';
-		var orangeShadeDark = 'rgba(255,152,0,0.2)';
-
-		var bluePri = 'rgba(21,101,192,1)';
-		var bluePri50 = 'rgba(21,101,192,0.5)';
-		var blueLight = 'rgba(94,146,243,1)';
-		var blueLight10 = 'rgba(94,146,243,0.1)';
-		var blueLight70 = 'rgba(94,146,243,0.7)';
-		var blueLight50 = 'rgba(94,146,243,0.58)';
-		var blueDark = 'rgba(0,60,143,1)';
-		var blueSec = 'rgba(3,169,244,1)';
-		var blueSec10 = 'rgba(3,169,244,0.11)';
-		var blueSecLight = 'rgba(103,218,255,1)';
-		var blueSecDark = 'rgba(0,122,193,1)';
-		var blueShadeDark = 'rgba(3,169,244,0.2)';
-
-		var greenShade = 'rgba(102, 177, 105, 0.25)';
-		var greenShadeDark = 'rgba(102, 177, 105, 0.35)';
-
 
 	function behindPosition(ctx, value) {
 		if (ctx.p0.parsed.x < time_in_s/60) {
@@ -12979,61 +13044,6 @@ function parsedisplay(t,sex,model,VI,d,mode) {
 
 
 
-	function getGradientRed(ctx, chartArea, scales) {
-		
-		const gradientBgRed = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
-		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
-		if (position<=0) position = 0;
-		if (position>=1) position = 1;
-		gradientBgRed.addColorStop(0, 'rgba(231,50,39,0.4)');
-		gradientBgRed.addColorStop(position, 'rgba(231,50,39,0.4)');
-		gradientBgRed.addColorStop(position, 'rgba(231,50,39,0.1');
-		gradientBgRed.addColorStop(1, 'rgba(231,50,39,0.1)');
-		return gradientBgRed;
-		
-	}
-
-	function getGradientYellow(ctx, chartArea, scales) {
-
-		const gradientBgYellow = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
-		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
-		if (position<=0) position = 0;
-		if (position>=1) position = 1;
-		gradientBgYellow.addColorStop(0, 'rgba(251,192,45,0.58)');
-		gradientBgYellow.addColorStop(position, 'rgba(251,192,45,0.58)');
-		gradientBgYellow.addColorStop(position, 'rgba(255,202,40,0.11)');
-		gradientBgYellow.addColorStop(1, 'rgba(255,202,40,0.11)');
-		return gradientBgYellow;
-
-	}
-
-	function getGradientBlue(ctx, chartArea, scales) {
-
-		const gradientBgBlue = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
-		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
-		if (position<=0) position = 0;
-		if (position>=1) position = 1;
-		gradientBgBlue.addColorStop(0, 'rgba(94,146,243,0.58)');
-		gradientBgBlue.addColorStop(position, 'rgba(94,146,243,0.58)');
-		gradientBgBlue.addColorStop(position, 'rgba(3,169,244,0.11)');
-		gradientBgBlue.addColorStop(1, 'rgba(3,169,244,0.11)');
-		return gradientBgBlue;
-
-	}
-
-	function getGradientGreen(ctx, chartArea, scales) {
-		
-		const gradientBgGreen = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
-		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
-		if (position<=0) position = 0;
-		if (position>=1) position = 1;
-		gradientBgGreen.addColorStop(0, 'rgba(9,203,93,0.7)');
-		gradientBgGreen.addColorStop(position, 'rgba(9,203,93,0.7)');
-		gradientBgGreen.addColorStop(position, 'rgba(9,203,93,0.1');
-		gradientBgGreen.addColorStop(1, 'rgba(9,203,93,0.1)');
-		return gradientBgGreen;
-		
-	}
 
 
 function clearInput(x) {
