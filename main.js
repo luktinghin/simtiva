@@ -1310,7 +1310,7 @@ const chartInfRateLayer = {
 		console.log(myChart2.data.datasets[1].data(p0DataIndex).meta_minute);
 	}
 
-		},1500)
+		},800)
 
 	setTimeout(
 
@@ -1701,9 +1701,21 @@ const chartInfRateLayer = {
 	);
 
 
+},1100);
+
+//dark mode activation
+	
+	if (localStorage.getItem("colourMode") == "dark") {
+		isDark = true;
+		var metaThemeColor = document.querySelector("meta[name=theme-color]");
+		metaThemeColor.setAttribute("content", "#000");
+		document.body.classList.add("dark");
+		document.getElementById("darkmodebutton").innerHTML = "<i class='fas fa-adjust fa-fw'></i>";
+	}
 
 
 
+	setTimeout(function() {
 		//dark mode for chart activation here
 		if (isDark) {
 				myChart.options.scales.x.grid.color = "rgba(255,255,255,0.2)";
@@ -1741,9 +1753,7 @@ const chartInfRateLayer = {
 				myChart2.data.datasets[10].borderColor = lineColor1dark;
 
 			}
-
-	},1300);
-
+		},1500);
 
 
 if ("serviceWorker" in navigator) {
@@ -1796,17 +1806,6 @@ window.addEventListener('hashchange', function(event) {
 
 }, false);
 */
-
-
-//dark mode activation
-	
-	if (localStorage.getItem("colourMode") == "dark") {
-		isDark = true;
-		var metaThemeColor = document.querySelector("meta[name=theme-color]");
-		metaThemeColor.setAttribute("content", "#000");
-		document.body.classList.add("dark");
-		document.getElementById("darkmodebutton").innerHTML = "<i class='fas fa-adjust fa-fw'></i>";
-	}
 
 
 
@@ -3462,21 +3461,34 @@ function displaypreview(x,ind) {
 function displaypreview2(x,ind) {
 	//check if expanded first
 	var object = document.getElementById("preview");
-	document.getElementById("preview-expand-button").style.display = "block";
-	if (!object.classList.contains("expand")) {
-		if (previewtimeout != null) {clearTimeout(previewtimeout);}
-		object.style.display="flex";
-		if (object.classList.contains('animate')) {object.classList.remove('animate');}
-		if (document.getElementById("preview-expand-button").classList.contains("animate2")) document.getElementById("preview-expand-button").classList.remove("animate2");
-		setTimeout(function() {
+	ableToExpand = ((drug_sets[ind].cpt_active > 0) || ((drug_sets[ind].cet_active > 0) && (drug_sets[ind].IB_active==0)));
+	if (ableToExpand) {
+		document.getElementById("preview-expand-button").style.display = "block";
+		if (!object.classList.contains("expand")) {
+			if (previewtimeout != null) {clearTimeout(previewtimeout);}
+			object.style.display="flex";
+			if (object.classList.contains('animate')) {object.classList.remove('animate');}
+			if (document.getElementById("preview-expand-button").classList.contains("animate2")) document.getElementById("preview-expand-button").classList.remove("animate2");
+			setTimeout(function() {
 				object.classList.add('animate');
 				document.getElementById("preview-expand-button").classList.add('animate2');
 			},400);
-		previewtimeout = setTimeout(function(){
+			previewtimeout = setTimeout(function(){
 				object.style.display="none";
 				document.getElementById("preview-expand-button").style.display = "none";
-			},12000);
-	}  
+			},11500);
+		}  
+	} else {
+		if (previewtimeout != null) {clearTimeout(previewtimeout);}
+		object.style.display="flex";
+		if (object.classList.contains('animate')) {object.classList.remove('animate');}
+		setTimeout(function() {
+			object.classList.add('animate');
+		},400);
+		previewtimeout = setTimeout(function(){
+			object.style.display="none";
+		},11500);
+	}
 	x=x*1;
 
 	if (drug_sets[ind].cpt_active > 0) {
@@ -3578,7 +3590,7 @@ function displaypreview_hide() {
 	previewtimeout = setTimeout(function() {
 		document.getElementById("preview").style.display = "none";
 		document.getElementById("preview-expand-button").style.display = "none";
-	},12000);
+	},11500);
 }
 
 function displaypreview_hide_onsubmit() {
@@ -3595,7 +3607,7 @@ function displaypreview_hide_onsubmit() {
 		clearTimeout(previewtimeout);
 		previewtimeout = setTimeout(function() {
 			document.getElementById("preview").style.display = "none";
-		},12000);
+		},11500);
 	} else {
 
 	}
