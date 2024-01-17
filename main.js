@@ -8791,6 +8791,30 @@ function readmodel(x, drug_set_index) {
 		"ke0 = " + drug_sets[drug_set_index].k41 + ";<br>" +
 		"ke0 derived from Scott & Stanski (J Pharmacol Exp Ther 1987;240:159-166)";
 	}
+	if (x == "Beths") {
+		drug_sets[drug_set_index].vc = 0.78 * mass;
+		drug_sets[drug_set_index].k10 = 0.07;
+		drug_sets[drug_set_index].k12 = 0.0365;
+		drug_sets[drug_set_index].k21 = 0.0312;
+		drug_sets[drug_set_index].k13 = 0.0049;
+		drug_sets[drug_set_index].k31 = 0.0011;
+		drug_sets[drug_set_index].k41 = 0;
+		drug_sets[drug_set_index].modeltext = "Beths model" + "<br>" +
+		"vc = " + drug_sets[drug_set_index].vc + "<br>" +
+		"k10 = " + drug_sets[drug_set_index].k10 + "<br>" +
+		"k12 = " + drug_sets[drug_set_index].k12 + "<br>" +
+		"k13 = " + drug_sets[drug_set_index].k13 + "<br>" +
+		"k21 = " + drug_sets[drug_set_index].k21 + "<br>" +
+		"k31 = " + drug_sets[drug_set_index].k31 + "<br>";
+
+		drug_sets[drug_set_index].drug_name = "Propofol";
+		drug_sets[drug_set_index].conc_units = "mcg";
+		drug_sets[drug_set_index].infused_units = "mg";
+		drug_sets[drug_set_index].inf_rate_permass = 0;
+		drug_sets[drug_set_index].inf_rate_permass_factor = 1;
+		drug_sets[drug_set_index].inf_rate_permass_unit = "mg/kg/h";
+		drug_sets[drug_set_index].inf_rate_permass_dp = 100;
+	}
 	/*
 	if (x == "Shafer (Weight adjusted)") {
 		// need to correct CP and CE based on Shibutani 2004 
