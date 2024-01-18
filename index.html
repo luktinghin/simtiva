@@ -114,139 +114,29 @@
 			<div class="modal-content" id="modalInitialcontent">
 				<div class="modal-header">Enter patient data<!--<span class="close notcondensed" onClick="hideallmodal()">&times;</span>--><img onclick="displayAbout();" src="apple-touch-icon-180x180.png" style="position:absolute;right:6px;width:44px;cursor:pointer"></div>
 				<div class="modal-body">
-					<div class="paedimode_selector">
-						<a class="button_paedimode active" id="paedimode0" onclick="switchpaedimode(0);">Adult</a><!--
-						--><a class="button_paedimode" id="paedimode1" onclick="switchpaedimode(1);">Paediatric</a>
-					</div>
+
 					<table class="table-Init">
-					<tr class="fr" id="row_age_adultmode">
-						<td >Age (y) <i class="far fa-question-circle tooltip"><span class="tooltiptext" style="width: 80px; line-height:20px">0-100y</span></i></td>
-						<td><input type="number" inputmode="decimal" id="inputAge" min="0.1" max="99" step="0.1" placeholder=" " onkeyup="sendToValidate(0)" required/></td>
-					</tr>
-					<tr class="fr" id="row_age_paedimode" style="display:none">
-						<td>Age <i class="far fa-question-circle tooltip"><span class="tooltiptext">Actual chronological age</span></i></td>
-						<td>
-							<input type="number" inputmode="decimal" id="inputAgePaedi" placeholder=" " onkeyup="sendToValidate(0)"/>
-							<select id="select_age_unit">
-								<option value="d">Days</option>
-								<option value="w">Weeks</option>
-								<option value="m" selected>Months</option>
-								<option value="y">Years</option>
-							</select>
-					</tr>
-					<tr id="row_PMA_paedimode" style="display:none">
-						<td><span style="letter-spacing: -0.5px">Post-menstrual age </span><i class="far fa-question-circle tooltip"><span class="tooltiptext" style="">Covariate for Eleveld; affects clearance in <6mo</span></i>
-						</td>
-						<td>
-							<div id="PMA_td">
-								<div id="PMA_entry"><input type="number" inputmode="decimal" id="inputPMA" placeholder=" "/>weeks</div>
-								<div id="PMA_explanation" onclick="displayWarning('Post-menstrual age', 'Covariate for Eleveld model, affects clearance in <6 months old. Optional entry, omit for full term.')">What's this?</div>
-							</div>
-						</td>
-					</tr>
+
+
 					<tr>
 						<td>Weight (kg) <i class="far fa-question-circle tooltip"><span class="tooltiptext">0-200kg, validation with BMI & weight-for-age</span></i></td>
 						<td><input type="number" inputmode="decimal" id="inputBW" min="0.1" max="200" step="0.01" placeholder=" " onkeyup="sendToValidate(0)" required/></td>
 					</tr>
-					<tr id="row_height">
-						<td>Height (cm) <i class="far fa-question-circle tooltip"><span class="tooltiptext">0-250cm, required for Schnider/Eleveld</span></i></td>
-						<td><input type="number" inputmode="decimal" id="inputBH" min="0.1" max="250" step="0.1" placeholder=" " onkeyup="sendToValidate(0)" ></td>
-					</tr>
-					<tr id="row_gender"><td>Gender</td>
-						<td>
-							<select id="select_gender" onchange="sendToValidate(0)" >
-								<option value="Male">Male</option>
-								<option value="Female">Female</option>
-							</select>
-						</td>
-					</tr>
+
+
 					<tr><td>Model <i class="far fa-question-circle tooltip2"><span class="tooltiptext">Paedfusor: for children. Marsh/Schnider/Minto: for adults.</span></i></td>
 						<td>
 							<select id="select_model" onchange="sendToValidate(0)" >
 								
 									<option value="Beths">Beths (Propofol)</option>
 									
-									<option value="Marsh">Propofol (Marsh)</option>
-									<option value="Schnider">Propofol (Schnider)</option>
-									<option value="Paedfusor">Propofol (Paedfusor)</option>
-									<option value="Eleveld" selected>Propofol (Eleveld)</option>
-								
-								
-									<option value="Minto">Remifentanil (Minto)</option>
-									<option value="Eleveld-Remifentanil">Remifentanil (Eleveld)</option>
-								
-									<option value="Maitre">Alfentanil (Maitre)</option>
-								
-									<option value="Shafer">Fentanyl (Shafer)</option>
-
-									<option value="Complex">Complex (Dual mode)</option>
 								
 							</select>
 
-							<select id="select_model_paedi" onchange="sendToValidate(0)" style="display:none">
-									<option value="Paedfusor">Propofol (Paedfusor)</option>
-									<option value="Eleveld" selected>Propofol (Eleveld)</option>
-									<option value="Eleveld-Remifentanil">Remifentanil (Eleveld)</option>
-									<option value="Complex">Complex (Dual mode)</option>
-							</select>
+
 						</td>
 					</tr>
-					<tr id="row_remidilution"><td style="letter-spacing:-0.5px">Concentration <span style="font-size: 85%">(mcg/ml)</span></td>
-						<td>
-							<select id="select_remidilution" onchange="change_remidilution(this.value)"> 
-								<option value="5">5mcg/ml</option>
-								<option value="10">10mcg/ml</option>
-								<option value="20" selected>20mcg/ml</option>
-								<option value="25">25mcg/ml</option>
-								<option value="40">40mcg/ml</option>
-								<option value="50">50mcg/ml</option>
-								<option value="custom">Custom</option>
-							</select>
-							<div id="custom_remidilution" onclick="popup_dilution('remidilution','remifentanil')">
-								<span id="remidilution">_</span>mcg/ml
-							</div>
-						</td>
-					</tr>
-					<tr id="row_alfendilution"><td style="letter-spacing:-0.5px">Concentration <span style="font-size: 85%">(mcg/ml)</span></td>
-						<td>
-							<select id="select_alfendilution" onchange="change_alfendilution(this.value)"> 
-								<option value="100" selected>100mcg/ml</option>
-								<option value="500">500mcg/ml</option>
-								<option value="custom">Custom</option>
-							</select>
-							<div id="custom_alfendilution" onclick="popup_dilution('alfendilution','alfentanil')">
-								<span id="alfendilution">_</span>mcg/ml
-							</div>
-						</td>
-					</tr>
-					<tr id="row_fen_weightadjusted"><td>Weight adjusted? <i class="far fa-question-circle tooltip3"><span class="tooltiptext">If YES: PK model adjusted to BW according to Shibutani, 2004; recommended for obese.</span></i></td>
-						<td>
-							<select id="select_fen_weightadjusted">
-								<option value="0" >No</option>
-								<option value="1" selected>Yes</option>
-							</select>
-						</td>
-					</tr>
-					<tr id="row_fendilution"><td style="letter-spacing:-0.5px">Concentration <span style="font-size: 85%">(mcg/ml)</span></td>
-						<td>
-							<select id="select_fendilution" onchange="change_fendilution(this.value)">
-								<option value="5">5mcg/ml</option>
-								<option value="10" selected>10mcg/ml</option>
-								<option value="20">20mcg/ml</option>
-								<option value="25">25mcg/ml</option>
-								<option value="50">50mcg/ml</option>
-								<option value="custom">Custom</option>
-							</select>
-							<div id="custom_fendilution" onclick="popup_dilution('fendilution','fentanyl')">
-								<span id="fendilution">_</span>mcg/ml
-							</div>
-						</td>
-					</tr>
-					<tr id="row_dexmededilution"><td>Drug dilution (mcg/ml)</td>
-						<td>
-							<input type="number" inputmode="decimal" id="inputDexmedeDilution" value="4">
-						</td>
-					</tr>
+
 					<!--
 					<tr><td>File Name</td>
 						<td>
@@ -256,35 +146,11 @@
 				-->
 					<!--<tr><td>Debug: Enter Sim Speed (1=default)</td><td><input type="number" id="simspeed" value="1"></td></tr>-->
 					</table>
-					<div id="valCard" class="translate">
-						<div id="valLeft"></div>
-						<div id="valRight">
-							<div style="position:relative">
-								<div id="valRightContainer1" class="">
-									Waiting for input.
-								</div>
-								<div id="valRightContainer2" class="valClose">
-									BMI: <span id="bmiDisplay"></span><span id="bmiForAgeDisplay"></span>
-									<div id="wfaDiv">Weight for age: <span id="wfaDisplay"></span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 
-					<div id="validationDisplay">
-					</div>
 					
-					<div id="checkmarkDisplay">
-                    <label class="container" style="visibility:hidden;">I confirm the above data are correct.
-                        <input type="checkbox" onChange="sendToValidate(1);checkChecked();" id="checkConfirm"><span class="checkmark"></span>
-                    </label>
-                    <label class="container" style="visibility:hidden;">I agree to the disclaimer.
-                        <input type="checkbox" id="checkDisclaim" onChange="checkChecked();"><span class="checkmark"></span>
-                    </label>
-					</div>
+
 					<div>
-						<a class="button invert disabled" id="btn_initProceed">Proceed</a>
+						<a class="button invert " onclick="toPageTwo();" id="btn_initProceed">Proceed</a>
 						<a class="button muted right" id="btn_disclaimer" onclick="displayDisclaimer();">Disclaimer</a>
 						<a class="button muted right" id="btn_about" onclick="displayAbout();">About</a>
 					</div>

@@ -1818,65 +1818,42 @@ function init() {
 function initsubmit() {
 	//the validation function on clicking "proceed" on starting page 1
 	//new, arbitrarily set zero
-	let validateText = "";
+	validateText = "";
 	drug_sets_index=0;
 	simspeed=1;
 	//initiate parameters;
 	mass = document.getElementById("inputBW").value *1; 
-	height = document.getElementById("inputBH").value*1;
-	if (paedi_mode==0) {
-		age = document.getElementById("inputAge").value*1;
-		ElModel = document.getElementById("select_model");
-		document.getElementById("ptoltooltip").style.display = "none";
-	} else {
-		document.getElementById("ptoltooltip").style.display = "inline-block";
-		ageunit = document.getElementById("select_age_unit").value;
-		if (ageunit == "d") {
-			age = document.getElementById("inputAgePaedi").value*1 / 365;
-		} else if (ageunit == "w") {
-			age = document.getElementById("inputAgePaedi").value*1 / 52;
-		} else if (ageunit == "m") {
-			age = document.getElementById("inputAgePaedi").value*1 / 12;
-		} else if (ageunit == "y") {
-			age = document.getElementById("inputAgePaedi").value*1;
-		}
-		ElModel = document.getElementById("select_model_paedi");
-	}
-	
-	if (document.getElementById("select_gender").value === "Male") {
-		gender = 0;
-	} else {
-		gender = 1;
-	}
-	if (height>0) {
-		document.getElementById("bh").innerHTML = height + "cm";
-		if (gender == 0) 
-			{lbm = 1.1 * mass - 128 * (mass/height) * (mass/height);}
-		else
-			{lbm = 1.07 * mass - 148 * (mass/height) * (mass/height);}
-	} else {
-		document.getElementById("bh").innerHTML = "?";
-	}
-	if (paedi_mode == 0) {
-		if (age>=0) {
-			document.getElementById("age").innerHTML = age + "y";
-		} else {
-			document.getElementById("age").innerHTML = "?";
-		}
-	} else {
-		document.getElementById("age").innerHTML = document.getElementById("inputAgePaedi").value + ageunit;
-		if (document.getElementById("inputPMA").value*1>0) {
-			document.getElementById("age").innerHTML = document.getElementById("age").innerHTML +
-				" (PMA: " + document.getElementById("inputPMA").value + "w)";
-		}
-	}
+	gender = 0;
+	height = 0;
+
+		//off complex interface displays
+		document.getElementById("ptolcard").style.display = "none";
+		document.getElementById("ptolcardoptions").style.display = "none";
+		document.getElementById("interactionscontainer").style.display = "none";
+		document.getElementById("ptolcard_switch").style.display = "none";
+
+		//interface change
+		document.getElementById("complexmodeselection0").style.display = "none";
+		document.getElementById("complexmodeselection1").style.display = "none";
+		document.getElementById("complexbuttons").style.display = "none";
+		readmodel(ElModel.value,0);
+		//infusate_concentration goes here
+		drug_sets[0].infusate_concentration = 10; //defaults 10 for propofol
+
+	ElModel = document.getElementById("select_model");
+
 	//display elements
 	document.getElementById("bw").innerHTML = mass + "kg";
-	document.getElementById("gender").innerHTML = document.getElementById("select_gender").value;
-
 
 	//off chart legend
 	myChart.legend.options.display = false;
+	complex_mode = 0;
+		  	document.getElementById("card_retrospective").style.display = "none";
+	  	document.getElementById("card_wakeup").style.display = "none";
+	  			document.getElementById("rescuebuttons").style.display="none";
+		loadoptions();
+		applyoptions();
+	/*
 	
 	if (ElModel.value === "Complex") {
 
@@ -2137,7 +2114,7 @@ function initsubmit() {
 		document.getElementById("page2title").innerHTML = x;
 		if ((ElModel.value == "Shafer") && (drug_sets[0].fentanyl_weightadjusted_flag == 1)) document.getElementById("page2title").innerHTML = "Fentanyl (Shafer: Weight adjusted)";
 	}
-	
+	*/
 
 	if (validateText != "") {
 		displayWarning("Invalid input",validateText);
@@ -9740,36 +9717,7 @@ function toPageOne() {
 }
 
 function toPageTwo() {
-	if (initsubmit()==0) {
-		//alter the age thing here:
-		El9 = document.getElementById("patientRight");
-		if (paedi_mode == 0) {
-			El9.innerHTML = "Age: " + age + "years, " + document.getElementById("select_gender").value + "<br> BW: " + weight + "kg";
-		} else {
-			if (document.getElementById("inputPMA").value*1>0) {
-				El9.innerHTML = "Age: " + document.getElementById("inputAgePaedi").value + ageunit + " (PMA: " + document.getElementById("inputPMA").value*1 + "w) " + ", " + document.getElementById("select_gender").value + "<br> BW: " + weight + "kg";
-			} else {
-				El9.innerHTML = "Age: " + document.getElementById("inputAgePaedi").value + ageunit + ", " + document.getElementById("select_gender").value + "<br> BW: " + weight + "kg";
-			}
-		}
-		if (height>0) {El9.innerHTML = El9.innerHTML.concat(", BH: " + height + "cm")} else {};
-		El9.innerHTML = El9.innerHTML.concat("<div style='font-size:70%; border-top:1px solid rgb(167 203 168); padding-top:3px; margin-top:3px; margin-right:5px'>" + document.getElementById("valRightContainer2").innerHTML + "</div>");
-
-		toPageTwoTransition();
-		document.getElementById("rescuebuttons").style.display="none";
-		loadoptions();
-		if (complex_mode==0) applyoptions();
-	} else {
-		El4 = document.getElementById("checkConfirm");
-		El5 = document.getElementById("checkDisclaim");
-		El6 = document.getElementById("btn_initProceed");
-		El4.checked = "";
-		El5.checked = "";
-		El4.parentElement.style.borderBottomColor = "transparent";
-		El5.parentElement.style.borderBottomColor = "transparent";
-		El6.classList.add("disabled");
-		El6.removeEventListener("click", toPageTwo);
-	}
+	initcpt();hideallmodal();
 }
 
 function toPageTwoTransition() {
