@@ -1419,7 +1419,7 @@ const chartInfRateLayer = {
 	    			borderWidth: ctx => behindPosition2(ctx, 8)
 	    		},
 	    		fill: true,
-	    		hidden: false,
+	    		hidden: true,
 	    		parsing: false
 	    	},{
 	    		label: 'Cp-Remi',
@@ -1578,12 +1578,19 @@ const chartInfRateLayer = {
 				    	labels: {
 				    	boxWidth: 20,
 				    	filter: function(item, chart) {
+				    		if (item.datasetIndex == 2) {
+				    			return true;
+				    		} else {
+				    			return false;
+				    		}
+				    		/*
 				    		var index = item.datasetIndex;
 				    		if ((index <= 1) || (index >= drug_sets.length*2+2)) {
 				    			return false;
 				    		} else {
 				    			return true;
 				    		}
+				    		*/
 				    	}
 			    	}
 			    },
@@ -1595,12 +1602,19 @@ const chartInfRateLayer = {
 			    		size: 10
 			    	},
 	            	filter: function(tooltipItem, data) {
+				    		if (tooltipItem.datasetIndex == 2) {
+				    			return true;
+				    		} else {
+				    			return false;
+				    		}
+	            		/*
 	            		var index = tooltipItem.datasetIndex;
 	            		if ((index >= 2) && (index <=5)) {
 	            			return true;
 	            		} else {
 	            			return false;
 	            		}
+	            		*/
 	            	},
 	            	position: 'nearest',
 	            	caretSize: 0,

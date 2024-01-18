@@ -4453,6 +4453,7 @@ body.dark #progressbar {
   z-index: 98; /*higher than modal*/
   opacity: 1;
   pointer-events: auto;
+  display: none;
 }
 
 .button.frontpage {
