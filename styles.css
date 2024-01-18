@@ -6096,7 +6096,7 @@ body.dark #chart2wrapper {
     background: rgba(255,255,255,0.01);
   }
   body.dark .hamburger {
-    
+    right:  calc((100% - 768px)/2 + 16px)
   }
 }
 
@@ -6565,3 +6565,8 @@ body.dark a.button.newbuttongrey:hover {
 
 
 /* end new input styles */
+
+
+#top_ce {
+  display: none;
+}

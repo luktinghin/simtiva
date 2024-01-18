@@ -69,16 +69,11 @@
 			<div class="modal-content" id="modalAboutcontent">
 				<div class="modal-header">ABOUT<span class="close" onClick="hidemodal('modalAbout')">&times;</span></div>
 				<div class="modal-body" style="overflow-y:auto; height: 70vh; font-size:90%">
-					<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1>
+					<h1>Vet.SimTIVA.app</h1>
 					<br><b>Written by Terence Luk, 2023</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!
 					<br>
 					<br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.
-					<br>Last updated 17/12/2023 (V4.4) Build 96.
-					<br>
-					<br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i>
-					<br>Coding is done in Javascript. The code to the mathematical calculations are based on "STANPUMP", which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.
-					<br>
-					<br>Contact us via our <a href="https://simtiva.blogspot.com/p/feedback.html" target="_blank">blog</a> page, or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.
+					<br>This page to be updated soon...
               		<div class="collapsible">Licenses & Legal</div>
               		<div class="collapsiblecontent">
               			Acknowledgments: this project is made possible with the following-
@@ -115,18 +110,19 @@
 				<div class="modal-header">Enter patient data<!--<span class="close notcondensed" onClick="hideallmodal()">&times;</span>--><img onclick="displayAbout();" src="apple-touch-icon-180x180.png" style="position:absolute;right:6px;width:44px;cursor:pointer"></div>
 				<div class="modal-body">
 
-					<table class="table-Init">
+					<div style="font-size:1.7rem;font-weight:bold">Vet.SimTIVA<span style="opacity: 0.5">.app</span></div>
+					<div style="margin-top:0.5rem;margin-bottom:0.5rem"><i>Welcome to Veterinary Simulator for TIVA:</i> an experimental progressive web app to guide TIVA using Beths model for TCI in dogs.</div>
+					<table class="table-Init" style="margin-top:1.5rem;margin-bottom:2rem">
 
-
-					<tr>
+					<tr class="fr">
 						<td>Weight (kg) <i class="far fa-question-circle tooltip"><span class="tooltiptext">0-200kg, validation with BMI & weight-for-age</span></i></td>
-						<td><input type="number" inputmode="decimal" id="inputBW" min="0.1" max="200" step="0.01" placeholder=" " onkeyup="sendToValidate(0)" required/></td>
+						<td><input type="number" inputmode="decimal" id="inputBW" min="0.1" max="200" step="0.01" placeholder=" " onkeyup="" required/></td>
 					</tr>
 
 
 					<tr><td>Model <i class="far fa-question-circle tooltip2"><span class="tooltiptext">Paedfusor: for children. Marsh/Schnider/Minto: for adults.</span></i></td>
 						<td>
-							<select id="select_model" onchange="sendToValidate(0)" >
+							<select id="select_model" onchange="" >
 								
 									<option value="Beths">Beths (Propofol)</option>
 									
@@ -853,7 +849,7 @@
 			<div class="top-bar-container">
 				<div class="topleft stop" id="iconplay" onclick="window.scrollTo(0,0);"><i class="fas fa-pause fa-lg"></i></div><!--
 				--><div class="topright">
-					<div class="top_subtitle " id="top_subtitle"><b>SimTIVA</b> - <span style="opacity: 50%; white-space:nowrap;" id="top_subtitle2">Simple TIVA simulator</span></div> 
+					<div class="top_subtitle " id="top_subtitle"><b>Vet.SimTIVA.app</b> - <span style="opacity: 50%; white-space:nowrap;" id="top_subtitle2">Veterinary Simulator for TIVA</span></div> 
 					<div class="top_title " id="top_title">
 						<div class="top_title_box cp" id="top_cp"><span id="cp">-</span></div>
 						<div class="top_title_box ce" id="top_ce"><span id="ce">-</span></div>
@@ -874,8 +870,9 @@
 							<span id="drugname"></span> (<span id="modelname"></span>)
 							
 						</div>
-						<div><b>BW:<span id="bw"></span></b>, BH:<span id="bh"></span></div>
-						<div><span id="age"></span>, <span id="gender"></span><!--<span id="temptimedisplay" style="float:right; opacity:50%"></span>--></div>
+						<div><b>BW:<span id="bw"></span></b><!--, BH:<span id="bh"></span>--></div>
+						<span id="gender" style="display:none"></span>
+						<!--<div><span id="age"></span>, <span id="gender"></span><span id="temptimedisplay" style="float:right; opacity:50%"></span></div>-->
 					</div>
 				</div>
 			</div>
