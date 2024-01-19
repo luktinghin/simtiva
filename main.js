@@ -1866,6 +1866,15 @@ function initsubmit() {
 		  	document.getElementById("card_retrospective").style.display = "none";
 	  	document.getElementById("card_wakeup").style.display = "none";
 	  			document.getElementById("rescuebuttons").style.display="none";
+
+	var conc_units_fields = document.getElementsByClassName("conc_units");
+	for (i=0; i<conc_units_fields.length; i++) {
+		conc_units_fields[i].innerHTML = drug_sets[active_drug_set_index].conc_units;
+	}
+	var infused_units_fields = document.getElementsByClassName("infused_units");
+	for (i=0; i<infused_units_fields.length; i++) {
+		infused_units_fields[i].innerHTML = drug_sets[active_drug_set_index].infused_units;
+	}
 		loadoptions();
 		applyoptions();
 	/*
