@@ -5352,10 +5352,16 @@ body.dark #pastschemeCOPY {
   /* padding: 10px; -> removed to avoid animation got height bug */
   overflow-y: scroll;
   transition: 0.3s all ease;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 #preview-expand-box.expand {
   height: 220px;
+}
+
+#preview-expand-box::-webkit-scrollbar {
+  display:none;
 }
 
 #preview-expand-box > div:first-child {
