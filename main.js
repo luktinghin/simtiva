@@ -3041,7 +3041,7 @@ function preview_cpt(x,ind) {
 	if (drug_sets[ind].cpt_bolus>=90) {
 		drug_sets[ind].cpt_bolus = Math.round(drug_sets[ind].cpt_bolus/10)*10;
 	} else if (drug_sets[ind].cpt_bolus>1) {
-			if ((mass>15) && (drug_sets[ind].cpt_bolus>=40)) {
+			if ((mass>30) && (drug_sets[ind].cpt_bolus>=40)) {
 				drug_sets[ind].cpt_bolus = Math.ceil(drug_sets[ind].cpt_bolus/5)*5; //round up to nearest 5mg
 			} else {
 				drug_sets[ind].cpt_bolus = Math.ceil(drug_sets[ind].cpt_bolus);
