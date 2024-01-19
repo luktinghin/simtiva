@@ -6120,6 +6120,26 @@ function find_trough(temp_trough,temp_time,temp_peak) {
 		return temp_time+i;
 }
 
+function find_decrement_cp_level(temp_target,temp_limit) {
+	let working_clock = Math.floor(time_in_s);
+    temp1 = drug_sets[active_drug_set_index].cpt_cp[working_clock-1][0];
+    temp2 = drug_sets[active_drug_set_index].cpt_cp[working_clock-1][1];
+    temp3 = drug_sets[active_drug_set_index].cpt_cp[working_clock-1][2];
+    value = temp1+temp2+temp3;
+    console.log('entering find decrement cp, cp is now ' + value);
+    let cpcounter;
+    for (cpcounter=0; cpcounter<temp_limit; cpcounter++) {
+    	test_trough = virtual_model(temp1,temp2,temp3,0,cpcounter,0,active_drug_set_index);
+    	if (test_trough < temp_target) {
+    		console.log(">>found trough CP level at " + cpcounter);
+    		console.log(">>the cp is " + test_trough);
+    		break;
+    	}
+    }
+    return working_clock + cpcounter;
+    
+}
+
 function scheme_bolusadmin(x, ind) {
 
 	l1 = Math.exp(-drug_sets[ind].lambda[1]);
