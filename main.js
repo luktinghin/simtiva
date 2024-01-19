@@ -3946,6 +3946,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 	*/
 
 	//determine threshold
+	/*
 	if (drug_sets[ind].drug_name == "Alfentanil") {
 		if (cpt_threshold_auto == 1) {
 			if (drug_sets[ind].cpt_rates[5]*360 > 100) {
@@ -3969,8 +3970,32 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 			}
 		}
 	}
+	*/
 
-
+	//determine new thresholds
+	if (drug_sets[ind].drug_name == "Alfentanil") {
+		if (cpt_threshold_auto == 1) {
+			if (drug_sets[ind].cpt_rates[5]*360 > 100) {
+				cpt_threshold = 0.15;
+				cpt_avgfactor = 0.63;
+			} else {
+				cpt_threshold = 0.25;
+				cpt_avgfactor = 0.44;
+				//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
+			}
+		}
+	} else {
+		if (cpt_threshold_auto == 1) {
+			if (drug_sets[ind].cpt_rates[5]*360 > 40) {
+				cpt_threshold = 0.08;
+				cpt_avgfactor = 0.66;
+			} else {
+				cpt_threshold = 0.05;
+				cpt_avgfactor = 0.6;
+				//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
+			}
+		}
+	}
 
 	
 
@@ -3978,7 +4003,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 
 	
 	//automatically determine high or low rounding factor (3600->round to 0.1, 360->round to 1)
-	if ((paedi_mode == 1) || (drug_sets[ind].cpt_rates[5]<16/360)) {
+	if ((paedi_mode == 1) || (drug_sets[ind].cpt_rates[5]<40/360)) {
 		var roundingfactor = 3600;
 	} else {
 		if (drug_sets[ind].drug_name == "Propofol") {
@@ -4079,7 +4104,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		} //end for
 	} else { //CPT mode
 		
-		for (j=0; j<60; j++) {
+		for (j=0; j<180; j++) {
 			
 			//temp_test_rate = cpt_rates[j/60];
 			if (firstcycle == -1) {
@@ -4301,14 +4326,14 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 					test_rate = Math.round(((drug_sets[ind].cpt_rates[drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]]-drug_sets[ind].cpt_rates[j])*cpt_avgfactor+drug_sets[ind].cpt_rates[j])*roundingfactor)/roundingfactor;
 					//}
 					if ((drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1) && (drug_sets[ind].cpt_rates[0]>0) && (drug_sets[ind].cpt_rates[0]>drug_sets[ind].cpt_rates[1])) {
-						for (k=0; k<120; k++) {drug_sets[ind].cpt_rates_real.push(test_rate);}
+						for (k=0; k<cpt_interval; k++) {drug_sets[ind].cpt_rates_real.push(test_rate);}
 					}
-					for (k=drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120; k<j*120; k++) {
+					for (k=drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*cpt_interval; k<j*cpt_interval; k++) {
 							drug_sets[ind].cpt_rates_real.push(test_rate);
 					}
-					console.log(test_rate*3600/10 + " - from " + drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120 + " to " + j*120 + "s");
+					console.log(test_rate*3600/10 + " - from " + drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*cpt_interval + " to " + j*cpt_interval + "s");
 
-					relativetime = working_clock+drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120;
+					relativetime = working_clock+drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*cpt_interval;
 
 					var rate1 = Math.round(test_rate*3600/drug_sets[ind].infusate_concentration*10)/10;
 					var rate2 = Math.round(rate1*drug_sets[ind].infusate_concentration*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp;
@@ -4326,13 +4351,13 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 				}
 
 				if (j==59) {
-					test_rate = Math.round((drug_sets[ind].cpt_rates[drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]]+drug_sets[ind].cpt_rates[j])/2*roundingfactor)/roundingfactor;
-					relativetime = working_clock+drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120;
+					test_rate = Math.round(((drug_sets[ind].cpt_rates[drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]]-drug_sets[ind].cpt_rates[j])*cpt_avgfactor+drug_sets[ind].cpt_rates[j])*roundingfactor)/roundingfactor;
+					relativetime = working_clock+drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*cpt_interval;
 					var rate1 = Math.round(test_rate*3600/drug_sets[ind].infusate_concentration*10)/10;
 					var rate2 = Math.round(rate1*drug_sets[ind].infusate_concentration*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp;
 					drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" + converttime(relativetime) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");	
 					drug_sets[ind].historyarray.push([relativetime, test_rate]);
-					for (k=drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120; k<7200; k++) {
+					for (k=drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*cpt_interval; k<7200; k++) {
 							drug_sets[ind].cpt_rates_real.push(test_rate);
 					}
 
@@ -10874,18 +10899,18 @@ function loadoptions(reset) {
 
 		if (optionsarray[2].indexOf(1) == 0) {
 			cpt_threshold_auto = 1;
-			cpt_threshold = 0.08;
-			cpt_avgfactor = 0.667;
+			cpt_threshold = 0.05;
+			cpt_avgfactor = 0.6;
 			document.getElementById("select_threshold").value = 0;
 		} else if (optionsarray[2].indexOf(1) == 1) {
 			cpt_threshold_auto = 0;
-			cpt_threshold = 0.13;
-			cpt_avgfactor = 0.55;		
+			cpt_threshold = 0.08;
+			cpt_avgfactor = 0.66;		
 			document.getElementById("select_threshold").value = 1;
 		} else if (optionsarray[2].indexOf(1) == 2) {
 			cpt_threshold_auto = 0;
-			cpt_threshold = 0.08;
-			cpt_avgfactor = 0.667;
+			cpt_threshold = 0.05;
+			cpt_avgfactor = 0.6;
 			document.getElementById("select_threshold").value = 2;
 		}
 
