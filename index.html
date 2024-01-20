@@ -73,7 +73,7 @@
 					<br><b>Written by Terence Luk, 2023</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!
 					<br>
 					<br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.
-					<br>Last updated 17/12/2023 (V4.4) Build 96.
+					<br>Last updated 20/1/2023 (V4.5) Build 97.
 					<br>
 					<br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i>
 					<br>Coding is done in Javascript. The code to the mathematical calculations are based on "STANPUMP", which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.
@@ -1174,12 +1174,13 @@
 					<div class="prompts_close" onclick="hide_prompts(this.parentElement)"><i class="fas fa-times-circle"></i></div>
 					<div id="previewleft"><i class="fas fa-arrow-circle-up" id="previewicon"></i></div>
 					<div id="previewright">
-						<div style="font-size:80%; font-weight:bold; border-bottom:1px solid #a9c5e4; padding-bottom:2px; line-height:1.2">PREVIEW: To achieve target <div id="preview_cpt"></div></div>
-						<div style="line-height:1.2;padding-top:2px;font-size:95%" id="preview_msg"></div>
+						<div style="font-size:79%; font-weight:bold; border-bottom:1px solid #a9c5e4; padding-bottom:2px; line-height:1.2">PREVIEW: To achieve target <div id="preview_cpt"></div></div>
+						<div style="line-height:1.2;padding-top:2px;font-size:91%" id="preview_msg"></div>
 					</div>
 				</div>
+				<div class="" id="preview-expand-button" onclick="displaypreview_expand();"><i class="fas fa-angle-double-down"></i> &nbsp; <span>EXPAND</span></div>
+				<div class="" id="preview-expand-box"></div>
 				<div class="prompts_card" id="prompt" style="border-color:#9bc99d">
-
 					<div id="promptleft"><i class="fas fa-info-circle" id="prompticon"></i></div>
 					<div id="promptright">
 						<div style="font-size:80%; font-weight:bold; border-bottom:1px solid #9bc99d; padding-bottom:2px"><span id="prompt_msg2">Current rate</span></div>
@@ -1318,20 +1319,23 @@
 				<a class="button" id="btn_reanimate" onclick="submit_reanimate();">Resume simulation</a>
 			</div>
 		</div>
-		<div class="card" id="card_cpt0">
+		<!--obsolete-->
+		<!--
+		<div class="card" id="" style="display:none">
 			<div class="cardtitle">Cp TARGETING</div>
 			<div class="cardcontents">
 				<table class="table-control space" id="tableCpt">
-					<tr class="fr"><td>Enter Cp (<span class="conc_units"></span>/ml)</td><td><input type="number" inputmode="decimal" id="inputDesired0"  min="0.1" max="200" step="0.1" placeholder=" " oninput="displaypreview(this.value,0);"></td></tr>
+					<tr class="fr"><td>Enter Cp (<span class="conc_units"></span>/ml)</td><td><input type="number" inputmode="decimal" id=""  min="0.1" max="200" step="0.1" placeholder=" " oninput="displaypreview(this.value,0);"></td></tr>
 				</table>
 				<a class="button" id="btn_startCpt0" onclick="start_cpt();">Start</a>
 				<a class="button" id="btn_pauseCpt0" onclick="pauseCpt(0); drug_sets[0].cpt_active=0.5;">Pause</a>
 			</div>
 		</div>
+
 		<div class="card" id="card_cpt1" style="display:none;">
 			<div class="cardtitle">Cp TARGETING.</div>
 			<div class="cardcontents">
-				<table class="table-control space" id="tableCpt">
+				<table class="table-control space" id="">
 					<tr class="fr"><td>Enter Cp (<span class="conc_units"></span>/ml)</td><td><input type="number" inputmode="decimal" id="inputDesired1"  min="0.1" max="200" step="0.1" placeholder=" " oninput="displaypreview(this.value,1);"></td></tr>
 				</table>
 				<a class="button" id="btn_startCpt1" onclick="
@@ -1340,11 +1344,72 @@
 				<a class="button" id="btn_pauseCpt1" onclick="pauseCpt(1); drug_sets[1].cpt_active=0.5;">Pause</a>
 			</div>
 		</div>
-		<div class="card" id="card_cet0">
+
+		-->
+		<!-- end obsolete-->
+
+		<!-- new interface styles update 2024 -->
+
+		<div class="input-container" id="card_cpt0" style="">
+			<div class="input-left">
+				<div class="input-target-icon"><i class="fas fa-tint fa-fw"></i></div>
+				<div class="input-description"><span id="input-description-cp-line1" style="font-size: 1.3rem;font-weight:bold;display:block"><span>Cp Target</span></span>(<span class="conc_units"></span>/ml)</div>
+				<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesired0" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0)"></div>
+			</div>
+			<div class="input-right">
+				<div class="input-button-container"><a class="button input-button newbuttongreen" id="btn_startCpt0_new" onclick="start_cpt();"><div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Start</div></a></div>
+				<div class="input-button-container"><a class="button input-button newbuttongrey" id="btn_pauseCpt0_new" onclick="pauseCpt(0);drug_sets[0].cpt_active=0.5;"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
+			</div>
+		</div>
+
+
+		<div class="input-container" id="card_cpt1" style="display:none">
+			<div class="input-left">
+				<div class="input-target-icon"><i class="fas fa-tint fa-fw"></i></div>
+				<div class="input-description"><span id="input-description-cp1-line1" style="font-size: 1.3rem;font-weight:bold;display:block"><span>Cp Target</span></span>(<span class="conc_units"></span>/ml)</div>
+				<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesired1" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,1)"></div>
+			</div>
+			<div class="input-right">
+				<div class="input-button-container"><a class="button input-button newbuttongreen" id="btn_startCpt1_new" onclick="start_cpt_complex(document.getElementById('inputDesired1').value*1,1)"><div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Start</div></a></div>
+				<div class="input-button-container"><a class="button input-button newbuttongrey" id="btn_pauseCpt1_new" onclick="pauseCpt(1); drug_sets[1].cpt_active=0.5;"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
+			</div>
+		</div>
+
+
+		<div class="input-container" id="card_cet0_new" style="">
+			<div class="input-left">
+				<div class="input-target-icon"><i class="fas fa-brain fa-fw"></i></div>
+				<div class="input-description"><span id="input-description-ce-line1" style="font-size: 1.3rem;font-weight:bold;display:block"><span>Ce Target</span></span>(<span class="conc_units"></span>/ml)</div>
+				<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesiredCe0_new" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0)"></div>
+			</div>
+			<div class="input-right">
+				<div class="input-button-container"><a class="button input-button newbuttongreen" id="btn_startCet0_new" onclick="start_cet();"><div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Start</div></a></div>
+				<div class="input-button-container"><a class="button input-button newbuttongrey" id="btn_pauseCet0_new" onclick="pauseCpt(0);"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
+			</div>
+		</div>
+
+		<div class="input-container" id="card_cet1_new" style="display:none">
+			<div class="input-left">
+				<div class="input-target-icon"><i class="fas fa-brain fa-fw"></i></div>
+				<div class="input-description"><span id="input-description-ce1-line1" style="font-size: 1.3rem;font-weight:bold;display:block"><span>Ce Target</span></span>(<span class="conc_units"></span>/ml)</div>
+				<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesiredCe1_new" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,1)"></div>
+			</div>
+			<div class="input-right">
+				<div class="input-button-container"><a class="button input-button newbuttongreen" id="btn_startCet1_new" onclick="start_cet_complex(document.getElementById('inputDesiredCe1_new').value*1,1);"><div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Start</div></a></div>
+				<div class="input-button-container"><a class="button input-button newbuttongrey" id="btn_pauseCet1_new" onclick="pauseCpt(1);"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
+			</div>
+		</div>
+
+
+		<!-- end new interface styles -->
+
+		<div class="card" id="card_cet0" style="">
 			<div class="cardtitle">Ce TARGETING</div>
 			<div class="cardcontents">
+				
+
 				<table class="table-control space" id="tableCet">
-					<tr class="fr"><td>Enter Ce (<span class="conc_units"></span>/ml)</td><td><input type="number" inputmode="decimal" style="border-radius:1rem; width:75px; border-width:2px" id="inputDesiredCe0" onfocus="this.nextElementSibling.style.display='inline-block';" min="0.1" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0);this.nextElementSibling.style.display='inline-block';" onblur="x=this;setTimeout(function(){x.nextElementSibling.style.display='none';},300)"><button id="clearCe" class="closeicon" onclick="clearInput('inputDesiredCe0');"></button></td></tr>
+					<tr class="fr"><td>Enter Ce (<span class="conc_units"></span>/ml)</td><td><input type="number" inputmode="decimal" style="border-radius:1rem; width:75px; border-width:2px" id="inputDesiredCe0" onfocus="this.nextElementSibling.style.display='inline-block';" min="0.1" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0);this.nextElementSibling.style.display='inline-block';" onblur="x=this;setTimeout(function(){x.nextElementSibling.style.display='none';},300)"><button id="" class="closeicon" onclick="clearInput('inputDesiredCe0');"></button></td></tr>
 					<tr id="IB_swing_select_row0" class="IB_elements">
 						<td>Peak/trough level</td>
 						<td>
@@ -1372,6 +1437,7 @@
 			-->
 				<a class="button" id="btn_startCet0" onclick="start_cet();">Start</a>
 				<a class="button" id="btn_pauseCet0" onclick="pauseCpt(0);">Pause</a>
+				
 				<span id="IB_about_btn0" onclick="displayIBabout();"><i class="fas fa-question-circle"></i></span>
 				<!--
 				<a class="button muted" id="btn_bolusconverter" onclick="start_cet_bolus();"><i class="fas fa-syringe"></i></a>
@@ -1382,7 +1448,7 @@
 			<div class="cardtitle">Ce TARGETING.</div>
 			<div class="cardcontents">
 				<table class="table-control space" id="tableCet1">
-					<tr class="fr"><td>Enter Ce (<span class="conc_units"></span>/ml)</td><td><input type="number" inputmode="decimal" style="border-radius:1rem; width:75px; border-width:2px" id="inputDesiredCe1" onfocus="this.nextElementSibling.style.display='inline-block';" min="0.1" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,1);this.nextElementSibling.style.display='inline-block';" onblur="x=this;setTimeout(function(){x.nextElementSibling.style.display='none';},300)"><button id="clearCe" class="closeicon" onclick="clearInput('inputDesiredCe1');"></button></td></tr>
+					<tr class="fr"><td>Enter Ce (<span class="conc_units"></span>/ml)</td><td><input type="number" inputmode="decimal" style="border-radius:1rem; width:75px; border-width:2px" id="inputDesiredCe1" onfocus="this.nextElementSibling.style.display='inline-block';" min="0.1" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,1);this.nextElementSibling.style.display='inline-block';" onblur="x=this;setTimeout(function(){x.nextElementSibling.style.display='none';},300)"><button id="" class="closeicon" onclick="clearInput('inputDesiredCe1');"></button></td></tr>
 					<tr id="IB_swing_select_row1" class="IB_elements">
 						<td>Peak/trough level</td>
 						<td>
@@ -1877,8 +1943,17 @@
 		</div>
 
 		</div><!--controlpanel-->
+		<div class="warningbanner">
+			<div class="warningbanner_left">
+				<i class="fas fa-exclamation-triangle"></i>
+			</div>
+			<div class="warningbanner_right">
+				<div class="warningbanner_up"><b>WARNING</b> - Simulation is ending!</div>
+				<div class="warningbanner_down">Simulation session expiring in &lt;10 mins. Update CP/CE target to continue using SimTIVA to avoid data loss.</div>
+			</div>
+		</div>
 		<div class="footer">
-			<b>SIMTiva</b>&nbsp;|&nbsp;Terence Luk 2023
+			<b>SIMTiva</b>&nbsp;|&nbsp;Terence Luk 2024
 			<ul>
 				<li><a href="#" onclick="setmodal('modalAbout');">About</a></li>
 				<li><a href="https://simtiva.blogspot.com/" target="_blank">Blog</a></li>

@@ -173,14 +173,16 @@ var manageFileListState = 0;
 
 var modal = undefined;
 
-var ptolcouplesarray = new Array(); //ptol couples over time
+var prior_half_minute_clock = 0;
+
+window.ptolcouplesarray = []; //ptol couples over time
 //var ptol0overtime = new Array(); //ptol chart data for 0 over time, series based on chart data
 //var ptol1overtime = new Array(); //ptol chart data for 1 over time
 
 var loop6 = null; //this is setinterval function
 
-
-var eventArray = new Array();
+window.BIS_array = [];
+window.eventArray = [];
 
 const arrBodyIcons = [
 	["baby","<i class='fas fa-baby fa-fw tooltip bodyicon'><span class='tooltiptext'>BMI-for-age reference range from WHO</span></i>"],
@@ -202,6 +204,367 @@ var texttimeout = null;
 // start service worker code
 
 var parseloading = 0; //suppress function calls during parseobject loading when equals 1
+
+var popupon = false;
+
+var isDark = false;
+var timeoutptol = null;
+var chartviewarray = [0,30,10];
+var ringbell2active = 0;
+var ringbell2timeout = null;
+var alert_sound_2 = null;
+var alert_vibrate_2 = null;
+var updateBIS = null;
+var timeoutVal = null;
+var ringtimeout = null;
+var ringactive = 0;
+var inputname = "";
+var importDataArray = new Array();
+var canvasUpdateInterval = null;
+var textheight = 0;
+var newCanvas = document.createElement('canvas');
+var newCanvasReady = 0;
+var popupchart;
+var boxesArray = new Array();
+var suitableForBoxes = false;
+var isFullscreen = false;
+var popupUpdateInterval;
+var numpadValue = 0;
+var numpadOrig;
+
+//global colors / charting script initiation
+
+
+		//band colors from column 200 of material design 1-10 hues, for myChart2
+		var bandColor0 = 'rgb(239,154,154,0.2)';//red
+		var bandColor1 = 'rgb(244,143,177,0.2)';//pink
+		var bandColor2 = 'rgb(206,147,216,0.2)';//purple
+		var bandColor3 = 'rgb(179,157,219,0.2)';
+		var bandColor4 = 'rgb(159,168,218,0.2)';
+		var bandColor5 = 'rgb(144,202,249,0.2)';
+		var bandColor6 = 'rgb(129,212,250,0.2)';
+		var bandColor7 = 'rgb(128,222,234,0.2)';
+		var bandColor8 = 'rgb(128,203,196,0.2)';
+		var bandColor9 = 'rgb(165,214,167,0.2)';
+		var bandColor10 = 'rgb(197,225,165,0.2)';
+		var bandColor11 = 'rgb(230,238,156,0.2)';//lime
+		var bandColor12 = 'rgb(255,245,157,0.2)';//yellow
+		var bandColor13 = 'rgb(255,224,130,0.2)';//amber
+		var bandColor14= 'rgb(255,204,128,0.2)'//orange
+
+		var dotColor0 = 'rgb(158,158,158,1)';
+		var dotColor1 = 'rgb(117,117,117,1)';
+		var dotColor2 = 'rgb(97,97,97,1)';
+		var dotColor3 = 'rgb(66,66,66,1)';
+		var dotColor4 = 'rgb(33,33,33,1)';
+		var dotColor5 = 'rgb(66,66,66,1)';
+		var dotColor6 = 'rgb(97,97,97,1)';
+		var dotColor7 = 'rgb(117,117,117,1)';
+		var dotColor8 = 'rgb(158,158,158,1)';
+
+		var dotColor0dark = 'rgb(185,185,185,0.7)';
+		var dotColor1dark = 'rgb(200,200,200,0.8)';
+		var dotColor2dark = 'rgb(215,215,215,0.8)';
+		var dotColor3dark = 'rgb(230,230,230,0.8)';
+		var dotColor4dark = 'rgb(245,245,245,1)';
+		var dotColor5dark = 'rgb(230,230,230,0.8)';
+		var dotColor6dark = 'rgb(215,215,215,0.8)';
+		var dotColor7dark = 'rgb(200,200,200,0.8)';
+		var dotColor8dark = 'rgb(185,185,185,0.7)';
+
+		/*
+		const dotColor0 = 'rgb(0,96,100,1)'//cyan
+		const dotColor1 = 'rgb(1,87,155,1)'; // lightblue
+		const dotColor2 = 'rgb(26,35,126,1)'; //indigo
+		const dotColor3 = 'rgb(74,20,140,1)'; //purple
+		const dotColor4 = 'rgb(183,28,28,1)';//red
+		const dotColor5 = 'rgb(230,81,0,1)';//orange
+		const dotColor6 = 'rgb(245,127,23,1)';//yellow
+		const dotColor7 = 'rgb(51,105,30,1)';//lightgreen
+		const dotColor8 = 'rgb(0,77,64,1)';//teal
+		*/
+
+		//line colors from blue-grey row
+		var lineColor0 = 'rgba(84,110,122,0.75)';
+		var lineColor1 = 'rgba(120,144,156,1)';
+		var lineColor1dark = 'rgba(210,235,250,1)';
+
+		var yellowPri = 'rgba(251,192,45,1)';
+		var yellowPri50 = 'rgba(251,192,45,0.58)';
+		var yellowPri10 = 'rgba(251,192,45,0.1)';
+		var yellowPri70 = 'rgba(251,192,45,0.7)';
+		var yellowPri30 = 'rgba(251,192,45,0.3)';
+		var yellowLight = 'rgba(255,242,99,1)';
+		var yellowLight10 = 'rgba(255,242,99,0.1)';
+		var yellowLight70 = 'rgba(255,242,99,0.7)';
+		var yellowDark = 'rgba(196,144,0,1)';
+		var yellowSec = 'rgba(255,202,40,1)';
+		var yellowSec10 = 'rgba(255,202,40,0.11)';
+		var yellowSecLight = 'rgba(255,253,97,1)';
+		var yellowSecDark = 'rgba(199,154,0,1)';
+		var orangeShadeLight = 'rgba(255,204,128,0.2)';
+		var orangeShadeDark = 'rgba(255,152,0,0.2)';
+
+		var bluePri = 'rgba(21,101,192,1)';
+		var bluePri50 = 'rgba(21,101,192,0.5)';
+		var blueLight = 'rgba(94,146,243,1)';
+		var blueLight10 = 'rgba(94,146,243,0.1)';
+		var blueLight70 = 'rgba(94,146,243,0.7)';
+		var blueLight50 = 'rgba(94,146,243,0.58)';
+		var blueDark = 'rgba(0,60,143,1)';
+		var blueSec = 'rgba(3,169,244,1)';
+		var blueSec10 = 'rgba(3,169,244,0.11)';
+		var blueSecLight = 'rgba(103,218,255,1)';
+		var blueSecDark = 'rgba(0,122,193,1)';
+		var blueShadeDark = 'rgba(3,169,244,0.2)';
+
+		var greenShade = 'rgba(102, 177, 105, 0.25)';
+		var greenShadeDark = 'rgba(102, 177, 105, 0.35)';
+
+
+
+
+	function getGradientRed(ctx, chartArea, scales) {
+		
+		const gradientBgRed = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
+		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
+		if (position<=0) position = 0;
+		if (position>=1) position = 1;
+		gradientBgRed.addColorStop(0, 'rgba(231,50,39,0.4)');
+		gradientBgRed.addColorStop(position, 'rgba(231,50,39,0.4)');
+		gradientBgRed.addColorStop(position, 'rgba(231,50,39,0.1');
+		gradientBgRed.addColorStop(1, 'rgba(231,50,39,0.1)');
+		return gradientBgRed;
+		
+	}
+
+	function getGradientYellow(ctx, chartArea, scales) {
+
+		const gradientBgYellow = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
+		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
+		if (position<=0) position = 0;
+		if (position>=1) position = 1;
+		gradientBgYellow.addColorStop(0, 'rgba(251,192,45,0.58)');
+		gradientBgYellow.addColorStop(position, 'rgba(251,192,45,0.58)');
+		gradientBgYellow.addColorStop(position, 'rgba(255,202,40,0.11)');
+		gradientBgYellow.addColorStop(1, 'rgba(255,202,40,0.11)');
+		return gradientBgYellow;
+
+	}
+
+	function getGradientBlue(ctx, chartArea, scales) {
+
+		const gradientBgBlue = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
+		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
+		if (position<=0) position = 0;
+		if (position>=1) position = 1;
+		gradientBgBlue.addColorStop(0, 'rgba(94,146,243,0.58)');
+		gradientBgBlue.addColorStop(position, 'rgba(94,146,243,0.58)');
+		gradientBgBlue.addColorStop(position, 'rgba(3,169,244,0.11)');
+		gradientBgBlue.addColorStop(1, 'rgba(3,169,244,0.11)');
+		return gradientBgBlue;
+
+	}
+
+	function getGradientGreen(ctx, chartArea, scales) {
+		
+		const gradientBgGreen = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
+		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
+		if (position<=0) position = 0;
+		if (position>=1) position = 1;
+		gradientBgGreen.addColorStop(0, 'rgba(9,203,93,0.7)');
+		gradientBgGreen.addColorStop(position, 'rgba(9,203,93,0.7)');
+		gradientBgGreen.addColorStop(position, 'rgba(9,203,93,0.1');
+		gradientBgGreen.addColorStop(1, 'rgba(9,203,93,0.1)');
+		return gradientBgGreen;
+		
+	}
+
+
+
+const chartInfRateLayer = {
+	id: 'chartInfRateLayer',
+	afterDraw(chart, args, options) {
+		if (suitableForBoxes && boxesArray.length>0) {
+			const {ctx, chartArea: {top, right, bottom, left, width, height }, scales} = chart;
+			//load history array
+			//define corr_factor for y scale as % of cp scale
+			if (drug_sets[active_drug_set_index].drug_name == "Fentanyl") {
+				ymax = 3;
+			} else if (drug_sets[active_drug_set_index].drug_name == "Alfentanil") {
+				ymax = 90;
+			} else {
+				ymax = 5;
+			}
+			corr_factor = 1 * 3600 / drug_sets[active_drug_set_index].infusate_concentration / 200 * ymax;
+			xmargin = scales.x.getPixelForValue(scales.x.min);
+
+			//determine text size
+			textsize = 16 * (width / popupchart.width);
+
+			/*
+			x0 = scales.x.getPixelForValue(0);
+			x1 = scales.x.getPixelForValue(5) - x0;
+			y0 = scales.y.getPixelForValue(3);
+			y1 = scales.y.getPixelForValue(0) - y0;
+
+			console.log("***");
+			console.log(scales.x.getPixelForValue(scales.x.max));
+			console.log(scales.x.getPixelForValue(scales.x.min));
+			console.log(scales.x.getPixelForValue(5));
+			console.log(scales.x.getPixelForValue(10));
+			console.log(scales.x.getPixelForValue(15));
+			console.log(scales.x.getPixelForValue(20));
+			console.log("###");
+			console.log(scales.y.getPixelForValue(scales.y.max));
+			console.log(scales.y.getPixelForValue(scales.y.min));
+			*/
+			
+			ctx.save();
+			
+
+			for (icount = 0; icount < boxesArray.length; icount++) {
+				if (boxesArray[icount][1] > 0) {
+					ctx.fillStyle = 'rgba(128,128,128,0.5)';
+
+						x0 = scales.x.getPixelForValue(boxesArray[icount][0] / 60) + 2;
+						y0 = scales.y.getPixelForValue(boxesArray[icount][1] * corr_factor);
+						x1 = scales.x.getPixelForValue(boxesArray[icount][2] / 60) - x0 - 2;
+						y1 = scales.y.getPixelForValue(scales.y.min) - y0;
+						ctx.fillRect(x0,y0,x1,y1);
+					
+					if (!isDark) {
+						ctx.fillStyle = "black";
+					} else {
+						ctx.fillStyle = "white";
+					}
+						ctx.font = "bold " + textsize + "px SourceSans";
+						ctx.fillText(Math.round(boxesArray[icount][1]*3600/drug_sets[active_drug_set_index].infusate_concentration*10)/10 + "ml/h", x0, y0 - textsize/3);
+				
+				}
+
+			}
+			// bolus
+			bolustext = "";
+			bolustime = -1;
+			bolusArray = new Array();
+			textheight = 0;
+			if ((drug_sets[active_drug_set_index].manualmode_active > 0) || (drug_sets[active_drug_set_index].cpt_active > 0) || ((drug_sets[active_drug_set_index].cet_active > 0) && (drug_sets[active_drug_set_index].IB_active == 0))) {
+				for (icount = 0; icount<drug_sets[active_drug_set_index].historyarrays.length; icount++) {
+					if (drug_sets[active_drug_set_index].historyarrays[icount][1] == 1) {
+						bolustime = drug_sets[active_drug_set_index].historyarrays[icount][2]; 
+						if (drug_sets[active_drug_set_index].historyarrays[icount][3]>0) {
+							bolustext = drug_sets[active_drug_set_index].historyarrays[icount][3] + drug_sets[active_drug_set_index].infused_units;
+						} else {
+							bolustext = "";
+						}
+
+						if (bolustext != "") {
+							bolusArray.push(bolustime);
+							x0 = scales.x.getPixelForValue(bolustime/60);
+							ctx.font = "bold " + textsize + "px SourceSans";
+							if (!isDark) {
+								ctx.fillStyle = "black";
+							} else {
+								ctx.fillStyle = "white";
+							}
+							
+							if (bolusArray.length>1) {
+								//if this is 10mins close to previous
+								if (bolusArray[bolusArray.length-1] - bolusArray[bolusArray.length-2] < 600) {
+									if (textheight < textsize * 6) {
+										textheight = textheight + textsize * 1.33;
+										ctx.fillText(bolustext, x0+10, 50+textheight);	
+										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
+										ctx.fillText("\uf063", x0-5, 50+textheight);	
+									} else {
+										textheight = 0;
+										ctx.fillText(bolustext, x0+10, 50);
+										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
+										ctx.fillText("\uf063", x0-5, 50);	
+									}
+								} else {
+									ctx.fillText(bolustext, x0+10, 50);
+									textheight = 0;
+									ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
+									ctx.fillText("\uf063", x0-5, 50);	
+								}
+							} else {
+								ctx.fillText(bolustext, x0+10, 50);
+								ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
+								ctx.fillText("\uf063", x0-5, 50);	
+							}
+						}
+					} else {
+						bolustext = "";
+					}
+				} // end for loop
+			} // end if manual/cpt/cet block
+		//end "suitableForBoxes"  check
+		} else {
+			if ((drug_sets[active_drug_set_index].cet_active > 0) && (drug_sets[active_drug_set_index].IB_active == 1)) {
+				//load chart context
+				const {ctx, chartArea: {width}, scales} = chart;
+
+				//determine text size
+				textsize = 14 * (width / popupchart.width);
+			
+				ctx.save();
+
+				// bolus
+				bolustext = "";
+				bolustime = -1;
+				bolusArray = new Array();
+				textheight = 0;
+				for (icount = 0; icount<drug_sets[active_drug_set_index].historyarray.length; icount++) {
+						bolustime = drug_sets[active_drug_set_index].historyarray[icount][0]; 
+						if (drug_sets[active_drug_set_index].historyarray[icount][2]>0) {
+							bolustext = drug_sets[active_drug_set_index].historyarray[icount][2] + drug_sets[active_drug_set_index].infused_units;
+						} else {
+							bolustext = "";
+						}
+
+						if (bolustext != "") {
+							bolusArray.push(bolustime);
+							x0 = scales.x.getPixelForValue(bolustime/60);
+							ctx.font = "bold " + textsize + "px SourceSans";
+							if (!isDark) {
+								ctx.fillStyle = "rgba(0,0,0,0.7)";
+							} else {
+								ctx.fillStyle = "rgba(255,255,255,0.7)";
+							}
+							if (bolusArray.length>1) {
+								//if this is 10mins close to previous
+								if (bolusArray[bolusArray.length-1] - bolusArray[bolusArray.length-2] < 660) {
+									if (textheight < textsize * 7) {
+										textheight = textheight + textsize * 1.33;
+										ctx.fillText(bolustext, x0+10, 50+textheight);		
+										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
+										ctx.fillText("\uf063", x0-5, 50+textheight);	
+									} else {
+										textheight = 0;
+										ctx.fillText(bolustext, x0+10, 50);
+										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
+										ctx.fillText("\uf063", x0-5, 50);	
+									}
+								} else {
+									ctx.fillText(bolustext, x0+10, 50);
+									textheight = 0;
+									ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
+									ctx.fillText("\uf063", x0-5, 50);	
+								}
+							} else {
+								ctx.fillText(bolustext, x0+10, 50);
+								ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
+								ctx.fillText("\uf063", x0-5, 50);	
+							}
+						}
+				} // end for loop
+			} // end if IB block
+		} 
+	}
+};
+
 
 
 //charting scripts
@@ -947,7 +1310,7 @@ var parseloading = 0; //suppress function calls during parseobject loading when 
 		console.log(myChart2.data.datasets[1].data(p0DataIndex).meta_minute);
 	}
 
-		},600)
+		},800)
 
 	setTimeout(
 
@@ -1338,9 +1701,21 @@ var parseloading = 0; //suppress function calls during parseobject loading when 
 	);
 
 
+},1100);
+
+//dark mode activation
+	
+	if (localStorage.getItem("colourMode") == "dark") {
+		isDark = true;
+		var metaThemeColor = document.querySelector("meta[name=theme-color]");
+		metaThemeColor.setAttribute("content", "#000");
+		document.body.classList.add("dark");
+		document.getElementById("darkmodebutton").innerHTML = "<i class='fas fa-adjust fa-fw'></i>";
+	}
 
 
 
+	setTimeout(function() {
 		//dark mode for chart activation here
 		if (isDark) {
 				myChart.options.scales.x.grid.color = "rgba(255,255,255,0.2)";
@@ -1378,9 +1753,7 @@ var parseloading = 0; //suppress function calls during parseobject loading when 
 				myChart2.data.datasets[10].borderColor = lineColor1dark;
 
 			}
-
-	},1000);
-
+		},1500);
 
 
 if ("serviceWorker" in navigator) {
@@ -1433,17 +1806,6 @@ window.addEventListener('hashchange', function(event) {
 
 }, false);
 */
-
-
-//dark mode activation
-	var isDark = false;
-	if (localStorage.getItem("colourMode") == "dark") {
-		isDark = true;
-		var metaThemeColor = document.querySelector("meta[name=theme-color]");
-		metaThemeColor.setAttribute("content", "#000");
-		document.body.classList.add("dark");
-		document.getElementById("darkmodebutton").innerHTML = "<i class='fas fa-adjust fa-fw'></i>";
-	}
 
 
 
@@ -1787,6 +2149,7 @@ function initsubmit() {
 function initcpt() {
 	document.getElementById("card_infusion0").style.display = "none";
 	document.getElementById("card_cet0").style.display = "none";
+	document.getElementById("card_cet0_new").style.display = "none";
 	document.getElementById("btn_displayhistory").innerHTML = "Scheme";
 	
 	document.getElementById("status").innerHTML="Waiting to start";
@@ -1830,8 +2193,8 @@ function initcpt() {
 function initcet() {
 	document.getElementById("card_infusion0").style.display = "none";
 	document.getElementById("card_cpt0").style.display = "none";
+	document.getElementById("card_cet0").style.display = "none";
 	document.getElementById("btn_displayhistory").innerHTML = "Scheme";
-	
 	document.getElementById("status").innerHTML="Waiting to start";
 
 	//moved from start_cpt
@@ -1878,10 +2241,11 @@ function initcet() {
 }
 
 function initcet_complex(drug_sets_index) {
-	document.getElementById("card_cet" + drug_sets_index).style.display = "";
-	document.getElementById("card_cet" + drug_sets_index).classList.add("hide");
+	document.getElementById("card_cet" + drug_sets_index + "_new").style.display = "";
+	document.getElementById("card_cet" + drug_sets_index + "_new").classList.add("hide");
 	document.getElementById("card_infusion" + drug_sets_index).style.display = "none";
 	document.getElementById("card_cpt" + drug_sets_index).style.display = "none";
+	document.getElementById("card_cet" + drug_sets_index).style.display = "none";
 	document.getElementById("btn_displayhistory").innerHTML = "Scheme";
 	
 	document.getElementById("status").innerHTML="Waiting to start";
@@ -1923,6 +2287,7 @@ function initcpt_complex(drug_sets_index) {
 	document.getElementById("card_cpt" + drug_sets_index).classList.add("hide");
 	document.getElementById("card_infusion" + drug_sets_index).style.display = "none";
 	document.getElementById("card_cet" + drug_sets_index).style.display = "none";
+	document.getElementById("card_cet" + drug_sets_index + "_new").style.display = "none";
 	document.getElementById("btn_displayhistory").innerHTML = "Scheme";
 	
 	document.getElementById("status").innerHTML="Waiting to start";
@@ -1962,6 +2327,7 @@ function initcpt_complex(drug_sets_index) {
 function initcetbolus(ind) {
 	document.getElementById("card_infusion" + ind).style.display = "none";
 	document.getElementById("card_cpt" + ind).style.display = "none";
+	document.getElementById("card_cet" + ind + "_new").style.display = "none";
 	document.getElementById("card_cet" + ind).style.display = "";
 	document.getElementById("card_cet" + ind).classList.add("hide");
 	document.getElementById("btn_displayhistory").innerHTML = "Scheme";
@@ -2101,6 +2467,7 @@ function initmanual(ind) {
 		document.getElementById("card_bolus" + ind).classList.add("hide");
 		document.getElementById('card_cpt' + ind).style.display = 'none';
 		document.getElementById('card_cet' + ind).style.display = 'none';
+		document.getElementById('card_cet' + ind + "_new").style.display = 'none';
 		//document.getElementById('card_TimeEstimation').style.display = 'none';
 		//document.getElementById('card_VolumeEstimation').style.display = 'none';
 		document.getElementById("schemecopytitle").innerHTML = "HISTORY";
@@ -2297,7 +2664,7 @@ function start_cpt() {
 		//UI code goes here
 			
 			document.getElementById("status").innerHTML="";
-			document.getElementById("btn_startCpt0").innerHTML = "Update Cpt";
+			document.getElementById("btn_startCpt0_new").innerHTML = `<div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Enter</div></a>`;
 			document.getElementById("iconplay").classList.remove("stop");
 			document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
 			document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
@@ -2323,7 +2690,7 @@ function start_cpt() {
 		
 	}
 	alert_api(0);
-	
+	displaypreview_hide_onsubmit();
 }
 
 
@@ -2354,14 +2721,14 @@ function start_cet() {
 	}
 
 	if (drug_sets[active_drug_set_index].firstrun == -1) {
-		if (document.getElementById("inputDesiredCe0").value>0) {
+		if (document.getElementById("inputDesiredCe0_new").value>0) {
 			drug_sets[active_drug_set_index].desired = 0;
 			drug_sets[active_drug_set_index].firstrun = 0;
 			drug_sets[active_drug_set_index].running = 1;
 
 			offset = Date.now();
-			if (document.getElementById("inputDesiredCe0").value>0) {
-				desired = document.getElementById("inputDesiredCe0").value *1;
+			if (document.getElementById("inputDesiredCe0_new").value>0) {
+				desired = document.getElementById("inputDesiredCe0_new").value *1;
 			}
 			drug_sets[active_drug_set_index].cet_active = 1;
 
@@ -2370,18 +2737,18 @@ function start_cet() {
 			//UI code goes here
 			drug_sets[active_drug_set_index].running = 1;
 			document.getElementById("status").innerHTML="";
-			document.getElementById("btn_startCet0").innerHTML = "Update Cet";
+			document.getElementById("btn_startCet0_new").innerHTML = `<div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Enter</div></a>`;
 			document.getElementById("iconplay").classList.remove("stop");
 			document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
 			document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
 			document.getElementById("pastscheme").classList.add("show");
 		} else {
 			displayWarning("Warning","CE Target Invalid.");
-			document.getElementById("inputDesiredCe0").value = "";
+			document.getElementById("inputDesiredCe0_new").value = "";
 		}
 	} else {
-		if (document.getElementById("inputDesiredCe0").value>0) {
-			desired = document.getElementById("inputDesiredCe0").value *1;
+		if (document.getElementById("inputDesiredCe0_new").value>0) {
+			desired = document.getElementById("inputDesiredCe0_new").value *1;
 			drug_sets[active_drug_set_index].running = 1;
 			document.getElementById("status").innerHTML="";
 			document.getElementById("iconplay").classList.remove("stop");
@@ -2391,10 +2758,11 @@ function start_cet() {
 			deliver_cet(desired,0);
 		} else {
 			displayWarning("Warning","CE Target Invalid.");
-			document.getElementById("inputDesiredCe0").value = "";
+			document.getElementById("inputDesiredCe0_new").value = "";
 		}
 	}
 	alert_api(0);
+	displaypreview_hide_onsubmit();
 }
 
 function start_cpt_complex(cpt_complex_desired, active_drug_set_index) {
@@ -2422,7 +2790,7 @@ function start_cpt_complex(cpt_complex_desired, active_drug_set_index) {
 		//UI code goes here
 			
 			document.getElementById("status").innerHTML="";
-			document.getElementById("btn_startCpt1").innerHTML = "Update Cpt";
+			document.getElementById("btn_startCpt1_new").innerHTML = `<div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Enter</div></a>`;
 			document.getElementById("iconplay").classList.remove("stop");
 			document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
 			document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
@@ -2455,6 +2823,7 @@ function start_cpt_complex(cpt_complex_desired, active_drug_set_index) {
 			document.getElementById("inputDesired1").value = "";
 		}
 	}
+	displaypreview_hide_onsubmit();
 
 }
 
@@ -2526,7 +2895,7 @@ function start_cet_complex(cet_complex_desired, active_drug_set_index) {
 			document.getElementById("pastscheme").classList.add("show");
 		} else {
 			displayWarning("Warning","CE Target Invalid.");
-			document.getElementById("inputDesiredCe1").value = "";
+			document.getElementById("inputDesiredCe1_new").value = "";
 		}
 	} else {
 		// if (document.getElementById("inputDesiredCe").value>0) {
@@ -2544,9 +2913,10 @@ function start_cet_complex(cet_complex_desired, active_drug_set_index) {
 			},500);
 		} else {
 			displayWarning("Warning","CE Target Invalid.");
-			document.getElementById("inputDesiredCe1").value = "";
+			document.getElementById("inputDesiredCe1_new").value = "";
 		}
 	}
+	displaypreview_hide_onsubmit();
 }
 
 function start_cet_bolus() {
@@ -2629,6 +2999,10 @@ function preview_cpt(x,ind) {
 	drug_sets[ind].desired = x;
 	drug_sets[ind].preview_bolus = 0;
 	drug_sets[ind].preview_rate = 0;
+	drug_sets[ind].previewhistorytext = "";
+	if (drug_sets[ind].previewhistoryarray == undefined) drug_sets[ind].previewhistoryarray = new Array();
+	//new code
+	drug_sets[ind].previewhistoryarray.length = 0;
 	if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
 		drug_sets[ind].fentanyl_weightadjusted_target_uncorrected = drug_sets[ind].desired;
 		drug_sets[ind].desired = drug_sets[ind].desired * 1/drug_sets[ind].fentanyl_weightadjusted_factor;
@@ -2662,16 +3036,68 @@ function preview_cpt(x,ind) {
 		drug_sets[ind].cpt_bolus = (drug_sets[ind].desired-est_cp)/drug_sets[ind].p_udf[1];
 		test_rate = drug_sets[ind].cpt_rates_real[working_clock-1];
 	}
-	if (cpt_bolus>=70) {
+	if (drug_sets[ind].cpt_bolus>=90) {
 		drug_sets[ind].cpt_bolus = Math.round(drug_sets[ind].cpt_bolus/10)*10;
 	} else if (drug_sets[ind].cpt_bolus>1) {
-			if ((mass>15) && (drug_sets[ind].cpt_bolus>=15)) {
+			if ((mass>30) && (drug_sets[ind].cpt_bolus>=40)) {
 				drug_sets[ind].cpt_bolus = Math.ceil(drug_sets[ind].cpt_bolus/5)*5; //round up to nearest 5mg
 			} else {
-				drug_sets[ind].cpt_bolus = Math.ceil(drug_sets[ind].cpt_bolus) + 1;
+				drug_sets[ind].cpt_bolus = Math.ceil(drug_sets[ind].cpt_bolus);
 			}
 	} else {
 		drug_sets[ind].cpt_bolus = 0;
+	}
+
+//new first pass
+
+	//new code
+	//if (effect_flag == 0) {
+		scheme_bolusadmin(drug_sets[ind].cpt_bolus, ind);
+		//if (drug_sets[ind].fentanyl_weightadjusted_flag==1) {
+			//drug_sets[ind].historytext = "<div class='schemecpt' data-time='" + working_clock + "'>" + "Preview scheme at " + converttime(working_clock) + " - <br>Cp target (" + drug_sets[ind].conc_units + "/ml): " + drug_sets[ind].fentanyl_weightadjusted_target_uncorrected + "</div>";
+		//} else {
+			//drug_sets[ind].historytext = "<div class='schemecpt' data-time='" + working_clock + "'>" + "Preview scheme at " + converttime(working_clock) + " - <br>Cp target (" + drug_sets[ind].conc_units + "/ml): " + drug_sets[ind].desired + "</div>";
+		//}
+		if (drug_sets[ind].cpt_bolus > 0) drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemebolus' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Bolus: " + drug_sets[ind].cpt_bolus + drug_sets[ind].infused_units + " <span style='opacity:0.5'>(" + Math.round(drug_sets[ind].cpt_bolus/drug_sets[ind].infusate_concentration*10)/10 + "ml)</span></div>");
+
+		//if (drug_sets[ind].fentanyl_weightadjusted_flag==1) {
+			//drug_sets[ind].historyarrays.push([1,0,working_clock,drug_sets[ind].fentanyl_weightadjusted_target_uncorrected]);
+		//} else {
+			//drug_sets[ind].historyarrays.push([1,0,working_clock,drug_sets[ind].desired]);
+		//}
+		//drug_sets[ind].historyarrays.push([1,1,working_clock,drug_sets[ind].cpt_bolus]);
+	//}
+	//
+
+	cpt_pause = 0;
+	if (est_cp >= drug_sets[ind].desired) {
+		while (est_cp>=drug_sets[ind].desired) {
+			cpt_pause = cpt_pause + 1;
+			est_cp = virtual_model(p_state2[1],p_state2[2],p_state2[3],0,cpt_pause,0,ind);
+		}
+		console.log("cpt_pause" + cpt_pause);
+		for (i=0; i<cpt_pause; i++) {
+
+			p_state2[1] = p_state2[1] * Math.exp(-drug_sets[ind].lambda[1]);
+			p_state2[2] = p_state2[2] * Math.exp(-drug_sets[ind].lambda[2]);
+			p_state2[3] = p_state2[3] * Math.exp(-drug_sets[ind].lambda[3]);
+
+
+			//drug_sets[ind].cpt_rates_real.push(0);
+			//drug_sets[ind].cpt_cp.push([p_state3[1],p_state3[2],p_state3[3]]);
+			//drug_sets[ind].cpt_ce.push([e_state3[1],e_state3[2],e_state3[3],e_state3[4]]);
+			//drug_sets[ind].volinf.push(temp_vol);
+
+			//if (i%10==0) {
+			//	myChart.data.datasets[ind*2+2].data.push({x:(working_clock+i)/60, y:p_state3[1]+p_state3[2]+p_state3[3]});
+			//	myChart.data.datasets[ind*2+3].data.push({x:(working_clock+i)/60, y:e_state3[1]+e_state3[2]+e_state3[3]+e_state3[4]});
+			//}
+		}
+		drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemepause' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Paused for " + converttime(cpt_pause) + "</div>");
+		//drug_sets[ind].historyarray.push([Math.floor(working_clock),0]); 
+		working_clock = working_clock + cpt_pause;
+		console.log('working clock is now' + working_clock);
+
 	}
 
 	cpt_interval = 120; //set to 120seconds
@@ -2685,7 +3111,7 @@ function preview_cpt(x,ind) {
 	drug_sets[ind].cpt_rates.length = 0;
 	drug_sets[ind].cpt_times.length = 0;
 
-	for (i=0; i<30; i++) {
+	for (i=0; i<60; i++) {
 		//if ((p_state2[1] == 0) || (skip == 1)) {
 			console.log(i*120);
 		if (p_state2[1] == 0) {
@@ -2754,22 +3180,21 @@ function preview_cpt(x,ind) {
 		}
 	} else {
 		if (cpt_threshold_auto == 1) {
-			if (drug_sets[ind].cpt_rates[5]*360 > 25) {
+			if (drug_sets[ind].cpt_rates[5]*360 > 40) {
 				cpt_threshold = 0.08;
 				cpt_avgfactor = 0.667;
 			} else {
-				cpt_threshold = 0.13;
-				cpt_avgfactor = 0.55;
+				cpt_threshold = 0.05;
+				cpt_avgfactor = 0.62;
 				//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
 			}
 		}
 	}
 
-
 	//second pass
 
 	//automatically determine high or low rounding factor (3600->round to 0.1, 360->round to 1)
-	if ((paedi_mode == 1) || (drug_sets[ind].cpt_rates[5]<16/360)) {
+	if ((paedi_mode == 1) || (drug_sets[ind].cpt_rates[5]<40/360)) {
 		var roundingfactor = 3600;
 	} else {
 		if (drug_sets[ind].drug_name == "Propofol") {
@@ -2783,131 +3208,284 @@ function preview_cpt(x,ind) {
 	var prior_timestamp = 0; //unit is iteration number (1=120s)
 	test_rate = Math.round(cpt_rates[0]*roundingfactor)/roundingfactor;
 	var firstcycle = -1;
+	var wait_pause = 1;
 	var wait_peak = 0;
 	var wait_cpt_avg = 0;
 
-	for (j=0; j<30; j++) {
-		
-		//temp_test_rate = cpt_rates[j/60];
-		if (firstcycle == -1) {
-			if ((drug_sets[ind].cpt_rates[0] > 0) && (drug_sets[ind].cpt_rates[0]>drug_sets[ind].cpt_rates[1])) {
-				prior_test_rate = drug_sets[ind].cpt_rates[1];
-				drug_sets[ind].cpt_times.push(1);
-			} else if ((drug_sets[ind].cpt_rates[0] > 0) && (drug_sets[ind].cpt_rates[1]>drug_sets[ind].cpt_rates[0])) { //special scenario where there is slow rise in inf rate to peak then falls
-				prior_test_rate = drug_sets[ind].cpt_rates[1];
-				console.log('enter special WAIT-PEAK cycle as cpt_rates fall into inc-peak-dec pattern');
-				INNER_LOOP: for (k=1; k<60; k++) {
-					if (drug_sets[ind].cpt_rates[k] > drug_sets[ind].cpt_rates[k-1]) {
-						wait_peak = k;
-					} else {
-						break INNER_LOOP;
+
+		for (j=0; j<60; j++) {
+			
+			//temp_test_rate = cpt_rates[j/60];
+			if (firstcycle == -1) {
+				if ((drug_sets[ind].cpt_rates[0] > 0) && (drug_sets[ind].cpt_rates[0]>drug_sets[ind].cpt_rates[1])) { //this is a type of decremental infusion rates - can use normal algorithm
+					wait_peak = 0; //reset wait peak to zero to avoid bug
+					prior_test_rate = drug_sets[ind].cpt_rates[1];
+					drug_sets[ind].cpt_times.push(1);
+				} else if ((drug_sets[ind].cpt_rates[0] > 0) && (drug_sets[ind].cpt_rates[1]>drug_sets[ind].cpt_rates[0])) { //special scenario where there is slow rise in inf rate to peak then falls
+					prior_test_rate = drug_sets[ind].cpt_rates[1];
+					console.log('enter special WAIT-PEAK cycle as cpt_rates fall into inc-peak-dec pattern');
+					INNER_LOOP: for (k=1; k<60; k++) {
+						if (drug_sets[ind].cpt_rates[k] > drug_sets[ind].cpt_rates[k-1]) {
+							wait_peak = k;
+						} else {
+							break INNER_LOOP;
+						}
 					}
-				}
-				
-				console.log('wait peak (cycle)' + wait_peak);
+					
+					console.log('wait peak (cycle)' + wait_peak);
 
-				const one_of_360 = 1/360;
-				const half_of_360 = 0.5/360;
+					const one_of_360 = 1/360;
+					const half_of_360 = 0.5/360;
 
-				//if it is a long wait_peak (>5 cycles), let's break the averaging rates into segments
-				//or else we just stick to one rate 
+					//if it is a long wait_peak (>5 cycles), let's break the averaging rates into segments
+					//or else we just stick to one rate 
 
-				if (wait_peak > 5) {
-					wait_temp1 = Math.round(drug_sets[ind].cpt_rates[1]*roundingfactor)/roundingfactor; 
-					wait_temp2 = Math.round(drug_sets[ind].cpt_rates[wait_peak]*roundingfactor)/roundingfactor; 
-					console.log("enter long wait peak mode------------");
-					console.log("wait_temp1 = " + wait_temp1*360);
-					//console.log("wait_temp2 = " + wait_temp2*360);
-					var breakpoint = 2; // this is the breakpoint between 2 segments
-					// if wait_temp1 and wait_temp2 are not different by more than 1 then there is no meaning to separate segments
-					if (wait_temp2 > wait_temp1 + one_of_360) {
-						
-						INNER_LOOP2: for (k = wait_peak; k > 1; k--) { //this loops from end back to beginning and determines breakpoint when it is no longer in steady state
-							if ((wait_temp2 - drug_sets[ind].cpt_rates[k-1]) > one_of_360) {
-								breakpoint = k;
-								break INNER_LOOP2;
+					if (wait_peak > 5) {
+						wait_temp1 = Math.round(drug_sets[ind].cpt_rates[1]*roundingfactor)/roundingfactor; // round to nearest 0.5
+						wait_temp2 = Math.round(drug_sets[ind].cpt_rates[wait_peak]*roundingfactor)/roundingfactor; // round to nearest 0.5
+						console.log("enter long wait peak mode------------");
+						//console.log("wait_temp1 = " + wait_temp1*360);
+						//console.log("wait_temp2 = " + wait_temp2*360);
+						var breakpoint = 2; // this is the breakpoint between 2 segments
+						// if wait_temp1 and wait_temp2 are not different by more than 1 then there is no meaning to separate segments
+						if (wait_temp2 > wait_temp1 + one_of_360) {
+							
+							INNER_LOOP2: for (k = wait_peak; k > 1; k--) { //this loops from end back to beginning and determines breakpoint when it is no longer in steady state
+								if ((wait_temp2 - drug_sets[ind].cpt_rates[k-1]) > one_of_360) {
+									breakpoint = k;
+									break INNER_LOOP2;
+								}
 							}
+
+							INNER_LOOP3: for (k = 1; k < breakpoint-1; k++) {
+								console.log(k);
+								wait_temp1 = wait_temp1 + drug_sets[ind].cpt_rates[k+1];
+							}
+
+							wait_temp1 = Math.round(wait_temp1/(breakpoint-1)*roundingfactor)/roundingfactor;
+							//console.log("wait_temp1 (INNERLOOP3) average = " + wait_temp1*360);
+
+
+							wait_rate_avg_begin = wait_temp1; 
+							wait_rate_avg_end = wait_temp2;
+						} else {
+							// use the higher rate
+							wait_rate_avg_begin = wait_temp2;
+							wait_rate_avg_end = wait_temp2;
+							// floor the breakpoint to the beginning
+							breakpoint = 2;
 						}
+						console.log("breakpoint = " + breakpoint);
+						//console.log("wait_rate avg begin = " + wait_rate_avg_begin*360);
+						//console.log("wait_rate avg end = " + wait_rate_avg_end*360);
 
-						INNER_LOOP3: for (k = 1; k < breakpoint-1; k++) {
-							console.log(k);
-							wait_temp1 = wait_temp1 + drug_sets[ind].cpt_rates[k+1];
-						}
+						// write to real system
+						//for (k=0; k<breakpoint*120; k++) {
+						//	drug_sets[ind].cpt_rates_real.push(wait_rate_avg_begin);
+						//}
+						//for (k=breakpoint; k<wait_peak*120; k++) {
+						//	drug_sets[ind].cpt_rates_real.push(wait_rate_avg_end);
+						//}
 
-						wait_temp1 = Math.round(wait_temp1/(breakpoint-1)*roundingfactor)/roundingfactor;
-						console.log("wait_temp1 (INNERLOOP3) average = " + wait_temp1*360);
-
-
-						test_rate = wait_temp1;
-					} else {
-						// use the higher rate
-						test_rate = wait_temp2;
+						prior_test_rate = drug_sets[ind].cpt_rates[wait_peak];
+						drug_sets[ind].cpt_times.push(wait_peak);
 						
+						drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeinf' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>" + Math.round(wait_rate_avg_begin*3600/drug_sets[ind].infusate_concentration*10)/10 + "ml/h " + "<span style='opacity:0.5'>(" + Math.round(wait_rate_avg_begin*3600*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
+						drug_sets[ind].previewhistoryarray.push([working_clock, wait_rate_avg_begin]);
+						
+
+						if (wait_rate_avg_end > wait_rate_avg_begin) {
+							relativetime = working_clock + breakpoint*120;
+							drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" + converttime(relativetime) + "</div>" + Math.round(wait_rate_avg_end*3600/drug_sets[ind].infusate_concentration*10)/10 + "ml/h " + "<span style='opacity:0.5'>(" + Math.round(wait_rate_avg_end*3600*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
+							drug_sets[ind].previewhistoryarray.push([relativetime, wait_rate_avg_end]);
+						}
+
+					} else { // so this is then wait_peak <=5
+						// take average and round to nearest 0.5
+						wait_temp1 = Math.round((drug_sets[ind].cpt_rates[wait_peak] + drug_sets[ind].cpt_rates[1])/2*roundingfactor)/roundingfactor;
+						console.log("enter short wait peak mode-------------");
+						//console.log("wait_temp1 = " + wait_temp1*360);
+
+						//for (k=0; k<wait_peak*120; k++) {
+						//	drug_sets[ind].cpt_rates_real.push(wait_temp1);
+						//}
+						prior_test_rate = drug_sets[ind].cpt_rates[wait_peak];
+						drug_sets[ind].cpt_times.push(wait_peak);
+						
+						drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeinf' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>" + Math.round(wait_temp1*3600/drug_sets[ind].infusate_concentration*10)/10 + "ml/h " + "<span style='opacity:0.5'>(" + Math.round(wait_temp1*3600*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
+						drug_sets[ind].previewhistoryarray.push([working_clock, wait_temp1]);
 					}
-				} else { // so this is then wait_peak <=5
-					// take average and round to nearest 0.5
-					wait_temp1 = Math.round((drug_sets[ind].cpt_rates[wait_peak] + drug_sets[ind].cpt_rates[1])/2*roundingfactor)/roundingfactor;
-					console.log("enter short wait peak mode-------------");
-					//console.log("wait_temp1 = " + wait_temp1*360);
 
-					test_rate=wait_temp1;
-					break;
-				}
-			} else { // this means cpt_rates[0] is zero -> infusion stopped for 2 min
-				test_rate = 0;
-				break;
-			} 
-			firstcycle = 0;
+				} else { // this means cpt_rates[0] is zero -> infusion stopped for 2 min
+					prior_test_rate = 0;
+					// determine how long is the pause and determine the time of peak
+					INNER_LOOP: for (k=1; k<60; k++) {
+						if (drug_sets[ind].cpt_rates[k] == 0) {
+							wait_pause = k;
+						} else if (drug_sets[ind].cpt_rates[k] > drug_sets[ind].cpt_rates[k-1]) {
+							wait_peak = k;
+						} else {
+							break INNER_LOOP;
+						}
+					}
+					console.log('wait pause (cycle)' + wait_pause);
+					console.log('wait peak (cycle)' + wait_peak);
 
-		} else if (drug_sets[ind].cpt_rates[0]>drug_sets[ind].cpt_rates[1]) {
-			console.log(prior_test_rate);
-			if (((prior_test_rate-drug_sets[ind].cpt_rates[j])/prior_test_rate > cpt_threshold) && (j>wait_peak)) { 
-				//if ((cpt_bolus == 0) && (cpt_times.length == 1)) { //upscale inf rate if no bolus
-				//	test_rate = Math.ceil((cpt_rates[0]+cpt_rates[1])/2*360)/360;
-				//} else { //normal scenario
-				test_rate = Math.round(((drug_sets[ind].cpt_rates[drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]]-drug_sets[ind].cpt_rates[j])*cpt_avgfactor+drug_sets[ind].cpt_rates[j])*roundingfactor)/roundingfactor;
-				//}
-				/*if (cpt_times[cpt_times.length-1] == 1) {
-					for (k=0; k<120; k++) {cpt_rates_real.push(test_rate);}
-				}
-				for (k=cpt_times[cpt_times.length-1]*120; k<j*120; k++) {
-						cpt_rates_real.push(test_rate);
-				}*/
-				console.log(test_rate*3600/10 + " - from " + drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120 + " to " + j*120 + "s");
-				/*
-				relativetime = working_clock+cpt_times[cpt_times.length-1]*120;
-				if (cpt_times[cpt_times.length-1] == 1) {
-					historytext = historytext.concat("<div class='schemeinf' data-time='" + working_clock + "'>" + "Time: " + converttime(working_clock) + " - Rate: " + Math.round(test_rate*360) + "ml/h</div>");	
-					historyarray.push([working_clock, test_rate]);
-				} else {
-					historytext = historytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "Time: " + converttime(relativetime) + " - Rate: " + Math.round(test_rate*360) + "ml/h</div>");	
-					historyarray.push([relativetime, test_rate]);
+					const one_of_360 = 1/360;
+					const half_of_360 = 0.5/360;
+
+					//if it is a long wait_peak (>5 cycles), let's break the averaging rates into segments
+					//or else we just stick to one rate 
+
+					if (wait_peak > 5) {
+						wait_temp1 = Math.round(drug_sets[ind].cpt_rates[wait_pause+1]*roundingfactor)/roundingfactor; // round to nearest 0.5
+						wait_temp2 = Math.round(drug_sets[ind].cpt_rates[wait_peak]*roundingfactor)/roundingfactor; // round to nearest 0.5
+						console.log("enter long wait peak mode------------");
+						//console.log("wait_temp1 = " + wait_temp1*360);
+						//console.log("wait_temp2 = " + wait_temp2*360);
+						var breakpoint = wait_pause+1; // this is the breakpoint between 2 segments
+						// if wait_temp1 and wait_temp2 are not different by more than 1 then there is no meaning to separate segments
+						if (wait_temp2 > wait_temp1 + one_of_360) {
+							
+							INNER_LOOP2: for (k = wait_peak; k > wait_pause; k--) { //this loops from end back to beginning and determines breakpoint when it is no longer in steady state
+								if ((wait_temp2 - drug_sets[ind].cpt_rates[k-1]) > one_of_360) {
+									breakpoint = k;
+									break INNER_LOOP2;
+								}
+							}
+
+							INNER_LOOP3: for (k = 1; k < breakpoint-wait_pause; k++) {
+								console.log(k);
+								wait_temp1 = wait_temp1 + drug_sets[ind].cpt_rates[wait_pause+1+k];
+							}
+
+							wait_temp1 = Math.round(wait_temp1/(breakpoint-wait_pause)*roundingfactor)/roundingfactor;
+							//console.log("wait_temp1 (INNERLOOP3) average = " + wait_temp1*360);
+
+
+							wait_rate_avg_begin = wait_temp1; 
+							wait_rate_avg_end = wait_temp2;
+						} else {
+							// use the higher rate
+							wait_rate_avg_begin = wait_temp2;
+							wait_rate_avg_end = wait_temp2;
+							// floor the breakpoint to the beginning
+							breakpoint = wait_pause+1;
+						}
+						console.log("breakpoint = " + breakpoint);
+						//console.log("wait_rate avg begin = " + wait_rate_avg_begin*360);
+						//console.log("wait_rate avg end = " + wait_rate_avg_end*360);
+
+						// write to real system
+						//for (k=0; k<wait_pause*120; k++) {
+						//	drug_sets[ind].cpt_rates_real.push(0);
+						//}
+						//for (k=wait_pause; k<breakpoint*120; k++) {
+						//	drug_sets[ind].cpt_rates_real.push(wait_rate_avg_begin);
+						//}
+						//for (k=breakpoint; k<wait_peak*120; k++) {
+						//	drug_sets[ind].cpt_rates_real.push(wait_rate_avg_end);
+						//}
+
+						prior_test_rate = cpt_rates[wait_peak];
+						drug_sets[ind].cpt_times.push(wait_peak);
+						relativetime = working_clock + wait_pause*120;
+						drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeinf' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Paused for " + wait_pause*2 + " mins </div>");
+						drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" + converttime(relativetime) + "</div>" + Math.round(wait_rate_avg_begin*3600/drug_sets[ind].infusate_concentration*10)/10 + "ml/h " + "<span style='opacity:0.5'>(" + Math.round(wait_rate_avg_begin*3600*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
+						drug_sets[ind].previewhistoryarray.push([working_clock, 0]);
+						drug_sets[ind].previewhistoryarray.push([relativetime, wait_rate_avg_begin]);
+
+						if (wait_rate_avg_end > wait_rate_avg_begin) {
+							relativetime = working_clock + breakpoint*120;
+							drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" +  converttime(relativetime) + "</div>" + Math.round(wait_rate_avg_end*3600/drug_sets[ind].infusate_concentration*10)/10 + "ml/h " + "<span style='opacity:0.5'>(" + Math.round(wait_rate_avg_end*3600*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
+							drug_sets[ind].previewhistoryarray.push([relativetime, wait_rate_avg_end]);
+						}
+
+					} else { // so this is then wait_peak <=5
+						// take average and round to nearest 0.5
+						wait_temp1 = Math.round((drug_sets[ind].cpt_rates[wait_peak] + drug_sets[ind].cpt_rates[wait_pause+1])/2*roundingfactor)/roundingfactor;
+						console.log("enter short wait peak mode-------------");
+						//console.log("wait_temp1 = " + wait_temp1*360);
+						//for (k=0; k<wait_pause*120; k++) {
+						//	drug_sets[ind].cpt_rates_real.push(0);
+						//}
+						//for (k=wait_pause; k<wait_peak*120; k++) {
+						//	drug_sets[ind].cpt_rates_real.push(wait_temp1);
+						//}
+						prior_test_rate = drug_sets[ind].cpt_rates[wait_peak];
+						drug_sets[ind].cpt_times.push(wait_peak);
+						relativetime = working_clock + wait_pause*120;
+						drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeinf' data-time='" + working_clock + "'>" + "<div class='timespan'>" +  converttime(working_clock) + "</div>Paused for " + wait_pause*2 + " mins </div>");
+						drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" +  converttime(relativetime) + "</div>" + Math.round(wait_temp1*3600/drug_sets[ind].infusate_concentration*10)/10 + "ml/h " + "<span style='opacity:0.5'>(" + Math.round(wait_temp1*3600*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
+						drug_sets[ind].previewhistoryarray.push([working_clock, 0]);
+						drug_sets[ind].previewhistoryarray.push([relativetime, wait_temp1]);
+					}
+
+				}// end else - the wait-pause wait-peak algorithm
+				firstcycle = 0;
+			} else { //not first cycle
+				//console.log("--debug-- normal algorithm, 2nd pass--, wait_peak=" + wait_peak);
+				//console.log("cycle " + j);
+				//console.log("prior test rate" + prior_test_rate);
+				//console.log("cpt_rates[j]" + cpt_rates[j]);
+				if (((prior_test_rate-drug_sets[ind].cpt_rates[j])/prior_test_rate > cpt_threshold) && (j>wait_peak)) { 
+					//if ((cpt_bolus == 0) && (cpt_times.length == 1)) { //upscale inf rate if no bolus
+					//	test_rate = Math.ceil((cpt_rates[0]+cpt_rates[1])/2*360)/360;
+					//} else { //normal scenario
+					test_rate = Math.round(((drug_sets[ind].cpt_rates[drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]]-drug_sets[ind].cpt_rates[j])*cpt_avgfactor+drug_sets[ind].cpt_rates[j])*roundingfactor)/roundingfactor;
+					//}
+					//if ((drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1) && (drug_sets[ind].cpt_rates[0]>0) && (drug_sets[ind].cpt_rates[0]>drug_sets[ind].cpt_rates[1])) {
+					//	for (k=0; k<120; k++) {drug_sets[ind].cpt_rates_real.push(test_rate);}
+					//}
+					//for (k=drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120; k<j*120; k++) {
+					//		drug_sets[ind].cpt_rates_real.push(test_rate);
+					//}
+					console.log(test_rate*3600/10 + " - from " + drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120 + " to " + j*120 + "s");
+
+					relativetime = working_clock+drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120;
+
+					var rate1 = Math.round(test_rate*3600/drug_sets[ind].infusate_concentration*10)/10;
+					var rate2 = Math.round(rate1*drug_sets[ind].infusate_concentration*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp;
+
+					if ((drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1) && (drug_sets[ind].cpt_rates[0]>drug_sets[ind].cpt_rates[1])) {
+						drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeinf' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");	
+						drug_sets[ind].previewhistoryarray.push([working_clock, test_rate]);
+					} else {
+						drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" + converttime(relativetime) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");	
+						drug_sets[ind].previewhistoryarray.push([relativetime, test_rate]);
+					}
+
+					drug_sets[ind].cpt_times.push(j);
+					prior_test_rate = drug_sets[ind].cpt_rates[j];
 				}
 
-				cpt_times.push(j);
-				prior_test_rate = cpt_rates[j];*/
-				break;
+				if (j==59) {
+					test_rate = Math.round(((drug_sets[ind].cpt_rates[drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]]-drug_sets[ind].cpt_rates[j])*cpt_avgfactor+drug_sets[ind].cpt_rates[j])*roundingfactor)/roundingfactor;
+					relativetime = working_clock+drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120;
+					var rate1 = Math.round(test_rate*3600/drug_sets[ind].infusate_concentration*10)/10;
+					var rate2 = Math.round(rate1*drug_sets[ind].infusate_concentration*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp;
+					drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" + converttime(relativetime) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");	
+					drug_sets[ind].previewhistoryarray.push([relativetime, test_rate]);
+					//for (k=drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120; k<7200; k++) {
+					//		drug_sets[ind].cpt_rates_real.push(test_rate);
+					//}
+
+					//var tempArray = new Array();
+					//for (i=0; i<drug_sets[ind].historyarray.length; i++) {
+					//	tempArray.push(drug_sets[ind].historyarray[i]);
+					//}
+					//drug_sets[ind].historyarrays.push([1,2,working_clock,tempArray]);
+				}
 			}
-			//if (cpt_rates[j]*0.99>prior_test_rate) { //increasing infusion rate, should get higher rate
-			//	test_rate = Math.round(cpt_rates[j])/360; 
-			//	console.log(test_rate*3600/10 + " - at " + j*120 + "s");
-			//	relativetime = working_clock+cpt_times[cpt_times.length-1]*120;
-			//	if ((cpt_times[cpt_times.length-1] == 1) && (prior_test_rate == 0)) {
-			//		for (k=0; k<120; k++) {cpt_rates_real.push(0);}
-			//	}
-			//	for (k=cpt_times[cpt_times.length-1]*120; k<j*120; k++) {
-			//			cpt_rates_real.push(test_rate);
-			//	}
-			//	historytext = historytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "Time: " + converttime(relativetime) + " - Rate: " + Math.round(test_rate*360) + "ml/h</div>");
-			//	cpt_times.push(j);
-			//	prior_test_rate = cpt_rates[j];
-			//}
-	
-		}
+		}//end for 1-60
 
-	}
+
 	drug_sets[ind].preview_bolus = drug_sets[ind].cpt_bolus;
-	drug_sets[ind].preview_rate = Math.round(test_rate*3600/drug_sets[ind].infusate_concentration*10)/10;
+	if (cpt_pause > 0) {
+		drug_sets[ind].preview_rate = 0;	
+	} else {
+		drug_sets[ind].preview_rate = Math.round(drug_sets[ind].previewhistoryarray[0][1]*3600/drug_sets[ind].infusate_concentration*10)/10;
+	}
 	drug_sets[ind].preview_downtrend = (drug_sets[ind].cpt_rates_real[working_clock-1] > test_rate);
 }
 
@@ -2917,13 +3495,36 @@ function displaypreview(x,ind) {
 }
 
 function displaypreview2(x,ind) {
-	if (previewtimeout != null) {clearTimeout(previewtimeout);}
+	//check if expanded first
 	var object = document.getElementById("preview");
-	object.style.display="flex";
-	if (object.classList.contains('animate')) {object.classList.remove('animate');}
-	setTimeout(function(){object.classList.add('animate')},400);
-	previewtimeout = setTimeout(function(){
-		object.style.display="none"},12000);
+	ableToExpand = ((drug_sets[ind].cpt_active > 0) || ((drug_sets[ind].cet_active > 0) && (drug_sets[ind].IB_active==0)));
+	if (ableToExpand) {
+		document.getElementById("preview-expand-button").style.display = "block";
+		if (!object.classList.contains("expand")) {
+			if (previewtimeout != null) {clearTimeout(previewtimeout);}
+			object.style.display="flex";
+			if (object.classList.contains('animate')) {object.classList.remove('animate');}
+			if (document.getElementById("preview-expand-button").classList.contains("animate2")) document.getElementById("preview-expand-button").classList.remove("animate2");
+			setTimeout(function() {
+				object.classList.add('animate');
+				document.getElementById("preview-expand-button").classList.add('animate2');
+			},400);
+			previewtimeout = setTimeout(function(){
+				object.style.display="none";
+				document.getElementById("preview-expand-button").style.display = "none";
+			},11500);
+		}  
+	} else {
+		if (previewtimeout != null) {clearTimeout(previewtimeout);}
+		object.style.display="flex";
+		if (object.classList.contains('animate')) {object.classList.remove('animate');}
+		setTimeout(function() {
+			object.classList.add('animate');
+		},400);
+		previewtimeout = setTimeout(function(){
+			object.style.display="none";
+		},11500);
+	}
 	x=x*1;
 
 	if (drug_sets[ind].cpt_active > 0) {
@@ -2944,6 +3545,9 @@ function displaypreview2(x,ind) {
 				document.getElementById("preview_msg").innerHTML = "Pause infusion";
 				document.getElementById("previewicon").className = "fas fa-pause-circle";
 			}
+			if (object.classList.contains("expand")) {
+				document.getElementById("preview-expand-box").innerHTML = drug_sets[active_drug_set_index].previewhistorytext;
+			}
 		} else {
 			document.getElementById("preview_cpt").innerHTML = "...";
 			document.getElementById("preview_msg").innerHTML = "Waiting for user input"
@@ -2961,6 +3565,9 @@ function displaypreview2(x,ind) {
 			} else {
 				document.getElementById("preview_msg").innerHTML = "Pause infusion";
 				document.getElementById("previewicon").className = "fas fa-pause-circle";
+			}
+			if (object.classList.contains("expand")) {
+				document.getElementById("preview-expand-box").innerHTML = drug_sets[active_drug_set_index].previewhistorytext;
 			}
 		} else {
 			document.getElementById("preview_cpt").innerHTML = "...";
@@ -2980,6 +3587,75 @@ function displaypreview2(x,ind) {
 		}
 	}
 }
+
+function displaypreview_expand() {
+	document.getElementById("preview-expand-box").innerHTML = drug_sets[active_drug_set_index].previewhistorytext;
+	document.getElementById("prompts_container").classList.add("expand");
+	document.getElementById("preview").classList.remove("animate");
+	document.getElementById("preview-expand-button").classList.remove("animate2");
+	document.getElementById("preview").style.display = "flex";
+	document.getElementById("preview").classList.add("expand");
+	clearTimeout(previewtimeout);
+	previewtimeout = null;
+	setTimeout(function() {
+		document.getElementById("preview-expand-box").classList.add("expand");
+		document.getElementById("preview-expand-button").innerHTML = `<i class="fas fa-angle-double-up"></i> &nbsp; <span>HIDE</span>`;
+		document.getElementById("preview-expand-button").setAttribute("onclick","displaypreview_hide()");
+	},200);
+}
+
+function displaypreview_hide() {	
+	document.getElementById("preview-expand-box").classList.remove("expand");
+	document.getElementById("preview").classList.add("animate");
+	document.getElementById("preview-expand-button").classList.add("animate2");
+	//document.getElementById("preview").style.display = "flex";
+	document.getElementById("preview").classList.remove("expand");
+	setTimeout(function() {
+		document.getElementById("prompts_container").classList.remove("expand");
+	},300);
+	setTimeout(function() {
+		document.getElementById("preview-expand-button").innerHTML = `<i class="fas fa-angle-double-down"></i> &nbsp; <span>EXPAND</span>`;
+		document.getElementById("preview-expand-button").setAttribute("onclick","displaypreview_expand()");
+	},500);
+	if (document.getElementById("preview").classList.contains('animate')) {document.getElementById("preview").classList.remove('animate');}
+	if (document.getElementById("preview-expand-button").classList.contains("animate2")) document.getElementById("preview-expand-button").classList.remove("animate2");
+	setTimeout(function() {
+				document.getElementById("preview").classList.add('animate');
+				document.getElementById("preview-expand-button").classList.add('animate2');
+			},400);
+	previewtimeout = setTimeout(function() {
+		document.getElementById("preview").style.display = "none";
+		document.getElementById("preview-expand-button").style.display = "none";
+	},11500);
+}
+
+function displaypreview_hide_onsubmit() {
+	document.getElementById("preview-expand-box").classList.remove("expand");
+	document.getElementById("preview").classList.remove("expand");
+		document.getElementById("prompts_container").classList.remove("expand");
+		document.getElementById("preview-expand-button").innerHTML = `<i class="fas fa-angle-double-down"></i> &nbsp; <span>EXPAND</span>`;
+		document.getElementById("preview-expand-button").setAttribute("onclick","displaypreview_expand()");	
+		document.getElementById("preview-expand-button").style.display = "none";
+	if (!document.getElementById("preview").classList.contains("animate"))	{
+		//situation where preview animation fade is NOT active, i.e. the hiding of preview is not yet active
+		document.getElementById("preview").classList.add("animate");
+		previewtimeout = null;
+		clearTimeout(previewtimeout);
+		previewtimeout = setTimeout(function() {
+			document.getElementById("preview").style.display = "none";
+		},11500);
+	} else {
+
+	}
+
+
+}
+	
+
+function displaypreview_close() {
+
+}
+
 function hidepreview() {
 	document.getElementById("preview").style.display="none";
 }
@@ -3142,13 +3818,13 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		} else {
 			drug_sets[ind].cpt_bolus = (drug_sets[ind].desired-(p_state[1]+p_state[2]+p_state[3]))/drug_sets[ind].p_udf[1];
 		}
-		if (drug_sets[ind].cpt_bolus>=70) {
+		if (drug_sets[ind].cpt_bolus>=90) {
 			drug_sets[ind].cpt_bolus = Math.round(drug_sets[ind].cpt_bolus/10)*10;
 		} else if (drug_sets[ind].cpt_bolus>1) {
-			if ((mass>15) && (drug_sets[ind].cpt_bolus>=15)) {
+			if ((mass>30) && (drug_sets[ind].cpt_bolus>=40)) {
 				drug_sets[ind].cpt_bolus = Math.ceil(drug_sets[ind].cpt_bolus/5)*5; //round up to nearest 5mg
 			} else {
-				drug_sets[ind].cpt_bolus = Math.ceil(drug_sets[ind].cpt_bolus) + 1;
+				drug_sets[ind].cpt_bolus = Math.ceil(drug_sets[ind].cpt_bolus) ;
 			}
 		} else {
 			drug_sets[ind].cpt_bolus = 0;
@@ -3157,6 +3833,68 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		//drug_sets[ind].firstrun = 0;
 		//myChart.data.datasets[2].data.push({x:working_clock/60, y:trial_result});
 	//}
+
+	if (effect_flag == 0) {
+		scheme_bolusadmin(drug_sets[ind].cpt_bolus, ind);
+		if (drug_sets[ind].fentanyl_weightadjusted_flag==1) {
+			drug_sets[ind].historytext = "<div class='schemecpt' data-time='" + working_clock + "'>" + "At " + converttime(working_clock) + " - Cp target (" + drug_sets[ind].conc_units + "/ml): " + drug_sets[ind].fentanyl_weightadjusted_target_uncorrected + "</div>";
+		} else {
+			drug_sets[ind].historytext = "<div class='schemecpt' data-time='" + working_clock + "'>" + "At " + converttime(working_clock) + " - Cp target (" + drug_sets[ind].conc_units + "/ml): " + drug_sets[ind].desired + "</div>";
+		}
+		if (drug_sets[ind].cpt_bolus > 0) drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemebolus' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Bolus: " + drug_sets[ind].cpt_bolus + drug_sets[ind].infused_units + " <span style='opacity:0.5'>(" + Math.round(drug_sets[ind].cpt_bolus/drug_sets[ind].infusate_concentration*10)/10 + "ml)</span></div>");
+
+		if (drug_sets[ind].fentanyl_weightadjusted_flag==1) {
+			drug_sets[ind].historyarrays.push([1,0,working_clock,drug_sets[ind].fentanyl_weightadjusted_target_uncorrected]);
+		} else {
+			drug_sets[ind].historyarrays.push([1,0,working_clock,drug_sets[ind].desired]);
+		}
+		drug_sets[ind].historyarrays.push([1,1,working_clock,drug_sets[ind].cpt_bolus]);
+	}
+
+	//new first pass
+	est_cp = p_state2[1] + p_state2[2] + p_state2[3];
+	temp_vol = temp_vol = drug_sets[ind].volinf[working_clock-1];
+	cpt_pause = 0;
+	if ((effect_flag == 0) && (est_cp >= drug_sets[ind].desired)) {
+		while (est_cp>=drug_sets[ind].desired) {
+			cpt_pause = cpt_pause + 1;
+			est_cp = virtual_model(p_state2[1],p_state2[2],p_state2[3],0,cpt_pause,0,ind);
+		}
+		console.log("cpt_pause" + cpt_pause);
+		for (i=0; i<cpt_pause; i++) {
+
+			p_state3[1] = p_state3[1] * Math.exp(-drug_sets[ind].lambda[1]);
+			p_state3[2] = p_state3[2] * Math.exp(-drug_sets[ind].lambda[2]);
+			p_state3[3] = p_state3[3] * Math.exp(-drug_sets[ind].lambda[3]);
+			e_state3[1] = e_state3[1] * Math.exp(-drug_sets[ind].lambda[1]);
+			e_state3[2] = e_state3[2] * Math.exp(-drug_sets[ind].lambda[2]);
+			e_state3[3] = e_state3[3] * Math.exp(-drug_sets[ind].lambda[3]);
+			e_state3[4] = e_state3[4] * Math.exp(-drug_sets[ind].lambda[4]);
+
+			drug_sets[ind].cpt_rates_real.push(0);
+			drug_sets[ind].cpt_cp.push([p_state3[1],p_state3[2],p_state3[3]]);
+			drug_sets[ind].cpt_ce.push([e_state3[1],e_state3[2],e_state3[3],e_state3[4]]);
+			drug_sets[ind].volinf.push(temp_vol);
+
+			if (i%10==0) {
+				myChart.data.datasets[ind*2+2].data.push({x:(working_clock+i)/60, y:p_state3[1]+p_state3[2]+p_state3[3]});
+				myChart.data.datasets[ind*2+3].data.push({x:(working_clock+i)/60, y:e_state3[1]+e_state3[2]+e_state3[3]+e_state3[4]});
+			}
+		}
+		drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemepause' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Paused for " + converttime(cpt_pause) + "</div>");
+		drug_sets[ind].historyarray.push([Math.floor(working_clock),0]); 
+		working_clock = working_clock + cpt_pause;
+		console.log('working clock is now' + working_clock);
+
+		//normalize p and e states
+		p_state2[1] = p_state3[1];
+		p_state2[2] = p_state3[2];
+		p_state2[3] = p_state3[3];
+		e_state2[1] = e_state3[1];
+		e_state2[2] = e_state3[2];
+		e_state2[3] = e_state3[3];
+		e_state2[4] = e_state3[4];
+	}
 
 	//first pass
 	for (i=0; i<60; i++) {
@@ -3263,41 +4001,23 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		}
 	} else {
 		if (cpt_threshold_auto == 1) {
-			if (drug_sets[ind].cpt_rates[5]*360 > 25) {
+			if (drug_sets[ind].cpt_rates[5]*360 > 40) {
 				cpt_threshold = 0.08;
 				cpt_avgfactor = 0.667;
 			} else {
-				cpt_threshold = 0.13;
-				cpt_avgfactor = 0.55;
+				cpt_threshold = 0.05;
+				cpt_avgfactor = 0.62;
 				//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
 			}
 		}
 	}
 
 
-	if (effect_flag == 0) {
-		scheme_bolusadmin(drug_sets[ind].cpt_bolus, ind);
-		if (drug_sets[ind].fentanyl_weightadjusted_flag==1) {
-			drug_sets[ind].historytext = "<div class='schemecpt' data-time='" + working_clock + "'>" + "At " + converttime(working_clock) + " - Cp target (" + drug_sets[ind].conc_units + "/ml): " + drug_sets[ind].fentanyl_weightadjusted_target_uncorrected + "</div>";
-		} else {
-			drug_sets[ind].historytext = "<div class='schemecpt' data-time='" + working_clock + "'>" + "At " + converttime(working_clock) + " - Cp target (" + drug_sets[ind].conc_units + "/ml): " + drug_sets[ind].desired + "</div>";
-		}
-		if (drug_sets[ind].cpt_bolus > 0) drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemebolus' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Bolus: " + drug_sets[ind].cpt_bolus + drug_sets[ind].infused_units + " <span style='opacity:0.5'>(" + Math.round(drug_sets[ind].cpt_bolus/drug_sets[ind].infusate_concentration*10)/10 + "ml)</span></div>");
-
-		if (drug_sets[ind].fentanyl_weightadjusted_flag==1) {
-			drug_sets[ind].historyarrays.push([1,0,working_clock,drug_sets[ind].fentanyl_weightadjusted_target_uncorrected]);
-		} else {
-			drug_sets[ind].historyarrays.push([1,0,working_clock,drug_sets[ind].desired]);
-		}
-		drug_sets[ind].historyarrays.push([1,1,working_clock,drug_sets[ind].cpt_bolus]);
-	}
-	
-
 	//new second pass (downsample infusion rates from cpt_rates and write to cpt_rates_real)
 
 	
 	//automatically determine high or low rounding factor (3600->round to 0.1, 360->round to 1)
-	if ((paedi_mode == 1) || (drug_sets[ind].cpt_rates[5]<16/360)) {
+	if ((paedi_mode == 1) || (drug_sets[ind].cpt_rates[5]<40/360)) {
 		var roundingfactor = 3600;
 	} else {
 		if (drug_sets[ind].drug_name == "Propofol") {
@@ -3645,7 +4365,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 				}
 
 				if (j==59) {
-					test_rate = Math.round((drug_sets[ind].cpt_rates[drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]]+drug_sets[ind].cpt_rates[j])/2*roundingfactor)/roundingfactor;
+					test_rate = Math.round(((drug_sets[ind].cpt_rates[drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]]-drug_sets[ind].cpt_rates[j])*cpt_avgfactor+drug_sets[ind].cpt_rates[j])*roundingfactor)/roundingfactor;
 					relativetime = working_clock+drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120;
 					var rate1 = Math.round(test_rate*3600/drug_sets[ind].infusate_concentration*10)/10;
 					var rate2 = Math.round(rate1*drug_sets[ind].infusate_concentration*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp;
@@ -3878,6 +4598,8 @@ function preview_cet(x,ind) {
 	drug_sets[ind].desired = x;
 	drug_sets[ind].preview_bolus = 0;
 	drug_sets[ind].preview_rate = 0;
+	if (drug_sets[ind].previewhistoryarray == undefined) drug_sets[ind].previewhistoryarray = new Array();
+	drug_sets[ind].previewhistorytext = "";
 	if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
 		drug_sets[ind].fentanyl_weightadjusted_target_uncorrected = drug_sets[ind].desired;
 		drug_sets[ind].desired = drug_sets[ind].desired * 1/drug_sets[ind].fentanyl_weightadjusted_factor;
@@ -3947,17 +4669,47 @@ function preview_cet(x,ind) {
 		drug_sets[ind].preview_bolus = drug_sets[ind].desired / drug_sets[ind].e_udf[drug_sets[ind].peak_time];
 		drug_sets[ind].preview_rate = 0;
 	}
+	
+	temp_peak = drug_sets[ind].prior_peak_time;
+	var min_dif = drug_sets[ind].desired *0.0001;
 
 	if ((drug_sets[ind].cet_lockdowntime>working_clock) && (drug_sets[ind].desired<drug_sets[ind].cet_priordesired)) {
 		//in lockdown phase
 		drug_sets[ind].preview_bolus = 0;
 		drug_sets[ind].preview_rate = 0;
+		//write CP CE till peak
+		remaining = drug_sets[ind].cet_lockdowntime-working_clock;
+		for (i=0; i<remaining; i++) {
+			p_state3[1] = p_state3[1] * Math.exp(-drug_sets[ind].lambda[1]);
+			p_state3[2] = p_state3[2] * Math.exp(-drug_sets[ind].lambda[2]);
+			p_state3[3] = p_state3[3] * Math.exp(-drug_sets[ind].lambda[3]);
+			e_state3[1] = e_state3[1] * Math.exp(-drug_sets[ind].lambda[1]);
+			e_state3[2] = e_state3[2] * Math.exp(-drug_sets[ind].lambda[2]);
+			e_state3[3] = e_state3[3] * Math.exp(-drug_sets[ind].lambda[3]);
+			e_state3[4] = e_state3[4] * Math.exp(-drug_sets[ind].lambda[4]);
+
+			//drug_sets[ind].cpt_rates_real.push(0);
+			//drug_sets[ind].cpt_cp.push([p_state3[1],p_state3[2],p_state3[3]]);
+			//drug_sets[ind].cpt_ce.push([e_state3[1],e_state3[2],e_state3[3],e_state3[4]]);
+			//drug_sets[ind].volinf.push(temp_vol);
+
+			//if (i%10==0) {
+			//	myChart.data.datasets[ind*2+2].data.push({x:(working_clock+i)/60, y:p_state3[1]+p_state3[2]+p_state3[3]});
+			//	myChart.data.datasets[ind*2+3].data.push({x:(working_clock+i)/60, y:e_state3[1]+e_state3[2]+e_state3[3]+e_state3[4]});
+			//}
+		}
+
+		working_clock = drug_sets[ind].cet_lockdowntime;
+		//update e_state2		
+		p_state2[1] = p_state3[1];
+		p_state2[2] = p_state3[2];
+		p_state2[3] = p_state3[3];
+
+		e_state2[1] = e_state3[1];
+		e_state2[2] = e_state3[2];
+		e_state2[3] = e_state3[3];
+		e_state2[4] = e_state3[4];
 	}
-	//END COPY from CPT PREVIEW
-
-	temp_peak = drug_sets[ind].prior_peak_time;
-	var min_dif = drug_sets[ind].desired *0.0001;
-
 
 	/* t6 additions, to make CET in this algorithm analogous to stanpump lines 2002-*/
 	temp1e = e_state2[1] ;
@@ -3972,94 +4724,13 @@ function preview_cet(x,ind) {
 	if ((Math.abs(drug_sets[ind].desired - est_ce) < drug_sets[ind].desired * 0.05) && (Math.abs(est_ce-est_cp) < est_ce * 0.1) && (working_clock>drug_sets[ind].cet_lockdowntime)) {
 		//ce too close to desired
 		console.log("entering CPT mode as CE close to desired and CP close to CE");
-		test_rate = drug_sets[ind].cpt_rates_real[working_clock-1];
-		//pop the arrays
-		drug_sets[ind].cpt_rates.length = 0;
-		drug_sets[ind].cpt_times.length = 0;
-		cpt_interval = 120; //set to 120seconds
-
-		for (i=0; i<60; i++) {
-			
-			est_cp = p_state2[1] + p_state2[2] + p_state2[3];
-
-			trial_cp = virtual_model( //need real lambda
-			 p_state2[1] * Math.exp(-drug_sets[ind].lambda[1]) + drug_sets[ind].p_coef[1] * test_rate * (1 - Math.exp(-drug_sets[ind].lambda[1])),
-			 p_state2[2] * Math.exp(-drug_sets[ind].lambda[2]) + drug_sets[ind].p_coef[2] * test_rate * (1 - Math.exp(-drug_sets[ind].lambda[2])),
-			 p_state2[3] * Math.exp(-drug_sets[ind].lambda[3]) + drug_sets[ind].p_coef[3] * test_rate * (1 - Math.exp(-drug_sets[ind].lambda[3])),0,cpt_interval,0,ind);
-
-			if (drug_sets[ind].desired > trial_cp) {
-				trial_rate = (drug_sets[ind].desired - trial_cp)/drug_sets[ind].p_udf[cpt_interval];
-			} else { trial_rate = 0;}
-
-				console.log("estCp" + est_cp);
-				console.log("trialcp" + trial_cp);
-				console.log("testrate" + test_rate);
-				console.log("trialrate" + trial_rate);
-
-			test_rate = trial_rate;
-			drug_sets[ind].cpt_rates.push(test_rate);
-
-			p_state2[1] = p_state2[1] * look_l1 + drug_sets[ind].p_coef[1] * test_rate * (1 - look_l1);
-			p_state2[2] = p_state2[2] * look_l2 + drug_sets[ind].p_coef[2] * test_rate * (1 - look_l2);
-			p_state2[3] = p_state2[3] * look_l3 + drug_sets[ind].p_coef[3] * test_rate * (1 - look_l3);
-		}
-
-	//determine threshold
-	if (drug_sets[ind].drug_name == "Alfentanil") {
-		if (cpt_threshold_auto == 1) {
-			if (drug_sets[ind].cpt_rates[5]*360 > 100) {
-				cpt_threshold = 0.15;
-				cpt_avgfactor = 0.63;
-			} else {
-				cpt_threshold = 0.25;
-				cpt_avgfactor = 0.44;
-				//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
-			}
-		}
-	} else {
-		if (cpt_threshold_auto == 1) {
-			if (drug_sets[ind].cpt_rates[5]*360 > 25) {
-				cpt_threshold = 0.08;
-				cpt_avgfactor = 0.667;
-			} else {
-				cpt_threshold = 0.13;
-				cpt_avgfactor = 0.55;
-				//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
-			}
-		}
-	}
-
-		//secondpass
-
-	//automatically determine high or low rounding factor (3600->round to 0.1, 360->round to 1)
-	if ((paedi_mode == 1) || (drug_sets[ind].cpt_rates[5]<16/360)) {
-		var roundingfactor = 3600;
-	} else {
-		if (drug_sets[ind].drug_name == "Propofol") {
-			var roundingfactor = 360;
-		} else {
-			var roundingfactor = 3600;
-		}
-	}
-		prior_test_rate = drug_sets[ind].cpt_rates[1];
-
-		//cpt_times.push(1);
-		for (j=1; j<30; j++) {
-			if (Math.abs(prior_test_rate-drug_sets[ind].cpt_rates[j])/prior_test_rate > cpt_threshold) { 
-				//if ((cpt_bolus == 0) && (cpt_times.length == 1)) { //upscale inf rate if no bolus
-				//	test_rate = Math.ceil((cpt_rates[0]+cpt_rates[1])/2*360)/360;
-				//} else { //normal scenario
-				if (prior_test_rate>drug_sets[ind].cpt_rates[j]) {
-					test_rate = Math.round(((prior_test_rate-drug_sets[ind].cpt_rates[j])*cpt_avgfactor+drug_sets[ind].cpt_rates[j])*roundingfactor)/roundingfactor;
-					break;
-				} else {
-					test_rate = Math.round((prior_test_rate + drug_sets[ind].cpt_rates[j])/2 *roundingfactor)/roundingfactor;
-					break;
-				}
-			}
-		}
-
-		drug_sets[ind].preview_bolus = 0;
+			drug_sets[ind].preview_rate = 0;
+			drug_sets[ind].preview_bolus = 0;
+			drug_sets[ind].previewhistorytext = "";
+			drug_sets[ind].previewhistoryarray.length = 0;
+		//next_time = working_clock;
+		deliver_cpt_alt(drug_sets[ind].desired);
+		test_rate = drug_sets[ind].previewhistoryarray[0][1];
 		drug_sets[ind].preview_rate = Math.round(test_rate*3600/drug_sets[ind].infusate_concentration*10)/10;
 		drug_sets[ind].preview_downtrend = (drug_sets[ind].cpt_rates_real[working_clock-1] > test_rate);
 	} else {
@@ -4067,9 +4738,100 @@ function preview_cet(x,ind) {
 		if (est_ce >= drug_sets[ind].desired) {
 			drug_sets[ind].preview_rate = 0;
 			drug_sets[ind].preview_bolus = 0;
+			drug_sets[ind].previewhistorytext = "";
+			drug_sets[ind].previewhistoryarray.length = 0;
 			//preview_cetpause = 0;
-			//not yet finish code;
+			//new find breakpoint code
+			//we want cp and ce to drop below desired
+
+			while (est_cp>=drug_sets[ind].desired) {
+				cpt_pause = cpt_pause + 1;
+				est_cp = virtual_model(p_state2[1],p_state2[2],p_state2[3],0,cpt_pause,0,ind);
+			}
+			console.log("cpt_pause" + cpt_pause);
+			est_ce = virtual_model(e_state2[1],e_state2[2],e_state2[3],e_state2[4],cpt_pause,1,ind);
+			cet_pause = cpt_pause;
+			while (est_ce>=drug_sets[ind].desired) {
+				cet_pause = cet_pause+1;
+				est_ce = virtual_model(e_state2[1],e_state2[2],e_state2[3],e_state2[4],cet_pause,1,ind);
+			}
+			console.log("cet_pause" + cet_pause);
+			//optimize breakpoint - if cet_pause is long, allow later start of deliverCPT
+			//new formula, see wikipedia - sigmoid curve - use that formula - normalize the curve, center on 300, x axis varies from -6 to +6
+			sigmoidx = (cet_pause - 300)/50;
+			sigmoid = 1/(1+Math.exp(-sigmoidx));
+			sigmoidcorrfactor = 0.5 * sigmoid + 0.3; //this will make sure the corrfactor min = 0.3, max = 0.8
+			breakpoint = Math.floor((cet_pause - cpt_pause)*sigmoidcorrfactor + cpt_pause);
+			
+			console.log("entering breakpoint -- " + breakpoint);
+			for (i=0; i<breakpoint; i++) {
+
+				p_state3[1] = p_state3[1] * Math.exp(-drug_sets[ind].lambda[1]);
+				p_state3[2] = p_state3[2] * Math.exp(-drug_sets[ind].lambda[2]);
+				p_state3[3] = p_state3[3] * Math.exp(-drug_sets[ind].lambda[3]);
+				e_state3[1] = e_state3[1] * Math.exp(-drug_sets[ind].lambda[1]);
+				e_state3[2] = e_state3[2] * Math.exp(-drug_sets[ind].lambda[2]);
+				e_state3[3] = e_state3[3] * Math.exp(-drug_sets[ind].lambda[3]);
+				e_state3[4] = e_state3[4] * Math.exp(-drug_sets[ind].lambda[4]);
+
+				//drug_sets[ind].cpt_rates_real.push(0);
+				//drug_sets[ind].cpt_cp.push([p_state3[1],p_state3[2],p_state3[3]]);
+				//drug_sets[ind].cpt_ce.push([e_state3[1],e_state3[2],e_state3[3],e_state3[4]]);
+				//drug_sets[ind].volinf.push(temp_vol);
+
+				//if (i%10==0) {
+				//	myChart.data.datasets[ind*2+2].data.push({x:(working_clock+i)/60, y:p_state3[1]+p_state3[2]+p_state3[3]});
+				//	myChart.data.datasets[ind*2+3].data.push({x:(working_clock+i)/60, y:e_state3[1]+e_state3[2]+e_state3[3]+e_state3[4]});
+				//}
+
+
+			}
+
+			est_cp = p_state3[1] + p_state3[2] + p_state3[3];
+			var compensation = (drug_sets[ind].desired*1.01 - est_cp)/drug_sets[ind].p_udf[1];
+
+			console.log("compensation, over 1secs, " + compensation);
+
+			//myChart.data.datasets[2].hidden = false;
+			//myChart.data.datasets[3].hidden = false;
+			//myChart.update();
+
+			
+			if (remaining>0) {
+				//if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
+				//	drug_sets[ind].historytext = "<div class='schemecet' data-time='" + Math.floor(time_in_s) + "'>" + "At " + converttime(Math.floor(time_in_s)) + " - Ce target (" + conc_units + "/ml): " + drug_sets[ind].fentanyl_weightadjusted_target_uncorrected + "</div>";
+				//} else {
+				//	drug_sets[ind].historytext = "<div class='schemecet' data-time='" + Math.floor(time_in_s) + "'>" + "At " + converttime(Math.floor(time_in_s)) + " - Ce target (" + conc_units + "/ml): " + drug_sets[ind].desired + "</div>";
+				//}
+				drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemepause' data-time='" + Math.floor(time_in_s) + "'>" + "<div class='timespan'>" + converttime(Math.floor(time_in_s)) + "</div>Paused for " + converttime(remaining+breakpoint) + "</div>");
+				drug_sets[ind].previewhistoryarray.push([Math.floor(time_in_s),0]); 
+				//if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
+				//	drug_sets[ind].historyarrays.push([2,0,Math.floor(time_in_s),drug_sets[ind].fentanyl_weightadjusted_target_uncorrected]);
+				//} else {
+				//	drug_sets[ind].historyarrays.push([2,0,Math.floor(time_in_s),drug_sets[ind].desired]);
+				//}
+				//drug_sets[ind].historyarrays.push([2,3,Math.floor(time_in_s),remaining+breakpoint]);
+			} else {
+				//if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
+				//	drug_sets[ind].historytext = "<div class='schemecet' data-time='" + working_clock + "'>" + "At " + converttime(working_clock) + " - Ce target (" + drug_sets[ind].conc_units + "/ml): " + drug_sets[ind].fentanyl_weightadjusted_target_uncorrected + "</div>";	
+				//} else {
+				//	drug_sets[ind].historytext = "<div class='schemecet' data-time='" + working_clock + "'>" + "At " + converttime(working_clock) + " - Ce target (" + drug_sets[ind].conc_units + "/ml): " + drug_sets[ind].desired + "</div>";	
+				//}
+				drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemepause' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Paused for " + converttime(breakpoint) + "</div>");
+				//this line is necessary for scheme display
+				drug_sets[ind].previewhistoryarray.push([Math.floor(working_clock),0]); 
+				//if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
+				//	drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].fentanyl_weightadjusted_target_uncorrected]);
+				//} else {
+				//	drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].desired]);
+				//}
+				//drug_sets[ind].historyarrays.push([2,3,working_clock,breakpoint]);
+			}
+			
+			next_time = working_clock + breakpoint;
 			console.log("CE >= desired ");
+			deliver_cpt_alt();
+			
 		} else {
 			// this is for est_ce not higher than desired
 			//if (temp_peak <= delta_seconds) temp_peak = delta_seconds + 1;
@@ -4088,7 +4850,7 @@ function preview_cet(x,ind) {
 				current = virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1,ind) + e_udf[temp_peak] * trial_rate;
 				}
 			drug_sets[ind].prior_peak_time = temp_peak;
-			//next_time = working_clock + temp_peak;
+			next_time = working_clock + temp_peak;
 
 			if (drug_sets[ind].cpt_rates_real.length > 0) {
 				drug_sets[ind].preview_bolus = trial_rate;
@@ -4108,61 +4870,269 @@ function preview_cet(x,ind) {
 			console.log("debug cet, temp_peak= " + temp_peak);
 			console.log("debug cet, current= " + current);
 
-			//scheme_bolusadmin(cet_bolus);
-			//historytext = "<div class='schemecet' data-time='" + working_clock + "'>" + "At " + converttime(working_clock) + " - Ce target (mcg/ml): " + desired + "</div>";
-			//if (cet_bolus > 0) {
-			//	cet_lockdowntime = working_clock + temp_peak -1;
-			//	historytext = historytext.concat("<div class='schemeboluscet' data-time='" + working_clock + "'>" + "Time: " + converttime(working_clock) + " - Bolus: " + cet_bolus + "mg</div>");
-			//	historytext = historytext.concat("<div class='schemepausecet' data-time='" + working_clock + "'>" + "Time: " + converttime(working_clock) + " - pause for " + converttime(temp_peak) + "</div>");
-			//}
+			if (drug_sets[ind].preview_bolus > 0) scheme_bolusadmin(drug_sets[ind].preview_bolus,ind);
 
+			drug_sets[ind].previewhistorytext = "";
+			drug_sets[ind].previewhistoryarray.length = 0;
+
+			if (drug_sets[ind].preview_bolus > 0) {
+				//drug_sets[ind].cet_lockdowntime = working_clock + temp_peak -1;
+				drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeboluscet' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Bolus: " + drug_sets[ind].preview_bolus + drug_sets[ind].infused_units + "</div>");
+				drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemepausecet' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Paused for " + converttime(temp_peak) + "</div>");
+				//if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
+				//	drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].fentanyl_weightadjusted_target_uncorrected]);	
+				//} else {
+				//	drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].desired]);	
+				//}
+				
+				//drug_sets[ind].historyarrays.push([2,1,working_clock,drug_sets[ind].cet_bolus]);
+				//drug_sets[ind].historyarrays.push([2,3,temp_peak]);
+			}
 
 			//real delivery
-			/*
-			var look_l1 = Math.exp(-lambda[1] ); 
-			var look_l2 = Math.exp(-lambda[2] );
-			var look_l3 = Math.exp(-lambda[3] );
-			var look_l4 = Math.exp(-lambda[4] );
+			var look_l1 = Math.exp(-drug_sets[ind].lambda[1] ); 
+			var look_l2 = Math.exp(-drug_sets[ind].lambda[2] );
+			var look_l3 = Math.exp(-drug_sets[ind].lambda[3] );
+			var look_l4 = Math.exp(-drug_sets[ind].lambda[4] );
 			var temp_result, temp_result_e;
 
 			for (j=0; j<temp_peak; j++) {
 
-				test_rate = 0;
-
-				p_state3[1] = p_state3[1] * look_l1 + p_coef[1] * test_rate * (1 - look_l1);
-				p_state3[2] = p_state3[2] * look_l2 + p_coef[2] * test_rate * (1 - look_l2);
-				p_state3[3] = p_state3[3] * look_l3 + p_coef[3] * test_rate * (1 - look_l3);
+				p_state3[1] = p_state3[1] * look_l1 ;
+				p_state3[2] = p_state3[2] * look_l2 ;
+				p_state3[3] = p_state3[3] * look_l3 ;
 				//if (effect_data)
 				//	{
-				e_state3[1] = e_state3[1] * look_l1 + e_coef[1] * test_rate * (1 - look_l1);
-				e_state3[2] = e_state3[2] * look_l2 + e_coef[2] * test_rate * (1 - look_l2);
-				e_state3[3] = e_state3[3] * look_l3 + e_coef[3] * test_rate * (1 - look_l3);
-				e_state3[4] = e_state3[4] * look_l4 + e_coef[4] * test_rate * (1 - look_l4);
+				e_state3[1] = e_state3[1] * look_l1 ;
+				e_state3[2] = e_state3[2] * look_l2 ;
+				e_state3[3] = e_state3[3] * look_l3 ;
+				e_state3[4] = e_state3[4] * look_l4 ;
 				
 				//prior_test_rate = test_rate;
 				temp_result = p_state3[1] + p_state3[2] + p_state3[3];
 				temp_result_e = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
-				cpt_rates_real.push(0);
-				cpt_cp.push([p_state3[1],p_state3[2],p_state3[3]]);
-				cpt_ce.push([e_state3[1],e_state3[2],e_state3[3],e_state3[4]]);
+				//drug_sets[ind].cpt_rates_real.push(0);
+				//drug_sets[ind].cpt_cp.push([p_state3[1],p_state3[2],p_state3[3]]);
+				//drug_sets[ind].cpt_ce.push([e_state3[1],e_state3[2],e_state3[3],e_state3[4]]);
+
+				//write to VI
+				//if ((j==0) && (drug_sets[ind].cet_bolus>0)) {
+				//	temp_vol += drug_sets[ind].cet_bolus/drug_sets[ind].infusate_concentration;
+				//	drug_sets[ind].volinf.push(temp_vol);
+				//} else {
+				//	drug_sets[ind].volinf.push(temp_vol);
+				//}
+
 				//if (j%60 ==0) {console.log(j + "real rate " + test_rate*3600/10 + " real Cp " + result);}
-				if (j%10==0) {
-					myChart.data.datasets[2].data.push({x:(working_clock+j)/60, y:temp_result});
-					myChart.data.datasets[3].data.push({x:(working_clock+j)/60, y:temp_result_e});
+				//if (j%10==0) {
+				//	myChart.data.datasets[ind*2+2].data.push({x:(working_clock+j)/60, y:temp_result});
+				//	myChart.data.datasets[ind*2+3].data.push({x:(working_clock+j)/60, y:temp_result_e});
+				//}
+			}
+			//try off the following lines to improve performance
+			//myChart.data.datasets[ind*2+2].hidden = false;
+			//myChart.data.datasets[ind*2+3].hidden = false;
+			//myChart.update();
+			//document.getElementById("historywrapper").innerHTML = drug_sets[ind].historytext;
+			//you've got to deliver the real bolus at this point too
+			
+			//drug_sets[ind].cet_priordesired = drug_sets[ind].desired;
+			//this line is necessary for scheme display
+			drug_sets[ind].previewhistoryarray.push([working_clock,0]); //write 0,0 first as I don't know what to write
+			
+			//insert deliverCPT code at this point
+			//pass on states to deliverCPT
+
+			compensation = 0;
+			deliver_cpt_alt();
+		}//end normal CET algorithm
+	}// end desired higher than CE part else
+
+
+	function deliver_cpt_alt() {
+
+			//need this for preview CPT to work for CPT algorithm
+			//new code to normalize p_states
+			p_state2[1] = p_state3[1];
+			p_state2[2] = p_state3[2];
+			p_state2[3] = p_state3[3];
+
+			console.log("next time in preview CET : " + next_time);
+			working_clock = next_time;
+			drug_sets[ind].cpt_rates.length = 0;
+			drug_sets[ind].cpt_times.length = 0;
+			test_rate = 0;
+
+			//copied from CPT PREVIEW
+			cpt_interval = 120; //set to 120seconds
+
+			var look_l1 = Math.exp(-drug_sets[ind].lambda[1] * cpt_interval); 
+			var look_l2 = Math.exp(-drug_sets[ind].lambda[2] * cpt_interval);
+			var look_l3 = Math.exp(-drug_sets[ind].lambda[3] * cpt_interval);
+			var look_l4 = Math.exp(-drug_sets[ind].lambda[4] * cpt_interval);
+
+			//first pass
+			for (i=0; i<60; i++) {
+
+				est_cp = p_state2[1] + p_state2[2] + p_state2[3];
+
+				console.log("-----" + converttime(i*120) + "------");
+
+				trial_cp = virtual_model( //need real lambda
+				 p_state2[1] * Math.exp(-drug_sets[ind].lambda[1]) + drug_sets[ind].p_coef[1] * test_rate * (1 - Math.exp(-drug_sets[ind].lambda[1])),
+				 p_state2[2] * Math.exp(-drug_sets[ind].lambda[2]) + drug_sets[ind].p_coef[2] * test_rate * (1 - Math.exp(-drug_sets[ind].lambda[2])),
+				 p_state2[3] * Math.exp(-drug_sets[ind].lambda[3]) + drug_sets[ind].p_coef[3] * test_rate * (1 - Math.exp(-drug_sets[ind].lambda[3])),0,cpt_interval,0,ind);
+
+				if (drug_sets[ind].desired > trial_cp) {
+					trial_rate = (drug_sets[ind].desired - trial_cp)/drug_sets[ind].p_udf[cpt_interval];
+				} else { trial_rate = 0;}
+
+				//var old_rate_pred_cp = p_state2[1] * look_l1 + p_coef[1] * test_rate * (1 - look_l1)
+				// + p_state2[2] * look_l2 + p_coef[2] * test_rate * (1 - look_l2)
+				// + p_state2[3] * look_l3 + p_coef[3] * test_rate * (1 - look_l3);
+
+				//var is_steady = (old_rate_pred_cp < (desired*1.05)) && (old_rate_pred_cp > (desired * 0.99));
+
+				console.log("estCp" + est_cp);
+				console.log("trialcp" + trial_cp);
+				console.log("testrate" + test_rate);
+				console.log("trialrate" + trial_rate);
+				//console.log("--> oldratepredcp = " + old_rate_pred_cp);
+				//console.log("--> is_steady = " + is_steady);
+				
+				test_rate = trial_rate;
+				drug_sets[ind].cpt_rates.push(test_rate);
+
+				p_state2[1] = p_state2[1] * look_l1 + drug_sets[ind].p_coef[1] * test_rate * (1 - look_l1);
+				p_state2[2] = p_state2[2] * look_l2 + drug_sets[ind].p_coef[2] * test_rate * (1 - look_l2);
+				p_state2[3] = p_state2[3] * look_l3 + drug_sets[ind].p_coef[3] * test_rate * (1 - look_l3);
+
+			}//end for
+			//threshold determination
+			if (drug_sets[ind].drug_name == "Alfentanil") {
+				if (cpt_threshold_auto == 1) {
+					if (drug_sets[ind].cpt_rates[5]*360 > 100) {
+						cpt_threshold = 0.15;
+						cpt_avgfactor = 0.63;
+					} else {
+						cpt_threshold = 0.25;
+						cpt_avgfactor = 0.44;
+						//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
+					}
+				}
+			} else {
+				if (cpt_threshold_auto == 1) {
+					if (drug_sets[ind].cpt_rates[5]*360 > 25) {
+						cpt_threshold = 0.08;
+						cpt_avgfactor = 0.667;
+					} else {
+						cpt_threshold = 0.05;
+						cpt_avgfactor = 0.62;
+						//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
+					}
 				}
 			}
-			myChart.data.datasets[2].hidden = false;
-			myChart.data.datasets[3].hidden = false;
-			myChart.update();
-			document.getElementById("historywrapper").innerHTML = historytext;
-			//you've got to deliver the real bolus at this point too
-			bolusadmin(cet_bolus);
-			historyarray.push([0,0]); //write 0,0 first as I don't know what to write
-			deliver_cpt(desired, 1, 0);
-			*/
-		
-		}
-	}
+
+			//second pass
+			//automatically determine high or low rounding factor (3600->round to 0.1, 360->round to 1)
+			if ((paedi_mode == 1) || (drug_sets[ind].cpt_rates[5]<40/360)) {
+				var roundingfactor = 3600;
+			} else {
+				if (drug_sets[ind].drug_name == "Propofol") {
+					var roundingfactor = 360;
+				} else {
+					var roundingfactor = 3600;
+				}
+			}
+
+			//...
+			//secondpass code
+
+			//temporary code init
+			firstcycle = -1;
+			
+			//end temporary code init
+
+			for (j=0; j<60; j++) {
+			if (firstcycle == -1) {
+				//if (cpt_rates[0] > 0) {
+					wait_peak = 0;
+					prior_test_rate = drug_sets[ind].cpt_rates[1];
+					drug_sets[ind].cpt_times.push(1);
+				//} else if ((cpt_rates[0] > 0) && (cpt_rates[1]>cpt_rates[0])) {
+					//inc-dec code
+				//} else {
+					//dec code
+				//}// end else
+				firstcycle =0;
+			} else { //not first cycle, CET mode
+
+				if ((Math.abs(prior_test_rate-drug_sets[ind].cpt_rates[j])/prior_test_rate > cpt_threshold) && (j>wait_peak)) { 
+					if (prior_test_rate>drug_sets[ind].cpt_rates[j]) {
+						test_rate = Math.round(((drug_sets[ind].cpt_rates[drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]]-drug_sets[ind].cpt_rates[j])*cpt_avgfactor+drug_sets[ind].cpt_rates[j])*roundingfactor)/roundingfactor;
+					} else {
+						test_rate = Math.round((prior_test_rate + drug_sets[ind].cpt_rates[j])/2 *roundingfactor)/roundingfactor;
+					}
+
+					if ((drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1) && (drug_sets[ind].cpt_rates[0]>0)) {
+						if (compensation>0) {
+							compensation = compensation / (120*j);
+							test_rate = Math.round((test_rate + compensation)*roundingfactor)/roundingfactor;
+						}
+						//for (k=0; k<120; k++) {drug_sets[ind].cpt_rates_real.push(test_rate);}
+					}
+					//for (k=drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120; k<j*120; k++) {
+					//		drug_sets[ind].cpt_rates_real.push(test_rate);
+					//}
+
+					console.log(test_rate*3600/10 + " - from " + drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120 + " to " + j*120 + "s");
+
+					var rate1 = Math.round(test_rate*3600/drug_sets[ind].infusate_concentration*10)/10;
+					var rate2 = Math.round(rate1*drug_sets[ind].infusate_concentration*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp;
+
+					relativetime = working_clock+drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120;
+					if ((drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1)) {
+						drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeinf' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");	
+						drug_sets[ind].previewhistoryarray.push([working_clock, test_rate]);
+					} else {
+						drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" + converttime(relativetime) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
+						drug_sets[ind].previewhistoryarray.push([relativetime, test_rate]);
+					}
+
+					drug_sets[ind].cpt_times.push(j);
+					prior_test_rate = drug_sets[ind].cpt_rates[j];
+				}
+
+				if (j==59) {
+					test_rate = Math.round(((drug_sets[ind].cpt_rates[drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]]-drug_sets[ind].cpt_rates[j])*cpt_avgfactor+drug_sets[ind].cpt_rates[j])*roundingfactor)/roundingfactor;
+					relativetime = working_clock+drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120;
+					var rate1 = Math.round(test_rate*3600/drug_sets[ind].infusate_concentration*10)/10;
+					var rate2 = Math.round(rate1*drug_sets[ind].infusate_concentration*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp;
+					if ((drug_sets[ind].cpt_times.length == 1) && (drug_sets[ind].cpt_times[0] == 1)) { //special scenario for 1 rate till the end, need to fill up first 2mins
+						drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeinf' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
+						drug_sets[ind].previewhistoryarray.push([working_clock, test_rate]);
+						//for (k=0; k<7200; k++) {
+						//		drug_sets[ind].cpt_rates_real.push(test_rate);
+						//}
+					} else {
+						drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" + converttime(relativetime) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
+						drug_sets[ind].previewhistoryarray.push([relativetime, test_rate]);
+						//for (k=drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120; k<7200; k++) {
+						//		drug_sets[ind].cpt_rates_real.push(test_rate);
+						//}
+					}
+
+					//var tempArray = new Array();
+					//for (i=0; i<drug_sets[ind].historyarray.length; i++) {
+					//	tempArray.push(drug_sets[ind].historyarray[i]);
+					//}
+					//drug_sets[ind].historyarrays.push([2,2,working_clock,tempArray]);
+				}
+			} //end else
+		} //end for
+
+	} // end private function deliver cpt alt
+
 }
 
 function deliver_cet(x, active_drug_set_index) {
@@ -4607,6 +5577,7 @@ function deliver_cet_real(x, ind) {
 	if (parseloading == 0) ptol_generate_margins(ind,0.9,0.5);
 	//ticker_active = 0;
 	//document.getElementById('ticker').style.display='none';
+
 }
 
 function apply_fentanyl_correction(ind) {
@@ -5511,7 +6482,7 @@ function pause(ind) {
 function pauseCpt(ind) {
 	drug_sets[ind].desired = 0;
 	document.getElementById("inputDesired" + ind).value = "0";
-	document.getElementById("inputDesiredCe" + ind).value = "0";
+	document.getElementById("inputDesiredCe" + ind + "_new").value = "0";
 	drug_sets[ind].running=0;
 
 	var working_clock = Math.floor(time_in_s);
@@ -6032,7 +7003,7 @@ function update() {
 	document.getElementById("historywrapperCOPY").innerHTML = document.getElementById("historywrapper").innerHTML;
 }
 
-var timeoutptol = null;
+
 function ptol_generate_margins(ind,param1,param2) {
 	//this is resource intensive
 	//Need to breakup tasks into smaller parts
@@ -6468,7 +7439,6 @@ function ptol_generate_ptol_based_on_couples() { //this creates ptol over time c
 	}
 }
 
-var prior_half_minute_clock = 0;
 
 function ptol_fill_history_future_dots(force_redraw) {
 	var half_minute_clock = Math.floor(time_in_s/30);
@@ -6916,7 +7886,7 @@ function updatechart(chart) {
 
 }
 
-var chartviewarray = [0,30,10];
+
 function updatechartview(chart) {
 	chart.options.scales.x.min = chartviewarray[0];
 	chart.options.scales.x.max = chartviewarray[1];
@@ -7029,10 +7999,6 @@ function runinfusion2() {
 
 
 
-var ringbell2active = 0;
-var ringbell2timeout = null;
-var alert_sound_2 = null;
-var alert_vibrate_2 = null;
 
 function runinfusion_complex() {
 	
@@ -7997,8 +8963,6 @@ function BIS_estimated(Ceinput) {
 	// don't know what the residual error +8.03 * epsilon is about, omit
 }
 
-BIS_array = new Array();
-
 function BIS_solve_eBIS(paramfrom, paramto) {
 	BIS_array.length = 0;
 	for (biscounter = 0; biscounter < drug_sets[0].cpt_cp.length; biscounter++) {
@@ -8016,7 +8980,6 @@ function BIS_charting() {
 
 }
 
-var updateBIS = null;
 
 function BIS_update(interval) {
 	updateBIS = setInterval(function() {
@@ -8661,7 +9624,7 @@ function retrospective(Tminus, r_bolus, r_infratemls, ind) {
 
 //z score calculated by : ((BMI/M)^L - 1) / (S * L)
 
-var timeoutVal = null;
+
 
 
 function sendToValidate(arg) {
@@ -8849,9 +9812,9 @@ function toPageTwo() {
 		El9.innerHTML = El9.innerHTML.concat("<div style='font-size:70%; border-top:1px solid rgb(167 203 168); padding-top:3px; margin-top:3px; margin-right:5px'>" + document.getElementById("valRightContainer2").innerHTML + "</div>");
 
 		toPageTwoTransition();
+		document.getElementById("rescuebuttons").style.display="none";
 		loadoptions();
 		if (complex_mode==0) applyoptions();
-		document.getElementById("rescuebuttons").style.display="none";
 	} else {
 		El4 = document.getElementById("checkConfirm");
 		El5 = document.getElementById("checkDisclaim");
@@ -8909,7 +9872,7 @@ function displayDisclaimer() {
 }
 
 function displayAbout() {
-	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk, 2023</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 17/12/2023 (V4.4) Build 96.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
+	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk, 2024</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 20/1/2024 (V4.5) Build 97.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
 	displayWarning("About", text);
 }
 
@@ -9222,7 +10185,7 @@ function confirmretrospective() {
 	temp3 = document.getElementById("retrospectiveInfusion").value *1;
 	retrospective(temp1, temp2, temp3, active_drug_set_index);
 	drug_sets[active_drug_set_index].desired = 0;
-	document.getElementById("inputDesiredCe" + active_drug_set_index).value = "";
+	document.getElementById("inputDesiredCe" + active_drug_set_index + "_new").value = "";
 	document.getElementById("inputDesired" + active_drug_set_index).value = "";
 	window.scrollTo(0,0);
 	hideallmodal();
@@ -9235,6 +10198,7 @@ function init_rescue(input_uid,external_flag) {
 	hidemodal("modalLoad");
 	document.getElementById("card_cpt0").classList.add("hide");
 	document.getElementById("card_cet0").classList.add("hide");
+	document.getElementById("card_cet0_new").classList.add("hide");
 	document.getElementById("card_infusion0").classList.add("hide");
 	document.getElementById("status").innerHTML = "";
 	if (external_flag) {
@@ -9456,6 +10420,7 @@ function reanimate(arg_time) {
 
 		document.getElementById('card_cpt0').style.display = 'none';
 		document.getElementById('card_cet0').style.display = 'none';
+		document.getElementById('card_cet0_new').style.display = 'none';
 		document.getElementById('card_reanimate').style.display = 'none';
 		document.getElementById('card_TimeEstimation').style.display = 'none';
 		document.getElementById('card_VolumeEstimation').style.display = 'none';
@@ -9484,6 +10449,7 @@ function reanimate(arg_time) {
 	if (argument == 1) {
 		document.getElementById("card_infusion0").style.display = "none";
 		document.getElementById("card_cet0").style.display = "none";
+		document.getElementById('card_cet0_new').style.display = 'none';
 		document.getElementById("card_cpt0").style.display = "";
 		if (orig_drug_set_index == 0) {
 			document.getElementById("card_cpt0").classList.remove("hide");
@@ -9506,6 +10472,7 @@ function reanimate(arg_time) {
 			drug_sets[0].cet_active = 1;
 					document.getElementById("btn_displayhistory").innerHTML = "Scheme";
 					document.getElementById("progressbar").style.display = "block";
+					document.getElementById('card_cet0_new').style.display = 'none';
 					//UI change
 					document.getElementById("card_cet0").querySelector(".cardtitle").innerHTML = "INTERMITTENT BOLUS";
 					document.getElementById("btn_startCet0").setAttribute("onclick", "start_cet_bolus()");
@@ -9555,16 +10522,16 @@ function reanimate(arg_time) {
 		} else {
 			document.getElementById("card_cpt0").style.display = "none";
 			document.getElementById("card_infusion0").style.display = "none";
-			document.getElementById("card_cet0").style.display = "";
+			document.getElementById("card_cet0").style.display = "none";
+			document.getElementById("card_cet0_new").style.display = "";
 			if (orig_drug_set_index == 0) {
-				document.getElementById("card_cet0").classList.remove("hide");
+				document.getElementById("card_cet0_new").classList.remove("hide");
 			} else {
-				document.getElementById("card_cet0").classList.add("hide");
+				document.getElementById("card_cet0_new").classList.add("hide");
 			}
 			document.getElementById("btn_displayhistory").innerHTML = "Scheme";
 			drug_sets[0].cet_active = 1;
 			if (drug_sets[0].fentanyl_weightadjusted_flag == 1) {
-				alert("uncorrected is 1");
 				desired = drug_sets[0].fentanyl_weightadjusted_target_uncorrected;
 				drug_sets[0].desired = 0;
 				deliver_cet(1,0);
@@ -9590,6 +10557,7 @@ function reanimate(arg_time) {
 		if (argument1 == 0) {
 			document.getElementById('card_cpt1').style.display = 'none';
 			document.getElementById('card_cet1').style.display = 'none';
+			document.getElementById('card_cet1_new').style.display = 'none';
 			document.getElementById('card_reanimate').style.display = 'none';
 			document.getElementById('card_TimeEstimation').style.display = 'none';
 			document.getElementById('card_VolumeEstimation').style.display = 'none';
@@ -9625,6 +10593,7 @@ function reanimate(arg_time) {
 		if (argument1 == 1) {
 			document.getElementById("card_infusion1").style.display = "none";
 			document.getElementById("card_cet1").style.display = "none";
+			document.getElementById("card_cet1_new").style.display = "none";
 			document.getElementById("card_cpt1").style.display = "";
 			
 			drug_sets[1].cpt_active = 1;
@@ -9648,6 +10617,7 @@ function reanimate(arg_time) {
 					document.getElementById("btn_displayhistory").innerHTML = "Scheme";
 					document.getElementById("progressbar").style.display = "block";
 					//UI change
+					document.getElementById("card_cet1_new").style.display = "none";
 					document.getElementById("card_cet1").querySelector(".cardtitle").innerHTML = "INTERMITTENT BOLUS";
 					document.getElementById("btn_startCet1").setAttribute("onclick", "start_cet_bolus()");
 					document.getElementById("IB_about_btn1").style.display = "block";
@@ -9677,12 +10647,13 @@ function reanimate(arg_time) {
 			} else {
 				document.getElementById("card_cpt1").style.display = "none";
 				document.getElementById("card_infusion1").style.display = "none";
-				document.getElementById("card_cet1").style.display = "";
+				document.getElementById("card_cet1").style.display = "none";
+				document.getElementById("card_cet1_new").style.display = "";
 				if (orig_drug_set_index == 1) {
-					document.getElementById("card_cet1").classList.remove("hide");
+					document.getElementById("card_cet1_new").classList.remove("hide");
 					document.getElementById("btn_displayhistory").innerHTML = "Scheme";
 				} else {
-					document.getElementById("card_cet1").classList.add("hide");
+					document.getElementById("card_cet1_new").classList.add("hide");
 				}
 				drug_sets[1].cet_active = 1;
 				if (drug_sets[1].fentanyl_weightadjusted_flag == 1) {
@@ -9722,6 +10693,9 @@ function togglemenu() {
   }
 
 }
+
+
+
 
 var collapsibles = document.getElementsByClassName("collapsible");
 var i;
@@ -9774,6 +10748,16 @@ for (i=0; i<tops.length; i++) {
 
 function hide_prompts(object) {
 	object.style.display="none";
+	if (document.getElementById("prompts_container").classList.contains("expand")) {
+		document.getElementById("preview-expand-button").classList.remove("animate2");
+		document.getElementById("preview-expand-button").style.display = "none";
+		document.getElementById("prompts_container").classList.remove("expand");
+		document.getElementById("preview").classList.remove("expand");
+		document.getElementById("preview-expand-box").classList.remove("expand");
+		document.getElementById("preview-expand-button").innerHTML = `<i class="fas fa-angle-double-down"></i> &nbsp; <span>EXPAND</span>`;
+		document.getElementById("preview-expand-button").setAttribute("onclick","displaypreview_expand()");
+
+	}
 }
 
 
@@ -9914,18 +10898,18 @@ function loadoptions(reset) {
 
 		if (optionsarray[2].indexOf(1) == 0) {
 			cpt_threshold_auto = 1;
-			cpt_threshold = 0.08;
-			cpt_avgfactor = 0.667;
+			cpt_threshold = 0.05;
+			cpt_avgfactor = 0.62;
 			document.getElementById("select_threshold").value = 0;
 		} else if (optionsarray[2].indexOf(1) == 1) {
 			cpt_threshold_auto = 0;
-			cpt_threshold = 0.13;
-			cpt_avgfactor = 0.55;		
+			cpt_threshold = 0.08;
+			cpt_avgfactor = 0.667;		
 			document.getElementById("select_threshold").value = 1;
 		} else if (optionsarray[2].indexOf(1) == 2) {
 			cpt_threshold_auto = 0;
-			cpt_threshold = 0.08;
-			cpt_avgfactor = 0.667;
+			cpt_threshold = 0.05;
+			cpt_avgfactor = 0.62;
 			document.getElementById("select_threshold").value = 2;
 		}
 
@@ -9967,7 +10951,7 @@ function loadoptions(reset) {
 			notificationactive = 1;
 		}
 	}
-	if ((localStorage.getItem("OPTIONSINFUSIONUNIT")==null) || (reset == "default")) {
+	if ((localStorage.getItem("OPTIONSINFUSIONUNIT")==null) || (JSON.parse(localStorage.getItem("OPTIONSINFUSIONUNIT")).length!=2) || (reset == "default")) {
 		optionsarray_infusionunit = [[1,0],[1,0,0]];
 		localStorage.setItem("OPTIONSINFUSIONUNIT",JSON.stringify(optionsarray_infusionunit));
 	} else {
@@ -10171,18 +11155,18 @@ function applyoptions() {
 	x = document.getElementById("select_threshold").value * 1;
 	if (x==0) {
 		cpt_threshold_auto = 1;
-		cpt_threshold = 0.08;
-		cpt_avgfactor = 0.667;
+		cpt_threshold = 0.05;
+		cpt_avgfactor = 0.62;
 		optionsarray.push([1,0,0]);
 	} else if (x==1) {
 		cpt_threshold_auto = 0;
-		cpt_threshold = 0.13;
-		cpt_avgfactor = 0.55;		
+		cpt_threshold = 0.08;
+		cpt_avgfactor = 0.667;		
 		optionsarray.push([0,1,0]);
 	} else if (x==2) {
 		cpt_threshold_auto = 0;
-		cpt_threshold = 0.08;
-		cpt_avgfactor = 0.667;
+		cpt_threshold = 0.05;
+		cpt_avgfactor = 0.62;
 		optionsarray.push([0,0,1]);
 	}
 
@@ -10274,9 +11258,6 @@ function sound(src) {
   }
 }
 
-
-var ringtimeout = null;
-var ringactive = 0;
 
 function ringbell(duration) {
 	let El1 = document.querySelector(".topleft");
@@ -11154,7 +12135,7 @@ async function downloadExcel() {
 }
 */
 
-var inputname = "";
+
 
 function exportFunction() {
 	//reset inputname
@@ -11245,7 +12226,6 @@ function exportKeys(filenameentry,testKeys) {
 	exportGenerateDownload(testString,filenameentry);
 }
 
-var importDataArray = new Array();
 
 function previewFile() {
 	
@@ -12342,92 +13322,6 @@ function parsedisplay(t,sex,model,VI,d,mode) {
   if (modal != undefined) hideallmodal();
 }
 
-		//band colors from column 200 of material design 1-10 hues, for myChart2
-		var bandColor0 = 'rgb(239,154,154,0.2)';//red
-		var bandColor1 = 'rgb(244,143,177,0.2)';//pink
-		var bandColor2 = 'rgb(206,147,216,0.2)';//purple
-		var bandColor3 = 'rgb(179,157,219,0.2)';
-		var bandColor4 = 'rgb(159,168,218,0.2)';
-		var bandColor5 = 'rgb(144,202,249,0.2)';
-		var bandColor6 = 'rgb(129,212,250,0.2)';
-		var bandColor7 = 'rgb(128,222,234,0.2)';
-		var bandColor8 = 'rgb(128,203,196,0.2)';
-		var bandColor9 = 'rgb(165,214,167,0.2)';
-		var bandColor10 = 'rgb(197,225,165,0.2)';
-		var bandColor11 = 'rgb(230,238,156,0.2)';//lime
-		var bandColor12 = 'rgb(255,245,157,0.2)';//yellow
-		var bandColor13 = 'rgb(255,224,130,0.2)';//amber
-		var bandColor14= 'rgb(255,204,128,0.2)'//orange
-
-		var dotColor0 = 'rgb(158,158,158,1)';
-		var dotColor1 = 'rgb(117,117,117,1)';
-		var dotColor2 = 'rgb(97,97,97,1)';
-		var dotColor3 = 'rgb(66,66,66,1)';
-		var dotColor4 = 'rgb(33,33,33,1)';
-		var dotColor5 = 'rgb(66,66,66,1)';
-		var dotColor6 = 'rgb(97,97,97,1)';
-		var dotColor7 = 'rgb(117,117,117,1)';
-		var dotColor8 = 'rgb(158,158,158,1)';
-
-		var dotColor0dark = 'rgb(185,185,185,0.7)';
-		var dotColor1dark = 'rgb(200,200,200,0.8)';
-		var dotColor2dark = 'rgb(215,215,215,0.8)';
-		var dotColor3dark = 'rgb(230,230,230,0.8)';
-		var dotColor4dark = 'rgb(245,245,245,1)';
-		var dotColor5dark = 'rgb(230,230,230,0.8)';
-		var dotColor6dark = 'rgb(215,215,215,0.8)';
-		var dotColor7dark = 'rgb(200,200,200,0.8)';
-		var dotColor8dark = 'rgb(185,185,185,0.7)';
-
-		/*
-		const dotColor0 = 'rgb(0,96,100,1)'//cyan
-		const dotColor1 = 'rgb(1,87,155,1)'; // lightblue
-		const dotColor2 = 'rgb(26,35,126,1)'; //indigo
-		const dotColor3 = 'rgb(74,20,140,1)'; //purple
-		const dotColor4 = 'rgb(183,28,28,1)';//red
-		const dotColor5 = 'rgb(230,81,0,1)';//orange
-		const dotColor6 = 'rgb(245,127,23,1)';//yellow
-		const dotColor7 = 'rgb(51,105,30,1)';//lightgreen
-		const dotColor8 = 'rgb(0,77,64,1)';//teal
-		*/
-
-		//line colors from blue-grey row
-		var lineColor0 = 'rgba(84,110,122,0.75)';
-		var lineColor1 = 'rgba(120,144,156,1)';
-		var lineColor1dark = 'rgba(210,235,250,1)';
-
-		var yellowPri = 'rgba(251,192,45,1)';
-		var yellowPri50 = 'rgba(251,192,45,0.58)';
-		var yellowPri10 = 'rgba(251,192,45,0.1)';
-		var yellowPri70 = 'rgba(251,192,45,0.7)';
-		var yellowPri30 = 'rgba(251,192,45,0.3)';
-		var yellowLight = 'rgba(255,242,99,1)';
-		var yellowLight10 = 'rgba(255,242,99,0.1)';
-		var yellowLight70 = 'rgba(255,242,99,0.7)';
-		var yellowDark = 'rgba(196,144,0,1)';
-		var yellowSec = 'rgba(255,202,40,1)';
-		var yellowSec10 = 'rgba(255,202,40,0.11)';
-		var yellowSecLight = 'rgba(255,253,97,1)';
-		var yellowSecDark = 'rgba(199,154,0,1)';
-		var orangeShadeLight = 'rgba(255,204,128,0.2)';
-		var orangeShadeDark = 'rgba(255,152,0,0.2)';
-
-		var bluePri = 'rgba(21,101,192,1)';
-		var bluePri50 = 'rgba(21,101,192,0.5)';
-		var blueLight = 'rgba(94,146,243,1)';
-		var blueLight10 = 'rgba(94,146,243,0.1)';
-		var blueLight70 = 'rgba(94,146,243,0.7)';
-		var blueLight50 = 'rgba(94,146,243,0.58)';
-		var blueDark = 'rgba(0,60,143,1)';
-		var blueSec = 'rgba(3,169,244,1)';
-		var blueSec10 = 'rgba(3,169,244,0.11)';
-		var blueSecLight = 'rgba(103,218,255,1)';
-		var blueSecDark = 'rgba(0,122,193,1)';
-		var blueShadeDark = 'rgba(3,169,244,0.2)';
-
-		var greenShade = 'rgba(102, 177, 105, 0.25)';
-		var greenShadeDark = 'rgba(102, 177, 105, 0.35)';
-
 
 	function behindPosition(ctx, value) {
 		if (ctx.p0.parsed.x < time_in_s/60) {
@@ -12447,61 +13341,6 @@ function parsedisplay(t,sex,model,VI,d,mode) {
 
 
 
-	function getGradientRed(ctx, chartArea, scales) {
-		
-		const gradientBgRed = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
-		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
-		if (position<=0) position = 0;
-		if (position>=1) position = 1;
-		gradientBgRed.addColorStop(0, 'rgba(231,50,39,0.4)');
-		gradientBgRed.addColorStop(position, 'rgba(231,50,39,0.4)');
-		gradientBgRed.addColorStop(position, 'rgba(231,50,39,0.1');
-		gradientBgRed.addColorStop(1, 'rgba(231,50,39,0.1)');
-		return gradientBgRed;
-		
-	}
-
-	function getGradientYellow(ctx, chartArea, scales) {
-
-		const gradientBgYellow = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
-		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
-		if (position<=0) position = 0;
-		if (position>=1) position = 1;
-		gradientBgYellow.addColorStop(0, 'rgba(251,192,45,0.58)');
-		gradientBgYellow.addColorStop(position, 'rgba(251,192,45,0.58)');
-		gradientBgYellow.addColorStop(position, 'rgba(255,202,40,0.11)');
-		gradientBgYellow.addColorStop(1, 'rgba(255,202,40,0.11)');
-		return gradientBgYellow;
-
-	}
-
-	function getGradientBlue(ctx, chartArea, scales) {
-
-		const gradientBgBlue = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
-		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
-		if (position<=0) position = 0;
-		if (position>=1) position = 1;
-		gradientBgBlue.addColorStop(0, 'rgba(94,146,243,0.58)');
-		gradientBgBlue.addColorStop(position, 'rgba(94,146,243,0.58)');
-		gradientBgBlue.addColorStop(position, 'rgba(3,169,244,0.11)');
-		gradientBgBlue.addColorStop(1, 'rgba(3,169,244,0.11)');
-		return gradientBgBlue;
-
-	}
-
-	function getGradientGreen(ctx, chartArea, scales) {
-		
-		const gradientBgGreen = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
-		var position = (scales.x.getPixelForValue(time_in_s/60) - scales.x.getPixelForValue(scales.x.min)) / chartArea.width;
-		if (position<=0) position = 0;
-		if (position>=1) position = 1;
-		gradientBgGreen.addColorStop(0, 'rgba(9,203,93,0.7)');
-		gradientBgGreen.addColorStop(position, 'rgba(9,203,93,0.7)');
-		gradientBgGreen.addColorStop(position, 'rgba(9,203,93,0.1');
-		gradientBgGreen.addColorStop(1, 'rgba(9,203,93,0.1)');
-		return gradientBgGreen;
-		
-	}
 
 
 function clearInput(x) {
@@ -12928,10 +13767,7 @@ async function shareViewURL() {
 	}
 }
 
-canvasUpdateInterval = null;
-var textheight = 0;
-var newCanvas = document.createElement('canvas');
-var newCanvasReady = 0;
+
 
 function canvasUpdate(oldCanvas, filename) {
 	newCanvas = cloneCanvas(oldCanvas,filename);
@@ -13734,6 +14570,10 @@ function resetPtolLabels() {
 
 function tabswitch(index) {
 
+	if (document.getElementById("preview").style.display != "none") {
+		displaypreview_hide_onsubmit();
+	}
+
 	if (index == undefined) index = 1-active_drug_set_index;
 
 	if (index == 0) {
@@ -13785,10 +14625,12 @@ function tabswitch(index) {
 		if (parseloading == 0) {
 			document.getElementById("card_cpt0").classList.remove("hide");
 			document.getElementById("card_cet0").classList.remove("hide");
+			document.getElementById("card_cet0_new").classList.remove("hide");
 			document.getElementById("card_bolus0").classList.remove("hide");
 			document.getElementById("card_infusion0").classList.remove("hide");
 			document.getElementById("card_cpt1").classList.add("hide");
 			document.getElementById("card_cet1").classList.add("hide");
+			document.getElementById("card_cet1_new").classList.add("hide");
 			document.getElementById("card_bolus1").classList.add("hide");
 			document.getElementById("card_infusion1").classList.add("hide");
 			document.getElementById("card_wakeup").classList.remove("hide");
@@ -13853,10 +14695,12 @@ function tabswitch(index) {
 		if (parseloading == 0) {
 			document.getElementById("card_cpt0").classList.add("hide");
 			document.getElementById("card_cet0").classList.add("hide");
+			document.getElementById("card_cet0_new").classList.add("hide");
 			document.getElementById("card_bolus0").classList.add("hide");
 			document.getElementById("card_infusion0").classList.add("hide");
 			document.getElementById("card_cpt1").classList.remove("hide");
 			document.getElementById("card_cet1").classList.remove("hide");
+			document.getElementById("card_cet1_new").classList.remove("hide");
 			document.getElementById("card_bolus1").classList.remove("hide");
 			document.getElementById("card_infusion1").classList.remove("hide");
 			document.getElementById("card_wakeup").classList.add("hide");
@@ -14049,8 +14893,6 @@ function tabaltdisplaycycle(inputArg) {
 		}
 	}
 }
-
-var popupon = false;
 
 function preparerange() {
 	var corX = time_in_s/60;
@@ -14376,8 +15218,7 @@ function popup_dilution(targetid,targetname) {
 		`)
 }
 
-var popupchart;
-var boxesArray = new Array();
+
 
 function generateBoxes() {
 	if (drug_sets[active_drug_set_index].manualmode_active == 1) {
@@ -14559,192 +15400,7 @@ function generateBoxes() {
 	} // end else: not manual mode
 }
 
-const chartInfRateLayer = {
-	id: 'chartInfRateLayer',
-	afterDraw(chart, args, options) {
-		if (suitableForBoxes && boxesArray.length>0) {
-			const {ctx, chartArea: {top, right, bottom, left, width, height }, scales} = chart;
-			//load history array
-			//define corr_factor for y scale as % of cp scale
-			if (drug_sets[active_drug_set_index].drug_name == "Fentanyl") {
-				ymax = 3;
-			} else if (drug_sets[active_drug_set_index].drug_name == "Alfentanil") {
-				ymax = 90;
-			} else {
-				ymax = 5;
-			}
-			corr_factor = 1 * 3600 / drug_sets[active_drug_set_index].infusate_concentration / 200 * ymax;
-			xmargin = scales.x.getPixelForValue(scales.x.min);
 
-			//determine text size
-			textsize = 16 * (width / popupchart.width);
-
-			/*
-			x0 = scales.x.getPixelForValue(0);
-			x1 = scales.x.getPixelForValue(5) - x0;
-			y0 = scales.y.getPixelForValue(3);
-			y1 = scales.y.getPixelForValue(0) - y0;
-
-			console.log("***");
-			console.log(scales.x.getPixelForValue(scales.x.max));
-			console.log(scales.x.getPixelForValue(scales.x.min));
-			console.log(scales.x.getPixelForValue(5));
-			console.log(scales.x.getPixelForValue(10));
-			console.log(scales.x.getPixelForValue(15));
-			console.log(scales.x.getPixelForValue(20));
-			console.log("###");
-			console.log(scales.y.getPixelForValue(scales.y.max));
-			console.log(scales.y.getPixelForValue(scales.y.min));
-			*/
-			
-			ctx.save();
-			
-
-			for (icount = 0; icount < boxesArray.length; icount++) {
-				if (boxesArray[icount][1] > 0) {
-					ctx.fillStyle = 'rgba(128,128,128,0.5)';
-
-						x0 = scales.x.getPixelForValue(boxesArray[icount][0] / 60) + 2;
-						y0 = scales.y.getPixelForValue(boxesArray[icount][1] * corr_factor);
-						x1 = scales.x.getPixelForValue(boxesArray[icount][2] / 60) - x0 - 2;
-						y1 = scales.y.getPixelForValue(scales.y.min) - y0;
-						ctx.fillRect(x0,y0,x1,y1);
-					
-					if (!isDark) {
-						ctx.fillStyle = "black";
-					} else {
-						ctx.fillStyle = "white";
-					}
-						ctx.font = "bold " + textsize + "px SourceSans";
-						ctx.fillText(Math.round(boxesArray[icount][1]*3600/drug_sets[active_drug_set_index].infusate_concentration*10)/10 + "ml/h", x0, y0 - textsize/3);
-				
-				}
-
-			}
-			// bolus
-			bolustext = "";
-			bolustime = -1;
-			bolusArray = new Array();
-			textheight = 0;
-			if ((drug_sets[active_drug_set_index].manualmode_active > 0) || (drug_sets[active_drug_set_index].cpt_active > 0) || ((drug_sets[active_drug_set_index].cet_active > 0) && (drug_sets[active_drug_set_index].IB_active == 0))) {
-				for (icount = 0; icount<drug_sets[active_drug_set_index].historyarrays.length; icount++) {
-					if (drug_sets[active_drug_set_index].historyarrays[icount][1] == 1) {
-						bolustime = drug_sets[active_drug_set_index].historyarrays[icount][2]; 
-						if (drug_sets[active_drug_set_index].historyarrays[icount][3]>0) {
-							bolustext = drug_sets[active_drug_set_index].historyarrays[icount][3] + drug_sets[active_drug_set_index].infused_units;
-						} else {
-							bolustext = "";
-						}
-
-						if (bolustext != "") {
-							bolusArray.push(bolustime);
-							x0 = scales.x.getPixelForValue(bolustime/60);
-							ctx.font = "bold " + textsize + "px SourceSans";
-							if (!isDark) {
-								ctx.fillStyle = "black";
-							} else {
-								ctx.fillStyle = "white";
-							}
-							
-							if (bolusArray.length>1) {
-								//if this is 10mins close to previous
-								if (bolusArray[bolusArray.length-1] - bolusArray[bolusArray.length-2] < 600) {
-									if (textheight < textsize * 6) {
-										textheight = textheight + textsize * 1.33;
-										ctx.fillText(bolustext, x0+10, 50+textheight);	
-										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-										ctx.fillText("\uf063", x0-5, 50+textheight);	
-									} else {
-										textheight = 0;
-										ctx.fillText(bolustext, x0+10, 50);
-										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-										ctx.fillText("\uf063", x0-5, 50);	
-									}
-								} else {
-									ctx.fillText(bolustext, x0+10, 50);
-									textheight = 0;
-									ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-									ctx.fillText("\uf063", x0-5, 50);	
-								}
-							} else {
-								ctx.fillText(bolustext, x0+10, 50);
-								ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-								ctx.fillText("\uf063", x0-5, 50);	
-							}
-						}
-					} else {
-						bolustext = "";
-					}
-				} // end for loop
-			} // end if manual/cpt/cet block
-		//end "suitableForBoxes"  check
-		} else {
-			if ((drug_sets[active_drug_set_index].cet_active > 0) && (drug_sets[active_drug_set_index].IB_active == 1)) {
-				//load chart context
-				const {ctx, chartArea: {width}, scales} = chart;
-
-				//determine text size
-				textsize = 14 * (width / popupchart.width);
-			
-				ctx.save();
-
-				// bolus
-				bolustext = "";
-				bolustime = -1;
-				bolusArray = new Array();
-				textheight = 0;
-				for (icount = 0; icount<drug_sets[active_drug_set_index].historyarray.length; icount++) {
-						bolustime = drug_sets[active_drug_set_index].historyarray[icount][0]; 
-						if (drug_sets[active_drug_set_index].historyarray[icount][2]>0) {
-							bolustext = drug_sets[active_drug_set_index].historyarray[icount][2] + drug_sets[active_drug_set_index].infused_units;
-						} else {
-							bolustext = "";
-						}
-
-						if (bolustext != "") {
-							bolusArray.push(bolustime);
-							x0 = scales.x.getPixelForValue(bolustime/60);
-							ctx.font = "bold " + textsize + "px SourceSans";
-							if (!isDark) {
-								ctx.fillStyle = "rgba(0,0,0,0.7)";
-							} else {
-								ctx.fillStyle = "rgba(255,255,255,0.7)";
-							}
-							if (bolusArray.length>1) {
-								//if this is 10mins close to previous
-								if (bolusArray[bolusArray.length-1] - bolusArray[bolusArray.length-2] < 660) {
-									if (textheight < textsize * 7) {
-										textheight = textheight + textsize * 1.33;
-										ctx.fillText(bolustext, x0+10, 50+textheight);		
-										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-										ctx.fillText("\uf063", x0-5, 50+textheight);	
-									} else {
-										textheight = 0;
-										ctx.fillText(bolustext, x0+10, 50);
-										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-										ctx.fillText("\uf063", x0-5, 50);	
-									}
-								} else {
-									ctx.fillText(bolustext, x0+10, 50);
-									textheight = 0;
-									ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-									ctx.fillText("\uf063", x0-5, 50);	
-								}
-							} else {
-								ctx.fillText(bolustext, x0+10, 50);
-								ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-								ctx.fillText("\uf063", x0-5, 50);	
-							}
-						}
-				} // end for loop
-			} // end if IB block
-		} 
-	}
-};
-
-suitableForBoxes = false;
-
-isFullscreen = false;
 
 function openpopupchart() {
 	
@@ -14813,7 +15469,7 @@ function openpopupchart() {
 				document.getElementById("pop_right_edit_ce").style.display = "block";
 				document.getElementById("pop_ce").classList.add("shadow");
 				document.getElementById("pop_right_edit_ce").setAttribute('onclick','displayNumpad("ce")');
-				document.getElementById('btn_confirm_numpad').setAttribute('onclick','confirmNumpad("inputDesiredCe0")');
+				document.getElementById('btn_confirm_numpad').setAttribute('onclick','confirmNumpad("inputDesiredCe0_new")');
 			}
 			if (active_drug_set_index == 1 && drug_sets[1].cpt_active > 0) {
 				document.getElementById("pop_right_edit_cp").style.display = "block";
@@ -14825,7 +15481,7 @@ function openpopupchart() {
 				document.getElementById("pop_right_edit_ce").style.display = "block";
 				document.getElementById("pop_ce").classList.add("shadow");
 				document.getElementById("pop_right_edit_ce").setAttribute('onclick','displayNumpad("ce")');
-				document.getElementById('btn_confirm_numpad').setAttribute('onclick','confirmNumpad("inputDesiredCe1")');
+				document.getElementById('btn_confirm_numpad').setAttribute('onclick','confirmNumpad("inputDesiredCe1_new")');
 			}
 		}
 		if (!isDark) {
@@ -15047,7 +15703,6 @@ function mirrorpopup() {
 
 }
 
-var popupUpdateInterval;
 
 function popupUpdateFunction(dur) {
 	clearInterval(popupUpdateInterval);
@@ -15059,8 +15714,8 @@ function popupUpdateFunction(dur) {
 
 //numpad code goes here
 
-var numpadValue = 0;
-var numpadOrig;
+
+
 
 function keypress(num) {
 	let numString = document.getElementById("numpadOutputDisplay").innerHTML;
@@ -15187,9 +15842,9 @@ function confirmNumpad(parameter) {
 	document.getElementById(parameter).value = numpadValue;
 	//first see if zero
 	if (numpadValue == 0) {
-		if (parameter == "inputDesiredCe0") {
+		if (parameter == "inputDesiredCe0_new") {
 			pauseCpt(0);
-		} else if (parameter == "inputDesiredCe1") {
+		} else if (parameter == "inputDesiredCe1_new") {
 			pauseCpt(1);
 		} else if (parameter == "inputDesired0") {
 			pauseCpt(0);
@@ -15197,9 +15852,9 @@ function confirmNumpad(parameter) {
 			pauseCpt(1);
 		}
 	} else {
-		if (parameter == "inputDesiredCe0") {
+		if (parameter == "inputDesiredCe0_new") {
 			start_cet();
-		} else if (parameter == "inputDesiredCe1") {
+		} else if (parameter == "inputDesiredCe1_new") {
 			start_cet_complex(numpadValue,1);
 		} else if (parameter == "inputDesired0") {
 			start_cpt();
@@ -15207,7 +15862,7 @@ function confirmNumpad(parameter) {
 			start_cpt_complex(numpadValue,1);
 		}
 	}
-	if (parameter == "inputDesiredCe0" || parameter == "inputDesiredCe1") {
+	if (parameter == "inputDesiredCe0_new" || parameter == "inputDesiredCe1_new") {
 		document.getElementById("chartinfodrugline2").innerHTML = "CET mode - Target " + numpadValue + drug_sets[active_drug_set_index].conc_units + "/ml"; 
 	} else {
 		document.getElementById("chartinfodrugline2").innerHTML = "CPT mode - Target " + numpadValue + drug_sets[active_drug_set_index].conc_units + "/ml"; 
