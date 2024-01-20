@@ -25,6 +25,7 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
  - Updated the UI for CPT and CET modes with more compact interface design
  - Sophisticated "preview box" can be viewed by clicking "expand" - previews the full scheme ahead for CPT/CET modes
  - Corrected the CPT algorithm - previously, increasing CPT will overshoot the CP and decreasing the CPT will cause premature re-start of infusion
+ - Improved support for widescreen devices particularly in complex/dual mode
  - Bugfix in Safari browser, MacOS
    
  Version 4.4 (Build 96)
