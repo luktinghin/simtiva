@@ -33,7 +33,7 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
  - Corrected algorithm in decremental infusion rates for reducing target in CET mode
  - Bug fixes
    
- Version 4.3 (Build 94) Current
+ Version 4.3 (Build 94) 
  - Added CeT and CpT quick edit function in Fullscreen mode 
  
  Version 4.2 (Build 91)
