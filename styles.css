@@ -5432,13 +5432,13 @@ body.dark #preview-expand-box > div > div.timespan {
     pointer-events: none;
   }
   .ptolcontainer {
-    height: 120px;
+    height: 100px;
   }
   .leftbar {
     padding-top: 0px;
   }
   .druglabelcontainer {
-    height: 180px;
+    /*height: 180px;*/
   }
   .sharebutton.complex {
     opacity: 0;
