@@ -5002,6 +5002,7 @@ body.dark .infusionratedropdownitem:hover {
   }
   .footer {
     text-align: left;
+    margin-left: 100px;
   }
   .footer ul {
     float: right;
@@ -5015,6 +5016,9 @@ body.dark .infusionratedropdownitem:hover {
   }
   .narrowbodywrapper .hamburger {
     right: 1rem;
+  }
+  body.dark .narrowbodywrapper .hamburger {
+    right: 2px;
   }
 
   .top_subtitle {
