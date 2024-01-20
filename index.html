@@ -70,7 +70,7 @@
 				<div class="modal-header">ABOUT<span class="close" onClick="hidemodal('modalAbout')">&times;</span></div>
 				<div class="modal-body" style="overflow-y:auto; height: 70vh; font-size:90%">
 					<h1>Vet.SimTIVA.app</h1>
-					<br><b>Written by Terence Luk, 2023</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!
+					<br><b>Written by Terence Luk, 2024</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!
 					<br>
 					<br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.
 					<br>This page to be updated soon...
@@ -123,15 +123,20 @@
 					<tr><td>Model <!--<i class="far fa-question-circle tooltip2"><span class="tooltiptext">Paedfusor: for children. Marsh/Schnider/Minto: for adults.</span></i>--></td>
 						<td>
 							<select id="select_model" onchange="" >
-								
 									<option value="Beths">Beths (Propofol)</option>
-									
-								
 							</select>
-
-
 						</td>
 					</tr>
+
+					<tr>
+						<td>Mode</td>
+						<td>
+							<select id="select_mode" onchange="" >
+									<option value="cpt">CP targeting</option>
+									<option value="manual">Manual</option>
+							</select>
+					</tr>
+
 
 					<!--
 					<tr><td>File Name</td>
@@ -1804,7 +1809,7 @@
 		</div>
 		</div><!--end cards container layout-->
 		<div class="bottomcard">
-			<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1>
+			<h1>Vet.SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1>
 		</div>
 
 		</div><!--controlpanel-->
@@ -1818,7 +1823,7 @@
 			</div>
 		</div>
 		<div class="footer">
-			<b>SIMTiva</b>&nbsp;|&nbsp;Terence Luk 2023
+			<b>Vet.SIMTiva</b>&nbsp;|&nbsp;Terence Luk 2023
 			<ul>
 				<li><a href="#" onclick="setmodal('modalAbout');">About</a></li>
 				<li><a href="https://simtiva.blogspot.com/" target="_blank">Blog</a></li>

@@ -9874,7 +9874,15 @@ function toPageOne() {
 }
 
 function toPageTwo() {
-	initsubmit();initcpt();hideallmodal();
+	initsubmit();
+	hideallmodal();
+	if (document.getElementById("select_mode").value == "cpt") {
+		initcpt();	
+	}
+	if (document.getElementById("select_mode").value == "manual") {
+		initmanual(0);	
+	}
+	
 }
 
 function toPageTwoTransition() {
