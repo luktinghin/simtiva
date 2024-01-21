@@ -1943,13 +1943,17 @@
 		</div>
 
 		</div><!--controlpanel-->
-		<div class="warningbanner">
+		<div class="warningbanner" id="warningBanner">
 			<div class="warningbanner_left">
 				<i class="fas fa-exclamation-triangle"></i>
 			</div>
 			<div class="warningbanner_right">
-				<div class="warningbanner_up"><b>WARNING</b> - Simulation is ending!</div>
-				<div class="warningbanner_down">Simulation session expiring in &lt;10 mins. Update CP/CE target to continue using SimTIVA to avoid data loss.</div>
+				<div class="warningbanner_up"><b>WARNING</b> - Time's up!</div>
+				<div class="warningbanner_down">
+					<div id="warningmessage">Simulation session expiring in &lt;10 mins. Do you want to continue using SimTIVA?</div>
+					<div id="warningbuttondiv"><a class="button muted" id="warningbutton" onclick="">Yes</a>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="footer">

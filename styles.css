@@ -6344,7 +6344,7 @@ body.dark #addeventtext{
 
 /* new warning banner styles */
 .warningbanner {
-
+  z-index: 999;
   position: fixed;
   display: none;
   /*display: flex*;*/
@@ -6374,6 +6374,21 @@ body.dark #addeventtext{
 }
 .warningbanner_down {
   font-size: 0.8rem;
+  display: flex;
+}
+#warningmessage {
+  flex-basis: 80%;
+}
+#warningbuttondiv {
+  min-height: 50px;
+  flex-grow: 1;
+  text-align: right;
+  position: relative;
+}
+#warningbutton {
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 /* end warning banner styles */
 

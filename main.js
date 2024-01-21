@@ -2706,6 +2706,8 @@ function common_start_calls() {
 			}
 			loop3 = setInterval(updatechart, 5000, myChart);
 
+		loop6 = setInterval(displayWarningBanner, 60*1000);
+		
 		initshare();
 }
 
@@ -3821,7 +3823,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		if (drug_sets[ind].cpt_bolus>=90) {
 			drug_sets[ind].cpt_bolus = Math.round(drug_sets[ind].cpt_bolus/10)*10;
 		} else if (drug_sets[ind].cpt_bolus>1) {
-			if ((mass>30) && (drug_sets[ind].cpt_bolus>=40)) {
+			if ((mass>30) && (drug_sets[ind].cpt_bolus>=30)) {
 				drug_sets[ind].cpt_bolus = Math.ceil(drug_sets[ind].cpt_bolus/5)*5; //round up to nearest 5mg
 			} else {
 				drug_sets[ind].cpt_bolus = Math.ceil(drug_sets[ind].cpt_bolus) ;
@@ -4001,7 +4003,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		}
 	} else {
 		if (cpt_threshold_auto == 1) {
-			if (drug_sets[ind].cpt_rates[5]*360 > 40) {
+			if (drug_sets[ind].cpt_rates[5]*360 >= 30) {
 				cpt_threshold = 0.08;
 				cpt_avgfactor = 0.667;
 			} else {
@@ -4017,7 +4019,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 
 	
 	//automatically determine high or low rounding factor (3600->round to 0.1, 360->round to 1)
-	if ((paedi_mode == 1) || (drug_sets[ind].cpt_rates[5]<40/360)) {
+	if ((paedi_mode == 1) || (drug_sets[ind].cpt_rates[5]<30/360)) {
 		var roundingfactor = 3600;
 	} else {
 		if (drug_sets[ind].drug_name == "Propofol") {
@@ -5022,7 +5024,7 @@ function preview_cet(x,ind) {
 				}
 			} else {
 				if (cpt_threshold_auto == 1) {
-					if (drug_sets[ind].cpt_rates[5]*360 > 25) {
+					if (drug_sets[ind].cpt_rates[5]*360 >= 30) {
 						cpt_threshold = 0.08;
 						cpt_avgfactor = 0.667;
 					} else {
@@ -5035,7 +5037,7 @@ function preview_cet(x,ind) {
 
 			//second pass
 			//automatically determine high or low rounding factor (3600->round to 0.1, 360->round to 1)
-			if ((paedi_mode == 1) || (drug_sets[ind].cpt_rates[5]<40/360)) {
+			if ((paedi_mode == 1) || (drug_sets[ind].cpt_rates[5]<30/360)) {
 				var roundingfactor = 3600;
 			} else {
 				if (drug_sets[ind].drug_name == "Propofol") {
@@ -16279,6 +16281,38 @@ function setBolusUnit(parameter) {
 	dropdownhide();
 }
 
+function displayWarningBanner() {
+	
+	will_end_drug_set = 0;
+	max_time = drug_sets[0].cpt_rates_real.length;
+	if (complex_mode == 1) {
+		if (drug_sets[1].cpt_rates_real.length < max_time) {
+			max_time = drug_sets[1].cpt_rates_real.length;
+			will_end_drug_set = 1;
+		}
+	}
+
+	//check if near the end, i.e. 600s before end i.e. 10 mins
+	if (Math.floor(time_in_s) > max_time - 60*10) {
+		hideallmodal();
+		//display the banner
+		document.getElementById("warningBanner").style.display = "flex";
+		document.getElementById("warningbutton").setAttribute("onclick", `extendSession(${will_end_drug_set});document.getElementById('warningBanner').style.display='none'`)
+	}
+}
+
+function extendSession(ind) {
+	//first see if the target is zero or the inf rate is zero
+	if ((drug_sets[ind].cpt_active == 1) && (drug_sets[ind].desired > 0)) {
+		deliver_cpt(drug_sets[ind].desired,0,0,ind);
+	}
+	if ((drug_sets[ind].cet_active == 1) && (drug_sets[ind].IB_active==0) && (drug_sets[ind].desired > 0)) {
+		deliver_cet(drug_sets[ind].desired,ind);
+	}
+	if ((drug_sets[ind].manualmode_active == 1) && (drug_sets[ind].inf_rate_mls>0)) {
+		lookahead(0,7200,ind);
+	}
+}
 /* failed code below 
 
 let arrLines = new Array();
