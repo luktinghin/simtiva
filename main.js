@@ -9387,7 +9387,7 @@ function lookahead(bolusgiven, duration, ind) {
 		drug_sets[ind].historyarrays.push([0,2,working_clock,drug_sets[ind].inf_rate_mls]);
 		document.getElementById("historywrapper").innerHTML = drug_sets[ind].historytext;
 
-		var crosscheck = myChart.data.datasets[ind*2+3].data[myChart.data.datasets[ind*2+3].data.length - 1].y;
+		var crosscheck = myChart.data.datasets[ind*2+2].data[myChart.data.datasets[ind*2+2].data.length - 1].y;
 		//this is to prevent a very specific error -> in dual mode, if only start inf and not bolus, will hang
 		if ((drug_sets[ind].cpt_cp.length>0) && (drug_sets[ind].firstrun>-1) && (crosscheck>0)) {
 			myChart.data.datasets[ind*2+2].data.length = myChart.data.datasets[ind*2+2].data.findIndex((element)=>element.x>time_in_s/60);
