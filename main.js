@@ -4790,9 +4790,10 @@ function preview_cet(x,ind) {
 			}
 
 			est_cp = p_state3[1] + p_state3[2] + p_state3[3];
-			var compensation = (drug_sets[ind].desired*1.01 - est_cp)/drug_sets[ind].p_udf[1];
+			compensation = 0;
+			//var compensation = (drug_sets[ind].desired*1.01 - est_cp)/drug_sets[ind].p_udf[1];
 
-			console.log("compensation, over 1secs, " + compensation);
+			//console.log("compensation, over 1secs, " + compensation);
 
 			//myChart.data.datasets[2].hidden = false;
 			//myChart.data.datasets[3].hidden = false;
@@ -5404,7 +5405,9 @@ function deliver_cet_real(x, ind) {
 			}
 
 			est_cp = p_state3[1] + p_state3[2] + p_state3[3];
-			var compensation = (drug_sets[ind].desired*1.01 - est_cp)/drug_sets[ind].p_udf[1];
+
+			//var compensation = (drug_sets[ind].desired - est_cp)/drug_sets[ind].p_udf[1];
+			compensation = 0;
 
 			console.log("compensation, over 1secs, " + compensation);
 
@@ -11746,6 +11749,8 @@ function savefile_patient() {
 function savefile_data() {
 	let outputobject = outputdataobject();
 	localStorage.setItem(uid + "DATA",JSON.stringify(outputobject));
+	//add warning banner check here
+	if (document.getElementById("warningBanner").style.display != "none") hideWarningBanner();
 }
 
 function savefile_time() {
@@ -16299,6 +16304,11 @@ function displayWarningBanner() {
 		document.getElementById("warningBanner").style.display = "flex";
 		document.getElementById("warningbutton").setAttribute("onclick", `extendSession(${will_end_drug_set});document.getElementById('warningBanner').style.display='none'`)
 	}
+}
+
+
+function hideWarningBanner() {
+	document.getElementById("warningBanner").style.display = "none";
 }
 
 function extendSession(ind) {
