@@ -3632,22 +3632,24 @@ function displaypreview_hide() {
 }
 
 function displaypreview_hide_onsubmit() {
-	document.getElementById("preview-expand-box").classList.remove("expand");
-	document.getElementById("preview").classList.remove("expand");
-		document.getElementById("prompts_container").classList.remove("expand");
-		document.getElementById("preview-expand-button").innerHTML = `<i class="fas fa-angle-double-down"></i> &nbsp; <span>EXPAND</span>`;
-		document.getElementById("preview-expand-button").setAttribute("onclick","displaypreview_expand()");	
-		document.getElementById("preview-expand-button").style.display = "none";
-	if (!document.getElementById("preview").classList.contains("animate"))	{
-		//situation where preview animation fade is NOT active, i.e. the hiding of preview is not yet active
-		document.getElementById("preview").classList.add("animate");
-		previewtimeout = null;
-		clearTimeout(previewtimeout);
-		previewtimeout = setTimeout(function() {
-			document.getElementById("preview").style.display = "none";
-		},11500);
-	} else {
+	if (parseloading == 0) {
+		document.getElementById("preview-expand-box").classList.remove("expand");
+		document.getElementById("preview").classList.remove("expand");
+			document.getElementById("prompts_container").classList.remove("expand");
+			document.getElementById("preview-expand-button").innerHTML = `<i class="fas fa-angle-double-down"></i> &nbsp; <span>EXPAND</span>`;
+			document.getElementById("preview-expand-button").setAttribute("onclick","displaypreview_expand()");	
+			document.getElementById("preview-expand-button").style.display = "none";
+		if (!document.getElementById("preview").classList.contains("animate"))	{
+			//situation where preview animation fade is NOT active, i.e. the hiding of preview is not yet active
+			document.getElementById("preview").classList.add("animate");
+			previewtimeout = null;
+			clearTimeout(previewtimeout);
+			previewtimeout = setTimeout(function() {
+				document.getElementById("preview").style.display = "none";
+			},11500);
+		} else {
 
+		}
 	}
 
 
