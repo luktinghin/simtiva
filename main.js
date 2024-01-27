@@ -8949,6 +8949,35 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].inf_rate_permass_unit = "mg/kg/h";
 		drug_sets[drug_set_index].inf_rate_permass_dp = 100;
 	}
+	if (x == "Cattai-Fentanyl") {
+		if (gender == 0) {
+			genderfactor = 1;
+		} else {
+			genderfactor = 1.236;
+		}
+		drug_sets[drug_set_index].vc = 3.76 * genderfactor * Math.pow((mass / 15.1),0.89);
+		drug_sets[drug_set_index].k10 = 0.129;
+		drug_sets[drug_set_index].k12 = 0.141;
+		drug_sets[drug_set_index].k21 = 0.191;
+		drug_sets[drug_set_index].k13 = 0.0771;
+		drug_sets[drug_set_index].k31 = 0.01;
+		drug_sets[drug_set_index].k41 = 0;
+		drug_sets[drug_set_index].modeltext = "Cattai model for fentanyl in dogs" + "<br>" +
+		"vc = " + drug_sets[drug_set_index].vc + "<br>" +
+		"k10 = " + drug_sets[drug_set_index].k10 + "<br>" +
+		"k12 = " + drug_sets[drug_set_index].k12 + "<br>" +
+		"k13 = " + drug_sets[drug_set_index].k13 + "<br>" +
+		"k21 = " + drug_sets[drug_set_index].k21 + "<br>" +
+		"k31 = " + drug_sets[drug_set_index].k31 + "<br>";
+
+		drug_sets[drug_set_index].drug_name = "Fentanyl";
+		drug_sets[drug_set_index].conc_units = "ng";
+		drug_sets[drug_set_index].infused_units = "mcg";
+		drug_sets[drug_set_index].inf_rate_permass = 0;
+		drug_sets[drug_set_index].inf_rate_permass_factor = 1/60;
+		drug_sets[drug_set_index].inf_rate_permass_unit = "mcg/kg/m";
+		drug_sets[drug_set_index].inf_rate_permass_dp = 100;
+	}
 	/*
 	if (x == "Shafer (Weight adjusted)") {
 		// need to correct CP and CE based on Shibutani 2004 
