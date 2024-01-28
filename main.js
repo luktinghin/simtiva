@@ -1835,12 +1835,12 @@ function updateInit() {
 	ElGender = document.getElementById("row_gender");
 	ElFen = document.getElementById("row_fendilution");
 	if (document.getElementById("select_model").value == "Beths") {
-		ElAge.style.display = "none";
+		//ElAge.style.display = "none";
 		ElGender.style.display = "none";
 		ElFen.style.display = "none";
 	}
 	if (document.getElementById("select_model").value == "Cattai-Fentanyl") {
-		ElAge.style.display = "table-row";
+		//ElAge.style.display = "table-row";
 		ElGender.style.display = "table-row";
 		ElFen.style.display = "table-row";
 	}
@@ -3203,14 +3203,14 @@ function preview_cpt(x,ind) {
 			//console.log("est cp" + est_cp);
 	}
 
-	if (drug_sets[ind].drug_name == "Alfentanil") {
+	if (drug_sets[ind].drug_name == "Fentanyl") {
 		if (cpt_threshold_auto == 1) {
-			if (drug_sets[ind].cpt_rates[5]*360 > 100) {
-				cpt_threshold = 0.15;
-				cpt_avgfactor = 0.63;
+			if (drug_sets[ind].cpt_rates[5]*360 > 20) {
+				cpt_threshold = 0.1;
+				cpt_avgfactor = 0.5;
 			} else {
-				cpt_threshold = 0.25;
-				cpt_avgfactor = 0.44;
+				cpt_threshold = 0.07;
+				cpt_avgfactor = 0.6;
 				//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
 			}
 		}
@@ -3471,6 +3471,7 @@ function preview_cpt(x,ind) {
 					//	test_rate = Math.ceil((cpt_rates[0]+cpt_rates[1])/2*360)/360;
 					//} else { //normal scenario
 					test_rate = Math.round(((drug_sets[ind].cpt_rates[drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]]-drug_sets[ind].cpt_rates[j])*cpt_avgfactor+drug_sets[ind].cpt_rates[j])*roundingfactor)/roundingfactor;
+					if ((drug_sets[ind].drug_name == "Fentanyl") && (drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1)) {test_rate = drug_sets[ind].cpt_rates[1]};
 					//}
 					//if ((drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1) && (drug_sets[ind].cpt_rates[0]>0) && (drug_sets[ind].cpt_rates[0]>drug_sets[ind].cpt_rates[1])) {
 					//	for (k=0; k<120; k++) {drug_sets[ind].cpt_rates_real.push(test_rate);}
@@ -8968,7 +8969,7 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].k13 = 0.0049;
 		drug_sets[drug_set_index].k31 = 0.0011;
 		drug_sets[drug_set_index].k41 = 0;
-		drug_sets[drug_set_index].modeltext = "Beths model" + "<br>" +
+		drug_sets[drug_set_index].modeltext = "Beths model for dogs (Vet Rec. 2001;148:198-203)" + "<br>" +
 		"vc = " + drug_sets[drug_set_index].vc + "<br>" +
 		"k10 = " + drug_sets[drug_set_index].k10 + "<br>" +
 		"k12 = " + drug_sets[drug_set_index].k12 + "<br>" +
@@ -8998,7 +8999,7 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].k13 = 0.0771;
 		drug_sets[drug_set_index].k31 = 0.01;
 		drug_sets[drug_set_index].k41 = 0;
-		drug_sets[drug_set_index].modeltext = "Cattai model for fentanyl in dogs" + "<br>" +
+		drug_sets[drug_set_index].modeltext = "Cattai model for fentanyl in dogs (Vet Anaesth Analg. 2023;50:31-40)" + "<br>" +
 		"vc = " + drug_sets[drug_set_index].vc + "<br>" +
 		"k10 = " + drug_sets[drug_set_index].k10 + "<br>" +
 		"k12 = " + drug_sets[drug_set_index].k12 + "<br>" +
@@ -9941,6 +9942,7 @@ function toPageOne() {
 function toPageTwo() {
 	initsubmit();
 	hideallmodal();
+	hidemodal('modalInitial');
 	if (document.getElementById("select_mode").value == "cpt") {
 		initcpt();	
 	}
