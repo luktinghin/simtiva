@@ -4836,10 +4836,11 @@ function preview_cet(x,ind) {
 			console.log("cet_pause" + cet_pause);
 			//optimize breakpoint - if cet_pause is long, allow later start of deliverCPT
 			//new formula, see wikipedia - sigmoid curve - use that formula - normalize the curve, center on 300, x axis varies from -6 to +6
-			sigmoidx = (cet_pause - 300)/50;
-			sigmoid = 1/(1+Math.exp(-sigmoidx));
-			sigmoidcorrfactor = 0.5 * sigmoid + 0.3; //this will make sure the corrfactor min = 0.3, max = 0.8
-			breakpoint = Math.floor((cet_pause - cpt_pause)*sigmoidcorrfactor + cpt_pause);
+			//sigmoidx = (cet_pause - 50)/50;
+			//sigmoid = 1/(1+Math.exp(-sigmoidx));
+			//sigmoidcorrfactor = 0.5 * sigmoid;
+			//breakpoint = Math.floor((cet_pause - cpt_pause)*sigmoidcorrfactor + cpt_pause);
+			breakpoint = Math.floor((cet_pause-cpt_pause)*0.1 + cpt_pause);
 			
 			console.log("entering breakpoint -- " + breakpoint);
 			for (i=0; i<breakpoint; i++) {
@@ -4866,8 +4867,8 @@ function preview_cet(x,ind) {
 			}
 
 			est_cp = p_state3[1] + p_state3[2] + p_state3[3];
-			var compensation = (drug_sets[ind].desired*1.01 - est_cp)/drug_sets[ind].p_udf[1];
-
+			//var compensation = (drug_sets[ind].desired*1.01 - est_cp)/drug_sets[ind].p_udf[1];
+			compensation = 0;
 			console.log("compensation, over 1secs, " + compensation);
 
 			//myChart.data.datasets[2].hidden = false;
@@ -5450,11 +5451,12 @@ function deliver_cet_real(x, ind) {
 			console.log("cet_pause" + cet_pause);
 			//optimize breakpoint - if cet_pause is long, allow later start of deliverCPT
 			//new formula, see wikipedia - sigmoid curve - use that formula - normalize the curve, center on 300, x axis varies from -6 to +6
-			sigmoidx = (cet_pause - 300)/50;
-			sigmoid = 1/(1+Math.exp(-sigmoidx));
-			sigmoidcorrfactor = 0.5 * sigmoid + 0.3; //this will make sure the corrfactor min = 0.3, max = 0.8
-			breakpoint = Math.floor((cet_pause - cpt_pause)*sigmoidcorrfactor + cpt_pause);
-			
+			//recenter on 100
+			//sigmoidx = (cet_pause - 50)/50;
+			//sigmoid = 1/(1+Math.exp(-sigmoidx));
+			//sigmoidcorrfactor = 0.5 * sigmoid + 0.2; //this will make sure the corrfactor min = 0.2, max = 0.8.
+			//breakpoint = Math.floor((cet_pause - cpt_pause)*sigmoidcorrfactor + cpt_pause);
+			breakpoint = Math.floor((cet_pause-cpt_pause)*0.1 + cpt_pause);
 			console.log("entering breakpoint -- " + breakpoint);
 			for (i=0; i<breakpoint; i++) {
 
@@ -5480,8 +5482,8 @@ function deliver_cet_real(x, ind) {
 			}
 
 			est_cp = p_state3[1] + p_state3[2] + p_state3[3];
-			var compensation = (drug_sets[ind].desired*1.01 - est_cp)/drug_sets[ind].p_udf[1];
-
+			//var compensation = (drug_sets[ind].desired*1.01 - est_cp)/drug_sets[ind].p_udf[1];
+			compensation = 0;
 			console.log("compensation, over 1secs, " + compensation);
 
 			//myChart.data.datasets[2].hidden = false;
