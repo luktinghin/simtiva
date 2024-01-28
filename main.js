@@ -11291,18 +11291,18 @@ function applyoptions() {
 	x = document.getElementById("select_threshold").value * 1;
 	if (x==0) {
 		cpt_threshold_auto = 1;
-		cpt_threshold = 0.08;
-		cpt_avgfactor = 0.667;
+		cpt_threshold = 0.05;
+		cpt_avgfactor = 0.6;
 		optionsarray.push([1,0,0]);
 	} else if (x==1) {
 		cpt_threshold_auto = 0;
-		cpt_threshold = 0.13;
-		cpt_avgfactor = 0.55;		
+		cpt_threshold = 0.08;
+		cpt_avgfactor = 0.66;		
 		optionsarray.push([0,1,0]);
 	} else if (x==2) {
 		cpt_threshold_auto = 0;
-		cpt_threshold = 0.08;
-		cpt_avgfactor = 0.667;
+		cpt_threshold = 0.05;
+		cpt_avgfactor = 0.6;
 		optionsarray.push([0,0,1]);
 	}
 
