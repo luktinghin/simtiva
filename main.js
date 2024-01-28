@@ -1829,6 +1829,22 @@ function init() {
 	setmodal("modalInitial");	
 	
 }
+
+function updateInit() {
+	ElAge = document.getElementById("row_age");
+	ElGender = document.getElementById("row_gender");
+	ElFen = document.getElementById("row_fendilution");
+	if (document.getElementById("select_model").value == "Beths") {
+		ElAge.style.display = "none";
+		ElGender.style.display = "none";
+		ElFen.style.display = "none";
+	}
+	if (document.getElementById("select_model").value == "Cattai-Fentanyl") {
+		ElAge.style.display = "table-row";
+		ElGender.style.display = "table-row";
+		ElFen.style.display = "table-row";
+	}
+}
 function initsubmit() {
 	//the validation function on clicking "proceed" on starting page 1
 	//new, arbitrarily set zero
@@ -1837,9 +1853,6 @@ function initsubmit() {
 	simspeed=1;
 	//initiate parameters;
 	mass = document.getElementById("inputBW").value *1; 
-	age = 0;
-	gender = 0;
-	height = 0;
 	ElModel = document.getElementById("select_model");
 		//off complex interface displays
 		document.getElementById("ptolcard").style.display = "none";
@@ -1853,12 +1866,33 @@ function initsubmit() {
 		document.getElementById("complexbuttons").style.display = "none";
 		readmodel(ElModel.value,0);
 		//infusate_concentration goes here
-		drug_sets[0].infusate_concentration = 10; //defaults 10 for propofol
+		
 
 	
 
 	//display elements
 	document.getElementById("bw").innerHTML = mass + "kg";
+	if (ElModel.value == "Beths") {
+		age = 0;
+		gender = 0;
+		height = 0;
+		document.getElementById("age").style.display = "none";
+		document.getElementById("gender").style.display = "none";
+		drug_sets[0].infusate_concentration = 10; //defaults 10 for propofol
+	}
+	if (ElModel.value == "Cattai-Fentanyl") {
+		age = 0; //not used in cattai fentanyl
+		document.getElementById("age").style.display = "none";
+		if (document.getElementById("select_fendilution").value == "custom") {
+			drug_sets[0].infusate_concentration = document.getElementById("fendilution").innerHTML *1;
+		} else {
+			drug_sets[0].infusate_concentration = document.getElementById("select_fendilution").value * 1;
+		}
+		document.getElementById("gender").innerHTML = document.getElementById("select_gender").value;
+		document.getElementById("drugname").innerHTML = "Fentanyl <span style='opacity:0.5'>(" + drug_sets[0].infusate_concentration + "mcg/ml)</span>";
+		document.getElementById("modelname").innerHTML = "Cattai";
+
+	}
 
 	//off chart legend
 	myChart.legend.options.display = false;
