@@ -4021,14 +4021,14 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 	*/
 
 	//determine new thresholds
-	if (drug_sets[ind].drug_name == "Alfentanil") {
+	if (drug_sets[ind].drug_name == "Fentanyl") {
 		if (cpt_threshold_auto == 1) {
-			if (drug_sets[ind].cpt_rates[5]*360 > 100) {
-				cpt_threshold = 0.15;
-				cpt_avgfactor = 0.63;
+			if (drug_sets[ind].cpt_rates[5]*360 > 20) {
+				cpt_threshold = 0.1;
+				cpt_avgfactor = 0.5;
 			} else {
-				cpt_threshold = 0.25;
-				cpt_avgfactor = 0.44;
+				cpt_threshold = 0.07;
+				cpt_avgfactor = 0.6;
 				//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
 			}
 		}
@@ -4152,7 +4152,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		} //end for
 	} else { //CPT mode
 		
-		for (j=0; j<180; j++) {
+		for (j=0; j<60; j++) {
 			
 			//temp_test_rate = cpt_rates[j/60];
 			if (firstcycle == -1) {
@@ -4372,6 +4372,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 					//	test_rate = Math.ceil((cpt_rates[0]+cpt_rates[1])/2*360)/360;
 					//} else { //normal scenario
 					test_rate = Math.round(((drug_sets[ind].cpt_rates[drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]]-drug_sets[ind].cpt_rates[j])*cpt_avgfactor+drug_sets[ind].cpt_rates[j])*roundingfactor)/roundingfactor;
+					if ((drug_sets[ind].drug_name == "Fentanyl") && (drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1)) {test_rate = drug_sets[ind].cpt_rates[1]};
 					//}
 					if ((drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1) && (drug_sets[ind].cpt_rates[0]>0) && (drug_sets[ind].cpt_rates[0]>drug_sets[ind].cpt_rates[1])) {
 						for (k=0; k<cpt_interval; k++) {drug_sets[ind].cpt_rates_real.push(test_rate);}
@@ -8950,6 +8951,7 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].inf_rate_permass_dp = 100;
 	}
 	if (x == "Cattai-Fentanyl") {
+		if (document.getElementById("select_gender").value == "Male") {gender = 0} else {gender = 1};
 		if (gender == 0) {
 			genderfactor = 1;
 		} else {
