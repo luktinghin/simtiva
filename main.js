@@ -1834,15 +1834,18 @@ function updateInit() {
 	ElAge = document.getElementById("row_age");
 	ElGender = document.getElementById("row_gender");
 	ElFen = document.getElementById("row_fendilution");
+	ElMode = document.getElementById("select_mode");
 	if (document.getElementById("select_model").value == "Beths") {
 		//ElAge.style.display = "none";
 		ElGender.style.display = "none";
 		ElFen.style.display = "none";
+		ElMode.options[1].disabled = false;
 	}
 	if (document.getElementById("select_model").value == "Cattai-Fentanyl") {
 		//ElAge.style.display = "table-row";
 		ElGender.style.display = "table-row";
 		ElFen.style.display = "table-row";
+		ElMode.options[1].disabled = true;
 	}
 }
 function initsubmit() {
@@ -1879,6 +1882,11 @@ function initsubmit() {
 		document.getElementById("age").style.display = "none";
 		document.getElementById("gender").style.display = "none";
 		drug_sets[0].infusate_concentration = 10; //defaults 10 for propofol
+		//unhide CE
+		myChart.data.datasets[3].hidden = false;
+		document.getElementById("top_ce").style.display = "inline-block";
+		//change chart filtering
+		myChart.options.plugins.tooltip.filter = function(item, chart) {if ((item.datasetIndex == 2) || (item.datasetIndex == 3)) {return true} else {return false}}
 	}
 	if (ElModel.value == "Cattai-Fentanyl") {
 		age = 0; //not used in cattai fentanyl
@@ -8968,14 +8976,15 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].k21 = 0.0312;
 		drug_sets[drug_set_index].k13 = 0.0049;
 		drug_sets[drug_set_index].k31 = 0.0011;
-		drug_sets[drug_set_index].k41 = 0;
+		drug_sets[drug_set_index].k41 = 0.723; //J vet pharmacol therap 21:182-188
 		drug_sets[drug_set_index].modeltext = "Beths model for dogs (Vet Rec. 2001;148:198-203)" + "<br>" +
 		"vc = " + drug_sets[drug_set_index].vc + "<br>" +
 		"k10 = " + drug_sets[drug_set_index].k10 + "<br>" +
 		"k12 = " + drug_sets[drug_set_index].k12 + "<br>" +
 		"k13 = " + drug_sets[drug_set_index].k13 + "<br>" +
 		"k21 = " + drug_sets[drug_set_index].k21 + "<br>" +
-		"k31 = " + drug_sets[drug_set_index].k31 + "<br>";
+		"k31 = " + drug_sets[drug_set_index].k31 + "<br>" + 
+		"ke0 = 0.723, from Bras (J Vet Pharmacol. Therap. 2008;32:182-188)"
 
 		drug_sets[drug_set_index].drug_name = "Propofol";
 		drug_sets[drug_set_index].conc_units = "mcg";
@@ -9948,6 +9957,9 @@ function toPageTwo() {
 	}
 	if (document.getElementById("select_mode").value == "manual") {
 		initmanual(0);	
+	}
+	if (document.getElementById("select_mode").value == "cet") {
+		initcet();
 	}
 	
 }
