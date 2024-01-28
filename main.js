@@ -5087,25 +5087,25 @@ function preview_cet(x,ind) {
 
 			}//end for
 			//threshold determination
-			if (drug_sets[ind].drug_name == "Alfentanil") {
+			if (drug_sets[ind].drug_name == "Fentanyl") {
 				if (cpt_threshold_auto == 1) {
 					if (drug_sets[ind].cpt_rates[5]*360 > 100) {
-						cpt_threshold = 0.15;
-						cpt_avgfactor = 0.63;
+						cpt_threshold = 0.1;
+						cpt_avgfactor = 0.5;
 					} else {
-						cpt_threshold = 0.25;
-						cpt_avgfactor = 0.44;
+						cpt_threshold = 0.07;
+						cpt_avgfactor = 0.6;
 						//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
 					}
 				}
 			} else {
 				if (cpt_threshold_auto == 1) {
-					if (drug_sets[ind].cpt_rates[5]*360 > 25) {
+					if (drug_sets[ind].cpt_rates[5]*360 > 40) {
 						cpt_threshold = 0.08;
-						cpt_avgfactor = 0.667;
+						cpt_avgfactor = 0.66;
 					} else {
-						cpt_threshold = 0.13;
-						cpt_avgfactor = 0.55;
+						cpt_threshold = 0.05;
+						cpt_avgfactor = 0.6;
 						//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
 					}
 				}
@@ -5113,7 +5113,7 @@ function preview_cet(x,ind) {
 
 			//second pass
 			//automatically determine high or low rounding factor (3600->round to 0.1, 360->round to 1)
-			if ((paedi_mode == 1) || (drug_sets[ind].cpt_rates[5]<16/360)) {
+			if ((paedi_mode == 1) || (drug_sets[ind].cpt_rates[5]<40/360)) {
 				var roundingfactor = 3600;
 			} else {
 				if (drug_sets[ind].drug_name == "Propofol") {
