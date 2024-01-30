@@ -386,6 +386,9 @@ td { padding: 4px 0px 4px 2px; border-top: 1px solid #ccc;}
 #row_gender {
   display: none;
 }
+#row_premed {
+  display: none;
+}
 #row_remidilution {
   display: none;
   height: 1rem;

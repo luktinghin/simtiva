@@ -1834,24 +1834,28 @@ function updateInit() {
 	ElAge = document.getElementById("row_age");
 	ElGender = document.getElementById("row_gender");
 	ElFen = document.getElementById("row_fendilution");
-	ElMode = document.getElementById("select_mode");
+	//ElMode = document.getElementById("select_mode");
+	ElPremed = document.getElementById("row_premed");
 	if (document.getElementById("select_model").value == "Beths") {
 		//ElAge.style.display = "none";
 		ElGender.style.display = "none";
 		ElFen.style.display = "none";
-		ElMode.options[1].disabled = false;
+		ElPremed.style.display = "none";
+		
 	}
 	if (document.getElementById("select_model").value == "Cattai-Fentanyl") {
 		//ElAge.style.display = "table-row";
 		ElGender.style.display = "table-row";
 		ElFen.style.display = "table-row";
-		ElMode.options[1].disabled = true;
+		ElPremed.style.display = "none";
+		
 	}
 	if (document.getElementById("select_model").value == "Cattai-Propofol") {
 		ElAge.style.display = "table-row";
 		ElGender.style.display = "table-row";
-		ElFen.style.display = "table-row";
-		ElMode.options[1].disabled = false;
+		ElFen.style.display = "none";
+		ElPremed.style.display = "table-row";
+		
 	}
 }
 function initsubmit() {
@@ -4092,14 +4096,27 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 			}
 		}
 	} else {
-		if (cpt_threshold_auto == 1) {
-			if (drug_sets[ind].cpt_rates[5]*360 > 40) {
-				cpt_threshold = 0.08;
-				cpt_avgfactor = 0.66;
-			} else {
-				cpt_threshold = 0.05;
-				cpt_avgfactor = 0.6;
-				//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
+		if (drug_sets[0].model_name == "Cattai-Propofol") {
+			if (cpt_threshold_auto == 1) {
+				if (drug_sets[ind].cpt_rates[5]*360 > 40) {
+					cpt_threshold = 0.08;
+					cpt_avgfactor = 0.5;
+				} else {
+					cpt_threshold = 0.07;
+					cpt_avgfactor = 0.5;
+					//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
+				}
+			}
+		} else {
+			if (cpt_threshold_auto == 1) {
+				if (drug_sets[ind].cpt_rates[5]*360 > 40) {
+					cpt_threshold = 0.08;
+					cpt_avgfactor = 0.66;
+				} else {
+					cpt_threshold = 0.05;
+					cpt_avgfactor = 0.6;
+					//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
+				}
 			}
 		}
 	}
@@ -4431,7 +4448,8 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 					//	test_rate = Math.ceil((cpt_rates[0]+cpt_rates[1])/2*360)/360;
 					//} else { //normal scenario
 					test_rate = Math.round(((drug_sets[ind].cpt_rates[drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]]-drug_sets[ind].cpt_rates[j])*cpt_avgfactor+drug_sets[ind].cpt_rates[j])*roundingfactor)/roundingfactor;
-					if ((drug_sets[ind].drug_name == "Fentanyl") && (drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1)) {test_rate = drug_sets[ind].cpt_rates[1]};
+					if ((drug_sets[ind].drug_name == "Fentanyl") && (drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1)) {test_rate = Math.ceil(drug_sets[ind].cpt_rates[1]*roundingfactor)/roundingfactor};
+					if ((drug_sets[ind].model_name == "Cattai-Propofol") && (drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1)) {test_rate = Math.ceil(drug_sets[ind].cpt_rates[1]*1.03*roundingfactor)/roundingfactor};
 					//}
 					if ((drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1) && (drug_sets[ind].cpt_rates[0]>0) && (drug_sets[ind].cpt_rates[0]>drug_sets[ind].cpt_rates[1])) {
 						for (k=0; k<cpt_interval; k++) {drug_sets[ind].cpt_rates_real.push(test_rate);}
@@ -9061,6 +9079,7 @@ function readmodel(x, drug_set_index) {
 			state_elderly_1 = (age >= 7) ? true:false;
 			state_elderly_2 = (age >= 8) ? true:false;
 		}
+		console.log("stateelderly1" + state_elderly_1 + "stateelderly2" + state_elderly_2);
 		if (state_premed == true) {
 			k_premed = 1.209;
 		} else {
@@ -9089,7 +9108,7 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].k31 = 0.00993;
 		drug_sets[drug_set_index].k41 = 0.723;
 
-		drug_sets[drug_set_index].modeltext = "Cattai-propofol model for dogs ()" + "<br>" +
+		drug_sets[drug_set_index].modeltext = "Cattai-propofol model for dogs (Vet Anaesth Analg. 2019;48:568-578)" + "<br>" +
 		"vc = " + drug_sets[drug_set_index].vc + "<br>" +
 		"k10 = " + drug_sets[drug_set_index].k10 + "<br>" +
 		"k12 = " + drug_sets[drug_set_index].k12 + "<br>" +
@@ -10033,6 +10052,8 @@ function toPageOne() {
 
 function toPageTwo() {
 	initsubmit();
+	loadoptions();
+	applyoptions();
 	hideallmodal();
 	hidemodal('modalInitial');
 	if (document.getElementById("select_mode").value == "cpt") {

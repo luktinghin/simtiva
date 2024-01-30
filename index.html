@@ -118,27 +118,18 @@
 						<td>
 							<select id="select_model" onchange="updateInit();" >
 									<option value="Beths">Beths (Propofol)</option>
-									<option value="Cattai-Propofol" disabled>Cattai (Propofol)</option>
+									<option value="Cattai-Propofol">Cattai (Propofol)</option>
 									<option value="Cattai-Fentanyl">Cattai (Fentanyl)</option>
 							</select>
 						</td>
 					</tr>
-					<tr id="row_premed" style="display:none">
-						<td>Premed
-						</td>
-						<td>
-							<select id="select_premed" onchange="" >
-									<option value="0">No</option>
-									<option value="1">Yes ()</option>
-							</select>
-						</td>
-					</tr>
+
 					<tr>
 						<td>Mode <i class="far fa-question-circle tooltip"><span class="tooltiptext" style="width: 160px">CE targeting: experimental; for propofol</span></i></td>
 						<td>
 							<select id="select_mode" onchange="" >
 									<option value="cpt">CP targeting</option>
-									<option value="cet">CE targeting</option>
+									<!--<option value="cet">CE targeting</option>-->
 									<option value="manual">Manual</option>
 							</select>
 					</tr>
@@ -156,6 +147,17 @@
 							<select id="select_gender" onchange="if (this.value == 'Male') {gender = 0} else {gender = 1}" >
 								<option value="Male">Male</option>
 								<option value="Female">Female</option>
+							</select>
+						</td>
+					</tr>
+
+					<tr id="row_premed" style="">
+						<td>Premed
+						</td>
+						<td>
+							<select id="select_premed" onchange="" >
+									<option value="0">No</option>
+									<option value="1">Yes ()</option>
 							</select>
 						</td>
 					</tr>
