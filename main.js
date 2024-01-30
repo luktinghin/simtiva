@@ -1847,6 +1847,12 @@ function updateInit() {
 		ElFen.style.display = "table-row";
 		ElMode.options[1].disabled = true;
 	}
+	if (document.getElementById("select_model").value == "Cattai-Propofol") {
+		ElAge.style.display = "table-row";
+		ElGender.style.display = "table-row";
+		ElFen.style.display = "table-row";
+		ElMode.options[1].disabled = false;
+	}
 }
 function initsubmit() {
 	//the validation function on clicking "proceed" on starting page 1
@@ -1867,6 +1873,7 @@ function initsubmit() {
 		document.getElementById("complexmodeselection0").style.display = "none";
 		document.getElementById("complexmodeselection1").style.display = "none";
 		document.getElementById("complexbuttons").style.display = "none";
+
 		readmodel(ElModel.value,0);
 		//infusate_concentration goes here
 		
@@ -1887,6 +1894,15 @@ function initsubmit() {
 		document.getElementById("top_ce").style.display = "inline-block";
 		//change chart filtering
 		myChart.options.plugins.tooltip.filter = function(item, chart) {if ((item.datasetIndex == 2) || (item.datasetIndex == 3)) {return true} else {return false}}
+	}
+	if (ElModel.value == "Cattai-Propofol") {
+		drug_sets[0].infusate_concentration = 10; //defaults 10 for propofol
+		//unhide CE
+		myChart.data.datasets[3].hidden = false;
+		document.getElementById("top_ce").style.display = "inline-block";
+		//change chart filtering
+		myChart.options.plugins.tooltip.filter = function(item, chart) {if ((item.datasetIndex == 2) || (item.datasetIndex == 3)) {return true} else {return false}}
+
 	}
 	if (ElModel.value == "Cattai-Fentanyl") {
 		age = 0; //not used in cattai fentanyl
@@ -8986,7 +9002,7 @@ function readmodel(x, drug_set_index) {
 		"k13 = " + drug_sets[drug_set_index].k13 + "<br>" +
 		"k21 = " + drug_sets[drug_set_index].k21 + "<br>" +
 		"k31 = " + drug_sets[drug_set_index].k31 + "<br>" + 
-		"ke0 = 0.723, from Bras (J Vet Pharmacol. Therap. 2008;32:182-188)"
+		"ke0 = 0.723, from Bras (J Vet Pharmacol. Therap. 2008;32:182-188)";
 
 		drug_sets[drug_set_index].drug_name = "Propofol";
 		drug_sets[drug_set_index].conc_units = "mcg";
@@ -9025,6 +9041,71 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].inf_rate_permass_factor = 1/60;
 		drug_sets[drug_set_index].inf_rate_permass_unit = "mcg/kg/m";
 		drug_sets[drug_set_index].inf_rate_permass_dp = 100;
+	}
+	if (x == "Cattai-Propofol") {
+		age = document.getElementById("inputAge").value * 1;
+		if (document.getElementById("select_gender").value == "Male") {gender = 0} else {gender = 1};
+		if (document.getElementById("select_premed").value == "1") {state_premed = true} else {state_premed = false};
+
+		if (mass <= 9) {
+			state_elderly_1 = (age >= 10) ? true:false;
+			state_elderly_2 = (age >= 11) ? true:false;
+		} else if (mass <= 25) {
+			state_elderly_1 = (age >= 9) ? true:false;
+			state_elderly_2 = (age >= 10) ? true:false;
+		} else if (mass <= 40) {
+			state_elderly_1 = (age >= 8) ? true:false;
+			state_elderly_2 = (age >= 9) ? true:false;
+		} else {
+			//>40
+			state_elderly_1 = (age >= 7) ? true:false;
+			state_elderly_2 = (age >= 8) ? true:false;
+		}
+		if (state_premed == true) {
+			k_premed = 1.209;
+		} else {
+			k_premed = 1;
+		}
+		if (state_elderly_2 == true) {
+			k_ag2 = 1.521;
+		} else {
+			k_ag2 = 1;
+		}
+		if (gender == 0) {
+			k_sex = 1;
+		} else {
+			k_sex = 1-0.345;
+		}
+		if (state_elderly_1 == true) {
+			k_ag1 = 1.347;
+		} else {
+			k_ag1 = 1;
+		}
+		drug_sets[drug_set_index].vc = 1.48 * (1 + 0.0993 * (mass - 12.25));
+		drug_sets[drug_set_index].k10 = 0.382 * (1 + -0.0111 * (mass - 12.25)) * k_premed * k_ag2;
+		drug_sets[drug_set_index].k12 = 0.544;
+		drug_sets[drug_set_index].k21 = 0.228;
+		drug_sets[drug_set_index].k13 = 0.129 * k_sex * k_ag1;
+		drug_sets[drug_set_index].k31 = 0.00993;
+		drug_sets[drug_set_index].k41 = 0.723;
+
+		drug_sets[drug_set_index].modeltext = "Cattai-propofol model for dogs ()" + "<br>" +
+		"vc = " + drug_sets[drug_set_index].vc + "<br>" +
+		"k10 = " + drug_sets[drug_set_index].k10 + "<br>" +
+		"k12 = " + drug_sets[drug_set_index].k12 + "<br>" +
+		"k13 = " + drug_sets[drug_set_index].k13 + "<br>" +
+		"k21 = " + drug_sets[drug_set_index].k21 + "<br>" +
+		"k31 = " + drug_sets[drug_set_index].k31 + "<br>" + 
+		"ke0 = 0.723, from Bras (J Vet Pharmacol. Therap. 2008;32:182-188)";
+
+		drug_sets[drug_set_index].drug_name = "Propofol";
+		drug_sets[drug_set_index].conc_units = "mcg";
+		drug_sets[drug_set_index].infused_units = "mg";
+		drug_sets[drug_set_index].inf_rate_permass = 0;
+		drug_sets[drug_set_index].inf_rate_permass_factor = 1;
+		drug_sets[drug_set_index].inf_rate_permass_unit = "mg/kg/h";
+		drug_sets[drug_set_index].inf_rate_permass_dp = 100;
+
 	}
 	/*
 	if (x == "Shafer (Weight adjusted)") {
