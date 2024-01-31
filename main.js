@@ -3231,6 +3231,7 @@ function preview_cpt(x,ind) {
 			//console.log("est cp" + est_cp);
 	}
 
+	//determine new thresholds
 	if (drug_sets[ind].drug_name == "Fentanyl") {
 		if (cpt_threshold_auto == 1) {
 			if (drug_sets[ind].cpt_rates[5]*360 > 20) {
@@ -3241,16 +3242,47 @@ function preview_cpt(x,ind) {
 				cpt_avgfactor = 0.6;
 				//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
 			}
+		} else {
+				x = document.getElementById("select_threshold").value * 1;
+				if (x == 1) { //lazy
+					cpt_threshold = 0.1;
+					cpt_avgfactor = 0.5;
+				} else {
+					cpt_threshold = 0.07;
+					cpt_avgfactor = 0.6;
+				}
 		}
 	} else {
-		if (cpt_threshold_auto == 1) {
-			if (drug_sets[ind].cpt_rates[5]*360 > 40) {
-				cpt_threshold = 0.08;
-				cpt_avgfactor = 0.66;
+		if (drug_sets[0].model_name == "Cattai-Propofol") {
+			if (cpt_threshold_auto == 1) {
+				if (drug_sets[ind].cpt_rates[5]*360 > 40) {
+					cpt_threshold = 0.08;
+					cpt_avgfactor = 0.5;
+				} else {
+					cpt_threshold = 0.07;
+					cpt_avgfactor = 0.5;
+					//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
+				}
 			} else {
-				cpt_threshold = 0.05;
-				cpt_avgfactor = 0.6;
-				//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
+				x = document.getElementById("select_threshold").value * 1;
+				if (x == 1) { //lazy
+					cpt_threshold = 0.08;
+					cpt_avgfactor = 0.5;
+				} else {
+					cpt_threshold = 0.07;
+					cpt_avgfactor = 0.5;
+				}
+			}
+		} else {
+			if (cpt_threshold_auto == 1) {
+				if (drug_sets[ind].cpt_rates[5]*360 > 40) {
+					cpt_threshold = 0.08;
+					cpt_avgfactor = 0.66;
+				} else {
+					cpt_threshold = 0.05;
+					cpt_avgfactor = 0.6;
+					//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
+				}
 			}
 		}
 	}
@@ -3499,7 +3531,8 @@ function preview_cpt(x,ind) {
 					//	test_rate = Math.ceil((cpt_rates[0]+cpt_rates[1])/2*360)/360;
 					//} else { //normal scenario
 					test_rate = Math.round(((drug_sets[ind].cpt_rates[drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]]-drug_sets[ind].cpt_rates[j])*cpt_avgfactor+drug_sets[ind].cpt_rates[j])*roundingfactor)/roundingfactor;
-					if ((drug_sets[ind].drug_name == "Fentanyl") && (drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1)) {test_rate = drug_sets[ind].cpt_rates[1]};
+					if ((drug_sets[ind].drug_name == "Fentanyl") && (drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1)) {test_rate = Math.ceil(drug_sets[ind].cpt_rates[1]*roundingfactor)/roundingfactor};
+					if ((drug_sets[ind].model_name == "Cattai-Propofol") && (drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1)) {test_rate = Math.ceil(drug_sets[ind].cpt_rates[1]*1.03*roundingfactor)/roundingfactor};
 					//}
 					//if ((drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1] == 1) && (drug_sets[ind].cpt_rates[0]>0) && (drug_sets[ind].cpt_rates[0]>drug_sets[ind].cpt_rates[1])) {
 					//	for (k=0; k<120; k++) {drug_sets[ind].cpt_rates_real.push(test_rate);}
@@ -3552,8 +3585,9 @@ function preview_cpt(x,ind) {
 		drug_sets[ind].preview_rate = 0;	
 	} else {
 		drug_sets[ind].preview_rate = Math.round(drug_sets[ind].previewhistoryarray[0][1]*3600/drug_sets[ind].infusate_concentration*10)/10;
+		
 	}
-	drug_sets[ind].preview_downtrend = (drug_sets[ind].cpt_rates_real[working_clock-1] > test_rate);
+	drug_sets[ind].preview_downtrend = (drug_sets[ind].cpt_rates_real[Math.floor(time_in_s)] > drug_sets[ind].previewhistoryarray[0][1]);
 }
 
 function displaypreview(x,ind) {
@@ -4094,6 +4128,15 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 				cpt_avgfactor = 0.6;
 				//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
 			}
+		} else {
+				x = document.getElementById("select_threshold").value * 1;
+				if (x == 1) { //lazy
+					cpt_threshold = 0.1;
+					cpt_avgfactor = 0.5;
+				} else {
+					cpt_threshold = 0.07;
+					cpt_avgfactor = 0.6;
+				}
 		}
 	} else {
 		if (drug_sets[0].model_name == "Cattai-Propofol") {
@@ -4105,6 +4148,15 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 					cpt_threshold = 0.07;
 					cpt_avgfactor = 0.5;
 					//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
+				}
+			} else {
+				x = document.getElementById("select_threshold").value * 1;
+				if (x == 1) { //lazy
+					cpt_threshold = 0.08;
+					cpt_avgfactor = 0.5;
+				} else {
+					cpt_threshold = 0.07;
+					cpt_avgfactor = 0.5;
 				}
 			}
 		} else {
