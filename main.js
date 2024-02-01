@@ -13947,14 +13947,14 @@ function previewshareoutput() {
 	
 
 	
-	document.getElementById("sharedatatext").value = 'https://simtiva.app/view.html?P=' + LZString.compressToEncodedURIComponent(outputstring());
+	document.getElementById("sharedatatext").value = 'https://vet.simtiva.app/view.html?P=' + LZString.compressToEncodedURIComponent(outputstring());
 }
 
 function updatedatatext() {
 	clearTimeout(texttimeout);
 	texttimeout = setTimeout(function() {
 		savefile_patient();
-		document.getElementById("sharedatatext").value = 'https://simtiva.app/view.html?P=' + LZString.compressToEncodedURIComponent(outputstring());	
+		document.getElementById("sharedatatext").value = 'https://vet.simtiva.app/view.html?P=' + LZString.compressToEncodedURIComponent(outputstring());	
 	},500);
 }
 
