@@ -6488,8 +6488,10 @@ function pause(ind) {
 }
 function pauseCpt(ind) {
 	drug_sets[ind].desired = 0;
-	document.getElementById("inputDesired" + ind).value = "0";
-	document.getElementById("inputDesiredCe" + ind + "_new").value = "0";
+	if (parseloading == 0) {
+		document.getElementById("inputDesired" + ind).value = "0";
+		document.getElementById("inputDesiredCe" + ind + "_new").value = "0";
+	}
 	drug_sets[ind].running=0;
 
 	var working_clock = Math.floor(time_in_s);
