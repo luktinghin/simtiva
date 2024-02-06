@@ -10359,7 +10359,6 @@ function displayModalOptions() {
 						</td>
 					</tr>
 				</table>
-				<div>&nbsp;</div>
 				<a class="button invert" id="" onclick="applyoptions();hidewarningmodal();">Apply</a>
 				<a class="button right muted" id="" onclick="loadoptions('default');displayModalOptions();loadoptions();applyoptions();">Reset settings</a>
 	`

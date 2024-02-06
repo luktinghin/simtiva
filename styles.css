@@ -1427,8 +1427,8 @@ body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom
 }
 
 .modal-body.alt {
-  padding:16px;
-  padding-bottom:26px;
+  padding:10px;
+  /*padding-bottom:26px;*/
   overflow-y:auto; 
   max-height: 70dvh;
 }
