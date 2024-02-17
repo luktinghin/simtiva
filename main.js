@@ -2706,7 +2706,7 @@ function common_start_calls() {
 			}
 			loop3 = setInterval(updatechart, 5000, myChart);
 
-		loop6 = setInterval(displayWarningBanner, 60*1000);
+		loop6 = setInterval(displayWarningBanner, 60*2000);
 		
 		initshare();
 }
@@ -16290,7 +16290,9 @@ function setBolusUnit(parameter) {
 }
 
 function displayWarningBanner() {
-	
+	//loop6 checks whether sim session expires. Q2mins.
+
+
 	will_end_drug_set = 0;
 	max_time = drug_sets[0].cpt_rates_real.length;
 	if (complex_mode == 1) {
@@ -16300,13 +16302,32 @@ function displayWarningBanner() {
 		}
 	}
 
-	//check if near the end, i.e. 600s before end i.e. 10 mins
-	if (Math.floor(time_in_s) > max_time - 60*10) {
+	
+	if (Math.floor(time_in_s) > max_time - 60*7) {
+		//really the end (~7mins), attempt to recover
+		extendSession(will_end_drug_set);
+		hideWarningBanner();
+	} else if (Math.floor(time_in_s) > max_time - 60*20) {
+		//check if near the end, i.e. 600s before end i.e. 15 mins /20mins
 		hideallmodal();
 		//display the banner
 		document.getElementById("warningBanner").style.display = "flex";
+		document.querySelector(".warningbanner_up").innerHTML = `<b>WARNING</b> - Time's up!`;
+		document.getElementById("warningmessage").innerHTML = `Simulation session expiring in <15 mins. Do you want to continue using SimTIVA?`;
+		document.getElementById("warningbutton").innerHTML = "Yes";
 		document.getElementById("warningbutton").setAttribute("onclick", `extendSession(${will_end_drug_set});document.getElementById('warningBanner').style.display='none'`)
+	} else if (Math.floor(time_in_s) > max_time - 60*60) {
+		//one hour left for infusions
+		hideallmodal();
+		document.getElementById("warningBanner").style.display = "flex";
+		document.querySelector(".warningbanner_up").innerHTML = `<b>ATTENTION</b> - Session inactivity`;
+		document.getElementById("warningmessage").innerHTML = `Current session will expire in 1h. Please update your infusion scheme to prevent data loss.`;
+		document.getElementById("warningbutton").innerHTML = "OK";
+		document.getElementById("warningbutton").setAttribute("onclick", `document.getElementById('warningBanner').style.display='none'`);
+
 	}
+
+
 }
 
 

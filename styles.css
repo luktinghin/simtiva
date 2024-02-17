@@ -1414,6 +1414,7 @@ body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom
 
 .modal-header.alt {
   padding-top:15px;
+  padding-left: 12px;
   border-radius: 15px 15px 0px 0px;
   color:grey;
   background:#fefefe;
@@ -6345,6 +6346,7 @@ body.dark #addeventtext{
 /* new warning banner styles */
 .warningbanner {
   z-index: 999;
+  max-width: calc(768px - 1rem);
   position: fixed;
   display: none;
   /*display: flex*;*/
@@ -6354,10 +6356,20 @@ body.dark #addeventtext{
   border: 2px solid #f00;
   margin: 0 0.5rem 1rem 0.5rem;
   bottom: 0;
-  left: 0;
   width: calc(100% - 1rem);
   color: white;
   padding: 0.5rem 0.5rem 0.5rem 0;
+}
+.narrowbodywrapper > .warningbanner {
+  width: calc(100% - 4rem);
+  margin: 0 2rem 1rem 2rem;
+  right: 0;
+}
+@media screen and (min-width: 768px) {
+  .narrowbodywrapper > .warningbanner {
+    width: calc(100% - 30px - 1.5rem);
+    margin: 0 0.5rem 1rem 0.5rem;
+  }
 }
 .warningbanner_left {
   flex-basis: 60px;
