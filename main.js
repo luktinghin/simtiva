@@ -232,6 +232,57 @@ var popupUpdateInterval;
 var numpadValue = 0;
 var numpadOrig;
 
+
+var collapsibles = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < collapsibles.length; i++) {
+  collapsibles[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+  if (collapsibles[i].classList.contains("active")) {
+    collapsibles[i].nextElementSibling.style.display = "block";
+  }
+}
+
+var collapsiblecards = document.getElementsByClassName("collapsiblecard");
+
+for (i=0; i<collapsiblecards.length; i++) {
+	collapsiblecards[i].nextElementSibling.style.display = "none";
+	collapsiblecards[i].nextElementSibling.classList.add("collapsed");
+	collapsiblecards[i].addEventListener("click", function() {
+		toggleCard(this);
+	});
+}
+
+function toggleCard(x) {
+	var content = x.nextElementSibling;
+	x.classList.toggle("active");
+    if (content.style.display === "block") {
+      content.style.display = "none";
+      //content.classList.add("collapsed");
+      content.classList.remove("animate");
+    } else {
+      content.style.display = "block";
+      content.classList.add("animate");
+    }
+}
+
+var tops = document.getElementsByClassName("top_title_box");
+
+for (i=0; i<tops.length; i++) {
+	tops[i].addEventListener("click", function() {
+		window.scrollTo(0,0);
+	})
+}
+
+
 //global colors / charting script initiation
 
 
@@ -10705,54 +10756,6 @@ function togglemenu() {
 
 
 
-var collapsibles = document.getElementsByClassName("collapsible");
-var i;
-
-for (i = 0; i < collapsibles.length; i++) {
-  collapsibles[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
-  if (collapsibles[i].classList.contains("active")) {
-    collapsibles[i].nextElementSibling.style.display = "block";
-  }
-}
-
-var collapsiblecards = document.getElementsByClassName("collapsiblecard");
-
-for (i=0; i<collapsiblecards.length; i++) {
-	collapsiblecards[i].nextElementSibling.style.display = "none";
-	collapsiblecards[i].nextElementSibling.classList.add("collapsed");
-	collapsiblecards[i].addEventListener("click", function() {
-		toggleCard(this);
-	});
-}
-
-function toggleCard(x) {
-	var content = x.nextElementSibling;
-	x.classList.toggle("active");
-    if (content.style.display === "block") {
-      content.style.display = "none";
-      //content.classList.add("collapsed");
-      content.classList.remove("animate");
-    } else {
-      content.style.display = "block";
-      content.classList.add("animate");
-    }
-}
-
-var tops = document.getElementsByClassName("top_title_box");
-
-for (i=0; i<tops.length; i++) {
-	tops[i].addEventListener("click", function() {
-		window.scrollTo(0,0);
-	})
-}
 
 function hide_prompts(object) {
 	object.style.display="none";
