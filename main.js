@@ -2706,12 +2706,7 @@ function common_start_calls() {
 				loop2 = setInterval(runinfusion2, refresh_interval);	
 			}
 			loop3 = setInterval(updatechart, 5000, myChart);
-
-<<<<<<< Updated upstream
-=======
 		loop7 = setInterval(displayWarningBanner, 60*2000);
-		
->>>>>>> Stashed changes
 		initshare();
 }
 
