@@ -1682,6 +1682,21 @@
 					<a id="pastschemebuttonCOPY" onclick="displaymodalhistory();"><i class="fas fa-history"></i> Past Schemes</a>
 				</div>
 		</div>
+		<div class="card" id="card_controlpanel">
+			<div class="cardtitle">CONTROL PANEL</div>
+			<div class="cardcontents">
+				<div>
+					<button id="" onclick="timeFxReset();">Restart</button>Restart simulation (patient characteristics will be kept, start again from time zero)
+				</div>
+				<div>
+					<button id="" onclick="timeFxSuspend();">Pause</button>Pause simulation (suspend simulation at current time while keeping all infusion data)
+				</div>
+				<div>
+					<button id="" onclick="timeFxResume(document.getElementById('inputjumptime').value)">Jump</button>Jump to a past or future time point
+					<input id="inputjumptime">
+				</div>
+			</div>
+		</div>
 		<div class="card" id="card_retrospective">
 			<div class="cardtitle collapsiblecard">RETROSPECTIVE</div>
 			<div class="cardcontents">

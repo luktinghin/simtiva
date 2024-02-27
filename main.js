@@ -180,6 +180,7 @@ window.ptolcouplesarray = []; //ptol couples over time
 //var ptol1overtime = new Array(); //ptol chart data for 1 over time
 
 var loop6 = null; //this is setinterval function
+var loop7 = null;
 
 window.BIS_array = [];
 window.eventArray = [];
@@ -2706,6 +2707,11 @@ function common_start_calls() {
 			}
 			loop3 = setInterval(updatechart, 5000, myChart);
 
+<<<<<<< Updated upstream
+=======
+		loop7 = setInterval(displayWarningBanner, 60*2000);
+		
+>>>>>>> Stashed changes
 		initshare();
 }
 
@@ -6847,12 +6853,15 @@ function update() {
 				if (historydivs[j].getAttribute("data-time")*1==prior) { //current infusing
 					historydivs[j].classList.add("grey");
 					historydivs[j].classList.remove("next");
+					historydivs[j].classList.remove("past");
 				} else if (historydivs[j].getAttribute("data-time")*1<prior) { //past history
 					historydivs[j].classList.add("past");
 					historydivs[j].classList.remove("grey");
+					historydivs[j].classList.remove("next");
 				} else {
 					historydivs[j].classList.add("next");
 					historydivs[j].classList.remove("grey");
+					historydivs[j].classList.remove("past");
 				}
 			}
 		//}
@@ -6964,12 +6973,15 @@ function update() {
 				if (historydivs[j].getAttribute("data-time")*1==prior) { //current infusing
 					historydivs[j].classList.add("grey");
 					historydivs[j].classList.remove("next");
+					historydivs[j].classList.remove("past");
 				} else if (historydivs[j].getAttribute("data-time")*1<prior) { //past history
 					historydivs[j].classList.add("past");
 					historydivs[j].classList.remove("grey");
+					historydivs[j].classList.remove("next");
 				} else {
 					historydivs[j].classList.add("next");
 					historydivs[j].classList.remove("grey");
+					historydivs[j].classList.remove("past");
 				}
 			}
 		//}
@@ -7001,6 +7013,163 @@ function update() {
 	}
 	//copy historywrapper text to another wrapper for widescreen
 	document.getElementById("historywrapperCOPY").innerHTML = document.getElementById("historywrapper").innerHTML;
+}
+
+//time manipulation functions
+
+function timeFxReset() {
+	timeFxSuspend();
+	if (drug_sets[0].cet_active>0 && drug_sets[0].IB_active==0) {
+		initsubmit();
+		initcet();	
+		document.getElementById("inputDesiredCe0_new").value = "";
+	} else if (drug_sets[0].cet_active>0 && drug_sets[0].IB_active==1) {
+		initsubmit();
+		initcetbolus();
+	} else if (drug_sets[0].manualmode_active>0) {
+		initsubmit();
+		initmanual(0);
+	} else if (drug_sets[0].cpt_active>0) {
+		initsubmit();
+		initcpt();
+		document.getElementById("inputDesired0").value = "";
+	}
+	time = 0;
+	time_in_s = 0;
+	myChart.data.datasets[2].data.length = 0;
+	myChart.data.datasets[3].data.length = 0;
+	myChart.update();
+	drug_sets[0].firstrun = -1;
+	//interface changes
+	document.getElementById("iconplay").classList.add("stop");
+	document.getElementById("iconplay").innerHTML="<i class='fas fa-pause fa-lg'></i>";
+	document.getElementById("top_subtitle").innerHTML = `<b>SimTIVA</b> - <span style='opacity: 50%; white-space:nowrap;' id='top_subtitle2'>Simple TIVA simulator</span>`;
+	document.getElementById("top_subtitle").classList.remove("topClose");
+	document.getElementById("top_title").classList.remove("topOpen");
+	document.getElementById("clock").innerHTML="_";
+	document.getElementById("displayvolume").innerHTML="_";
+	document.getElementById("infusiondescriptor").innerHTML="";
+	document.getElementById("prompt_msg2").innerHTML="Simulation reset";
+	document.getElementById("status").innerHTML="Waiting to start";
+	document.getElementById("historywrapper").innerHTML="Waiting to start";
+	document.getElementById("historywrapperCOPY").innerHTML="Waiting to start";
+	document.getElementById("ptolcard_right").innerHTML="-";
+
+}
+function timeFxSuspend() {
+    time_of_stop = Date.now();
+	clearInterval(loop1);
+	clearInterval(loop2);
+	clearInterval(loop3);
+	clearInterval(loop7);
+}
+
+function timeFxResume(parametertime) {
+    //parameter is input in ms AFTER current
+    parametertime = parametertime*1000;
+    if (parametertime > 0) {
+    	//this is jump to future, no problem
+    	offset = Date.now() - parametertime;
+		loop1 = setInterval(update, 500);
+		loop2 = setInterval(runinfusion2, refresh_interval);
+		loop3 = setInterval(updatechart, 5000, myChart);
+		loop7 = setInterval(displayWarningBanner, 60*2000);
+	} else {
+		//this is jump back in time, gotta remove inf schemes as necessary
+		
+		offset = Date.now() - parametertime;
+		//read historyarrays, truncate it. also grab the scheme time for grabbing historytext later
+		
+		tempIndex = drug_sets[0].historyarrays.findIndex((element) => element[2] > (time + parametertime)/1000);
+
+		if (tempIndex > -1) {
+			//branch off manual mode VS CPT/CET modes
+			if (drug_sets[0].manualmode_active>0) {
+				tempCutoff = drug_sets[0].historyarrays[tempIndex][2];
+				tempRate = drug_sets[0].historyarrays[tempIndex-1][3];
+				drug_sets[0].historyarrays.length = tempIndex;
+				//truncate important data at cutoff
+				drug_sets[0].cpt_cp.length = tempCutoff;
+				drug_sets[0].cpt_ce.length = tempCutoff;
+				drug_sets[0].cpt_rates_real.length = tempCutoff;
+				drug_sets[0].volinf.length = tempCutoff;
+				myChart.data.datasets[2].data.length = myChart.data.datasets[2].data.findIndex((element)=>element.x>tempCutoff/60) -1;
+				myChart.data.datasets[3].data.length = myChart.data.datasets[3].data.findIndex((element)=>element.x>tempCutoff/60) -1;
+				drug_sets[0].inf_rate_mls = tempRate;
+				update();
+				lookahead(0,7200,0);
+				//remove one line of historyarrays
+				drug_sets[0].historyarrays.length = drug_sets[0].historyarrays.length - 1;
+				//need to process historytext
+				drug_sets[0].historytext = "";
+				for (counter = 0; counter<drug_sets[0].historyarrays.length; counter++) {
+					//1 is bolus, 2 is infusion			
+					if (drug_sets[0].historyarrays[counter][1]==1) {
+						appendText = "<div><div class='timespan'>" + converttime(Math.floor(drug_sets[0].historyarrays[counter][2])) + "</div>Bolus: " + drug_sets[0].historyarrays[counter][3] + drug_sets[0].infused_units + "</div>";
+					}
+					if (drug_sets[0].historyarrays[counter][1]==2) {
+						appendText = "<div><div class='timespan'>" + converttime(Math.floor(drug_sets[0].historyarrays[counter][2])) + "</div>Rate: " + Math.round(drug_sets[0].historyarrays[counter][3]*100)/100 + "ml/h</div>";
+					}
+					drug_sets[0].historytext = drug_sets[0].historytext.concat(appendText);
+				}
+				document.getElementById("historywrapper").innerHTML = drug_sets[0].historytext;
+			} else {
+
+				//make sure this is start of scheme first. because for CET mode the time in position [2] may not be right
+				if (drug_sets[0].historyarrays[tempIndex][1] == 0) {
+					//then it's ok
+				} else if (drug_sets[0].historyarrays[tempIndex-1][1] == 0) {
+					//move back 1 line
+					tempIndex = tempIndex - 1;
+				} else if (drug_sets[0].historyarrays[tempIndex-2][1] == 0) {
+					tempIndex = tempIndex - 2;
+				} else if (drug_sets[0].historyarrays[tempIndex-3][1] == 0) {
+					tempIndex = tempIndex - 3;
+				}
+
+				//find prev until can find desired of previous. can be index -2, -3, or -4, determined by second position equals 0 i.e. [1] == 0
+				if (drug_sets[0].historyarrays[tempIndex - 2][1]==0) {
+					tempDesired = drug_sets[0].historyarrays[tempIndex - 2][3];
+				} else if (drug_sets[0].historyarrays[tempIndex - 3][1]==0) {
+					tempDesired = drug_sets[0].historyarrays[tempIndex - 3][3];	
+				} else if (drug_sets[0].historyarrays[tempIndex - 4][1]==0) {
+					tempDesired = drug_sets[0].historyarrays[tempIndex - 4][3];	
+				}
+				
+				tempCutoff = drug_sets[0].historyarrays[tempIndex][2];
+				drug_sets[0].historyarrays.length = tempIndex;
+				drug_sets[0].historyarray.length = 0;
+				tempArray = JSON.stringify(drug_sets[0].historyarrays[drug_sets[0].historyarrays.length-1][3]);
+				drug_sets[0].historyarray = JSON.parse(tempArray);
+				//read historytexts, truncate it
+				tempIndex = drug_sets[0].historytexts.findIndex((element) => element[0] == tempCutoff);
+				drug_sets[0].historytext = drug_sets[0].historytexts[tempIndex][1];
+				drug_sets[0].historytexts.length = tempIndex;
+				//truncate important data at cutoff
+				drug_sets[0].cpt_cp.length = tempCutoff;
+				drug_sets[0].cpt_ce.length = tempCutoff;
+				drug_sets[0].cpt_rates_real.length = tempCutoff;
+				drug_sets[0].volinf.length = tempCutoff;
+				myChart.data.datasets[2].data.length = myChart.data.datasets[2].data.findIndex((element)=>element.x>tempCutoff/60) -1;
+				myChart.data.datasets[3].data.length = myChart.data.datasets[3].data.findIndex((element)=>element.x>tempCutoff/60) -1;
+				//get correct desired value
+				drug_sets[0].desired = tempDesired;
+				document.getElementById("inputDesired0").value = tempDesired;
+				document.getElementById("inputDesiredCe0_new").value = tempDesired;
+				//interface update
+				document.getElementById("historywrapper").innerHTML = drug_sets[0].historytext;
+			}
+		}
+		
+		loop1 = setInterval(update, 500);
+		loop2 = setInterval(runinfusion2, refresh_interval);
+		loop3 = setInterval(updatechart, 5000, myChart);
+		loop7 = setInterval(displayWarningBanner, 60*2000);
+
+
+	}
+    update();
+    updatechart(myChart);
 }
 
 
@@ -16277,6 +16446,70 @@ function setBolusUnit(parameter) {
 	}
 	//close the dropdown
 	dropdownhide();
+}
+
+function displayWarningBanner() {
+	//loop7 checks whether sim session expires. Q2mins.
+
+
+	will_end_drug_set = 0;
+	max_time = drug_sets[0].cpt_rates_real.length;
+	if (complex_mode == 1) {
+		if (drug_sets[1].cpt_rates_real.length < max_time) {
+			max_time = drug_sets[1].cpt_rates_real.length;
+			will_end_drug_set = 1;
+		}
+	}
+
+	
+	if (Math.floor(time_in_s) > max_time - 60*7) {
+		//really the end (~7mins), attempt to recover
+		//console.log("will end drug set" + will_end_drug_set + " - condition 7mins");
+		extendSession(will_end_drug_set);
+		hideWarningBanner();
+	} else if (Math.floor(time_in_s) > max_time - 60*20) {
+		//console.log("will end drug set" + will_end_drug_set + " - condition 20mins");
+		//check if near the end, i.e. 600s before end i.e. 15 mins /20mins
+		hideallmodal();
+		//display the banner
+		document.getElementById("warningBanner").style.display = "flex";
+		document.querySelector(".warningbanner_up").innerHTML = `<b>WARNING</b> - Time's up!`;
+		document.getElementById("warningmessage").innerHTML = `Simulation session expiring in <15 mins. Do you want to continue using SimTIVA?`;
+		document.getElementById("warningbutton").innerHTML = "Yes";
+		document.getElementById("warningbutton").setAttribute("onclick", `extendSession(${will_end_drug_set});document.getElementById('warningBanner').style.display='none'`)
+	} else if (Math.floor(time_in_s) > max_time - 60*60) {
+		//console.log("will end drug set" + will_end_drug_set + " - condition 60mins");
+		//one hour left for infusions
+		hideallmodal();
+		document.getElementById("warningBanner").style.display = "flex";
+		document.querySelector(".warningbanner_up").innerHTML = `<b>ATTENTION</b> - Session inactivity`;
+		document.getElementById("warningmessage").innerHTML = `Current session will expire in 1h. Please update your infusion scheme to prevent data loss.`;
+		document.getElementById("warningbutton").innerHTML = "OK";
+		document.getElementById("warningbutton").setAttribute("onclick", `document.getElementById('warningBanner').style.display='none'`);
+
+	} else {
+		//console.log("displayrwarningbanner fired conditions not met, will end drug set" + will_end_drug_set)
+	}
+
+
+}
+
+
+function hideWarningBanner() {
+	document.getElementById("warningBanner").style.display = "none";
+}
+
+function extendSession(ind) {
+	//first see if the target is zero or the inf rate is zero
+	if ((drug_sets[ind].cpt_active == 1) && (drug_sets[ind].desired > 0)) {
+		deliver_cpt(drug_sets[ind].desired,0,0,ind);
+	}
+	if ((drug_sets[ind].cet_active == 1) && (drug_sets[ind].IB_active==0) && (drug_sets[ind].desired > 0)) {
+		deliver_cet(drug_sets[ind].desired,ind);
+	}
+	if ((drug_sets[ind].manualmode_active == 1) && (drug_sets[ind].inf_rate_mls>0)) {
+		lookahead(0,7200,ind);
+	}
 }
 
 /* failed code below 
