@@ -7121,7 +7121,7 @@ function timeFxSuspend() {
 	clearInterval(loop7);
 	document.getElementById("timeFxRowSuspend").classList.add("hide");
 	document.getElementById("timeFxRowResume").classList.remove("hide");
-	document.getElementById("suspendBanner").style.display = "block";
+	document.getElementById("suspendBanner").style.display = "flex";
 	document.getElementById("iconplay").classList.add("stop");
 }
 
