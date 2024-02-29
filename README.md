@@ -6,7 +6,7 @@
 ### About
 SimTIVA is a computer simulation program to simulate the delivery of TCI/TIVA. It is a progressive web app and can be run in desktop and mobile browsers across all platforms. Broad cross platform support based on modern web technology means it can be accessed on a wide range of devices. In addition, a simple installation process enables SimTIVA to be run like a native app on your device, and even without internet access. 
 
-This is an open source project; created by Terence Luk 2023; licensed under GNU General Public License v3.0.
+This is an open source project; created by Terence Luk 2024; licensed under GNU General Public License v3.0.
 
 Coding is done in JavaScript. The code to mathematical calculations are based on STANPUMP, created by Dr. Steven Shafer, freely available on [OpenTCI](http://opentci.org/code/stanpump).
 
@@ -21,12 +21,19 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
 - To help deliver TCI in a setting where TCI pumps are not available
 
 ### Changelog
- Version 4.4 (Build 96) Current
+ Version 4.5 (Build 97) Current
+ - Updated the UI for CPT and CET modes with more compact interface design
+ - Sophisticated "preview box" can be viewed by clicking "expand" - previews the full scheme ahead for CPT/CET modes
+ - Corrected the CPT algorithm - previously, increasing CPT will overshoot the CP and decreasing the CPT will cause premature re-start of infusion
+ - Improved support for widescreen devices particularly in complex/dual mode
+ - Bugfix in Safari browser, MacOS
+   
+ Version 4.4 (Build 96)
  - Bolus/Infusion unit function: manual mode - can change infusion unit from "ml/h" to "mg/kg/h" (or appropriate units) & change the bolus unit from "mg" to "mg/kg" or "ml" (or appropriate units)
  - Corrected algorithm in decremental infusion rates for reducing target in CET mode
  - Bug fixes
    
- Version 4.3 (Build 94) Current
+ Version 4.3 (Build 94) 
  - Added CeT and CpT quick edit function in Fullscreen mode 
  
  Version 4.2 (Build 91)

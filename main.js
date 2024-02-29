@@ -235,6 +235,57 @@ var popupUpdateInterval;
 var numpadValue = 0;
 var numpadOrig;
 
+
+var collapsibles = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < collapsibles.length; i++) {
+  collapsibles[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+  if (collapsibles[i].classList.contains("active")) {
+    collapsibles[i].nextElementSibling.style.display = "block";
+  }
+}
+
+var collapsiblecards = document.getElementsByClassName("collapsiblecard");
+
+for (i=0; i<collapsiblecards.length; i++) {
+	collapsiblecards[i].nextElementSibling.style.display = "none";
+	collapsiblecards[i].nextElementSibling.classList.add("collapsed");
+	collapsiblecards[i].addEventListener("click", function() {
+		toggleCard(this);
+	});
+}
+
+function toggleCard(x) {
+	var content = x.nextElementSibling;
+	x.classList.toggle("active");
+    if (content.style.display === "block") {
+      content.style.display = "none";
+      //content.classList.add("collapsed");
+      content.classList.remove("animate");
+    } else {
+      content.style.display = "block";
+      content.classList.add("animate");
+    }
+}
+
+var tops = document.getElementsByClassName("top_title_box");
+
+for (i=0; i<tops.length; i++) {
+	tops[i].addEventListener("click", function() {
+		window.scrollTo(0,0);
+	})
+}
+
+
 //global colors / charting script initiation
 
 
@@ -3633,22 +3684,24 @@ function displaypreview_hide() {
 }
 
 function displaypreview_hide_onsubmit() {
-	document.getElementById("preview-expand-box").classList.remove("expand");
-	document.getElementById("preview").classList.remove("expand");
-		document.getElementById("prompts_container").classList.remove("expand");
-		document.getElementById("preview-expand-button").innerHTML = `<i class="fas fa-angle-double-down"></i> &nbsp; <span>EXPAND</span>`;
-		document.getElementById("preview-expand-button").setAttribute("onclick","displaypreview_expand()");	
-		document.getElementById("preview-expand-button").style.display = "none";
-	if (!document.getElementById("preview").classList.contains("animate"))	{
-		//situation where preview animation fade is NOT active, i.e. the hiding of preview is not yet active
-		document.getElementById("preview").classList.add("animate");
-		previewtimeout = null;
-		clearTimeout(previewtimeout);
-		previewtimeout = setTimeout(function() {
-			document.getElementById("preview").style.display = "none";
-		},11500);
-	} else {
+	if (parseloading == 0) {
+		document.getElementById("preview-expand-box").classList.remove("expand");
+		document.getElementById("preview").classList.remove("expand");
+			document.getElementById("prompts_container").classList.remove("expand");
+			document.getElementById("preview-expand-button").innerHTML = `<i class="fas fa-angle-double-down"></i> &nbsp; <span>EXPAND</span>`;
+			document.getElementById("preview-expand-button").setAttribute("onclick","displaypreview_expand()");	
+			document.getElementById("preview-expand-button").style.display = "none";
+		if (!document.getElementById("preview").classList.contains("animate"))	{
+			//situation where preview animation fade is NOT active, i.e. the hiding of preview is not yet active
+			document.getElementById("preview").classList.add("animate");
+			previewtimeout = null;
+			clearTimeout(previewtimeout);
+			previewtimeout = setTimeout(function() {
+				document.getElementById("preview").style.display = "none";
+			},11500);
+		} else {
 
+		}
 	}
 
 
@@ -3824,7 +3877,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		if (drug_sets[ind].cpt_bolus>=90) {
 			drug_sets[ind].cpt_bolus = Math.round(drug_sets[ind].cpt_bolus/10)*10;
 		} else if (drug_sets[ind].cpt_bolus>1) {
-			if ((mass>30) && (drug_sets[ind].cpt_bolus>=40)) {
+			if ((mass>30) && (drug_sets[ind].cpt_bolus>=30)) {
 				drug_sets[ind].cpt_bolus = Math.ceil(drug_sets[ind].cpt_bolus/5)*5; //round up to nearest 5mg
 			} else {
 				drug_sets[ind].cpt_bolus = Math.ceil(drug_sets[ind].cpt_bolus) ;
@@ -4004,7 +4057,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		}
 	} else {
 		if (cpt_threshold_auto == 1) {
-			if (drug_sets[ind].cpt_rates[5]*360 > 40) {
+			if (drug_sets[ind].cpt_rates[5]*360 >= 30) {
 				cpt_threshold = 0.08;
 				cpt_avgfactor = 0.667;
 			} else {
@@ -4020,7 +4073,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 
 	
 	//automatically determine high or low rounding factor (3600->round to 0.1, 360->round to 1)
-	if ((paedi_mode == 1) || (drug_sets[ind].cpt_rates[5]<40/360)) {
+	if ((paedi_mode == 1) || (drug_sets[ind].cpt_rates[5]<30/360)) {
 		var roundingfactor = 3600;
 	} else {
 		if (drug_sets[ind].drug_name == "Propofol") {
@@ -4791,9 +4844,10 @@ function preview_cet(x,ind) {
 			}
 
 			est_cp = p_state3[1] + p_state3[2] + p_state3[3];
-			var compensation = (drug_sets[ind].desired*1.01 - est_cp)/drug_sets[ind].p_udf[1];
+			compensation = 0;
+			//var compensation = (drug_sets[ind].desired*1.01 - est_cp)/drug_sets[ind].p_udf[1];
 
-			console.log("compensation, over 1secs, " + compensation);
+			//console.log("compensation, over 1secs, " + compensation);
 
 			//myChart.data.datasets[2].hidden = false;
 			//myChart.data.datasets[3].hidden = false;
@@ -5025,7 +5079,7 @@ function preview_cet(x,ind) {
 				}
 			} else {
 				if (cpt_threshold_auto == 1) {
-					if (drug_sets[ind].cpt_rates[5]*360 > 25) {
+					if (drug_sets[ind].cpt_rates[5]*360 >= 30) {
 						cpt_threshold = 0.08;
 						cpt_avgfactor = 0.667;
 					} else {
@@ -5038,7 +5092,7 @@ function preview_cet(x,ind) {
 
 			//second pass
 			//automatically determine high or low rounding factor (3600->round to 0.1, 360->round to 1)
-			if ((paedi_mode == 1) || (drug_sets[ind].cpt_rates[5]<40/360)) {
+			if ((paedi_mode == 1) || (drug_sets[ind].cpt_rates[5]<30/360)) {
 				var roundingfactor = 3600;
 			} else {
 				if (drug_sets[ind].drug_name == "Propofol") {
@@ -5405,7 +5459,9 @@ function deliver_cet_real(x, ind) {
 			}
 
 			est_cp = p_state3[1] + p_state3[2] + p_state3[3];
-			var compensation = (drug_sets[ind].desired*1.01 - est_cp)/drug_sets[ind].p_udf[1];
+
+			//var compensation = (drug_sets[ind].desired - est_cp)/drug_sets[ind].p_udf[1];
+			compensation = 0;
 
 			console.log("compensation, over 1secs, " + compensation);
 
@@ -6484,8 +6540,10 @@ function pause(ind) {
 }
 function pauseCpt(ind) {
 	drug_sets[ind].desired = 0;
-	document.getElementById("inputDesired" + ind).value = "0";
-	document.getElementById("inputDesiredCe" + ind + "_new").value = "0";
+	if (parseloading == 0) {
+		document.getElementById("inputDesired" + ind).value = "0";
+		document.getElementById("inputDesiredCe" + ind + "_new").value = "0";
+	}
 	drug_sets[ind].running=0;
 
 	var working_clock = Math.floor(time_in_s);
@@ -10044,7 +10102,7 @@ function displayDisclaimer() {
 }
 
 function displayAbout() {
-	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk, 2024</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 20/1/2024 (V4.5) Build 97.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
+	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk, 2024</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 23/2/2024 (V4.5) Build 98.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
 	displayWarning("About", text);
 }
 
@@ -10522,7 +10580,6 @@ function displayModalOptions() {
 						</td>
 					</tr>
 				</table>
-				<div>&nbsp;</div>
 				<a class="button invert" id="" onclick="applyoptions();hidewarningmodal();">Apply</a>
 				<a class="button right muted" id="" onclick="loadoptions('default');displayModalOptions();loadoptions();applyoptions();">Reset settings</a>
 	`
@@ -10869,54 +10926,6 @@ function togglemenu() {
 
 
 
-var collapsibles = document.getElementsByClassName("collapsible");
-var i;
-
-for (i = 0; i < collapsibles.length; i++) {
-  collapsibles[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
-  if (collapsibles[i].classList.contains("active")) {
-    collapsibles[i].nextElementSibling.style.display = "block";
-  }
-}
-
-var collapsiblecards = document.getElementsByClassName("collapsiblecard");
-
-for (i=0; i<collapsiblecards.length; i++) {
-	collapsiblecards[i].nextElementSibling.style.display = "none";
-	collapsiblecards[i].nextElementSibling.classList.add("collapsed");
-	collapsiblecards[i].addEventListener("click", function() {
-		toggleCard(this);
-	});
-}
-
-function toggleCard(x) {
-	var content = x.nextElementSibling;
-	x.classList.toggle("active");
-    if (content.style.display === "block") {
-      content.style.display = "none";
-      //content.classList.add("collapsed");
-      content.classList.remove("animate");
-    } else {
-      content.style.display = "block";
-      content.classList.add("animate");
-    }
-}
-
-var tops = document.getElementsByClassName("top_title_box");
-
-for (i=0; i<tops.length; i++) {
-	tops[i].addEventListener("click", function() {
-		window.scrollTo(0,0);
-	})
-}
 
 function hide_prompts(object) {
 	object.style.display="none";
@@ -11916,6 +11925,8 @@ function savefile_patient() {
 function savefile_data() {
 	let outputobject = outputdataobject();
 	localStorage.setItem(uid + "DATA",JSON.stringify(outputobject));
+	//add warning banner check here
+	if (document.getElementById("warningBanner").style.display != "none") hideWarningBanner();
 }
 
 function savefile_time() {
@@ -16453,8 +16464,6 @@ function setBolusUnit(parameter) {
 
 function displayWarningBanner() {
 	//loop7 checks whether sim session expires. Q2mins.
-
-
 	will_end_drug_set = 0;
 	max_time = drug_sets[0].cpt_rates_real.length;
 	if (complex_mode == 1) {
