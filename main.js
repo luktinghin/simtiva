@@ -175,6 +175,8 @@ var modal = undefined;
 
 var prior_half_minute_clock = 0;
 
+var time_of_stop = -1;
+
 window.ptolcouplesarray = []; //ptol couples over time
 //var ptol0overtime = new Array(); //ptol chart data for 0 over time, series based on chart data
 //var ptol1overtime = new Array(); //ptol chart data for 1 over time
@@ -7060,6 +7062,12 @@ function timeFxSuspend() {
 }
 
 function timeFxResume(parametertime) {
+	//clear interval first to prevent loop error
+	if (time_of_stop == -1) {
+		timeFxSuspend();
+	}
+	//reset time of stop
+	time_of_stop = -1;
     //parameter is input in ms AFTER current
     parametertime = parametertime*1000;
     if (parametertime > 0) {
