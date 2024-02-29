@@ -881,6 +881,200 @@
 				</div>
 			</div>
 		</div>
+		<div id="modalJump" class="modal">
+			<div class="modal-content" id="modalJumpcontent">
+				<div class="modal-header" id="modalJumptitle">Jump to time<span class="close" onClick="hidemodal('modalJump')">&times;</span></div>
+				<div class="modal-body">
+					<div style="font-weight:bold; font-style:italic">
+					Choose an action
+					</div>
+					<select id="timeFxTimeMode" onchange="setnow2(Math.floor(time_in_s))" style="width:100%">
+						<option value="0">Move forward (relative to present)</option>
+						<option value="1">Move backward (relative to present)</option>
+						<option value="2" selected>Jump to time point</option>
+					</select>
+					<table class="time-select-container">
+						<tr style="opacity:0.7">
+							<td class="">Hrs</td>
+							<td class=""></td>
+							<td>Min</td>
+							<td></td>
+							<td>Sec</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="" style="cursor: pointer" onclick="deltahours2(1);"><i class="fas fa-chevron-up"></i></td>
+							<td class=""></td>
+							<td style="cursor: pointer" onclick="deltaminutes2(1);"><i class="fas fa-chevron-up"></i></td>
+							<td></td>
+							<td style="cursor: pointer" onclick="deltaseconds2(1)"><i class="fas fa-chevron-up"></i></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="">
+								<select id="hh2" class="time-select">
+									<option value="0">00</option>
+									<option value="1">01</option>
+									<option value="2">02</option>
+									<option value="3">03</option>
+									<option value="4">04</option>
+									<option value="5">05</option>
+									<option value="6">06</option>
+									<option value="7">07</option>
+									<option value="8">08</option>
+									<option value="9">09</option>
+								</select>
+							</td>
+							<td class="">&nbsp;:&nbsp;</td>
+							<td>
+								<select id="mm2" class="time-select">
+									<option value="0">00</option>
+									<option value="1">01</option>
+									<option value="2">02</option>
+									<option value="3">03</option>
+									<option value="4">04</option>
+									<option value="5">05</option>
+									<option value="6">06</option>
+									<option value="7">07</option>
+									<option value="8">08</option>
+									<option value="9">09</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+									<option value="16">16</option>
+									<option value="17">17</option>
+									<option value="18">18</option>
+									<option value="19">19</option>
+									<option value="20">20</option>
+									<option value="21">21</option>
+									<option value="22">22</option>
+									<option value="23">23</option>
+									<option value="24">24</option>
+									<option value="25">25</option>
+									<option value="26">26</option>
+									<option value="27">27</option>
+									<option value="28">28</option>
+									<option value="29">29</option>
+									<option value="30">30</option>
+									<option value="31">31</option>
+									<option value="32">32</option>
+									<option value="33">33</option>
+									<option value="34">34</option>
+									<option value="35">35</option>
+									<option value="36">36</option>
+									<option value="37">37</option>
+									<option value="38">38</option>
+									<option value="39">39</option>
+									<option value="40">40</option>
+									<option value="41">41</option>
+									<option value="42">42</option>
+									<option value="43">43</option>
+									<option value="44">44</option>
+									<option value="45">45</option>
+									<option value="46">46</option>
+									<option value="47">47</option>
+									<option value="48">48</option>
+									<option value="49">49</option>
+									<option value="50">50</option>
+									<option value="51">51</option>
+									<option value="52">52</option>
+									<option value="53">53</option>
+									<option value="54">54</option>
+									<option value="55">55</option>
+									<option value="56">56</option>
+									<option value="57">57</option>
+									<option value="58">58</option>
+									<option value="59">59</option>
+								</select>
+							</td>
+							<td>&nbsp;:&nbsp;</td>
+							<td>
+								<select id="ss2" class="time-select">
+									<option value="0">00</option>
+									<option value="1">01</option>
+									<option value="2">02</option>
+									<option value="3">03</option>
+									<option value="4">04</option>
+									<option value="5">05</option>
+									<option value="6">06</option>
+									<option value="7">07</option>
+									<option value="8">08</option>
+									<option value="9">09</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+									<option value="16">16</option>
+									<option value="17">17</option>
+									<option value="18">18</option>
+									<option value="19">19</option>
+									<option value="20">20</option>
+									<option value="21">21</option>
+									<option value="22">22</option>
+									<option value="23">23</option>
+									<option value="24">24</option>
+									<option value="25">25</option>
+									<option value="26">26</option>
+									<option value="27">27</option>
+									<option value="28">28</option>
+									<option value="29">29</option>
+									<option value="30">30</option>
+									<option value="31">31</option>
+									<option value="32">32</option>
+									<option value="33">33</option>
+									<option value="34">34</option>
+									<option value="35">35</option>
+									<option value="36">36</option>
+									<option value="37">37</option>
+									<option value="38">38</option>
+									<option value="39">39</option>
+									<option value="40">40</option>
+									<option value="41">41</option>
+									<option value="42">42</option>
+									<option value="43">43</option>
+									<option value="44">44</option>
+									<option value="45">45</option>
+									<option value="46">46</option>
+									<option value="47">47</option>
+									<option value="48">48</option>
+									<option value="49">49</option>
+									<option value="50">50</option>
+									<option value="51">51</option>
+									<option value="52">52</option>
+									<option value="53">53</option>
+									<option value="54">54</option>
+									<option value="55">55</option>
+									<option value="56">56</option>
+									<option value="57">57</option>
+									<option value="58">58</option>
+									<option value="59">59</option>
+								</select>
+							</td>
+							<td><a style = "cursor: pointer" onclick="setnow2(Math.floor(time_in_s));">&nbsp; Now</a></td>
+						</tr>
+						<tr>
+							<td class="" style="cursor: pointer" onclick="deltahours2(-1)"><i class="fas fa-chevron-down"></i></td>
+							<td class=""></td>
+							<td style="cursor: pointer" onclick="deltaminutes2(-1)"><i class="fas fa-chevron-down"></i></td>
+							<td></td>
+							<td style="cursor: pointer" onclick="deltaseconds2(-1)"><i class="fas fa-chevron-down"></i></td>
+							<td></td>
+						</tr>
+					</table>
+					<div id="timeFxMessage"></div>
+					<div style="padding-top:18px">
+						<a class="button invert" id="btn_submitjump" onclick="timeFxSubmitJump();">SUBMIT</a>
+						<a class="button muted right" onclick="modal=document.getElementById('modalJump');hideallmodal()">CANCEL</a>
+
+					</div>
+				</div>
+			</div>
+		</div>
 		<!--endmodal-->
 
   <!-- start leftbar-->
@@ -1685,15 +1879,33 @@
 		<div class="card" id="card_controlpanel">
 			<div class="cardtitle">CONTROL PANEL</div>
 			<div class="cardcontents">
-				<div>
-					<button id="" onclick="timeFxReset();">Restart</button>Restart simulation (patient characteristics will be kept, start again from time zero)
+				<div class="timeFxRow">
+					<div class="timeFxRowLeft"><a id="btn_timeFxReset" onclick="timeFxReset();" class="timeFxButton"><i class="fas fa-undo-alt"></i></a></div>
+					<div class="timeFxRowRight">
+						<div class="timeFxLine1">Restart sim</div>
+						<div class="timeFxLine2">Keep same patient data & start over</div>
+					</div>
 				</div>
-				<div>
-					<button id="" onclick="timeFxSuspend();">Pause</button>Pause simulation (suspend simulation at current time while keeping all infusion data)
+				<div class="timeFxRow" id="timeFxRowSuspend">
+					<div class="timeFxRowLeft"><a id="btn_timeFxSuspend" onclick="timeFxSuspend();" class="timeFxButton"><i class="fas fa-pause fa-fw"></i></a></div>
+					<div class="timeFxRowRight">
+						<div class="timeFxLine1">Pause sim</div>
+						<div class="timeFxLine2">Suspend simulation & keep all data</div>
+					</div>
 				</div>
-				<div>
-					<button id="" onclick="timeFxResume(document.getElementById('inputjumptime').value)">Jump</button>Jump to a past or future time point
-					<input id="inputjumptime">
+				<div class="timeFxRow hide" id="timeFxRowResume">
+					<div class="timeFxRowLeft"><a id="btn_timeFxResume" onclick="timeFxResume(0);" class="timeFxButton"><i class="fas fa-play fa-fw"></i></a></div>
+					<div class="timeFxRowRight">
+						<div class="timeFxLine1">Resume sim</div>
+						<div class="timeFxLine2">Resume running simulation</div>
+					</div>
+				</div>
+				<div class="timeFxRow">
+					<div class="timeFxRowLeft"><a id="btn_timeFxJump" onclick="timeFxOpenJump();" class="timeFxButton"><i class="fas fa-stopwatch fa-fw"></i></a></div>
+					<div class="timeFxRowRight">
+						<div class="timeFxLine1">Jump to time</div>
+						<div class="timeFxLine2">Jump backward/forward in time</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -1958,6 +2170,9 @@
 		</div>
 
 		</div><!--controlpanel-->
+		<div class="suspendbanner" id="suspendBanner">
+			<div style="padding-top:20px;font-weight:bold;color:white">Simulation is suspended.</div>
+		</div>
 		<div class="warningbanner" id="warningBanner">
 			<div class="warningbanner_left">
 				<i class="fas fa-exclamation-triangle"></i>

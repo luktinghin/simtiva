@@ -6342,7 +6342,19 @@ body.dark #addeventtext{
   }
 }
 
-
+/* new suspend banner styles */
+.suspendbanner {
+  z-index: 999;
+  width: 100%;
+  position: fixed;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 0;
+  display: none;
+  background: linear-gradient(0deg, rgba(92,92,92,1) 0%, rgba(255,255,255,0) 100%);
+}
 /* new warning banner styles */
 .warningbanner {
   z-index: 999;
@@ -6492,6 +6504,41 @@ a.input-button {
   height: 36px;
   display: flex;
   margin-right: 0px;
+}
+
+.timeFxRow {
+  display: flex;
+  align-items: center;
+}
+.timeFxRow.hide {
+  display: none;
+}
+.timeFxRowLeft {
+  
+}
+a.timeFxButton {
+  background: #ddd;
+  font-size: 125%;
+  border-radius: 1rem;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  padding-top: 2px;
+  text-align: center;
+  display: block;
+  cursor: pointer;
+}
+.timeFxRowRight {
+  padding-left: 8px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+.timeFxLine1 {
+  font-weight: bold;
+}
+.timeFxLine2 {
+  font-size: 75%;
+  opacity: 70%;
 }
 
 @media screen and (max-width: 465px) {

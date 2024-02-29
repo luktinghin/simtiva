@@ -7073,6 +7073,8 @@ function update() {
 //time manipulation functions
 
 function timeFxReset() {
+	document.getElementById("timeFxRowSuspend").classList.remove("hide");
+	document.getElementById("timeFxRowResume").classList.add("hide");
 	timeFxSuspend();
 	if (drug_sets[0].cet_active>0 && drug_sets[0].IB_active==0) {
 		initsubmit();
@@ -7117,6 +7119,10 @@ function timeFxSuspend() {
 	clearInterval(loop2);
 	clearInterval(loop3);
 	clearInterval(loop7);
+	document.getElementById("timeFxRowSuspend").classList.add("hide");
+	document.getElementById("timeFxRowResume").classList.remove("hide");
+	document.getElementById("suspendBanner").style.display = "block";
+	document.getElementById("iconplay").classList.add("stop");
 }
 
 function timeFxResume(parametertime) {
@@ -7126,6 +7132,10 @@ function timeFxResume(parametertime) {
 	}
 	//reset time of stop
 	time_of_stop = -1;
+	document.getElementById("timeFxRowSuspend").classList.remove("hide");
+	document.getElementById("timeFxRowResume").classList.add("hide");
+	document.getElementById("suspendBanner").style.display = "none";
+	document.getElementById("iconplay").classList.remove("stop");
     //parameter is input in ms AFTER current
     parametertime = parametertime*1000;
     if (parametertime > 0) {
@@ -14659,7 +14669,6 @@ function setnow(input__time) {
 		document.getElementById("hh").value = hours;
 	}
 }
-
 function deltahours(param) {
 	var param1 = document.getElementById("hh").value * 1;
 	var param2 = (param1 + param + 1000) % 10;
@@ -14674,6 +14683,68 @@ function deltaseconds(param) {
 	var param1 = document.getElementById("ss").value * 1;
 	var param2 = (param1 + param + 6000) % 60;
 	document.getElementById("ss").value = param2;
+}
+
+function setnow2(input__time) {
+	var hours = Math.floor(input__time/(60*60));
+	var minutes = Math.floor(input__time%(60*60)/60);
+	var seconds = Math.floor(input__time%60);
+
+	if (document.getElementById("timeFxTimeMode").value == "0") {
+		document.getElementById("hh2").value = 0;
+		document.getElementById("mm2").value = 0;
+		document.getElementById("ss2").value = 0;
+	} else if (document.getElementById("timeFxTimeMode").value == "1") {
+		document.getElementById("hh2").value = 0;
+		document.getElementById("mm2").value = 0;
+		document.getElementById("ss2").value = 0;
+	} else {
+		document.getElementById("hh2").value = hours;
+		document.getElementById("mm2").value = minutes;
+		document.getElementById("ss2").value = seconds;	
+	}
+}
+function deltahours2(param) {
+	var param1 = document.getElementById("hh2").value * 1;
+	var param2 = (param1 + param + 1000) % 10;
+	document.getElementById("hh2").value = param2;
+}
+function deltaminutes2(param) {
+	var param1 = document.getElementById("mm2").value * 1;
+	var param2 = (param1 + param + 6000) % 60;
+	document.getElementById("mm2").value = param2;
+}
+function deltaseconds2(param) {
+	var param1 = document.getElementById("ss2").value * 1;
+	var param2 = (param1 + param + 6000) % 60;
+	document.getElementById("ss2").value = param2;
+}
+function timeFxSubmitJump() {
+	var paramH = document.getElementById("hh2").value * 1;
+	var paramM = document.getElementById("mm2").value * 1;
+	var paramS = document.getElementById("ss2").value * 1;
+	if (document.getElementById("timeFxTimeMode").value == "0") {
+		store_time = paramH * 60 * 60 + paramM * 60 + paramS;
+		jump_time = store_time;
+	} else if (document.getElementById("timeFxTimeMode").value == "1") {
+		store_time = paramH * 60 * 60 + paramM * 60 + paramS;
+		jump_time = (-1) * store_time;
+	} else {
+		store_time = paramH * 60 * 60 + paramM * 60 + paramS;
+		jump_time = store_time - Math.floor(time_in_s);
+	}
+	if ((Math.floor(time_in_s) + jump_time <= 0) || (Math.floor(time_in_s) + jump_time >= drug_sets[0].cpt_rates_real.length)) {
+		document.getElementById("timeFxMessage").innerHTML = "Entered time point is invalid. Please try again.";
+	} else {
+		timeFxResume(jump_time);
+		hidemodal('modalJump');
+	}
+}
+function timeFxOpenJump() {
+	document.getElementById("timeFxMessage").innerHTML = "";
+	setnow2(Math.floor(time_in_s));
+	hideallmodal();
+	setmodal('modalJump');
 }
 function alignEvents() {
 	if (eventArray.length>0) {
