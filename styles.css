@@ -6352,6 +6352,7 @@ body.dark #addeventtext{
   align-items: center;
   justify-content: center;
   bottom: 0;
+  left: 0;
   display: none;
   background: linear-gradient(0deg, rgba(92,92,92,1) 0%, rgba(255,255,255,0) 100%);
 }
@@ -6509,15 +6510,33 @@ a.input-button {
 .timeFxRow {
   display: flex;
   align-items: center;
+  border-radius: 9px;
+}
+.timeFxRow:hover {
+  background: #eee;
+}
+.timeFxRow:hover > div > a {
+  color: black;
+}
+body.dark .timeFxRow:hover {
+  background: rgba(128,128,128,0.3)
+}
+body.dark .timeFxRow:hover > div {
+  color: white;
+}
+body.dark .timeFxRow:hover > div > a {
+  background: #ccc;
+  color: black;
 }
 .timeFxRow.hide {
   display: none;
 }
 .timeFxRowLeft {
-  
+  padding-left: 5px;
 }
 a.timeFxButton {
-  background: #ddd;
+  background: #ccc;
+  color: white;
   font-size: 125%;
   border-radius: 1rem;
   width: 36px;
@@ -6527,6 +6546,12 @@ a.timeFxButton {
   text-align: center;
   display: block;
   cursor: pointer;
+}
+a.timeFxButton:hover, a.timeFxButton:active {
+  color: black;
+}
+body.dark a.timeFxButton {
+  background: #555;
 }
 .timeFxRowRight {
   padding-left: 8px;

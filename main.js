@@ -7073,174 +7073,213 @@ function update() {
 //time manipulation functions
 
 function timeFxReset() {
-	document.getElementById("timeFxRowSuspend").classList.remove("hide");
-	document.getElementById("timeFxRowResume").classList.add("hide");
-	timeFxSuspend();
-	if (drug_sets[0].cet_active>0 && drug_sets[0].IB_active==0) {
-		initsubmit();
-		initcet();	
-		document.getElementById("inputDesiredCe0_new").value = "";
-	} else if (drug_sets[0].cet_active>0 && drug_sets[0].IB_active==1) {
-		initsubmit();
-		initcetbolus();
-	} else if (drug_sets[0].manualmode_active>0) {
-		initsubmit();
-		initmanual(0);
-	} else if (drug_sets[0].cpt_active>0) {
-		initsubmit();
-		initcpt();
-		document.getElementById("inputDesired0").value = "";
+	conditions = ((time_in_s>1) && (drug_sets[0].cpt_rates_real.length > 1));
+	if (conditions) {
+		document.getElementById("timeFxRowSuspend").classList.remove("hide");
+		document.getElementById("timeFxRowResume").classList.add("hide");
+		timeFxSuspend();
+		if (drug_sets[0].cet_active>0 && drug_sets[0].IB_active==0) {
+			initsubmit();
+			initcet();	
+			document.getElementById("inputDesiredCe0_new").value = "";
+		} else if (drug_sets[0].cet_active>0 && drug_sets[0].IB_active==1) {
+			initsubmit();
+			initcetbolus();
+		} else if (drug_sets[0].manualmode_active>0) {
+			initsubmit();
+			initmanual(0);
+			document.getElementById("tableInitialBolus0").style.display = "table";
+			document.getElementById("tableInfusionRate0").classList.add("line");
+			document.getElementById("inputInfusion0").value = "";
+			document.getElementById("inputBolus_initial0").value = "";
+			document.getElementById("btn_start0").innerHTML = "Start";
+		} else if (drug_sets[0].cpt_active>0) {
+			initsubmit();
+			initcpt();
+			document.getElementById("inputDesired0").value = "";
+		}
+		time = 0;
+		time_in_s = 0;
+		myChart.data.datasets[2].data.length = 0;
+		myChart.data.datasets[3].data.length = 0;
+		myChart.data.datasets[2].data.push({x:0,y:0});
+		myChart.data.datasets[3].data.push({x:0,y:0});
+		myChart.update();
+		drug_sets[0].firstrun = -1;
+		//interface changes
+		document.getElementById("iconplay").classList.add("stop");
+		document.getElementById("iconplay").innerHTML="<i class='fas fa-pause fa-lg'></i>";
+		document.getElementById("top_subtitle").innerHTML = `<b>SimTIVA</b> - <span style='opacity: 50%; white-space:nowrap;' id='top_subtitle2'>Simple TIVA simulator</span>`;
+		document.getElementById("top_subtitle").classList.remove("topClose");
+		document.getElementById("top_title").classList.remove("topOpen");
+		document.getElementById("clock").innerHTML="_";
+		document.getElementById("displayvolume").innerHTML="_";
+		document.getElementById("infusiondescriptor").innerHTML="";
+		document.getElementById("prompt_msg2").innerHTML="Simulation reset";
+		document.getElementById("status").innerHTML="Waiting to start";
+		document.getElementById("historywrapper").innerHTML="Waiting to start";
+		document.getElementById("historywrapperCOPY").innerHTML="Waiting to start";
+		document.getElementById("ptolcard_right").innerHTML="-";
+		document.getElementById("timeFxRowSuspend").classList.remove("hide");
+		document.getElementById("timeFxRowResume").classList.add("hide");
+		document.getElementById("suspendBanner").style.display = "none";
 	}
-	time = 0;
-	time_in_s = 0;
-	myChart.data.datasets[2].data.length = 0;
-	myChart.data.datasets[3].data.length = 0;
-	myChart.update();
-	drug_sets[0].firstrun = -1;
-	//interface changes
-	document.getElementById("iconplay").classList.add("stop");
-	document.getElementById("iconplay").innerHTML="<i class='fas fa-pause fa-lg'></i>";
-	document.getElementById("top_subtitle").innerHTML = `<b>SimTIVA</b> - <span style='opacity: 50%; white-space:nowrap;' id='top_subtitle2'>Simple TIVA simulator</span>`;
-	document.getElementById("top_subtitle").classList.remove("topClose");
-	document.getElementById("top_title").classList.remove("topOpen");
-	document.getElementById("clock").innerHTML="_";
-	document.getElementById("displayvolume").innerHTML="_";
-	document.getElementById("infusiondescriptor").innerHTML="";
-	document.getElementById("prompt_msg2").innerHTML="Simulation reset";
-	document.getElementById("status").innerHTML="Waiting to start";
-	document.getElementById("historywrapper").innerHTML="Waiting to start";
-	document.getElementById("historywrapperCOPY").innerHTML="Waiting to start";
-	document.getElementById("ptolcard_right").innerHTML="-";
-
 }
+
 function timeFxSuspend() {
-    time_of_stop = Date.now();
-	clearInterval(loop1);
-	clearInterval(loop2);
-	clearInterval(loop3);
-	clearInterval(loop7);
-	document.getElementById("timeFxRowSuspend").classList.add("hide");
-	document.getElementById("timeFxRowResume").classList.remove("hide");
-	document.getElementById("suspendBanner").style.display = "flex";
-	document.getElementById("iconplay").classList.add("stop");
+	conditions = ((time_of_stop == -1) && (time_in_s>1) && (drug_sets[0].cpt_rates_real.length > 1));
+	if (conditions) {
+	    time_of_stop = Date.now();
+		clearInterval(loop1);
+		clearInterval(loop2);
+		clearInterval(loop3);
+		clearInterval(loop7);
+		document.getElementById("timeFxRowSuspend").classList.add("hide");
+		document.getElementById("timeFxRowResume").classList.remove("hide");
+		document.getElementById("suspendBanner").style.display = "flex";
+		document.getElementById("iconplay").classList.add("stop");
+	}
 }
 
 function timeFxResume(parametertime) {
-	//clear interval first to prevent loop error
-	if (time_of_stop == -1) {
-		timeFxSuspend();
-	}
-	//reset time of stop
-	time_of_stop = -1;
-	document.getElementById("timeFxRowSuspend").classList.remove("hide");
-	document.getElementById("timeFxRowResume").classList.add("hide");
-	document.getElementById("suspendBanner").style.display = "none";
-	document.getElementById("iconplay").classList.remove("stop");
-    //parameter is input in ms AFTER current
-    parametertime = parametertime*1000;
-    if (parametertime > 0) {
-    	//this is jump to future, no problem
-    	offset = Date.now() - parametertime;
-		loop1 = setInterval(update, 500);
-		loop2 = setInterval(runinfusion2, refresh_interval);
-		loop3 = setInterval(updatechart, 5000, myChart);
-		loop7 = setInterval(displayWarningBanner, 60*2000);
-	} else {
-		//this is jump back in time, gotta remove inf schemes as necessary
-		
-		offset = Date.now() - parametertime;
-		//read historyarrays, truncate it. also grab the scheme time for grabbing historytext later
-		
-		tempIndex = drug_sets[0].historyarrays.findIndex((element) => element[2] > (time + parametertime)/1000);
+	conditions = ((time_in_s + parametertime > 60) && (time_in_s + parametertime < drug_sets[0].cpt_rates_real.length - 300) && (time_in_s>1) && (drug_sets[0].cpt_rates_real.length > 1));
 
-		if (tempIndex > -1) {
-			//branch off manual mode VS CPT/CET modes
-			if (drug_sets[0].manualmode_active>0) {
-				tempCutoff = drug_sets[0].historyarrays[tempIndex][2];
-				tempRate = drug_sets[0].historyarrays[tempIndex-1][3];
-				drug_sets[0].historyarrays.length = tempIndex;
-				//truncate important data at cutoff
-				drug_sets[0].cpt_cp.length = tempCutoff;
-				drug_sets[0].cpt_ce.length = tempCutoff;
-				drug_sets[0].cpt_rates_real.length = tempCutoff;
-				drug_sets[0].volinf.length = tempCutoff;
-				myChart.data.datasets[2].data.length = myChart.data.datasets[2].data.findIndex((element)=>element.x>tempCutoff/60) -1;
-				myChart.data.datasets[3].data.length = myChart.data.datasets[3].data.findIndex((element)=>element.x>tempCutoff/60) -1;
-				drug_sets[0].inf_rate_mls = tempRate;
-				update();
-				lookahead(0,7200,0);
-				//remove one line of historyarrays
-				drug_sets[0].historyarrays.length = drug_sets[0].historyarrays.length - 1;
-				//need to process historytext
-				drug_sets[0].historytext = "";
-				for (counter = 0; counter<drug_sets[0].historyarrays.length; counter++) {
-					//1 is bolus, 2 is infusion			
-					if (drug_sets[0].historyarrays[counter][1]==1) {
-						appendText = "<div><div class='timespan'>" + converttime(Math.floor(drug_sets[0].historyarrays[counter][2])) + "</div>Bolus: " + drug_sets[0].historyarrays[counter][3] + drug_sets[0].infused_units + "</div>";
-					}
-					if (drug_sets[0].historyarrays[counter][1]==2) {
-						appendText = "<div><div class='timespan'>" + converttime(Math.floor(drug_sets[0].historyarrays[counter][2])) + "</div>Rate: " + Math.round(drug_sets[0].historyarrays[counter][3]*100)/100 + "ml/h</div>";
-					}
-					drug_sets[0].historytext = drug_sets[0].historytext.concat(appendText);
-				}
-				document.getElementById("historywrapper").innerHTML = drug_sets[0].historytext;
-			} else {
-
-				//make sure this is start of scheme first. because for CET mode the time in position [2] may not be right
-				if (drug_sets[0].historyarrays[tempIndex][1] == 0) {
-					//then it's ok
-				} else if (drug_sets[0].historyarrays[tempIndex-1][1] == 0) {
-					//move back 1 line
-					tempIndex = tempIndex - 1;
-				} else if (drug_sets[0].historyarrays[tempIndex-2][1] == 0) {
-					tempIndex = tempIndex - 2;
-				} else if (drug_sets[0].historyarrays[tempIndex-3][1] == 0) {
-					tempIndex = tempIndex - 3;
-				}
-
-				//find prev until can find desired of previous. can be index -2, -3, or -4, determined by second position equals 0 i.e. [1] == 0
-				if (drug_sets[0].historyarrays[tempIndex - 2][1]==0) {
-					tempDesired = drug_sets[0].historyarrays[tempIndex - 2][3];
-				} else if (drug_sets[0].historyarrays[tempIndex - 3][1]==0) {
-					tempDesired = drug_sets[0].historyarrays[tempIndex - 3][3];	
-				} else if (drug_sets[0].historyarrays[tempIndex - 4][1]==0) {
-					tempDesired = drug_sets[0].historyarrays[tempIndex - 4][3];	
-				}
-				
-				tempCutoff = drug_sets[0].historyarrays[tempIndex][2];
-				drug_sets[0].historyarrays.length = tempIndex;
-				drug_sets[0].historyarray.length = 0;
-				tempArray = JSON.stringify(drug_sets[0].historyarrays[drug_sets[0].historyarrays.length-1][3]);
-				drug_sets[0].historyarray = JSON.parse(tempArray);
-				//read historytexts, truncate it
-				tempIndex = drug_sets[0].historytexts.findIndex((element) => element[0] == tempCutoff);
-				drug_sets[0].historytext = drug_sets[0].historytexts[tempIndex][1];
-				drug_sets[0].historytexts.length = tempIndex;
-				//truncate important data at cutoff
-				drug_sets[0].cpt_cp.length = tempCutoff;
-				drug_sets[0].cpt_ce.length = tempCutoff;
-				drug_sets[0].cpt_rates_real.length = tempCutoff;
-				drug_sets[0].volinf.length = tempCutoff;
-				myChart.data.datasets[2].data.length = myChart.data.datasets[2].data.findIndex((element)=>element.x>tempCutoff/60) -1;
-				myChart.data.datasets[3].data.length = myChart.data.datasets[3].data.findIndex((element)=>element.x>tempCutoff/60) -1;
-				//get correct desired value
-				drug_sets[0].desired = tempDesired;
-				document.getElementById("inputDesired0").value = tempDesired;
-				document.getElementById("inputDesiredCe0_new").value = tempDesired;
-				//interface update
-				document.getElementById("historywrapper").innerHTML = drug_sets[0].historytext;
-			}
+	if (conditions) {
+		//clear interval first to prevent loop error
+		if (time_of_stop == -1) {
+			timeFxSuspend();
 		}
-		
-		loop1 = setInterval(update, 500);
-		loop2 = setInterval(runinfusion2, refresh_interval);
-		loop3 = setInterval(updatechart, 5000, myChart);
-		loop7 = setInterval(displayWarningBanner, 60*2000);
+		//reset time of stop
+		time_of_stop = -1;
+		document.getElementById("timeFxRowSuspend").classList.remove("hide");
+		document.getElementById("timeFxRowResume").classList.add("hide");
+		document.getElementById("suspendBanner").style.display = "none";
+		document.getElementById("iconplay").classList.remove("stop");
+	    //parameter is input in ms AFTER current
+	    parametertime = parametertime*1000;
+	    if (parametertime > 0) {
+	    	//this is jump to future, no problem
+	    	offset = Date.now() - parametertime;
+			loop1 = setInterval(update, 500);
+			loop2 = setInterval(runinfusion2, refresh_interval);
+			loop3 = setInterval(updatechart, 5000, myChart);
+			loop7 = setInterval(displayWarningBanner, 60*2000);
+		} else {
+			//this is jump back in time, gotta remove inf schemes as necessary
+			
+			offset = Date.now() - parametertime;
+			//read historyarrays, truncate it. also grab the scheme time for grabbing historytext later
+			
+			tempIndex = drug_sets[0].historyarrays.findIndex((element) => element[2] > (time + parametertime)/1000);
+
+			if (tempIndex > -1) {
+				//branch off manual mode VS CPT/CET modes
+				if (drug_sets[0].manualmode_active>0) {
+					tempCutoff = drug_sets[0].historyarrays[tempIndex][2];
+					tempRate = drug_sets[0].historyarrays[tempIndex-1][3];
+					drug_sets[0].historyarrays.length = tempIndex;
+					//truncate important data at cutoff
+					drug_sets[0].cpt_cp.length = tempCutoff;
+					drug_sets[0].cpt_ce.length = tempCutoff;
+					drug_sets[0].cpt_rates_real.length = tempCutoff;
+					drug_sets[0].volinf.length = tempCutoff;
+					myChart.data.datasets[2].data.length = myChart.data.datasets[2].data.findIndex((element)=>element.x>tempCutoff/60) -1;
+					myChart.data.datasets[3].data.length = myChart.data.datasets[3].data.findIndex((element)=>element.x>tempCutoff/60) -1;
+					drug_sets[0].inf_rate_mls = tempRate;
+					update();
+					lookahead(0,7200,0);
+					//remove one line of historyarrays
+					drug_sets[0].historyarrays.length = drug_sets[0].historyarrays.length - 1;
+					//need to process historytext
+					drug_sets[0].historytext = "";
+					for (counter = 0; counter<drug_sets[0].historyarrays.length; counter++) {
+						//1 is bolus, 2 is infusion			
+						if (drug_sets[0].historyarrays[counter][1]==1) {
+							appendText = "<div><div class='timespan'>" + converttime(Math.floor(drug_sets[0].historyarrays[counter][2])) + "</div>Bolus: " + drug_sets[0].historyarrays[counter][3] + drug_sets[0].infused_units + "</div>";
+						}
+						if (drug_sets[0].historyarrays[counter][1]==2) {
+							appendText = "<div><div class='timespan'>" + converttime(Math.floor(drug_sets[0].historyarrays[counter][2])) + "</div>Rate: " + Math.round(drug_sets[0].historyarrays[counter][3]*100)/100 + "ml/h</div>";
+						}
+						drug_sets[0].historytext = drug_sets[0].historytext.concat(appendText);
+					}
+					document.getElementById("historywrapper").innerHTML = drug_sets[0].historytext;
+				} else {
+
+					//make sure this is start of scheme first. because for CET mode the time in position [2] may not be right
+					if (drug_sets[0].historyarrays[tempIndex][1] == 0) {
+						//then it's ok
+					} else if (drug_sets[0].historyarrays[tempIndex-1][1] == 0) {
+						//move back 1 line
+						tempIndex = tempIndex - 1;
+					} else if (drug_sets[0].historyarrays[tempIndex-2][1] == 0) {
+						tempIndex = tempIndex - 2;
+					} else if (drug_sets[0].historyarrays[tempIndex-3][1] == 0) {
+						tempIndex = tempIndex - 3;
+					}
+
+					//find prev until can find desired of previous. can be index -2, -3, or -4, determined by second position equals 0 i.e. [1] == 0
+					if (drug_sets[0].historyarrays[tempIndex - 2][1]==0) {
+						tempDesired = drug_sets[0].historyarrays[tempIndex - 2][3];
+						tempWorkingClock = drug_sets[0].historyarrays[tempIndex - 2][2];
+					} else if (drug_sets[0].historyarrays[tempIndex - 3][1]==0) {
+						tempDesired = drug_sets[0].historyarrays[tempIndex - 3][3];	
+						tempWorkingClock = drug_sets[0].historyarrays[tempIndex - 3][2];
+					} else if (drug_sets[0].historyarrays[tempIndex - 4][1]==0) {
+						tempDesired = drug_sets[0].historyarrays[tempIndex - 4][3];	
+						tempWorkingClock = drug_sets[0].historyarrays[tempIndex - 4][2];
+					}
+
+					//specific code to solve cet_priordesired and cet_lockdowntime bug
+					//confirm this is cet mode
+					if (drug_sets[0].historyarrays[tempIndex][0] == 2) {
+						drug_sets[0].cet_priordesired = tempDesired;
+						if (drug_sets[0].historyarrays[tempIndex-2][1]==3) { //this indicates CET pause or CET lockdown, depending on whether this array has 3 or 4 elements
+							if (drug_sets[0].historyarrays[tempIndex-2].length==3) {
+								tempLockdown = tempWorkingClock + drug_sets[0].historyarrays[tempIndex-2][2] - 1;
+								drug_sets[0].cet_lockdowntime = tempLockdown;
+							}
+						} else {
+							//attempt to find cet_lockdowntime has failed, zero the lockdown
+							//probably the current scheme is CET going down trend, hence there is CET pause but there is no lockdown
+							drug_set[0].cet_lockdowntime = 0;
+						}
+					}
+					
+					tempCutoff = drug_sets[0].historyarrays[tempIndex][2];
+					drug_sets[0].historyarrays.length = tempIndex;
+					drug_sets[0].historyarray.length = 0;
+					tempArray = JSON.stringify(drug_sets[0].historyarrays[drug_sets[0].historyarrays.length-1][3]);
+					drug_sets[0].historyarray = JSON.parse(tempArray);
+					//read historytexts, truncate it
+					tempIndex = drug_sets[0].historytexts.findIndex((element) => element[0] == tempCutoff);
+					drug_sets[0].historytext = drug_sets[0].historytexts[tempIndex][1];
+					drug_sets[0].historytexts.length = tempIndex;
+					//truncate important data at cutoff
+					drug_sets[0].cpt_cp.length = tempCutoff;
+					drug_sets[0].cpt_ce.length = tempCutoff;
+					drug_sets[0].cpt_rates_real.length = tempCutoff;
+					drug_sets[0].volinf.length = tempCutoff;
+					myChart.data.datasets[2].data.length = myChart.data.datasets[2].data.findIndex((element)=>element.x>tempCutoff/60) -1;
+					myChart.data.datasets[3].data.length = myChart.data.datasets[3].data.findIndex((element)=>element.x>tempCutoff/60) -1;
+					//get correct desired value
+					drug_sets[0].desired = tempDesired;
+					document.getElementById("inputDesired0").value = tempDesired;
+					document.getElementById("inputDesiredCe0_new").value = tempDesired;
+					//interface update
+					document.getElementById("historywrapper").innerHTML = drug_sets[0].historytext;
+				}
+			}
+			
+			loop1 = setInterval(update, 500);
+			loop2 = setInterval(runinfusion2, refresh_interval);
+			loop3 = setInterval(updatechart, 5000, myChart);
+			loop7 = setInterval(displayWarningBanner, 60*2000);
 
 
+		}
+	    update();
+	    updatechart(myChart);
 	}
-    update();
-    updatechart(myChart);
 }
 
 
@@ -9545,7 +9584,7 @@ function lookahead(bolusgiven, duration, ind) {
 		drug_sets[ind].volinf.length = working_clock;	
 		drug_sets[ind].cpt_rates_real.length = working_clock;
 
-		drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div>" + "<div class='timespan'>" + converttime(working_clock) + "</div> Rate: " + Math.round(drug_sets[ind].inf_rate_mls*100/100) + "ml/h</div>");
+		drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div>" + "<div class='timespan'>" + converttime(working_clock) + "</div> Rate: " + Math.round(drug_sets[ind].inf_rate_mls*100)/100 + "ml/h</div>");
 		drug_sets[ind].historyarrays.push([0,2,working_clock,drug_sets[ind].inf_rate_mls]);
 		document.getElementById("historywrapper").innerHTML = drug_sets[ind].historytext;
 
@@ -14733,7 +14772,7 @@ function timeFxSubmitJump() {
 		store_time = paramH * 60 * 60 + paramM * 60 + paramS;
 		jump_time = store_time - Math.floor(time_in_s);
 	}
-	if ((Math.floor(time_in_s) + jump_time <= 0) || (Math.floor(time_in_s) + jump_time >= drug_sets[0].cpt_rates_real.length)) {
+	if ((Math.floor(time_in_s) + jump_time <= 60) || (Math.floor(time_in_s) + jump_time >= drug_sets[0].cpt_rates_real.length - 300)) {
 		document.getElementById("timeFxMessage").innerHTML = "Entered time point is invalid. Please try again.";
 	} else {
 		timeFxResume(jump_time);
