@@ -102,7 +102,7 @@
               		</div>
 					<div style="padding-top:1rem;">
 					<a class="button wide" onclick="hideallmodal();">Back</a>
-					<a class="button muted right" id="btn_disclaimer" onclick="displayDisclaimer();">Disclaimer</a><button onclick="importDialog()" style="opacity:0">Hi</button>
+					<a class="button muted right" id="btn_disclaimer2" onclick="displayDisclaimer();">Disclaimer</a><button onclick="importDialog()" style="opacity:0">Hi</button>
 					</div>
 				</div>
 			</div>
@@ -186,6 +186,14 @@
 									<option value="Eleveld" selected>Propofol (Eleveld)</option>
 									<option value="Eleveld-Remifentanil">Remifentanil (Eleveld)</option>
 									<option value="Complex">Complex (Dual mode)</option>
+							</select>
+						</td>
+					</tr>
+					<tr id="row_eleveldopioid"><td style="letter-spacing:-0.5px">Concomitant opioid</span></td>
+						<td>
+							<select id="select_eleveldopioid">
+								<option value="1">Yes, with opioid</option>
+								<option value="0">No, propofol alone</option>
 							</select>
 						</td>
 					</tr>

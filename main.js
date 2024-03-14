@@ -234,7 +234,7 @@ var isFullscreen = false;
 var popupUpdateInterval;
 var numpadValue = 0;
 var numpadOrig;
-
+var opioid = 1; //arbitrary default opioid = 1 for eleveld. to be re-set to 0 or 1 at first input screen
 
 var collapsibles = document.getElementsByClassName("collapsible");
 var i;
@@ -1935,7 +1935,7 @@ function initsubmit() {
 	if (ElModel.value === "Complex") {
 
 		complex_mode = 1;
-
+		opioid = 1;
 		//interface change
 
 		document.getElementById("complexmodeselection0").style.display = "block";
@@ -1998,6 +1998,10 @@ function initsubmit() {
 		document.getElementById("complexmodeselection0").style.display = "none";
 		document.getElementById("complexmodeselection1").style.display = "none";
 		document.getElementById("complexbuttons").style.display = "none";
+
+		if (ElModel.value == "Eleveld") {
+			if (document.getElementById("select_eleveldopioid").value == "1") {opioid = 1} else {opioid = 0};
+		}
 		readmodel(ElModel.value,0);
 		//infusate_concentration goes here
 		drug_sets[0].infusate_concentration = 10; //defaults 10 for propofol
@@ -7218,7 +7222,10 @@ function timeFxResume(parametertime) {
 					}
 
 					//find prev until can find desired of previous. can be index -2, -3, or -4, determined by second position equals 0 i.e. [1] == 0
-					if (drug_sets[0].historyarrays[tempIndex - 2][1]==0) {
+					if (tempIndex == 0) {
+						tempDesired = drug_sets[0].historyarrays[tempIndex][3];
+						tempWorkingClock = drug_sets[0].historyarrays[tempIndex][2];
+					} else if (drug_sets[0].historyarrays[tempIndex - 2][1]==0) {
 						tempDesired = drug_sets[0].historyarrays[tempIndex - 2][3];
 						tempWorkingClock = drug_sets[0].historyarrays[tempIndex - 2][2];
 					} else if (drug_sets[0].historyarrays[tempIndex - 3][1]==0) {
@@ -7233,7 +7240,10 @@ function timeFxResume(parametertime) {
 					//confirm this is cet mode
 					if (drug_sets[0].historyarrays[tempIndex][0] == 2) {
 						drug_sets[0].cet_priordesired = tempDesired;
-						if (drug_sets[0].historyarrays[tempIndex-2][1]==3) { //this indicates CET pause or CET lockdown, depending on whether this array has 3 or 4 elements
+						if (tempIndex == 0) {
+							tempLockdown = tempWorkingClock + drug_sets[0].historyarrays[tempIndex+2][2] - 1;
+							drug_sets[0].cet_lockdowntime = tempLockdown;
+						} else if (drug_sets[0].historyarrays[tempIndex-2][1]==3) { //this indicates CET pause or CET lockdown, depending on whether this array has 3 or 4 elements
 							if (drug_sets[0].historyarrays[tempIndex-2].length==3) {
 								tempLockdown = tempWorkingClock + drug_sets[0].historyarrays[tempIndex-2][2] - 1;
 								drug_sets[0].cet_lockdowntime = tempLockdown;
@@ -7245,22 +7255,37 @@ function timeFxResume(parametertime) {
 						}
 					}
 					
-					tempCutoff = drug_sets[0].historyarrays[tempIndex][2];
-					drug_sets[0].historyarrays.length = tempIndex;
+					
+					if (tempIndex == 0) {
+						//now determine whether the data should be truncated
+						if (drug_sets[0].historyarrays.length > 4) { //more than one scheme detected, truncate at next scheme
+							tempCutoff = drug_sets[0].historyarrays[tempIndex+4][2];
+							drug_sets[0].historyarrays.length = 4;
+						} else {
+							//no need to change timeline, continue as if normal
+							tempCutoff = -1;
+						}
+					} else {
+						tempCutoff = drug_sets[0].historyarrays[tempIndex][2];
+						drug_sets[0].historyarrays.length = tempIndex;	
+					}
+					
 					drug_sets[0].historyarray.length = 0;
 					tempArray = JSON.stringify(drug_sets[0].historyarrays[drug_sets[0].historyarrays.length-1][3]);
 					drug_sets[0].historyarray = JSON.parse(tempArray);
-					//read historytexts, truncate it
-					tempIndex = drug_sets[0].historytexts.findIndex((element) => element[0] == tempCutoff);
-					drug_sets[0].historytext = drug_sets[0].historytexts[tempIndex][1];
-					drug_sets[0].historytexts.length = tempIndex;
-					//truncate important data at cutoff
-					drug_sets[0].cpt_cp.length = tempCutoff;
-					drug_sets[0].cpt_ce.length = tempCutoff;
-					drug_sets[0].cpt_rates_real.length = tempCutoff;
-					drug_sets[0].volinf.length = tempCutoff;
-					myChart.data.datasets[2].data.length = myChart.data.datasets[2].data.findIndex((element)=>element.x>tempCutoff/60) -1;
-					myChart.data.datasets[3].data.length = myChart.data.datasets[3].data.findIndex((element)=>element.x>tempCutoff/60) -1;
+					if (tempCutoff > -1) {
+						//read historytexts, truncate it
+						tempIndex = drug_sets[0].historytexts.findIndex((element) => element[0] == tempCutoff);
+						drug_sets[0].historytext = drug_sets[0].historytexts[tempIndex][1];
+						drug_sets[0].historytexts.length = tempIndex;
+						//truncate important data at cutoff
+						drug_sets[0].cpt_cp.length = tempCutoff;
+						drug_sets[0].cpt_ce.length = tempCutoff;
+						drug_sets[0].cpt_rates_real.length = tempCutoff;
+						drug_sets[0].volinf.length = tempCutoff;
+						myChart.data.datasets[2].data.length = myChart.data.datasets[2].data.findIndex((element)=>element.x>tempCutoff/60) -1;
+						myChart.data.datasets[3].data.length = myChart.data.datasets[3].data.findIndex((element)=>element.x>tempCutoff/60) -1;
+					}
 					//get correct desired value
 					drug_sets[0].desired = tempDesired;
 					document.getElementById("inputDesired0").value = tempDesired;
@@ -8799,7 +8824,11 @@ function switchpaedimode(arg) {
 			document.getElementById("row_fen_weightadjusted").style.display = "none";
 			document.getElementById("row_height").style.display = "table-row";
 			document.getElementById("row_fen_weightadjusted").style.display = "none";
-
+			if (document.getElementById("select_model").value == "Eleveld") {
+				document.getElementById("row_eleveldopioid").style.display = "table-row";	
+			} else {
+				document.getElementById("row_eleveldopioid").style.display = "none";	
+			}
 			
 
 		}
@@ -8829,6 +8858,11 @@ function switchpaedimode(arg) {
 			document.getElementById("row_PMA_paedimode").style.display = "none";
 			document.getElementById("row_remidilution").style.display = "table-row";
 		}
+		if (document.getElementById("select_model_paedi").value == "Eleveld") {
+				document.getElementById("row_eleveldopioid").style.display = "table-row";	
+			} else {
+				document.getElementById("row_eleveldopioid").style.display = "none";	
+			}
 		paedi_mode = 1;
 	}
 
@@ -8947,7 +8981,6 @@ function readmodel(x, drug_set_index) {
 	}
 	if (x == "Eleveld") {
 
-		var opioid = 1; // arbitralily set YES to intraop opioids;
 		const toweeks = 52.1429;
 		if (paedi_mode == 0) {
 			PMA = age*toweeks+40; //arbitrarily set PMA 40 weeks +age	
@@ -8971,10 +9004,18 @@ function readmodel(x, drug_set_index) {
 		}
 		var v3ref = 273; //just use this from the table
 		if (gender == 0) { 
-			var cl1 = 1.79 * Math.pow(mass/70,0.75) * (fclmaturation(PMA)/fclmaturation(35*toweeks+40))* Math.exp(-0.00286*age) ;
+			if (opioid == 1) {
+				var cl1 = 1.79 * Math.pow(mass/70,0.75) * (fclmaturation(PMA)/fclmaturation(35*toweeks+40))* Math.exp(-0.00286*age) ;
+			} else {
+				var cl1 = 1.79 * Math.pow(mass/70,0.75) * (fclmaturation(PMA)/fclmaturation(35*toweeks+40)) ;
+			}
 			//maturation valid for ~<5months according to Eleveld 2018
 		} else {
-			var cl1 = 2.1 * Math.pow(mass/70,0.75) * (fclmaturation(PMA)/fclmaturation(35*toweeks+40))* Math.exp(-0.00286*age) ;
+			if (opioid == 1) {
+				var cl1 = 2.1 * Math.pow(mass/70,0.75) * (fclmaturation(PMA)/fclmaturation(35*toweeks+40))* Math.exp(-0.00286*age) ;
+			} else {
+				var cl1 = 2.1 * Math.pow(mass/70,0.75) * (fclmaturation(PMA)/fclmaturation(35*toweeks+40)) ;
+			}
 		}
 		var cl2 = 1.75 * Math.pow(v2/v2ref,0.75)* (1 + 1.3*(1-fq3maturation(age*toweeks)));
 		var cl3 = 1.11 * Math.pow(v3/v3ref,0.75)*(fq3maturation(age*toweeks)/fq3maturation(35*toweeks));
@@ -8984,8 +9025,14 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].k13 = cl3 / drug_sets[drug_set_index].vc;
 		drug_sets[drug_set_index].k21 = cl2 / v2;
 		drug_sets[drug_set_index].k31 = cl3 / v3;
+		if (opioid == 1) {
+			opioidtext = "Assume: presence of concomitant opioid";	
+		} else {
+			opioidtext = "Propofol alone; assume absence of opioid"
+		}
+		
 		drug_sets[drug_set_index].modeltext = "Eleveld model (BJA 2018;120:942-959)" + "<br>" +
-		"Assume: presence of opioids" + "<br>" +
+		opioidtext + "<br>" +
 		"vc = " + drug_sets[drug_set_index].vc + "<br>" +
 		"v2 = " + v2 + "<br>" + 
 		"v3 = " + v3 + "<br>" + 
@@ -9950,6 +9997,11 @@ function sendToValidate(arg) {
 		} else {
 			document.getElementById("row_remidilution").style.display = "none";
 		}
+		if (document.getElementById("select_model").value == "Eleveld") {
+			document.getElementById("row_eleveldopioid").style.display = "table-row";	
+		} else {
+			document.getElementById("row_eleveldopioid").style.display = "none";	
+		}
 	} else { //paedi mode 1
 		if (document.getElementById("select_model_paedi").value === "Eleveld-Remifentanil") {
 			document.getElementById("row_remidilution").style.display = "table-row";
@@ -9960,6 +10012,11 @@ function sendToValidate(arg) {
 			document.getElementById("row_PMA_paedimode").style.display = "table-row";
 		} else {
 			document.getElementById("row_PMA_paedimode").style.display = "none";
+		}
+		if (document.getElementById("select_model_paedi").value == "Eleveld") {
+			document.getElementById("row_eleveldopioid").style.display = "table-row";	
+		} else {
+			document.getElementById("row_eleveldopioid").style.display = "none";	
 		}
 	}
 	if (paedi_mode == 0) {
@@ -11866,6 +11923,13 @@ function outputpatientstring() {
 				P_patient.push(drug_sets[0].fentanyl_weightadjusted_factor);
 			}
 		}
+		if (P_patient[0]=="Eleveld") {
+			if (opioid == 1) {
+				P_patient.push(1); //P_patient[10] for eleveld is opioid = 0 or 1
+			} else {
+				P_patient.push(0);
+			}
+		}
 
 		//simple mode, P_patient.length would not be more than 11
 	} else {
@@ -12666,6 +12730,16 @@ function parseobject(input_uid,external,extObject) {
 
 	if ((object.P_patient[0] == "Eleveld") && (object.P_patient[1] == "Remifentanil")) {
 		object.P_patient[0] = "Eleveld-Remifentanil";
+	}
+
+	if ((object.P_patient[0] == "Eleveld") && (complex_mode == 0)) {
+		if (object.P_patient[10] != undefined) {
+			if (object.P_patient[10] == 0) {
+				opioid = 0;
+			} else {
+				opioid = 1;
+			}
+		}
 	}
 
 	readmodel(object.P_patient[0],0);
