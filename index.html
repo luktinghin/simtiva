@@ -323,11 +323,11 @@
 					</div>
 					-->
 					<div id="simplemodeselection" style="padding-top:1rem; padding-bottom:0.5rem; text-align:center; border:2px solid #ccc; border-radius:9px;box-shadow:inset 0 4px 0 0 rgba(0,0,0,0.15);">Choose one of the following:<br>
-						<a class="button huge" onclick="initcpt();hideallmodal();"><span style="border-bottom:1px solid LightCoral">CP</span> TARGETING<i class="fas fa-tint fa-fw" style="color:LightCoral;"></i></a>
+						<a class="button huge" onclick="initcpt();hideallmodal();document.getElementById('card_controlpanel').style.display='block';"><span style="border-bottom:1px solid LightCoral">CP</span> TARGETING<i class="fas fa-tint fa-fw" style="color:LightCoral;"></i></a>
 						<br>
-						<a class="button huge" onclick="initcet();hideallmodal()"><span style="border-bottom:1px solid green">CE</span> TARGETING<i class="fas fa-brain fa-fw" style="color:green;"></i></a>
+						<a class="button huge" onclick="initcet();hideallmodal();document.getElementById('card_controlpanel').style.display='block';"><span style="border-bottom:1px solid green">CE</span> TARGETING<i class="fas fa-brain fa-fw" style="color:green;"></i></a>
 						<br>
-						<a class="button huge" onclick="initmanual(0);hideallmodal();">MANUAL<i class="fas fa-syringe fa-fw" style="color:rgb(81 203 238)"></i></a>
+						<a class="button huge" onclick="initmanual(0);hideallmodal();document.getElementById('card_controlpanel').style.display='block';">MANUAL<i class="fas fa-syringe fa-fw" style="color:rgb(81 203 238)"></i></a>
 						<br>
 						<a class="button huge" onclick="initcetbolus(0);hideallmodal();">INTERMITTENT BOLUS<i class="fas fa-hourglass-half fa-fw" style="color:#c19f14"></i></a>
 					</div>
@@ -1861,29 +1861,6 @@
 
 		</div> <!-- end interactions container -->
 
-				
-				<div style='display:none'>
-					<div>CURRENT: <span id='isobole_chart_current'></span></div>
-					<div>CURSOR: <span id='isobole_chart_description'></span></div>
-					<div><b>PTOL:</b><span id="ptol"></span></div>
-				</div>
-		<div class="card" id="parameters">
-			<div class="cardtitle">MODEL PARAMETERS</div>
-			<div class="cardcontents"><span id="modeldescription"></span></div>
-		</div>
-		<div class="card" id="schemecopy">
-			<div class="cardtitle" id="schemecopytitle">SCHEME</div>
-			<div class="cardcontents" id="schemecopycontainer">
-			
-
-				<div id="historywrapperCOPY">Waiting to start.
-				</div>
-			
-			</div>
-				<div id="pastschemeCOPY">
-					<a id="pastschemebuttonCOPY" onclick="displaymodalhistory();"><i class="fas fa-history"></i> Past Schemes</a>
-				</div>
-		</div>
 		<div class="card" id="card_controlpanel">
 			<div class="cardtitle">CONTROL PANEL</div>
 			<div class="cardcontents">
@@ -1917,6 +1894,24 @@
 				</div>
 			</div>
 		</div>
+		<div class="card" id="parameters">
+			<div class="cardtitle">MODEL PARAMETERS</div>
+			<div class="cardcontents"><span id="modeldescription"></span></div>
+		</div>
+		<div class="card" id="schemecopy">
+			<div class="cardtitle" id="schemecopytitle">SCHEME</div>
+			<div class="cardcontents" id="schemecopycontainer">
+			
+
+				<div id="historywrapperCOPY">Waiting to start.
+				</div>
+			
+			</div>
+				<div id="pastschemeCOPY">
+					<a id="pastschemebuttonCOPY" onclick="displaymodalhistory();"><i class="fas fa-history"></i> Past Schemes</a>
+				</div>
+		</div>
+
 		<div class="card" id="card_retrospective">
 			<div class="cardtitle collapsiblecard">RETROSPECTIVE</div>
 			<div class="cardcontents">

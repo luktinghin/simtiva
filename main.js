@@ -7146,7 +7146,7 @@ function timeFxSuspend() {
 }
 
 function timeFxResume(parametertime) {
-	conditions = ((time_in_s + parametertime > 60) && (time_in_s + parametertime < drug_sets[0].cpt_rates_real.length - 300) && (time_in_s>1) && (drug_sets[0].cpt_rates_real.length > 1));
+	conditions = ((time_in_s + parametertime > 1) && (time_in_s + parametertime < drug_sets[0].cpt_rates_real.length - 300) && (time_in_s>1) && (drug_sets[0].cpt_rates_real.length > 1));
 
 	if (conditions) {
 		//clear interval first to prevent loop error
@@ -7155,6 +7155,8 @@ function timeFxResume(parametertime) {
 		}
 		//reset time of stop
 		time_of_stop = -1;
+		//tempIndexNew is to identify if there's a new Scheme start distal to jump time, and this will also need to update the lockdown and prior desired values
+		tempIndexNew = -1;
 		document.getElementById("timeFxRowSuspend").classList.remove("hide");
 		document.getElementById("timeFxRowResume").classList.add("hide");
 		document.getElementById("suspendBanner").style.display = "none";
@@ -7174,7 +7176,11 @@ function timeFxResume(parametertime) {
 			offset = Date.now() - parametertime;
 			//read historyarrays, truncate it. also grab the scheme time for grabbing historytext later
 			
-			tempIndex = drug_sets[0].historyarrays.findIndex((element) => element[2] > (time + parametertime)/1000);
+			if ((drug_sets[0].historyarrays[0][0] == 2) || (drug_sets[0].historyarrays[0][0] == 1)) {
+				tempIndex = drug_sets[0].historyarrays.findIndex((element) => (element[2] > (time + parametertime)/1000) && (element[1] == 0));
+			} else {
+				tempIndex = drug_sets[0].historyarrays.findIndex((element) => element[2] > (time + parametertime)/1000);
+			}
 
 			if (tempIndex > -1) {
 				//branch off manual mode VS CPT/CET modes
@@ -7208,72 +7214,47 @@ function timeFxResume(parametertime) {
 					}
 					document.getElementById("historywrapper").innerHTML = drug_sets[0].historytext;
 				} else {
+					//this is CPT/ CET scheme
 
-					//make sure this is start of scheme first. because for CET mode the time in position [2] may not be right
-					if (drug_sets[0].historyarrays[tempIndex][1] == 0) {
-						//then it's ok
-					} else if (drug_sets[0].historyarrays[tempIndex-1][1] == 0) {
-						//move back 1 line
-						tempIndex = tempIndex - 1;
-					} else if (drug_sets[0].historyarrays[tempIndex-2][1] == 0) {
-						tempIndex = tempIndex - 2;
-					} else if (drug_sets[0].historyarrays[tempIndex-3][1] == 0) {
-						tempIndex = tempIndex - 3;
-					}
-
-					//find prev until can find desired of previous. can be index -2, -3, or -4, determined by second position equals 0 i.e. [1] == 0
-					if (tempIndex == 0) {
-						tempDesired = drug_sets[0].historyarrays[tempIndex][3];
-						tempWorkingClock = drug_sets[0].historyarrays[tempIndex][2];
-					} else if (drug_sets[0].historyarrays[tempIndex - 2][1]==0) {
-						tempDesired = drug_sets[0].historyarrays[tempIndex - 2][3];
-						tempWorkingClock = drug_sets[0].historyarrays[tempIndex - 2][2];
-					} else if (drug_sets[0].historyarrays[tempIndex - 3][1]==0) {
-						tempDesired = drug_sets[0].historyarrays[tempIndex - 3][3];	
-						tempWorkingClock = drug_sets[0].historyarrays[tempIndex - 3][2];
-					} else if (drug_sets[0].historyarrays[tempIndex - 4][1]==0) {
-						tempDesired = drug_sets[0].historyarrays[tempIndex - 4][3];	
-						tempWorkingClock = drug_sets[0].historyarrays[tempIndex - 4][2];
-					}
-
-					//specific code to solve cet_priordesired and cet_lockdowntime bug
-					//confirm this is cet mode
-					if (drug_sets[0].historyarrays[tempIndex][0] == 2) {
-						drug_sets[0].cet_priordesired = tempDesired;
-						if (tempIndex == 0) {
-							tempLockdown = tempWorkingClock + drug_sets[0].historyarrays[tempIndex+2][2] - 1;
-							drug_sets[0].cet_lockdowntime = tempLockdown;
-						} else if (drug_sets[0].historyarrays[tempIndex-2][1]==3) { //this indicates CET pause or CET lockdown, depending on whether this array has 3 or 4 elements
-							if (drug_sets[0].historyarrays[tempIndex-2].length==3) {
-								tempLockdown = tempWorkingClock + drug_sets[0].historyarrays[tempIndex-2][2] - 1;
-								drug_sets[0].cet_lockdowntime = tempLockdown;
+					if (drug_sets[0].historyarrays[tempIndex][0] == 1) {
+						//this is CPT mode
+						tempDesired = 0;
+						for (innercounter = 0; innercounter < drug_sets[0].historyarrays.length; innercounter++) {
+							if (drug_sets[0].historyarrays[innercounter][2] < (time + parametertime)/1000) {
+								if (drug_sets[0].historyarrays[innercounter][1] == 0) {
+									tempDesired = drug_sets[0].historyarrays[innercounter][3];
+									if (drug_sets[0].fentanyl_weightadjusted_flag == 1) {
+										tempDesired = tempDesired * 1/drug_sets[0].fentanyl_weightadjusted_factor;	
+									} 
+								}
 							}
-						} else {
-							//attempt to find cet_lockdowntime has failed, zero the lockdown
-							//probably the current scheme is CET going down trend, hence there is CET pause but there is no lockdown
-							drug_set[0].cet_lockdowntime = 0;
 						}
-					}
-					
-					
-					if (tempIndex == 0) {
-						//now determine whether the data should be truncated
-						if (drug_sets[0].historyarrays.length > 4) { //more than one scheme detected, truncate at next scheme
-							tempCutoff = drug_sets[0].historyarrays[tempIndex+4][2];
-							drug_sets[0].historyarrays.length = 4;
-						} else {
-							//no need to change timeline, continue as if normal
-							tempCutoff = -1;
+
+					} else if (drug_sets[0].historyarrays[tempIndex][0] == 2) {
+						//this is CET mode
+						tempDesired = 0;
+						for (innercounter = 0; innercounter < drug_sets[0].historyarrays.length; innercounter++) {
+							if (drug_sets[0].historyarrays[innercounter][2] < (time + parametertime)/1000) {
+								if (drug_sets[0].historyarrays[innercounter][1] == 0) {
+									tempDesired = drug_sets[0].historyarrays[innercounter][3];
+									if (drug_sets[0].fentanyl_weightadjusted_flag == 1) {
+										tempDesired = tempDesired * 1/drug_sets[0].fentanyl_weightadjusted_factor;	
+									} 
+								}
+							}
 						}
-					} else {
-						tempCutoff = drug_sets[0].historyarrays[tempIndex][2];
-						drug_sets[0].historyarrays.length = tempIndex;	
-					}
-					
-					drug_sets[0].historyarray.length = 0;
-					tempArray = JSON.stringify(drug_sets[0].historyarrays[drug_sets[0].historyarrays.length-1][3]);
-					drug_sets[0].historyarray = JSON.parse(tempArray);
+						drug_sets[0].cet_priordesired = tempDesired;
+
+					} // end CET mode
+
+					tempCutoff = drug_sets[0].historyarrays[tempIndex][2];
+
 					if (tempCutoff > -1) {
+						drug_sets[0].historyarrays.length = tempIndex;	
+						
+						drug_sets[0].historyarray.length = 0;
+						tempArray = JSON.stringify(drug_sets[0].historyarrays[drug_sets[0].historyarrays.length-1][3]);
+						drug_sets[0].historyarray = JSON.parse(tempArray);
 						//read historytexts, truncate it
 						tempIndex = drug_sets[0].historytexts.findIndex((element) => element[0] == tempCutoff);
 						drug_sets[0].historytext = drug_sets[0].historytexts[tempIndex][1];
@@ -7285,15 +7266,38 @@ function timeFxResume(parametertime) {
 						drug_sets[0].volinf.length = tempCutoff;
 						myChart.data.datasets[2].data.length = myChart.data.datasets[2].data.findIndex((element)=>element.x>tempCutoff/60) -1;
 						myChart.data.datasets[3].data.length = myChart.data.datasets[3].data.findIndex((element)=>element.x>tempCutoff/60) -1;
+						//at this point, the historyarrays have been truncated, then for CET mode, update the lockdown time
+						if (drug_sets[0].historyarrays[tempIndex][0] == 2) {
+							for (innercounter3 = 0; innercounter3<drug_sets[0].historyarrays.length; innercounter3++) {
+								//get all CET pause things
+								if (drug_sets[0].historyarrays[innercounter3][1] == 3) {
+									if (drug_sets[0].historyarrays[innercounter3].length == 3) {
+										//this is indeed a lockdown value
+										tempWorkingClock = drug_sets[0].historyarrays[innercounter3-1][2];
+										tempLockdown = drug_sets[0].historyarrays[innercounter3][2] + tempWorkingClock -1;
+										drug_sets[0].cet_lockdowntime = tempLockdown;
+									}
+								}
+							}
+						}
+						//get correct desired value
+						drug_sets[0].desired = tempDesired;
+
+						//attempt to fill the tempcutoff using the scheme
+						lookaheadfill(0,tempCutoff,drug_sets[0].historyarray[0][0]+7200);
+						if (drug_sets[0].fentanyl_weightadjusted_flag == 0) {
+							document.getElementById("inputDesired0").value = tempDesired;
+							document.getElementById("inputDesiredCe0_new").value = tempDesired;
+						} else {
+							tempDesired = Math.round(tempDesired * drug_sets[0].fentanyl_weightadjusted_factor *10)/10;	
+							document.getElementById("inputDesired0").value = tempDesired;
+							document.getElementById("inputDesiredCe0_new").value = tempDesired;
+						}
+						//interface update
+						document.getElementById("historywrapper").innerHTML = drug_sets[0].historytext;
 					}
-					//get correct desired value
-					drug_sets[0].desired = tempDesired;
-					document.getElementById("inputDesired0").value = tempDesired;
-					document.getElementById("inputDesiredCe0_new").value = tempDesired;
-					//interface update
-					document.getElementById("historywrapper").innerHTML = drug_sets[0].historytext;
-				}
-			}
+				} // end CET CPT parts
+			} //end tempIndex>-1 part
 			
 			loop1 = setInterval(update, 500);
 			loop2 = setInterval(runinfusion2, refresh_interval);
@@ -8832,6 +8836,7 @@ function switchpaedimode(arg) {
 			
 
 		}
+		document.getElementById("rescuebuttons").style.display = "block";
 		paedi_mode = 0;
 	} else {
 		//paedi mode 1
@@ -8863,6 +8868,7 @@ function switchpaedimode(arg) {
 			} else {
 				document.getElementById("row_eleveldopioid").style.display = "none";	
 			}
+		document.getElementById("rescuebuttons").style.display = "none";
 		paedi_mode = 1;
 	}
 
@@ -9744,6 +9750,119 @@ function lookahead(bolusgiven, duration, ind) {
 		ptol_generate_margins(ind,0.9,0.5);
 	}
 	
+}
+
+function lookaheadfill(ind, inputTime, maxDuration) {
+	working_clock = inputTime;
+	p_state[1] = drug_sets[ind].cpt_cp[working_clock-1][0];
+	p_state[2] = drug_sets[ind].cpt_cp[working_clock-1][1];
+	p_state[3] = drug_sets[ind].cpt_cp[working_clock-1][2];
+
+	e_state[1] = drug_sets[ind].cpt_ce[working_clock-1][0];
+	e_state[2] = drug_sets[ind].cpt_ce[working_clock-1][1];
+	e_state[3] = drug_sets[ind].cpt_ce[working_clock-1][2];
+	e_state[4] = drug_sets[ind].cpt_ce[working_clock-1][3];
+
+	if (drug_sets[ind].fentanyl_weightadjusted_flag==1) {
+			p_state[1] *= 1/drug_sets[ind].fentanyl_weightadjusted_factor;
+			p_state[2] *= 1/drug_sets[ind].fentanyl_weightadjusted_factor;
+			p_state[3] *= 1/drug_sets[ind].fentanyl_weightadjusted_factor;
+			e_state[1] *= 1/drug_sets[ind].fentanyl_weightadjusted_factor;
+			e_state[2] *= 1/drug_sets[ind].fentanyl_weightadjusted_factor;
+			e_state[3] *= 1/drug_sets[ind].fentanyl_weightadjusted_factor;
+			e_state[4] *= 1/drug_sets[ind].fentanyl_weightadjusted_factor;
+	}
+
+
+	p_state2[1] = p_state[1];
+	p_state2[2] = p_state[2];
+	p_state2[3] = p_state[3];
+	e_state2[1] = e_state[1];
+	e_state2[2] = e_state[2];
+	e_state2[3] = e_state[3];
+	e_state2[4] = e_state[4];
+
+	var look_l1 = Math.exp(-drug_sets[ind].lambda[1]); 
+	var look_l2 = Math.exp(-drug_sets[ind].lambda[2]);
+	var look_l3 = Math.exp(-drug_sets[ind].lambda[3]);
+	var look_l4 = Math.exp(-drug_sets[ind].lambda[4]);
+	var est_cp;
+	var est_ce;
+	var temp_vol;
+
+	temp_vol = drug_sets[ind].volinf[working_clock-1];
+
+	for (i=working_clock; i<maxDuration; i++) {
+		rateIndex = drug_sets[0].historyarray.findIndex((element) => element[0]>=i);
+		if (rateIndex == -1) {
+			rateIndex = drug_sets[0].historyarray.length-1;
+		} else {
+			rateIndex = rateIndex - 1;
+		}
+		look_pump_rate_in_amt = drug_sets[0].historyarray[rateIndex][1];
+		temp_vol = temp_vol+look_pump_rate_in_amt/drug_sets[ind].infusate_concentration;
+		p_state2[1] = p_state2[1] * look_l1 + drug_sets[ind].p_coef[1] * look_pump_rate_in_amt * (1 - look_l1);
+		p_state2[2] = p_state2[2] * look_l2 + drug_sets[ind].p_coef[2] * look_pump_rate_in_amt * (1 - look_l2);
+		p_state2[3] = p_state2[3] * look_l3 + drug_sets[ind].p_coef[3] * look_pump_rate_in_amt * (1 - look_l3);
+		//if (effect_data)
+		//	{
+		e_state2[1] = e_state2[1] * look_l1 + drug_sets[ind].e_coef[1] * look_pump_rate_in_amt * (1 - look_l1);
+		e_state2[2] = e_state2[2] * look_l2 + drug_sets[ind].e_coef[2] * look_pump_rate_in_amt * (1 - look_l2);
+		e_state2[3] = e_state2[3] * look_l3 + drug_sets[ind].e_coef[3] * look_pump_rate_in_amt * (1 - look_l3);
+		e_state2[4] = e_state2[4] * look_l4 + drug_sets[ind].e_coef[4] * look_pump_rate_in_amt * (1 - look_l4);
+
+		est_cp = p_state2[1]+p_state2[2]+p_state2[3];
+		est_ce = e_state2[1]+e_state2[2]+e_state2[3]+e_state2[4];
+
+		drug_sets[ind].cpt_rates_real.push(look_pump_rate_in_amt);
+		drug_sets[ind].cpt_cp.push([p_state2[1],p_state2[2],p_state2[3]]);
+		drug_sets[ind].cpt_ce.push([e_state2[1],e_state2[2],e_state2[3],e_state2[4]]);
+		drug_sets[ind].volinf.push(temp_vol);
+		//charting engine: initially has higher resolution
+		if ((i-working_clock<3*60) && (i%15==0)) {
+			myChart.data.datasets[ind*2+2].data.push({x:i/60, y:est_cp});
+			myChart.data.datasets[ind*2+3].data.push({x:i/60, y:est_ce});
+		}
+		if ((i-working_clock>=3*60) && (i-working_clock<12*60) && (i%20==0)) {
+			myChart.data.datasets[ind*2+2].data.push({x:i/60, y:est_cp});
+			myChart.data.datasets[ind*2+3].data.push({x:i/60, y:est_ce});			
+		}
+		if ((i-working_clock>=12*60) && (i-working_clock<39*60) && (i%30==0)) {
+			myChart.data.datasets[ind*2+2].data.push({x:i/60, y:est_cp});
+			myChart.data.datasets[ind*2+3].data.push({x:i/60, y:est_ce});
+		}
+		if ((i-working_clock>=39*60) && (i%60==0)) {
+			myChart.data.datasets[ind*2+2].data.push({x:i/60, y:est_cp});
+			myChart.data.datasets[ind*2+3].data.push({x:i/60, y:est_ce});
+		}
+
+	}
+
+	//updatehistorytext
+	for (innercounter = 0; innercounter < drug_sets[0].historyarray.length; innercounter++) {
+		if (drug_sets[0].historyarray[innercounter][0] > working_clock) {
+			test_rate = drug_sets[0].historyarray[innercounter][1]; 
+			var rate1 = Math.round(test_rate*3600/drug_sets[ind].infusate_concentration*10)/10;
+			var rate2 = Math.round(rate1*drug_sets[ind].infusate_concentration*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp;
+			relativetime = drug_sets[0].historyarray[innercounter][0];					
+			drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" + converttime(relativetime) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");	
+		}
+	}
+	document.getElementById("historywrapper").innerHTML = drug_sets[0].historytext;
+	
+	//myChart.data.datasets[ind*2+2].hidden = false;
+	//myChart.data.datasets[ind*2+3].hidden = false;
+	//myChart.update();
+	if (drug_sets[ind].fentanyl_weightadjusted_flag==1) {
+		apply_fentanyl_correction(ind);
+	} else {
+		myChart.update();
+	}
+	//
+	//if (parseloading == 0) {
+	//	savefile_data();
+	//	ptol_generate_margins(ind,0.9,0.5);
+	//}
 }
 
 function sendtowakeup(conc) {

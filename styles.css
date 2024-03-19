@@ -5251,6 +5251,9 @@ body.dark .infusionratedropdownitem:hover {
   #card_infusion1, #card_cpt1, #card_cet1 {
     margin-top:0px;
   }
+  #card_controlpanel {
+    display: none;
+  }
   #outputselector {
     display:none;
   }
@@ -6514,6 +6517,7 @@ a.input-button {
 }
 .timeFxRow:hover {
   background: #eee;
+  cursor: pointer;
 }
 .timeFxRow:hover > div > a {
   color: black;
@@ -6538,7 +6542,7 @@ a.timeFxButton {
   background: #ccc;
   color: white;
   font-size: 125%;
-  border-radius: 1rem;
+  border-radius: 2rem;
   width: 36px;
   height: 36px;
   line-height: 36px;
