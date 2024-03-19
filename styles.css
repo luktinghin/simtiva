@@ -1481,7 +1481,7 @@ body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom
   height:2.7rem;
 }
 .table-Init.paedimode tr {
-  height:2.8rem;
+  height:2.7rem;
 }
 
 .IB_elements {
@@ -4980,6 +4980,10 @@ body.dark .infusionratedropdownitem:hover {
 }
 
 
+#card_controlpanel {
+  display: none;
+}
+
 @media screen and (min-width:768px) { /*small screen - tablet*/
   body {
     overflow-x:hidden;
@@ -5251,9 +5255,7 @@ body.dark .infusionratedropdownitem:hover {
   #card_infusion1, #card_cpt1, #card_cet1 {
     margin-top:0px;
   }
-  #card_controlpanel {
-    display: none;
-  }
+
   #outputselector {
     display:none;
   }

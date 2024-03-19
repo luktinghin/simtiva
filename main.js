@@ -7110,6 +7110,7 @@ function timeFxReset() {
 		myChart.data.datasets[3].data.push({x:0,y:0});
 		myChart.update();
 		drug_sets[0].firstrun = -1;
+		time_of_stop = -1;
 		//interface changes
 		document.getElementById("iconplay").classList.add("stop");
 		document.getElementById("iconplay").innerHTML="<i class='fas fa-pause fa-lg'></i>";
@@ -10988,7 +10989,7 @@ function reanimate(arg_time) {
 			if (drug_sets[0].fentanyl_weightadjusted_flag == 1) {
 				desired = drug_sets[0].fentanyl_weightadjusted_target_uncorrected;
 				drug_sets[0].desired = 0;
-				deliver_cet(1,0);
+				deliver_cet(desired,0);
 			} else {
 				deliver_cet(drug_sets[0].desired,0);	
 			}
