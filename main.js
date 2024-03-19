@@ -7142,7 +7142,7 @@ function timeFxSuspend() {
 		document.getElementById("timeFxRowSuspend").classList.add("hide");
 		document.getElementById("timeFxRowResume").classList.remove("hide");
 		document.getElementById("suspendBanner").style.display = "flex";
-		document.getElementById("iconplay").classList.add("stop");
+		document.getElementById("iconplay").style.display = "none";
 	}
 }
 
@@ -7161,7 +7161,7 @@ function timeFxResume(parametertime) {
 		document.getElementById("timeFxRowSuspend").classList.remove("hide");
 		document.getElementById("timeFxRowResume").classList.add("hide");
 		document.getElementById("suspendBanner").style.display = "none";
-		document.getElementById("iconplay").classList.remove("stop");
+		document.getElementById("iconplay").style.display = "block";
 	    //parameter is input in ms AFTER current
 	    parametertime = parametertime*1000;
 	    if (parametertime > 0) {
@@ -14816,8 +14816,11 @@ function createEvent(inputtime, inputtext, isEdit) {
 		El4.innerHTML = `
 			<div class='eventmarker'>${number}</div>
 			<div class='eventtime'>${outputtime}</div>
-			${inputtext}
-		`
+		`;
+		let El5 = document.createElement("div");
+		El5.style.display = "inline-block";
+		El5.textContent = inputtext;
+		El4.appendChild(El5);
 		El3.appendChild(El4);
 	} else { 
 		//this is edit mode
@@ -14842,8 +14845,11 @@ function createEvent(inputtime, inputtext, isEdit) {
 		ElLabel.innerHTML = `
 			<div class='eventmarker'>${number}</div>
 			<div class='eventtime'>${outputtime}</div>
-			${inputtext}
-		`
+		`;
+		let El5 = document.createElement("div");
+		El5.style.display = "inline-block";
+		El5.textContent = inputtext;
+		ElLabel.appendChild(El5);
 		ElLabel.setAttribute('id', 'labelevent'+inputtime);
 
 	}
