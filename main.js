@@ -7082,6 +7082,18 @@ function timeFxReset() {
 		document.getElementById("timeFxRowSuspend").classList.remove("hide");
 		document.getElementById("timeFxRowResume").classList.add("hide");
 		timeFxSuspend();
+		if (drug_sets[0].historyarrays[0][0] == 2) {
+			document.getElementById("card_cet0_new").style.pointerEvents = "auto";
+			document.getElementById("card_cet0_new").style.filter = "saturate(1)";
+		} else if (drug_sets[0].historyarrays[0][0] == 1) {
+			document.getElementById("card_cpt0").style.pointerEvents = "auto";
+			document.getElementById("card_cpt0").style.filter = "saturate(1)";
+		} else {
+			document.getElementById("card_infusion0").style.pointerEvents = "auto";
+			document.getElementById("card_infusion0").style.filter = "saturate(1)";
+			document.getElementById("card_bolus0").style.pointerEvents = "auto";
+			document.getElementById("card_bolus0").style.filter = "saturate(1)";
+		}
 		if (drug_sets[0].cet_active>0 && drug_sets[0].IB_active==0) {
 			initsubmit();
 			initcet();	
@@ -7112,6 +7124,7 @@ function timeFxReset() {
 		drug_sets[0].firstrun = -1;
 		time_of_stop = -1;
 		//interface changes
+		document.getElementById("iconplay").style.display = "block";
 		document.getElementById("iconplay").classList.add("stop");
 		document.getElementById("iconplay").innerHTML="<i class='fas fa-pause fa-lg'></i>";
 		document.getElementById("top_subtitle").innerHTML = `<b>SimTIVA</b> - <span style='opacity: 50%; white-space:nowrap;' id='top_subtitle2'>Simple TIVA simulator</span>`;
@@ -15730,6 +15743,17 @@ function popup_dilution(targetid,targetname) {
 			</table>
 			<div style='text-align:right'>
 			<a class='button muted' onclick='hideallmodal()'>OK</a>
+			</div>
+		`)
+}
+
+function popup_reset() {
+	displayWarning(`Quick Reset`,
+		`
+			<div>Proceed with caution. This will reset infusion data and return to start while keeping patient characteristics.<br>&nbsp;<br>&nbsp;</div>
+			<div>
+			<a class='button invert' onclick='timeFxReset();hideallmodal();'>Confirm</a>
+			<a class='button muted right' onclick='hideallmodal()'>Cancel</a>
 			</div>
 		`)
 }

@@ -492,9 +492,9 @@
 
 		<div id="modalReset" class="modal">
 			<div class="modal-content" id="modalResetcontent">
-				<div class="modal-header">RESET</div>
+				<div class="modal-header">RELOAD</div>
 				<div class="modal-body" style="">
-					This will reset all patient data and start all over again. Are you sure?
+					This will remove all patient data and start SimTIVA all over again. Are you sure?
 					<div style="padding-top:1rem; text-align:center">
 					<a class="button wide" onclick="location.reload();">Yes</a>
 					<a class="button wide" onclick="hideallmodal();">No</a>
@@ -1141,7 +1141,7 @@
             >About</a>
             <a href="#" 
             onclick="setmodal('modalReset'); togglemenu();" 
-            >Reset</a>
+            >Reload</a>
             <a href="#" 
             onclick="setmodal('modalHelp'); togglemenu();" 
             >Help</a>
@@ -1864,10 +1864,10 @@
 		<div class="card" id="card_controlpanel">
 			<div class="cardtitle">CONTROL PANEL</div>
 			<div class="cardcontents">
-				<div class="timeFxRow" onclick="timeFxReset();">
+				<div class="timeFxRow" onclick="popup_reset();">
 					<div class="timeFxRowLeft"><a id="btn_timeFxReset" onclick="timeFxReset();" class="timeFxButton"><i class="fas fa-undo-alt"></i></a></div>
 					<div class="timeFxRowRight">
-						<div class="timeFxLine1">Restart sim</div>
+						<div class="timeFxLine1">Quick reset</div>
 						<div class="timeFxLine2">Keep same patient data & start over</div>
 					</div>
 				</div>
