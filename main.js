@@ -7143,6 +7143,18 @@ function timeFxSuspend() {
 		document.getElementById("timeFxRowResume").classList.remove("hide");
 		document.getElementById("suspendBanner").style.display = "flex";
 		document.getElementById("iconplay").style.display = "none";
+		if (drug_sets[0].historyarrays[0][0] == 2) {
+			document.getElementById("card_cet0_new").style.pointerEvents = "none";
+			document.getElementById("card_cet0_new").style.filter = "saturate(0)";
+		} else if (drug_sets[0].historyarrays[0][0] == 1) {
+			document.getElementById("card_cpt0").style.pointerEvents = "none";
+			document.getElementById("card_cpt0").style.filter = "saturate(0)";
+		} else {
+			document.getElementById("card_infusion0").style.pointerEvents = "none";
+			document.getElementById("card_infusion0").style.filter = "saturate(0)";
+			document.getElementById("card_bolus0").style.pointerEvents = "none";
+			document.getElementById("card_bolus0").style.filter = "saturate(0)";
+		}
 	}
 }
 
@@ -7156,8 +7168,6 @@ function timeFxResume(parametertime) {
 		}
 		//reset time of stop
 		time_of_stop = -1;
-		//tempIndexNew is to identify if there's a new Scheme start distal to jump time, and this will also need to update the lockdown and prior desired values
-		tempIndexNew = -1;
 		document.getElementById("timeFxRowSuspend").classList.remove("hide");
 		document.getElementById("timeFxRowResume").classList.add("hide");
 		document.getElementById("suspendBanner").style.display = "none";
@@ -7306,6 +7316,19 @@ function timeFxResume(parametertime) {
 			loop7 = setInterval(displayWarningBanner, 60*2000);
 
 
+		}
+
+		if (drug_sets[0].historyarrays[0][0] == 2) {
+			document.getElementById("card_cet0_new").style.pointerEvents = "auto";
+			document.getElementById("card_cet0_new").style.filter = "saturate(1)";
+		} else if (drug_sets[0].historyarrays[0][0] == 1) {
+			document.getElementById("card_cpt0").style.pointerEvents = "auto";
+			document.getElementById("card_cpt0").style.filter = "saturate(1)";
+		} else {
+			document.getElementById("card_infusion0").style.pointerEvents = "auto";
+			document.getElementById("card_infusion0").style.filter = "saturate(1)";
+			document.getElementById("card_bolus0").style.pointerEvents = "auto";
+			document.getElementById("card_bolus0").style.filter = "saturate(1)";
 		}
 	    update();
 	    updatechart(myChart);
