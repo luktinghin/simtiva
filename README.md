@@ -21,7 +21,11 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
 - To help deliver TCI in a setting where TCI pumps are not available
 
 ### Changelog
- Version 4.5 (Build 97) Current
+ Version 4.6 (Build 100) Current
+ - Model: Eleveld "without opioid" is added.
+ - Control panel: controls the timeline. Quick reset: reset the infusion data. Pause: pause the simulation at current time instance. Jump: jump forward or backward in time.
+   
+ Version 4.5 (Build 97) 
  - Updated the UI for CPT and CET modes with more compact interface design
  - Sophisticated "preview box" can be viewed by clicking "expand" - previews the full scheme ahead for CPT/CET modes
  - Corrected the CPT algorithm - previously, increasing CPT will overshoot the CP and decreasing the CPT will cause premature re-start of infusion
