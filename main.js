@@ -7172,6 +7172,7 @@ function timeFxSuspend() {
 }
 
 function timeFxResume(parametertime) {
+
 	conditions = ((time_in_s + parametertime > 1) && (time_in_s + parametertime < drug_sets[0].cpt_rates_real.length - 300) && (time_in_s>1) && (drug_sets[0].cpt_rates_real.length > 1));
 
 	if (conditions) {
@@ -14998,6 +14999,7 @@ function timeFxSubmitJump() {
 	var paramH = document.getElementById("hh2").value * 1;
 	var paramM = document.getElementById("mm2").value * 1;
 	var paramS = document.getElementById("ss2").value * 1;
+	max_duration = drug_sets[0].cpt_rates_real.length-300;
 	if (document.getElementById("timeFxTimeMode").value == "0") {
 		store_time = paramH * 60 * 60 + paramM * 60 + paramS;
 		jump_time = store_time;
@@ -15008,8 +15010,11 @@ function timeFxSubmitJump() {
 		store_time = paramH * 60 * 60 + paramM * 60 + paramS;
 		jump_time = store_time - Math.floor(time_in_s);
 	}
-	if ((Math.floor(time_in_s) + jump_time <= 60) || (Math.floor(time_in_s) + jump_time >= drug_sets[0].cpt_rates_real.length - 300)) {
-		document.getElementById("timeFxMessage").innerHTML = "Entered time point is invalid. Please try again.";
+	if (Math.floor(time_in_s) + jump_time >= max_duration) {
+		max_duration_string = converttime(max_duration);
+		document.getElementById("timeFxMessage").innerHTML = `Entered time point is invalid. Time cannot be set beyond maximum allowable limit of infusion, currently at ${max_duration_string}. Please try again.`;
+	} else if (Math.floor(time_in_s) + jump_time <= 1) {
+		document.getElementById("timeFxMessage").innerHTML = `Entered time point is invalid. Time cannot be set earlier than time zero. Please try again.`;
 	} else {
 		timeFxResume(jump_time);
 		hidemodal('modalJump');
