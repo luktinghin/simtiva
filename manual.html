@@ -86,9 +86,48 @@
 			<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">Did you know...?<a href="https://t.co/KXov8b2dRM">https://t.co/KXov8b2dRM</a> is a progressive web app (PWA). It can function like any other webpage on your browser on mobiles &amp; computers.<br><br>What&#39;s more, u can install it on your iPhone (see video/screenshot) by clicking share -&gt; add to homescreen.<a href="https://twitter.com/hashtag/TIVA?src=hash&amp;ref_src=twsrc%5Etfw">#TIVA</a> <a href="https://twitter.com/hashtag/TCI?src=hash&amp;ref_src=twsrc%5Etfw">#TCI</a> <a href="https://t.co/t5zCk67GY5">pic.twitter.com/t5zCk67GY5</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1725058259210649691?ref_src=twsrc%5Etfw">November 16, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 		</div>
 		<p class="m-h3">Android Chrome:</p>
+		<p>Select "Install App" from the <span style="padding: 4px; width: 2rem; background: #eee"><i class="fas fa-ellipsis-v"></i></span> menu button.
 		<div class="m-image-container">
 			<img src="manualresources/ss-1-install-android-chrome.jpg">
 		</div>
+		<p class="m-h1">Simulation modes</p>
+		<p>There are 4 modes for single-drug simulation, namely CP targeting (plasma site targeting), CE targeting (effect site targeting), manual mode, or intermittent bolus mode. In addition there is a "Complex (Dual mode)" to simulate simultaneous infusions of propofol in combination with an opioid of your choice.</p>
+		<p>The pharmacokinetic calculations are based on STANPUMP, created by Steven Shafer, freely available from opentci.org. Full credits and details available on "About" screen.</p>
+		<p class="m-h3">Caution on accuracy</p>
+		<p>Please note that SimTIVA is a computer simulation program only to simulate the delivery of TIVA using a TCI pump; but it has no physical connection interface with a syringe pump. SimTIVA is designed in a way such that the user is assumed to have multiple busy tasks at hand and may not be free to adjust pump settings very frequently (say every 10 seconds). In a TCI pump, the infusion rates are updated frequently, e.g. every 10 seconds. However, in SimTIVA, the concept is to simplify the infusion regimen so that the infusion rates need to be adjusted just several times per hour (definitely not every other second or minute), otherwise it will be too cumbersome for the anaesthetist looking after the patient to frequently alter the infusion rate on the pump. With this in mind, in CPT or CET mode, SimTIVA infusion regimen only requires you to change infusion rates for typically 5-7 times for the first hour or so. The downside of this is accuracy, SimTIVA will not be able to deliver a perfect CP/CE target because the CP/CE will fluctuate if the infusion rates are not adjusted very frequently. </p>
+		<p class="m-h3">Realtime simulation</p>
+		<p>SimTIVA is designed to run in real time, i.e. parallel to the actual time sequence of a clinical case. The clock (displayed on the top left corner) will start ticking the moment you start your simulation. For advanced feature in resetting the timeline, or going back partially or going forward in time, read Chapter 6 - Working with timeline.</p>
+		<p class="m-h2">CP Targeting mode (plasma site)</p>
+		<p>In this mode, you can enter a CP target. For example, setting a propofol target CP of 3mcg/ml using the Marsh model will give rise to the following infusion regimen. The current CP, CE, and infusion rate will be displayed at the top of the screen. The suggested infusion CPT regimen is listed under "Scheme" to guide you through the next rate changes to maintain your desired target concentration. On mobile devices, you may need to swap between "Graph" and "Scheme" displays.</p>
+		<div class="m-image-container">
+			<img src="manualresources/ss-2-cptmode.png">
+		</div>
+		<p class="m-h3">Preview box</p>
+		<p>As you enter your CP target, a blue box will appear, suggesting the action for you to follow. For example, a bolus followed by an infusion in ml/h.</p>
+		<div class="m-image-container">
+			<img src="manualresources/ss-2-preview.png">
+		</div>
+		<p class="m-h3">Reminder box</p>
+		<div class="m-image-container">
+			<img src="manualresources/ss-2-warning.png">
+		</div>
+		<p>When the next infusion rate change is imminent, a red reminder box will remind you about it.</p>
+		<p class="m-h2">CE Targeting mode (effect site)</p>
+		<p>In this mode, you can enter a CE target. Typically, the plasma concentration is allowed to overshoot to accomodate the fast achievement of CE towards target. Also, there is a pause after the initial bolus for CE to equilibrate with CP. For example, setting a propofol target CP of 3mcg/ml using the Eleveld model will give rise to the following infusion regimen. The current CP, CE, and infusion rate will be displayed at the top of the screen. The suggested infusion CET regimen is listed under "Scheme" to guide you through the next rate changes to maintain your desired target concentration. On mobile devices, you may need to swap between "Graph" and "Scheme" displays.</p>
+		<div class="m-image-container">
+			<img src="manualresources/ss-2-cetmode.png">
+		</div>
+		<p class="m-h3">Expanding the preview box</p>
+		<p>As mentioned above, a preview box will appear as you enter a CE target. A practical tip is that you may expand the preview box by clicking "Expand" below the blue preview box to have a full understanding of the entire CET scheme before starting your infusion. Demo as below:</p>
+		<div class="m-video-container">
+			<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr"><a href="https://t.co/4zrK2ZezXO">https://t.co/4zrK2ZezXO</a> first update in 2024. User interface of CET and CPT modes has been re-designed. More importantly, a full preview of scheme is available (click “expand”) so you can preview the new scheme before submitting it. Other bugfixes in changelog. <a href="https://t.co/05hZqyiVJD">pic.twitter.com/05hZqyiVJD</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1748538694238384591?ref_src=twsrc%5Etfw">January 20, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+		</div>
+		<p class="m-h2">Manual mode</p>
+		<p>In this mode, you can enter the bolus and infusion rate manually. The bolus input unit can be entered as ml, mg, or mg/kg for propofol, or ml, mcg, or mcg/kg for opioids. The infusion unit, similarly, can be configured on a volume, mass/time, or mass/body weight/time basis. You can change these units by clicking on the arrow <span style="padding: 4px; width: 2rem; background: #eee"><i class="fas fa-chevron-down"></i></span> next to the bolus/infusion input. The current CP, CE, and infusion rate will be displayed at the top of the screen.</p>
+		<div class="m-video-container">
+			<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">Wrapping up 2023 with a New feature (<a href="https://t.co/4zrK2ZezXO">https://t.co/4zrK2ZezXO</a>): Bolus &amp; Infusion units- U may now switch between “mg” vs “mg/kg” vs “ml” for bolus, “ml/h” vs “mg/kg/h” (or appropriate units) for infusion in manual mode.<br>Can switch by tapping the dropdown 🔽 or via “Options”.<br>(1/2) <a href="https://t.co/hCthkRDMbO">pic.twitter.com/hCthkRDMbO</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1736365967851331753?ref_src=twsrc%5Etfw">December 17, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+		</div>
+
 	</div> <!--end m-main-->
 
 

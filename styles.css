@@ -6716,18 +6716,24 @@ body.dark a.button.newbuttongrey:hover {
 .m-image-container {
   text-align: center;
   background: rgba(0,0,0,0.5);
+  overflow-y: auto;
+  overflow-x: auto;  
 }
 
 .m-image-container > img {
-  max-width: 80vw;
+  max-width: 80%;
   max-height: 60vh;
   display: block;
   margin: 0.5rem auto;
+  cursor: zoom-in;
+  transition: 0.3s all ease;
 }
 
 .m-image-container > img.expand {
   max-width: 95vw;
   max-height: 95dvh;
+  cursor: zoom-out;
+
 }
 
 .m-video-container {
