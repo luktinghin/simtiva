@@ -6719,8 +6719,15 @@ body.dark a.button.newbuttongrey:hover {
 }
 
 .m-image-container > img {
-  max-width: 60vw;
+  max-width: 80vw;
   max-height: 60vh;
+  display: block;
+  margin: 0.5rem auto;
+}
+
+.m-image-container > img.expand {
+  max-width: 95vw;
+  max-height: 95dvh;
 }
 
 .m-video-container {
@@ -6735,6 +6742,12 @@ body.dark a.button.newbuttongrey:hover {
     width: 80%;
     max-width: 1024px;
     margin: 1rem auto;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .m-image-container > img {
+    max-width: 450px;
   }
 }
 

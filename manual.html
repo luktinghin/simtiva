@@ -92,7 +92,11 @@
 	</div> <!--end m-main-->
 
 
-	<script></script>
+	<script>
+		document.querySelectorAll(".m-image-container > img").forEach(function(el) {
+			el.setAttribute('onclick',`this.classList.toggle("expand")`)
+		})
+	</script>
 </body>
 </html>
 
