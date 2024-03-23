@@ -6723,6 +6723,13 @@ body.dark a.button.newbuttongrey:hover {
   max-height: 60vh;
 }
 
+.m-video-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.5);
+}
+
 @media screen and (min-width: 465px) {
   .m-main {
     width: 80%;
