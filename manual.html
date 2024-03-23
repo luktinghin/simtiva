@@ -18,9 +18,6 @@
 	<link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png" />
 	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png" />
 
-
-
-
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
     <meta charset="utf-8">
 	<meta name="description" content="Simple and free TIVA simulator">
@@ -29,16 +26,66 @@
     <title>SimTIVA Manual</title>
 </head>
 <body>
-	<p>Welcome to SimTIVA Manual</p>
-	<p>This is the user manual for simtiva.app, a web app to simulate target-controlled infusion (TCI).</p>
-	<p>Contents</p>
-	<p>Getting Started</p>
-	<p>On the first screen, you may enter patient characteristics and choose a model. According to the model, there may be different patient parameters that are required. On the top, you can choose between "Adult" and "Paediatric" modes.</p>
-	<p>Drugs and models</p>
-	<p>The available models are: </p>
-	<ul>
-		<li></li>
-	</ul>
+	<div class="m-header">
+		<div class="m-header-left"></div>
+		<div class="m-header-right"></div>
+		<div class="m-header-close"></div>
+	</div>
+	<div class="m-subheader">
+		<div class="m-subheader-icon"></div>
+		<div class="m-subheader-left"></div>
+		<div class="m-subheader-right"></div>
+	</div>
+	<div class="m-main" id="m-main-chapter1"> <!--start m-main-->
+		<p>Welcome to SimTIVA Manual</p>
+		<p>This is the user manual for simtiva.app, a web app to simulate target-controlled infusion (TCI).</p>
+		<p>Contents</p>
+		<p class="m-h1">Getting Started</p>
+		<div class="m-image-container">
+			<img src="manualresources/ss-1-startscreen1.png">
+		</div>
+		<p>On the first screen, you may enter patient characteristics and choose a model. According to the model, there may be different patient parameters that are required. On the top, you can choose between "Adult" and "Paediatric" modes. For opioids, you will be required to enter the dilution.</p>
+		<p class="m-h3">Validation</p>
+		<p>Data validation is applied to data input. BMI, weight-for-age & length-for-age are displayed where available, according to WHO definitions and Child Growth Standards. Extreme body habitus will invoke a warning prompt.</p>
+		<p class="m-h3">Paediatric patient</p>
+		<p>In the paediatric mode, additional features are provided:</p>
+		<ul>
+			<li>Unit of age: y/m/d</li>
+			<li>Post-menstrual age: coparameter in Eleveld model - prematurity affects clearance in <6months</li>
+			<li>Validation of weight with WHO Child Growth Standards</li>
+			<li>Custom opioid dilution</li>
+			<li>Age-dependent estimated BIS for Eleveld model</li>
+		</ul>
+		<p>Other features that exist on adult patients are also provided for the paediatric patient, e.g. complex mode and PD interaction of propofol-opioid.</p>
+		<p>In the following video demo, propofol and remifentanil CET regimens are simulated in children. Remifentanil dilution can be customized.
+		<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">Paediatric <a href="https://twitter.com/hashtag/TIVA?src=hash&amp;ref_src=twsrc%5Etfw">#TIVA</a> with <a href="https://t.co/qLpMHjFA1Q">https://t.co/qLpMHjFA1Q</a> (1/3)<a href="https://t.co/KXov8b2dRM">https://t.co/KXov8b2dRM</a> has TCI functions specially designed for children, but not as an afterthought. In this video, propofol and remifentanil CET regimens are simulated. Remifentanil dilution can be customized. <a href="https://t.co/1jMePtz0kp">pic.twitter.com/1jMePtz0kp</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1705766533837046231?ref_src=twsrc%5Etfw">September 24, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+		<p class="m-h2">Drugs and models</p>
+		<p>The available models are: </p>
+		<ul>
+			<li>Propofol: Eleveld, Marsh, Schnider, Paedfusor</li>
+			<li>Remifentanil: Minto, Eleveld</li>
+			<li>Fentanyl: Shafer</li>
+			<li>Alfentanil: Maitre</li>
+			<li>Complex mode: to simulate the combination of propofol and opioids, select "Complex (Dual mode)" in "Model" on the first screen. This will allow you to enter data for propofol and opioid on the second screen.
+		</ul>
+		<p class="m-h2">Mode selection screen</p>
+		<p>After selecting a model, you may choose one of four infusion modes, namely CP targeting, CE targeting, manual bolus & infusion, and intermittent bolus. These will be explained in detail in Chapter 2.</p>
+		<div class="m-image-container">
+			<img src="manualresources/ss-1-startscreen2.png">
+		</div>
+		<p>If you have selected "Complex (Dual mode)" in "Model" on first screen, you can customize your propofol and opioid information on the second screen. For example, the PK model and drug dilution can be entered.</p>
+		<div class="m-image-container">
+			<img src="manualresources/ss-1-start-complex.png">
+		</div>
+		<p class="m-h2">Installation</p>
+		<p>Simtiva.app is a website that can function as a web application. This means that you may run it inside your web browser (Safari on iPhone, Chrome on Android, or other browsers on desktop), or you may choose to install it directly through your browser. Once it is installed, it adds an icon to your homescreen that acts as the shortcut to the app and it can also be used offline - without internet access. Demos for installation on iPhone and Android illustrated below:</p>
+		<p class="m-h3">iPhone iOS Safari:</p>
+		<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">Did you know...?<a href="https://t.co/KXov8b2dRM">https://t.co/KXov8b2dRM</a> is a progressive web app (PWA). It can function like any other webpage on your browser on mobiles &amp; computers.<br><br>What&#39;s more, u can install it on your iPhone (see video/screenshot) by clicking share -&gt; add to homescreen.<a href="https://twitter.com/hashtag/TIVA?src=hash&amp;ref_src=twsrc%5Etfw">#TIVA</a> <a href="https://twitter.com/hashtag/TCI?src=hash&amp;ref_src=twsrc%5Etfw">#TCI</a> <a href="https://t.co/t5zCk67GY5">pic.twitter.com/t5zCk67GY5</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1725058259210649691?ref_src=twsrc%5Etfw">November 16, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+		<p class="m-h3">Android Chrome:</p>
+		<div class="m-image-container">
+			<img src="manualresources/ss-1-install-android-chrome.jpg">
+		</div>
+	</div> <!--end m-main-->
 
 
 	<script></script>
