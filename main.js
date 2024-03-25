@@ -2607,7 +2607,7 @@ function start_manual(ind) { //this is new
 			}
 			
 		} else {
-			lookahead(0,7200,ind);
+			lookahead(0,21600,ind);
 		}
 
 
@@ -2642,7 +2642,7 @@ function start_manual(ind) { //this is new
 		document.getElementById("iconplay").classList.remove("stop");
 		document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
 		
-		lookahead(0,7200,ind);//start button name already changed to "updaterate"	
+		lookahead(0,21600,ind);//start button name already changed to "updaterate"	
 		
 	}
 }
@@ -3957,7 +3957,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 	}
 
 	//first pass
-	for (i=0; i<60; i++) {
+	for (i=0; i<180; i++) {
 		//if ((p_state2[1] == 0) || (skip == 1)) {
 			console.log(i*120);
 		if (p_state2[1] == 0) {
@@ -4100,7 +4100,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 
 	
 	if (effect_flag == 1) { //CET mode
-		for (j=0; j<60; j++) {
+		for (j=0; j<180; j++) {
 			if (firstcycle == -1) {
 				//if (cpt_rates[0] > 0) {
 					wait_peak = 0;
@@ -4149,7 +4149,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 					prior_test_rate = drug_sets[ind].cpt_rates[j];
 				}
 
-				if (j==59) {
+				if (j==179) {
 					test_rate = Math.round((drug_sets[ind].cpt_rates[drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]]+drug_sets[ind].cpt_rates[j])/2*roundingfactor)/roundingfactor;
 					relativetime = working_clock+drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120;
 					var rate1 = Math.round(test_rate*3600/drug_sets[ind].infusate_concentration*10)/10;
@@ -4157,13 +4157,13 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 					if ((drug_sets[ind].cpt_times.length == 1) && (drug_sets[ind].cpt_times[0] == 1)) { //special scenario for 1 rate till the end, need to fill up first 2mins
 						drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
 						drug_sets[ind].historyarray.push([working_clock, test_rate]);
-						for (k=0; k<7200; k++) {
+						for (k=0; k<21600; k++) {
 								drug_sets[ind].cpt_rates_real.push(test_rate);
 						}
 					} else {
 						drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" + converttime(relativetime) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");
 						drug_sets[ind].historyarray.push([relativetime, test_rate]);
-						for (k=drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120; k<7200; k++) {
+						for (k=drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120; k<21600; k++) {
 								drug_sets[ind].cpt_rates_real.push(test_rate);
 						}
 					}
@@ -4178,7 +4178,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		} //end for
 	} else { //CPT mode
 		
-		for (j=0; j<60; j++) {
+		for (j=0; j<180; j++) {
 			
 			//temp_test_rate = cpt_rates[j/60];
 			if (firstcycle == -1) {
@@ -4189,7 +4189,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 				} else if ((drug_sets[ind].cpt_rates[0] > 0) && (drug_sets[ind].cpt_rates[1]>drug_sets[ind].cpt_rates[0])) { //special scenario where there is slow rise in inf rate to peak then falls
 					prior_test_rate = drug_sets[ind].cpt_rates[1];
 					console.log('enter special WAIT-PEAK cycle as cpt_rates fall into inc-peak-dec pattern');
-					INNER_LOOP: for (k=1; k<60; k++) {
+					INNER_LOOP: for (k=1; k<180; k++) {
 						if (drug_sets[ind].cpt_rates[k] > drug_sets[ind].cpt_rates[k-1]) {
 							wait_peak = k;
 						} else {
@@ -4284,7 +4284,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 				} else { // this means cpt_rates[0] is zero -> infusion stopped for 2 min
 					prior_test_rate = 0;
 					// determine how long is the pause and determine the time of peak
-					INNER_LOOP: for (k=1; k<60; k++) {
+					INNER_LOOP: for (k=1; k<180; k++) {
 						if (drug_sets[ind].cpt_rates[k] == 0) {
 							wait_pause = k;
 						} else if (drug_sets[ind].cpt_rates[k] > drug_sets[ind].cpt_rates[k-1]) {
@@ -4424,14 +4424,14 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 					prior_test_rate = drug_sets[ind].cpt_rates[j];
 				}
 
-				if (j==59) {
+				if (j==179) {
 					test_rate = Math.round(((drug_sets[ind].cpt_rates[drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]]-drug_sets[ind].cpt_rates[j])*cpt_avgfactor+drug_sets[ind].cpt_rates[j])*roundingfactor)/roundingfactor;
 					relativetime = working_clock+drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120;
 					var rate1 = Math.round(test_rate*3600/drug_sets[ind].infusate_concentration*10)/10;
 					var rate2 = Math.round(rate1*drug_sets[ind].infusate_concentration*drug_sets[ind].inf_rate_permass_factor/mass*drug_sets[ind].inf_rate_permass_dp)/drug_sets[ind].inf_rate_permass_dp;
 					drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + relativetime + "'>" + "<div class='timespan'>" + converttime(relativetime) + "</div>" + rate1 + "ml/h " + "<span style='opacity:0.5'>(" + rate2 + drug_sets[ind].inf_rate_permass_unit + ")</span></div>");	
 					drug_sets[ind].historyarray.push([relativetime, test_rate]);
-					for (k=drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120; k<7200; k++) {
+					for (k=drug_sets[ind].cpt_times[drug_sets[ind].cpt_times.length-1]*120; k<21600; k++) {
 							drug_sets[ind].cpt_rates_real.push(test_rate);
 					}
 
@@ -4462,7 +4462,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 	//you've got to deliver the real bolus at this point too
 	bolusadmin(drug_sets[0].cpt_bolus,ind);
 
-	for (j=0; j<7200; j++) {
+	for (j=0; j<21600; j++) {
 
 		test_rate = drug_sets[ind].cpt_rates_real[j+working_clock];
 		temp_vol = temp_vol+test_rate/drug_sets[ind].infusate_concentration;
@@ -4494,10 +4494,15 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 			myChart.data.datasets[ind*2+2].data.push({x:(working_clock+j)/60, y:temp_result});
 			myChart.data.datasets[ind*2+3].data.push({x:(working_clock+j)/60, y:temp_result_e});
 		}
-		if ((j>=15*60) && (j%60==0)) {
+		if ((j>=15*60) && (j<120*60) && (j%60==0)) {
 			myChart.data.datasets[ind*2+2].data.push({x:(working_clock+j)/60, y:temp_result});
 			myChart.data.datasets[ind*2+3].data.push({x:(working_clock+j)/60, y:temp_result_e});			
 		}
+		if ((j>=12*60) && (j%120==0)) {
+			myChart.data.datasets[ind*2+2].data.push({x:(working_clock+j)/60, y:temp_result});
+			myChart.data.datasets[ind*2+3].data.push({x:(working_clock+j)/60, y:temp_result_e});			
+		}
+
 	}
 	
 	
@@ -6537,7 +6542,7 @@ function updateinfusion() {
 function pause(ind) {
 	drug_sets[ind].inf_rate_mls = 0;
 	document.getElementById("inputInfusion" + ind).value = "0";
-	lookahead(0,7200,ind);
+	lookahead(0,21600,ind);
 	document.getElementById("iconplay").classList.add("stop");
 	document.getElementById("iconplay").innerHTML="<i class='fas fa-pause fa-lg'></i>";
 	document.getElementById("status").innerHTML="Paused";
@@ -6601,7 +6606,7 @@ function pauseCpt(ind) {
 	var temp_result, temp_result_e;
 	var temp_vol = drug_sets[ind].volinf[working_clock-1];
 
-	for (j=0; j<7200; j++) {
+	for (j=0; j<21600; j++) {
 
 		p_state3[1] = p_state3[1] * look_l1 ;
 		p_state3[2] = p_state3[2] * look_l2 ;
@@ -6626,7 +6631,11 @@ function pauseCpt(ind) {
 			myChart.data.datasets[ind*2+2].data.push({x:(working_clock+j)/60, y:temp_result});
 			myChart.data.datasets[ind*2+3].data.push({x:(working_clock+j)/60, y:temp_result_e});
 		}
-		if ((j>=1800) && (j%60==0)) {
+		if ((j>=1800) && (j<7200) && (j%60==0)) {
+			myChart.data.datasets[ind*2+2].data.push({x:(working_clock+j)/60, y:temp_result});
+			myChart.data.datasets[ind*2+3].data.push({x:(working_clock+j)/60, y:temp_result_e});			
+		}
+		if ((j>=7200) && (j%120==0)) {
 			myChart.data.datasets[ind*2+2].data.push({x:(working_clock+j)/60, y:temp_result});
 			myChart.data.datasets[ind*2+3].data.push({x:(working_clock+j)/60, y:temp_result_e});			
 		}
@@ -7222,7 +7231,7 @@ function timeFxResume(parametertime) {
 					myChart.data.datasets[3].data.length = myChart.data.datasets[3].data.findIndex((element)=>element.x>tempCutoff/60) -1;
 					drug_sets[0].inf_rate_mls = tempRate;
 					update();
-					lookahead(0,7200,0);
+					lookahead(0,21600,0);
 					//remove one line of historyarrays
 					drug_sets[0].historyarrays.length = drug_sets[0].historyarrays.length - 1;
 					//need to process historytext
@@ -7309,7 +7318,7 @@ function timeFxResume(parametertime) {
 						drug_sets[0].desired = tempDesired;
 
 						//attempt to fill the tempcutoff using the scheme
-						lookaheadfill(0,tempCutoff,drug_sets[0].historyarray[0][0]+7200);
+						lookaheadfill(0,tempCutoff,drug_sets[0].historyarray[0][0]+21600);
 						if (drug_sets[0].fentanyl_weightadjusted_flag == 0) {
 							document.getElementById("inputDesired0").value = tempDesired;
 							document.getElementById("inputDesiredCe0_new").value = tempDesired;
@@ -8647,7 +8656,7 @@ function bolusadmin(x, ind) {
 		drug_sets[ind].volinf.push(temp_vol+x/drug_sets[ind].infusate_concentration);
 		drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div><div class='timespan'>" + converttime(working_clock) + "</div> Bolus: " + x + drug_sets[ind].infused_units + "</div>");
 		drug_sets[ind].historyarrays.push([0,1,working_clock,x]);
-		lookahead(1,7200,ind);
+		lookahead(1,21600,ind);
 		document.getElementById("historywrapper").innerHTML = drug_sets[ind].historytext;
 	}
 	//result = p_state[1] + p_state[2] + p_state[3];
@@ -9661,7 +9670,7 @@ function lookahead(bolusgiven, duration, ind) {
 	if (duration>0) {
 		//this turns arg into a limit for 7200 iterations
 	} else {
-		duration = 7200;
+		duration = 21600;
 	}
 
 	if (bolusgiven == 1) {
@@ -9768,7 +9777,11 @@ function lookahead(bolusgiven, duration, ind) {
 			myChart.data.datasets[ind*2+2].data.push({x:(working_clock+i)/60, y:est_cp});
 			myChart.data.datasets[ind*2+3].data.push({x:(working_clock+i)/60, y:est_ce});
 		}
-		if ((i>=39*60) && (i%60==0)) {
+		if ((i>=39*60) && (i<7200) && (i%60==0)) {
+			myChart.data.datasets[ind*2+2].data.push({x:(working_clock+i)/60, y:est_cp});
+			myChart.data.datasets[ind*2+3].data.push({x:(working_clock+i)/60, y:est_ce});
+		}
+		if ((i>=7200) && (i%120==0)) {
 			myChart.data.datasets[ind*2+2].data.push({x:(working_clock+i)/60, y:est_cp});
 			myChart.data.datasets[ind*2+3].data.push({x:(working_clock+i)/60, y:est_ce});
 		}
@@ -9869,7 +9882,11 @@ function lookaheadfill(ind, inputTime, maxDuration) {
 			myChart.data.datasets[ind*2+2].data.push({x:i/60, y:est_cp});
 			myChart.data.datasets[ind*2+3].data.push({x:i/60, y:est_ce});
 		}
-		if ((i-working_clock>=39*60) && (i%60==0)) {
+		if ((i-working_clock>=39*60) && (i-working_clock<7200) && (i%60==0)) {
+			myChart.data.datasets[ind*2+2].data.push({x:i/60, y:est_cp});
+			myChart.data.datasets[ind*2+3].data.push({x:i/60, y:est_ce});
+		}
+		if ((i-working_clock>=7200) && (i%120==0)) {
 			myChart.data.datasets[ind*2+2].data.push({x:i/60, y:est_cp});
 			myChart.data.datasets[ind*2+3].data.push({x:i/60, y:est_ce});
 		}
