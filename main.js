@@ -2014,8 +2014,8 @@ function initsubmit() {
 			 
 			BIS40 = BIS_Ce_for_BIS(40);
 			BIS60 = BIS_Ce_for_BIS(60);
-			myChart.data.datasets[11].data = [{x:0, y:BIS60},{x:7200, y:BIS60}];
-			myChart.data.datasets[10].data = [{x:0, y:BIS40},{x:7200, y:BIS40}];
+			myChart.data.datasets[11].data = [{x:0, y:BIS60},{x:21600, y:BIS60}];
+			myChart.data.datasets[10].data = [{x:0, y:BIS40},{x:21600, y:BIS40}];
 			myChart.data.datasets[10].backgroundColor = yellowPri30;
 			myChart.data.datasets[10].borderColor = yellowPri50;
 			myChart.data.datasets[11].borderColor = yellowPri50;
@@ -13170,7 +13170,7 @@ function parseobject(input_uid,external,extObject) {
 				if (count+2 < parse_historyarray.length) { //this is not last
 					duration = parse_historyarray[count+2][2] + 180;
 				} else {
-					duration = parse_historyarray[count][2] + 7200;
+					duration = parse_historyarray[count][2] + 21600;
 				}
 				time_in_s = parse_historyarray[count][2];
 				console.log("now is " + time_in_s);
@@ -13189,7 +13189,7 @@ function parseobject(input_uid,external,extObject) {
 					if (count+1 < parse_historyarray.length) { //this is not last
 						duration = parse_historyarray[count+1][2] + 180;
 					} else {
-						duration = parse_historyarray[count][2] + 7200;
+						duration = parse_historyarray[count][2] + 21600;
 					}
 					time_in_s = parse_historyarray[count][2];
 					drug_sets[0].inf_rate_mls = parse_historyarray[count][3];
@@ -13203,7 +13203,7 @@ function parseobject(input_uid,external,extObject) {
 					if (count+1 < parse_historyarray.length) { //this is last
 						duration = parse_historyarray[count+1][2] + 180;
 					} else {
-						duration = parse_historyarray[count][2] + 7200;
+						duration = parse_historyarray[count][2] + 21600;
 					}
 					drug_sets[0].inf_rate_mls = parse_historyarray[count][3];
 					lookahead(0,duration,0);
@@ -13497,7 +13497,7 @@ function parseobject(input_uid,external,extObject) {
 				if (count+2 < parse_historyarray1.length) { //this is not last
 					duration = parse_historyarray1[count+2][2] + 180;
 				} else {
-					duration = parse_historyarray1[count][2] + 7200;
+					duration = parse_historyarray1[count][2] + 21600;
 				}
 				time_in_s = parse_historyarray1[count][2];
 				console.log("now is " + time_in_s);
@@ -13516,7 +13516,7 @@ function parseobject(input_uid,external,extObject) {
 					if (count+1 < parse_historyarray1.length) { //this is not last
 						duration = parse_historyarray1[count+1][2] + 180;
 					} else {
-						duration = parse_historyarray1[count][2] + 7200;
+						duration = parse_historyarray1[count][2] + 21600;
 					}
 					time_in_s = parse_historyarray1[count][2];
 					drug_sets[1].inf_rate_mls = parse_historyarray1[count][3];
@@ -13530,7 +13530,7 @@ function parseobject(input_uid,external,extObject) {
 					if (count+1 < parse_historyarray1.length) { //this is last
 						duration = parse_historyarray1[count+1][2] + 180;
 					} else {
-						duration = parse_historyarray1[count][2] + 7200;
+						duration = parse_historyarray1[count][2] + 21600;
 					}
 					drug_sets[1].inf_rate_mls = parse_historyarray1[count][3];
 					lookahead(0,duration,1);
@@ -16899,7 +16899,7 @@ function extendSession(ind) {
 		deliver_cet(drug_sets[ind].desired,ind);
 	}
 	if ((drug_sets[ind].manualmode_active == 1) && (drug_sets[ind].inf_rate_mls>0)) {
-		lookahead(0,7200,ind);
+		lookahead(0,21600,ind);
 	}
 }
 
