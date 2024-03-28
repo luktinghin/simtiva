@@ -41,7 +41,7 @@
 		<p>Welcome to SimTIVA Manual</p>
 		<p>This is the user manual for simtiva.app, a web app to simulate target-controlled infusion (TCI).</p>
 		<p>Select a chapter to view</p>
-		<p><button onclick="getChapter(1)">1</button><button onclick="getChapter(2)">2</button></p>
+		<p><button onclick="getChapter(1)">1</button><button onclick="getChapter(2)">2</button><button onclick="getChapter(3)">3</button></p>
 		<p>On this page <button onclick="populateOnThisPage();">UPDATE</button></p>
 		<div id="onthispage">
 		</div>
@@ -185,11 +185,49 @@
 			</section>
 			<section id="2-6" data-heading="Complex mode">
 				<p class="m-h2">Complex (Dual) mode</p>
-				<p>To be continued...</p>
+				<p>In this mode, you may run two-drug simulations simultaneously. For each drug, the functions for CP or CE targeting, manual infusion, or intermittent bolus mode are preserved. In addition, you may explore the pharmacodynamic (PD) interaction between propofol and opioid, as propofol and opioid demonstrate intense synergism. Probability of tolerance to laryngoscopy (PTOL) is used as a measure of potency of propofol-opioid combination. Isobologram charts illustrate the propofol-opioid combinations to achieve the same pharmacodynamic effect.</p>
+				<p><b>For details, please read Chapter 7: Complex mode</b></p>
+				<p>Isobologram: Using different combinations of CE-propofol and CE-remifentanil (effect-site concentrations of propofol and remifentanil respectively), all yielding the same predicted response (90% probability to tolerate laryngoscopy, PTOL90), a line (isobole) is drawn connecting all the possible combinations of CE-propofol/CE-remifentanil to achieve the same identical effect (van den Berg 2021). In our simulation programme, the same method is repeated for PTOL80, PTOL70... PTOL10 to generate a total of 9 isoboles on the 2-dimensional chart. The contour of the isoboles is typical of synergism, or supradditive interaction.</p>
+				<p>For the opioid, you may choose to use remifentanil, fentanyl, or alfentanil. The program converts the CE into equivalent doses.</p>
+				<p>Below is a video demostration of complex mode, with manual infusions of propofol and remifentanil. </p>
+				<div class="m-video-container">
+					<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">(4/5) <br>When is anaesthedia &quot;too deep&quot; or &quot;too light&quot;? <a href="https://t.co/KXov8b2dRM">https://t.co/KXov8b2dRM</a> enables PD modelling &amp; displays a &quot;green zone&quot; to mark the CE margins required to achieve PTOL50-90. In this example, CE is in the green zone but is predicted to fall below PTOL50 margin beyond 7.5min <a href="https://t.co/KJ0ICsQdeT">pic.twitter.com/KJ0ICsQdeT</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1702847358290280870?ref_src=twsrc%5Etfw">September 16, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+				</div>
 			</section>
-	</div>;
-
-		</div> <!--end m-main-->
+		</div><!--end m-main (ch2)-->
+		<div class="m-main" id="m-main-chapter3" data-name="Chapter 3: Options">
+			<p class="m-h1">OPTIONS</p>
+			<section id="3-1" data-heading="Changing options">
+				<p>SimTIVA settings can be accessed on the welcome screen by clicking the <span style="display: inline-block; padding: 4px; width: 1.8rem; height: 1.8rem; background: #ddd; border-radius: 2rem"><i class="fas fa-cog fa-fw"></i></span> options button. Alternatively, you may change the options when simulation is running, by going to the options panel at the bottom of the page.</p>
+				<p class="m-h3">Dark mode</p>
+				<p>You can switch between Dark / Light modes by clicking on the floating icon <span style="display: inline-block; padding: 4px; width: 1.8rem; height: 1.8rem; background: #ddd; border-radius: 2rem"><i class='fas fa-adjust fa-fw'></i></span> / <span style="display: inline-block; padding: 4px; width: 1.8rem; height: 1.8rem; background: #ddd; border-radius: 2rem"><i class="fas fa-moon fa-fw"></i></span> at the right lower corner.</p>
+				<p class="m-h3">Saving options</p>
+				<p>All options are automatically saved, so that the next time you use SimTIVA the same settings are restored.</p>
+			</section>
+			<section id="3-2" data-heading="List of options">
+				<p class="m-h2">List of options</p>
+				<p>The options panel:</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-3-options.png">
+				</div>
+				<p><span class="m-emphasis">Unit:</span> the preferred secondary unit for propofol infusion. The primary unit is always ml/h. The secondary unit is used in prompts, reminders and schemes. An example is 50ml/h (10mg/kg/h). The US convention for propofol infusion is mcg/kg/m and you can change this unit here.</p>
+				<p><span class="m-emphasis">Default rate unit:</span> this is the default rate unit for infusion in manual mode. You can switch between "ml/h" or "mg/kg/h", or appropriate units. This will not affect other modes, such as the CP/CE targeting mode. A video demo is shown below.</p>
+				<p><span class="m-emphasis">Default bolus unit:</span> this is the default bolus unit for manual bolus in manual mode. You can switch between "ml", "mg", or "mg/kg" (or appropriate units).</p>
+				<p><span class="m-emphasis">Simspeed:</span> the default is 1x (normal speed), and you can change it to 5x, 25x, or 50x, which will speed up the simulation.</p>
+				<p><span class="m-emphasis">Threshold:</span> there are three options for the threshold/accuracy option: "Auto", "Lazy", or "Accurate". For CP/CE targeting, SimTIVA generates an infusion scheme to maintain the CP (or CE) approximately equal to the target. "Auto" threshold means that the program automatically determines the optimal balance between accuracy in maintaining the CP (or CE) while keeping the number of rate changes of the infusion scheme as infrequent as possible. "Lazy" means that the program will sacrifice accuracy of maintaining the target by keeping the number of infusion rate changes over time to a minimum. "Accurate" threshold setting will keep CP (or CE) value as close to target as possible, but this may increase the number of times you adjust the infusion rate in a CP/CE targeting scheme.</p>
+				<P><span class="m-emphasis">Wakelock:</span> on a supported device, such as an Android device, setting Wakelock to "On" will keep the screen awake. If you are using iPhone, you may have to adjust the screen timeout in system preferences yourself.</p>
+				<p><span class="m-emphasis">Vibrate:</span> when the next rate change is imminent in CP/CE targeting mode, SimTIVA will activate vibration as a reminder (supported devices only).</p>
+				<p><span class="m-emphasis">Sound:</span> when the next rate change is imminent in CP/CE targeting mode, SimTIVA will sound an audio alarm (supported devices only).</p>
+				<p><span class="m-emphasis">Notifications:</span> when the next rate change is imminent in CP/CE targeting mode, SimTIVA will activate system notification (supported devices only).</p>
+			</section>
+			<section id="3-3" data-heading="Infusion unit in manual mode">
+				<p class="m-h3">Infusion unit in manual mode</p>
+				<p>This is a video demo of altering the infusion and bolus units. You can also click the <span style="padding: 4px; width: 1.8rem; height: 1.8rem; background: #ddd; border-radius: 9px"><i class="fas fa-chevron-down"></i></span> dropdown triangle next to the "Infusion rate" or "Bolus" entry fields to change these units. The conversion between ml/h and mg/kg/h is automatic.</p>
+				<div class="m-video-container">
+					<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">Wrapping up 2023 with a New feature (<a href="https://t.co/4zrK2ZezXO">https://t.co/4zrK2ZezXO</a>): Bolus &amp; Infusion units- U may now switch between “mg” vs “mg/kg” vs “ml” for bolus, “ml/h” vs “mg/kg/h” (or appropriate units) for infusion in manual mode.<br>Can switch by tapping the dropdown 🔽 or via “Options”.<br>(1/2) <a href="https://t.co/hCthkRDMbO">pic.twitter.com/hCthkRDMbO</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1736365967851331753?ref_src=twsrc%5Etfw">December 17, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+				</div>
+			</section>
+		</div><!--end m-main (ch3)-->
 	</div> <!--end m-body-->
 
 	<script>//start script block
@@ -204,6 +242,7 @@ const options = {
 	threshold: 0
 }
 
+/*  obsolete ->
 const callback = (entries, observer) => {
 	entries.forEach((entry) =>
 		console.log(entry))
@@ -215,6 +254,7 @@ const onIntersect = (entries) => {
 		console.log(string);
 	})	
 }
+*/
 
 function onObserve(entries) {
 	entries.forEach((entry) => {

@@ -6678,6 +6678,11 @@ body.dark a.button.newbuttongrey:hover {
 }
 
 /*manual styles here */
+.m-emphasis {
+  font-weight: bold;
+  font-style: italic;
+  color: #198964;
+}
 .m-header {
   position: fixed;
   top: 0;
