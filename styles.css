@@ -6678,6 +6678,14 @@ body.dark a.button.newbuttongrey:hover {
 }
 
 /*manual styles here */
+ol ::marker {
+  color: red;
+  font-family: "Brandon Text", sans-serif;
+  font-weight: bold;
+}
+.m-icon-inline {
+  padding: 4px; width: 1.8rem; height: 1.8rem; background: #ddd; border-radius: 9px
+}
 .m-emphasis {
   font-weight: bold;
   font-style: italic;

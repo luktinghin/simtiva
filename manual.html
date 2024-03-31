@@ -41,7 +41,7 @@
 		<p>Welcome to SimTIVA Manual</p>
 		<p>This is the user manual for simtiva.app, a web app to simulate target-controlled infusion (TCI).</p>
 		<p>Select a chapter to view</p>
-		<p><button onclick="getChapter(1)">1</button><button onclick="getChapter(2)">2</button><button onclick="getChapter(3)">3</button></p>
+		<p><button onclick="getChapter(1)">1</button><button onclick="getChapter(2)">2</button><button onclick="getChapter(3)">3</button><button onclick="getChapter(4)">4</button></p>
 		<p>On this page <button onclick="populateOnThisPage();">UPDATE</button></p>
 		<div id="onthispage">
 		</div>
@@ -104,14 +104,14 @@
 					<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">Did you know...?<a href="https://t.co/KXov8b2dRM">https://t.co/KXov8b2dRM</a> is a progressive web app (PWA). It can function like any other webpage on your browser on mobiles &amp; computers.<br><br>What&#39;s more, u can install it on your iPhone (see video/screenshot) by clicking share -&gt; add to homescreen.<a href="https://twitter.com/hashtag/TIVA?src=hash&amp;ref_src=twsrc%5Etfw">#TIVA</a> <a href="https://twitter.com/hashtag/TCI?src=hash&amp;ref_src=twsrc%5Etfw">#TCI</a> <a href="https://t.co/t5zCk67GY5">pic.twitter.com/t5zCk67GY5</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1725058259210649691?ref_src=twsrc%5Etfw">November 16, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 				</div>
 				<p class="m-h3">Android Chrome:</p>
-				<p>Select "Install App" from the <span style="padding: 4px; width: 2rem; background: #eee"><i class="fas fa-ellipsis-v"></i></span> menu button.
+				<p>Select "Install App" from the <span class="m-icon-inline"><i class="fas fa-ellipsis-v"></i></span> menu button.
 				</p>
 				<div class="m-image-container">
 					<img src="manualresources/ss-1-install-android-chrome.jpg">
 				</div>
 			</section>
 		</div>
-		<div class="m-main" id="m-main-chapter2" data-name="Chapter 2: Simulation modes">
+		<div class="m-main" id="m-main-chapter2" data-name="Chapter 2: Running Simulations">
 
 			<p class="m-h1">Simulation modes</p>
 			<section id="2-1" data-heading="Introduction">
@@ -121,6 +121,9 @@
 				<p>Please note that SimTIVA is a computer simulation program only to simulate the delivery of TIVA using a TCI pump; but it has no physical connection interface with a syringe pump. SimTIVA is designed in a way such that the user is assumed to have multiple busy tasks at hand and may not be free to adjust pump settings very frequently (say every 10 seconds). In a TCI pump, the infusion rates are updated frequently, e.g. every 10 seconds. However, in SimTIVA, the concept is to simplify the infusion regimen so that the infusion rates need to be adjusted just several times per hour (definitely not every other second or minute), otherwise it will be too cumbersome for the anaesthetist looking after the patient to frequently alter the infusion rate on the pump. With this in mind, in CPT or CET mode, SimTIVA infusion regimen only requires you to change infusion rates for typically 5-7 times for the first hour or so. The downside of this is accuracy, SimTIVA will not be able to deliver a perfect CP/CE target because the CP/CE will fluctuate if the infusion rates are not adjusted very frequently. </p>
 				<p class="m-h3">Realtime simulation</p>
 				<p>SimTIVA is designed to run in real time, i.e. parallel to the actual time sequence of a clinical case. The clock (displayed on the top left corner) will start ticking the moment you start your simulation. For advanced feature in resetting the timeline, or going back partially or going forward in time, read Chapter 6 - Working with timeline.</p>
+				<p class="m-h3">Overview of information display</p>
+				<p>In all modes, the current CP and CE are displayed on top. A third box will also appear, indicating the infusion rate in ml/h, if an infusion is running. The main pharmacokinetic graph visualizes the plot of CP/CE values over time. If you are using the <span class="m-emphasis">Eleveld</span> propofol model, a box will appear below the main pharmacokinetic graph, showing the predicted bispectral index (BIS) value, which is estimated from the Eleveld pharmacodynamic model.</p>
+				<p>For a more detailed walkthrough on using graphs in SimTIVA, proceed to Chapter 4: Working with Graphs.</p>
 			</section>
 			<section id="2-2" data-heading="CP Targeting">
 				<p class="m-h2">CP Targeting mode (plasma site)</p>
@@ -222,19 +225,85 @@
 			</section>
 			<section id="3-3" data-heading="Infusion unit in manual mode">
 				<p class="m-h3">Infusion unit in manual mode</p>
-				<p>This is a video demo of altering the infusion and bolus units. You can also click the <span style="padding: 4px; width: 1.8rem; height: 1.8rem; background: #ddd; border-radius: 9px"><i class="fas fa-chevron-down"></i></span> dropdown triangle next to the "Infusion rate" or "Bolus" entry fields to change these units. The conversion between ml/h and mg/kg/h is automatic.</p>
+				<p>This is a video demo of altering the infusion and bolus units. You can also click the <span class="m-icon-inline"><i class="fas fa-chevron-down"></i></span> dropdown triangle next to the "Infusion rate" or "Bolus" entry fields to change these units. The conversion between ml/h and mg/kg/h is automatic.</p>
 				<div class="m-video-container">
 					<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">Wrapping up 2023 with a New feature (<a href="https://t.co/4zrK2ZezXO">https://t.co/4zrK2ZezXO</a>): Bolus &amp; Infusion units- U may now switch between “mg” vs “mg/kg” vs “ml” for bolus, “ml/h” vs “mg/kg/h” (or appropriate units) for infusion in manual mode.<br>Can switch by tapping the dropdown 🔽 or via “Options”.<br>(1/2) <a href="https://t.co/hCthkRDMbO">pic.twitter.com/hCthkRDMbO</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1736365967851331753?ref_src=twsrc%5Etfw">December 17, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 				</div>
 			</section>
 		</div><!--end m-main (ch3)-->
+		<div class="m-main" id="m-main-chapter4" data-name="Chapter 4: Working with Graphs">
+			<p class="m-h1">Working with graphs</p>
+			<section id="4-1" data-heading="Overview">
+				<p class="m-h2">Overview</p>
+				<p>On mobile devices, the main graph looks like this:</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-4-maingraph-annotated.png">
+				</div>
+				<ol type="A">
+					<li><span class="m-emphasis">History/Scheme button:</span> shows "History" in manual mode and "Scheme" in CPT/CET mode</li>
+					<li><span class="m-emphasis">Event button:</span> Annotate event at current time. You can edit the time and event details later on. Events are numbered and displayed at bottom of graph.</li>
+					<li><span class="m-emphasis">Fullscreen button:</span> maximizes the graph and hides controls.</li>
+					<li><span class="m-emphasis">Graph options button:</span> Opens the options panel - you can adjust the time scale among other options. The <span class="m-icon-inline"><i class="fas fa-search-plus"></i></span> and <span class="m-icon-inline"><i class="fas fa-search-minus"></i></span> buttons will change the time scale to show the entire timeline or just the current portion.</li>
+				</ol>
+			</section>
+			<section id="4-2" data-heading="Quick view & time scale">
+				<p class="m-h2">Video demo of quick view info box</p>
+				<p>In this video demonstration, you can see that an info box appears in the main graph as move your cursor. (On mobile devices this means tapping on graph area, on desktop computers this means hovering over the graph area with mouse.) By highlighting a certain timepoint, the info box will display important data such as CP, CE, infusion rate, and estimated BIS (available in Eleveld propofol model only). This video also shows how you can adjust the time scale to show more (or less) of the timeline.
+				<div class="m-video-container">
+					<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/tiva?src=hash&amp;ref_src=twsrc%5Etfw">#tiva</a> <a href="https://twitter.com/hashtag/tci?src=hash&amp;ref_src=twsrc%5Etfw">#tci</a> <a href="https://twitter.com/hashtag/anaesthesia?src=hash&amp;ref_src=twsrc%5Etfw">#anaesthesia</a><br>Showcasing the updated feature of <a href="https://t.co/qLpMHjFA1Q">https://t.co/qLpMHjFA1Q</a> - using Eleveld model, an estimated BIS value is displayed. The chart also shows the CE boundaries for BIS 40-60. This allows estimation of effect without pEEG.<br>Chart duration also extends to 2h. <a href="https://t.co/i6O9ITw7vv">pic.twitter.com/i6O9ITw7vv</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1701062106144190782?ref_src=twsrc%5Etfw">September 11, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+				</div>
+			</section>
+			<section id="4-3" data-heading="Graph options panel">
+				<p class="m-h2">Graph options panel</p>
+				<p>To open this panel, click the <span class="m-icon-inline"><i class="fas fa-cog"></i></span> icon. </p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-4-graphoptions.png">
+				</div>
+				<ul>
+					<li>Display events: toggle events on/off.</li>
+					<li>Automatic time scale: the time scale (x-axis) will be automatically adjusted as time progresses.</li>
+					<li>Custom time range slider: Use this to show more (or less) of the timeline. Adjusting this will turn off automating time scaling.</li>
+					<li>PD effect estimation: In Eleveld propofol model, the display of BIS 40-60 margins appears. This is the range of CE values to achieve BIS 40-60. In Complex mode, 2 more options are available: "PTOL 50-90" or "NSRI 20-50" margin display.</li>
+				</ul>
+
+			</section>
+			<section id="4-4" data-heading="Fullscreen graph">
+				<p class="m-h2">Fullscreen graph</p>
+				<p>Sometimes, it is advantageous to hold your mobile phone sideways and maximize the graph to fullscreen. In this fullscreen display mode, the user inputs and controls, such as setting the CP/CE target or manual bolus or infusion entry fields are hidden. The important data, such as CP, CE, and infusion rate will still be displayed, on right side of screen. In addition, grey bars will appear at the bottom of the fullscreen graph to visualize the infusion rate changes over time.</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-4-fullscreen.png">
+				</div>
+				<ol type="A">
+					<li>Info box display toggle: show/hide the info box.</li>
+					<li>Close button: exits fullscreen.</li>
+					<li>Options button: alters the fullscreen graph settings.</li>
+				</ol>
+				<p class="m-h3">iPhones & other devices</p>
+				<p>On iPhones, fullscreen mode will not automatically turn your display sideways/landscape. Please check to have auto-rotate on and turn your phone sideways. On Android, fullscreen mode is in landscape like watching a video. On most desktop browsers, fullscreen mode is supported meaning that the browser window containing the graph will be maximized.</p> 
+				<p class="m-h3">Showing/hiding the info box</p>
+				<p>An info box containing drug information is displayed by default, to show the time & infusion data. If this hinders your viewing experience or obscures your graph, you can tap on the side arrow toggle <span class="m-icon-inline"><i class="fas fa-chevron-circle-right"></i></span> to hide it. The image below is a fullscreen graph with hidden info box.</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-4-fullscreen-noinfo.png">
+				</div>
+			</section>
+			<section id="4-5" data-heading="Isobologram graph">
+				<p class="m-h2">Isobologram</p>
+				<p>The isobologram graph will be explained in detail in Chapter 7: Complex Mode.</p>
+			</section>
+		</div><!-- end m-main (ch4)-->
 	</div> <!--end m-body-->
 
 	<script>//start script block
 
+setTimeout(function() {loadChapterURL()},300);
+
 document.querySelectorAll(".m-image-container > img").forEach(function(el) {
 	el.setAttribute('onclick',`this.classList.toggle("expand")`)
 })
+
+const url = new URL(location);
+
+let state = { chapter: 0};
 
 const options = {
 	root: document.querySelector(".main"),
@@ -271,6 +340,8 @@ function onObserve(entries) {
 const observer = new IntersectionObserver(onObserve, options);
 
 mainObject = document.getElementById("m-main-chapter1");
+
+activeChapter = 0;
 
 const sections = [...mainObject.querySelectorAll('[data-heading]')];
 
@@ -309,24 +380,49 @@ chapters.forEach((chapter) => {
 //end hide all chapters
 
 
-function getChapter(number) {
-	chapters = document.querySelectorAll(".m-main");
-	chapters.forEach((chapter) => {
-		chapter.style.display = "none";
-	})
-	mainObject = document.getElementById("m-main-chapter" + number);
-	number = number - 1;
-	chapters[number].style.display = "block";
-	tempNodeList = [...mainObject.querySelectorAll('[data-heading]')];
-	sections.length = 0;
-	for (tempCount = 0; tempCount < tempNodeList.length; tempCount++) {
-		sections.push(tempNodeList[tempCount]);
+function getChapter(number,omithistory) {
+	if (number != activeChapter) {
+		activeChapter = number;
+		chapters = document.querySelectorAll(".m-main");
+		chapters.forEach((chapter) => {
+			chapter.style.display = "none";
+		})
+		mainObject = document.getElementById("m-main-chapter" + number);
+		number = number - 1;
+		chapters[number].style.display = "block";
+		tempNodeList = [...mainObject.querySelectorAll('[data-heading]')];
+		sections.length = 0;
+		for (tempCount = 0; tempCount < tempNodeList.length; tempCount++) {
+			sections.push(tempNodeList[tempCount]);
+		}
+		sections.forEach((section) => {
+			observer.observe(section)
+		});
+		document.getElementById("chaptername").innerHTML = chapters[number].dataset.name;
+		if (omithistory != 1) {
+			url.searchParams.set("ch", number+1);
+			state.chapter = number+1;
+			history.pushState(state, "", url);
+		}
 	}
-	sections.forEach((section) => {
-		observer.observe(section)
-	});
-	document.getElementById("chaptername").innerHTML = chapters[number].dataset.name;
 }
+
+window.addEventListener("popstate", (event) => {
+	loadChapterURL();
+});
+
+function loadChapterURL() {
+	tempString = window.location.search;
+	tempParams = new URLSearchParams(tempString);
+	parameter = tempParams.get("ch");
+	console.log(parameter);
+	if (parameter != undefined) {
+		if (parameter != activeChapter) {
+			getChapter(parameter,1);
+		}
+	}
+}
+
 
 let onThisPageArray = new Array();
 
