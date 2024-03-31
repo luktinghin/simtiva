@@ -402,8 +402,8 @@ chapters[0].style.display = "block";
 //end hide all chapters
 
 
-function getChapter(number,omithistory) {
-	if (number != activeChapter) {
+function getChapter(number,omithistory,force) {
+	if ((number != activeChapter) || (force==1)) {
 		activeChapter = number;
 		chapters = document.querySelectorAll(".m-main");
 		chapters.forEach((chapter) => {
@@ -521,7 +521,21 @@ function togglemenu2() {
 
 }
 
+function loadlanguage(lang) {
+	tempHTML = "";
+	fetch('chinese.json')
+  		.then(function(response) {
+    	return response.json();
+  	})
+  	.then(function(data) {
+    	tempHTML=JSON.parse(data.text);
+    	document.getElementById("m-main-chapter1").outerHTML = tempHTML;
+    	getChapter(1,0,1);
+    	twttr.widgets.load();
 
+  	});
+
+}
 
 	</script><!--end of script block-->
 	<script src="lz-string.js"></script>
