@@ -529,7 +529,7 @@ function loadlanguage(lang) {
   	})
   	.then(function(data) {
   		ind=1;
-    	tempHTML=JSON.parse(data."chapter"+ind.text);
+    	tempHTML=JSON.parse(data.chapter1.text);
     	document.getElementById("m-main-chapter1").outerHTML = tempHTML;
     	getChapter(1,0,1);
     	twttr.widgets.load();
