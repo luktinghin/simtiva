@@ -4250,7 +4250,6 @@ body.dark #ptolcard_switch {
   top:15%;
   left: 15%;
   width:85%;
-  
   margin-top:15px;
 }
 
@@ -6704,6 +6703,10 @@ body.dark a.button.newbuttongrey:hover {
       -webkit-transform: none;
       transform: none;
   transition: transform 0.3s ease-out;
+}
+
+#menu2 .menucontent a {
+ padding: 3px 0;
 }
 ol ::marker {
   color: red;
