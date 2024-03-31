@@ -11203,10 +11203,6 @@ function togglemenu() {
 
 }
 
-
-
-
-
 function hide_prompts(object) {
 	object.style.display="none";
 	if (document.getElementById("prompts_container").classList.contains("expand")) {

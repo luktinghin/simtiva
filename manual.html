@@ -26,27 +26,36 @@
     <title>SimTIVA Manual</title>
 </head>
 <body>
+	<div class="hamburger manual" id="hamburger" onclick="togglemenu2();">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+    </div>
 	<div class="m-header">
 		<div class="m-header-left"></div>
-		<div class="m-header-right"><span id="chaptername">SimTIVA manual</span></div>
+		<div class="m-header-right"><div id="chapternum"></div><div id="chaptername">SimTIVA manual</div></div>
 		<div class="m-header-close"></div>
 	</div>
 	<div class="m-subheader">
-		<div class="m-subheader-icon"></div>
+		<div class="m-subheader-icon">&nbsp;</div>
 		<div class="m-subheader-left"></div>
-		<div class="m-subheader-right"></div>
+		<div class="m-subheader-right"><span onclick="populateOnThisPage();"><i class="fas fa-chevron-down"></i></span></div>
+	</div>
+	<div class="m-onthispageexpand">
+		<div id="onthispage">
+		</div>
 	</div>
 	<div class="m-body">
-	<div>
+		<div style="height:75px">&nbsp;</div>
+	<div class="m-main" id="m-main-beginning" data-name="Main Menu" data-number="-1">
 		<p>Welcome to SimTIVA Manual</p>
 		<p>This is the user manual for simtiva.app, a web app to simulate target-controlled infusion (TCI).</p>
 		<p>Select a chapter to view</p>
 		<p><button onclick="getChapter(1)">1</button><button onclick="getChapter(2)">2</button><button onclick="getChapter(3)">3</button><button onclick="getChapter(4)">4</button></p>
 		<p>On this page <button onclick="populateOnThisPage();">UPDATE</button></p>
-		<div id="onthispage">
-		</div>
+
 	</div>
-		<div class="m-main" id="m-main-chapter1" data-name="Chapter 1: Getting Started"> <!--start m-main-->
+		<div class="m-main" id="m-main-chapter1" data-name="Getting Started" data-number="1"> <!--start m-main-->
 			<p class="m-h1">Getting Started</p>
 			<section id="1-1" data-heading="Entering patient data">
 				<div class="m-image-container">
@@ -111,7 +120,7 @@
 				</div>
 			</section>
 		</div>
-		<div class="m-main" id="m-main-chapter2" data-name="Chapter 2: Running Simulations">
+		<div class="m-main" id="m-main-chapter2" data-name="Running Simulations" data-number="2">
 
 			<p class="m-h1">Simulation modes</p>
 			<section id="2-1" data-heading="Introduction">
@@ -198,7 +207,7 @@
 				</div>
 			</section>
 		</div><!--end m-main (ch2)-->
-		<div class="m-main" id="m-main-chapter3" data-name="Chapter 3: Options">
+		<div class="m-main" id="m-main-chapter3" data-name="Options" data-number="3">
 			<p class="m-h1">OPTIONS</p>
 			<section id="3-1" data-heading="Changing options">
 				<p>SimTIVA settings can be accessed on the welcome screen by clicking the <span style="display: inline-block; padding: 4px; width: 1.8rem; height: 1.8rem; background: #ddd; border-radius: 2rem"><i class="fas fa-cog fa-fw"></i></span> options button. Alternatively, you may change the options when simulation is running, by going to the options panel at the bottom of the page.</p>
@@ -231,7 +240,7 @@
 				</div>
 			</section>
 		</div><!--end m-main (ch3)-->
-		<div class="m-main" id="m-main-chapter4" data-name="Chapter 4: Working with Graphs">
+		<div class="m-main" id="m-main-chapter4" data-name="Working with Graphs" data-number="4">
 			<p class="m-h1">Working with graphs</p>
 			<section id="4-1" data-heading="Overview">
 				<p class="m-h2">Overview</p>
@@ -377,6 +386,8 @@ chapters = document.querySelectorAll(".m-main");
 chapters.forEach((chapter) => {
 	chapter.style.display = "none";
 })
+
+chapters[0].style.display = "block";
 //end hide all chapters
 
 
@@ -388,7 +399,6 @@ function getChapter(number,omithistory) {
 			chapter.style.display = "none";
 		})
 		mainObject = document.getElementById("m-main-chapter" + number);
-		number = number - 1;
 		chapters[number].style.display = "block";
 		tempNodeList = [...mainObject.querySelectorAll('[data-heading]')];
 		sections.length = 0;
@@ -399,9 +409,10 @@ function getChapter(number,omithistory) {
 			observer.observe(section)
 		});
 		document.getElementById("chaptername").innerHTML = chapters[number].dataset.name;
+		document.getElementById("chapternum").innerHTML = "Chapter " + chapters[number].dataset.number + ":";
 		if (omithistory != 1) {
-			url.searchParams.set("ch", number+1);
-			state.chapter = number+1;
+			url.searchParams.set("ch", number);
+			state.chapter = number;
 			history.pushState(state, "", url);
 		}
 	}
@@ -415,32 +426,52 @@ function loadChapterURL() {
 	tempString = window.location.search;
 	tempParams = new URLSearchParams(tempString);
 	parameter = tempParams.get("ch");
-	console.log(parameter);
 	if (parameter != undefined) {
 		if (parameter != activeChapter) {
 			getChapter(parameter,1);
 		}
+	} else {
+		getChapter(0,1);
 	}
 }
 
 
 let onThisPageArray = new Array();
+let onThisPageArrayId = new Array();
 
 function populateOnThisPage() {
 	onThisPageArray.length = 0;
 	document.getElementById("onthispage").innerHTML = "";
 	sections.forEach((section)=> {
-    	onThisPageArray.push(section.dataset.heading)
+    	onThisPageArray.push(section.dataset.heading);
+    	onThisPageArrayId.push(section.id);
     });
     let El1 = document.createElement("ul");
-	onThisPageArray.forEach((El) => {
+	for (count=0;count<onThisPageArray.length;count++) {
     	let El2 = document.createElement("li");
-    	El2.innerHTML = El;
+    	let El3 = document.createElement("a");
+    	El3.innerHTML = onThisPageArray[count];
+    	El3.href = "#" + onThisPageArrayId[count];
+    	El3.setAttribute("onclick","scrollby();document.querySelector('.m-onthispageexpand').style.display='none'");
+    	El2.appendChild(El3);
     	El1.appendChild(El2);
-	});
+	}
 	document.getElementById("onthispage").appendChild(El1);
+	document.querySelector(".m-onthispageexpand").style.display="block";
 };
 
+function scrollby() {
+	setTimeout(function() {window.scrollBy(0,-85);},100);
+}
+function togglemenu2() {
+  document.getElementById("hamburger").classList.toggle("change");
+  if (document.getElementById("hamburger").classList.contains("change")) {
+    //document.getElementById("menu").classList.add("open");
+  } else {
+    //document.getElementById("menu").classList.remove("open");
+  }
+
+}
 
 
 

@@ -4156,7 +4156,10 @@ tr.subheading7 {
   width:38px;
 }
 
-
+.hamburger.manual {
+  top: 10px;
+  right: 8px;
+}
 .bar1, .bar2, .bar3 {
   width: 26px;
   height: 4px;
@@ -6696,22 +6699,68 @@ ol ::marker {
   top: 0;
   display: flex;
   width: 100%;
-  height: 25px;
-  background: white;
-  color: blue;
+  height: 50px;
+  background: #111;
+  color: white;
+
+}
+.m-header-right {
+  flex-basis: calc(100% - 40px);
+  padding-left: 0.5rem;
+  padding-top: 0.5rem;
+}
+#chapternum {
+  font-size: 0.7rem;
+  color: #ccc;
+}
+#chaptername {
+  font-size: 1.25rem;
+  font-weight: bold;
+  line-height: 1.1rem;
+}
+.m-header-close {
+  flex-basis: 40px;
 }
 .m-subheader {
   position: fixed;
   display: flex;
-  height: 25px;
-  top: 25px;
+  height: 30px;
+  top: 50px;
   width: 100%;
-  background: black;
+  background: #111;
   color: white;
+  box-shadow: 0px 3px 4px -1px rgba(0,0,0,0.3);
+}
+.m-subheader-icon {
+  flex-basis: 0.5rem;
+  border-radius: 9px 0 0 0;
+  background: #7B8092;
+}
+.m-subheader-left {
+  flex-basis: calc(100% - 1rem);
+  background: #7B8092;
+  font-weight: bold;
+  line-height: 30px;
+}
+.m-subheader-right {
+  flex-basis: 2rem;
+  padding-right: 20px;
+  line-height: 30px;
+  border-radius: 0 9px 0 0;
+  background: #7B8092;
+}
+.m-onthispageexpand {
+  position: fixed;
+  top: 75px;
+  width: 100%;
+  left: 0;
+  background: #aab0c3;
+}
+.m-body {
+  background: #fff;
 }
 .m-main {
   width: 100%;
-  border-radius: 9px;
   background: #fff;
   padding: 0.5rem;
 }
