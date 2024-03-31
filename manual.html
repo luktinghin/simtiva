@@ -39,7 +39,7 @@
 	<div class="m-subheader">
 		<div class="m-subheader-icon">&nbsp;</div>
 		<div class="m-subheader-left"></div>
-		<div class="m-subheader-right"><span onclick="populateOnThisPage();"><i class="fas fa-chevron-down"></i></span></div>
+		<div class="m-subheader-right"><span id="subheaderdropdown" onclick="populateOnThisPage();"><i class="fas fa-chevron-down"></i></span></div>
 	</div>
 	<div class="m-onthispageexpand">
 		<div id="onthispage">
@@ -341,6 +341,7 @@ function onObserve(entries) {
 			const target = direction === DOWN 
 			? getNextSection(entry) 
 			: entry.target;
+			console.log(target);
 			document.querySelector(".m-subheader-left").textContent = target.dataset.heading;
 		} 
 	})
@@ -440,24 +441,29 @@ let onThisPageArray = new Array();
 let onThisPageArrayId = new Array();
 
 function populateOnThisPage() {
-	onThisPageArray.length = 0;
-	document.getElementById("onthispage").innerHTML = "";
-	sections.forEach((section)=> {
-    	onThisPageArray.push(section.dataset.heading);
-    	onThisPageArrayId.push(section.id);
-    });
-    let El1 = document.createElement("ul");
-	for (count=0;count<onThisPageArray.length;count++) {
-    	let El2 = document.createElement("li");
-    	let El3 = document.createElement("a");
-    	El3.innerHTML = onThisPageArray[count];
-    	El3.href = "#" + onThisPageArrayId[count];
-    	El3.setAttribute("onclick","scrollby();document.querySelector('.m-onthispageexpand').style.display='none'");
-    	El2.appendChild(El3);
-    	El1.appendChild(El2);
+	document.getElementById("subheaderdropdown").classList.toggle("active");
+	if (document.getElementById("subheaderdropdown").classList.contains("active")) {
+		onThisPageArray.length = 0;
+		document.getElementById("onthispage").innerHTML = "";
+		sections.forEach((section)=> {
+	    	onThisPageArray.push(section.dataset.heading);
+	    	onThisPageArrayId.push(section.id);
+	    });
+	    let El1 = document.createElement("ul");
+		for (count=0;count<onThisPageArray.length;count++) {
+	    	let El2 = document.createElement("li");
+	    	let El3 = document.createElement("a");
+	    	El3.innerHTML = onThisPageArray[count];
+	    	El3.href = "#" + onThisPageArrayId[count];
+	    	El3.setAttribute("onclick","document.getElementById('subheaderdropdown').classList.toggle('active');scrollby();document.querySelector('.m-onthispageexpand').style.display='none';");
+	    	El2.appendChild(El3);
+	    	El1.appendChild(El2);
+		}
+		document.getElementById("onthispage").appendChild(El1);
+		document.querySelector(".m-onthispageexpand").style.display="block";
+	} else {
+		document.querySelector(".m-onthispageexpand").style.display="none";
 	}
-	document.getElementById("onthispage").appendChild(El1);
-	document.querySelector(".m-onthispageexpand").style.display="block";
 };
 
 function scrollby() {
