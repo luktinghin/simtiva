@@ -26,28 +26,35 @@
     <title>SimTIVA Manual</title>
 </head>
 <body>
-	<div class="hamburger manual" id="hamburger" onclick="togglemenu2();">
+	<div id="menu2">
+		<div class="menucontent">
+		</div>
+	</div>
+	<div class="hamburgermanual" id="hamburgermanual" onclick="togglemenu2();">
         <div class="bar1"></div>
         <div class="bar2"></div>
         <div class="bar3"></div>
     </div>
-	<div class="m-header">
-		<div class="m-header-left"></div>
-		<div class="m-header-right"><div id="chapternum"></div><div id="chaptername">SimTIVA manual</div></div>
-		<div class="m-header-close"></div>
-	</div>
-	<div class="m-subheader">
-		<div class="m-subheader-icon">&nbsp;</div>
-		<div class="m-subheader-left"></div>
-		<div class="m-subheader-right"><span id="subheaderdropdown" onclick="populateOnThisPage();"><i class="fas fa-chevron-down"></i></span></div>
-	</div>
-	<div class="m-onthispageexpand">
-		<div id="onthispage">
+    <div class="m-aside">
+		<div class="m-header">
+			<div class="m-header-left"></div>
+			<div class="m-header-right"><div id="chapternum"></div><div id="chaptername">SimTIVA manual</div></div>
+			<div class="m-header-close"></div>
 		</div>
-	</div>
+		<div class="m-subheader">
+			<div class="m-subheader-icon">&nbsp;</div>
+			<div class="m-subheader-left"></div>
+			<div class="m-subheader-right"><span id="subheaderdropdown" onclick="toggleOnThisPage();"><i class="fas fa-chevron-down"></i></span></div>
+		</div>
+		<div class="m-onthispageexpand hide">
+			<div id="onthispagetitle">On this page</div>
+			<div id="onthispage">
+			</div>
+		</div>
+	</div> <!-- end m-aside -->
 	<div class="m-body">
-		<div style="height:75px">&nbsp;</div>
-	<div class="m-main" id="m-main-beginning" data-name="Main Menu" data-number="-1">
+		<div style="height:75px" class="m-body-placeholder">&nbsp;</div>
+	<div class="m-main" id="m-main-beginning" data-name="Welcome" data-number="0">
 		<p>Welcome to SimTIVA Manual</p>
 		<p>This is the user manual for simtiva.app, a web app to simulate target-controlled infusion (TCI).</p>
 		<p>Select a chapter to view</p>
@@ -304,7 +311,10 @@
 
 	<script>//start script block
 
-setTimeout(function() {loadChapterURL()},300);
+setTimeout(function() {
+	loadChapterURL();
+	updateChapterListings();
+},300);
 
 document.querySelectorAll(".m-image-container > img").forEach(function(el) {
 	el.setAttribute('onclick',`this.classList.toggle("expand")`)
@@ -341,7 +351,7 @@ function onObserve(entries) {
 			const target = direction === DOWN 
 			? getNextSection(entry) 
 			: entry.target;
-			console.log(target);
+			if (onThisPageArrayId.length>0) highlightOnThisPage(target.id);
 			document.querySelector(".m-subheader-left").textContent = target.dataset.heading;
 		} 
 	})
@@ -411,6 +421,7 @@ function getChapter(number,omithistory) {
 		});
 		document.getElementById("chaptername").innerHTML = chapters[number].dataset.name;
 		document.getElementById("chapternum").innerHTML = "Chapter " + chapters[number].dataset.number + ":";
+		updateOnThisPage();
 		if (omithistory != 1) {
 			url.searchParams.set("ch", number);
 			state.chapter = number;
@@ -439,42 +450,73 @@ function loadChapterURL() {
 
 let onThisPageArray = new Array();
 let onThisPageArrayId = new Array();
+let chapterListings = new Array();
 
-function populateOnThisPage() {
+function updateOnThisPage() {
+	onThisPageArray.length = 0;
+	onThisPageArrayId.length = 0;
+	document.getElementById("onthispage").innerHTML = "";
+	sections.forEach((section)=> {
+    	onThisPageArray.push(section.dataset.heading);
+    	onThisPageArrayId.push(section.id);
+    });
+    let El1 = document.createElement("ul");
+	for (count=0;count<onThisPageArray.length;count++) {
+    	let El2 = document.createElement("li");
+    	let El3 = document.createElement("a");
+    	El3.innerHTML = onThisPageArray[count];
+    	El3.href = "#" + onThisPageArrayId[count];
+    	El2.id = "link" + onThisPageArrayId[count];
+    	El2.classList.add("onThisPageLink");
+    	El3.setAttribute("onclick","document.getElementById('subheaderdropdown').classList.toggle('active');scrollby();document.querySelector('.m-onthispageexpand').classList.add('hide');");
+    	El2.appendChild(El3);
+    	El1.appendChild(El2);
+	}
+	document.getElementById("onthispage").appendChild(El1);
+}
+
+function highlightOnThisPage(inputID) {
+	if (inputID != undefined) {
+		let links = document.querySelectorAll(".onThisPageLink");
+		links.forEach((link) => {
+			link.classList.remove("active");
+		});
+		document.getElementById("link" + inputID).classList.add("active");
+	}
+}
+
+function toggleOnThisPage() {
 	document.getElementById("subheaderdropdown").classList.toggle("active");
 	if (document.getElementById("subheaderdropdown").classList.contains("active")) {
-		onThisPageArray.length = 0;
-		document.getElementById("onthispage").innerHTML = "";
-		sections.forEach((section)=> {
-	    	onThisPageArray.push(section.dataset.heading);
-	    	onThisPageArrayId.push(section.id);
-	    });
-	    let El1 = document.createElement("ul");
-		for (count=0;count<onThisPageArray.length;count++) {
-	    	let El2 = document.createElement("li");
-	    	let El3 = document.createElement("a");
-	    	El3.innerHTML = onThisPageArray[count];
-	    	El3.href = "#" + onThisPageArrayId[count];
-	    	El3.setAttribute("onclick","document.getElementById('subheaderdropdown').classList.toggle('active');scrollby();document.querySelector('.m-onthispageexpand').style.display='none';");
-	    	El2.appendChild(El3);
-	    	El1.appendChild(El2);
-		}
-		document.getElementById("onthispage").appendChild(El1);
-		document.querySelector(".m-onthispageexpand").style.display="block";
+		document.querySelector(".m-onthispageexpand").classList.remove("hide");
 	} else {
-		document.querySelector(".m-onthispageexpand").style.display="none";
+		document.querySelector(".m-onthispageexpand").classList.add("hide");
 	}
 };
+
+function updateChapterListings() {
+	let El1 = document.createElement("ul");
+	for (count=0; count<chapters.length; count++) {
+    	let El2 = document.createElement("li");
+    	let El3 = document.createElement("a");
+    	string = chapters[count].dataset.number + ". " + chapters[count].dataset.name;
+    	El3.innerHTML = string;
+    	El2.appendChild(El3);
+    	El1.appendChild(El2);
+		chapterListings.push(string);
+	}
+	document.querySelector(".menucontent").appendChild(El1);
+}
 
 function scrollby() {
 	setTimeout(function() {window.scrollBy(0,-85);},100);
 }
 function togglemenu2() {
-  document.getElementById("hamburger").classList.toggle("change");
-  if (document.getElementById("hamburger").classList.contains("change")) {
-    //document.getElementById("menu").classList.add("open");
+  document.getElementById("hamburgermanual").classList.toggle("change");
+  if (document.getElementById("hamburgermanual").classList.contains("change")) {
+    document.getElementById("menu2").classList.add("open");
   } else {
-    //document.getElementById("menu").classList.remove("open");
+    document.getElementById("menu2").classList.remove("open");
   }
 
 }
