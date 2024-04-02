@@ -328,12 +328,37 @@
 				<div class="m-image-container">
 					<img src="manualresources/ss-5-eventedit.png">
 				</div>
-				<p>To edit the event, click on either the event marker (e.g. "01") on the main graph, or tap the event text at the bottom.</p>
+				<p>To edit the event, click on either the event marker (e.g. "02") on the main graph, or tap the event text at the bottom.</p>
 				<p>You can turn events on or off in the graph options panel, which can be accessed by the <span class="m-icon-inline"><i class="fas fa-cog"></i></span> options button.</p>
 			</section>
 		</div><!-- end m-main (ch5)-->
 		<div class="m-main" id="m-main-chapter6" data-name="Working with Timeline" data-number="6">
+			<p class="m-h1">Working with Timeline</p>
 			<section id="6-1" data-heading="Overview">
+				<p>SimTIVA is designed to be run in real-time, that is, in parallel to the time course of an actual clinical case. The clock starts to tick the moment the case has started, and the CP/CE displayed at the current time point will also be the predicted pharmacokinetic status at present. However, SimTIVA also offers timeline functions as follows:</p>
+				<ul>
+					<li><span class="m-emphasis">Quick reset:</span>
+						<br>Keep same patient data and start over from time zero</li>
+					<li><span class="m-emphasis">Pause sim:</span>
+						<br>Suspend simulation and keep all data, this is analagous to pausing a video playback</li>
+					<li><span class="m-emphasis">Jump to time:</span>
+						<br>Jump backward or forward in time, like skipping to different time point of a video</li>
+				</ul>
+				<p>The timeline functions are located in the "Control Panel" beneath the main graph.</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-6-controlpanel.png">
+				</div>
+				<p>Note that these functions will separate the simulation from working in real time, but may be advantageous in several situations. For example, you may wish to partially go back in time and try different dosing regimens by testing different infusion rates, or the effect of different doses of boluses. Or, you may have forgotten to start SimTIVA 5 minutes ago after you started actual clinical case, but you may still enter the infusion data into SimTIVA and jump forward 5 minutes and that would align the SimTIVA timeline to current time instance.</p>
+				<p>For programming complexity reasons, the timeline functions are limited to CP/CE targeting and manual infusion mode of single-drug regimen only.</p>
+			</section>
+			<section id="6-2" data-heading="Jumping to time">
+				<p class="m-h2">Jumping to time</p>
+				<p>Opening the "Jump to time" window leads to one of the three options. You can move to a certain time point, or move back or move forward (relative to present). A time selection field is available. If the time entered is invalid, an error message will appear. Here is a video demo of the "Jump to time" feature: </p>
+				<div class="m-video-container">
+					<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">1/ Time travel<br>Upcoming feature: restart, pause sim, &amp; jump back/forward in time. SimTIVA is meant to be run in real-time, but this creates difficulty if u wish to simulate multiple scenarios, e.g. u may wish to start over or partially go back in time... <a href="https://t.co/vmF2NqFOlA">pic.twitter.com/vmF2NqFOlA</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1763109348262527467?ref_src=twsrc%5Etfw">February 29, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+				</div>
+				<p>This feature has a few limitations. One, all SimTIVA simulations have a limit of up to 6 hours. The pharmacokinetic data is generated for this finite duration, and you may not jump forward to beyond 6 hours after the last infusion scheme change.</p>
+				<p>The other limitation is that, when going back partially in time, this will also remove any rate changes (or CP/CE target changes) along the way. If you have started your infusion, and changed the infusion rate from 50ml/h to 25ml/h at 30 minutes, and if you jump back from 1 hour (origin) to 10 minutes (destination), this will remove the infusion rate change at 30 minutes.</p>
 			</section>
 		</div><!--end m-main Ch6-->
 	</div> <!--end m-body-->
@@ -564,10 +589,10 @@ function loadlanguage(lang) {
     	return response.json();
   	})
   	.then(function(data) {
-  		ind=1;
-    	tempHTML=JSON.parse(data.chapter1.text);
-    	document.getElementById("m-main-chapter1").outerHTML = tempHTML;
-    	getChapter(1,0,1);
+  		ind=4;
+    	tempHTML=JSON.parse(data.chapter4.text);
+    	document.getElementById("m-main-chapter4").outerHTML = tempHTML;
+    	getChapter(4,0,1);
     	twttr.widgets.load();
 
   	});
