@@ -6658,7 +6658,7 @@ function pauseCpt(ind) {
 	document.getElementById("top_infrate").style.display = "none";
 	if (parseloading == 0) {
 		savefile_data();	
-		if (complex_mode == 1) ptol_generate_margins(ind,0.9,0.5);
+		ptol_generate_margins(ind,0.9,0.5);
 	} else {
 		myChart.update();
 	}

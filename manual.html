@@ -6,7 +6,7 @@
 	<link href="css/regular.min.css" rel="stylesheet"> 
 	<link href="css/solid.min.css" rel="stylesheet">
 	<link href="css/brands.min.css" rel="stylesheet"> <!--font awesome-->
-	<meta name="theme-color" content="#7B8092">
+	<meta name="theme-color" content="#000000">
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<link rel="apple-touch-icon" href="apple-touch-icon.png" />
 	<link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png" />
@@ -307,6 +307,35 @@
 				<p>The isobologram graph will be explained in detail in Chapter 7: Complex Mode.</p>
 			</section>
 		</div><!-- end m-main (ch4)-->
+		<div class="m-main" id="m-main-chapter5" data-name="Events" data-number="5">
+			<p class="m-h1">Events</p>
+			<section id="5-1" data-heading="Overview">
+				<p>Events contain small segments of text, marked at a specific time, which help you to mark important events or information on the timeline. Examples of events you may enter are: "Induction", "Loss of consciousness", "Intubation", "Woke up", or vital signs that you can enter manually.</p>
+				<p>This feature is helpful when you wish to review the case. By marking the time point, when you highlight the time using the "Quick View" feature of the graph, you can also note the CP, CE, and infusion rate at that specific time point. </p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-5-overview.png">
+				</div>
+				<p>An example is shown above. Note the CP, CE, and eBIS at the point of "Waking up". The timing of this event correlates with the time highlighted on "Quick View" box on the main graph. The CE was 1.77mcg/ml, eBIS was 65 at this time point.</p>
+			</section>
+			<section id="5-2" data-heading="Event creation & editing">
+				<p class="m-h2">Event creation</p>
+				<p>To create an event, tap the "Event button" on the main graph. This will take you to the event creation screen. You can set the time of the event.</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-5-eventcreation.png">
+				</div>
+				<p class="m-h2">Event editing</p>
+				<p>The events will appear as "01", "02"... et cetera on the main graph. The respective text content will appear at the bottom of the main graph</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-5-eventedit.png">
+				</div>
+				<p>To edit the event, click on either the event marker (e.g. "01") on the main graph, or tap the event text at the bottom.</p>
+				<p>You can turn events on or off in the graph options panel, which can be accessed by the <span class="m-icon-inline"><i class="fas fa-cog"></i></span> options button.</p>
+			</section>
+		</div><!-- end m-main (ch5)-->
+		<div class="m-main" id="m-main-chapter6" data-name="Working with Timeline" data-number="6">
+			<section id="6-1" data-heading="Overview">
+			</section>
+		</div><!--end m-main Ch6-->
 	</div> <!--end m-body-->
 
 	<script>//start script block
@@ -411,16 +440,18 @@ function getChapter(number,omithistory,force) {
 		})
 		mainObject = document.getElementById("m-main-chapter" + number);
 		chapters[number].style.display = "block";
-		tempNodeList = [...mainObject.querySelectorAll('[data-heading]')];
-		sections.length = 0;
-		for (tempCount = 0; tempCount < tempNodeList.length; tempCount++) {
-			sections.push(tempNodeList[tempCount]);
+		if (number>0) {
+			tempNodeList = [...mainObject.querySelectorAll('[data-heading]')];
+			sections.length = 0;
+			for (tempCount = 0; tempCount < tempNodeList.length; tempCount++) {
+				sections.push(tempNodeList[tempCount]);
+			}
+			sections.forEach((section) => {
+				observer.observe(section)
+			});
+			document.getElementById("chaptername").innerHTML = chapters[number].dataset.name;
+			document.getElementById("chapternum").innerHTML = "Chapter " + chapters[number].dataset.number + ":";
 		}
-		sections.forEach((section) => {
-			observer.observe(section)
-		});
-		document.getElementById("chaptername").innerHTML = chapters[number].dataset.name;
-		document.getElementById("chapternum").innerHTML = "Chapter " + chapters[number].dataset.number + ":";
 		updateOnThisPage();
 		if (omithistory != 1) {
 			url.searchParams.set("ch", number);
@@ -499,8 +530,13 @@ function updateChapterListings() {
 	for (count=0; count<chapters.length; count++) {
     	let El2 = document.createElement("li");
     	let El3 = document.createElement("a");
-    	string = chapters[count].dataset.number + ". " + chapters[count].dataset.name;
+    	if (count == 0) {
+    		string = chapters[count].dataset.name;
+    	} else {
+    		string = "<span style='color:white; width:2rem; display:inline-block'>" + chapters[count].dataset.number + ". " + "</span>" + chapters[count].dataset.name;
+    	}
     	El3.innerHTML = string;
+    	El2.setAttribute("onclick", "getChapter(" + count + "); togglemenu2();");
     	El2.appendChild(El3);
     	El1.appendChild(El2);
 		chapterListings.push(string);

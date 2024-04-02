@@ -6747,7 +6747,7 @@ ol ::marker {
 #chaptername {
   font-size: 1.25rem;
   font-weight: bold;
-  line-height: 1.1rem;
+  line-height: 1.2rem;
 }
 .m-header-close {
   flex-basis: 40px;
@@ -6775,7 +6775,7 @@ ol ::marker {
 }
 .m-subheader-right {
   flex-basis: 2rem;
-  padding-right: 20px;
+  padding-right: 26px;
   line-height: 30px;
   border-radius: 0 9px 0 0;
   background: #7B8092;
@@ -6818,6 +6818,8 @@ ol ::marker {
   font-weight: normal;
   background: transparent;
   padding-left: 0.5rem;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 .onThisPageLink.active {
   background: linear-gradient(90deg, rgba(255,255,255,1) 0px, rgba(255,255,255,1) 5px, rgba(255,255,255,0.2) 5px, rgba(255,255,255,0.2) 100%);
@@ -6914,6 +6916,9 @@ ol ::marker {
   #menu2 .menucontent a {
     font-size: 1.5rem;
   }
+  #onthispagetitle {
+    display: none;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -6943,6 +6948,8 @@ ol ::marker {
     top: 60px;
     height: 100px;
     width: 23%;
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
   }
   .m-header-right {
     padding-top: 2rem;
@@ -6971,9 +6978,16 @@ ol ::marker {
     width: calc(100% - 1rem);
     margin-left: 0;
     border-radius: 1rem;
+    padding: 1rem;
   }
   .m-body {
     background: #7B8092;
+  }
+  #onthispage {
+    border-bottom: 1px solid #ddd;
+  }
+  #onthispage ul {
+    margin-bottom: 0;
   }
 
 }
