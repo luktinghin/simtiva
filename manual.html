@@ -589,13 +589,14 @@ function loadlanguage(lang,ind) {
     	return response.json();
   	})
   	.then(function(data) {
-  		key = "chapter" + ind;
-    	tempHTML=JSON.parse(data[key].text);
-    	document.getElementById("m-main-" + key).outerHTML = tempHTML;
-    	getChapter(ind,0,1);
-    	twttr.widgets.load();
+  		for (count=1;count<6;count++) {
+  			key = "chapter" + count;
+    		tempHTML=JSON.parse(data[key].text);
+    		document.getElementById("m-main-" + key).outerHTML = tempHTML;
+    	}
   	});
-
+    getChapter(ind,0,1);
+    twttr.widgets.load();
 }
 
 	</script><!--end of script block-->
