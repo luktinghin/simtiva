@@ -582,17 +582,16 @@ function togglemenu2() {
 
 }
 
-function loadlanguage(lang) {
+function loadlanguage(lang,ind) {
 	tempHTML = "";
 	fetch('chinese.json')
   		.then(function(response) {
     	return response.json();
   	})
   	.then(function(data) {
-  		ind=4;
-    	tempHTML=JSON.parse(data.chapter4.text);
+    	tempHTML=JSON.parse(data[ind].text);
     	document.getElementById("m-main-chapter4").outerHTML = tempHTML;
-    	getChapter(4,0,1);
+    	getChapter(ind,0,1);
     	twttr.widgets.load();
 
   	});
