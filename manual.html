@@ -361,6 +361,24 @@
 				<p>The other limitation is that, when going back partially in time, this will also remove any rate changes (or CP/CE target changes) along the way. If you have started your infusion, and changed the infusion rate from 50ml/h to 25ml/h at 30 minutes, and if you jump back from 1 hour (origin) to 10 minutes (destination), this will remove the infusion rate change at 30 minutes.</p>
 			</section>
 		</div><!--end m-main Ch6-->
+		<div id="footer-up">
+			<div id="footer-up-left">
+				<div class="smalltext">Last updated:</div>
+				<div id="lastupdated">5 April 2024</div>
+			</div>
+			<div id="footer-up-right">
+				<span style="border-radius: 2rem; width: 1.5rem;display:inline-block; margin-right:0.25rem"><i class="fas fa-chevron-circle-up"></i></span>TOP
+			</div>
+		</div>
+		<div id="footer-down">
+			<div id="footer-previous">
+				<div class="smalltext"><i class="fas fa-chevron-circle-left"></i>&nbsp;Previous</div>
+				<div id="previouschapter">...</div>
+			</div>
+			<div id="footer-next">
+				<div class="smalltext">Next&nbsp;<i class="fas fa-chevron-circle-right"></i></div>
+				<div id="nextchapter">...</div>
+		</div>
 	</div> <!--end m-body-->
 
 	<script>//start script block
@@ -368,11 +386,14 @@
 setTimeout(function() {
 	loadChapterURL();
 	updateChapterListings();
+	activateImageContainers();
 },300);
 
-document.querySelectorAll(".m-image-container > img").forEach(function(el) {
-	el.setAttribute('onclick',`this.classList.toggle("expand")`)
-})
+function activateImageContainers() {
+	document.querySelectorAll(".m-image-container > img").forEach(function(el) {
+		el.setAttribute('onclick',`this.classList.toggle("expand")`)
+	})
+}
 
 const url = new URL(location);
 
@@ -478,6 +499,7 @@ function getChapter(number,omithistory,force) {
 			document.getElementById("chapternum").innerHTML = "Chapter " + chapters[number].dataset.number + ":";
 		}
 		updateOnThisPage();
+		getFooter();
 		if (omithistory != 1) {
 			url.searchParams.set("ch", number);
 			state.chapter = number;
@@ -594,9 +616,39 @@ function loadlanguage(lang,ind) {
     		tempHTML=JSON.parse(data[key].text);
     		document.getElementById("m-main-" + key).outerHTML = tempHTML;
     	}
+    	activateImageContainers();
     	getChapter(ind,0,1);
     	twttr.widgets.load();
   	});
+}
+
+function getFooter() {
+	if ((activeChapter >= 1) && (activeChapter <= chapters.length-2)) {
+		nextString = chapters[activeChapter*1+1].dataset.name;
+		previousString = chapters[activeChapter*1-1].dataset.name;
+		nextChapter = activeChapter*1 + 1;
+		previousChapter = activeChapter*1 - 1;
+		document.getElementById("footer-previous").style.visibility = "visible";
+		document.getElementById("footer-next").style.visibility = "visible";
+		document.getElementById("nextchapter").innerHTML = nextString;
+		document.getElementById("previouschapter").innerHTML = previousString;
+		document.getElementById("footer-previous").setAttribute("onclick","getChapter(" + previousChapter + ")");
+		document.getElementById("footer-next").setAttribute("onclick","getChapter(" + nextChapter + ")");
+	}
+	if (activeChapter == 1) {
+		nextString = chapters[activeChapter*1+1].dataset.name;
+		nextChapter = activeChapter*1 + 1;
+		document.getElementById("nextchapter").innerHTML = nextString;
+		document.getElementById("footer-previous").style.visibility = "hidden";
+		document.getElementById("footer-next").setAttribute("onclick","getChapter(" + nextChapter + ")");
+	}
+	if (activeChapter == chapters.length-1) {
+		previousString = chapters[activeChapter*1-1].dataset.name;
+		previousChapter = activeChapter*1-1;
+		document.getElementById("previouschapter").innerHTML = previousString;
+		document.getElementById("footer-next").style.visibility = "hidden";
+		document.getElementById("footer-previous").setAttribute("onclick","getChapter(" + previousChapter + ")");
+	}
 }
 
 	</script><!--end of script block-->

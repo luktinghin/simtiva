@@ -6830,7 +6830,7 @@ ol ::marker {
   text-decoration: inherit;
 }
 .m-body {
-  background: #fff;          
+  background: #7B8092;          
 }
 .m-body * {
     -webkit-user-select: text;
@@ -6842,6 +6842,7 @@ ol ::marker {
   width: 100%;
   background: #fff;
   padding: 0.5rem;
+  border-radius: 0 0 9px 9px;
 }
 
 .m-h1 {
@@ -6902,6 +6903,57 @@ ol ::marker {
   background: rgba(0,0,0,0.5);
 }
 
+#footer-up {
+  display: flex;
+  background: #000;
+  width: 100%;
+  color: white;
+}
+
+#footer-up-left {
+  background: #7B8092;
+  border-radius: 0 0 0 9px;
+  padding: 0.5rem;
+  flex-basis: 50%;
+}
+
+#footer-up-right {
+  text-align: right;
+  border-radius: 0 0 9px 0;
+  background: #7b8092;
+  padding: 0.5rem;
+  flex-basis: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#footer-down {
+  background: #000;
+  display: flex;
+  width: 100%;
+}
+
+#footer-previous {
+  flex-basis: 50%;
+  padding: 0.5rem;
+  color: white;
+}
+
+#footer-next {
+  flex-basis: 50%;
+  text-align: right;
+  padding: 0.5rem;
+  color: white;
+}
+
+.smalltext {
+  text-transform: uppercase;
+  color: #ddd;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 0.75rem;
+}
 
 @media screen and (min-width: 465px) {
   .m-main {
@@ -7014,6 +7066,31 @@ ol ::marker {
   }
   .m-main {
     width: 90%;
+  }
+  #footer-up {
+    width: 90%;
+  }
+  #footer-down {
+    width: 90%;
+    background: #111;
+    margin-bottom: 1rem;
+    border-radius: 0 0 1rem 1rem;
+  }
+  #footer-up-left {
+    border-radius:  0 0 0 1rem;
+    box-shadow: inset 1px -1px 0 white;
+  }
+  #footer-up-right {
+    border-radius: 0 0 1rem 0;
+    box-shadow: inset -1px -1px 0 white;
+  }
+  #footer-previous {
+    border-radius: 0 0 0 1rem;
+    background: #111;
+  }
+  #footer-next {
+    border-radius: 0 0 1rem 0;
+    background: #111;
   }
 }
 
