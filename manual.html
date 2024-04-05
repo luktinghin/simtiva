@@ -515,7 +515,24 @@ window.addEventListener("popstate", (event) => {
 function loadChapterURL() {
 	tempString = window.location.search;
 	tempParams = new URLSearchParams(tempString);
+	file = "";
 	parameter = tempParams.get("ch");
+	parameter2 = tempParams.get("lang");
+	if (parameter2 != undefined) {
+		if (parameter2 == "zh") file = "chinese";
+		if (parameter2 == "es") file = "spanish";
+		if (parameter2 == "fr") file = "french";
+
+		if (file != "") {
+			if (parameter != undefined) {
+				loadlanguage(file,parameter,1);
+			} else {
+				loadlanguage(file,0,1);
+			}
+		} else {
+			getChapter(0,1);
+		}
+	}
 	if (parameter != undefined) {
 		if (parameter != activeChapter) {
 			getChapter(parameter,1);
@@ -604,7 +621,7 @@ function togglemenu2() {
 
 }
 
-function loadlanguage(lang,ind) {
+function loadlanguage(lang,ind,omithistory) {
 	tempHTML = "";
 	fetch(lang + '.json')
   		.then(function(response) {
@@ -617,7 +634,16 @@ function loadlanguage(lang,ind) {
     		document.getElementById("m-main-" + key).outerHTML = tempHTML;
     	}
     	activateImageContainers();
-    	getChapter(ind,0,1);
+    	if (omithistory != undefined) {
+    		if (omithistory == 1) {
+    			getChapter(ind,1,1);
+    		} else {
+    			getChapter(ind,0,1);
+    		}	
+    	} else {
+    		getChapter(ind,0,1);
+    	}
+    	
     	twttr.widgets.load();
   	});
 }
