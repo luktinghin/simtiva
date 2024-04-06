@@ -381,6 +381,12 @@
 		</div>
 	</div> <!--end m-body-->
 
+		<div id="modalDialog" class="modal alt">
+			<div class="modal-content alt" id="modalDialogcontent">
+				<div class="modal-header alt"><span class="title">Please wait</span><span class="close alt" onClick="hidedialogmodal()">&times;</span></div>
+				<div class="modal-body alt">SimTIVA is loading up...</div>
+			</div>
+		</div>
 	<script>//start script block
 
 //declare variables
@@ -396,15 +402,6 @@ languageMatrix = [
         "Английский"
     ],
     [
-        "Spanish",
-        "Espagnol",
-        "Español",
-        "西班牙语",
-        "Espanhol",
-        "スペイン語",
-        "испанский"
-    ],
-    [
         "French",
         "Français",
         "Francés",
@@ -414,7 +411,16 @@ languageMatrix = [
         "Французский"
     ],
     [
-        "English",
+        "Spanish",
+        "Espagnol",
+        "Español",
+        "西班牙语",
+        "Espanhol",
+        "スペイン語",
+        "испанский"
+    ],
+    [
+        "Chinese",
         "Chinois",
         "Chino",
         "中文",
@@ -773,6 +779,90 @@ function getFooter() {
 		document.getElementById("footer-previous").setAttribute("onclick","getChapter(" + previousChapter + ")");
 	}
 }
+
+function displayLanguagePanel() {
+	languageHTML = `
+		
+	`
+}
+
+modal = undefined;
+function setmodal(modalname) {
+  modal = document.getElementById(modalname);
+  modalcontent = document.getElementById(modalname + "content");
+  modal.classList.add("fadein");
+  modalcontent.classList.add("open");
+  //document.getElementById("bodywrapper").classList.add("blurry");
+}
+
+window.onclick = function(event) {
+  if ((event.target == modal) && (modal.id != "modalInitial") && (modal.id != "modalScreen2") && (modal.id != "modalLoad")) {
+    //document.getElementById("bodywrapper").classList.remove("blurry");
+
+    if (modal.id == "modalShare") {
+	  	clearInterval(canvasUpdateInterval);
+	  	canvasUpdateInterval = null;
+	  }
+
+    modalcontent = document.getElementById(modal.id + "content");
+    modal.classList.remove("fadein");
+    modalcontent.classList.remove("open");
+    modal = undefined;
+    
+  }
+}
+document.addEventListener('touchstart', function(event){
+  if ((event.target == modal) && (modal.id != "modalInitial") && (modal.id != "modalScreen2") && (modal.id != "modalLoad")) {
+    //document.getElementById("bodywrapper").classList.remove("blurry");
+
+    if (modal.id == "modalShare") {
+	  	clearInterval(canvasUpdateInterval);
+	  	canvasUpdateInterval = null;
+	  }
+    modalcontent = document.getElementById(modal.id + "content");
+    modal.classList.remove("fadein");
+    modalcontent.classList.remove("open");
+    modal = undefined;
+    //document.getElementById("bodywrapper").classList.remove("blurry");
+  }
+});
+
+function displayDialog(dialogTitle, dialogContent) {
+	const ElTitle = document.querySelector("#modalDialog .title");
+	const ElContent = document.querySelector("#modalDialog .modal-body");
+	ElTitle.innerHTML = dialogTitle;
+	ElContent.innerHTML = dialogContent;
+	setmodal("modalDialog");
+}
+function hideallmodal() {
+	//document.getElementById("bodywrapper").classList.remove("blurry");
+	if (modal != undefined) {
+	  if (modal.id == "modalShare") {
+	  	clearInterval(canvasUpdateInterval);
+	  	canvasUpdateInterval = null;
+	  }
+		modalcontent = document.getElementById(modal.id + "content");
+	  modal.classList.remove("fadein");
+	  modalcontent.classList.remove("open");
+	  modal = undefined;
+
+	}
+}
+function hidemodal(param) {
+		if (param == "modalShare") {
+	  	clearInterval(canvasUpdateInterval);
+	  	canvasUpdateInterval = null;
+	  }
+	document.getElementById(param + "content").classList.remove("open");
+	document.getElementById(param).classList.remove("fadein");
+	modal = undefined;
+}
+function hidedialogmodal() {
+  document.getElementById("modalDialog").classList.remove("fadein");
+  document.getElementById("modalDialogcontent").classList.remove("open");
+}
+
+
 
 	</script><!--end of script block-->
 	<script src="lz-string.js"></script>
