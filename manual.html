@@ -29,7 +29,6 @@
 	<div id="menu2">
 		<div class="menucontent">
 		</div>
-		<button onclick="displayLanguagePanel()">Select Lang</button>
 	</div>
 	<div class="hamburgermanual" id="hamburgermanual" onclick="togglemenu2();">
         <div class="bar1"></div>
@@ -362,6 +361,7 @@
 				<p>The other limitation is that, when going back partially in time, this will also remove any rate changes (or CP/CE target changes) along the way. If you have started your infusion, and changed the infusion rate from 50ml/h to 25ml/h at 30 minutes, and if you jump back from 1 hour (origin) to 10 minutes (destination), this will remove the infusion rate change at 30 minutes.</p>
 			</section>
 		</div><!--end m-main Ch6-->
+		<button style="background: transparent" onclick="displayLanguagePanel()">Select Lang</button>
 		<div id="footer-up">
 			<div id="footer-up-left">
 				<div class="smalltext">Last updated:</div>
@@ -721,35 +721,41 @@ function togglemenu2() {
 }
 
 function loadlanguage(lang,ind,omithistory) {
-	tempHTML = "";
-	fetch(lang + '.json')
-  		.then(function(response) {
-    	return response.json();
-  	})
-  	.then(function(data) {
-  		activeLanguage = lang;
-  		for (count=1;count<=6;count++) {
-  			key = "chapter" + count;
-    		tempHTML=JSON.parse(data[key].text);
-    		document.getElementById("m-main-" + key).outerHTML = tempHTML;
-    	}
-    	if (omithistory != undefined) {
-    		if (omithistory == 1) {
-    			getChapter(ind,1,1);
-    		} else {
-    			getChapter(ind,0,1);
-    		}	
-    	} else {
-    		getChapter(ind,0,1);
-    	}
-		if (omithistory != 1) {
-			url.searchParams.set("lang", lang);
-			state.lang = lang;
-			history.pushState(state, "", url);
-		}
-		activateImageContainers();
-    	twttr.widgets.load();
-  	});
+	if ((lang=="fr") || (lang == "es") || (lang == "zh")) {
+		tempHTML = "";
+		fetch(lang + '.json')
+	  		.then(function(response) {
+	    	return response.json();
+	  	})
+	  	.then(function(data) {
+	  		activeLanguage = lang;
+	  		for (count=1;count<=6;count++) {
+	  			key = "chapter" + count;
+	    		tempHTML=JSON.parse(data[key].text);
+	    		document.getElementById("m-main-" + key).outerHTML = tempHTML;
+	    	}
+	    	if (omithistory != undefined) {
+	    		if (omithistory == 1) {
+	    			getChapter(ind,1,1);
+	    		} else {
+	    			getChapter(ind,0,1);
+	    		}	
+	    	} else {
+	    		getChapter(ind,0,1);
+	    	}
+			if (omithistory != 1) {
+				url.searchParams.set("lang", lang);
+				state.lang = lang;
+				history.pushState(state, "", url);
+			}
+			activateImageContainers();
+	    	twttr.widgets.load();
+	  	});
+	} else {
+		getChapter(ind,omithistory,1);
+		activeLanguage == "en";
+		activeLanguageCode == 0;
+	}
 }
 
 function getFooter() {
