@@ -421,10 +421,35 @@ languageMatrix = [
         "Chinês",
         "中国語",
         "Китайский"
+    ],
+    [
+        "Portuguese",
+        "Portugais",
+        "Portugués",
+        "葡萄牙语",
+        "Português",
+        "ポルトガル語",
+        "Португальский"
+    ],
+    [
+        "Japanese",
+        "Japonais",
+        "Japonés",
+        "日语",
+        "Japonês",
+        "日本語",
+        "Японский"
+    ],
+    [
+        "Russian",
+        "Russe",
+        "Ruso",
+        "俄语",
+        "Russo",
+        "ロシア語",
+        "Русский"
     ]
 ];
-
-const observer = new IntersectionObserver(onObserve, options);
 
 mainObject = document.getElementById("m-main-chapter1");
 
@@ -441,12 +466,6 @@ let prevScrollTop = 0;
 const url = new URL(location);
 
 let state = { chapter: 0, lang: "en"};
-
-const options = {
-	root: document.querySelector(".main"),
-	rootMargin: '-100px 0px 0px 0px',
-	threshold: 0
-}
 
 setTimeout(function() {
 	loadChapterURL();
@@ -493,6 +512,14 @@ function onObserve(entries) {
 		} 
 	})
 }
+
+const options = {
+	//root: document.querySelector(".main"),
+	rootMargin: '-100px 0px 0px 0px',
+	threshold: 0
+}
+
+const observer = new IntersectionObserver(onObserve, options);
 
 function calcScrollDirection() {
 	const { scrollTop } = document.documentElement;
