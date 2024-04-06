@@ -613,8 +613,14 @@ function loadChapterURL() {
 					activeLanguage = "en";
 					loadlanguage(file,0,1);
 				}
-			} else {
-				getChapter(0,1);
+			} else if ((file == "") || (file == "en")) {
+				if (parameter != undefined) {
+					if (parameter != activeChapter) {
+						getChapter(parameter,1);
+					}
+				} else {
+					getChapter(0,1);
+				}
 			}
 		}
 	} else {
