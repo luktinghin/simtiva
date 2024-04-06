@@ -366,7 +366,7 @@
 				<div class="smalltext">Last updated:</div>
 				<div id="lastupdated">5 April 2024</div>
 			</div>
-			<div id="footer-up-right">
+			<div id="footer-up-right" onclick="toTop();">
 				<span style="border-radius: 2rem; width: 1.5rem;display:inline-block; margin-right:0.25rem"><i class="fas fa-chevron-circle-up"></i></span>TOP
 			</div>
 		</div>
@@ -472,6 +472,10 @@ setTimeout(function() {
 	updateChapterListings();
 	activateImageContainers();
 },300);
+
+function toTop() {
+	window.scrollTo(0,0);
+}
 
 function getLangCode(input) {
 	if (input == "en") return 0;
@@ -581,6 +585,7 @@ function getChapter(number,omithistory,force) {
 			state.chapter = number;
 			history.pushState(state, "", url);
 		}
+		toTop();
 	}
 }
 
