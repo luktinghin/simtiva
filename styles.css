@@ -6830,7 +6830,7 @@ ol ::marker {
   text-decoration: inherit;
 }
 .m-body {
-  background: #7B8092;          
+  background: #fff;          
 }
 .m-body * {
     -webkit-user-select: text;
@@ -6984,6 +6984,9 @@ ol ::marker {
   body {
     display: flex;
   }
+  .m-body {
+    background: #7b8092;
+  }
   .hamburgermanual {
     left: 0.5rem;
   }
@@ -7045,7 +7048,31 @@ ol ::marker {
   #onthispage ul {
     margin-bottom: 0;
   }
-
+  #footer-up {
+    width: calc(100% - 1rem);
+  }
+  #footer-down {
+    width: calc(100% - 1rem);
+    background: #111;
+    margin-bottom: 1rem;
+    border-radius: 0 0 1rem 1rem;
+  }
+  #footer-up-left {
+    border-radius:  0 0 0 1rem;
+    box-shadow: inset 1px -1px 0 white;
+  }
+  #footer-up-right {
+    border-radius: 0 0 1rem 0;
+    box-shadow: inset -1px -1px 0 white;
+  }
+  #footer-previous {
+    border-radius: 0 0 0 1rem;
+    background: #111;
+  }
+  #footer-next {
+    border-radius: 0 0 1rem 0;
+    background: #111;
+  }
 }
 
 @media screen and (min-width: 900px) {
@@ -7072,25 +7099,6 @@ ol ::marker {
   }
   #footer-down {
     width: 90%;
-    background: #111;
-    margin-bottom: 1rem;
-    border-radius: 0 0 1rem 1rem;
-  }
-  #footer-up-left {
-    border-radius:  0 0 0 1rem;
-    box-shadow: inset 1px -1px 0 white;
-  }
-  #footer-up-right {
-    border-radius: 0 0 1rem 0;
-    box-shadow: inset -1px -1px 0 white;
-  }
-  #footer-previous {
-    border-radius: 0 0 0 1rem;
-    background: #111;
-  }
-  #footer-next {
-    border-radius: 0 0 1rem 0;
-    background: #111;
   }
 }
 

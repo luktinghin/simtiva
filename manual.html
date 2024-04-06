@@ -383,26 +383,88 @@
 
 	<script>//start script block
 
+//declare variables
+
+languageMatrix = [
+    [
+        "English",
+        "Anglais",
+        "Inglés",
+        "英文",
+        "Inglês",
+        "英語",
+        "Английский"
+    ],
+    [
+        "Spanish",
+        "Espagnol",
+        "Español",
+        "西班牙语",
+        "Espanhol",
+        "スペイン語",
+        "испанский"
+    ],
+    [
+        "French",
+        "Français",
+        "Francés",
+        "法语",
+        "Francês",
+        "フランス語",
+        "Французский"
+    ],
+    [
+        "English",
+        "Chinois",
+        "Chino",
+        "中文",
+        "Chinês",
+        "中国語",
+        "Китайский"
+    ]
+];
+
+const observer = new IntersectionObserver(onObserve, options);
+
+mainObject = document.getElementById("m-main-chapter1");
+
+activeChapter = 0;
+activeLanguage = "en";
+
+const sections = [...mainObject.querySelectorAll('[data-heading]')];
+
+const DOWN = "DOWN";
+const UP = "UP";
+
+let prevScrollTop = 0;
+
+const url = new URL(location);
+
+let state = { chapter: 0, lang: "en"};
+
+const options = {
+	root: document.querySelector(".main"),
+	rootMargin: '-100px 0px 0px 0px',
+	threshold: 0
+}
+
 setTimeout(function() {
 	loadChapterURL();
 	updateChapterListings();
 	activateImageContainers();
 },300);
 
+function getLangCode(input) {
+	if (input == "en") return 0;
+	if (input == "fr") return 1;
+	if (input == "es") return 2;
+	if (input == "zh") return 3;
+}
+
 function activateImageContainers() {
 	document.querySelectorAll(".m-image-container > img").forEach(function(el) {
 		el.setAttribute('onclick',`this.classList.toggle("expand")`)
 	})
-}
-
-const url = new URL(location);
-
-let state = { chapter: 0};
-
-const options = {
-	root: document.querySelector(".main"),
-	rootMargin: '-100px 0px 0px 0px',
-	threshold: 0
 }
 
 /*  obsolete ->
@@ -431,19 +493,6 @@ function onObserve(entries) {
 		} 
 	})
 }
-
-const observer = new IntersectionObserver(onObserve, options);
-
-mainObject = document.getElementById("m-main-chapter1");
-
-activeChapter = 0;
-
-const sections = [...mainObject.querySelectorAll('[data-heading]')];
-
-const DOWN = "DOWN";
-const UP = "UP";
-
-let prevScrollTop = 0;
 
 function calcScrollDirection() {
 	const { scrollTop } = document.documentElement;
@@ -519,26 +568,31 @@ function loadChapterURL() {
 	parameter = tempParams.get("ch");
 	parameter2 = tempParams.get("lang");
 	if (parameter2 != undefined) {
-		if (parameter2 == "zh") file = "chinese";
-		if (parameter2 == "es") file = "spanish";
-		if (parameter2 == "fr") file = "french";
+		if (parameter2 != activeLanguage) {
+			if (parameter2 == "zh") file = "zh";
+			if (parameter2 == "es") file = "es";
+			if (parameter2 == "fr") file = "fr";
 
-		if (file != "") {
-			if (parameter != undefined) {
-				loadlanguage(file,parameter,1);
+			if (file != "") {
+				if (parameter != undefined) {
+					activeLanguage = parameter2;
+					loadlanguage(file,parameter,1);
+				} else {
+					activeLanguage = "en";
+					loadlanguage(file,0,1);
+				}
 			} else {
-				loadlanguage(file,0,1);
+				getChapter(0,1);
+			}
+		}
+	} else {
+		if (parameter != undefined) {
+			if (parameter != activeChapter) {
+				getChapter(parameter,1);
 			}
 		} else {
 			getChapter(0,1);
 		}
-	}
-	if (parameter != undefined) {
-		if (parameter != activeChapter) {
-			getChapter(parameter,1);
-		}
-	} else {
-		getChapter(0,1);
 	}
 }
 
@@ -628,12 +682,12 @@ function loadlanguage(lang,ind,omithistory) {
     	return response.json();
   	})
   	.then(function(data) {
+  		activeLanguage = lang;
   		for (count=1;count<=6;count++) {
   			key = "chapter" + count;
     		tempHTML=JSON.parse(data[key].text);
     		document.getElementById("m-main-" + key).outerHTML = tempHTML;
     	}
-    	activateImageContainers();
     	if (omithistory != undefined) {
     		if (omithistory == 1) {
     			getChapter(ind,1,1);
@@ -643,7 +697,12 @@ function loadlanguage(lang,ind,omithistory) {
     	} else {
     		getChapter(ind,0,1);
     	}
-    	
+		if (omithistory != 1) {
+			url.searchParams.set("lang", lang);
+			state.lang = lang;
+			history.pushState(state, "", url);
+		}
+		activateImageContainers();
     	twttr.widgets.load();
   	});
 }
