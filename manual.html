@@ -361,6 +361,20 @@
 				<p>The other limitation is that, when going back partially in time, this will also remove any rate changes (or CP/CE target changes) along the way. If you have started your infusion, and changed the infusion rate from 50ml/h to 25ml/h at 30 minutes, and if you jump back from 1 hour (origin) to 10 minutes (destination), this will remove the infusion rate change at 30 minutes.</p>
 			</section>
 		</div><!--end m-main Ch6-->
+		<div class="m-main" id="m-main-chapter7" data-name="Complex mode">
+			<p class="m-h1">Complex Mode</p>
+			<section id="7-1" data-heading="Pharmacodynamic Interactions">
+				<p class="m-h2">Pharmacodynamic Interactions</p>
+				<p>Propofol and opioids such as remifentanil demonstrate intense synergism. The interaction can be quantified using a hypnotic-analgesic endpoint such as ablating response to laryngoscopy. For example, remifenanil concentration of 4ng/ml may reduce propofol concentration associated with loss of response to laryngoscopy by two-thirds (Bouillon 2001). Probability to tolerate laryngoscopy (PTOL) and its derivative, the noxious stimulation response index (NSRI), have been proposed as measures of potency of propofol-remifentanil drug combination (Hannivoort 2016).</p>
+				<p>Isobologram</p>
+				<p>Using different combinations of CE-propofol and CE-remifentanil (effect-site concentrations of propofol and remifentanil respectively), all yielding the same predicted response (90% probability to tolerate laryngoscopy, PTOL90), a line (isobole) is drawn connecting all the possible combinations of CE-propofol/CE-remifentanil to achieve the same identical effect (van den Berg 2021). In our simulation programme, the same method is repeated for PTOL80, PTOL70... PTOL10 to generate a total of 9 isoboles on the 2-dimensional chart. The contour of the isoboles is typical of synergism, or supradditive interaction.</p>
+				<p>Combinations of CEProp/CERemi for PTOL90</p>
+				<p>Using PTOL90 isobole as an example, the combinations of CE-propofol and CE-remifentanil yielding the identical effect are: {8.6mcg/ml, 1ng/ml}, {5.9mcg/ml, 2ng/ml}, {3.6mcg/ml, 4ng/ml}, {2mcg/ml, 8ng/ml} according to the Bouillon interaction model (van den Berg 2021). Following this, the clinician may decide on using PTOL as a guidance to control different CE of propofol/remifentanil based on haemodynamic, hypnotic, or other consequences while maintaining the same level of pharmacodynamic endpoint.</p>
+				<p class="m-h2">Isobologram legend</p>
+				<p class="m-h2">Examples</p>
+			</section>
+		</div><!-- end m-main Ch7 -->
+		<!-- end of main content -->
 		<button style="background: transparent" onclick="displayLanguagePanel()">Select Lang</button>
 		<div id="footer-up">
 			<div id="footer-up-left">
@@ -701,6 +715,7 @@ function toggleOnThisPage() {
 };
 
 function updateChapterListings() {
+	chapterListings.length = 0;
 	let El1 = document.createElement("ul");
 	for (count=0; count<chapters.length; count++) {
     	let El2 = document.createElement("li");

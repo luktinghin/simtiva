@@ -7139,6 +7139,7 @@ ol ::marker {
   }
   .m-main {
     width: 90%;
+    max-width: auto;
   }
   #footer-up {
     width: 90%;
