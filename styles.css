@@ -6990,6 +6990,14 @@ ol ::marker {
   float: right;
 }
 
+.lang-disclaimer {
+  font-style: italic;
+  color: #555;
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 10px 50px;
+}
+
 @media screen and (min-width: 465px) {
   .m-main {
     width: 80%;

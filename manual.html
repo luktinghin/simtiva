@@ -800,6 +800,16 @@ function getFooter() {
 }
 
 activeLanguageCode = 0;
+iterationArray = ["en","fr","es","zh","pt","ja","ru"];
+disclaimerArray = [
+	"Translation is performed using ChatGPT. ChatGPT can make mistakes. Please verify important information yourself.",
+	"La traduction est effectuée à l'aide de ChatGPT. ChatGPT peut faire des erreurs. Veuillez vérifier vous-même les informations importantes.",
+	"La traducción se realiza utilizando ChatGPT. ChatGPT puede cometer errores. Por favor, verifique usted mismo la información importante.",
+	"翻译是使用 ChatGPT 进行的。ChatGPT 可能会犯错。请您自行验证重要信息。",
+	"A tradução é feita usando o ChatGPT. O ChatGPT pode cometer erros. Por favor, verifique as informações importantes por si mesmo.",
+	"翻訳は ChatGPT を使用して行われます。ChatGPT には間違いがある可能性があります。重要な情報は自分で確認してください。",
+	"Перевод выполняется с использованием ChatGPT. ChatGPT может допускать ошибки. Пожалуйста, проверьте важную информацию самостоятельно."
+]
 
 function displayLanguagePanel() {
 	if (activeLanguage == "en") activeLanguageCode = 0;
@@ -809,7 +819,7 @@ function displayLanguagePanel() {
 	if (activeLanguage == "pt") activeLanguageCode = 4;
 	if (activeLanguage == "ja") activeLanguageCode = 5;
 	if (activeLanguage == "ru") activeLanguageCode = 6;
-	iterationArray = ["en","fr","es","zh","pt","ja","ru"];
+	
 	El1 = document.createElement("div");
 	El1.classList.add("languagePanel");
 	El1.innerHTML = "";
@@ -823,8 +833,12 @@ function displayLanguagePanel() {
 		El2.setAttribute("onclick","loadlanguage('" + iterationArray[iteration] + "'," + activeChapter + ");hidedialogmodal()");
 		El1.appendChild(El2);
 	}
+	El3 = document.createElement("div");
+	El3.innerHTML = disclaimerArray[activeLanguageCode];
+	El3.classList.add("lang-disclaimer");
 	ElRoot = document.createElement("div");
 	ElRoot.appendChild(El1);
+	ElRoot.appendChild(El3);
 	displayDialog("Language",ElRoot.innerHTML);
 }
 
