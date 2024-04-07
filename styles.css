@@ -6966,9 +6966,12 @@ ol ::marker {
   border: 2px solid #ddd;
   background: #eee;
   padding: 5px 10px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   cursor: pointer;
+}
+
+.lang-option:hover {
+  background: #ddd;
 }
 
 .lang-active {
@@ -6976,6 +6979,10 @@ ol ::marker {
   background: #198964;
   color: white;
   font-weight: bold;
+}
+
+.lang-active:hover {
+  background: #198964;
 }
 
 .lang-subtext {
