@@ -601,6 +601,7 @@ window.addEventListener("popstate", (event) => {
 });
 
 function loadChapterURL() {
+	console.log("popstate event fired");
 	tempString = window.location.search;
 	tempParams = new URLSearchParams(tempString);
 	file = "";
@@ -628,6 +629,17 @@ function loadChapterURL() {
 				} else {
 					getChapter(0,1);
 				}
+			} else {
+				console.log("unacceptable language search param");
+			}
+		} else {
+			//got "lang" in url, "lang" remains same
+			if (parameter != undefined) {
+				if (parameter != activeChapter) {
+					getChapter(parameter,1);
+				}
+			} else {
+				getChapter(0,1);
 			}
 		}
 	} else {
