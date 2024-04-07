@@ -811,14 +811,21 @@ function displayLanguagePanel() {
 	if (activeLanguage == "ru") activeLanguageCode = 6;
 	iterationArray = ["en","fr","es","zh","pt","ja","ru"];
 	El1 = document.createElement("div");
+	El1.classList.add("languagePanel");
 	El1.innerHTML = "";
 	for (iteration = 0; iteration<languageMatrix.length; iteration++) {
 		El2 = document.createElement("div");
-		El2.innerHTML = "<div><span>" + languageMatrix[iteration][iteration] + "</span>&nbsp;(<span>" + languageMatrix[iteration][activeLanguageCode] + ")</span></div>";
+		El2.classList.add("lang-option");
+		if (activeLanguage == iterationArray[iteration]) {
+			El2.classList.add("lang-active");
+		}
+		El2.innerHTML = "<div><span class='lang-text'>" + languageMatrix[iteration][iteration] + "</span><span class='lang-subtext'>" + languageMatrix[iteration][activeLanguageCode] + "</span></div>";
 		El2.setAttribute("onclick","loadlanguage('" + iterationArray[iteration] + "'," + activeChapter + ");hidedialogmodal()");
 		El1.appendChild(El2);
 	}
-	displayDialog("Language",El1.innerHTML);
+	ElRoot = document.createElement("div");
+	ElRoot.appendChild(El1);
+	displayDialog("Language",ElRoot.innerHTML);
 }
 
 modal = undefined;

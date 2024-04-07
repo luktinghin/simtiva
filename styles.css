@@ -6938,6 +6938,7 @@ ol ::marker {
   flex-basis: 50%;
   padding: 0.5rem;
   color: white;
+  cursor: pointer;
 }
 
 #footer-next {
@@ -6945,6 +6946,7 @@ ol ::marker {
   text-align: right;
   padding: 0.5rem;
   color: white;
+  cursor: pointer;
 }
 
 .smalltext {
@@ -6953,6 +6955,32 @@ ol ::marker {
   font-weight: bold;
   letter-spacing: 1px;
   font-size: 0.75rem;
+}
+
+.languagePanel {
+
+}
+
+.lang-option {
+  border-radius: 9px;
+  border: 2px solid #ddd;
+  background: #eee;
+  padding: 5px 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.lang-active {
+  border: 2px solid rgba(0,255,0,0.5);
+  background: #198964;
+  color: white;
+  font-weight: bold;
+}
+
+.lang-subtext {
+  opacity: 0.5;
+  float: right;
 }
 
 @media screen and (min-width: 465px) {
