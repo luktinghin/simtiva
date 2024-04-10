@@ -363,23 +363,78 @@
 		</div><!--end m-main Ch6-->
 		<div class="m-main" id="m-main-chapter7" data-name="Complex mode" data-number="7">
 			<p class="m-h1">Complex Mode</p>
-			<section id="7-1" data-heading="Synergism">
+			<section id="7-1" data-heading="Introduction">
+				<p class="m-h2">Introduction</p>
+				<p class="m-h3">Entering the complex (dual) mode</p>
+				<p>Complex (dual) mode enables the simultaneous simulations of 2 drugs: propofol and an opioid such as remifentanil, alfentanil, or fentanyl. </p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-7-enteringcomplex.png">
+				</div>
+				<ol type="A">
+					<li>To enter this mode, choose "Complex (Dual mode)" under "Model" on the first screen</li>
+					<li>Then, proceed to choose the appropriate model for Propofol, and the infusion mode as well</li>
+					<li>Next, choose the opioid & model, its dilution, and the infusion mode. Click "Proceed" after you have finished.</li>
+				</ol>
+				<p class="m-h3">What is complex (dual) mode?</p>
+				<p>This mode enables the simultaneous simulations of 2 drugs: propofol and an opioid such as remifentanil, alfentanil, or fentanyl. For each drug, the functions for CP or CE targeting, manual infusion, or intermittent bolus mode are preserved. Switching between two drug infusions is simple, each drug runs on its own under their respective tabs. See the tab interface below:</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-7-simultaneous.png">
+				</div>
+				<ul>
+					<li>Orange arrow: The active tab is "Propofol". This means that the current information displayed, including CP, CE, infusion rate, and the main graph, are all representing data for the propofol simulation.</li>
+					<li>Purple arrow: When there is imminent change in the inactive tab, such as "Remifentanil" as demonstrated here, a reminder icon will appear next to the inactive tab. You may click the "Remifentanil" icon to switch to the "Remifentanil" simulation.</li>
+					<li>Blue arrow: By clicking on the "Remifentanil" icon on the tab, you are now in the "Remifentanil" simulation. The information relevant to remifentanil will be displayed, such as the dilution and model, and other pharmacokinetic data.</li>
+				</ul>
+				<p>In addition, you may explore the pharmacodynamic (PD) interaction between propofol and opioid, as propofol and opioid demonstrate intense synergism. This will be further explained below. Probability of tolerance to laryngoscopy (PTOL) is used as a measure of potency of propofol-opioid combination. Isobologram charts illustrate the propofol-opioid combinations to achieve the same pharmacodynamic effect.</p>
+				<p>The following are specific features of complex (dual) mode:</p>
+				<ul>
+					<li>In the main pharmacokinetic graph, a green zone will highlight the area bounded by the margins of PTOL50 and PTOL90. For example, in propofol simulation, the upper boundary of the green zone represents the CE-propofol to attain PTOL90, and the lower boundary of the green zone represents the CE-propofol to attain PTOL50.</li>
+					<li>The current value of probability of tolerance to laryngoscopy will be shown in a box under the main graph. Screenshot is given below. Different options are available for this box display, namely: BIS, PTOL, and NSRI.</li>
+					<li>An isobologram will be displayed. This shows the PTOL status (measure of mixed drug effects) in relation to CE-propofol and CE-opioid values, over time.</li>
+				</ul>
+				<div class="m-image-container">
+					<img src="manualresources/ss-7-ptolswitching.png">
+				</div>
+				<p>The above picture shows the display of the pharmacodynamic (PD) effect estimation mode of your choice. Three options are available: BIS, PTOL, and NSRI.</p>
+				<ol type="A">
+					<li>You can click the "Quick Switch" button (red arrow) to quickly cycle between BIS, PTOL, or NSRI displays.</li>
+					<li>Alternatively, you can change this setting under "Graph options" by clicking on the <span class="m-icon-inline"><i class="fas fa-cog"></i></span> options icon then choose the appropriate PD effect estimation mode.</li>
+					<li>The "green zone" on the main pharmacokinetic graph will update to show the margins for the upper and lower boundaries of PD effect, based on the PD estimation mode you have chosen. An example is PTOL50-90 (boundaries bounded by green arrows). This will be further explained.</li>
+				</ol>
+
+			</section>
+			<section id="7-2" data-heading="Synergism">
 				<p class="m-h2">Synergism</p>
-				<p>Anaesthetists often combine medications to achieve accurate level of hypnosis and analgesia, with suppression of response to noxious stimulation. In total intravenous anaesthesia, propofol and opioids such as remifentanil demonstrate intense synergism. The interaction can be quantified using a hypnotic-analgesic endpoint such as ablating response to laryngoscopy. Bouillon and colleagues defined this as the probability to tolerate laryngoscopy, or PTOL, as an absence of movement response to laryngoscopy, and PTOL was suggested as an alternative to minimum alveolar concentration (MAC) when using propofol instead of volatile anaesthesia. For decades, the interaction between propofol and opioids has been studied using various clinical end-points, for example, algometry, tetanic stimulus, laryngoscopy and response to shaking and shouting (Kern 2004, Bouillon 2004). When studying the "response" to noxious stimulation, most contemporary anaesthetic depth monitors (which focus on hypnotic part of drug effect) and more recently developed analgesia monitors, were only partially successful in the correlation with response to noxious stimuli (Hannivoort 2016).</p>
-				<p>For simplicity, SimTIVA has chosen PTOL as the measurement of choice to quantify the combined pharmacodynamic effect of propofol and opioids. This measurement is well studied in the literature to characterize the interaction between propofol-remifentanil, propofol-sevoflurane, and sevoflurane-remifentanil. Another related index, the noxious stimulation response index (NSRI), is a derivative of PTOL and a new numerical marker of depth of anaesthesia. The NSRI is scaled from 0 (indicating extensive combined drug effects) to 100 (when no anaesthetic medications are administered), and as NSRI is directly derived from PTOL using mathematical formula, NSRI and PTOL are therefore interchangeable, they merely differ in scale (Hannivoort 2016, Luginbuhl 2010). For PTOL, a PTOL of 100 means total absence of response to laryngoscopy. These measurements have been incorporated in drug information advisory displays from anaesthetic monitors. Both PTOL and NSRI can be displayed in SimTIVA as a marker of combined pharmacodynamic effect.</p>
+				<p>Anaesthetists often combine medications to achieve accurate level of hypnosis and analgesia, with suppression of response to noxious stimulation. In total intravenous anaesthesia, propofol and opioids such as remifentanil demonstrate intense synergism. The interaction can be quantified using a hypnotic-analgesic endpoint such as ablating movement response to laryngoscopy. Bouillon and colleagues defined this as the probability to tolerate laryngoscopy, or PTOL. PTOL was suggested as an alternative to minimum alveolar concentration (MAC) when using propofol instead of volatile anaesthesia. For decades, the interaction between propofol and opioids has been studied using various clinical end-points, for example, algometry, tetanic stimulus, laryngoscopy and response to shaking and shouting (Kern 2004, Bouillon 2004). When studying the "response" to noxious stimulation, most contemporary anaesthetic depth monitors (which focus on hypnotic part of drug effect) and more recently developed analgesia monitors, were only partially successful in the correlation with response to noxious stimuli (Hannivoort 2016).</p>
+				<p>For simplicity, SimTIVA has chosen PTOL as the measurement of choice to quantify the combined pharmacodynamic effect of propofol and opioids. This measurement is well studied in the literature to characterize the interaction between propofol-remifentanil, propofol-sevoflurane, and sevoflurane-remifentanil. Another related index, the noxious stimulation response index (NSRI), is a derivative of PTOL and a new numerical marker of depth of anaesthesia. The NSRI is scaled from 0 (indicating extensive combined drug effects) to 100 (when no anaesthetic medications are administered), and as NSRI is directly derived from PTOL using mathematical formula, NSRI and PTOL are therefore interchangeable, they merely differ in scale (Hannivoort 2016, Luginbuhl 2010). For PTOL, a PTOL of 100 means total absence of response to laryngoscopy. These measurements have been incorporated in drug information advisory displays on anaesthetic monitors. Both PTOL and NSRI can be displayed in SimTIVA as a marker of combined pharmacodynamic effect.</p>
 				<p>A good method of visualizing the pharmacodynamic interaction behaviour of drug combinations is through response surface models, which show the entire spectrum of effect throughout different combinations of anaesthetic drug concentrations. Classically, if we are studying a specific level of effect, such as a 90% tolerance to laryngoscopy (PTOL90), we can use an isobologram, which can be derived from the more complex three-dimensional response surface model. Van den Berg studied the combinations of propofol and remifentanil to achieve predicted PTOL90, using the Bouillon interaction model, as described before. sing different combinations of CE-propofol and CE-remifentanil (effect-site concentrations of propofol and remifentanil respectively), all yielding the same predicted response (90% probability to tolerate laryngoscopy, PTOL90), a line (isobole) is drawn connecting all the possible combinations of CE-propofol/CE-remifentanil to achieve the same identical effect (van den Berg 2021). </p>
 				<div class="m-image-container">
 					<img src="manualresources/ss-7-vandenberg.png">
 				</div>
 				<p>For example, 4 pairs of CE-propofol/CE-remifentanil are described to achieve this identical effect endpoint, as shown above. The clinician can then choose a particular combination that is most beneficial to different clinical scenario based on hypnotic, analgesic, and haemodynamic effects. The concept of "rational opioid selection" was also suggested by Vuyk in 1997, that using an opioid as an adjuvant of anaesthesia, the required propofol concentration can be reduced and this can possibly reduce the time of return to consciousness. Vuyk also described an optimal CE-opioid that can maintain adequate anaesthesia, while maintaining rapid wakeup through reduction in propofol requirements. In practice, the clinician may reduce propofol concentration and increase remifentanil concentration to hasten emergence from anaesthesia.</p>
 				<p>The conversion of CE-remifentanil to two different opioids available in SimTIVA: CE-alfentanil and CE-fentanyl is based on opioid potency equivalence and the formula suggested by Vuyk, as given here: potency ratio of fentanyl:alfentanil:remifentanil was 1 : 1/70 : 1/2.3.</p>
-			<section id="7-2" data-heading="Isobologram">
+			<section id="7-3" data-heading="Isobologram">
 				<p class="m-h2">Isobologram Interpretation</p>
-				<p>As mentioned before, using different combinations of CE-propofol and CE-remifentanil (effect-site concentrations of propofol and remifentanil respectively), all yielding the same predicted response (90% probability to tolerate laryngoscopy, PTOL90), a line (isobole) is drawn connecting all the possible combinations of CE-propofol/CE-remifentanil to achieve the same identical effect (van den Berg 2021). In SimTIVA, the same method is repeated for PTOL80, PTOL70... PTOL10 to generate a total of 9 isoboles on the 2-dimensional chart. The contour of the isoboles is typical of synergism, or supradditive interaction.</p>
+				<p>The isobologram in SimTIVA contains 9 isoboles from PTOL10 to PTOL90. As mentioned before, using different combinations of CE-propofol and CE-remifentanil (effect-site concentrations of propofol and remifentanil respectively), all yielding the same predicted response (90% probability to tolerate laryngoscopy, PTOL90), a line (isobole) is drawn connecting all the possible combinations of CE-propofol/CE-remifentanil to achieve identical effect. The same method is repeated for PTOL80, PTOL70... PTOL10 to generate a total of 9 isoboles on the 2-dimensional chart. The contour of the isoboles is typical of synergism, or supradditive interaction.</p>
 				<p class="m-h3">How to read the isobologram in SimTIVA</p>
-				<p>to be continued
-				<p class="m-h2">Isobologram legend</p>
+				<ul>
+					<li>X-axis: CE-opioid</li>
+					<li>Y-axis: CE-propofol</li>
+					<li>Red dot: Represents the current time instance - the x- and y- values are CE-opioid and CE-propofol respectively.</li>
+					<li>Isobole lines: total of 9 isoboles displayed, the PTOL90, PTOL50 and PTOL10 lines are labelled for reference.</li>
+					<li>PTOL trend line: A line representing the past, present, and future PTOL values over time of the current case. Every grey dot represent 1-minute intervals.</li>
+					<li>Arrow: PTOL value 20 minutes into the future.</li>
+				</ul>
+				<div class="m-image-container">
+					<img src="manualresources/ss-7-isobologram.jpeg">
+				</div>
+				<p>In the above example, propofol 240mg bolus and remifentanil 50mcg bolus were given in an 80kg patient in a "dual mode" simulation. The resultant CE-propofol & CE-remifentanil values over time (the curved trend line) are plotted within this 2-dimensional space, overlapping on the isobole lines. The red dot represents the current time, with a PTOL of around 23%.</p>
+			</section>
+			<section id="7-4" data-heading="Examples">
 				<p class="m-h2">Examples</p>
+				<p class="m-h3">Example 1</p>
+				<p class="m-h3">Example 2</p>
+
 			</section>
 		</div><!-- end m-main Ch7 -->
 		<!-- end of main content -->
