@@ -837,7 +837,7 @@ function loadlanguage(lang,ind,omithistory) {
 	  	})
 	  	.then(function(data) {
 	  		activeLanguage = lang;
-	  		for (count=1;count<=6;count++) {
+	  		for (count=1;count<=7;count++) {
 	  			key = "chapter" + count;
 	    		tempHTML=JSON.parse(data[key].text);
 	    		document.getElementById("m-main-" + key).outerHTML = tempHTML;
