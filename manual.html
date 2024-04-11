@@ -305,6 +305,10 @@
 			<section id="4-5" data-heading="Isobologram graph">
 				<p class="m-h2">Isobologram</p>
 				<p>The isobologram graph will be explained in detail in Chapter 7: Complex Mode.</p>
+				<p>An example of an isobologram, which explores the relationship (specifically, the pharmacodynamic synergistic interaction) between propofol and remifentanil, is shown below.</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-7-isobologram.jpeg">
+				</div>
 			</section>
 		</div><!-- end m-main (ch4)-->
 		<div class="m-main" id="m-main-chapter5" data-name="Events" data-number="5">
@@ -413,6 +417,7 @@
 				</div>
 				<p>For example, 4 pairs of CE-propofol/CE-remifentanil are described to achieve this identical effect endpoint, as shown above. The clinician can then choose a particular combination that is most beneficial to different clinical scenario based on hypnotic, analgesic, and haemodynamic effects. The concept of "rational opioid selection" was also suggested by Vuyk in 1997, that using an opioid as an adjuvant of anaesthesia, the required propofol concentration can be reduced and this can possibly reduce the time of return to consciousness. Vuyk also described an optimal CE-opioid that can maintain adequate anaesthesia, while maintaining rapid wakeup through reduction in propofol requirements. In practice, the clinician may reduce propofol concentration and increase remifentanil concentration to hasten emergence from anaesthesia.</p>
 				<p>The conversion of CE-remifentanil to two different opioids available in SimTIVA: CE-alfentanil and CE-fentanyl is based on opioid potency equivalence and the formula suggested by Vuyk, as given here: potency ratio of fentanyl:alfentanil:remifentanil was 1 : 1/70 : 1/2.3.</p>
+			</section>
 			<section id="7-3" data-heading="Isobologram">
 				<p class="m-h2">Isobologram Interpretation</p>
 				<p>The isobologram in SimTIVA contains 9 isoboles from PTOL10 to PTOL90. As mentioned before, using different combinations of CE-propofol and CE-remifentanil (effect-site concentrations of propofol and remifentanil respectively), all yielding the same predicted response (90% probability to tolerate laryngoscopy, PTOL90), a line (isobole) is drawn connecting all the possible combinations of CE-propofol/CE-remifentanil to achieve identical effect. The same method is repeated for PTOL80, PTOL70... PTOL10 to generate a total of 9 isoboles on the 2-dimensional chart. The contour of the isoboles is typical of synergism, or supradditive interaction.</p>
@@ -422,7 +427,7 @@
 					<li>Y-axis: CE-propofol</li>
 					<li>Red dot: Represents the current time instance - the x- and y- values are CE-opioid and CE-propofol respectively.</li>
 					<li>Isobole lines: total of 9 isoboles displayed, the PTOL90, PTOL50 and PTOL10 lines are labelled for reference.</li>
-					<li>PTOL trend line: A line representing the past, present, and future PTOL values over time of the current case. Every grey dot represent 1-minute intervals.</li>
+					<li>PTOL trend line: A line representing the past, present, and future PTOL values over time of the current case. Every grey dot represent 1-minute intervals before and after current time.</li>
 					<li>Arrow: PTOL value 20 minutes into the future.</li>
 				</ul>
 				<div class="m-image-container">
@@ -432,9 +437,22 @@
 			</section>
 			<section id="7-4" data-heading="Examples">
 				<p class="m-h2">Examples</p>
-				<p class="m-h3">Example 1</p>
-				<p class="m-h3">Example 2</p>
-
+				<p class="m-h3">Example 1 - More propofol or more remifentanil for induction?</p>
+				<p>To illustrate the application of "Complex (Dual mode)", the first example is given. Imagine a patient of 35 years old and 80kg body weight receiving propofol bolus and remifentanil bolus for induction. Two regimens are tested: </p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-7-example1.png">
+				</div>
+				<ul>
+					<li>(A) Propofol 160mg and Remifentanil 100mcg</li>
+					<li>(B) Propofol 240mg and Remifentanil 50mcg</li>
+				</ul>
+				<p>Both of these regimens can attain good intubating conditions (PTOL 90%) at 1m and 1.5m respectively. You can replicate the above scenarios using "Complex (Dual mode)", and select "Propofol-Eleveld" model and "Manual mode" as well as "Remifentanil-Minto" model and "Manual mode" in SimTIVA.</p>
+				<p class="m-h3">Example 2 - Propofol and remifentanil infusions</p>
+				<p>In this second example, propofol (Eleveld) and remifentanil (Minto) simulations were running in manual mode. Initially, BIS is chosen as PD effect estimation mode, and the green zone on the main graph of propofol simulation corresponds to CE required to achieve BIS 40-60. Then, the user has switched PD effect estimation to PTOL, which will also update the green zone on the main graph, which now highlights the CE values to attain PTOL50-90. In this example, because of falling remifentanil concentration post-induction, the PTOL was predicted to drop below 50% at around 7.5min. The anaesthetist should be aware of this and titrate the dosages accordingly to maintain adequate anaesthesia.</p>
+				<p>Towards the end of the video demonstration, the isobologram is shown. The current PTOL value was represented by the red dot, and the past and future PTOL values were plotted as a trend line curve. The user then switched the PD effect estimation mode to NSRI, using the "Quick Switch" button.</p>
+				<div class="m-video-container">
+					<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">(4/5) <br>When is anaesthedia &quot;too deep&quot; or &quot;too light&quot;? <a href="https://t.co/KXov8b2dRM">https://t.co/KXov8b2dRM</a> enables PD modelling &amp; displays a &quot;green zone&quot; to mark the CE margins required to achieve PTOL50-90. In this example, CE is in the green zone but is predicted to fall below PTOL50 margin beyond 7.5min <a href="https://t.co/KJ0ICsQdeT">pic.twitter.com/KJ0ICsQdeT</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1702847358290280870?ref_src=twsrc%5Etfw">September 16, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+				</div>
 			</section>
 		</div><!-- end m-main Ch7 -->
 		<!-- end of main content -->

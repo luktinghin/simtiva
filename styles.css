@@ -2517,10 +2517,10 @@ body.dark #timecopy {
   height: 220px;
   border-radius: 9px;
   position: absolute;
-  bottom: 87px;
+  bottom: 102px;
   right: 20px;
   background: #0009;
-  padding: 5px 10px;
+  padding: 3px 10px;
   display: block;
 }
 #chartoverlayoptions2content {
@@ -2539,7 +2539,7 @@ body.dark #timecopy {
 }
 
 #chartoverlayoptionscontent.PDoptions {
-  height: 265px;
+  height: 255px;
 }
 #PD_options_group {
   display: none;
@@ -2560,14 +2560,14 @@ body.dark #timecopy {
 
 #chartoverlayoptionscontentarrow {
   position: absolute;
-  bottom: 72px;
-  right: 72px;
+  bottom: 92px;
+  right: 74px;
   display:block;
   width: 0;
   height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 15px solid #0009;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 10px solid #0009;
 }
 #chartoverlayoptionscontentarrow2 {
   position: absolute;
