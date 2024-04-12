@@ -455,6 +455,28 @@
 				</div>
 			</section>
 		</div><!-- end m-main Ch7 -->
+		<div class="m-main" id="m-main-chapter8" data-name="Share Function">
+			<p class="m-h1">Share Function</p>
+			<section id="8-0" data-heading="Introduction">
+				<p class="m-h3">How to use the Share Function</p>
+				<p>To open the "Share" panel, click the <span class="m-icon-inline"><i class="fas fa-share-alt fa-fw"></i></span> Share button (A) on the right lower corner. SimTIVA allows you to share your simulation in two ways. One, you can share a static image (B), which will contain the main pharmacokinetic graph, the infusion scheme, and events. Two, you can share an interactive SimFile (C) which can be viewed by the online SimTIVA Viewer; via this function, you can either share this SimFile as a website link (weblink for short) on desktop PCs or quickly share this directly on your mobile devices.</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-8-sharefunction.png">
+				</div>
+				<p>You can also specify a "File Name" (D) to help identify this SimFile for record keeping.</p>
+			</section>
+			<section id="8-1" data-heading="Share Image">
+				<p class="m-h2">Share Image</p>
+				<p>This function is ideal for visualizing an overview of your case or inserting it as an image for your presentations. As mentioned, this function generates a static image of the current simulation at the current time point (it automatically updates while SimTIVA is running). In the single-drug mode, a sample image is shown below. Aside from pharmacokinetic data, the File Name and the date and time of starting simulation will be displayed. You can choose to "Download" the image on desktop or mobile devices, or "Share" it on mobile devices. </p>
+				<p>For the Complex (Dual mode), both Propofol and Opioid simulations will be included. The isobologram will be displayed too. An isobologram legend guides the interpretation of the isobologram.</p>
+				<p>Share via APPS - screenshot of IPHONE, android</p>
+			</section>
+			<section id="8-2" data-heading="Share Weblink">
+				<p>Copy, or share</p>
+			</section>
+			<section id="8-3" data-heading="SimTIVA Viewer">
+			</section>
+		</div><!--end m-main Ch8 -->
 		<!-- end of main content -->
 		<button style="background: transparent" onclick="displayLanguagePanel()">Select Lang</button>
 		<div id="footer-up">
@@ -797,6 +819,7 @@ function toggleOnThisPage() {
 
 function updateChapterListings() {
 	chapterListings.length = 0;
+	document.querySelector(".menucontent").innerHTML = "";
 	let El1 = document.createElement("ul");
 	for (count=0; count<chapters.length; count++) {
     	let El2 = document.createElement("li");
