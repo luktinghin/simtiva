@@ -782,6 +782,8 @@ window.addEventListener("popstate", (event) => {
 	loadChapterURL();
 });
 
+let bodyElement = "";
+
 function loadChapterURL() {
 	console.log("popstate event fired");
 	tempString = window.location.search;
@@ -924,6 +926,27 @@ function loadlanguage(lang,ind,omithistory) {
 	    	return response.json();
 	  	})
 	  	.then(function(data) {
+
+	    	//backup the English body
+	    	if ((activeLanguage == "en") && (bodyElement == "")) {
+	    		bodyElement = {
+	    			"chapter1": {},
+	    			"chapter2": {},
+	    			"chapter3": {},
+	    			"chapter4": {},
+	    			"chapter5": {},
+	    			"chapter6": {},
+	    			"chapter7": {},
+	    			"chapter8": {},
+	    			"chapter9": {},
+	    		};
+	    		for (count=1;count<=9;count++) {
+	    			key = "chapter" + count;
+	    			tempHTML = document.getElementById("m-main-" + key).outerHTML;
+	    			bodyElement[key].text = tempHTML;
+	    		}
+	    	}
+
 	  		activeLanguage = lang;
 	  		for (count=1;count<=9;count++) {
 	  			key = "chapter" + count;
@@ -947,8 +970,18 @@ function loadlanguage(lang,ind,omithistory) {
 			activateImageContainers();
 			updateChapterListings();
 	    	twttr.widgets.load();
+
+
 	  	});
 	} else {
+		//load the English version
+		if (bodyElement != "") {
+	  		for (count=1;count<=9;count++) {
+	  			key = "chapter" + count;
+	    		tempHTML=JSON.parse(bodyElement[key].text);
+	    		document.getElementById("m-main-" + key).outerHTML = tempHTML;
+	    	}
+		}
 		getChapter(ind,0,1);
 		activeLanguage == "en";
 		activeLanguageCode == 0;
