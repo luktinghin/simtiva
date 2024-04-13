@@ -943,15 +943,15 @@ function loadlanguage(lang,ind,omithistory) {
 	    		for (count=1;count<=9;count++) {
 	    			key = "chapter" + count;
 	    			tempHTML = document.getElementById("m-main-" + key).outerHTML;
-	    			bodyElement[key].text = tempHTML;
+	    			bodyElement[key].text = JSON.stringify(tempHTML);
 	    		}
 	    	}
 
 	  		activeLanguage = lang;
 	  		for (count=1;count<=9;count++) {
-	  			key = "chapter" + count;
+	  			key2 = "chapter" + count;
 	    		tempHTML=JSON.parse(data[key].text);
-	    		document.getElementById("m-main-" + key).outerHTML = tempHTML;
+	    		document.getElementById("m-main-" + key2).outerHTML = tempHTML;
 	    	}
 	    	if (omithistory != undefined) {
 	    		if (omithistory == 1) {
