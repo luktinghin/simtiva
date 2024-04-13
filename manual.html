@@ -812,6 +812,9 @@ function getChapter(number,omithistory,force) {
 	if (activeChapter == 0) {
 		if (number != 0) leaveHome();
 	}
+	if (number == 0) {
+		if (activeChapter != 0) goHome();
+	}
 	if ((number != activeChapter) || (force==1)) {
 		activeChapter = number;
 		chapters = document.querySelectorAll(".m-main");
