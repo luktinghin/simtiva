@@ -529,15 +529,34 @@
 				<p>First of all, it is worth noting that you do not need to do anything to save SimFile on device. SimTIVA is a web application and utilizes an interface called the "Local Storage API" to manage the simulations that you have run on your device. As you run a simulation, it is automatically saved.</p>
 				<p>In the Share/Save panel, which can be easily accessed via the <span class="m-icon-inline"><i class="fas fa-share-alt fa-fw"></i></span> Share button, you can type a File Name for easy identification of the SimFile later on.</p>
 				<p class="m-h3">The "Load File" panel</p>
-				<p>From the first screen, click <span class="m-icon-inline"><i class="fas fa-save fa-fw"></i></span> "Load File" (A), then click "Load Local SimFile" (B). This will take you to the "Load File" panel. A list of previously saved simulations will appear. Choose the one you want to load and click "Load Selection".</p>
+				<p>From the first screen, click <span class="m-icon-inline"><i class="fas fa-save fa-fw"></i></span> "Load File" (A), then click "Load Local SimFile" (B). This will take you to the "Load File" panel. A list of previously saved simulations will appear. Choose the desired SimFile and click "Load Selection". After loading, you can choose to "Resume Simulation", see the section below.</p>
 				<p class="m-h3">Rescue (Rescuing the last-saved SimFile)</p>
 				<p>Sometimes, accidents can happen. The browser window might have frozen or closed unexpectedly. By clicking <span class="m-icon-inline"><i class="fas fa-life-ring fa-fw"></i></span> "Rescue" on the first screen, the last-saved SimFile will be loaded and the data will be restored. Here you can resume from the last saved time point.</p>
 			</section>
-			<section id="9-2" data-heading="Deleting SimFile">
-			</section>
-			<section id="9-3" data-heading="Exporting database">
+			<section id="9-2" data-heading="File Management">
+				<p class="m-h2">File Management</p>
+				<p class="m-h3">Deleting a SimFile</p>
+				<p>In the "Load File" panel, click "Manage". Next to each SimFile item, there will be a <span class="m-icon-inline"><i class="fas fa-trash-alt"></i></span> Delete icon. Click it to delete a SimFile. Click "Exit Manager" to go back to the initial "Load File" panel.</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-9-delete.png">
+				</div>
+				<p class="m-h3">Exporting database</p>
+				<p>The entire database of SimFiles can be exported. To perform this action, on the "Load File" Panel, click "Manage", and click "Export All". This will take you to the next screen, where you can enter a file name for the CSV database file, and once you confirm by clicking "Proceed" the file will be saved on to device.</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-9-exportpopup.png">
+				</div>
+				<p>This will generate a CSV file (comma-separated values). The database file can be opened by various spreadsheet programs such as Microsoft Excel or Google Sheets. In the database, each SimFile will be represented by the following data: file name (if any), time, duration, patient details such as age, weight and height, and a weblink attached to each SimFile entry. By opening the corresponding weblink of the case, this will take you to the SimTIVA Viewer app to review the case details.</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-9-csv.png">
+				</div>
+				<p>Also, the CSV file can be loaded into SimTIVA, so that you can use the SimTIVA app to retrieve the specific SimFile case for review. In the SimTIVA interface, it is possible to "Resume" from this previous case. See the sections below for details on how to load an external database CSV file and how to resume simulations.</p>
 			</section>
 			<section id="9-4" data-heading="Loading from external database">
+				<p class="m-h2">Loading from external database</p>
+				<p>Suppose a database is exported using the "Export" Function as outlined above. You will have the file saved on disk. It is possible to load this CSV file into SimTIVA and retrieve all the recorded SimFiles stored there. From the first screen, choose <span class="m-icon-inline"><i class="fas fa-save fa-fw"></i></span>  "Load File", and then "Import from external database". Use the file selection box to select the file on device to load. Select the desired SimFile entry and click "Load Selection". Watch the video below for a demonstration.</p>
+				<div class="m-video-container">
+					<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">December Updates (1)<a href="https://t.co/4zrK2ZezXO">https://t.co/4zrK2ZezXO</a> has improved its import/export function. U may export your data to a .CSV file &amp; import it back to SimTIVA from the Load screen. <br>U may also review individual simfiles by opening the .CSV file in a spreadsheet app. <a href="https://t.co/sVhgN3HLOm">pic.twitter.com/sVhgN3HLOm</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1732959336065081710?ref_src=twsrc%5Etfw">December 8, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+				</div>
 			</section>
 			<section id="9-5" data-heading="Resuming from SimFile">
 			</section>
