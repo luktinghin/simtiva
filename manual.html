@@ -552,6 +552,7 @@
 			</section>
 		</div><!--end m-main Ch8 -->
 		<div class="m-main" id="m-main-chapter9" data-name="File Management" data-number="9">
+			<p class="m-h1">File Management</p>
 			<section id="9-1" data-heading="Saving/Loading">
 				<p class="m-h2">Saving/Loading SimFile</p>
 				<p>First of all, it is worth noting that you do not need to do anything to save SimFile on device. SimTIVA is a web application and utilizes an interface called the "Local Storage API" to manage the simulations that you have run on your device. As you run a simulation, it is automatically saved.</p>
@@ -1066,6 +1067,11 @@ function loadlanguage(lang,ind,omithistory) {
 	    	}
 		}
 		getChapter(ind,0,1);
+		if (omithistory != 1) {
+			url.searchParams.set("lang", lang);
+			state.lang = lang;
+			history.pushState(state, "", url);
+		}
 		setTimeout(function() {
 			activateImageContainers();
 			updateChapterListings();
@@ -1134,6 +1140,9 @@ function displayLanguagePanel() {
 		El2.classList.add("lang-option");
 		if (activeLanguage == iterationArray[iteration]) {
 			El2.classList.add("lang-active");
+		}
+		if (iteration>=4) {
+			El2.classList.add("disabled");
 		}
 		El2.innerHTML = "<div><span class='lang-text'>" + languageMatrix[iteration][iteration] + "</span><span class='lang-subtext'>" + languageMatrix[iteration][activeLanguageCode] + "</span></div>";
 		El2.setAttribute("onclick","loadlanguage('" + iterationArray[iteration] + "'," + activeChapter + ");hidedialogmodal()");

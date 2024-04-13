@@ -7005,6 +7005,12 @@ body.home {
   cursor: pointer;
 }
 
+.lang-option.disabled {
+  background: #dedede;
+  color: #ccc;
+  pointer-events: none;
+}
+
 .lang-option:hover {
   background: #ddd;
 }
