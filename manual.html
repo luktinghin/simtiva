@@ -950,7 +950,7 @@ function loadlanguage(lang,ind,omithistory) {
 	  		activeLanguage = lang;
 	  		for (count=1;count<=9;count++) {
 	  			key2 = "chapter" + count;
-	    		tempHTML=JSON.parse(data[key].text);
+	    		tempHTML=JSON.parse(data[key2].text);
 	    		document.getElementById("m-main-" + key2).outerHTML = tempHTML;
 	    	}
 	    	if (omithistory != undefined) {
