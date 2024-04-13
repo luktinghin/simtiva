@@ -6710,7 +6710,8 @@ body.dark a.button.newbuttongrey:hover {
 }
 #menu2 .menucontent a {
  padding: 3px 0;
- font-size: 1.2rem;
+ font-size: 1.05rem;
+ letter-spacing: 0.5px;
 }
 ol ::marker {
   color: red;

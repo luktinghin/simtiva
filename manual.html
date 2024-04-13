@@ -148,15 +148,17 @@
 					<img src="manualresources/ss-2-cptmode.png">
 				</div>
 				<p class="m-h3">Preview box</p>
-				<p>As you enter your CP target, a blue box will appear, suggesting the action for you to follow. For example, a bolus followed by an infusion in ml/h.</p>
+				<p>As you enter your CP target, a blue box will appear, suggesting the action for you to follow. For example, a bolus followed by an infusion in ml/h. </p>
 				<div class="m-image-container">
-					<img src="manualresources/ss-2-preview.png">
+					<img src="manualresources/ss-2-expand-hide.png">
 				</div>
+				<p>You can click "Expand" to expand the preview box to a full preview, that will present to you the entire TCI scheme for the next few hours. Clicking "Hide" will collapse the box to its original state.</p>
 				<p class="m-h3">Reminder box</p>
+				<p>When the next infusion rate change is imminent, a red reminder box will remind you about it. If "Notification" and/or "Sound" in Options have been turned on, the prompts will appear at appropriate times (supported devices only). Please refer to Chpater 3 - Options. "Close" button will hide the reminder box prompt temporarily.</p>
 				<div class="m-image-container">
 					<img src="manualresources/ss-2-warning.png">
 				</div>
-				<p>When the next infusion rate change is imminent, a red reminder box will remind you about it.</p>
+				
 			</section>
 			<section id="2-3" data-heading="CE Targeting">
 			<p class="m-h2">CE Targeting mode (effect site)</p>
@@ -211,6 +213,29 @@
 				<p>Below is a video demostration of complex mode, with manual infusions of propofol and remifentanil. </p>
 				<div class="m-video-container">
 					<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">(4/5) <br>When is anaesthedia &quot;too deep&quot; or &quot;too light&quot;? <a href="https://t.co/KXov8b2dRM">https://t.co/KXov8b2dRM</a> enables PD modelling &amp; displays a &quot;green zone&quot; to mark the CE margins required to achieve PTOL50-90. In this example, CE is in the green zone but is predicted to fall below PTOL50 margin beyond 7.5min <a href="https://t.co/KJ0ICsQdeT">pic.twitter.com/KJ0ICsQdeT</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1702847358290280870?ref_src=twsrc%5Etfw">September 16, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+				</div>
+			</section>
+			<section id="2-7" data-heading="Advanced features">
+				<p class="m-h2">Advanced Features</p>
+				<p class="m-h3">Retrospective</p>
+				<p>This feature allows you to retrospectively edit a manual bolus and infusion rate change. For example, the patient had surgical stimulation a few minutes ago, and you have given a manual bolus (25mg propofol) and adjusted the infusion rate to 60ml/h but you have forgotten to enter these information in SimTIVA, you can correct this in SimTIVA by using the Retrospective Function. Enter the information as in the picture below. A warning prompt will appear asking you to confirm the data. After this action, you are reminded to enter a new CP or CE target as soon as possible to continue with TCI functionality.</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-2-retrospective.png">
+				</div>
+				<p class="m-h3">Volume Estimation</p>
+				<p>SimTIVA is running and you estimate the remaining surgery will take 30 minutes. How much propofol do you still need? The "Volume Estimation" panel will provide an answer, so that you will know if there is enough propofol in the syringe you are infusing, or how much more is required to be drawn up to avoid wastage.</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-2-volumeestimation.png">
+				</div>
+				<p class="m-h3">Time Estimation</p>
+				<p>SimTIVA is running and you have a certain amount of propofol in the syringe that is currently being infused (e.g. 20mls remaining). Given the volume to be infused, what is the expected duration before this infusion is finished? The "Time Estimation" panel will provide an answer.</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-2-timeestimation.png">
+				</div>
+				<p class="m-h3">Wakeup Time</p>
+				<p>This panel is based on decrement time from the current CE to drop to the designated "wakeup concentration" if the infusion is stopped at the current time point. Please note the patient characteristics, concurrent medications, duration of infusion etc all have an effect on wake-up time. </p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-2-wakeuptime.png">
 				</div>
 			</section>
 		</div><!--end m-main (ch2)-->
@@ -411,7 +436,7 @@
 				<p class="m-h2">Synergism</p>
 				<p>Anaesthetists often combine medications to achieve accurate level of hypnosis and analgesia, with suppression of response to noxious stimulation. In total intravenous anaesthesia, propofol and opioids such as remifentanil demonstrate intense synergism. The interaction can be quantified using a hypnotic-analgesic endpoint such as ablating movement response to laryngoscopy. Bouillon and colleagues defined this as the probability to tolerate laryngoscopy, or PTOL. PTOL was suggested as an alternative to minimum alveolar concentration (MAC) when using propofol instead of volatile anaesthesia. For decades, the interaction between propofol and opioids has been studied using various clinical end-points, for example, algometry, tetanic stimulus, laryngoscopy and response to shaking and shouting (Kern 2004, Bouillon 2004). When studying the "response" to noxious stimulation, most contemporary anaesthetic depth monitors (which focus on hypnotic part of drug effect) and more recently developed analgesia monitors, were only partially successful in the correlation with response to noxious stimuli (Hannivoort 2016).</p>
 				<p>For simplicity, SimTIVA has chosen PTOL as the measurement of choice to quantify the combined pharmacodynamic effect of propofol and opioids. This measurement is well studied in the literature to characterize the interaction between propofol-remifentanil, propofol-sevoflurane, and sevoflurane-remifentanil. Another related index, the noxious stimulation response index (NSRI), is a derivative of PTOL and a new numerical marker of depth of anaesthesia. The NSRI is scaled from 0 (indicating extensive combined drug effects) to 100 (when no anaesthetic medications are administered), and as NSRI is directly derived from PTOL using mathematical formula, NSRI and PTOL are therefore interchangeable, they merely differ in scale (Hannivoort 2016, Luginbuhl 2010). For PTOL, a PTOL of 100 means total absence of response to laryngoscopy. These measurements have been incorporated in drug information advisory displays on anaesthetic monitors. Both PTOL and NSRI can be displayed in SimTIVA as a marker of combined pharmacodynamic effect.</p>
-				<p>A good method of visualizing the pharmacodynamic interaction behaviour of drug combinations is through response surface models, which show the entire spectrum of effect throughout different combinations of anaesthetic drug concentrations. Classically, if we are studying a specific level of effect, such as a 90% tolerance to laryngoscopy (PTOL90), we can use an isobologram, which can be derived from the more complex three-dimensional response surface model. Van den Berg studied the combinations of propofol and remifentanil to achieve predicted PTOL90, using the Bouillon interaction model, as described before. sing different combinations of CE-propofol and CE-remifentanil (effect-site concentrations of propofol and remifentanil respectively), all yielding the same predicted response (90% probability to tolerate laryngoscopy, PTOL90), a line (isobole) is drawn connecting all the possible combinations of CE-propofol/CE-remifentanil to achieve the same identical effect (van den Berg 2021). </p>
+				<p>A good method of visualizing the pharmacodynamic interaction behaviour of drug combinations is through response surface models, which show the entire spectrum of effect throughout different combinations of anaesthetic drug concentrations. Classically, if we are studying a specific level of effect, such as a 90% tolerance to laryngoscopy (PTOL90), we can use an isobologram, which can be derived from the more complex three-dimensional response surface model. Van den Berg studied the combinations of propofol and remifentanil to achieve predicted PTOL90, using the Bouillon interaction model, as described before. Using different combinations of CE-propofol and CE-remifentanil (effect-site concentrations of propofol and remifentanil respectively), all yielding the same predicted response (90% probability to tolerate laryngoscopy, PTOL90), a line (isobole) is drawn connecting all the possible combinations of CE-propofol/CE-remifentanil to achieve the same identical effect (van den Berg 2021). </p>
 				<div class="m-image-container">
 					<img src="manualresources/ss-7-vandenberg.png">
 				</div>
@@ -455,7 +480,7 @@
 				</div>
 			</section>
 		</div><!-- end m-main Ch7 -->
-		<div class="m-main" id="m-main-chapter8" data-name="Share Function">
+		<div class="m-main" id="m-main-chapter8" data-name="Share Function" data-number="8">
 			<p class="m-h1">Share Function</p>
 			<section id="8-0" data-heading="Introduction">
 				<p class="m-h3">How to use the Share Function</p>
@@ -490,14 +515,33 @@
 			<section id="8-2" data-heading="Weblink & SimTIVA Viewer">
 				<p class="m-h2">Share Weblink & SimTIVA Viewer</p>
 				<p>A copy of current simulation can be shared as a SimFile that can be viewed on the SimTIVA Viewer. All the data in the simulation becomes accessible on the weblink. Other users can then review the case interactively. A website link (weblink) is generated that functions as a SimFile.</p>
-				<p>You may choose to "Copy" the weblink to clipboard and paste it in another program; or you can "Share" it via apps on mobile devices. In the video demonstration below, the user pastes the weblink into a mobile browser and the SimFile is loaded immediately. The case was a surgery for ingrowing toe nail, and the anaesthetic was sedation with propofol with fentanyl. The event notes can also be viewed. Switching between BIS, PTOL and NSRI PD effect estimation display modes is also available.</p>
+				<p>You may choose to "Copy" the weblink to clipboard and paste it in another program; or you can "Share" it via apps on mobile devices. In the video demonstration below, a weblink is shared via Whatsapp. Clicking on the link will load the SimFile automatically. The case was a surgery for excision of a lipoma, and the anaesthetic was sedation with propofol with fentanyl. The event notes can also be viewed. You can see from the video, the PK graph of propofol and the drug regimen given, and then you can also review the fentanyl graph and drug regimen. The PD effect estimation can be switched to BIS mode and the CP/CE/Infusion rate/eBIS can be reviewed by dragging the cursor over the main graph using the "Quick View" function. Finally, the Viewer app can go into Fullscreen for a general overview of the case.</p>
 				<div class="m-video-container">
-					<iframe width="560" height="315" src="https://www.youtube.com/embed/HW4FhEV1-kU?si=kqcdBth1KEXzZMiQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+					<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">Did you know? <a href="https://t.co/4zrK2ZezXO">https://t.co/4zrK2ZezXO</a> has a &quot;share&quot; function that enables easy sharing of simulation. In this video, the case (excision of lipoma under propofol/fentanyl sedation) was shared via WhatsApp &amp; reviewed. Can see the CP/CE/inf/eBIS &amp; enter Fullscreen view for an… <a href="https://t.co/ziz6WudDGr">pic.twitter.com/ziz6WudDGr</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1778950923194397153?ref_src=twsrc%5Etfw">April 13, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 				</div>
-				<p>The weblink itself contains all the pharmacokinetic profile required to replay the entire simulation. The weblink to the above video is <a href="https://simtiva.app/view.html?P=N4IgdghgtgpiBcIDqMAmBzGACGAPAxlgJIDiAKgHJYBCAskQMwDsIANCAAoD6ALgJawEARgYAGAJztuABwj8YYHggDaIAKIAbGADcYG1G04AnAPbSTAMxMa2Q0eyj50bABwBWVkLceGL9gDEYKAgtQyhnT3sQAGUACwgLGCNDQMUIMABPG1ZRADo-cAiQRwihHNyANnEmcQqKhgAWWqY3F2YGgF0pLgNEIQAmAHohcUH+0X6GLAb4X3h+piwOWkNuHRVlESiAeVksPjAAZySeNCwQLuUGcfYAJVv+oQvWZQb69jITAFcjMD4ARy+MB4WC+0meyjcDA8IFoJl0rCwiUUWAAZFhpKZpFgAEbWL6Hc6XJgMMoge5CCqIw446TicRYEJQEyHEEWA58Q6xIkvFwuKIAGQgrKwrL4PHw3IhA2h7CQEAA1tgzAocBkYISeCEFQd0DhqJysBUGhcupwuLFcBtlPYynbRKJLvZ+p4ck7WC6KmU3I6XrbWC5JON3S7A6wfe6ym87W4Q6xo+HfTbXT6GJ5Y36PYm0xHM56fW686wmP0XQ0k87i+IPBXXXzbbXQ-y3Zdk2VnRnky77I3WMbE5HWAx+1448OGgPM96Gn5R0W3DPJ12+1DC8uS1Ty3Gan5HR0zdwtGB0DxYip+S4yjVxC4OgBfIA" target="_blank">here</a>.</p>
-				<textarea style="width:100%;height:120px;font-size:0.75rem;background:#ddd">https://simtiva.app/view.html?P=N4IgdghgtgpiBcIDqMAmBzGACGAPAxlgJIDiAKgHJYBCAskQMwDsIANCAAoD6ALgJawEARgYAGAJztuABwj8YYHggDaIAKIAbGADcYG1G04AnAPbSTAMxMa2Q0eyj50bABwBWVkLceGL9gDEYKAgtQyhnT3sQAGUACwgLGCNDQMUIMABPG1ZRADo-cAiQRwihHNyANnEmcQqKhgAWWqY3F2YGgF0pLgNEIQAmAHohcUH+0X6GLAb4X3h+piwOWkNuHRVlESiAeVksPjAAZySeNCwQLuUGcfYAJVv+oQvWZQb69jITAFcjMD4ARy+MB4WC+0meyjcDA8IFoJl0rCwiUUWAAZFhpKZpFgAEbWL6Hc6XJgMMoge5CCqIw446TicRYEJQEyHEEWA58Q6xIkvFwuKIAGQgrKwrL4PHw3IhA2h7CQEAA1tgzAocBkYISeCEFQd0DhqJysBUGhcupwuLFcBtlPYynbRKJLvZ+p4ck7WC6KmU3I6XrbWC5JON3S7A6wfe6ym87W4Q6xo+HfTbXT6GJ5Y36PYm0xHM56fW686wmP0XQ0k87i+IPBXXXzbbXQ-y3Zdk2VnRnky77I3WMbE5HWAx+1448OGgPM96Gn5R0W3DPJ12+1DC8uS1Ty3Gan5HR0zdwtGB0DxYip+S4yjVxC4OgBfIA</textarea>
+				<p>The weblink itself contains all the pharmacokinetic profile required to replay the entire simulation. The weblink to the above video is <a href="https://simtiva.app/view.html?P=N4IgdghgtgpiBcICiAPAxgSwM4YPZgAIQAaEABQH0AXDWBAJgEYBWR0ygBwhpjCoQDayADYwAbjGEATEuQBOuDrgBmuYSUYAGUlDQBzEgDYAnMUaHtAZgAcpAGIwoEUbKgGz2kAGUAFhGUwcrIOfBBgAJ7qZqRg7iC67myaAHTWjJYZjNYA7JaGacbZ9IYAuuwUMogALAD0jPQ19Jr0VQRa8PSW8MzGBACCALKylOKCApZVbCAAMn0gZQJV1p5eVBBy-Av1LaReHDCYsIS4AK5UBMkEXgBCZATZhvPEAkz02aQA6hAA1jAEMNcAJJeAiGR4lMrkCg+FBjATaJIeTQLbT0YjaZHPVHEPLEZiY+HRJhVDwo4ho4l4gkInH0NFaMloyx0qlktgZUwMrHknGWUz4xnEQxVQzEKrUnnGTSWMXMQX1Rjs6zy5g9dHywwZckS+nWVjqhaEthsehy7n09XmsXaAXc43ZTk6swO1l28nZWxcwkUj2u71CqqmcWCqWiqpm-0K5g45VWliGJIQyGUUSxKg+QRS-U5BMlAC+QA" target="_blank">here</a>.</p>
+				<textarea style="width:100%;height:120px;font-size:0.75rem;background:#ddd">https://simtiva.app/view.html?P=N4IgdghgtgpiBcICiAPAxgSwM4YPZgAIQAaEABQH0AXDWBAJgEYBWR0ygBwhpjCoQDayADYwAbjGEATEuQBOuDrgBmuYSUYAGUlDQBzEgDYAnMUaHtAZgAcpAGIwoEUbKgGz2kAGUAFhGUwcrIOfBBgAJ7qZqRg7iC67myaAHTWjJYZjNYA7JaGacbZ9IYAuuwUMogALAD0jPQ19Jr0VQRa8PSW8MzGBACCALKylOKCApZVbCAAMn0gZQJV1p5eVBBy-Av1LaReHDCYsIS4AK5UBMkEXgBCZATZhvPEAkz02aQA6hAA1jAEMNcAJJeAiGR4lMrkCg+FBjATaJIeTQLbT0YjaZHPVHEPLEZiY+HRJhVDwo4ho4l4gkInH0NFaMloyx0qlktgZUwMrHknGWUz4xnEQxVQzEKrUnnGTSWMXMQX1Rjs6zy5g9dHywwZckS+nWVjqhaEthsehy7n09XmsXaAXc43ZTk6swO1l28nZWxcwkUj2u71CqqmcWCqWiqpm-0K5g45VWliGJIQyGUUSxKg+QRS-U5BMlAC+QA</textarea>
 			</section>
 		</div><!--end m-main Ch8 -->
+		<div class="m-main" id="m-main-chapter9" data-name="File Management" data-number="9">
+			<section id="9-1" data-heading="Saving/Loading">
+				<p class="m-h2">Saving/Loading SimFile</p>
+				<p>First of all, it is worth noting that you do not need to do anything to save SimFile on device. SimTIVA is a web application and utilizes an interface called the "Local Storage API" to manage the simulations that you have run on your device. As you run a simulation, it is automatically saved.</p>
+				<p>In the Share/Save panel, which can be easily accessed via the <span class="m-icon-inline"><i class="fas fa-share-alt fa-fw"></i></span> Share button, you can type a File Name for easy identification of the SimFile later on.</p>
+				<p class="m-h3">The "Load File" panel</p>
+				<p>From the first screen, click <span class="m-icon-inline"><i class="fas fa-save fa-fw"></i></span> "Load File" (A), then click "Load Local SimFile" (B). This will take you to the "Load File" panel. A list of previously saved simulations will appear. Choose the one you want to load and click "Load Selection".</p>
+				<p class="m-h3">Rescue (Rescuing the last-saved SimFile)</p>
+				<p>Sometimes, accidents can happen. The browser window might have frozen or closed unexpectedly. By clicking <span class="m-icon-inline"><i class="fas fa-life-ring fa-fw"></i></span> "Rescue" on the first screen, the last-saved SimFile will be loaded and the data will be restored. Here you can resume from the last saved time point.</p>
+			</section>
+			<section id="9-2" data-heading="Deleting SimFile">
+			</section>
+			<section id="9-3" data-heading="Exporting database">
+			</section>
+			<section id="9-4" data-heading="Loading from external database">
+			</section>
+			<section id="9-5" data-heading="Resuming from SimFile">
+			</section>
+		</div><!--end of m-main Ch9 -->
 		<!-- end of main content -->
 		<button style="background: transparent" onclick="displayLanguagePanel()">Select Lang</button>
 		<div id="footer-up">
@@ -848,7 +892,7 @@ function updateChapterListings() {
     	if (count == 0) {
     		string = chapters[count].dataset.name;
     	} else {
-    		string = "<span style='color:white; width:2rem; display:inline-block'>" + chapters[count].dataset.number + ". " + "</span>" + chapters[count].dataset.name;
+    		string = "<span style='color:white; width:1.2rem; display:inline-block'>" + chapters[count].dataset.number + ". " + "</span>" + chapters[count].dataset.name;
     	}
     	El3.innerHTML = string;
     	El2.setAttribute("onclick", "getChapter(" + count + "); togglemenu2();");
@@ -881,7 +925,7 @@ function loadlanguage(lang,ind,omithistory) {
 	  	})
 	  	.then(function(data) {
 	  		activeLanguage = lang;
-	  		for (count=1;count<=7;count++) {
+	  		for (count=1;count<=9;count++) {
 	  			key = "chapter" + count;
 	    		tempHTML=JSON.parse(data[key].text);
 	    		document.getElementById("m-main-" + key).outerHTML = tempHTML;
