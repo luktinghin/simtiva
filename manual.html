@@ -1066,6 +1066,11 @@ function loadlanguage(lang,ind,omithistory) {
 	    	}
 		}
 		getChapter(ind,0,1);
+		setTimeout(function() {
+			activateImageContainers();
+			updateChapterListings();
+	    	twttr.widgets.load();
+	    },250);
 		activeLanguage == "en";
 		activeLanguageCode == 0;
 	}
