@@ -6833,6 +6833,35 @@ ol ::marker {
 .m-body {
   background: #fff;          
 }
+.m-body.home {
+  background: #222;
+  flex-basis: 100%;
+}
+#m-main-home {
+  background: #222;
+  border-radius: 0;
+  width: 100%;
+}
+#m-main-home-content {
+  flex-basis: 90%;
+}
+@media screen and (min-width: 465px) {
+  #m-main-home-content {
+    flex-basis:70%
+  }
+}
+#m-main-home a {
+  background: #198964;
+  font-weight: bold;
+  color: white;
+  border-radius: 2rem;
+  display: inline-block;
+  padding: 0 6px;
+  text-decoration: none;
+}
+body.home {
+  background: #222;
+}
 .m-body * {
     -webkit-user-select: text;
      -moz-user-select: text;
@@ -6935,6 +6964,7 @@ ol ::marker {
   width: 100%;
 }
 
+
 #footer-previous {
   flex-basis: 50%;
   padding: 0.5rem;
@@ -6948,6 +6978,10 @@ ol ::marker {
   padding: 0.5rem;
   color: white;
   cursor: pointer;
+}
+
+#footer-up.home, #footer-down.home, #footer-previous.home, #footer-next.home {
+  display: none;
 }
 
 .smalltext {
@@ -6999,6 +7033,48 @@ ol ::marker {
   padding: 10px 50px;
 }
 
+.languagebutton {
+  border: 1px solid white;
+  border-radius: 2rem;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.m-aside > .languagebutton {
+  display: none;
+}
+
+.startbutton {
+  border-radius: 2rem;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90px;
+  padding: 4px 8px;
+  background: #198964;
+  cursor: pointer;
+}
+
+.languagedescription {
+  flex-basis: 100%;
+  padding-left: 8px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.startdescription {
+  flex-basis: 100%;
+  padding-left: 8px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
 @media screen and (min-width: 465px) {
   .m-main {
     width: 80%;
@@ -7046,6 +7122,12 @@ ol ::marker {
   }
   .m-aside {
     flex-basis: 23%;
+  }
+  .m-aside > .languagebutton {
+    display: flex;
+    position: fixed;
+    bottom: 60px;
+    left: calc(11.5% - 60px);
   }
   .m-header {
     top: 60px;
@@ -7147,6 +7229,9 @@ ol ::marker {
   }
   #footer-down {
     width: 90%;
+  }
+  .m-aside > .languagebutton {
+    left: calc(15% - 60px);
   }
 }
 

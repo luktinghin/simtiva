@@ -27,6 +27,11 @@
 </head>
 <body>
 	<div id="menu2">
+						<div class="languagebutton" style="position:fixed;bottom:60px;left:calc(50% - 60px)" onclick="displayLanguagePanel();">
+							<span><i class="fas fa-globe"></i></span>
+							<span class="languagedescription">English</span>
+							<span class="languagechevron"><i class="fas fa-chevron-down"></i></span>
+						</div>
 		<div class="menucontent">
 		</div>
 	</div>
@@ -51,16 +56,39 @@
 			<div id="onthispage">
 			</div>
 		</div>
+						<div class="languagebutton" onclick="displayLanguagePanel();">
+							<span><i class="fas fa-globe"></i></span>
+							<span class="languagedescription">English</span>
+							<span class="languagechevron"><i class="fas fa-chevron-down"></i></span>
+						</div>
 	</div> <!-- end m-aside -->
 	<div class="m-body">
 		<div style="height:75px" class="m-body-placeholder">&nbsp;</div>
-	<div class="m-main" id="m-main-beginning" data-name="Welcome" data-number="0">
-		<p>Welcome to SimTIVA Manual</p>
-		<p>This is the user manual for simtiva.app, a web app to simulate target-controlled infusion (TCI).</p>
-		<p>Select a chapter to view</p>
-		<p><button onclick="getChapter(1)">1</button><button onclick="getChapter(2)">2</button><button onclick="getChapter(3)">3</button><button onclick="getChapter(4)">4</button><button onclick="getChapter(5)">5</button><button onclick="getChapter(6)">6</button><button onclick="loadlanguage('ch',1)">chinese</button><button onclick="loadlanguage('fr',1)">french</button><button onclick="loadlanguage('es',1)">spanish</button><button onclick="displayLanguagePanel()">Select Lang</button></p>
-		<p>On this page <button onclick="populateOnThisPage();">UPDATE</button></p>
-
+	<div class="m-main" id="m-main-home" data-name="Home" data-number="0">
+		<div style="height:70dvh;width:100%;display:flex;justify-content: center;align-items:center">
+			<div id="m-main-home-content">
+				<div style="display:flex;justify-content: center;align-items: center">
+					<div style="flex-basis:25%;padding-right:1rem"><img src="icon1024.webp" style="width:100%"></div>
+					<div style="flex-basis:75%;border-bottom:1px solid white"><span style="font-size: 1.5rem;color: white;font-weight: bold">SimTIVA Manual</span></div>
+				</div>
+				<div style="display:flex;justify-content: center;align-items: center">
+					<div style="flex-basis: 25%"></div>
+					<div style="flex-basis: 75%">
+						<p style="color:white;font-weight:bold">Welcome!</p>
+						<p style="color:#ddd">This is the user manual for <a href="https://simtiva.app" target="_blank">SimTIVA.app</a>, a web app to simulate target-controlled infusion (TCI). This manual contains 9 chapters: the first two chapters cover the basic functionalities to help you get started. We have translated the manual into multiple languages. Video tutorials are coming soon.</p>
+						<div class="startbutton" style="" onclick="getChapter(1)">
+							<span><i class="fas fa-chevron-circle-right"></i></span>
+							<span class="startdescription">START</span>
+						</div>
+						<div class="languagebutton" style="margin-top:40px" onclick="displayLanguagePanel();">
+							<span><i class="fas fa-globe"></i></span>
+							<span class="languagedescription">English</span>
+							<span class="languagechevron"><i class="fas fa-chevron-down"></i></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 		<div class="m-main" id="m-main-chapter1" data-name="Getting Started" data-number="1"> <!--start m-main-->
 			<p class="m-h1">Getting Started</p>
@@ -575,7 +603,6 @@
 			</section>
 		</div><!--end of m-main Ch9 -->
 		<!-- end of main content -->
-		<button style="background: transparent" onclick="displayLanguagePanel()">Select Lang</button>
 		<div id="footer-up">
 			<div id="footer-up-left">
 				<div class="smalltext">Last updated:</div>
@@ -688,6 +715,8 @@ const url = new URL(location);
 
 let state = { chapter: 0, lang: "en"};
 
+goHome();
+
 setTimeout(function() {
 	loadChapterURL();
 	updateChapterListings();
@@ -779,6 +808,9 @@ chapters[0].style.display = "block";
 
 
 function getChapter(number,omithistory,force) {
+	if (activeChapter == 0) {
+		if (number != 0) leaveHome();
+	}
 	if ((number != activeChapter) || (force==1)) {
 		activeChapter = number;
 		chapters = document.querySelectorAll(".m-main");
@@ -980,6 +1012,21 @@ function loadlanguage(lang,ind,omithistory) {
 	    	}
 
 	  		activeLanguage = lang;
+
+			if (activeLanguage == "en") activeLanguageCode = 0;
+			if (activeLanguage == "fr") activeLanguageCode = 1;
+			if (activeLanguage == "es") activeLanguageCode = 2;
+			if (activeLanguage == "zh") activeLanguageCode = 3;
+			if (activeLanguage == "pt") activeLanguageCode = 4;
+			if (activeLanguage == "ja") activeLanguageCode = 5;
+			if (activeLanguage == "ru") activeLanguageCode = 6;
+
+			//update the language buttons
+			langButtons = document.querySelectorAll(".languagebutton");
+			langButtons.forEach(function(langElement) {
+				langElement.querySelector(".languagedescription").innerHTML = languageMatrix[activeLanguageCode][activeLanguageCode];
+			})
+
 	  		for (count=1;count<=9;count++) {
 	  			key2 = "chapter" + count;
 	  			if (data[key2] != undefined) {
@@ -1170,6 +1217,25 @@ function hidedialogmodal() {
   document.getElementById("modalDialogcontent").classList.remove("open");
 }
 
+function goHome() {
+	document.querySelector(".m-aside").style.display="none";
+	document.querySelector(".m-body").classList.add("home");
+	document.body.classList.add("home");
+	document.getElementById("footer-up").classList.add("home");
+	document.getElementById("footer-down").classList.add("home");
+	document.getElementById("footer-previous").classList.add("home");
+	document.getElementById("footer-next").classList.add("home");
+}
+
+function leaveHome() {
+	document.querySelector(".m-aside").style.display="block";
+	document.querySelector(".m-body").classList.remove("home");
+	document.body.classList.remove("home");
+	document.getElementById("footer-up").classList.remove("home");
+	document.getElementById("footer-down").classList.remove("home");
+	document.getElementById("footer-previous").classList.remove("home");
+	document.getElementById("footer-next").classList.remove("home");
+}
 
 
 	</script><!--end of script block-->
