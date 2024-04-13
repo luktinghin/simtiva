@@ -1079,6 +1079,12 @@ function loadlanguage(lang,ind,omithistory) {
 	    },250);
 		activeLanguage == "en";
 		activeLanguageCode == 0;
+
+			//update the language buttons
+			langButtons = document.querySelectorAll(".languagebutton");
+			langButtons.forEach(function(langElement) {
+				langElement.querySelector(".languagedescription").innerHTML = languageMatrix[activeLanguageCode][activeLanguageCode];
+			})
 	}
 }
 
