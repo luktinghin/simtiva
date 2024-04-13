@@ -957,11 +957,13 @@ function updateChapterListings() {
     	let El3 = document.createElement("a");
     	if (count == 0) {
     		string = chapters[count].dataset.name;
+    		El2.setAttribute("onclick", "getChapter(0); goHome(); togglemenu2();");
     	} else {
     		string = "<span style='color:white; width:1.4rem; display:inline-block'>" + chapters[count].dataset.number + ". " + "</span>" + chapters[count].dataset.name;
+    		El2.setAttribute("onclick", "getChapter(" + count + "); togglemenu2();");
     	}
     	El3.innerHTML = string;
-    	El2.setAttribute("onclick", "getChapter(" + count + "); togglemenu2();");
+    	
     	El2.appendChild(El3);
     	El1.appendChild(El2);
 		chapterListings.push(string);
