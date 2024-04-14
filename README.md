@@ -21,7 +21,12 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
 - To help deliver TCI in a setting where TCI pumps are not available
 
 ### Changelog
- Version 4.6 (Build 100) Current
+ Version 4.7 (Build 102) Current
+ - Bugfixes: graph options, eBIS after pause
+ - Infusion duration increased to 6 hours (previously 2 hours)
+ - User Manual: initial release
+   
+ Version 4.6 (Build 100) 
  - Model: Eleveld "without opioid" is added.
  - Control panel: controls the timeline. Quick reset: reset the infusion data. Pause: pause the simulation at current time instance. Jump: jump forward or backward in time.
    
