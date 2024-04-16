@@ -1,4 +1,4 @@
-const cacheName = "simtiva-v4-102";
+const cacheName = "simtiva-v4-103";
 const assets = [
 	"/",
 	"/index.html",
@@ -25,7 +25,9 @@ const assets = [
 	"/fonts/SourceSans3-Bold.otf.woff2",
 	"/fonts/SourceSans3-It.otf.woff2",
 	"/fonts/SourceSans3-BoldIt.otf.woff2",
-	"/lz-string.js"
+	"/lz-string.js",
+	"/manual.html",
+	"/icon1024.webp"
 ]
 
 self.addEventListener('activate', event => {

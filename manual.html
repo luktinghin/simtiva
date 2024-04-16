@@ -854,6 +854,26 @@ window.addEventListener("popstate", (event) => {
 
 let bodyElement = "";
 
+	    	//backup the English body
+	    	if ((activeLanguage == "en") && (bodyElement == "")) {
+	    		bodyElement = {
+	    			"chapter1": {},
+	    			"chapter2": {},
+	    			"chapter3": {},
+	    			"chapter4": {},
+	    			"chapter5": {},
+	    			"chapter6": {},
+	    			"chapter7": {},
+	    			"chapter8": {},
+	    			"chapter9": {},
+	    		};
+	    		for (count=1;count<=9;count++) {
+	    			key = "chapter" + count;
+	    			tempHTML = document.getElementById("m-main-" + key).outerHTML;
+	    			bodyElement[key].text = JSON.stringify(tempHTML);
+	    		}
+	    	}
+
 function loadChapterURL() {
 	console.log("popstate event fired");
 	tempString = window.location.search;
@@ -866,6 +886,9 @@ function loadChapterURL() {
 			if (parameter2 == "zh") file = "zh";
 			if (parameter2 == "es") file = "es";
 			if (parameter2 == "fr") file = "fr";
+			if (parameter2 == "pt") file = "pt";
+			if (parameter2 == "ru") file = "ru";
+			if (parameter2 == "ja") file = "ja";
 
 			if (file != "") {
 				if (parameter != undefined) {
@@ -991,7 +1014,7 @@ function togglemenu2() {
 }
 
 function loadlanguage(lang,ind,omithistory) {
-	if ((lang=="fr") || (lang == "es") || (lang == "zh")) {
+	if ((lang=="fr") || (lang == "es") || (lang == "zh") || (lang == "pt") || (lang == "ru") || (lang == "ja")) {
 		tempHTML = "";
 		fetch(lang + '.json')
 	  		.then(function(response) {
@@ -1167,9 +1190,9 @@ function displayLanguagePanel() {
 		if (activeLanguage == iterationArray[iteration]) {
 			El2.classList.add("lang-active");
 		}
-		if (iteration>=4) {
-			El2.classList.add("disabled");
-		}
+		//if (iteration>=4) {
+		//	El2.classList.add("disabled");
+		//}
 		El2.innerHTML = "<div><span class='lang-text'>" + languageMatrix[iteration][iteration] + "</span><span class='lang-subtext'>" + languageMatrix[iteration][activeLanguageCode] + "</span></div>";
 		El2.setAttribute("onclick","loadlanguage('" + iterationArray[iteration] + "'," + activeChapter + ");hidedialogmodal()");
 		El1.appendChild(El2);
