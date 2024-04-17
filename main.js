@@ -10409,7 +10409,7 @@ function displayAbout2() {
 			<span>Quick Start Guide</span>
 		</div>
 		<div class="customAboutItem" onclick="
-				window.open('https://simtiva.app/manual', '_blank');
+				window.open('https://simtiva.netlify.app/manual', '_blank');
 				document.getElementById('customAbout1').classList.remove('active');
 				document.getElementById('customAbout2').classList.add('active');
 			">
