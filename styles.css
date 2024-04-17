@@ -5329,6 +5329,56 @@ body.dark #pastschemeCOPY {
   }
 }
 
+/* customAbout styles*/
+.customAboutContainer {
+  display: flex;
+  column-gap: 9px;
+  margin-bottom: 12px;
+}
+
+.customAboutItem {
+  border-radius: 9px;
+  border: 1px solid #ccc;
+  flex-basis: 33%;
+  padding: 5px;
+  text-align: center;
+  font-size: 0.75rem;
+  transition: 0.3s all ease;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.customAboutItem.active {
+  border-color: #4CAF50;
+  border-bottom: 5px solid #4cAF50;
+  font-weight: bold;
+  background: rgb(255,255,255);
+  background: radial-gradient(circle, rgba(255,255,255,0) 30%, rgba(76,175,80,0.33) 100%);
+  margin-bottom: 0px;
+}
+
+.customAboutItem:hover {
+  background: rgb(255,255,255);
+  background: radial-gradient(circle, rgba(255,255,255,0) 30%, rgba(200,200,200,0.5) 100%);
+}
+
+.customAboutIcon {
+  font-size: 2.5rem;
+  color: #ccc;
+  display: block;
+}
+
+.customAboutItem.active > .customAboutIcon {
+  color: #198964;
+}
+
+.customAboutText {
+  display: none;
+}
+
+.customAboutQuickGuideText {
+  display: none;
+}
 
 
 

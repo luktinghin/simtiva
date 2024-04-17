@@ -292,7 +292,7 @@
 					<div>
 						<a class="button invert disabled" id="btn_initProceed">Proceed</a>
 						<a class="button muted right" id="btn_disclaimer" onclick="displayDisclaimer();">Disclaimer</a>
-						<a class="button muted right" id="btn_about" onclick="displayAbout();">About</a>
+						<a class="button muted right" id="btn_about" onclick="displayAbout2();"><span style="padding-right: 6px"><i class="fas fa-question-circle"></i></span>Help</a>
 					</div>
 
 			</div>
@@ -556,9 +556,11 @@
 				<div class="modal-header">HELP<span class="close" onClick="hidemodal('modalHelp')">&times;</span></div>
 				<div class="modal-body" style="overflow-y:auto; height:70vh;">
 					<b>Instructions for use</b>
+					<br>This is the Quick Start Guide. For details, please visit the separate User Manual.
 					<br><b>1.</b> Enter patient data on the first screen you see.
 					<br><b>2.</b> Choose a model
 					<br><b>3.</b> There are four modes: CP targeting, CE targeting, manual infusion, and intermittent bolus.
+					<br><b>4.</b> In addition, there is a Complex mode, which allows simultaneous simulation of propofol and an opioid.
 					<br>
 					<br><b>CP/CE targeting mode</b>
 					<br><b>1.</b> Enter desired CP/CE target.
@@ -1137,14 +1139,14 @@
             ontouchstart="showbaselayer(); window.scrollTo(0,0); event.preventDefault(); togglemenu();">Home</a>-->
             <!--ontouchstart="setmodal('modalAbout'); event.preventDefault(); togglemenu();"-->
             <a href="#" 
-            onclick="setmodal('modalAbout'); togglemenu();" 
-            >About</a>
+            onclick="displayAbout2(); togglemenu();" 
+            >Help</a>
             <a href="#" 
             onclick="setmodal('modalReset'); togglemenu();" 
             >Reload</a>
-            <a href="#" 
+            <!--<a href="#" 
             onclick="setmodal('modalHelp'); togglemenu();" 
-            >Help</a>
+            >Help</a>-->
             <a href="#" 
             onclick="setmodal('modalDocumentation'); togglemenu();" 
             >Documentation</a>
