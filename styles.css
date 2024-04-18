@@ -5336,6 +5336,11 @@ body.dark #pastschemeCOPY {
   margin-bottom: 12px;
 }
 
+body.dark .customAboutContainer {
+  box-shadow: inset 0 -1px 0 0 rgb(153,153,153);
+  padding: 0;
+}
+
 .customAboutItem {
   border-radius: 9px;
   border: 1px solid #ccc;
@@ -5348,6 +5353,13 @@ body.dark #pastschemeCOPY {
   margin-bottom: 5px;
 }
 
+body.dark .customAboutItem {
+  margin-bottom: 1px;
+  background: #333;
+  border: 1px solid transparent;
+  border-radius: 9px 9px 0 0;
+}
+
 .customAboutItem.active {
   border-color: #4CAF50;
   border-bottom: 5px solid #4cAF50;
@@ -5355,6 +5367,14 @@ body.dark #pastschemeCOPY {
   background: rgb(255,255,255);
   background: radial-gradient(circle, rgba(255,255,255,0) 30%, rgba(76,175,80,0.33) 100%);
   margin-bottom: 0px;
+}
+
+body.dark .customAboutItem.active {
+  background: #555;
+  border-bottom: 1px solid transparent;
+  border: 1px solid #4CAF50;
+  color: white;
+  box-shadow: inset 0 -5px 0 0 #4cAF50;
 }
 
 .customAboutItem:hover {
@@ -5370,6 +5390,10 @@ body.dark #pastschemeCOPY {
 
 .customAboutItem.active > .customAboutIcon {
   color: #198964;
+}
+
+body.dark .customAboutItem.active > .customAboutIcon {
+  color: white;
 }
 
 .customAboutText {
