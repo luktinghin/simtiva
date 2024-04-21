@@ -10413,7 +10413,11 @@ function displayAbout2() {
 		<div class="customAboutItem" onclick="
 				window.open('https://simtiva.netlify.app/manual', '_blank');
 				document.getElementById('customAbout1').classList.remove('active');
-				document.getElementById('customAbout2').classList.add('active');
+				document.getElementById('customAbout2').classList.remove('active');
+				document.querySelector('.customAboutQuickGuideText').style.display = 'none';
+				document.querySelector('.customAboutText').style.display = 'none';
+				document.querySelector('.customAboutContainer').classList.remove('active');
+
 			">
 			<span class="customAboutIcon"><i class="fab fa-readme fa-fw"></i></span>
 			<span>User Manual</span>
