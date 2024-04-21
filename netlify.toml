@@ -5,8 +5,8 @@
   force = true
 
 [[redirects]]
-  from = "https://manual.simtiva.netlify.app"
-  to = "https://simtiva.netlify.app/manual"
+  from = "https://manual.simtiva.netlify.app/*"
+  to = "https://simtiva.netlify.app/manual.html"
   status = 301
   force = true
 
