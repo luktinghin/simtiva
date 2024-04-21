@@ -4,5 +4,9 @@
   status = 200
   force = true
 
-
+[[redirects]]
+  from = "https://manual.simtiva.app"
+  to = "https://manual.simtiva.app/manual.html"
+  status = 200
+  force = true
 
