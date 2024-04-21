@@ -4,7 +4,7 @@
     "orientation": "any",
     "start_url": "index.html",
     "theme_color": "#7B8092",
-    "scope": "/index.html",
+    "scope": "/",
     "icons": [
       {
        "src": "\/icon192.png",

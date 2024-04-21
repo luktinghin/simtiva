@@ -4,15 +4,5 @@
   status = 200
   force = true
 
-[[redirects]]
-  from = "https://manual.simtiva.app"
-  to = "https://simtiva.app/manual.html"
-  status = 301
-  force = true
 
-[[redirects]]
-  from = "https://simtiva.netlify.app/manual"
-  to = "https://simtiva.app/manual.html"
-  status = 301
-  force = true
 
