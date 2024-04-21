@@ -10395,6 +10395,7 @@ function displayAbout2() {
 				document.querySelector('.customAboutQuickGuideText').style.display = 'none';
 				document.getElementById('customAbout1').classList.add('active');
 				document.getElementById('customAbout2').classList.remove('active');
+				document.querySelector('.customAboutContainer').classList.add('active');
 			">
 			<span class="customAboutIcon"><i class="fas fa-info-circle fa-fw"></i></span>
 			<span>About</span>
@@ -10404,6 +10405,7 @@ function displayAbout2() {
 				document.querySelector('.customAboutQuickGuideText').style.display = 'block';
 				document.getElementById('customAbout1').classList.remove('active');
 				document.getElementById('customAbout2').classList.add('active');
+				document.querySelector('.customAboutContainer').classList.add('active');
 			">
 			<span class="customAboutIcon"><i class="fas fa-question fa-fw"></i></span>
 			<span>Quick Start Guide</span>

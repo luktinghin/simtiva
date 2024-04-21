@@ -5336,8 +5336,8 @@ body.dark #pastschemeCOPY {
   margin-bottom: 12px;
 }
 
-body.dark .customAboutContainer {
-  box-shadow: inset 0 -1px 0 0 rgb(153,153,153);
+body.dark .customAboutContainer.active {
+  box-shadow: inset 0 -1px 0 0 #4CAF50;
   padding: 0;
 }
 
@@ -5354,10 +5354,9 @@ body.dark .customAboutContainer {
 }
 
 body.dark .customAboutItem {
-  margin-bottom: 1px;
   background: #333;
   border: 1px solid transparent;
-  border-radius: 9px 9px 0 0;
+  border-radius: 9px;
 }
 
 .customAboutItem.active {
@@ -5370,11 +5369,13 @@ body.dark .customAboutItem {
 }
 
 body.dark .customAboutItem.active {
-  background: #555;
-  border-bottom: 1px solid transparent;
-  border: 1px solid #4CAF50;
+  background: #444;
+  border-radius: 9px 9px 0 0;
+  border-top: 1px solid #4CAF50;
+  border-right: 1px solid #4CAF50;
+  border-left: 1px solid #4CAF50;
   color: white;
-  box-shadow: inset 0 -5px 0 0 #4cAF50;
+  box-shadow: inset 0 5px 10px -5px #4CAF50;
 }
 
 .customAboutItem:hover {
