@@ -4498,7 +4498,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 			myChart.data.datasets[ind*2+2].data.push({x:(working_clock+j)/60, y:temp_result});
 			myChart.data.datasets[ind*2+3].data.push({x:(working_clock+j)/60, y:temp_result_e});			
 		}
-		if ((j>=12*60) && (j%120==0)) {
+		if ((j>=120*60) && (j%120==0)) {
 			myChart.data.datasets[ind*2+2].data.push({x:(working_clock+j)/60, y:temp_result});
 			myChart.data.datasets[ind*2+3].data.push({x:(working_clock+j)/60, y:temp_result_e});			
 		}
@@ -16972,6 +16972,31 @@ function extendSession(ind) {
 	if ((drug_sets[ind].manualmode_active == 1) && (drug_sets[ind].inf_rate_mls>0)) {
 		lookahead(0,21600,ind);
 	}
+}
+
+//VSCapture functions
+BIS_real = new Array();
+exportparams = {};
+function captureBIS() {
+	dataexport = []; //replace with real data capture
+	exportparams.timestamp = new Date(dataexport[0].Time);
+	exportparams.timestamp2 = new Date(dataexport[1].Time);
+	exportparams.timeresolution = (Date.parse(exportparams.timestamp2) - Date.parse(exportparams.timestamp))/1000;
+	for (i=0; i<dataexport.length; i++) {
+    	BIS_real[i*exportparams.timeresolution]=dataexport[i].BIS;
+	}
+
+	// alter the main chart
+	myChart.options.scales.y1 = {
+        type: 'linear',
+        display: true,
+        position: 'right',
+
+        // grid line settings
+        grid: {
+          drawOnChartArea: false, // only want the grid lines for one axis to show up
+        },
+      }
 }
 
 /* failed code below 
