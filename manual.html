@@ -20,7 +20,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
     <meta charset="utf-8">
-	<meta name="description" content="Simple and free TIVA simulator">
+	<meta name="description" content="Manual for SimTIVA: simple and free TIVA simulator">
     <meta name="keywords" content="simtiva, tiva, tci, free, simulator, calculator, terence, luk, propofol, remifentanil, alfentanil, app, smartphones, apple, android">
     <meta name="author" content="Terence Luk">
     <title>SimTIVA Manual</title>
@@ -633,6 +633,17 @@
 			</div>
 		</div>
 	<script>//start script block
+
+
+//start service worker
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function() {
+    navigator.serviceWorker
+      .register("/sw-manual.js")
+      .then(res => console.log("service worker registered"))
+      .catch(err => console.log("service worker not registered", err))
+  })
+}
 
 //declare variables
 
