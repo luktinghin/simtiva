@@ -10411,7 +10411,7 @@ function displayAbout2() {
 			<span>Quick Start Guide</span>
 		</div>
 		<div class="customAboutItem" onclick="
-				window.open('https://manual.simtiva.app/manual', '_blank');
+				window.open('https://manual.simtiva.app', '_blank');
 				document.getElementById('customAbout1').classList.remove('active');
 				document.getElementById('customAbout2').classList.remove('active');
 				document.querySelector('.customAboutQuickGuideText').style.display = 'none';
