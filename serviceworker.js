@@ -1,7 +1,8 @@
-const cacheName = "simtiva-v4-105";
+const cacheName = "simtiva-v4-106-plusmanual";
 const assets = [
 	"/",
 	"/index.html",
+	"/manual.html",
 	"/main.js",
 	"/chartjs-plugin-crosshair.min.js",
 	"/styles.css",
@@ -19,13 +20,20 @@ const assets = [
 	"/eleveld1.gif",
 	"/eleveld2.gif",
 	"/icon.png",
+	"/icon1024.webp",
 	"/apple-touch-icon-180x180.png",
 	"/fonts/BrandonText-Bold.otf",
 	"/fonts/SourceSans3-Regular.otf.woff2",
 	"/fonts/SourceSans3-Bold.otf.woff2",
 	"/fonts/SourceSans3-It.otf.woff2",
 	"/fonts/SourceSans3-BoldIt.otf.woff2",
-	"/lz-string.js"
+	"/lz-string.js",
+	"/es.json",
+	"/fr.json",
+	"/zh.json",
+	"/ja.json",
+	"/pt.json",
+	"/ru.json"
 ]
 
 self.addEventListener('activate', event => {
