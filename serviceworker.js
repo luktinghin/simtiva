@@ -1,4 +1,4 @@
-const cacheName = "simtiva-v4-106-plusmanual";
+const cacheName = "simtiva-v4-107-plusmanual";
 const assets = [
 	"/",
 	"/index.html",
@@ -14,6 +14,8 @@ const assets = [
 	"/webfonts/fa-solid-900.woff2",
 	"/webfonts/fa-regular-400.ttf",
 	"/webfonts/fa-regular-400.woff2",
+	"/webfonts/fa-brands-400.ttf",
+	"/webfonts/fa-brands-400.woff2",
 	"/chart.min.js",
 	"/beep.mp3",
 	"/beep-2.mp3",
