@@ -7172,6 +7172,10 @@ body.home {
 }
 
 @media screen and (min-width: 768px) {
+  .m-body.home {
+    top: 6.5%;
+    position: absolute;
+  }
   .m-image-container > img {
     max-width: 450px;
   }
