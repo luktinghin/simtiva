@@ -7,6 +7,6 @@
 [[redirects]]
   from = "https://manual.simtiva.app"
   to = "https://simtiva.app/manual.html"
-  status = 301
+  status = 200
   force = true
 
