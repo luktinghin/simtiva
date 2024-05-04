@@ -1808,6 +1808,18 @@
 
 		</div>
 
+		<div id="VSchartcontainer">
+			<canvas id="myChart3"></canvas>
+		</div>
+		<div id="VScontrols">
+			<div>
+				<div>Load the JSON file here:</div>
+				<input type="file" id="myFile2" accept=".json,.JSON,application/json" onchange="VSreadjson()" style="width:100%">
+			</div>
+			<button onclick="VSaltertime();">alter time</button>
+			<button onclick="captureBIS();">process BIS</button>
+			<button onclick="VSchartpopulate(); myChart3.update();">draw chart</button>
+		</div>
 		<div id="ptolcard" class="">
 			<div id="ptolcard_left" style="padding:0.5rem;flex-basis:70%">
 				<div style="font-size:200%;font-weight:bold;line-height:1" id=""><span id="ptoltitle">PTOL</span><span id="ptoltooltip" onclick="ptolwarning();" style="display:none"><i class="far fa-question-circle"></i></span></div>

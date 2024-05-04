@@ -2275,6 +2275,10 @@ body.dark .loadduration {
   width:100%; 
   transform:0; 
 }
+#VSchartcontainer {
+  height: 220px;
+  width: 100%;
+}
 #chartwrapper {
   position:absolute;
   width:100%;

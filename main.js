@@ -1757,6 +1757,189 @@ const chartInfRateLayer = {
 
 },1100);
 
+setTimeout(
+
+		function() {
+
+
+		var ctx = document.getElementById('myChart3').getContext('2d');
+
+		//var y = document.getElementById('chartwrapper').offsetHeight*0.6;
+
+		/*
+		var gradientGreen = ctx.createLinearGradient(0, 100, 0, y+100);  //x0y0x1y1  //y+100 last param
+			gradientGreen.addColorStop(0.4, 'rgba(9, 203, 93,0.4)');   
+			gradientGreen.addColorStop(1, 'rgba(9, 203, 93,0.05)');
+
+			console.log(gradientGreen);
+			*/
+
+
+		/*
+		var gradientRed = ctx.createLinearGradient(0, 0, 0, y); // y last param
+			gradientRed.addColorStop(0.4, 'rgba(231, 50, 39,0.4)');   
+			gradientRed.addColorStop(1, 'rgba(231, 50, 39,0)');
+
+			*/
+
+
+		myChart3 = new Chart(ctx, {
+	    type: 'line',
+	    data: {
+	    	datasets: [{
+	    		label: 'BIS (actual)', 
+	    		data: [{x: 0, y: 0}],
+	    		borderWidth:3,
+	    		pointRadius:3,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(231, 50, 39,0.7)',
+	    		backgroundColor: 'rgb(231, 50, 39,0.4)',
+	    		pointBorderColor: 'rgb(231, 50, 39,0.8)',
+	    		pointBackgroundColor: 'rgb(231, 50, 39,0.8)',
+	    		fill: false,
+	    		parsing: false,
+	    		hidden: false
+	    	},{
+	    		label: 'BIS (estimated)', 
+	    		data: [{x:0, y:0}],
+	    		borderWidth:3,
+	    		pointRadius:3,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(9, 203, 93,0.7)',
+	    		backgroundColor: 'rgb(9, 203, 93,0.4)',
+	    		pointBorderColor: 'rgb(9, 203, 93,0.8)',
+	    		pointBackgroundColor: 'rgb(9, 203, 93,0.8)',
+	    		fill: false,
+	    		parsing: false,
+	    		hidden:false
+	    	}]
+	    }, //end data
+	    options: {
+	    	maintainAspectRatio: false,
+	    	interaction: {
+
+	    	},
+	    	scales: {
+	    		y: {
+	    			display: true,
+	    			min: 0,
+	    			max: 100,
+					title: {
+						display: true,
+						text:'BIS'
+					}
+	    		},
+	    		x: {
+	    			type: 'linear',
+	    			display: true,
+	    			position:'bottom',
+	    			min:0,
+	    			max:20,
+					title: {
+						display: true,
+						text:'Time (minutes)'
+					}
+	    		}
+	    	},
+	        animation: {
+	        	duration: 200
+	        },
+	        transitions: {
+	        	active: {
+	        		animation: {
+	        			duration: 200
+	        		}
+	        	}
+	        },
+
+		    plugins: { //start plugins
+		    	//shadingArea,
+			    legend: {
+			    		onClick: null,
+				    	labels: {
+				    	boxWidth: 20,
+				    	/*
+				    	filter: function(item, chart) {
+
+				    	}
+				    	*/
+			    	}
+			    },
+			    tooltip: {
+			    	mode: 'index',
+			    	intersect: false,
+			    	footerFont: {
+			    		weight: 'normal',
+			    		size: 10
+			    	},
+	            	filter: function(tooltipItem, data) {
+	
+	            	},
+	            	position: 'nearest',
+	            	caretSize: 0,
+	            	backgroundColor: 'rgba(0,0,0,0.5)',
+					callbacks: {
+						title: function(context) {
+
+						},
+						
+	                	label: function(context) {
+	                		
+	 
+	                	},
+
+	                	footer: function(tooltipItems) {
+
+
+
+	                	}
+	                	
+	                }
+			    },
+		    	crosshair: {
+		    		line: {
+		    			color: '#66F',
+		    			width: 1,
+		    			//dashPattern: [20,5]
+		    		},
+			        sync: {
+			          enabled: true,            // enable trace line syncing with other charts
+			          group: 1,                 // chart group
+			          suppressTooltips: false   // suppress tooltips when showing a synced tracer
+			        },
+			        zoom: {
+			        	enabled: false,
+			        }
+		    	},
+		    	/*
+		    	annotation: {
+		    		annotations: {
+		    			line0: {
+		    				type: 'line',
+		    				drawTime: 'beforeDatasetsDraw',
+		    				xMin: getEventLine(0),
+		    				xMax: getEventLine(0),
+		    				borderColor: 'rgba(255,0,0,0.2)',
+		    				borderWidth: 2,
+		    				label: {
+		    					content: getEventLabel(0),
+		    					enabled: true
+		    				}
+		    			}
+		    		}
+		    	}
+		    	*/
+		    } //endplugins
+	    } //end options
+	    //, plugins: [multiply],
+
+
+	}//end charting function
+	);
+
+
+},1100);
+
 //dark mode activation
 	
 	if (localStorage.getItem("colourMode") == "dark") {
@@ -8253,6 +8436,10 @@ function updatechartview(chart) {
 		chart.options.scales.x.ticks.stepSize = 10;
 	} else if (chartviewarray[1]-chartviewarray[0] <= 120) {
 		chart.options.scales.x.ticks.stepSize = 15;
+	}
+	if (myChart3 != undefined) {
+		myChart3.options.scales.x.min = chart.options.scales.x.min;
+		myChart3.options.scales.x.max = chart.options.scales.x.max;
 	}
 }
 
@@ -16975,18 +17162,23 @@ function extendSession(ind) {
 }
 
 //VSCapture functions
-BIS_real = new Array();
-exportparams = {};
-function captureBIS() {
-	dataexport = []; //replace with real data capture
-	exportparams.timestamp = new Date(dataexport[0].Time);
-	exportparams.timestamp2 = new Date(dataexport[1].Time);
-	exportparams.timeresolution = (Date.parse(exportparams.timestamp2) - Date.parse(exportparams.timestamp))/1000;
-	for (i=0; i<dataexport.length; i++) {
-    	BIS_real[i*exportparams.timeresolution]=dataexport[i].BIS;
-	}
+VSimportdata = {};			//the processed array output by captureBIS
+VSimportparams = {};
+dataimport2 = new Array(); 	//the first array used by VSimportjson to capture
+dataimport3 = new Array(); 	//the alternative array used by VSimportjson to capture
 
+function captureBIS() {
+	VSimportparams.timestamp = new Date(dataimport2[0].Time);
+	VSimportparams.timestamp2 = new Date(dataimport2[1].Time);
+	VSimportparams.timeresolution = (Date.parse(VSimportparams.timestamp2) - Date.parse(VSimportparams.timestamp))/1000;
+	VSimportdata.BIS = new Array();
+	for (i=0; i<dataimport2.length; i++) {
+    	VSimportdata.BIS[i*VSimportparams.timeresolution]=dataimport2[i].BIS;
+	}
+	displayWarning("BIS data loaded",
+		"BIS data loaded. Time of start of data: " + VSimportparams.timestamp);
 	// alter the main chart
+	/*
 	myChart.options.scales.y1 = {
         type: 'linear',
         display: true,
@@ -16997,6 +17189,133 @@ function captureBIS() {
           drawOnChartArea: false, // only want the grid lines for one axis to show up
         },
       }
+      */
+}
+
+function VSaltertime() {
+	El1 = document.createElement("div");
+	El1.innerHTML = "<b>BIS data</b> - start time of imported data: <br>" + VSimportparams.timestamp;
+	El1.innerHTML = El1.innerHTML.concat("<br>" + "<b>SimTIVA data</b> - start time of SimTIVA data: <br>" + d);
+	El2 = document.createElement("select");
+	El2.innerHTML = `
+		<option value="-10">-10</option>
+		<option value="-9">-9</option>
+		<option value="-8">-8</option>
+		<option value="-7">-7</option>
+		<option value="-6">-6</option>
+		<option value="-5">-5</option>
+		<option value="-4">-4</option>
+		<option value="-3">-3</option>
+		<option value="-2">-2</option>
+		<option value="-1">-1</option>
+		<option value="1" selected>+1</option>
+		<option value="2">+2</option>
+		<option value="3">+3</option>
+		<option value="4">+4</option>
+		<option value="5">+5</option>
+		<option value="6">+6</option>
+		<option value="7">+7</option>
+		<option value="8">+8</option>
+		<option value="9">+9</option>
+		<option value="10">+10</option>
+	`;
+	El2.id = "select_shifttime";
+	El3 = document.createElement("div");
+	El3.innerHTML = "Shift time of start of BIS data (relative to SimTIVA data), to align both sets of data, in minutes: <br>For example, delay by 5 mins is '-5'. ";
+	El4 = document.createElement("a");
+	El4.innerHTML = "Confirm";
+	El4.classList.add("button");
+	El4.classList.add("invert");
+	El4.id="btn_confirm_shifttime";
+	El4.setAttribute("onclick","VSaltertime2()");
+	ElRoot = document.createElement("div");
+	ElRoot.appendChild(El1);
+	ElRoot.appendChild(El3);
+	ElRoot.appendChild(El2);
+	ElRoot.appendChild(El4);
+	displayWarning("Alter time",ElRoot.innerHTML);
+}
+
+function VSaltertime2() {
+	altertime = document.getElementById("select_shifttime").value * 60;
+	VSimportparams.timestamp = new Date(dataimport2[0].Time);
+	VSimportparams.timestamp2 = new Date(dataimport2[1].Time);
+	VSimportparams.timeresolution = (Date.parse(VSimportparams.timestamp2) - Date.parse(VSimportparams.timestamp))/1000;
+	if (VSimportdata.BIS == undefined) {
+		VSimportdata.BIS = new Array();
+	} else {
+		VSimportdata.BIS.length = 0;
+	}
+	for (i=0; i<dataimport2.length; i++) {
+		if (i*VSimportparams.timeresolution - altertime > 0) {
+    		VSimportdata.BIS[i*VSimportparams.timeresolution - altertime]=dataimport2[i].BIS;
+    	}
+	}
+	VSchartpopulate();
+	myChart3.update();
+	hideallmodal();
+}
+
+
+function VSchartpopulate() {
+	myChart3.data.datasets[0].data.length = 0;
+	myChart3.data.datasets[1].data.length = 0;
+    for (i=0; i<VSimportdata.BIS.length; i++) {
+    	if (VSimportdata.BIS[i] != undefined) myChart3.data.datasets[0].data.push({x: i/60, y: VSimportdata.BIS[i]});
+    }
+    for (i=0; i<BIS_array.length; i++) {
+    	if (i%10 == 0) {
+        	myChart3.data.datasets[1].data.push({x: i/60, y: BIS_array[i]});
+        }
+    }
+}
+
+
+function VSimportjson() {
+	El1 = document.createElement("div");
+	El1.id = "loadfile_container2";
+	El3 = document.createElement("input");
+	El3.type = "file";
+	El3.id = "myFile2";
+	El3.accept = ".json,.JSON,application/json";
+	El3.setAttribute("onchange","VSreadjson()");
+	El1.appendChild(El3);
+	//El1.innerHTML = "<input type='file' id='myFile2' onchange='' style='width: 100%' accept=''/>"
+  El2 = document.createElement("div");
+  El2.appendChild(El1);
+  displayWarning("Import JSON",El2.innerHTML);
+}
+
+function VSreadjson() {
+  //const content2 = document.getElementById("loadfile_container2");
+  const [file2] = document.getElementById("myFile2").files;
+  const reader2 = new FileReader();
+
+  reader2.addEventListener(
+    "load",
+    () => {
+      //crosschecking code to see whether file type is correct
+      errorMessage = "";
+      console.log(reader2.fileName);
+      if (!(reader2.fileName.slice(-5) == ".json" || reader2.fileName.slice(-4) == ".JSON" )) {
+      	errorMessage += "Not a JSON file." + "<br>";
+      	console.log(errorMessage);
+      }
+      if (errorMessage != "") {
+      	//more error debug here
+      	displayWarning("Failed import",errorMessage);
+      } else {
+      	console.log("parsing");
+      	dataimport2 = JSON.parse(reader2.result);
+      }
+    },false,
+   )
+
+  if (file2) {
+  	console.log("reading");
+    reader2.readAsText(file2);
+    reader2.fileName = file2.name;
+  }
 }
 
 /* failed code below 
