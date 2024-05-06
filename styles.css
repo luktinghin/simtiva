@@ -2275,6 +2275,11 @@ body.dark .loadduration {
   width:100%; 
   transform:0; 
 }
+#VSdropArea {
+  height: 300px;
+  width: 100%;
+  background: #ddd;
+}
 #VSchartcontainer {
   height: 220px;
   width: 100%;

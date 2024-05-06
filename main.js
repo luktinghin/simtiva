@@ -8422,6 +8422,10 @@ function updatechart(chart) {
 		}
 	}
 
+	if (myChart3 != undefined) {
+		myChart3.options.scales.x.min = chart.options.scales.x.min;
+		myChart3.options.scales.x.max = chart.options.scales.x.max;
+	}
 }
 
 
@@ -8437,10 +8441,7 @@ function updatechartview(chart) {
 	} else if (chartviewarray[1]-chartviewarray[0] <= 120) {
 		chart.options.scales.x.ticks.stepSize = 15;
 	}
-	if (myChart3 != undefined) {
-		myChart3.options.scales.x.min = chart.options.scales.x.min;
-		myChart3.options.scales.x.max = chart.options.scales.x.max;
-	}
+
 }
 
 function updatechartview2() {
@@ -12012,46 +12013,50 @@ function output(resolution, duration) {
 	var counter_next = 999; //index top for manual
 
 	//validate duration
-	if ((duration>0) && (duration<cpt_cp.length)) {
+	if ((duration>0) && (duration<drug_sets[0].cpt_cp.length)) {
 		var working_clock = duration;
 	} else {
 		var working_clock = Math.floor(time_in_s);
 	}
 
-	if (historyarrays[0][0] == 0) title1.push(["","------------------- manual mode -------------------","","","",""]);
-	if (historyarrays[0][0] == 1) title1.push(["","------------------- CPT mode -------------------","","","",""]);
-	if (historyarrays[0][0] == 2) title1.push(["","------------------- CET mode -------------------","","","",""]);
+	if (drug_sets[0].historyarrays[0][0] == 0) title1.push(["","------------------- manual mode -------------------","","","","",""]);
+	if (drug_sets[0].historyarrays[0][0] == 1) title1.push(["","------------------- CPT mode -------------------","","","","",""]);
+	if (drug_sets[0].historyarrays[0][0] == 2) title1.push(["","------------------- CET mode -------------------","","","","",""]);
 
 	
 	var string = "BW: " + mass + "kg; BH: " + height + "cm; Age: " + age + "y; Gender: " + document.getElementById('gender').innerHTML + "; Model: " + document.getElementById('modelname').innerHTML + "; Last active threshold mode: " + document.getElementById('select_threshold').options[document.getElementById('select_threshold').selectedIndex].text;
-	title1.push(["",string,"","","","",""]);
-	title1.push(["","--------------------------------","","","","",""]);
+	title1.push(["",string,"","","","","",""]);
+	title1.push(["","--------------------------------","","","","","",""]);
 	
+	title1.push(["","Event Array:","","","","","",""]);
+	for (i=0; i<eventArray.length; i++) {
+		title1.push([eventArray[i][0],eventArray[i][1],"","","","","",""]);
+	}
 
-	title1.push(["Time","Remarks","Rate","Cp","Ce","Vol. infused"]);
+	title1.push(["Time","Remarks","Rate","Cp","Ce","Vol. infused","eBIS"]);
 
-	for (i=0; i<historyarrays.length; i++) {
+	for (i=0; i<drug_sets[0].historyarrays.length; i++) {
 		//every CPT scheme is finished with an infusion scheme [i][2]
 		//every CET shceme is finished with an infusion scheme [i][2] too
-		if (historyarrays[i][1] == 0) {
-			arrTEMP.push([historyarrays[i][2],"Target (" + conc_units + "/ml): " + historyarrays[i][3],"","","",""]);
+		if (drug_sets[0].historyarrays[i][1] == 0) {
+			arrTEMP.push([drug_sets[0].historyarrays[i][2],"Target (" + drug_sets[0].conc_units + "/ml): " + drug_sets[0].historyarrays[i][3],"","","",""]);
 		} 
-		if (historyarrays[i][1] == 1) arrTEMP.push([historyarrays[i][2],"Bolus (" + infused_units + "): " + historyarrays[i][3],"","","",""]);
-		if (historyarrays[i][1] == 3) arrTEMP.push([historyarrays[i][2],"Pause for (s): " + historyarrays[i][3],"", "", "",""]);
-		if (historyarrays[0][0] == 0) { //if manual mode
-			if (historyarrays[i][1] == 2) arrTEMP.push([historyarrays[i][2],"Infusion rate (ml/h): " + historyarrays[i][3], "", "", "",""]);
+		if (drug_sets[0].historyarrays[i][1] == 1) arrTEMP.push([drug_sets[0].historyarrays[i][2],"Bolus (" + drug_sets[0].infused_units + "): " + drug_sets[0].historyarrays[i][3],"","","",""]);
+		if (drug_sets[0].historyarrays[i][1] == 3) arrTEMP.push([drug_sets[0].historyarrays[i][2],"Pause for (s): " + drug_sets[0].historyarrays[i][3],"", "", "",""]);
+		if (drug_sets[0].historyarrays[0][0] == 0) { //if manual mode
+			if (drug_sets[0].historyarrays[i][1] == 2) arrTEMP.push([drug_sets[0].historyarrays[i][2],"Infusion rate (ml/h): " + drug_sets[0].historyarrays[i][3], "", "", "",""]);
 		} else {
-			if (historyarrays[i][1] == 2) {
+			if (drug_sets[0].historyarrays[i][1] == 2) {
 				//need to check if the next one has a time point less than this one, and if so, omit this one, this is for CET when the inf regimen is later than "current"
 				//first, if this is not the last one
-				if (i<historyarrays.length-1) {
-					if (historyarrays[i+1][2]>historyarrays[i][2]) arrTEMP.push([historyarrays[i][2],"Infusion scheme: " + outputformathistory(historyarrays[i][3]), "", "", "",""]);	
+				if (i<drug_sets[0].historyarrays.length-1) {
+					if (drug_sets[0].historyarrays[i+1][2]>drug_sets[0].historyarrays[i][2]) arrTEMP.push([drug_sets[0].historyarrays[i][2],"Infusion scheme: " + outputformathistory(drug_sets[0].historyarrays[i][3]), "", "", "",""]);	
 				} else { //just push if this is the last one
-					arrTEMP.push([historyarrays[i][2],"Infusion scheme: " + outputformathistory(historyarrays[i][3]), "", "", "",""]);
+					arrTEMP.push([drug_sets[0].historyarrays[i][2],"Infusion scheme: " + outputformathistory(drug_sets[0].historyarrays[i][3]), "", "", "",""]);
 				}
 			}
 		}
-		if (historyarrays[i][0] == 4) arrTEMP.push([historyarrays[i][2],historyarrays[i][3],, "", "", "",""]);		
+		if (drug_sets[0].historyarrays[i][0] == 4) arrTEMP.push([drug_sets[0].historyarrays[i][2],drug_sets[0].historyarrays[i][3],, "", "", "",""]);		
 		//historyarrays[i][0] == 4 means retrospective
 	}
 	
@@ -12068,7 +12073,7 @@ function output(resolution, duration) {
 			}
 		}
 		if (i%resolution == 0){
-			arrTABLE.push([i,"",cpt_rates_real[i],cpt_cp[i][0]+cpt_cp[i][1]+cpt_cp[i][2],cpt_ce[i][0]+cpt_ce[i][1]+cpt_ce[i][2]+cpt_ce[i][3],volinf[i]]);
+			arrTABLE.push([i,"",drug_sets[0].cpt_rates_real[i],drug_sets[0].cpt_cp[i][0]+drug_sets[0].cpt_cp[i][1]+drug_sets[0].cpt_cp[i][2],drug_sets[0].cpt_ce[i][0]+drug_sets[0].cpt_ce[i][1]+drug_sets[0].cpt_ce[i][2]+drug_sets[0].cpt_ce[i][3],drug_sets[0].volinf[i],BIS_array[i]]);
 		}
 	}
 	//console.log(title1);
@@ -12971,7 +12976,7 @@ function previewFile() {
       	errorMessage += "Not a CSV file." + "<br>";
       	console.log(errorMessage);
       }
-      if (errorMessage != "") {
+      if (errorMessage == "") {
       	let tempRaw = reader.result.split("\n"); //last record is 2nd last line. last line is an empty line.
       	
       	if (tempRaw != undefined) {
@@ -12979,9 +12984,9 @@ function previewFile() {
 		      	errorMessage += "Cannot read file. Does not seem to be a SimTIVA .csv database file." + "<br>";
 		      } else {
 		      	//preview first record and see if it's fine
-		      	let parseArrayComma = parseArrayRaw[1].split(",");
-		      	let parseArrayURL = parseArrayComma[parseArrayComma.length-1];
-		      	if (parseArrayURL.slice(0,19) != "https://simtiva.app") {
+		      	let tempArrayComma = tempRaw[1].split(",");
+		      	let tempArrayURL = tempArrayComma[tempArrayComma.length-1];
+		      	if (tempArrayURL.slice(0,19) != "https://simtiva.app") {
 		      		errorMessage += "Wrong weblink reference. Possible corrupted database.";
 		      	}
 		      }
@@ -17166,6 +17171,57 @@ VSimportdata = {};			//the processed array output by captureBIS
 VSimportparams = {};
 dataimport2 = new Array(); 	//the first array used by VSimportjson to capture
 dataimport3 = new Array(); 	//the alternative array used by VSimportjson to capture
+
+//drag and drop functionality
+let dropArea = document.getElementById("VSdropArea")
+;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+  dropArea.addEventListener(eventName, preventDefaults, false)
+})
+
+function preventDefaults (e) {
+  e.preventDefault()
+  e.stopPropagation()
+}
+
+dropArea.addEventListener('drop', handleDrop, false);
+let fileEntry;
+let fileList;
+
+function handleDrop(e) {
+  dt = e.dataTransfer;
+  fileList = dt.files;
+  items = dt.items;
+  fileEntry = items[0].webkitGetAsEntry();
+  console.log(items[0]);
+  console.log("drop event fired");
+  console.log(fileEntry);
+  handleFile(fileEntry, readData, errorData);
+}
+
+
+function handleFile(entry, successCallback, errorCallback) {
+	entry.file(function (file) {
+		console.log('fileEntry File Event fired');
+		readerX = new FileReader();
+		readerX.onload = function() {
+			successCallback(readerX.result);
+		}
+		readerX.onerror = function() {
+			errorCallback(readerX.error);
+		}
+		readerX.readAsText(file);	
+	}, errorCallback);
+}
+
+function readData(data) {
+	dataimport2 = JSON.parse(data);
+}
+
+function errorData(data) {
+	console.log(data);
+}
+
+
 
 function captureBIS() {
 	VSimportparams.timestamp = new Date(dataimport2[0].Time);
