@@ -17215,7 +17215,7 @@ let fileList;
           {}
         );
       });
-      //console.log(jsonarray);
+      console.log(jsonarray);
       return jsonarray;
     }
   }
@@ -17261,16 +17261,14 @@ function refreshFile(entry, successCallback, errorCallback) {
 }
 
 function readData(data) {
-	tempJSON = CSVtoJSON(data);
-	dataimport2 = JSON.parse(tempJSON);
+	dataimport2 = CSVtoJSON(data);
 	document.getElementById("VSimportconfirmbtn").classList.remove("disabled");
 	document.getElementById("VSimportmessage").innerHTML = "Data loaded successfully.";
 }
 
 function readData2(data) {
 	//this is the refresh function
-	tempJSON = CSVtoJSON(data);
-	dataimport2 = JSON.parse(tempJSON);
+	dataimport2 = CSVtoJSON(data);
 	//document.getElementById("VSimportconfirmbtn").classList.remove("disabled");
 	//document.getElementById("VSimportmessage").innerHTML = "Data loaded successfully.";
 	captureBIS(1);
