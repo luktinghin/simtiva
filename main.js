@@ -17177,6 +17177,18 @@ let dropArea = document.getElementById("VSdropArea")
 ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
   dropArea.addEventListener(eventName, preventDefaults, false)
 })
+;['dragenter', 'dragover'].forEach(eventName => {
+  dropArea.addEventListener(eventName, highlight, false)
+})
+;['dragleave', 'drop'].forEach(eventName => {
+  dropArea.addEventListener(eventName, unhighlight, false)
+})
+function highlight(e) {
+  dropArea.classList.add('VShighlight')
+}
+function unhighlight(e) {
+  dropArea.classList.remove('VShighlight')
+}
 
 function preventDefaults (e) {
   e.preventDefault()
@@ -17215,6 +17227,8 @@ function handleFile(entry, successCallback, errorCallback) {
 
 function readData(data) {
 	dataimport2 = JSON.parse(data);
+	document.getElementById("VSimportconfirmbtn").classList.remove("disabled");
+	document.getElementById("VSimportmessage").innerHTML = "Data loaded successfully.";
 }
 
 function errorData(data) {
