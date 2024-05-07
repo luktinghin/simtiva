@@ -17237,7 +17237,7 @@ function errorData(data) {
 
 
 
-function captureBIS() {
+function captureBIS(suppressdialog) {
 	VSimportparams.timestamp = new Date(dataimport2[0].Time);
 	VSimportparams.timestamp2 = new Date(dataimport2[1].Time);
 	VSimportparams.timeresolution = (Date.parse(VSimportparams.timestamp2) - Date.parse(VSimportparams.timestamp))/1000;
@@ -17245,9 +17245,13 @@ function captureBIS() {
 	for (i=0; i<dataimport2.length; i++) {
     	VSimportdata.BIS[i*VSimportparams.timeresolution]=dataimport2[i].BIS;
 	}
-	displayWarning("BIS data loaded",
-		"BIS data loaded. Time of start of data: " + VSimportparams.timestamp);
-	// alter the main chart
+	if (suppressdialog == 1) {
+
+	} else {
+		displayWarning("BIS data loaded",
+		"BIS data loaded. Time of start of data: " + VSimportparams.timestamp);	
+	}
+		// alter the main chart
 	/*
 	myChart.options.scales.y1 = {
         type: 'linear',
