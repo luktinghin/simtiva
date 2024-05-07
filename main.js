@@ -17291,9 +17291,9 @@ function captureBIS(suppressdialog) {
 	VSimportdata.BIS = new Array();
 	//find the correct BIS key in data
 	BISkey = "";
-	if (dataimport[0].hasOwnProperty("BIS")) {
+	if (dataimport2[0].hasOwnProperty("BIS")) {
 		BISkey = "BIS";
-	} else if (dataimport[0].hasOwnProperty("")) {
+	} else if (dataimport2[0].hasOwnProperty("")) {
 		BISkey = "NOM_EEG_BISPECTRAL_INDEX";
 	}
 	if (BISkey != "") {
