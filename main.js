@@ -17170,6 +17170,7 @@ function extendSession(ind) {
 VSimportdata = {};			//the processed array output by captureBIS
 VSimportparams = {};
 VSimportparams.altertime = 0;
+
 dataimport2 = new Array(); 	//the first array used by VSimportjson to capture
 dataimport3 = new Array(); 	//the alternative array used by VSimportjson to capture
 
@@ -17284,22 +17285,58 @@ function errorData(data) {
 	displayWarning("Critical error",data);
 }
 
+function preprocess() {
+	VSimportdata.timeepoch = new Array();
+	VSimportdata.timestring = new Array();
+	VSimportdata.BIS = new Array();
+	if ((dataimport2[0].Time.length == 23) && (dataimport2[0].hasOwnProperty("NOM_EEG_BISPECTRAL_INDEX"))) {
+		timeprior = 0;
+		for (i=0; i<dataimport2.length; i++) {
+			YYYY = dataimport2[i].Time.slice(6,10);
+			MM = dataimport2[i].Time.slice(3,5);
+			DD = dataimport2[i].Time.slice(0,2);
+			Tstring = dataimport2[i].Time.slice(11);
+			timestring = YYYY + "-" + MM + "-" + DD + "T" + Tstring;
+			timeepoch = Date.parse(timestring);
+			if (i==0) {
+				VSimportdata.timeepoch.push(timeepoch);
+				VSimportdata.timestring.push(timestring);
+				VSimportdata.BIS.push(dataimport2[i].NOM_EEG_BISPECTRAL_INDEX * 1);
+				timeprior = timeepoch;
+			} else {
+				timediff = Math.round((Date.parse(timestring) - timeprior)/1000);
+				for (j=0;j<timediff-1;j++) {
+					VSimportdata.timeepoch.push(undefined);
+					VSimportdata.timestring.push(undefined);
+					VSimportdata.BIS.push(undefined);
+				}
+				VSimportdata.timeepoch.push(timeepoch);
+				VSimportdata.timestring.push(timestring);
+				VSimportdata.BIS.push(dataimport2[i].NOM_EEG_BISPECTRAL_INDEX * 1);
+				timeprior = timeepoch;
+			}
+		}
+	}
+}
+
 function captureBIS(suppressdialog) {
-	VSimportparams.timestamp = new Date(dataimport2[0].Time);
-	VSimportparams.timestamp2 = new Date(dataimport2[1].Time);
-	VSimportparams.timeresolution = (Date.parse(VSimportparams.timestamp2) - Date.parse(VSimportparams.timestamp))/1000;
 	VSimportdata.BIS = new Array();
 	//find the correct BIS key in data
-	BISkey = "";
+	VSimportparams.BISkey = "";
 	if (dataimport2[0].hasOwnProperty("BIS")) {
-		BISkey = "BIS";
-	} else if (dataimport2[0].hasOwnProperty("NOM_EEG_BISPECTRAL_INDEX")) {
-		BISkey = "NOM_EEG_BISPECTRAL_INDEX";
-	}
-	if (BISkey != "") {
+		VSimportparams.timestamp = new Date(dataimport2[0].Time);
+		VSimportparams.timestamp2 = new Date(dataimport2[1].Time);
+		VSimportparams.timeresolution = (Date.parse(VSimportparams.timestamp2) - Date.parse(VSimportparams.timestamp))/1000;
+		VSimportparams.BISkey = "BIS";
 		for (i=0; i<dataimport2.length; i++) {
-    		VSimportdata.BIS[i*VSimportparams.timeresolution]=dataimport2[i][BISkey];
+    		VSimportdata.BIS[i*VSimportparams.timeresolution] = dataimport2[i][VSimportparams.BISkey];
 		}
+	} else if (dataimport2[0].hasOwnProperty("NOM_EEG_BISPECTRAL_INDEX")) {
+		VSimportparams.BISkey = "NOM_EEG_BISPECTRAL_INDEX";
+		preprocess();
+	}
+	if (VSimportparams.BISkey != "") {
+
 	} else {
 		displayWarning("BIS data loading failed","No suitable BIS data found in CSV file");
 	}
