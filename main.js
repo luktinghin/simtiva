@@ -17284,16 +17284,24 @@ function errorData(data) {
 	displayWarning("Critical error",data);
 }
 
-
-
-
 function captureBIS(suppressdialog) {
 	VSimportparams.timestamp = new Date(dataimport2[0].Time);
 	VSimportparams.timestamp2 = new Date(dataimport2[1].Time);
 	VSimportparams.timeresolution = (Date.parse(VSimportparams.timestamp2) - Date.parse(VSimportparams.timestamp))/1000;
 	VSimportdata.BIS = new Array();
-	for (i=0; i<dataimport2.length; i++) {
-    	VSimportdata.BIS[i*VSimportparams.timeresolution]=dataimport2[i].BIS;
+	//find the correct BIS key in data
+	BISkey == "";
+	if (dataimport[0].hasOwnProperty("BIS")) {
+		BISkey = "BIS";
+	} else if (dataimport[0].hasOwnProperty("")) {
+		BISkey = "NOM_EEG_BISPECTRAL_INDEX";
+	}
+	if (BISkey != "") {
+		for (i=0; i<dataimport2.length; i++) {
+    		VSimportdata.BIS[i*VSimportparams.timeresolution]=dataimport2[i].[BISkey];
+		}
+	} else {
+		displayWarning("BIS data loading failed","No suitable BIS data found in CSV file");
 	}
 	if (suppressdialog == 1) {
 
@@ -17412,6 +17420,7 @@ function VSimportjson() {
 }
 
 function VSreadjson() {
+	//obsolete as this cannot read a continuously-updated file
   //const content2 = document.getElementById("loadfile_container2");
   const [file2] = document.getElementById("myFile2").files;
   const reader2 = new FileReader();
