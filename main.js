@@ -17293,7 +17293,7 @@ function captureBIS(suppressdialog) {
 	BISkey = "";
 	if (dataimport2[0].hasOwnProperty("BIS")) {
 		BISkey = "BIS";
-	} else if (dataimport2[0].hasOwnProperty("")) {
+	} else if (dataimport2[0].hasOwnProperty("NOM_EEG_BISPECTRAL_INDEX")) {
 		BISkey = "NOM_EEG_BISPECTRAL_INDEX";
 	}
 	if (BISkey != "") {
