@@ -17202,7 +17202,7 @@ dropArea.addEventListener('drop', handleDrop, false);
 let fileEntry;
 let fileList;
 
-  const CSVToJSON = (csv) => {
+  function CSVToJSON(csv) {
     if (csv !== null) {
       var lines = csv.split(/\r\n|\n/);
       //console.log(lines);
@@ -17218,8 +17218,8 @@ let fileList;
       //console.log(jsonarray);
       return jsonarray;
     }
-  };
-  
+  }
+
 function handleDrop(e) {
   dt = e.dataTransfer;
   fileList = dt.files;
