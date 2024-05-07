@@ -17290,7 +17290,7 @@ function captureBIS(suppressdialog) {
 	VSimportparams.timeresolution = (Date.parse(VSimportparams.timestamp2) - Date.parse(VSimportparams.timestamp))/1000;
 	VSimportdata.BIS = new Array();
 	//find the correct BIS key in data
-	BISkey == "";
+	BISkey = "";
 	if (dataimport[0].hasOwnProperty("BIS")) {
 		BISkey = "BIS";
 	} else if (dataimport[0].hasOwnProperty("")) {
