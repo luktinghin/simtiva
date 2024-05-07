@@ -17202,6 +17202,24 @@ dropArea.addEventListener('drop', handleDrop, false);
 let fileEntry;
 let fileList;
 
+  const CSVToJSON = (csv) => {
+    if (csv !== null) {
+      var lines = csv.split(/\r\n|\n/);
+      //console.log(lines);
+      const headers = lines.shift().split(/\t|,/);
+
+      var jsonarray = lines.map((line) => {
+        const values = line.split(/\t|,/);
+        return headers.reduce(
+          (obj, header, index) => ((obj[header] = values[index]), obj),
+          {}
+        );
+      });
+      //console.log(jsonarray);
+      return jsonarray;
+    }
+  };
+  
 function handleDrop(e) {
   dt = e.dataTransfer;
   fileList = dt.files;
@@ -17268,23 +17286,7 @@ function errorData(data) {
 	displayWarning("Critical error",data);
 }
 
-  const CSVToJSON = (csv) => {
-    if (csv !== null) {
-      var lines = csv.split(/\r\n|\n/);
-      //console.log(lines);
-      const headers = lines.shift().split(/\t|,/);
 
-      var jsonarray = lines.map((line) => {
-        const values = line.split(/\t|,/);
-        return headers.reduce(
-          (obj, header, index) => ((obj[header] = values[index]), obj),
-          {}
-        );
-      });
-      //console.log(jsonarray);
-      return jsonarray;
-    }
-  };
 
 
 function captureBIS(suppressdialog) {
