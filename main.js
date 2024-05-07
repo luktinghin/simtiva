@@ -17298,7 +17298,7 @@ function captureBIS(suppressdialog) {
 	}
 	if (BISkey != "") {
 		for (i=0; i<dataimport2.length; i++) {
-    		VSimportdata.BIS[i*VSimportparams.timeresolution]=dataimport2[i].[BISkey];
+    		VSimportdata.BIS[i*VSimportparams.timeresolution]=dataimport2[i][BISkey];
 		}
 	} else {
 		displayWarning("BIS data loading failed","No suitable BIS data found in CSV file");
