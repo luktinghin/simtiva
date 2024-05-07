@@ -17202,7 +17202,7 @@ dropArea.addEventListener('drop', handleDrop, false);
 let fileEntry;
 let fileList;
 
-  function CSVToJSON(csv) {
+  function CSVtoJSON(csv) {
     if (csv !== null) {
       var lines = csv.split(/\r\n|\n/);
       //console.log(lines);
