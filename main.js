@@ -17169,8 +17169,11 @@ function extendSession(ind) {
 //VSCapture functions
 VSimportdata = {};			//the processed array output by captureBIS
 VSimportparams = {};
+VSimportparams.altertime = 0;
 dataimport2 = new Array(); 	//the first array used by VSimportjson to capture
 dataimport3 = new Array(); 	//the alternative array used by VSimportjson to capture
+
+//CEDITS: VScapture code, including drag and drop functionality, FileEntry methods, CSVtoJSON methods, all credits to John George K, creator of VSchart and VScapture.
 
 //drag and drop functionality
 let dropArea = document.getElementById("VSdropArea")
@@ -17225,16 +17228,63 @@ function handleFile(entry, successCallback, errorCallback) {
 	}, errorCallback);
 }
 
+function refreshFile(entry, successCallback, errorCallback) {
+	entry.file(function (file) {
+		console.log('fileEntry File Event fired');
+		readerX = new FileReader();
+		readerX.onload = function() {
+			successCallback(readerX.result);
+		}
+		readerX.onerror = function() {
+			errorCallback(readerX.error);
+		}
+		readerX.readAsText(file);	
+	}, errorCallback);
+}
+
 function readData(data) {
-	dataimport2 = JSON.parse(data);
+	tempJSON = CSVtoJSON(data);
+	dataimport2 = JSON.parse(tempJSON);
 	document.getElementById("VSimportconfirmbtn").classList.remove("disabled");
 	document.getElementById("VSimportmessage").innerHTML = "Data loaded successfully.";
 }
 
-function errorData(data) {
-	console.log(data);
+function readData2(data) {
+	//this is the refresh function
+	tempJSON = CSVtoJSON(data);
+	dataimport2 = JSON.parse(tempJSON);
+	//document.getElementById("VSimportconfirmbtn").classList.remove("disabled");
+	//document.getElementById("VSimportmessage").innerHTML = "Data loaded successfully.";
+	captureBIS(1);
+	if (VSimportparams.altertime != 0) {
+		VSaltertime2();
+	} else {
+		VSchartpopulate();	
+		myChart3.update();
+	}
 }
 
+function errorData(data) {
+	displayWarning("Critical error",data);
+}
+
+  const CSVToJSON = (csv) => {
+    if (csv !== null) {
+      var lines = csv.split(/\r\n|\n/);
+      //console.log(lines);
+      const headers = lines.shift().split(/\t|,/);
+
+      var jsonarray = lines.map((line) => {
+        const values = line.split(/\t|,/);
+        return headers.reduce(
+          (obj, header, index) => ((obj[header] = values[index]), obj),
+          {}
+        );
+      });
+      //console.log(jsonarray);
+      return jsonarray;
+    }
+  };
 
 
 function captureBIS(suppressdialog) {
@@ -17312,6 +17362,7 @@ function VSaltertime() {
 
 function VSaltertime2() {
 	altertime = document.getElementById("select_shifttime").value * 60;
+	VSimportparams.altertime = altertime;
 	VSimportparams.timestamp = new Date(dataimport2[0].Time);
 	VSimportparams.timestamp2 = new Date(dataimport2[1].Time);
 	VSimportparams.timeresolution = (Date.parse(VSimportparams.timestamp2) - Date.parse(VSimportparams.timestamp))/1000;
