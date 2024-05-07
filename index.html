@@ -444,7 +444,20 @@
 			</div>
 		</div>
 
-
+		<div id="modalVSimport" class="modal">
+			<div class="modal-content" id="modalVSimportcontent">
+				<div class="modal-header">Load Vital Signs Capture File</div>
+				<div class="modal-body">
+					<div>Load the JSON file here:</div>
+					<div id="VSdropArea">
+						<div><i class="fas fa-cloud-upload-alt"></i></div>
+						<div>Drag and drop the .CSV file from VSCapture here to begin real-time data transfer.</div>
+					</div>
+					<!--<input type="file" id="myFile2" accept=".json,.JSON,application/json" onchange="VSreadjson()" style="width:100%">-->
+				
+				</div>
+			</div>
+		</div>
 
 
 
@@ -1811,15 +1824,13 @@
 		<div id="VSchartcontainer">
 			<canvas id="myChart3"></canvas>
 		</div>
-		<div id="VScontrols">
+		<div id="VSimportbutton">
+			<button onclick="setmodal('modalVSimport')">Open Vital Signs Capture Dialog</button>
 			<div>
-				<div>Load the JSON file here:</div>
-				<div id="VSdropArea"></div>
-				<input type="file" id="myFile2" accept=".json,.JSON,application/json" onchange="VSreadjson()" style="width:100%">
+					<button onclick="VSaltertime();">alter time</button>
+					<button onclick="captureBIS();">process BIS</button>
+					<button onclick="VSchartpopulate(); myChart3.update();">draw chart</button>
 			</div>
-			<button onclick="VSaltertime();">alter time</button>
-			<button onclick="captureBIS();">process BIS</button>
-			<button onclick="VSchartpopulate(); myChart3.update();">draw chart</button>
 		</div>
 		<div id="ptolcard" class="">
 			<div id="ptolcard_left" style="padding:0.5rem;flex-basis:70%">
