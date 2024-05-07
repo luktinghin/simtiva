@@ -17261,14 +17261,14 @@ function refreshFile(entry, successCallback, errorCallback) {
 }
 
 function readData(data) {
-	dataimport2 = CSVtoJSON(data);
+	dataimport2 = JSON.parse(data);
 	document.getElementById("VSimportconfirmbtn").classList.remove("disabled");
 	document.getElementById("VSimportmessage").innerHTML = "Data loaded successfully.";
 }
 
 function readData2(data) {
 	//this is the refresh function
-	dataimport2 = CSVtoJSON(data);
+	dataimport2 = JSON.parse(data);
 	//document.getElementById("VSimportconfirmbtn").classList.remove("disabled");
 	//document.getElementById("VSimportmessage").innerHTML = "Data loaded successfully.";
 	captureBIS(1);
