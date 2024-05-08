@@ -17253,7 +17253,7 @@ function handleFile(entry, successCallback, errorCallback) {
 			errorCallback(readerX.error);
 		}
 		readerX.readAsText(file);
-		console.log(file);	
+		VSimportparams.fileType = file.type;	
 	}, errorCallback);
 }
 
@@ -17272,9 +17272,13 @@ function refreshFile(entry, successCallback, errorCallback) {
 }
 
 function readData(data) {
-	dataimport2 = CSVtoJSON(data);
-	document.getElementById("VSimportconfirmbtn").classList.remove("disabled");
-	document.getElementById("VSimportmessage").innerHTML = fileEntry.name + " - Data loaded successfully.";
+	if (VSimportparams.fileType == "text/csv") {
+		dataimport2 = CSVtoJSON(data);
+		document.getElementById("VSimportconfirmbtn").classList.remove("disabled");
+		document.getElementById("VSimportmessage").innerHTML = fileEntry.name + " - Data loaded successfully.";
+	} else {
+		displayWarning("Error","Error reading file");
+	}
 }
 
 function readData2(data) {
