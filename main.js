@@ -17313,6 +17313,7 @@ function preprocess() {
 			DD = dataimport2[i].Time.slice(0,2);
 			Tstring = dataimport2[i].Time.slice(11);
 			timestring = YYYY + "-" + MM + "-" + DD + "T" + Tstring;
+			VSimportparams.timestamp = timestring;
 			timeepoch = Date.parse(timestring);
 			if (i==0) {
 				VSimportdata.timeepoch.push(timeepoch);
@@ -17350,6 +17351,7 @@ function captureBIS(suppressdialog) {
 		VSimportparams.BISkey = "BIS";
 		for (i=0; i<dataimport2.length; i++) {
 			timestring = dataimport2[i].Time;
+			VSimportparams.timestamp = timestring;
 			timeepoch = Date.parse(timestring);
 			if (i==0) {
 				VSimportdata.timeepoch.push(timeepoch);
