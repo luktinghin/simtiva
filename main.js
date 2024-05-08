@@ -187,6 +187,21 @@ var loop7 = null;
 window.BIS_array = [];
 window.eventArray = [];
 
+//VSCapture functions
+VSimportdata = {};			//the processed array output by captureBIS
+VSimportparams = {};
+VSimportparams.altertime = 0;
+
+dataimport2 = new Array(); 	//the first array used by VSimportjson to capture
+dataimport3 = new Array(); 	//the alternative array used by VSimportjson to capture
+
+//CEDITS: VScapture code, including drag and drop functionality, FileEntry methods, CSVtoJSON methods, all credits to John George K, creator of VSchart and VScapture.
+
+//drag and drop functionality
+ var dropArea = document.getElementById("VSdropArea");
+ var fileEntry;
+ var fileList;
+
 const arrBodyIcons = [
 	["baby","<i class='fas fa-baby fa-fw tooltip bodyicon'><span class='tooltiptext'>BMI-for-age reference range from WHO</span></i>"],
 	["child","<i class='fas fa-child fa-fw tooltip bodyicon'><span class='tooltiptext'>BMI-for-age & weight-for-age reference range from WHO</span></i>"],
@@ -17166,27 +17181,21 @@ function extendSession(ind) {
 	}
 }
 
-//VSCapture functions
-VSimportdata = {};			//the processed array output by captureBIS
-VSimportparams = {};
-VSimportparams.altertime = 0;
 
-dataimport2 = new Array(); 	//the first array used by VSimportjson to capture
-dataimport3 = new Array(); 	//the alternative array used by VSimportjson to capture
 
-//CEDITS: VScapture code, including drag and drop functionality, FileEntry methods, CSVtoJSON methods, all credits to John George K, creator of VSchart and VScapture.
+  dropArea.addEventListener("dragenter", preventDefaults, false);
+  dropArea.addEventListener("dragover", preventDefaults, false);
+  dropArea.addEventListener("dragleave", preventDefaults, false);
+  dropArea.addEventListener("drop", preventDefaults, false);
 
-//drag and drop functionality
-let dropArea = document.getElementById("VSdropArea")
-;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-  dropArea.addEventListener(eventName, preventDefaults, false)
-})
-;['dragenter', 'dragover'].forEach(eventName => {
-  dropArea.addEventListener(eventName, highlight, false)
-})
-;['dragleave', 'drop'].forEach(eventName => {
-  dropArea.addEventListener(eventName, unhighlight, false)
-})
+
+  dropArea.addEventListener("dragenter", highlight, false);
+  dropArea.addEventListener("dragover", highlight, false);
+
+
+  dropArea.addEventListener("dragleave", unhighlight, false);
+  dropArea.addEventListener("drop", unhighlight, false);
+
 function highlight(e) {
   dropArea.classList.add('VShighlight')
 }
@@ -17200,8 +17209,7 @@ function preventDefaults (e) {
 }
 
 dropArea.addEventListener('drop', handleDrop, false);
-let fileEntry;
-let fileList;
+
 
   function CSVtoJSON(csv) {
     if (csv !== null) {
@@ -17227,6 +17235,7 @@ function handleDrop(e) {
   items = dt.items;
   fileEntry = items[0].webkitGetAsEntry();
   console.log(items[0]);
+  console.log(items[0].type);
   console.log("drop event fired");
   console.log(fileEntry);
   handleFile(fileEntry, readData, errorData);
@@ -17238,6 +17247,7 @@ function handleFile(entry, successCallback, errorCallback) {
 		console.log('fileEntry File Event fired');
 		readerX = new FileReader();
 		readerX.onload = function() {
+			console.log(readerX.result);
 			successCallback(readerX.result);
 		}
 		readerX.onerror = function() {
@@ -17264,7 +17274,7 @@ function refreshFile(entry, successCallback, errorCallback) {
 function readData(data) {
 	dataimport2 = CSVtoJSON(data);
 	document.getElementById("VSimportconfirmbtn").classList.remove("disabled");
-	document.getElementById("VSimportmessage").innerHTML = "Data loaded successfully.";
+	document.getElementById("VSimportmessage").innerHTML = fileEntry.name + " - Data loaded successfully.";
 }
 
 function readData2(data) {
