@@ -17247,13 +17247,13 @@ function handleFile(entry, successCallback, errorCallback) {
 		console.log('fileEntry File Event fired');
 		readerX = new FileReader();
 		readerX.onload = function() {
-			console.log(readerX.result);
 			successCallback(readerX.result);
 		}
 		readerX.onerror = function() {
 			errorCallback(readerX.error);
 		}
-		readerX.readAsText(file);	
+		readerX.readAsText(file);
+		console.log(file);	
 	}, errorCallback);
 }
 
