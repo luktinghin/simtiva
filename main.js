@@ -17307,13 +17307,14 @@ function preprocess() {
 		//Philips device for: MPDataExport.csv
 		//contains Timestamp with milliseconds
 		timeprior = 0;
+		VSimportparams.timestamp = timestring;
 		for (i=0; i<dataimport2.length; i++) {
 			YYYY = dataimport2[i].Time.slice(6,10);
 			MM = dataimport2[i].Time.slice(3,5);
 			DD = dataimport2[i].Time.slice(0,2);
 			Tstring = dataimport2[i].Time.slice(11);
 			timestring = YYYY + "-" + MM + "-" + DD + "T" + Tstring;
-			VSimportparams.timestamp = timestring;
+			
 			timeepoch = Date.parse(timestring);
 			if (i==0) {
 				VSimportdata.timeepoch.push(timeepoch);
@@ -17322,28 +17323,31 @@ function preprocess() {
 				timeprior = timeepoch;
 			} else {
 				timediff = Math.round((timeepoch - timeprior)/1000);
-				for (j=0;j<timediff-1;j++) {
-					VSimportdata.timeepoch.push(undefined);
-					VSimportdata.timestring.push(undefined);
-					VSimportdata.BIS.push(undefined);
+				if (timediff >= 1) {
+					//only push data if it is more than 1s time interval
+					for (j=0;j<timediff-1;j++) {
+						VSimportdata.timeepoch.push(undefined);
+						VSimportdata.timestring.push(undefined);
+						VSimportdata.BIS.push(undefined);
+					}
+					VSimportdata.timeepoch.push(timeepoch);
+					VSimportdata.timestring.push(timestring);
+					VSimportdata.BIS.push(dataimport2[i].NOM_EEG_BISPECTRAL_INDEX * 1);
+					timeprior = timeepoch;
 				}
-				VSimportdata.timeepoch.push(timeepoch);
-				VSimportdata.timestring.push(timestring);
-				VSimportdata.BIS.push(dataimport2[i].NOM_EEG_BISPECTRAL_INDEX * 1);
-				timeprior = timeepoch;
 			}
 		}
 	} else if ((dataimport2[0].Time.length == 23) && (dataimport2[0].hasOwnProperty("BIS"))) {
 		//"SAMPLE BIS MONITOR WITH NUMERICAL INPUT", John, 10/5/2024
 		//contains Timestamp with milliseconds
 		timeprior = 0;
+		VSimportparams.timestamp = timestring;
 		for (i=0; i<dataimport2.length; i++) {
 			YYYY = dataimport2[i].Time.slice(6,10);
 			MM = dataimport2[i].Time.slice(3,5);
 			DD = dataimport2[i].Time.slice(0,2);
 			Tstring = dataimport2[i].Time.slice(11);
 			timestring = YYYY + "-" + MM + "-" + DD + "T" + Tstring;
-			VSimportparams.timestamp = timestring;
 			timeepoch = Date.parse(timestring);
 			if (i==0) {
 				VSimportdata.timeepoch.push(timeepoch);
@@ -17352,15 +17356,17 @@ function preprocess() {
 				timeprior = timeepoch;
 			} else {
 				timediff = Math.round((timeepoch - timeprior)/1000);
-				for (j=0;j<timediff-1;j++) {
-					VSimportdata.timeepoch.push(undefined);
-					VSimportdata.timestring.push(undefined);
-					VSimportdata.BIS.push(undefined);
+				if (timediff >= 1) {
+					for (j=0;j<timediff-1;j++) {
+						VSimportdata.timeepoch.push(undefined);
+						VSimportdata.timestring.push(undefined);
+						VSimportdata.BIS.push(undefined);
+					}
+					VSimportdata.timeepoch.push(timeepoch);
+					VSimportdata.timestring.push(timestring);
+					VSimportdata.BIS.push(dataimport2[i].BIS * 1);
+					timeprior = timeepoch;
 				}
-				VSimportdata.timeepoch.push(timeepoch);
-				VSimportdata.timestring.push(timestring);
-				VSimportdata.BIS.push(dataimport2[i].BIS * 1);
-				timeprior = timeepoch;
 			}
 		}
 	}
