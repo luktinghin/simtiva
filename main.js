@@ -2011,15 +2011,15 @@ setTimeout(
 	    		parsing: false,
 	    		hidden:false
 	    	},{
-	    		label: 'Infusion rate (Alaris)', 
+	    		label: 'Infusion rate calculated from VI (Alaris)', 
 	    		data: [{x:0, y:0}],
 	    		borderWidth:3,
 	    		pointRadius:3,
 	    		borderJoinStyle: 'round',
-	    		borderColor: 'rgb(9, 203, 93,0.7)',
-	    		backgroundColor: 'rgb(9, 203, 93,0.4)',
-	    		pointBorderColor: 'rgb(9, 203, 93,0.8)',
-	    		pointBackgroundColor: 'rgb(9, 203, 93,0.8)',
+	    		borderColor: bluePri,
+	    		backgroundColor: bluePri50,
+	    		pointBorderColor: bluePri,
+	    		pointBackgroundColor: bluePri50,
 	    		fill: false,
 	    		parsing: false,
 	    		hidden:false
@@ -2029,10 +2029,10 @@ setTimeout(
 	    		borderWidth:3,
 	    		pointRadius:3,
 	    		borderJoinStyle: 'round',
-	    		borderColor: 'rgb(9, 203, 93,0.7)',
-	    		backgroundColor: 'rgb(9, 203, 93,0.4)',
-	    		pointBorderColor: 'rgb(9, 203, 93,0.8)',
-	    		pointBackgroundColor: 'rgb(9, 203, 93,0.8)',
+	    		borderColor: yellowPri,
+	    		backgroundColor: yellowPri50,
+	    		pointBorderColor: yellowPri,
+	    		pointBackgroundColor: yellowPri50,
 	    		fill: false,
 	    		parsing: false,
 	    		hidden:false
@@ -17581,6 +17581,45 @@ function preprocess() {
 	}
 }
 
+function preprocessInfusion(data) {
+    var timeprior;
+    var VIprior = 0;
+    var speed = 0;
+    for (i=0;i<data.length;i++) {
+        	YYYY = data[i].Time.slice(6,10);
+			MM = data[i].Time.slice(3,5);
+			DD = data[i].Time.slice(0,2);
+			Tstring = data[i].Time.slice(11);
+			timestring = YYYY + "-" + MM + "-" + DD + "T" + Tstring;
+            timeepoch = Date.parse(timestring);
+            //console.log("current" + timeepoch);
+            if (i == 0) {
+                //store baseline time, not necessarily start time
+                timeprior = timeepoch;
+            }
+            if ((data[i].VolumeInfused>0) && (data[i].VolumeInfused>VIprior)) {
+                //so, infusion has started
+                //and this is not data duplicate, i.e. VI has increased
+                console.log("moved; timestamp " + timeepoch + " " + timestring);
+                //do consider that i may be zero.
+                if (i==0) {
+                    deltaVI = data[i].VolumeInfused;
+                    deltaTime = 1;
+                } else {
+                    deltaVI = data[i].VolumeInfused - data[i-1].VolumeInfused;
+                    deltaTime = Math.round((timeepoch - timeprior)/1000);
+                }
+                
+                
+                speed = deltaVI / deltaTime;
+                speedmlh = speed * 3600;
+                console.log("rate ml/h " + speedmlh);
+                timeprior = timeepoch;
+                VIprior = data[i].VolumeInfused;
+            }
+    }
+}
+
 function captureBIS(suppressdialog) {
 	VSimportdata.timeepoch = new Array();
 	VSimportdata.timestring = new Array();
@@ -17668,17 +17707,19 @@ function VSaltertime() {
 function VSaltertime2() {
 	altertime = document.getElementById("select_shifttime").value * 60;
 	VSimportparams.altertime = altertime;
-	VSimportparams.timestamp = new Date(dataimport2[0].Time);
-	VSimportparams.timestamp2 = new Date(dataimport2[1].Time);
-	VSimportparams.timeresolution = (Date.parse(VSimportparams.timestamp2) - Date.parse(VSimportparams.timestamp))/1000;
+	//VSimportparams.timestamp = new Date(dataimport2[0].Time);
+	//VSimportparams.timestamp2 = new Date(dataimport2[1].Time);
+	//VSimportparams.timeresolution = (Date.parse(VSimportparams.timestamp2) - Date.parse(VSimportparams.timestamp))/1000;
 	if (VSimportdata.BIS == undefined) {
 		VSimportdata.BIS = new Array();
 	} else {
 		VSimportdata.BIS.length = 0;
 	}
 	for (i=0; i<dataimport2.length; i++) {
-		if (i*VSimportparams.timeresolution - altertime > 0) {
-    		VSimportdata.BIS[i*VSimportparams.timeresolution - altertime]=dataimport2[i].BIS;
+		if (i - altertime > 0) {
+    		VSimportdata.BIS[i - altertime]=dataimport2[i].BIS;
+    		VSimportdata.timeepoch[i - altertime]=dataimport2[i].BIS;
+    		VSimportdata.timestring[i - altertime]=dataimport2[i].BIS;
     	}
 	}
 	VSchartpopulate();
