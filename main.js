@@ -1955,6 +1955,215 @@ setTimeout(
 
 },1100);
 
+setTimeout(
+
+		function() {
+
+
+		var ctx = document.getElementById('myChart4').getContext('2d');
+
+		//var y = document.getElementById('chartwrapper').offsetHeight*0.6;
+
+		/*
+		var gradientGreen = ctx.createLinearGradient(0, 100, 0, y+100);  //x0y0x1y1  //y+100 last param
+			gradientGreen.addColorStop(0.4, 'rgba(9, 203, 93,0.4)');   
+			gradientGreen.addColorStop(1, 'rgba(9, 203, 93,0.05)');
+
+			console.log(gradientGreen);
+			*/
+
+
+		/*
+		var gradientRed = ctx.createLinearGradient(0, 0, 0, y); // y last param
+			gradientRed.addColorStop(0.4, 'rgba(231, 50, 39,0.4)');   
+			gradientRed.addColorStop(1, 'rgba(231, 50, 39,0)');
+
+			*/
+
+
+		myChart4 = new Chart(ctx, {
+	    type: 'line',
+	    data: {
+	    	datasets: [{
+	    		label: 'CP (Alaris)', 
+	    		data: [{x: 0, y: 0}],
+	    		borderWidth:3,
+	    		pointRadius:3,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(231, 50, 39,0.7)',
+	    		backgroundColor: 'rgb(231, 50, 39,0.4)',
+	    		pointBorderColor: 'rgb(231, 50, 39,0.8)',
+	    		pointBackgroundColor: 'rgb(231, 50, 39,0.8)',
+	    		fill: false,
+	    		parsing: false,
+	    		hidden: false
+	    	},{
+	    		label: 'CE (Alaris)', 
+	    		data: [{x:0, y:0}],
+	    		borderWidth:3,
+	    		pointRadius:3,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(9, 203, 93,0.7)',
+	    		backgroundColor: 'rgb(9, 203, 93,0.4)',
+	    		pointBorderColor: 'rgb(9, 203, 93,0.8)',
+	    		pointBackgroundColor: 'rgb(9, 203, 93,0.8)',
+	    		fill: false,
+	    		parsing: false,
+	    		hidden:false
+	    	},{
+	    		label: 'Infusion rate (Alaris)', 
+	    		data: [{x:0, y:0}],
+	    		borderWidth:3,
+	    		pointRadius:3,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(9, 203, 93,0.7)',
+	    		backgroundColor: 'rgb(9, 203, 93,0.4)',
+	    		pointBorderColor: 'rgb(9, 203, 93,0.8)',
+	    		pointBackgroundColor: 'rgb(9, 203, 93,0.8)',
+	    		fill: false,
+	    		parsing: false,
+	    		hidden:false
+	    	},{
+	    		label: 'Volume infused (Alaris)', 
+	    		data: [{x:0, y:0}],
+	    		borderWidth:3,
+	    		pointRadius:3,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(9, 203, 93,0.7)',
+	    		backgroundColor: 'rgb(9, 203, 93,0.4)',
+	    		pointBorderColor: 'rgb(9, 203, 93,0.8)',
+	    		pointBackgroundColor: 'rgb(9, 203, 93,0.8)',
+	    		fill: false,
+	    		parsing: false,
+	    		hidden:false
+	    	}]
+	    }, //end data
+	    options: {
+	    	maintainAspectRatio: false,
+	    	interaction: {
+
+	    	},
+	    	scales: {
+	    		y: {
+	    			display: true,
+	    			min: 0,
+	    			max: 6,
+					title: {
+						display: true,
+						text:'BIS'
+					}
+	    		},
+	    		x: {
+	    			type: 'linear',
+	    			display: true,
+	    			position:'bottom',
+	    			min:0,
+	    			max:20,
+					title: {
+						display: true,
+						text:'Time (minutes)'
+					}
+	    		}
+	    	},
+	        animation: {
+	        	duration: 200
+	        },
+	        transitions: {
+	        	active: {
+	        		animation: {
+	        			duration: 200
+	        		}
+	        	}
+	        },
+
+		    plugins: { //start plugins
+		    	//shadingArea,
+			    legend: {
+			    		onClick: null,
+				    	labels: {
+				    	boxWidth: 20,
+				    	/*
+				    	filter: function(item, chart) {
+
+				    	}
+				    	*/
+			    	}
+			    },
+			    tooltip: {
+			    	mode: 'index',
+			    	intersect: false,
+			    	footerFont: {
+			    		weight: 'normal',
+			    		size: 10
+			    	},
+	            	filter: function(tooltipItem, data) {
+	
+	            	},
+	            	position: 'nearest',
+	            	caretSize: 0,
+	            	backgroundColor: 'rgba(0,0,0,0.5)',
+					callbacks: {
+						title: function(context) {
+
+						},
+						
+	                	label: function(context) {
+	                		
+	 
+	                	},
+
+	                	footer: function(tooltipItems) {
+
+
+
+	                	}
+	                	
+	                }
+			    },
+		    	crosshair: {
+		    		line: {
+		    			color: '#66F',
+		    			width: 1,
+		    			//dashPattern: [20,5]
+		    		},
+			        sync: {
+			          enabled: true,            // enable trace line syncing with other charts
+			          group: 1,                 // chart group
+			          suppressTooltips: false   // suppress tooltips when showing a synced tracer
+			        },
+			        zoom: {
+			        	enabled: false,
+			        }
+		    	},
+		    	/*
+		    	annotation: {
+		    		annotations: {
+		    			line0: {
+		    				type: 'line',
+		    				drawTime: 'beforeDatasetsDraw',
+		    				xMin: getEventLine(0),
+		    				xMax: getEventLine(0),
+		    				borderColor: 'rgba(255,0,0,0.2)',
+		    				borderWidth: 2,
+		    				label: {
+		    					content: getEventLabel(0),
+		    					enabled: true
+		    				}
+		    			}
+		    		}
+		    	}
+		    	*/
+		    } //endplugins
+	    } //end options
+	    //, plugins: [multiply],
+
+
+	}//end charting function
+	);
+
+
+},1100);
+
 //dark mode activation
 	
 	if (localStorage.getItem("colourMode") == "dark") {
@@ -17307,16 +17516,16 @@ function preprocess() {
 		//Philips device for: MPDataExport.csv
 		//contains Timestamp with milliseconds
 		timeprior = 0;
-		VSimportparams.timestamp = timestring;
+		
 		for (i=0; i<dataimport2.length; i++) {
 			YYYY = dataimport2[i].Time.slice(6,10);
 			MM = dataimport2[i].Time.slice(3,5);
 			DD = dataimport2[i].Time.slice(0,2);
 			Tstring = dataimport2[i].Time.slice(11);
 			timestring = YYYY + "-" + MM + "-" + DD + "T" + Tstring;
-			
 			timeepoch = Date.parse(timestring);
 			if (i==0) {
+				VSimportparams.timestamp = timestring;
 				VSimportdata.timeepoch.push(timeepoch);
 				VSimportdata.timestring.push(timestring);
 				VSimportdata.BIS.push(dataimport2[i].NOM_EEG_BISPECTRAL_INDEX * 1);
@@ -17341,7 +17550,6 @@ function preprocess() {
 		//"SAMPLE BIS MONITOR WITH NUMERICAL INPUT", John, 10/5/2024
 		//contains Timestamp with milliseconds
 		timeprior = 0;
-		VSimportparams.timestamp = timestring;
 		for (i=0; i<dataimport2.length; i++) {
 			YYYY = dataimport2[i].Time.slice(6,10);
 			MM = dataimport2[i].Time.slice(3,5);
@@ -17350,6 +17558,7 @@ function preprocess() {
 			timestring = YYYY + "-" + MM + "-" + DD + "T" + Tstring;
 			timeepoch = Date.parse(timestring);
 			if (i==0) {
+				VSimportparams.timestamp = timestring;
 				VSimportdata.timeepoch.push(timeepoch);
 				VSimportdata.timestring.push(timestring);
 				VSimportdata.BIS.push(dataimport2[i].BIS * 1);

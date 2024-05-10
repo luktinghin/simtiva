@@ -2302,7 +2302,11 @@ body.dark .loadduration {
   padding-top: 10px;
   padding-bottom: 10px;
 }
-#VSchartcontainer {
+#VSchartcontainerBIS {
+  height: 220px;
+  width: 100%;
+}
+#VSchartcontainerinfusion {
   height: 220px;
   width: 100%;
 }
