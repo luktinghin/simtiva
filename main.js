@@ -17333,24 +17333,16 @@ function preprocess() {
 				timeprior = timeepoch;
 			}
 		}
-	}
-}
-
-function captureBIS(suppressdialog) {
-	VSimportdata.timeepoch = new Array();
-	VSimportdata.timestring = new Array();
-	VSimportdata.BIS = new Array();
-	//find the correct BIS key in data
-	VSimportparams.BISkey = "";
-	if (dataimport2[0].hasOwnProperty("BIS")) {
-		//AS3 monitor??
-		//VSimportparams.timestamp = new Date(dataimport2[0].Time);
-		//VSimportparams.timestamp2 = new Date(dataimport2[1].Time);
-		//VSimportparams.timeresolution = (Date.parse(VSimportparams.timestamp2) - Date.parse(VSimportparams.timestamp))/1000;
+	} else if ((dataimport2[0].Time.length == 23) && (dataimport2[0].hasOwnProperty("BIS"))) {
+		//"SAMPLE BIS MONITOR WITH NUMERICAL INPUT", John, 10/5/2024
+		//contains Timestamp with milliseconds
 		timeprior = 0;
-		VSimportparams.BISkey = "BIS";
 		for (i=0; i<dataimport2.length; i++) {
-			timestring = dataimport2[i].Time;
+			YYYY = dataimport2[i].Time.slice(6,10);
+			MM = dataimport2[i].Time.slice(3,5);
+			DD = dataimport2[i].Time.slice(0,2);
+			Tstring = dataimport2[i].Time.slice(11);
+			timestring = YYYY + "-" + MM + "-" + DD + "T" + Tstring;
 			VSimportparams.timestamp = timestring;
 			timeepoch = Date.parse(timestring);
 			if (i==0) {
@@ -17371,6 +17363,19 @@ function captureBIS(suppressdialog) {
 				timeprior = timeepoch;
 			}
 		}
+	}
+}
+
+function captureBIS(suppressdialog) {
+	VSimportdata.timeepoch = new Array();
+	VSimportdata.timestring = new Array();
+	VSimportdata.BIS = new Array();
+	//find the correct BIS key in data
+	VSimportparams.BISkey = "";
+	if (dataimport2[0].hasOwnProperty("BIS")) {
+		VSimportparams.BISkey = "BIS";
+		preprocess();
+
 	} else if (dataimport2[0].hasOwnProperty("NOM_EEG_BISPECTRAL_INDEX")) {
 		VSimportparams.BISkey = "NOM_EEG_BISPECTRAL_INDEX";
 		preprocess();
