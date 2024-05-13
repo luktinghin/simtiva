@@ -17563,7 +17563,7 @@ function readData2(data) {
 function readDataInfusion(data) {
 	if (VSimportparams.fileType == "text/csv") {
 		dataimportinfusion = CSVtoJSON(data);
-		//document.getElementById("VSimportconfirmbtn").classList.remove("disabled");
+		document.getElementById("VSimportconfirmbtn").classList.remove("disabled");
 		document.getElementById("VSimportmessage2").innerHTML = fileEntry2.name + " - Data loaded successfully.";
 	} else {
 		displayWarning("Error","Error reading file");
@@ -17911,13 +17911,24 @@ function VSaltertime() {
 }
 
 function VSimporttogglescreen(param) {
+	btn2 = document.getElementById("VSloadinfusionbtn");
+	btn1 = document.getElementById("VSimportconfirmbtn");
 	if (param == 1) {
 		document.getElementById("VSmodalscreen1").classList.remove("hide");
 		document.getElementById("VSmodalscreen2").classList.remove("open");
-
+		btn1.classList.add("disabled");
+		btn1.setAttribute("onclick","captureBIS(1);VSchartpopulate();hidemodal('modalVSimport');myChart3.update();");
+		btn2.innerHTML = "Load Infusion Data";
+		btn2.setAttribute("onclick","VSimporttogglescreen(2)");
 	} else if (param == 2) {
 		document.getElementById("VSmodalscreen1").classList.add("hide");
 		document.getElementById("VSmodalscreen2").classList.add("open");
+		captureBIS(1);VSchartpopulate();myChart3.update();
+		btn1.classList.add("disabled");
+		btn1.setAttribute("onclick","captureInfusion(1);VSchartpopulateinfusion();hidemodal('modalVSimport');myChart4.update();")
+		btn2.innerHTML = "Load BIS Data";
+		btn2.setAttribute("onclick","VSimporttogglescreen(1)");
+
 	}
 }
 
