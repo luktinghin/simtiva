@@ -448,16 +448,27 @@
 			<div class="modal-content" id="modalVSimportcontent">
 				<div class="modal-header">Load Vital Signs Capture File</div>
 				<div class="modal-body">
-					<div>Load the CSV file here:</div>
-					<div id="VSdropArea">
-						<div style="font-size:400%" class="VSicon"><i class="fas fa-cloud-download-alt"></i></div>
-						<div style="width:80%">Drag and drop the .CSV file from VSCapture here to begin real-time data transfer.</div>
+					<div id="VSmodalscreencontainer">
+						<div id="VSmodalscreen1">
+							<div>Load the BIS CSV file here:</div>
+							<div id="VSdropArea">
+								<div style="font-size:400%" class="VSicon"><i class="fas fa-cloud-download-alt"></i></div>
+								<div style="width:80%">Drag and drop the .CSV file from VSCapture here to begin real-time data transfer.</div>
+							</div>
+							<div id="VSimportmessage">&nbsp;</div>
+						</div><!-- end screen1-->
+						<div id="VSmodalscreen2">
+							<div>Load the infusion data CSV file here:</div>
+							<div id="VSdropArea2">
+								<div style="font-size:400%" class="VSicon"><i class="fas fa-cloud-download-alt"></i></div>
+								<div style="width:80%">Drag and drop the .CSV file from VSCapture here to begin real-time data transfer.</div>
+							</div>
+							<div id="VSimportmessage2">&nbsp;</div>
+						</div><!-- end screen2-->
 					</div>
-					<!--<input type="file" id="myFile2" accept=".json,.JSON,application/json" onchange="VSreadjson()" style="width:100%">-->
-				
-					<div id="VSimportmessage">&nbsp;</div>
 					<div id="VSimportbuttons">
 						<a class="button invert disabled" id="VSimportconfirmbtn" onclick="captureBIS(1);VSchartpopulate();hidemodal('modalVSimport');myChart3.update();">Confirm</a>
+						<a class="button" id="VSloadinfusionbtn" onclick="VSimporttogglescreen(2)">Load Infusion Data</a>
 						<a class="button alt right" onclick="hidemodal('modalVSimport');">Cancel</a>
 					</div>
 				</div>

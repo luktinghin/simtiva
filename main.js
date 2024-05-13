@@ -199,8 +199,11 @@ dataimport3 = new Array(); 	//the alternative array used by VSimportjson to capt
 
 //drag and drop functionality
  var dropArea = document.getElementById("VSdropArea");
+ var dropArea2 = document.getElementById("VSdropArea2");
  var fileEntry;
+ var fileEntry2;
  var fileList;
+ var fileList2;
 
 const arrBodyIcons = [
 	["baby","<i class='fas fa-baby fa-fw tooltip bodyicon'><span class='tooltiptext'>BMI-for-age reference range from WHO</span></i>"],
@@ -1996,7 +1999,8 @@ setTimeout(
 	    		pointBackgroundColor: 'rgb(231, 50, 39,0.8)',
 	    		fill: false,
 	    		parsing: false,
-	    		hidden: false
+	    		hidden: false,
+	    		yAxisID: 'y',
 	    	},{
 	    		label: 'CE (Alaris)', 
 	    		data: [{x:0, y:0}],
@@ -2009,7 +2013,8 @@ setTimeout(
 	    		pointBackgroundColor: 'rgb(9, 203, 93,0.8)',
 	    		fill: false,
 	    		parsing: false,
-	    		hidden:false
+	    		hidden:false,
+	    		yAxisID: 'y',
 	    	},{
 	    		label: 'Infusion rate calculated from VI (Alaris)', 
 	    		data: [{x:0, y:0}],
@@ -2022,7 +2027,8 @@ setTimeout(
 	    		pointBackgroundColor: bluePri50,
 	    		fill: false,
 	    		parsing: false,
-	    		hidden:false
+	    		hidden:false,
+	    		yAxisID: 'y1',
 	    	},{
 	    		label: 'Volume infused (Alaris)', 
 	    		data: [{x:0, y:0}],
@@ -2035,7 +2041,8 @@ setTimeout(
 	    		pointBackgroundColor: yellowPri50,
 	    		fill: false,
 	    		parsing: false,
-	    		hidden:false
+	    		hidden:false,
+	    		yAxisID: 'y1',
 	    	}]
 	    }, //end data
 	    options: {
@@ -2050,8 +2057,22 @@ setTimeout(
 	    			max: 6,
 					title: {
 						display: true,
-						text:'BIS'
-					}
+						text:'Concentration (mcg/ml)',
+					},
+	    		},
+	    		y1: {
+	    			type: 'linear',
+	    			display: true,
+	    			position: 'right',
+	    			min: 0,
+	    			max: 100,
+	    			title: {
+	    				display: true,
+	    				text:'Infusion rate (ml/h)',
+	    			},
+	    			grid: {
+	    				drawOnChartArea: false,
+	    			},
 	    		},
 	    		x: {
 	    			type: 'linear',
@@ -17419,6 +17440,30 @@ function preventDefaults (e) {
 
 dropArea.addEventListener('drop', handleDrop, false);
 
+  dropArea2.addEventListener("dragenter", preventDefaults, false);
+  dropArea2.addEventListener("dragover", preventDefaults, false);
+  dropArea2.addEventListener("dragleave", preventDefaults, false);
+  dropArea2.addEventListener("drop", preventDefaults, false);
+
+
+  dropArea2.addEventListener("dragenter", highlight2, false);
+  dropArea2.addEventListener("dragover", highlight2, false);
+
+
+  dropArea2.addEventListener("dragleave", unhighlight2, false);
+  dropArea2.addEventListener("drop", unhighlight2, false);
+
+function highlight2(e) {
+  dropArea2.classList.add('VShighlight')
+}
+function unhighlight2(e) {
+  dropArea2.classList.remove('VShighlight')
+}
+
+dropArea.addEventListener('drop', handleDrop, false);
+
+dropArea2.addEventListener('drop', handleDrop2, false);
+
 
   function CSVtoJSON(csv) {
     if (csv !== null) {
@@ -17450,6 +17495,17 @@ function handleDrop(e) {
   handleFile(fileEntry, readData, errorData);
 }
 
+function handleDrop2(e) {
+  dt = e.dataTransfer;
+  fileList2 = dt.files;
+  items = dt.items;
+  fileEntry2 = items[0].webkitGetAsEntry();
+  console.log(items[0]);
+  console.log(items[0].type);
+  console.log("drop event fired (INFUSION)");
+  console.log(fileEntry2);
+  handleFile(fileEntry2, readDataInfusion, errorData);
+}
 
 function handleFile(entry, successCallback, errorCallback) {
 	entry.file(function (file) {
@@ -17504,14 +17560,22 @@ function readData2(data) {
 	}
 }
 
+function readDataInfusion(data) {
+	if (VSimportparams.fileType == "text/csv") {
+		dataimportinfusion = CSVtoJSON(data);
+		//document.getElementById("VSimportconfirmbtn").classList.remove("disabled");
+		document.getElementById("VSimportmessage2").innerHTML = fileEntry2.name + " - Data loaded successfully.";
+	} else {
+		displayWarning("Error","Error reading file");
+	}
+}
+
 function errorData(data) {
 	displayWarning("Critical error",data);
 }
 
 function preprocess() {
-	//VSimportdata.timeepoch = new Array();
-	//VSimportdata.timestring = new Array();
-	//VSimportdata.BIS = new Array();
+	//create two arrays of BIS: one for backup ("ORIGINAL") and one for display ("WORKING")
 	if ((dataimport2[0].Time.length == 23) && (dataimport2[0].hasOwnProperty("NOM_EEG_BISPECTRAL_INDEX"))) {
 		//Philips device for: MPDataExport.csv
 		//contains Timestamp with milliseconds
@@ -17525,23 +17589,32 @@ function preprocess() {
 			timestring = YYYY + "-" + MM + "-" + DD + "T" + Tstring;
 			timeepoch = Date.parse(timestring);
 			if (i==0) {
-				VSimportparams.timestamp = timestring;
-				VSimportdata.timeepoch.push(timeepoch);
-				VSimportdata.timestring.push(timestring);
-				VSimportdata.BIS.push(dataimport2[i].NOM_EEG_BISPECTRAL_INDEX * 1);
+				VSimportparams.timestamp1 = timestring;
+				VSimportdata.timeepoch1original.push(timeepoch);
+				VSimportdata.timeepoch1working.push(timeepoch);
+				VSimportdata.timestring1original.push(timestring);
+				VSimportdata.timestring1working.push(timestring);
+				VSimportdata.BISoriginal.push(dataimport2[i].NOM_EEG_BISPECTRAL_INDEX * 1);
+				VSimportdata.BISworking.push(dataimport2[i].NOM_EEG_BISPECTRAL_INDEX * 1);
 				timeprior = timeepoch;
 			} else {
 				timediff = Math.round((timeepoch - timeprior)/1000);
 				if (timediff >= 1) {
 					//only push data if it is more than 1s time interval
 					for (j=0;j<timediff-1;j++) {
-						VSimportdata.timeepoch.push(undefined);
-						VSimportdata.timestring.push(undefined);
-						VSimportdata.BIS.push(undefined);
+						VSimportdata.timeepoch1original.push(undefined);
+						VSimportdata.timeepoch1working.push(undefined);
+						VSimportdata.timestring1original.push(undefined);
+						VSimportdata.timestring1working.push(undefined);
+						VSimportdata.BISoriginal.push(undefined);
+						VSimportdata.BISworking.push(undefined);
 					}
-					VSimportdata.timeepoch.push(timeepoch);
-					VSimportdata.timestring.push(timestring);
-					VSimportdata.BIS.push(dataimport2[i].NOM_EEG_BISPECTRAL_INDEX * 1);
+					VSimportdata.timeepoch1original.push(timeepoch);
+					VSimportdata.timeepoch1working.push(timeepoch);
+					VSimportdata.timestring1original.push(timestring);
+					VSimportdata.timestring1working.push(timestring);
+					VSimportdata.BISoriginal.push(dataimport2[i].NOM_EEG_BISPECTRAL_INDEX * 1);
+					VSimportdata.BISworking.push(dataimport2[i].NOM_EEG_BISPECTRAL_INDEX * 1);
 					timeprior = timeepoch;
 				}
 			}
@@ -17558,22 +17631,31 @@ function preprocess() {
 			timestring = YYYY + "-" + MM + "-" + DD + "T" + Tstring;
 			timeepoch = Date.parse(timestring);
 			if (i==0) {
-				VSimportparams.timestamp = timestring;
-				VSimportdata.timeepoch.push(timeepoch);
-				VSimportdata.timestring.push(timestring);
-				VSimportdata.BIS.push(dataimport2[i].BIS * 1);
+				VSimportparams.timestamp1 = timestring;
+				VSimportdata.timeepoch1original.push(timeepoch);
+				VSimportdata.timeepoch1working.push(timeepoch);
+				VSimportdata.timestring1original.push(timestring);
+				VSimportdata.timestring1working.push(timestring);
+				VSimportdata.BISoriginal.push(dataimport2[i].BIS * 1);
+				VSimportdata.BISworking.push(dataimport2[i].BIS * 1);
 				timeprior = timeepoch;
 			} else {
 				timediff = Math.round((timeepoch - timeprior)/1000);
 				if (timediff >= 1) {
 					for (j=0;j<timediff-1;j++) {
-						VSimportdata.timeepoch.push(undefined);
-						VSimportdata.timestring.push(undefined);
-						VSimportdata.BIS.push(undefined);
+						VSimportdata.timeepoch1original.push(undefined);
+						VSimportdata.timeepoch1working.push(undefined);
+						VSimportdata.timestring1original.push(undefined);
+						VSimportdata.timestring1working.push(undefined);
+						VSimportdata.BISoriginal.push(undefined);
+						VSimportdata.BISworking.push(undefined);
 					}
-					VSimportdata.timeepoch.push(timeepoch);
-					VSimportdata.timestring.push(timestring);
-					VSimportdata.BIS.push(dataimport2[i].BIS * 1);
+					VSimportdata.timeepoch1original.push(timeepoch);
+					VSimportdata.timeepoch1working.push(timeepoch);
+					VSimportdata.timestring1original.push(timestring);
+					VSimportdata.timestring1working.push(timestring);
+					VSimportdata.BISoriginal.push(dataimport2[i].BIS * 1);
+					VSimportdata.BISworking.push(dataimport2[i].BIS * 1);
 					timeprior = timeepoch;
 				}
 			}
@@ -17595,35 +17677,129 @@ function preprocessInfusion(data) {
             //console.log("current" + timeepoch);
             if (i == 0) {
                 //store baseline time, not necessarily start time
+                //time prior is used to calculate deltaTime
                 timeprior = timeepoch;
+                //cursor time prior is used to move the cursor of simtiva time against each +1 element of infusion data
+                cursortimeprior = timeepoch;
             }
-            if ((data[i].VolumeInfused>0) && (data[i].VolumeInfused>VIprior)) {
-                //so, infusion has started
-                //and this is not data duplicate, i.e. VI has increased
-                console.log("moved; timestamp " + timeepoch + " " + timestring);
-                //do consider that i may be zero.
-                if (i==0) {
-                    deltaVI = data[i].VolumeInfused;
-                    deltaTime = 1;
-                } else {
-                    deltaVI = data[i].VolumeInfused - data[i-1].VolumeInfused;
-                    deltaTime = Math.round((timeepoch - timeprior)/1000);
-                }
-                
-                
-                speed = deltaVI / deltaTime;
-                speedmlh = speed * 3600;
-                console.log("rate ml/h " + speedmlh);
-                timeprior = timeepoch;
-                VIprior = data[i].VolumeInfused;
-            }
-    }
+	            if ((data[i].VolumeInfused>0) && (data[i].VolumeInfused>VIprior)) {
+	                //so, infusion has started
+	                //and this is not data duplicate, i.e. VI has increased
+	                console.log("moved; timestamp " + timeepoch + " " + timestring);
+	                //do consider that i may be zero.
+	                if (i==0) {
+	                	//so, no previous VI to compare. Set deltaTime to over 1s.
+	                    deltaVI = data[i].VolumeInfused;
+	                    deltaTime = 1;
+	                } else {
+	                    deltaVI = data[i].VolumeInfused - data[i-1].VolumeInfused;
+	                    deltaTime = Math.round((timeepoch - timeprior)/1000);
+	                }
+	                speed = deltaVI / deltaTime;
+	                speedmlh = speed * 3600;
+	                console.log("rate ml/h " + speedmlh);
+	                if (VIprior == 0) {
+	                	//this is the first instance of a non-zero VI.
+	                	//record this as start of infusion data.
+	                	//to align with simtiva time, this is first element of infusion data.
+	                	VSimportparams.timestring2 = timestring;
+	                	VSimportdata.timeepoch2original.push(timeepoch);
+	                	VSimportdata.timeepoch2working.push(timeepoch);
+	                	VSimportdata.timestring2original.push(timestring);
+	                	VSimportdata.timestring2working.push(timestring);
+	                	VSimportdata.CPoriginal.push(data[i][VSimportparams.CPkey]);
+	                	VSimportdata.CPworking.push(data[i][VSimportparams.CPkey])
+	                	VSimportdata.CEoriginal.push(data[i][VSimportparams.CEkey]);
+	                	VSimportdata.CEworking.push(data[i][VSimportparams.CEkey]);
+	                	VSimportdata.VIoriginal.push(data[i][VSimportparams.VIkey]);
+	                	VSimportdata.VIworking.push(data[i][VSimportparams.VIkey]);
+	                	VSimportdata.rateoriginal.push(speedmlh);
+	                	VSimportdata.rateworking.push(speedmlh);
+	                } else {
+	                	//this is normal situation, inf has started, VI is increasing
+	                	//need time filler code
+	                	timediff = Math.round((timeepoch - cursortimeprior)/1000);
+						if (timediff >= 1) {
+							for (j=0;j<timediff-1;j++) {
+			                	VSimportdata.timeepoch2original.push(undefined);
+			                	VSimportdata.timeepoch2working.push(undefined);
+			                	VSimportdata.timestring2original.push(undefined);
+			                	VSimportdata.timestring2working.push(undefined);
+			                	VSimportdata.CPoriginal.push(undefined);
+			                	VSimportdata.CPworking.push(undefined)
+			                	VSimportdata.CEoriginal.push(undefined);
+			                	VSimportdata.CEworking.push(undefined);
+			                	VSimportdata.VIoriginal.push(undefined);
+			                	VSimportdata.VIworking.push(undefined);
+			                	VSimportdata.rateoriginal.push(undefined);
+			                	VSimportdata.rateworking.push(undefined);
+							}
+		                	VSimportdata.timeepoch2original.push(timeepoch);
+		                	VSimportdata.timeepoch2working.push(timeepoch);
+		                	VSimportdata.timestring2original.push(timestring);
+		                	VSimportdata.timestring2working.push(timestring);
+		                	VSimportdata.CPoriginal.push(data[i][VSimportparams.CPkey]);
+		                	VSimportdata.CPworking.push(data[i][VSimportparams.CPkey])
+		                	VSimportdata.CEoriginal.push(data[i][VSimportparams.CEkey]);
+		                	VSimportdata.CEworking.push(data[i][VSimportparams.CEkey]);
+		                	VSimportdata.VIoriginal.push(data[i][VSimportparams.VIkey]);
+		                	VSimportdata.VIworking.push(data[i][VSimportparams.VIkey]);
+		                	VSimportdata.rateoriginal.push(speedmlh);
+		                	VSimportdata.rateworking.push(speedmlh);
+		                }
+	                }
+	                timeprior = timeepoch;
+	                cursortimeprior = timeepoch;
+	                VIprior = data[i].VolumeInfused;
+	            } else {
+	            	if ((i>0) && (VIprior>0)) {
+	            		//for whatever reason, VI not greater than zero, or VI did not increase
+	            		//in this situation, push further elements in infusion data, 
+	            		//to align with simtiva time.
+	                	timediff = Math.round((timeepoch - cursortimeprior)/1000);
+						if (timediff >= 1) {
+							for (j=0;j<timediff-1;j++) {
+			                	VSimportdata.timeepoch2original.push(undefined);
+			                	VSimportdata.timeepoch2working.push(undefined);
+			                	VSimportdata.timestring2original.push(undefined);
+			                	VSimportdata.timestring2working.push(undefined);
+			                	VSimportdata.CPoriginal.push(undefined);
+			                	VSimportdata.CPworking.push(undefined)
+			                	VSimportdata.CEoriginal.push(undefined);
+			                	VSimportdata.CEworking.push(undefined);
+			                	VSimportdata.VIoriginal.push(undefined);
+			                	VSimportdata.VIworking.push(undefined);
+			                	VSimportdata.rateoriginal.push(undefined);
+			                	VSimportdata.rateworking.push(undefined);
+							}
+		                	VSimportdata.timeepoch2original.push(timeepoch);
+		                	VSimportdata.timeepoch2working.push(timeepoch);
+		                	VSimportdata.timestring2original.push(timestring);
+		                	VSimportdata.timestring2working.push(timestring);
+		                	VSimportdata.CPoriginal.push(data[i][VSimportparams.CPkey]);
+		                	VSimportdata.CPworking.push(data[i][VSimportparams.CPkey])
+		                	VSimportdata.CEoriginal.push(data[i][VSimportparams.CEkey]);
+		                	VSimportdata.CEworking.push(data[i][VSimportparams.CEkey]);
+		                	VSimportdata.VIoriginal.push(data[i][VSimportparams.VIkey]);
+		                	VSimportdata.VIworking.push(data[i][VSimportparams.VIkey]);
+		                	VSimportdata.rateoriginal.push(undefined);
+		                	VSimportdata.rateworking.push(undefined);
+							cursortimeprior = timeepoch;
+						}
+					}
+
+	            }//end else statement (i.e. VI not >0, VI not increase)
+	        
+    } //end for loop iterating elements from data
 }
 
 function captureBIS(suppressdialog) {
-	VSimportdata.timeepoch = new Array();
-	VSimportdata.timestring = new Array();
-	VSimportdata.BIS = new Array();
+	VSimportdata.timeepoch1original = new Array();
+	VSimportdata.timeepoch1working = new Array();
+	VSimportdata.timestring1original = new Array();
+	VSimportdata.timestring1working = new Array();
+	VSimportdata.BISoriginal = new Array();
+	VSimportdata.BISworking = new Array();
 	//find the correct BIS key in data
 	VSimportparams.BISkey = "";
 	if (dataimport2[0].hasOwnProperty("BIS")) {
@@ -17643,7 +17819,7 @@ function captureBIS(suppressdialog) {
 
 	} else {
 		displayWarning("BIS data loaded",
-		"BIS data loaded. Time of start of data: " + VSimportparams.timestamp);	
+		"BIS data loaded. Time of start of data: " + VSimportparams.timestamp1);	
 	}
 		// alter the main chart
 	/*
@@ -17658,6 +17834,36 @@ function captureBIS(suppressdialog) {
         },
       }
       */
+}
+
+function captureInfusion(suppressDialog) {
+	VSimportdata.timeepoch2original = new Array();
+	VSimportdata.timeepoch2working = new Array();
+	VSimportdata.timestring2original = new Array();
+	VSimportdata.timestring2working = new Array();
+	VSimportdata.CPoriginal = new Array();
+	VSimportdata.CPworking = new Array();
+	VSimportdata.CEoriginal = new Array();
+	VSimportdata.CEworking = new Array();
+	VSimportdata.VIoriginal = new Array();
+	VSimportdata.VIworking = new Array();
+	VSimportdata.rateoriginal = new Array();
+	VSimportdata.rateworking = new Array();
+	//find the correct BIS key in data
+	VSimportparams.CPkey = "";
+	VSimportparams.CEkey = "";
+	VSimportparams.VIkey = "";
+	if (dataimportinfusion[0].hasOwnProperty("VolumeInfused") && dataimportinfusion[0].hasOwnProperty("PlasmaConcentration") && dataimportinfusion[0].hasOwnProperty("EffectSiteConcentration") ) {
+		VSimportparams.VIkey = "VolumeInfused";
+		VSimportparams.CPkey = "PlasmaConcentration";
+		VSimportparams.CEkey = "EffectSiteConcentration";
+		preprocessInfusion(dataimportinfusion);
+	}
+	if (VSimportparams.VIkey != "") {
+
+	} else {
+		displayWarning("Infusion data loading failed","No suitable infusion data found in CSV file");
+	}
 }
 
 function VSaltertime() {
@@ -17704,24 +17910,46 @@ function VSaltertime() {
 	displayWarning("Alter time",ElRoot.innerHTML);
 }
 
+function VSimporttogglescreen(param) {
+	if (param == 1) {
+		document.getElementById("VSmodalscreen1").classList.remove("hide");
+		document.getElementById("VSmodalscreen2").classList.remove("open");
+
+	} else if (param == 2) {
+		document.getElementById("VSmodalscreen1").classList.add("hide");
+		document.getElementById("VSmodalscreen2").classList.add("open");
+	}
+}
+
 function VSaltertime2() {
+
 	altertime = document.getElementById("select_shifttime").value * 60;
 	VSimportparams.altertime = altertime;
-	//VSimportparams.timestamp = new Date(dataimport2[0].Time);
-	//VSimportparams.timestamp2 = new Date(dataimport2[1].Time);
-	//VSimportparams.timeresolution = (Date.parse(VSimportparams.timestamp2) - Date.parse(VSimportparams.timestamp))/1000;
-	if (VSimportdata.BIS == undefined) {
-		VSimportdata.BIS = new Array();
+	//get original BIS values and pop the working array
+
+	VSimportdata.BISworking.length = 0;
+	VSimportdata.timeepoch1working.length = 0;
+	VSimportdata.timestring1working.length = 0;
+
+	VSimportdata.BISworking = JSON.parse(JSON.stringify(VSimportdata.BISoriginal));
+	VSimportdata.timeepoch1working = JSON.parse(JSON.stringify(VSimportdata.timeepoch1original));
+	VSimportdata.timestring1working = JSON.parse(JSON.stringify(VSimportdata.timestring1original));
+
+
+	if (altertime < 0) {
+		for (i=0;i<(-1 * altertime);i++) {
+			VSimportdata.BISworking.unshift(undefined);
+			VSimportdata.timeepoch1working.unshift(undefined);
+			VSimportdata.timestring1working.unshift(undefined);
+		}
 	} else {
-		VSimportdata.BIS.length = 0;
+		for (i=0;i<altertime;i++) {
+			VSimportdata.BISworking.shift();
+			VSimportdata.timeepoch1working.shift();
+			VSimportdata.timestring1working.shift();
+		}
 	}
-	for (i=0; i<dataimport2.length; i++) {
-		if (i - altertime > 0) {
-    		VSimportdata.BIS[i - altertime]=dataimport2[i].BIS;
-    		VSimportdata.timeepoch[i - altertime]=dataimport2[i].BIS;
-    		VSimportdata.timestring[i - altertime]=dataimport2[i].BIS;
-    	}
-	}
+
 	VSchartpopulate();
 	myChart3.update();
 	hideallmodal();
@@ -17731,13 +17959,26 @@ function VSaltertime2() {
 function VSchartpopulate() {
 	myChart3.data.datasets[0].data.length = 0;
 	myChart3.data.datasets[1].data.length = 0;
-    for (i=0; i<VSimportdata.BIS.length; i++) {
-    	if (VSimportdata.BIS[i] != undefined) myChart3.data.datasets[0].data.push({x: i/60, y: VSimportdata.BIS[i]});
+    for (i=0; i<VSimportdata.BISworking.length; i++) {
+    	if (VSimportdata.BISworking[i] != undefined) myChart3.data.datasets[0].data.push({x: i/60, y: VSimportdata.BISworking[i]});
     }
     for (i=0; i<BIS_array.length; i++) {
     	if (i%10 == 0) {
         	myChart3.data.datasets[1].data.push({x: i/60, y: BIS_array[i]});
         }
+    }
+}
+
+function VSchartpopulateinfusion() {
+	myChart4.data.datasets[0].data.length = 0;
+	myChart4.data.datasets[1].data.length = 0;
+	myChart4.data.datasets[2].data.length = 0;
+	myChart4.data.datasets[3].data.length = 0;
+    for (i=0; i<VSimportdata.CPworking.length; i++) {
+    	if (VSimportdata.CPworking[i] != undefined) myChart4.data.datasets[0].data.push({ x: i/60, y: VSimportdata.CPworking[i] });
+    	if (VSimportdata.CEworking[i] != undefined) myChart4.data.datasets[1].data.push({ x: i/60, y: VSimportdata.CEworking[i] });
+    	if (VSimportdata.rateworking[i] != undefined) myChart4.data.datasets[2].data.push({ x: i/60, y: VSimportdata.rateworking[i] });
+    	if (VSimportdata.VIworking[i] != undefined) myChart4.data.datasets[3].data.push({ x: i/60, y: VSimportdata.VIworking[i] });
     }
 }
 

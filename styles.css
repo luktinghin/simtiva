@@ -2275,6 +2275,38 @@ body.dark .loadduration {
   width:100%; 
   transform:0; 
 }
+#VSmodalscreencontainer {
+  position:relative;
+  overflow:hidden;
+  white-space:nowrap;
+  height: 320px;
+  width: 100%;
+}
+#VSmodalscreen1 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  transofrm: translate(0);
+  opacity: 1;
+  transition: 0.3s ease-in-out all;
+}
+#VSmodalscreen1.hide {
+  transform: translateX(-105%);
+  opacity: 0; 
+}
+#VSmodalscreen2 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(105%);
+  opacity: 0;
+  transition: 0.3s ease-in-out all;
+}
+#VSmodalscreen2.open {
+  transform: translate(0);
+  opacity: 1;
+}
 #VSdropArea {
   height: 250px;
   width: 100%;
@@ -2286,6 +2318,20 @@ body.dark .loadduration {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  white-space: normal;
+}
+#VSdropArea2 {
+  height: 250px;
+  width: 100%;
+  background: #ddd;
+  border-radius: 9px;
+  border: 5px solid transparent;
+  transition: 0.3s ease all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  white-space: normal;
 }
 .VSicon {
   opacity: 0.5;
@@ -2298,7 +2344,19 @@ body.dark .loadduration {
   color: #198964;
   opacity: 1;
 }
+#VSdropArea2.VShighlight {
+  background: #eee;
+  border-color: #ccc;
+}
+#VSdropArea2.VShighlight .VSicon {
+  color: #198964;
+  opacity: 1;
+}
 #VSimportmessage {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+#VSimportmessage2 {
   padding-top: 10px;
   padding-bottom: 10px;
 }
