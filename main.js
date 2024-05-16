@@ -17843,7 +17843,7 @@ function VScaptureBIS() {
 	VSimportdata.BISworking = new Array();
 	timeprior = 0;
 		for (i=0; i<objBIS.length; i++) {
-			timeepoch = data[i].time;
+			timeepoch = objBIS[i].time;
 			if (i==0) {
 				VSimportparams.timestamp1 = new Date(timeepoch * 1000);
 				VSimportdata.timeepoch1original.push(timeepoch);
