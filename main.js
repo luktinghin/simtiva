@@ -17465,8 +17465,6 @@ function unhighlight2(e) {
 }
 */
 
-dropArea.addEventListener('drop', handleDrop3, false);
-
 //dropArea2.addEventListener('drop', handleDrop2, false);
 
 
@@ -17574,10 +17572,14 @@ function readData3(data) {
 		document.getElementById("VSimportconfirmbtn").classList.remove("disabled");
 		if ((objInfusion.length > 0) && (objBIS.length>0)) {
 			document.getElementById("VSimportmessage").innerHTML = fileEntry.name + " - BIS & infusion data loaded successfully.";	
+			VScaptureBIS();
+			VScaptureInfusion(objInfusion);
 		} else if (objInfusion.length > 0) {
 			document.getElementById("VSimportmessage").innerHTML = fileEntry.name + " - Infusion data loaded successfully.";	
+			VScaptureInfusion(objInfusion);
 		} else if (objBIS.length > 0) {
 			document.getElementById("VSimportmessage").innerHTML = fileEntry.name + " - BIS data loaded successfully.";	
+			VScaptureBIS();
 		} else {
 			document.getElementById("VSimportmessage").innerHTML = fileEntry.name + " - file read but no suitable data parsed.";	
 		}
@@ -17841,7 +17843,6 @@ function VScaptureBIS() {
 	VSimportdata.BISworking = new Array();
 	timeprior = 0;
 		for (i=0; i<objBIS.length; i++) {
-			timeepoch = objBIS[0].time;
 			if (i==0) {
 				VSimportparams.timestamp1 = new Date(timeepoch * 1000);
 				VSimportdata.timeepoch1original.push(timeepoch);
