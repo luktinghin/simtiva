@@ -202,7 +202,7 @@ dataimport3 = new Array(); 	//the alternative array used by VSimportjson to capt
 
 //drag and drop functionality
  var dropArea = document.getElementById("VSdropArea");
- var dropArea2 = document.getElementById("VSdropArea2");
+ //var dropArea2 = document.getElementById("VSdropArea2");
  var fileEntry;
  var fileEntry2;
  var fileList;
@@ -2019,7 +2019,7 @@ setTimeout(
 	    		hidden:false,
 	    		yAxisID: 'y',
 	    	},{
-	    		label: 'Infusion rate calculated from VI (Alaris)', 
+	    		label: 'Rate (Alaris)', 
 	    		data: [{x:0, y:0}],
 	    		borderWidth:3,
 	    		pointRadius:3,
@@ -2033,7 +2033,7 @@ setTimeout(
 	    		hidden:false,
 	    		yAxisID: 'y1',
 	    	},{
-	    		label: 'Volume infused (Alaris)', 
+	    		label: 'VI (Alaris)', 
 	    		data: [{x:0, y:0}],
 	    		borderWidth:3,
 	    		pointRadius:3,
@@ -17442,7 +17442,7 @@ function preventDefaults (e) {
 }
 
 dropArea.addEventListener('drop', handleDrop, false);
-
+/*
   dropArea2.addEventListener("dragenter", preventDefaults, false);
   dropArea2.addEventListener("dragover", preventDefaults, false);
   dropArea2.addEventListener("dragleave", preventDefaults, false);
@@ -17456,12 +17456,14 @@ dropArea.addEventListener('drop', handleDrop, false);
   dropArea2.addEventListener("dragleave", unhighlight2, false);
   dropArea2.addEventListener("drop", unhighlight2, false);
 
+
 function highlight2(e) {
   dropArea2.classList.add('VShighlight')
 }
 function unhighlight2(e) {
   dropArea2.classList.remove('VShighlight')
 }
+*/
 
 dropArea.addEventListener('drop', handleDrop3, false);
 
