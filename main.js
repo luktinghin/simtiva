@@ -17564,8 +17564,9 @@ function readData(data) {
 function readData3(data) {
 	if (VSimportparams.fileType == "application/json") {
 		obj1 = VSparseJSON(data);
-		VSparseInfusion(obj1);
-		VSparseBIS(obj1);
+		preprocessJSON(obj1,tempObj1,tempObj2);
+		VSparseInfusion(tempObj1);
+		VSparseBIS(tempObj2);
 		document.getElementById("VSimportconfirmbtn").classList.remove("disabled");
 		if ((objInfusion.length > 0) && (objBIS.length>0)) {
 			document.getElementById("VSimportmessage").innerHTML = fileEntry.name + " - BIS & infusion data loaded successfully.";	
@@ -18080,7 +18081,7 @@ function VSreadjson() {
 
 //temp new code -- unfinished
 
-function preprocessX(data, object1, object2) {
+function preprocessJSON(data, object1, object2) {
     function toTimeEpoch(inputstring) {
 			YYYY = inputstring.slice(6,10);
 			MM = inputstring.slice(3,5);
