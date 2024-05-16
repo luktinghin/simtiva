@@ -192,10 +192,13 @@ VSimportdata = {};			//the processed array output by captureBIS
 VSimportparams = {};
 VSimportparams.altertime = 0;
 
-dataimport2 = new Array(); 	//the first array used by VSimportjson to capture
-dataimport3 = new Array(); 	//the alternative array used by VSimportjson to capture
+obj1 = new Array();
+objInfusion = new Array();
+objBIS = new Array();
+dataimport2 = new Array(); 	//the first array used by VSimportjson to capture; obsolete
+dataimport3 = new Array(); 	//the alternative array used by VSimportjson to capture; obsolete
 
-//CEDITS: VScapture code, including drag and drop functionality, FileEntry methods, CSVtoJSON methods, all credits to John George K, creator of VSchart and VScapture.
+//CREDITS: VScapture code, including drag and drop functionality, FileEntry methods, CSVtoJSON methods, all credits to John George K, creator of VSchart and VScapture.
 
 //drag and drop functionality
  var dropArea = document.getElementById("VSdropArea");
@@ -17460,7 +17463,7 @@ function unhighlight2(e) {
   dropArea2.classList.remove('VShighlight')
 }
 
-dropArea.addEventListener('drop', handleDrop, false);
+dropArea.addEventListener('drop', handleDrop3, false);
 
 dropArea2.addEventListener('drop', handleDrop2, false);
 
@@ -17507,6 +17510,18 @@ function handleDrop2(e) {
   handleFile(fileEntry2, readDataInfusion, errorData);
 }
 
+function handleDrop3(e) {
+  dt = e.dataTransfer;
+  fileList = dt.files;
+  items = dt.items;
+  fileEntry = items[0].webkitGetAsEntry();
+  console.log(items[0]);
+  console.log(items[0].type);
+  console.log("drop event fired");
+  console.log(fileEntry);
+  handleFile(fileEntry, readData3, errorData);
+}
+
 function handleFile(entry, successCallback, errorCallback) {
 	entry.file(function (file) {
 		console.log('fileEntry File Event fired');
@@ -17541,6 +17556,27 @@ function readData(data) {
 		dataimport2 = CSVtoJSON(data);
 		document.getElementById("VSimportconfirmbtn").classList.remove("disabled");
 		document.getElementById("VSimportmessage").innerHTML = fileEntry.name + " - Data loaded successfully.";
+	} else {
+		displayWarning("Error","Error reading file");
+	}
+}
+
+function readData3(data) {
+	if (VSimportparams.fileType == "application/json") {
+		obj1 = VSparseJSON(data);
+		VSparseInfusion(obj1);
+		VSparseBIS(obj1);
+		document.getElementById("VSimportconfirmbtn").classList.remove("disabled");
+		if ((objInfusion.length > 0) && (objBIS.length>0)) {
+			document.getElementById("VSimportmessage").innerHTML = fileEntry.name + " - BIS & infusion data loaded successfully.";	
+		} else if (objInfusion.length > 0) {
+			document.getElementById("VSimportmessage").innerHTML = fileEntry.name + " - Infusion data loaded successfully.";	
+		} else if (objBIS.length > 0) {
+			document.getElementById("VSimportmessage").innerHTML = fileEntry.name + " - BIS data loaded successfully.";	
+		} else {
+			document.getElementById("VSimportmessage").innerHTML = fileEntry.name + " - file read but no suitable data parsed.";	
+		}
+		
 	} else {
 		displayWarning("Error","Error reading file");
 	}
@@ -18040,6 +18076,107 @@ function VSreadjson() {
     reader2.readAsText(file2);
     reader2.fileName = file2.name;
   }
+}
+
+//temp new code -- unfinished
+
+function preprocessX(data, object1, object2) {
+    function toTimeEpoch(inputstring) {
+			YYYY = inputstring.slice(6,10);
+			MM = inputstring.slice(3,5);
+			DD = inputstring.slice(0,2);
+			Tstring = inputstring.slice(11);
+			timestring = YYYY + "-" + MM + "-" + DD + "T" + Tstring;
+			timeepoch = Date.parse(timestring);
+            return timeepoch;
+    }
+    for (i=0;i<data.length;i++) {
+        if (data[i].PhysioID == "PlasmaConcentration") {
+            object1.push({time: toTimeEpoch(data[i].Timestamp), CP: data[i].Value})
+        }
+        if (data[i].PhysioID == "EffectSiteConcentration") {
+            object1.push({time: toTimeEpoch(data[i].Timestamp), CE: data[i].Value})
+        }
+        if (data[i].PhysioID == "VI_Value") {
+            object1.push({time: toTimeEpoch(data[i].Timestamp), VI: data[i].Value})
+        }
+        if (data[i].PhysioID == "InfusionRateValue") {
+            object1.push({time: toTimeEpoch(data[i].Timestamp), rate: data[i].Value})
+        }
+        if (data[i].PhysioID == "BIS") {
+            object2.push({time: toTimeEpoch(data[i].Timestamp), BIS: data[i].Value})
+        }
+        if (data[i].PhysioID == "SQI") {
+            object2.push({time: toTimeEpoch(data[i].Timestamp), SQI: data[i].Value})
+        }
+    }
+}
+
+function VSparseJSON(data) {
+	data2 = data.replaceAll("][",",");
+	return JSON.parse(data2);
+}
+
+function VSparseInfusion(data) {
+    timeprior = 0;
+    for (i=0; i<data.length; i++) {
+        workingclock = Math.floor(data[i].time/1000);
+        if (workingclock > timeprior) {
+        	//push undefined values first
+
+            if (data[i].hasOwnProperty("VI")) {
+                objInfusion2.push({ time: workingclock, VI: data[i].VI, CP: undefined, CE: undefined, rate: undefined });
+            }
+            if (data[i].hasOwnProperty("CP")) {
+                objInfusion2.push({ time: workingclock, CP: data[i].CP, VI: undefined, VI: undefined, rate: undefined });
+            }
+            if (data[i].hasOwnProperty("CE")) {
+                objInfusion2.push({ time: workingclock, CE: data[i].CE, CP: undefined, VI: undefined, rate: undefined });
+            }
+            if (data[i].hasOwnProperty("rate")) {
+                objInfusion2.push({ time: workingclock, rate: data[i].rate, CP: undefined, VI: undefined, CE: undefined });
+            }
+        } else {
+            if (data[i].hasOwnProperty("VI")) {
+                objInfusion2[objInfusion2.length-1].VI= data[i].VI;
+            }
+            if (data[i].hasOwnProperty("CP")) {
+                objInfusion2[objInfusion2.length-1].CP= data[i].CP ;
+            }
+            if (data[i].hasOwnProperty("CE")) {
+                objInfusion2[objInfusion2.length-1].CE= data[i].CE ;
+            }
+            if (data[i].hasOwnProperty("rate")) {
+                objInfusion2[objInfusion2.length-1].rate= data[i].rate ;
+            }
+        }
+        timeprior = workingclock;
+    }
+}
+
+function VSparseBIS(data) {
+    timeprior = 0;
+    for (i=0; i<data.length; i++) {
+        workingclock = Math.floor(data[i].time/1000);
+        if (workingclock > timeprior) {
+        	//push undefined values first
+            if (data[i].hasOwnProperty("BIS")) {
+                objBIS2.push({ time: workingclock, BIS: data[i].BIS, SQI: undefined});
+            }
+            if (data[i].hasOwnProperty("SQI")) {
+                objBIS2.push({ time: workingclock, SQI: data[i].SQI, BIS: undefined});
+            }
+
+        } else {
+            if (data[i].hasOwnProperty("SQI")) {
+                objBIS2[objBIS2.length-1].SQI= data[i].SQI;
+            }
+            if (data[i].hasOwnProperty("BIS")) {
+                objBIS2[objBIS2.length-1].BIS= data[i].BIS ;
+            }
+        }
+        timeprior = workingclock;
+    }
 }
 
 /* failed code below 
