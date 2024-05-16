@@ -18125,29 +18125,29 @@ function VSparseInfusion(data) {
         	//push undefined values first
 
             if (data[i].hasOwnProperty("VI")) {
-                objInfusion2.push({ time: workingclock, VI: data[i].VI, CP: undefined, CE: undefined, rate: undefined });
+                objInfusion.push({ time: workingclock, VI: data[i].VI, CP: undefined, CE: undefined, rate: undefined });
             }
             if (data[i].hasOwnProperty("CP")) {
-                objInfusion2.push({ time: workingclock, CP: data[i].CP, VI: undefined, VI: undefined, rate: undefined });
+                objInfusion.push({ time: workingclock, CP: data[i].CP, VI: undefined, VI: undefined, rate: undefined });
             }
             if (data[i].hasOwnProperty("CE")) {
-                objInfusion2.push({ time: workingclock, CE: data[i].CE, CP: undefined, VI: undefined, rate: undefined });
+                objInfusion.push({ time: workingclock, CE: data[i].CE, CP: undefined, VI: undefined, rate: undefined });
             }
             if (data[i].hasOwnProperty("rate")) {
-                objInfusion2.push({ time: workingclock, rate: data[i].rate, CP: undefined, VI: undefined, CE: undefined });
+                objInfusion.push({ time: workingclock, rate: data[i].rate, CP: undefined, VI: undefined, CE: undefined });
             }
         } else {
             if (data[i].hasOwnProperty("VI")) {
-                objInfusion2[objInfusion2.length-1].VI= data[i].VI;
+                objInfusion[objInfusion.length-1].VI= data[i].VI;
             }
             if (data[i].hasOwnProperty("CP")) {
-                objInfusion2[objInfusion2.length-1].CP= data[i].CP ;
+                objInfusion[objInfusion.length-1].CP= data[i].CP ;
             }
             if (data[i].hasOwnProperty("CE")) {
-                objInfusion2[objInfusion2.length-1].CE= data[i].CE ;
+                objInfusion[objInfusion.length-1].CE= data[i].CE ;
             }
             if (data[i].hasOwnProperty("rate")) {
-                objInfusion2[objInfusion2.length-1].rate= data[i].rate ;
+                objInfusion[objInfusion.length-1].rate= data[i].rate ;
             }
         }
         timeprior = workingclock;
@@ -18161,18 +18161,18 @@ function VSparseBIS(data) {
         if (workingclock > timeprior) {
         	//push undefined values first
             if (data[i].hasOwnProperty("BIS")) {
-                objBIS2.push({ time: workingclock, BIS: data[i].BIS, SQI: undefined});
+                objBIS.push({ time: workingclock, BIS: data[i].BIS, SQI: undefined});
             }
             if (data[i].hasOwnProperty("SQI")) {
-                objBIS2.push({ time: workingclock, SQI: data[i].SQI, BIS: undefined});
+                objBIS.push({ time: workingclock, SQI: data[i].SQI, BIS: undefined});
             }
 
         } else {
             if (data[i].hasOwnProperty("SQI")) {
-                objBIS2[objBIS2.length-1].SQI= data[i].SQI;
+                objBIS[objBIS.length-1].SQI= data[i].SQI;
             }
             if (data[i].hasOwnProperty("BIS")) {
-                objBIS2[objBIS2.length-1].BIS= data[i].BIS ;
+                objBIS[objBIS.length-1].BIS= data[i].BIS ;
             }
         }
         timeprior = workingclock;
