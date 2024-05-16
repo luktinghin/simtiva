@@ -17467,7 +17467,7 @@ function unhighlight2(e) {
 
 dropArea.addEventListener('drop', handleDrop3, false);
 
-dropArea2.addEventListener('drop', handleDrop2, false);
+//dropArea2.addEventListener('drop', handleDrop2, false);
 
 
   function CSVtoJSON(csv) {
