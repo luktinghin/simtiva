@@ -17843,6 +17843,7 @@ function VScaptureBIS() {
 	VSimportdata.BISworking = new Array();
 	timeprior = 0;
 		for (i=0; i<objBIS.length; i++) {
+			timeepoch = data[i].time;
 			if (i==0) {
 				VSimportparams.timestamp1 = new Date(timeepoch * 1000);
 				VSimportdata.timeepoch1original.push(timeepoch);
@@ -17924,7 +17925,7 @@ function VScaptureInfusion(data) {
 	VSimportdata.VIworking = new Array();
 	VSimportdata.rateoriginal = new Array();
 	VSimportdata.rateworking = new Array();
-    var timeprior;
+    var timeprior = 0;
     for (i=0;i<data.length;i++) {
 			timeepoch = data[i].time;
 			timestring = new Date(data[i].time * 1000);
@@ -17944,6 +17945,7 @@ function VScaptureInfusion(data) {
                 timeprior = timeepoch;
             } else {
             	timediff = timeepoch - timeprior;
+            	console.log("infusion time advance" + timediff);
 				if (timediff >= 1) {
 					for (j=0;j<timediff-1;j++) {
 	                	VSimportdata.timeepoch2original.push(undefined);
