@@ -17441,7 +17441,7 @@ function preventDefaults (e) {
   e.stopPropagation()
 }
 
-dropArea.addEventListener('drop', handleDrop, false);
+dropArea.addEventListener('drop', handleDrop3, false);
 /*
   dropArea2.addEventListener("dragenter", preventDefaults, false);
   dropArea2.addEventListener("dragover", preventDefaults, false);
