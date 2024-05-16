@@ -17564,6 +17564,8 @@ function readData(data) {
 function readData3(data) {
 	if (VSimportparams.fileType == "application/json") {
 		obj1 = VSparseJSON(data);
+		tempObj1 = new Array();
+		tempObj2 = new Array();
 		preprocessJSON(obj1,tempObj1,tempObj2);
 		VSparseInfusion(tempObj1);
 		VSparseBIS(tempObj2);
