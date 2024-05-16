@@ -17832,7 +17832,42 @@ function preprocessInfusion(data) {
     } //end for loop iterating elements from data
 }
 
+function VScaptureBIS() {
+	VSimportdata.timeepoch1original = new Array();
+	VSimportdata.timeepoch1working = new Array();
+	VSimportdata.BISoriginal = new Array();
+	VSimportdata.BISworking = new Array();
+	timeprior = 0;
+		for (i=0; i<dataimport2.length; i++) {
+			timeepoch = objBIS[0].time;
+			if (i==0) {
+				VSimportparams.timestamp1 = new Date(timeepoch * 1000);
+				VSimportdata.timeepoch1original.push(timeepoch);
+				VSimportdata.timeepoch1working.push(timeepoch);
+				VSimportdata.BISoriginal.push(objBIS[i].BIS * 1);
+				VSimportdata.BISworking.push(objBIS[i].BIS * 1);
+				timeprior = timeepoch;
+			} else {
+				timediff = timeepoch - timeprior;
+				if (timediff >= 1) {
+					for (j=0;j<timediff-1;j++) {
+						VSimportdata.timeepoch1original.push(undefined);
+						VSimportdata.timeepoch1working.push(undefined);
+						VSimportdata.BISoriginal.push(undefined);
+						VSimportdata.BISworking.push(undefined);
+					}
+					VSimportdata.timeepoch1original.push(timeepoch);
+					VSimportdata.timeepoch1working.push(timeepoch);
+					VSimportdata.BISoriginal.push(objBIS[i].BIS * 1);
+					VSimportdata.BISworking.push(objBIS[i].BIS * 1);
+					timeprior = timeepoch;
+				}
+			}
+		}
+}
+
 function captureBIS(suppressdialog) {
+	//older code, will become obsolete
 	VSimportdata.timeepoch1original = new Array();
 	VSimportdata.timeepoch1working = new Array();
 	VSimportdata.timestring1original = new Array();
@@ -17873,6 +17908,66 @@ function captureBIS(suppressdialog) {
         },
       }
       */
+}
+
+function VScaptureInfusion(data) {
+	VSimportdata.timeepoch2original = new Array();
+	VSimportdata.timeepoch2working = new Array();
+	VSimportdata.CPoriginal = new Array();
+	VSimportdata.CPworking = new Array();
+	VSimportdata.CEoriginal = new Array();
+	VSimportdata.CEworking = new Array();
+	VSimportdata.VIoriginal = new Array();
+	VSimportdata.VIworking = new Array();
+	VSimportdata.rateoriginal = new Array();
+	VSimportdata.rateworking = new Array();
+    var timeprior;
+    for (i=0;i<data.length;i++) {
+			timeepoch = data[i].time;
+			timestring = new Date(data[i].time * 1000);
+            //console.log("current" + timeepoch);
+            if (i == 0) {
+	        	VSimportparams.timestring2 = timestring;
+	        	VSimportdata.timeepoch2original.push(timeepoch);
+	        	VSimportdata.timeepoch2working.push(timeepoch);
+	        	VSimportdata.CPoriginal.push(data[i].CP);
+	        	VSimportdata.CPworking.push(data[i].CP)
+	        	VSimportdata.CEoriginal.push(data[i].CE);
+	        	VSimportdata.CEworking.push(data[i].CE);
+	        	VSimportdata.VIoriginal.push(data[i].VI);
+	        	VSimportdata.VIworking.push(data[i].VI);
+	        	VSimportdata.rateoriginal.push(data[i].rate);
+	        	VSimportdata.rateworking.push(data[i].rate);
+                timeprior = timeepoch;
+            } else {
+            	timediff = timeepoch - timeprior;
+				if (timediff >= 1) {
+					for (j=0;j<timediff-1;j++) {
+	                	VSimportdata.timeepoch2original.push(undefined);
+	                	VSimportdata.timeepoch2working.push(undefined);
+	                	VSimportdata.CPoriginal.push(undefined);
+	                	VSimportdata.CPworking.push(undefined)
+	                	VSimportdata.CEoriginal.push(undefined);
+	                	VSimportdata.CEworking.push(undefined);
+	                	VSimportdata.VIoriginal.push(undefined);
+	                	VSimportdata.VIworking.push(undefined);
+	                	VSimportdata.rateoriginal.push(undefined);
+	                	VSimportdata.rateworking.push(undefined);
+					}
+                	VSimportdata.timeepoch2original.push(timeepoch);
+                	VSimportdata.timeepoch2working.push(timeepoch);
+                	VSimportdata.CPoriginal.push(data[i].CP);
+                	VSimportdata.CPworking.push(data[i].CP)
+                	VSimportdata.CEoriginal.push(data[i].CE);
+                	VSimportdata.CEworking.push(data[i].CE);
+                	VSimportdata.VIoriginal.push(data[i].VI);
+                	VSimportdata.VIworking.push(data[i].VI);
+                	VSimportdata.rateoriginal.push(data[i].rate);
+                	VSimportdata.rateworking.push(data[i].rate);
+                }
+            }
+    } //end for loop iterating elements from data
+
 }
 
 function captureInfusion(suppressDialog) {
