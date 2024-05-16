@@ -17945,7 +17945,6 @@ function VScaptureInfusion(data) {
                 timeprior = timeepoch;
             } else {
             	timediff = timeepoch - timeprior;
-            	console.log("infusion time advance" + timediff);
 				if (timediff >= 1) {
 					for (j=0;j<timediff-1;j++) {
 	                	VSimportdata.timeepoch2original.push(undefined);
@@ -17969,6 +17968,7 @@ function VScaptureInfusion(data) {
                 	VSimportdata.VIworking.push(data[i].VI);
                 	VSimportdata.rateoriginal.push(data[i].rate);
                 	VSimportdata.rateworking.push(data[i].rate);
+                	timeprior = timeepoch;
                 }
             }
     } //end for loop iterating elements from data
