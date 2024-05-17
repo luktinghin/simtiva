@@ -184,6 +184,7 @@ window.ptolcouplesarray = []; //ptol couples over time
 var loop6 = null; //this is setinterval function
 var loop7 = null;
 
+BIS_baseline = 93;
 window.BIS_array = [];
 window.eventArray = [];
 
@@ -2220,7 +2221,7 @@ setTimeout(
 	    	datasets: [{
 	    		label: 'Eleveld PD', 
 	    		data: [],
-	    		borderWidth:3,
+	    		borderWidth:0,
 	    		pointRadius:3,
 	    		borderJoinStyle: 'round',
 	    		borderColor: bluePri,
@@ -9972,7 +9973,7 @@ function BIS_Ce_for_effect(effectinput) {
 }
 
 function BIS_Ce_for_BIS(bisinput) {
-	effect = (93 - bisinput) / 93;
+	effect = (BIS_baseline - bisinput) / BIS_baseline;
 	return BIS_Ce_for_effect(effect);
 }
 
@@ -9987,7 +9988,7 @@ function BIS_gamma(Ceinput) {
 }
 
 function BIS_estimated(Ceinput) {
-	return 93 * (1-BIS_effect(Ceinput));
+	return BIS_baseline * (1-BIS_effect(Ceinput));
 	// don't know what the residual error +8.03 * epsilon is about, omit
 }
 
@@ -10017,7 +10018,7 @@ function BIS_update(interval) {
 
 function BIS_generate_PD_curve() {
 	dataoutput = new Array();
-	for (i=100;i>=0;i = i - 10) {
+	for (i=BIS_baseline;i>=0;i = i - 5) {
 		x = BIS_Ce_for_BIS(i);
 		y = i;
 		dataoutput.push( {x: x, y: i} );
