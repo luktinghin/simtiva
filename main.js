@@ -2188,6 +2188,219 @@ setTimeout(
 
 },1100);
 
+setTimeout(
+
+		function() {
+
+
+		var ctx = document.getElementById('myChart5').getContext('2d');
+
+		//var y = document.getElementById('chartwrapper').offsetHeight*0.6;
+
+		/*
+		var gradientGreen = ctx.createLinearGradient(0, 100, 0, y+100);  //x0y0x1y1  //y+100 last param
+			gradientGreen.addColorStop(0.4, 'rgba(9, 203, 93,0.4)');   
+			gradientGreen.addColorStop(1, 'rgba(9, 203, 93,0.05)');
+
+			console.log(gradientGreen);
+			*/
+
+
+		/*
+		var gradientRed = ctx.createLinearGradient(0, 0, 0, y); // y last param
+			gradientRed.addColorStop(0.4, 'rgba(231, 50, 39,0.4)');   
+			gradientRed.addColorStop(1, 'rgba(231, 50, 39,0)');
+
+			*/
+
+
+		myChart5 = new Chart(ctx, {
+	    type: 'line',
+	    data: {
+	    	datasets: [{
+	    		label: 'Eleveld PD', 
+	    		data: [],
+	    		borderWidth:3,
+	    		pointRadius:3,
+	    		borderJoinStyle: 'round',
+	    		borderColor: bluePri,
+	    		backgroundColor: bluePri50,
+	    		pointBorderColor: bluePri,
+	    		pointBackgroundColor: bluePri50,
+	    		fill: false,
+	    		parsing: false,
+	    		hidden: false,
+	    		
+	    	},{
+	    		label: 'CE (Alaris)', 
+	    		data: [{x:0, y:0}],
+	    		borderWidth:3,
+	    		pointRadius:3,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(9, 203, 93,0.7)',
+	    		backgroundColor: 'rgb(9, 203, 93,0.4)',
+	    		pointBorderColor: 'rgb(9, 203, 93,0.8)',
+	    		pointBackgroundColor: 'rgb(9, 203, 93,0.8)',
+	    		fill: false,
+	    		parsing: false,
+	    		hidden:true,
+	    		
+	    	},{
+	    		label: 'Rate (Alaris)', 
+	    		data: [{x:0, y:0}],
+	    		borderWidth:3,
+	    		pointRadius:3,
+	    		borderJoinStyle: 'round',
+	    		borderColor: bluePri,
+	    		backgroundColor: bluePri50,
+	    		pointBorderColor: bluePri,
+	    		pointBackgroundColor: bluePri50,
+	    		fill: false,
+	    		parsing: false,
+	    		hidden:true,
+	    		
+	    	},{
+	    		label: 'VI (Alaris)', 
+	    		data: [{x:0, y:0}],
+	    		borderWidth:3,
+	    		pointRadius:3,
+	    		borderJoinStyle: 'round',
+	    		borderColor: yellowPri,
+	    		backgroundColor: yellowPri50,
+	    		pointBorderColor: yellowPri,
+	    		pointBackgroundColor: yellowPri50,
+	    		fill: false,
+	    		parsing: false,
+	    		hidden:true,
+	    		
+	    	}]
+	    }, //end data
+	    options: {
+	    	maintainAspectRatio: false,
+	    	interaction: {
+
+	    	},
+	    	scales: {
+	    		y: {
+	    			display: true,
+	    			min: 0,
+	    			max: 100,
+					title: {
+						display: true,
+						text:'BIS',
+					},
+	    		},
+	    		x: {
+	    			type: 'linear',
+	    			display: true,
+	    			position:'bottom',
+	    			min:0,
+	    			max:10,
+					title: {
+						display: true,
+						text:'CE (mcg/ml)'
+					}
+	    		}
+	    	},
+	        animation: {
+	        	duration: 200
+	        },
+	        transitions: {
+	        	active: {
+	        		animation: {
+	        			duration: 200
+	        		}
+	        	}
+	        },
+
+		    plugins: { //start plugins
+		    	//shadingArea,
+			    legend: {
+			    		onClick: null,
+				    	labels: {
+				    	boxWidth: 20,
+				    	/*
+				    	filter: function(item, chart) {
+
+				    	}
+				    	*/
+			    	}
+			    },
+			    tooltip: {
+			    	mode: 'index',
+			    	intersect: false,
+			    	footerFont: {
+			    		weight: 'normal',
+			    		size: 10
+			    	},
+	            	filter: function(tooltipItem, data) {
+	
+	            	},
+	            	position: 'nearest',
+	            	caretSize: 0,
+	            	backgroundColor: 'rgba(0,0,0,0.5)',
+					callbacks: {
+						title: function(context) {
+
+						},
+						
+	                	label: function(context) {
+	                		
+	 
+	                	},
+
+	                	footer: function(tooltipItems) {
+
+
+
+	                	}
+	                	
+	                }
+			    },
+		    	crosshair: {
+		    		line: {
+		    			color: '#66F',
+		    			width: 1,
+		    			//dashPattern: [20,5]
+		    		},
+			        sync: {
+			          enabled: true,            // enable trace line syncing with other charts
+			          group: 1,                 // chart group
+			          suppressTooltips: false   // suppress tooltips when showing a synced tracer
+			        },
+			        zoom: {
+			        	enabled: false,
+			        }
+		    	},
+		    	/*
+		    	annotation: {
+		    		annotations: {
+		    			line0: {
+		    				type: 'line',
+		    				drawTime: 'beforeDatasetsDraw',
+		    				xMin: getEventLine(0),
+		    				xMax: getEventLine(0),
+		    				borderColor: 'rgba(255,0,0,0.2)',
+		    				borderWidth: 2,
+		    				label: {
+		    					content: getEventLabel(0),
+		    					enabled: true
+		    				}
+		    			}
+		    		}
+		    	}
+		    	*/
+		    } //endplugins
+	    } //end options
+	    //, plugins: [multiply],
+
+
+	}//end charting function
+	);
+
+
+},2100);
+
 //dark mode activation
 	
 	if (localStorage.getItem("colourMode") == "dark") {
@@ -9800,6 +10013,16 @@ function BIS_update(interval) {
 	updateBIS = setInterval(function() {
 		document.getElementById("ptolcard_right").innerHTML = BIS_array[Math.floor(time_in_s)]
 	},interval)
+}
+
+function BIS_generate_PD_curve() {
+	dataoutput = new Array();
+	for (i=100;i>=0;i = i - 10) {
+		x = BIS_Ce_for_BIS(i);
+		y = i;
+		dataoutput.push( {x: x, y: i} );
+	}
+	return dataoutput;
 }
 
 function proceedComplex() {
@@ -18050,6 +18273,7 @@ function VSaltertime() {
 }
 
 function VSimporttogglescreen(param) {
+	//obsolete now as we import one single json
 	btn2 = document.getElementById("VSloadinfusionbtn");
 	btn1 = document.getElementById("VSimportconfirmbtn");
 	if (param == 1) {

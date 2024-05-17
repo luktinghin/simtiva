@@ -2368,6 +2368,10 @@ body.dark .loadduration {
   height: 380px;
   width: 100%;
 }
+#calibrationcurvecontainer {
+  height: 500px;
+  width: 100%;
+}
 #chartwrapper {
   position:absolute;
   width:100%;
