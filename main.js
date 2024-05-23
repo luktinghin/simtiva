@@ -258,6 +258,8 @@ var numpadValue = 0;
 var numpadOrig;
 var opioid = 1; //arbitrary default opioid = 1 for eleveld. to be re-set to 0 or 1 at first input screen
 
+const lerp = (x, y, a) => x * (1 - a) + y * a;
+
 var collapsibles = document.getElementsByClassName("collapsible");
 var i;
 
@@ -2219,21 +2221,22 @@ setTimeout(
 	    type: 'line',
 	    data: {
 	    	datasets: [{
-	    		label: 'Eleveld PD', 
+	    		label: 'Eleveld PD (reference)', 
 	    		data: [],
-	    		borderWidth:0,
-	    		pointRadius:3,
+	    		borderWidth:3,
+	    		pointRadius:0,
 	    		borderJoinStyle: 'round',
 	    		borderColor: bluePri,
 	    		backgroundColor: bluePri50,
 	    		pointBorderColor: bluePri,
 	    		pointBackgroundColor: bluePri50,
+	    		tension:0.4,
 	    		fill: false,
 	    		parsing: false,
 	    		hidden: false,
 	    		
 	    	},{
-	    		label: 'CE (Alaris)', 
+	    		label: 'Custom curve', 
 	    		data: [{x:0, y:0}],
 	    		borderWidth:3,
 	    		pointRadius:3,
@@ -2242,34 +2245,6 @@ setTimeout(
 	    		backgroundColor: 'rgb(9, 203, 93,0.4)',
 	    		pointBorderColor: 'rgb(9, 203, 93,0.8)',
 	    		pointBackgroundColor: 'rgb(9, 203, 93,0.8)',
-	    		fill: false,
-	    		parsing: false,
-	    		hidden:true,
-	    		
-	    	},{
-	    		label: 'Rate (Alaris)', 
-	    		data: [{x:0, y:0}],
-	    		borderWidth:3,
-	    		pointRadius:3,
-	    		borderJoinStyle: 'round',
-	    		borderColor: bluePri,
-	    		backgroundColor: bluePri50,
-	    		pointBorderColor: bluePri,
-	    		pointBackgroundColor: bluePri50,
-	    		fill: false,
-	    		parsing: false,
-	    		hidden:true,
-	    		
-	    	},{
-	    		label: 'VI (Alaris)', 
-	    		data: [{x:0, y:0}],
-	    		borderWidth:3,
-	    		pointRadius:3,
-	    		borderJoinStyle: 'round',
-	    		borderColor: yellowPri,
-	    		backgroundColor: yellowPri50,
-	    		pointBorderColor: yellowPri,
-	    		pointBackgroundColor: yellowPri50,
 	    		fill: false,
 	    		parsing: false,
 	    		hidden:true,
@@ -17949,12 +17924,12 @@ function preprocessInfusion(data) {
                 //cursor time prior is used to move the cursor of simtiva time against each +1 element of infusion data
                 cursortimeprior = timeepoch;
             }
-	            if ((data[i].VolumeInfused>0) && (data[i].VolumeInfused>VIprior)) {
+	            if ((data[i].VolumeInfused>0) && (data[i].VolumeInfused * 1>VIprior)) {
 	                //so, infusion has started
 	                //and this is not data duplicate, i.e. VI has increased
 	                console.log("moved; timestamp " + timeepoch + " " + timestring);
 	                //do consider that i may be zero.
-	                if (i==0) {
+	                if (VIprior==0) {
 	                	//so, no previous VI to compare. Set deltaTime to over 1s.
 	                    deltaVI = data[i].VolumeInfused;
 	                    deltaTime = 1;
@@ -18011,13 +17986,14 @@ function preprocessInfusion(data) {
 		                	VSimportdata.CEworking.push(data[i][VSimportparams.CEkey]);
 		                	VSimportdata.VIoriginal.push(data[i][VSimportparams.VIkey]);
 		                	VSimportdata.VIworking.push(data[i][VSimportparams.VIkey]);
+		                	
 		                	VSimportdata.rateoriginal.push(speedmlh);
 		                	VSimportdata.rateworking.push(speedmlh);
 		                }
 	                }
 	                timeprior = timeepoch;
 	                cursortimeprior = timeepoch;
-	                VIprior = data[i].VolumeInfused;
+	                VIprior = data[i].VolumeInfused * 1;
 	            } else {
 	            	if ((i>0) && (VIprior>0)) {
 	            		//for whatever reason, VI not greater than zero, or VI did not increase
@@ -18357,7 +18333,18 @@ function VSchartpopulateinfusion() {
     }
 }
 
+function VSgenerate_data_point_at_time(inputtime,inputvar) {
+	//make sure inputtime is an integer
+	inputtime = Math.round(inputtime * 1);
+	//check if it exists
+	if (VSimportdata[inputvar].length>0) {
+		if (VSimportdata[inputvar][inputtime] != undefined) {
+			return VSimportdata[inputvar][inputtime] * 1;
+		} else {
 
+		}
+	}
+}
 function VSimportjson() {
 	El1 = document.createElement("div");
 	El1.id = "loadfile_container2";
