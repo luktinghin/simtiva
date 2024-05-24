@@ -1823,7 +1823,25 @@
 				</div>
 			</div>
 		</div>
-
+		<button onclick="emulateEleveldInit();emulateEleveldReal();emulatePlot();">EmulateStart</button>
+		<button onclick="emulateReset();emulateEleveldReal();emulatePlot()">RedrawPlot</button>
+		<button onclick="emulatePlotUpdate(1)">Update</button>
+		<div id="emulatecard" class="card">
+			<div class="cardtitle">ELEVELD EMULATION</div>
+			<div id="emulatetitlecontainer">
+				<div id="emulatetitleleft">
+					<span style="font-size:200%;font-weight:bold;line-height:1">eBIS</span>
+					<div style="font-size:80%;opacity:50%" id="">Estimated BIS from Eleveld PD model</div>
+				</div>
+				<div style="font-size:80%;opacity:50%" id="emulatetitleright">
+				</div>
+			</div>
+			<div id="emulateoptions">
+			</div>
+			<div id="emulatechartcontainer">
+				<canvas id="myChartEmulate"></canvas>
+			</div>
+		</div>
 
 		<div id="interactionscontainer">
 			<div id="interactionstabselector">

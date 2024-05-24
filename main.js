@@ -1757,6 +1757,252 @@ const chartInfRateLayer = {
 
 },1100);
 
+// new chart code, for emulation
+
+	setTimeout(
+
+		function() {
+
+
+		var ctx = document.getElementById('myChartEmulate').getContext('2d');
+
+		
+
+		myChartEmulate = new Chart(ctx, {
+	    type: 'line',
+	    data: {
+	    	datasets: [{
+	    		label: 'Cp',
+	    		data: [{x: 0, y: 0}],
+	    		borderWidth:3,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(231, 50, 39,0.45)',
+	    		backgroundColor: 'rgb(0,0,0,0)',
+	    		segment: {
+	    			borderColor: ctx => behindPosition(ctx, 'rgb(231,50,39,0.65)'),
+	    			borderWidth: ctx => behindPosition2(ctx, 7)
+	    		},
+	    		fill: false,
+	    		hidden: false,
+	    		parsing: false
+	    	},{
+	    		label: 'Ce',
+	    		data: [{x:0, y:0}],
+	    		borderWidth:3,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(48, 163, 7,0.45)',
+					segment: {
+	    			borderColor: ctx => behindPosition(ctx, 'rgb(48,163,7,0.65)'),
+	    			borderWidth: ctx => behindPosition2(ctx, 7)
+	    		},
+	    		//borderColor: yellowPri50,
+	    		//backgroundColor: gradientGreen,//'rgb(90, 100, 90,0.1)',
+	    		
+	    		backgroundColor: 'rgb(0,0,0,0)',
+
+	    		fill: false,
+	    		hidden: false,
+	    		parsing: false
+	    	},{
+	    		label: 'Cp(Emulate)',
+	    		data: [{x: 0, y: 0}],
+	    		borderWidth:3,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(186, 9, 148,0.6)',
+					segment: {
+	    			borderColor: ctx => behindPosition(ctx, 'rgb(186,9,148,0.85)'),
+	    			borderWidth: ctx => behindPosition2(ctx, 7)
+	    		},
+	    		borderDash: [3,1.5],
+	    		//borderColor: yellowSec,
+	    		//backgroundColor: gradientRed,//'rgb(100, 90, 90,0.1)',
+	    		
+	    		backgroundColor: 'rgb(0,0,0,0)',
+	    		
+	    		
+	    		fill: false,
+	    		hidden: false,
+	    		parsing: false
+	    	},{
+	    		label: 'Ce(Emulate)',
+	    		data: [{x:0, y:0}],
+	    		borderWidth:3,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(26, 159, 163,0.6)',
+					segment: {
+	    			borderColor: ctx => behindPosition(ctx, 'rgb(26,159,163,0.85)'),
+	    			borderWidth: ctx => behindPosition2(ctx, 7)
+	    		},
+	    		borderDash: [3,1.5],
+	    		//borderColor: yellowPri50,
+	    		//backgroundColor: gradientGreen,//'rgb(90, 100, 90,0.1)',
+	    		
+	    		backgroundColor:'rgb(0,0,0,0)',
+	    		fill: false,
+	    		hidden: false,
+	    		parsing: false
+	    	}]
+	    }, //end data
+	    options: {
+	    	maintainAspectRatio: false,
+	    	interaction: {
+
+	    	},
+	    	scales: {
+	    		y: {
+	    			display: true,
+	    			min: 0,
+	    			max: 5,
+						title: {
+							display: true,
+							text:'Concentration (mcg/ml)'
+						},
+						ticks: {
+							stepSize: 1
+						}
+	    		},
+	    		x: {
+	    			type: 'linear',
+	    			display: true,
+	    			position:'bottom',
+	    			min:0,
+	    			max:20,
+					title: {
+						display: true,
+						text:'Time (minutes)'
+					}
+	    		}
+	    	},
+	        animation: {
+	        	duration: 200
+	        },
+	        transitions: {
+	        	active: {
+	        		animation: {
+	        			duration: 200
+	        		}
+	        	}
+	        },
+
+		    plugins: { //start plugins
+		    	//shadingArea,
+			    legend: {
+			    		
+				    	labels: {
+				    	boxWidth: 20,
+				    	
+			    	}
+			    },
+			    tooltip: {
+			    	mode: 'index',
+			    	intersect: false,
+			    	footerFont: {
+			    		weight: 'normal',
+			    		size: 10
+			    	},
+	            	position: 'nearest',
+	            	caretSize: 0,
+	            	backgroundColor: 'rgba(0,0,0,0.5)',
+					callbacks: {
+						title: function(context) {
+							var title = context[0].parsed.x || "";
+							if (title) {
+								title = title*60; //to s
+								return converttime(title);
+							}
+						},
+						
+	                	label: function(context) {
+	                		
+	                    	var label = context.dataset.label || '';
+
+	                    	if (label) {
+	                    		label += Math.round(context.parsed.y * 100) / 100;
+		                    	return label;
+	                    	}
+	                	},
+
+	                	footer: function(tooltipItems) {
+
+	                		var infrate = "Inf rate: ";
+
+	                		var vitext = "VI: ";
+
+	                		var parsedx = tooltipItems[0].parsed.x;
+
+	                		infrate = infrate + getinfusionrate(parsedx * 60,active_drug_set_index) + "ml/h";
+
+	                		vitext = vitext + Math.round(drug_sets[active_drug_set_index].volinf[Math.round(parsedx*60)]*10)/10 + "ml";
+
+	                		if ((PD_mode == 1) && (active_drug_set_index == 0)) {
+	                			PD_text = "eBIS: " + BIS_array[Math.round(parsedx*60)];
+	                			return [infrate, vitext, PD_text];
+	                		} else if ((PD_mode == 2) && (ptolcouplesarray.length>0)) {
+	                			temp_ptol_elem = ptolcouplesarray[Math.round(parsedx*2)];
+	                			if (temp_ptol_elem == undefined) {
+	                				PD_text = "";
+	                			} else {
+	                				PD_text = "PTOL: " + Math.round(temp_ptol_elem.meta_ptol * 100);
+	                			}
+	                			return [infrate, vitext, PD_text];
+	                		} else {
+	                			return [infrate, vitext];	
+	                		}
+
+	                		
+
+	                	}
+	                	
+	                }
+			    },
+		    	crosshair: {
+		    		line: {
+		    			color: '#66F',
+		    			width: 1,
+		    			//dashPattern: [20,5]
+		    		},
+			        sync: {
+			          enabled: true,            // enable trace line syncing with other charts
+			          group: 1,                 // chart group
+			          suppressTooltips: false   // suppress tooltips when showing a synced tracer
+			        },
+			        zoom: {
+			        	enabled: false,
+			        }
+		    	},
+		    	/*
+		    	annotation: {
+		    		annotations: {
+		    			line0: {
+		    				type: 'line',
+		    				drawTime: 'beforeDatasetsDraw',
+		    				xMin: getEventLine(0),
+		    				xMax: getEventLine(0),
+		    				borderColor: 'rgba(255,0,0,0.2)',
+		    				borderWidth: 2,
+		    				label: {
+		    					content: getEventLabel(0),
+		    					enabled: true
+		    				}
+		    			}
+		    		}
+		    	}
+		    	*/
+		    } //endplugins
+	    } //end options
+	    //, plugins: [multiply],
+
+
+	}//end charting function
+	);
+
+
+},1100);
+
 //dark mode activation
 	
 	if (localStorage.getItem("colourMode") == "dark") {
@@ -9349,6 +9595,14 @@ function BIS_solve_eBIS(paramfrom, paramto) {
 	}
 }
 
+function BIS_solve_eBIS2(paramfrom, paramto) {
+	//for emulate eleveld
+	BIS_array.length = 0;
+	for (biscounter = 0; biscounter < drug_sets[2].cpt_cp.length; biscounter++) {
+		BIS_array.push(Math.round(BIS_estimated(getce(biscounter,2))));
+	}
+}
+
 function BIS_charting() {
 	BIS_solve_eBIS();
 	BIS40 = BIS_Ce_for_BIS(40);
@@ -14043,6 +14297,15 @@ function goDark(arg) {
 				myChart2.data.datasets[10].pointBorderColor = lineColor1dark;
 				myChart2.data.datasets[10].pointBackgroundColor = lineColor1dark;
 				myChart2.data.datasets[10].borderColor = lineColor1dark;
+				if (document.getElementById("emulatechartcontainer").style.display == "block") {
+				myChartEmulate.options.scales.x.grid.color = "rgba(255,255,255,0.2)";
+				myChartEmulate.options.scales.y.grid.color = "rgba(255,255,255,0.2)";
+				myChartEmulate.options.scales.x.grid.borderColor = "rgba(255,255,255,0.6)";
+				myChartEmulate.options.scales.y.grid.borderColor = "rgba(255,255,255,0.6)";
+				myChartEmulate.options.scales.x.ticks.color = "rgba(255,255,255,0.6)";
+				myChartEmulate.options.scales.y.ticks.color = "rgba(255,255,255,0.6)";
+				myChartEmulate.update();
+				}
 			myChart.update();
 			myChart2.update();
 			isDark = true;
@@ -14086,6 +14349,15 @@ function goDark(arg) {
 				myChart2.data.datasets[10].borderColor = lineColor1;
 				myChart.update();
 				myChart2.update();
+				if (document.getElementById("emulatechartcontainer").style.display == "block") {
+				myChartEmulate.options.scales.x.grid.color = "rgba(0,0,0,0.1)";
+				myChartEmulate.options.scales.y.grid.color = "rgba(0,0,0,0.1)";
+				myChartEmulate.options.scales.x.grid.borderColor = "rgba(0,0,0,0.25)";
+				myChartEmulate.options.scales.y.grid.borderColor = "rgba(0,0,0,0.25)";
+				myChartEmulate.options.scales.x.ticks.color = "rgba(102,102,102,1)";
+				myChartEmulate.options.scales.y.ticks.color = "rgba(102,102,102,1)";
+				myChartEmulate.update();
+				}
 				isDark = false;
 	}
 
@@ -16974,29 +17246,120 @@ function extendSession(ind) {
 	}
 }
 
-//VSCapture functions
-BIS_real = new Array();
-exportparams = {};
-function captureBIS() {
-	dataexport = []; //replace with real data capture
-	exportparams.timestamp = new Date(dataexport[0].Time);
-	exportparams.timestamp2 = new Date(dataexport[1].Time);
-	exportparams.timeresolution = (Date.parse(exportparams.timestamp2) - Date.parse(exportparams.timestamp))/1000;
-	for (i=0; i<dataexport.length; i++) {
-    	BIS_real[i*exportparams.timeresolution]=dataexport[i].BIS;
+function emulateEleveldInit() {
+	drug_sets[2] = {};
+	opioid = 2;
+
+			readmodel("Eleveld",2);
+			calculate_udfs(2);
+			drug_sets[2].desired = 0;
+			drug_sets[2].cpt_rates = new Array();
+			drug_sets[2].cpt_times = new Array();
+			drug_sets[2].cpt_cp = new Array();
+			drug_sets[2].cpt_ce = new Array();
+			drug_sets[2].cpt_rates_real = new Array();
+			drug_sets[2].volinf = new Array();
+			drug_sets[2].historyarray = new Array();
+			drug_sets[2].historyarrays = new Array();
+			drug_sets[2].historytexts = new Array();
+			drug_sets[2].cpt_bolus = 0;
+			drug_sets[2].cet_bolus = 0;
+			drug_sets[2].cpt_pause = 0;
+			drug_sets[2].cet_pause = 0;
+			drug_sets[2].cet_lockdowntime = 0;
+
+}
+
+function emulateEleveldReal() {
+	bolusArray = new Array();
+	for (i = 0; i<drug_sets[0].historyarrays.length; i++) {
+		if (drug_sets[0].historyarrays[i][1] == 1) {
+			bolusArray.push([drug_sets[0].historyarrays[i][2],drug_sets[0].historyarrays[i][3]]);
+		}
+	}
+	bolusCursor = 0;
+	p_state[1] = 0;
+	p_state[2] = 0;
+	p_state[3] = 0;
+	e_state[1] = 0;
+	e_state[2] = 0;
+	e_state[3] = 0;
+	e_state[4] = 0;
+			l1 = Math.exp(-drug_sets[2].lambda[1]);
+			l2 = Math.exp(-drug_sets[2].lambda[2]);
+			l3 = Math.exp(-drug_sets[2].lambda[3]);
+			l4 = Math.exp(-drug_sets[2].lambda[4]);
+
+	for (i = 0; i<drug_sets[0].cpt_rates_real.length; i++) {
+		if (bolusArray[bolusCursor] != undefined) {
+			if (i == bolusArray[bolusCursor][0]) {
+				emulateBolus(bolusArray[bolusCursor][1]);
+				bolusCursor = bolusCursor + 1;
+			} else {
+				emulateBolus(drug_sets[0].cpt_rates_real[i]);
+			}
+		} else {
+			emulateBolus(drug_sets[0].cpt_rates_real[i]);
+		}
 	}
 
-	// alter the main chart
-	myChart.options.scales.y1 = {
-        type: 'linear',
-        display: true,
-        position: 'right',
+	BIS_solve_eBIS2();
 
-        // grid line settings
-        grid: {
-          drawOnChartArea: false, // only want the grid lines for one axis to show up
-        },
-      }
+	function emulateBolus(inputbolus) {
+		console.log(inputbolus);
+			p_state[1] = p_state[1] * l1 + drug_sets[2].p_coef[1] * inputbolus * (1 - l1);
+			p_state[2] = p_state[2] * l2 + drug_sets[2].p_coef[2] * inputbolus * (1 - l2);
+			p_state[3] = p_state[3] * l3 + drug_sets[2].p_coef[3] * inputbolus * (1 - l3);
+
+			e_state[1] = e_state[1] * l1 + drug_sets[2].e_coef[1] * inputbolus * (1 - l1);
+			e_state[2] = e_state[2] * l2 + drug_sets[2].e_coef[2] * inputbolus * (1 - l2);
+			e_state[3] = e_state[3] * l3 + drug_sets[2].e_coef[3] * inputbolus * (1 - l3);
+			e_state[4] = e_state[4] * l4 + drug_sets[2].e_coef[4] * inputbolus * (1 - l4);
+
+			drug_sets[2].cpt_cp.push([p_state[1],p_state[2],p_state[3]]);
+			drug_sets[2].cpt_ce.push([e_state[1],e_state[2],e_state[3],e_state[4]]);
+	}
+
+}
+
+function emulateReset() {
+	drug_sets[2].cpt_cp.length = 0;
+	drug_sets[2].cpt_ce.length = 0;
+	myChartEmulate.data.datasets[2].data.length = 0;
+	myChartEmulate.data.datasets[3].data.length = 0;
+	BIS_array.length = 0;
+}
+
+function emulatePlot(duration) {
+	myChartEmulate.data.datasets[0].data = [...myChart.data.datasets[2].data];
+	myChartEmulate.data.datasets[1].data = [...myChart.data.datasets[3].data];
+	for (i=0; i<myChartEmulate.data.datasets[0].data.length; i++) {
+		myChartEmulate.data.datasets[2].data.push({
+	    x: myChartEmulate.data.datasets[0].data[i].x,
+	    y: getcp(myChartEmulate.data.datasets[0].data[i].x * 60,2)
+	             });
+		myChartEmulate.data.datasets[3].data.push({
+	    x: myChartEmulate.data.datasets[1].data[i].x,
+	    y: getce(myChartEmulate.data.datasets[1].data[i].x * 60,2)
+	             });
+	}
+	myChartEmulate.update();
+}
+
+function emulatePlotUpdate(auto,scaleX0,scaleX1,scaleY0,scaleY1) {
+	if (auto == 1) {
+		myChartEmulate.options.scales.x.min = myChart.options.scales.x.min;
+		myChartEmulate.options.scales.x.max = myChart.options.scales.x.max;
+		myChartEmulate.options.scales.y.min = myChart.options.scales.y.min;
+		myChartEmulate.options.scales.y.max = myChart.options.scales.y.max;
+	} else {
+		myChartEmulate.options.scales.x.min = scaleX0;
+		myChartEmulate.options.scales.x.max = scaleX1;
+		myChartEmulate.options.scales.y.min = scaleY0;
+		myChartEmulate.options.scales.y.max = scaleY1;
+	}
+	myChartEmulate.update();
+	
 }
 
 /* failed code below 
