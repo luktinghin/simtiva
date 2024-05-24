@@ -2282,7 +2282,9 @@ body.dark .loadduration {
 }
 #emulatetitlecontainer {
   display: flex;
-  padding: 10px;
+  height: 85px;
+  justify-content: center;
+  align-items: center;
   border-bottom: 1px solid #9bc99d;
   border-top: 1px solid #9bc99d;
   background: linear-gradient(78deg, rgba(240,255,240,0.1) 68%, rgba(213,237,214,0.9) 68%);

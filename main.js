@@ -1938,16 +1938,8 @@ const chartInfRateLayer = {
 
 	                		vitext = vitext + Math.round(drug_sets[active_drug_set_index].volinf[Math.round(parsedx*60)]*10)/10 + "ml";
 
-	                		if ((PD_mode == 1) && (active_drug_set_index == 0)) {
+	                		if (BIS_array.length>0) {
 	                			PD_text = "eBIS: " + BIS_array[Math.round(parsedx*60)];
-	                			return [infrate, vitext, PD_text];
-	                		} else if ((PD_mode == 2) && (ptolcouplesarray.length>0)) {
-	                			temp_ptol_elem = ptolcouplesarray[Math.round(parsedx*2)];
-	                			if (temp_ptol_elem == undefined) {
-	                				PD_text = "";
-	                			} else {
-	                				PD_text = "PTOL: " + Math.round(temp_ptol_elem.meta_ptol * 100);
-	                			}
 	                			return [infrate, vitext, PD_text];
 	                		} else {
 	                			return [infrate, vitext];	
@@ -17359,7 +17351,7 @@ function emulatePlotUpdate(auto,scaleX0,scaleX1,scaleY0,scaleY1) {
 		myChartEmulate.options.scales.y.max = scaleY1;
 	}
 	myChartEmulate.update();
-	
+	document.getElementById("emulatetitleright").innerHTML = BIS_array[Math.floor(time_in_s)];
 }
 
 /* failed code below 
