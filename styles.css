@@ -2278,6 +2278,11 @@ body.dark .loadduration {
 #emulatechartcontainer {
   height: 350px;
   width: 100%;
+  display: none;
+}
+#emulatecontrols {
+  height: 50px;
+  width: 100%;
   display: block;
 }
 #emulatetitlecontainer {
@@ -2286,8 +2291,8 @@ body.dark .loadduration {
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid #9bc99d;
-  border-top: 1px solid #9bc99d;
   background: linear-gradient(78deg, rgba(240,255,240,0.1) 68%, rgba(213,237,214,0.9) 68%);
+  box-shadow: inset 0px 6px 8px -5px rgba(0,0,0,0.15);
 }
 #chartwrapper {
   position:absolute;

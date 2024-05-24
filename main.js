@@ -1878,12 +1878,12 @@ const chartInfRateLayer = {
 	    		}
 	    	},
 	        animation: {
-	        	duration: 200
+	        	duration: 0
 	        },
 	        transitions: {
 	        	active: {
 	        		animation: {
-	        			duration: 200
+	        			duration: 0
 	        		}
 	        	}
 	        },
@@ -1893,8 +1893,10 @@ const chartInfRateLayer = {
 			    legend: {
 			    		
 				    	labels: {
-				    	boxWidth: 20,
-				    	
+				    	boxWidth: 9,
+				    	font: {
+				    		size: 11
+				    	}
 			    	}
 			    },
 			    tooltip: {
@@ -7674,6 +7676,13 @@ function ptol_generate_margins(ind,param1,param2) {
 					if (updateBIS == null) BIS_update(1000);
 				}
 			}
+		} else if (document.getElementById("myChartEmulate").style.display == "block") {
+			if (drug_sets[2] != undefined) {
+				emulateReset();
+				setTimeout(emulateEleveldReal,2500);
+				setTimeout(emulatePlot,3000);
+			}
+			
 		}
 	}
 }
@@ -8469,6 +8478,11 @@ function updatechart(chart) {
 	//savefile_data();
 	chart.update();
 	savefile_time();
+
+	//make changes to emulate too
+	if (document.getElementById("emulatechartcontainer").style.display == "block") {
+		emulatePlotUpdate(1);
+	}
 
 	//detect scale change
 	if (eventArray.length>0){
@@ -17241,7 +17255,18 @@ function extendSession(ind) {
 function emulateEleveldInit() {
 	drug_sets[2] = {};
 	opioid = 2;
-
+	if (drug_sets[0].model_name == "Marsh") {
+		myChartEmulate.data.datasets[0].label = "Cp(Marsh)";
+		myChartEmulate.data.datasets[1].label = "Ce(Marsh)";
+		myChartEmulate.data.datasets[2].label = "Cp(Eleveld)";
+		myChartEmulate.data.datasets[3].label = "Ce(Eleveld)";
+	}
+	if (drug_sets[0].model_name == "Schnider") {
+		myChartEmulate.data.datasets[0].label = "Cp(Schnider)";
+		myChartEmulate.data.datasets[1].label = "Ce(Schnider)";
+		myChartEmulate.data.datasets[2].label = "Cp(Eleveld)";
+		myChartEmulate.data.datasets[3].label = "Ce(Eleveld)";
+	}
 			readmodel("Eleveld",2);
 			calculate_udfs(2);
 			drug_sets[2].desired = 0;
@@ -17298,7 +17323,6 @@ function emulateEleveldReal() {
 	BIS_solve_eBIS2();
 
 	function emulateBolus(inputbolus) {
-		console.log(inputbolus);
 			p_state[1] = p_state[1] * l1 + drug_sets[2].p_coef[1] * inputbolus * (1 - l1);
 			p_state[2] = p_state[2] * l2 + drug_sets[2].p_coef[2] * inputbolus * (1 - l2);
 			p_state[3] = p_state[3] * l3 + drug_sets[2].p_coef[3] * inputbolus * (1 - l3);
@@ -17351,7 +17375,9 @@ function emulatePlotUpdate(auto,scaleX0,scaleX1,scaleY0,scaleY1) {
 		myChartEmulate.options.scales.y.max = scaleY1;
 	}
 	myChartEmulate.update();
-	document.getElementById("emulatetitleright").innerHTML = BIS_array[Math.floor(time_in_s)];
+	if (BIS_array[Math.floor(time_in_s)] != undefined) {
+		document.getElementById("emulatetitleright").innerHTML = BIS_array[Math.floor(time_in_s)];
+	}
 }
 
 /* failed code below 
