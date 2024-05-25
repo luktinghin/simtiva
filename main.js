@@ -17254,7 +17254,7 @@ function extendSession(ind) {
 
 function emulateEleveldInit() {
 	drug_sets[2] = {};
-	opioid = 2;
+	opioid = 1;
 	if (drug_sets[0].model_name == "Marsh") {
 		myChartEmulate.data.datasets[0].label = "Cp(Marsh)";
 		myChartEmulate.data.datasets[1].label = "Ce(Marsh)";
