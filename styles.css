@@ -2275,15 +2275,38 @@ body.dark .loadduration {
   width:100%; 
   transform:0; 
 }
-#emulatechartcontainer {
+#emulatebox {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
   height: 350px;
   width: 100%;
-  display: none;
+}
+#emulatechartcontainer {
+  top: 0;
+  position: absolute;
+  height: 350px;
+  width: 100%;
+  opacity: 0;
+  transition: 0.3s ease-in-out all;
+  transform: translateX(105%);
+}
+#emulatechartcontainer.open {
+  opacity: 1;
+  transform: translateX(0);
 }
 #emulatecontrols {
-  height: 50px;
+  top: 0;
+  position: absolute;
+  height: 350px;
   width: 100%;
-  display: block;
+  opacity: 1;
+  transition: 0.3s ease-in-out all;
+  transform:  translateX(0);
+}
+#emulatecontrols.hide {
+  opacity: 0;
+  transform: translateX(-105%);
 }
 #emulatetitlecontainer {
   display: flex;
@@ -2293,6 +2316,20 @@ body.dark .loadduration {
   border-bottom: 1px solid #9bc99d;
   background: linear-gradient(78deg, rgba(240,255,240,0.1) 68%, rgba(213,237,214,0.9) 68%);
   box-shadow: inset 0px 6px 8px -5px rgba(0,0,0,0.15);
+}
+.customTableRow {
+  border-bottom: 1px solid #ccc;
+  width: 75%;
+  margin: 0 auto;
+}
+.customTableRow.noline {
+  border-bottom: 0;
+}
+.customTableRow span {
+  width: 33%;
+  font-size: 0.8rem;
+  display: inline-block;
+  text-align: center;
 }
 #chartwrapper {
   position:absolute;

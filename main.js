@@ -8480,7 +8480,7 @@ function updatechart(chart) {
 	savefile_time();
 
 	//make changes to emulate too
-	if (document.getElementById("emulatechartcontainer").style.display == "block") {
+	if (document.getElementById("emulatechartcontainer").classList.contains("open")) {
 		emulatePlotUpdate(1);
 	}
 
@@ -14303,7 +14303,7 @@ function goDark(arg) {
 				myChart2.data.datasets[10].pointBorderColor = lineColor1dark;
 				myChart2.data.datasets[10].pointBackgroundColor = lineColor1dark;
 				myChart2.data.datasets[10].borderColor = lineColor1dark;
-				if (document.getElementById("emulatechartcontainer").style.display == "block") {
+				if (document.getElementById("emulatechartcontainer").classList.contains("open")) {
 				myChartEmulate.options.scales.x.grid.color = "rgba(255,255,255,0.2)";
 				myChartEmulate.options.scales.y.grid.color = "rgba(255,255,255,0.2)";
 				myChartEmulate.options.scales.x.grid.borderColor = "rgba(255,255,255,0.6)";
@@ -14355,7 +14355,7 @@ function goDark(arg) {
 				myChart2.data.datasets[10].borderColor = lineColor1;
 				myChart.update();
 				myChart2.update();
-				if (document.getElementById("emulatechartcontainer").style.display == "block") {
+				if (document.getElementById("emulatechartcontainer").classList.contains("open")) {
 				myChartEmulate.options.scales.x.grid.color = "rgba(0,0,0,0.1)";
 				myChartEmulate.options.scales.y.grid.color = "rgba(0,0,0,0.1)";
 				myChartEmulate.options.scales.x.grid.borderColor = "rgba(0,0,0,0.25)";
@@ -17252,6 +17252,16 @@ function extendSession(ind) {
 	}
 }
 
+function emulateDisplayToggle() {
+	if (!document.getElementById("emulatechartcontainer").classList.contains("open")) {
+		document.getElementById("emulatechartcontainer").classList.add("open");
+		document.getElementById("emulatecontrols").classList.add("hide");
+	} else {
+		document.getElementById("emulatechartcontainer").classList.remove("open");
+		document.getElementById("emulatecontrols").classList.remove("hide");
+	}
+}
+
 function emulateEleveldInit() {
 	drug_sets[2] = {};
 	opioid = 1;
@@ -17380,6 +17390,94 @@ function emulatePlotUpdate(auto,scaleX0,scaleX1,scaleY0,scaleY1) {
 	}
 }
 
+function emulateEstimateRatio() {
+
+	//assume this is CPT mode first
+	if (drug_sets[0].cpt_active>0) preview_cpt(3,0);
+	if (drug_sets[0].cet_active>0) preview_cet(3,0);
+
+		
+	p_state[1] = 0;
+	p_state[2] = 0;
+	p_state[3] = 0;
+	e_state[1] = 0;
+	e_state[2] = 0;
+	e_state[3] = 0;
+	e_state[4] = 0;
+	l1 = Math.exp(-drug_sets[2].lambda[1]);
+	l2 = Math.exp(-drug_sets[2].lambda[2]);
+	l3 = Math.exp(-drug_sets[2].lambda[3]);
+	l4 = Math.exp(-drug_sets[2].lambda[4]);
+
+	//set cursor for inf rate;
+	cursor = 0;
+	//determine bolus;
+	test_bolus = drug_sets[0].preview_bolus;
+	emulateBolus2(test_bolus);
+			
+			
+			
+	for (i=1; i<=2700; i++) {
+		//determine rate
+		test_rate = drug_sets[0].previewhistoryarray[cursor][1];
+		emulateBolus2(test_rate);
+		if (cursor+1 == drug_sets[0].previewhistoryarray.length) {
+
+		} else {
+			if (i>=drug_sets[0].previewhistoryarray[cursor+1][0]) cursor = cursor + 1;	
+		}	
+	}
+
+	test_ce = e_state[1] + e_state[2] + e_state[3] + e_state[4];
+	console.log("eleveld CE est at 45m is " + test_ce);
+	ratio = test_ce/3;
+	console.log("ratio is " + ratio);
+
+	//reset stuffs to initial
+	drug_sets[0].cpt_bolus = 0;
+	drug_sets[0].cet_bolus = 0;
+	p_state[1] = 0;
+	p_state[2] = 0;
+	p_state[3] = 0;
+	e_state[1] = 0;
+	e_state[2] = 0;
+	e_state[3] = 0;
+	e_state[4] = 0;
+	return ratio;
+
+
+	function emulateBolus2(inputbolus) {
+		
+			//p_state[1] = p_state[1] * l1 + drug_sets[2].p_coef[1] * inputbolus * (1 - l1);
+			//p_state[2] = p_state[2] * l2 + drug_sets[2].p_coef[2] * inputbolus * (1 - l2);
+			//p_state[3] = p_state[3] * l3 + drug_sets[2].p_coef[3] * inputbolus * (1 - l3);
+			e_state[1] = e_state[1] * l1 + drug_sets[2].e_coef[1] * inputbolus * (1 - l1);
+			e_state[2] = e_state[2] * l2 + drug_sets[2].e_coef[2] * inputbolus * (1 - l2);
+			e_state[3] = e_state[3] * l3 + drug_sets[2].e_coef[3] * inputbolus * (1 - l3);
+			e_state[4] = e_state[4] * l4 + drug_sets[2].e_coef[4] * inputbolus * (1 - l4);
+			
+	}
+}
+
+function emulatePopulateRatio() {
+	if (drug_sets[2] == undefined) emulateEleveldInit();
+	ratio = emulateEstimateRatio();
+	modelname = drug_sets[0].model_name;
+	document.getElementById("emulateRatioModel1").innerHTML = modelname;
+	document.getElementById("emulateRatioModel2").innerHTML = modelname;
+	document.getElementById("emulateRatioModel3").innerHTML = modelname;
+	document.getElementById("emulateRatio").innerHTML = Math.round(ratio*100)/100;
+	document.getElementById("emulateRatioX1").innerHTML = Math.round(1/ratio*10)/10;
+	document.getElementById("emulateRatioX2").innerHTML = Math.round(2/ratio*10)/10;
+	document.getElementById("emulateRatioX3").innerHTML = Math.round(3/ratio*10)/10;
+	document.getElementById("emulateRatioX4").innerHTML = Math.round(4/ratio*10)/10;
+	document.getElementById("emulateRatioX5").innerHTML = Math.round(5/ratio*10)/10;
+	document.getElementById("emulateRatioX1start").innerHTML = Math.round(2/ratio*10)/10;
+	document.getElementById("emulateRatioX2start").innerHTML = Math.round(4/ratio*10)/10;
+	document.getElementById("emulateRatioX3start").innerHTML = Math.round(6/ratio*10)/10;
+	document.getElementById("emulateRatioX4start").innerHTML = Math.round(8/ratio*10)/10;
+	document.getElementById("emulateRatioX5start").innerHTML = Math.round(10/ratio*10)/10;
+}
 /* failed code below 
 
 let arrLines = new Array();
