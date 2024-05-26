@@ -209,6 +209,7 @@ var texttimeout = null;
 var parseloading = 0; //suppress function calls during parseobject loading when equals 1
 
 var popupon = false;
+var emulateOn = false;
 
 var isDark = false;
 var timeoutptol = null;
@@ -2076,7 +2077,9 @@ document.addEventListener('touchend', function(event) {
     	} else {
     		myChart.canvas.dispatchEvent(new Event("mouseout"));	
     	}
-        
+      if (emulateOn) {
+      	myChartEmulate.canvas.dispatchEvent(new Event("mouseout"));		
+      } 
     }
 })
 
@@ -8480,7 +8483,7 @@ function updatechart(chart) {
 	savefile_time();
 
 	//make changes to emulate too
-	if (document.getElementById("emulatechartcontainer").classList.contains("open")) {
+	if (emulateOn == true) {
 		emulatePlotUpdate(1);
 	}
 
@@ -14303,7 +14306,7 @@ function goDark(arg) {
 				myChart2.data.datasets[10].pointBorderColor = lineColor1dark;
 				myChart2.data.datasets[10].pointBackgroundColor = lineColor1dark;
 				myChart2.data.datasets[10].borderColor = lineColor1dark;
-				if (document.getElementById("emulatechartcontainer").classList.contains("open")) {
+				if (emulateOn == true) {
 				myChartEmulate.options.scales.x.grid.color = "rgba(255,255,255,0.2)";
 				myChartEmulate.options.scales.y.grid.color = "rgba(255,255,255,0.2)";
 				myChartEmulate.options.scales.x.grid.borderColor = "rgba(255,255,255,0.6)";
@@ -14355,7 +14358,7 @@ function goDark(arg) {
 				myChart2.data.datasets[10].borderColor = lineColor1;
 				myChart.update();
 				myChart2.update();
-				if (document.getElementById("emulatechartcontainer").classList.contains("open")) {
+				if (emulateOn == true) {
 				myChartEmulate.options.scales.x.grid.color = "rgba(0,0,0,0.1)";
 				myChartEmulate.options.scales.y.grid.color = "rgba(0,0,0,0.1)";
 				myChartEmulate.options.scales.x.grid.borderColor = "rgba(0,0,0,0.25)";
@@ -17256,9 +17259,11 @@ function emulateDisplayToggle() {
 	if (!document.getElementById("emulatechartcontainer").classList.contains("open")) {
 		document.getElementById("emulatechartcontainer").classList.add("open");
 		document.getElementById("emulatecontrols").classList.add("hide");
+		document.getElementById("emulatechartbuttons").classList.remove("hide");
 	} else {
 		document.getElementById("emulatechartcontainer").classList.remove("open");
 		document.getElementById("emulatecontrols").classList.remove("hide");
+		document.getElementById("emulatechartbuttons").classList.add("hide");
 	}
 }
 
@@ -17466,7 +17471,7 @@ function emulatePopulateRatio() {
 	document.getElementById("emulateRatioModel1").innerHTML = modelname;
 	document.getElementById("emulateRatioModel2").innerHTML = modelname;
 	document.getElementById("emulateRatioModel3").innerHTML = modelname;
-	document.getElementById("emulateRatio").innerHTML = Math.round(ratio*100)/100;
+	document.getElementById("emulateRatio").innerHTML = Math.round(1/ratio*100)/100;
 	document.getElementById("emulateRatioX1").innerHTML = Math.round(1/ratio*10)/10;
 	document.getElementById("emulateRatioX2").innerHTML = Math.round(2/ratio*10)/10;
 	document.getElementById("emulateRatioX3").innerHTML = Math.round(3/ratio*10)/10;
@@ -17477,6 +17482,7 @@ function emulatePopulateRatio() {
 	document.getElementById("emulateRatioX3start").innerHTML = Math.round(6/ratio*10)/10;
 	document.getElementById("emulateRatioX4start").innerHTML = Math.round(8/ratio*10)/10;
 	document.getElementById("emulateRatioX5start").innerHTML = Math.round(10/ratio*10)/10;
+	document.getElementById("emulateCE50").innerHTML = Math.round(BIS_Ce50()*10)/10;
 }
 /* failed code below 
 

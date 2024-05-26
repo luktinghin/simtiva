@@ -1823,9 +1823,7 @@
 				</div>
 			</div>
 		</div>
-		<button onclick="emulateEleveldInit();emulateEleveldReal();emulatePlot();">EmulateStart</button>
-		<button onclick="emulateReset();emulateEleveldReal();emulatePlot()">RedrawPlot</button>
-		<button onclick="emulatePlotUpdate(1)">Update</button>
+
 		<div id="emulatecard" class="card">
 			<div class="cardtitle">ELEVELD EMULATION</div>
 
@@ -1838,13 +1836,13 @@
 				</div>
 			</div>
 			<div id="emulateswitch">
-				<a class="button" onclick="emulateDisplayToggle();">Switch</a>
-				<a class="button" onclick="emulatePopulateRatio();">Ratio</a>
+				<a class="button" onclick="document.getElementById('emulateswitch').classList.add('hide');document.getElementById('emulatebox').classList.add('expand');emulatePopulateRatio();">Turn on emulation</a>
 			</div>
 			<div id="emulatebox">
+				<div id="emulatechartbuttons" class="hide"><a id="chartemulatebutton" onclick="emulateDisplayToggle()"><span style="padding-right: 6px"><i class="fas fa-question-circle"></i></span>Details</a></div>
 				<div id="emulatecontrols">
 					<div>
-						<span style="opacity:0.7;font-size:0.8rem">Ratio to convert <i><span id="emulateRatioModel3">Marsh</span> target</i> to <i>Eleveld target</i> is:<b><span id="emulateRatio"></span></b></span>
+						<span style="opacity:0.7;font-size:0.8rem;width:80%;margin:9px auto;white-space:normal;display:block">This table estimates the required target to emulate the Eleveld model. Use the induction target for initial 1-3mins then reduce to maintenance target. Ratio to convert <i>Eleveld target</i> to <i><span id="emulateRatioModel3">Marsh</span> target</i> is: <b><span id="emulateRatio" ></span></b></span>
 						<div class="customTableRow">
 							<span><b>Eleveld CET</b></span><span><b id="emulateRatioModel1">Marsh</b><br><b>Induction</b></span><span><b id="emulateRatioModel2">Marsh</b><br><b>Maintenance</b></span>
 						</div>
@@ -1866,9 +1864,10 @@
 						<div class="customTableRow noline">
 
 						</div>
+						<span style="opacity:0.7;font-size:0.8rem;width:80%;margin:9px auto;white-space:normal;display:block">Age-adjusted CE50 for Eleveld model is: <b><span id="emulateCE50"></span></b></span>
 					</div>
-					<div style="display:flex;width:100%;height: 80px;justify-content:center;align-items:center">
-						<a class="button invert" onclick="emulateEleveldInit();emulateEleveldReal();emulateDisplayToggle();setTimeout(emulatePlot,3000)">Start Emulation</a>
+					<div style="display:flex;width:100%;height: 40px;justify-content:center;align-items:center">
+						<a class="button invert" id="emulateStartBtn" onclick="emulateEleveldInit();emulateEleveldReal();emulateDisplayToggle();setTimeout(emulatePlot,3000);setTimeout(function() {document.getElementById('emulateStartBtn').setAttribute('onclick','emulateDisplayToggle()');document.getElementById('emulateStartBtn').innerHTML='Show Graph'},250);emulateOn = true;">Start Emulation</a>
 					</div>
 				</div>
 				<div id="emulatechartcontainer">

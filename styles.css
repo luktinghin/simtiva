@@ -2279,8 +2279,12 @@ body.dark .loadduration {
   position: relative;
   overflow: hidden;
   white-space: nowrap;
-  height: 350px;
+  height: 0px;
   width: 100%;
+  transition: 0.3s ease-in-out all;
+}
+#emulatebox.expand {
+  height: 350px;
 }
 #emulatechartcontainer {
   top: 0;
@@ -2289,11 +2293,13 @@ body.dark .loadduration {
   width: 100%;
   opacity: 0;
   transition: 0.3s ease-in-out all;
-  transform: translateX(105%);
+  pointer-events: none;
+  /*transform: translateX(105%);*/
 }
 #emulatechartcontainer.open {
   opacity: 1;
-  transform: translateX(0);
+  pointer-events: auto;
+  /*transform: translateX(0);*/
 }
 #emulatecontrols {
   top: 0;
@@ -2306,7 +2312,7 @@ body.dark .loadduration {
 }
 #emulatecontrols.hide {
   opacity: 0;
-  transform: translateX(-105%);
+  transform: translateY(-105%);
 }
 #emulatetitlecontainer {
   display: flex;
@@ -2314,12 +2320,54 @@ body.dark .loadduration {
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid #9bc99d;
-  background: linear-gradient(78deg, rgba(240,255,240,0.1) 68%, rgba(213,237,214,0.9) 68%);
+  background: linear-gradient(78deg, rgba(240,255,240,0.5) 68%, rgba(213,237,214,1) 68%);
   box-shadow: inset 0px 6px 8px -5px rgba(0,0,0,0.15);
+}
+
+#emulateswitch {
+ box-shadow: inset 0px 6px 8px -5px rgba(0,0,0,0.15);
+ text-align: center; 
+ padding: 10px;
+}
+#emulateswitch a.button {
+  font-size: 0.8rem;
+  line-height: 1;
+  height: 25px;
+}
+#emulateswitch.hide {
+  display: none;
+}
+#emulatechartbuttons {
+  display: flex;
+  position: absolute;
+  bottom: 60px;
+  right: 20px;
+  height: 30px;
+  background: #ccc;
+  box-shadow: 0px 5px 7px -5px rgb(0 0 0 /20%);
+  border-radius: 2em;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+  opacity: 1;
+  pointer-events: auto;
+  transition: 0.3s ease-in-out all;
+}
+#emulatechartbuttons.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+#chartemulatebutton {
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+#emulatechartbuttons:hover {
+  background: #dedede;
 }
 .customTableRow {
   border-bottom: 1px solid #ccc;
-  width: 75%;
+  width: 80%;
   margin: 0 auto;
 }
 .customTableRow.noline {
@@ -2330,6 +2378,8 @@ body.dark .loadduration {
   font-size: 0.8rem;
   display: inline-block;
   text-align: center;
+  line-height: 0.95;
+  height: 1.2rem;
 }
 #chartwrapper {
   position:absolute;
