@@ -1842,7 +1842,7 @@
 				<div id="emulatechartbuttons" class="hide"><a id="chartemulatebutton" onclick="emulateDisplayToggle()"><span style="padding-right: 6px"><i class="fas fa-question-circle"></i></span>Details</a></div>
 				<div id="emulatecontrols">
 					<div>
-						<span style="opacity:0.7;font-size:0.8rem;width:80%;margin:9px auto;white-space:normal;display:block">This table estimates the required target to emulate the Eleveld model. Use the induction target for initial 1-3mins then reduce to maintenance target. Ratio to convert <i>Eleveld target</i> to <i><span id="emulateRatioModel3">Marsh</span> target</i> is: <b><span id="emulateRatio" ></span></b></span>
+						<span style="opacity:0.7;font-size:0.8rem;width:85%;margin:9px auto;white-space:normal;display:block">This table estimates the required target to emulate the Eleveld model. Use the induction target for initial 1-3mins then reduce to maintenance target. Ratio to convert <i>Eleveld target</i> to <i><span id="emulateRatioModel3">Marsh</span> target</i> is: <b><span id="emulateRatio" ></span></b></span>
 						<div class="customTableRow">
 							<span><b>Eleveld CET</b></span><span><b id="emulateRatioModel1">Marsh</b><br><b>Induction</b></span><span><b id="emulateRatioModel2">Marsh</b><br><b>Maintenance</b></span>
 						</div>
@@ -1864,7 +1864,7 @@
 						<div class="customTableRow noline">
 
 						</div>
-						<span style="opacity:0.7;font-size:0.8rem;width:80%;margin:9px auto;white-space:normal;display:block">Age-adjusted CE50 for Eleveld model is: <b><span id="emulateCE50"></span></b></span>
+						<span style="opacity:0.7;font-size:0.8rem;width:85%;margin:9px auto;white-space:normal;display:block">Age-adjusted CE50 for Eleveld model is: <b><span id="emulateCE50"></span></b></span>
 					</div>
 					<div style="display:flex;width:100%;height: 40px;justify-content:center;align-items:center">
 						<a class="button invert" id="emulateStartBtn" onclick="emulateEleveldInit();emulateEleveldReal();emulateDisplayToggle();setTimeout(emulatePlot,3000);setTimeout(function() {document.getElementById('emulateStartBtn').setAttribute('onclick','emulateDisplayToggle()');document.getElementById('emulateStartBtn').innerHTML='Show Graph'},250);emulateOn = true;">Start Emulation</a>

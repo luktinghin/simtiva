@@ -2367,7 +2367,7 @@ body.dark .loadduration {
 }
 .customTableRow {
   border-bottom: 1px solid #ccc;
-  width: 80%;
+  width: 85%;
   margin: 0 auto;
 }
 .customTableRow.noline {
@@ -2379,7 +2379,7 @@ body.dark .loadduration {
   display: inline-block;
   text-align: center;
   line-height: 0.95;
-  height: 1.2rem;
+  height: 1.1rem;
 }
 #chartwrapper {
   position:absolute;
