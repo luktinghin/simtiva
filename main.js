@@ -18405,26 +18405,40 @@ function preprocessJSON(data, object1, object2) {
 			timeepoch = Date.parse(timestring);
             return timeepoch;
     }
-    for (i=0;i<data.length;i++) {
-        if (data[i].PhysioID == "PlasmaConcentration") {
-            object1.push({time: toTimeEpoch(data[i].Timestamp), CP: data[i].Value})
-        }
-        if (data[i].PhysioID == "EffectSiteConcentration") {
-            object1.push({time: toTimeEpoch(data[i].Timestamp), CE: data[i].Value})
-        }
-        if (data[i].PhysioID == "VI_Value") {
-            object1.push({time: toTimeEpoch(data[i].Timestamp), VI: data[i].Value})
-        }
-        if (data[i].PhysioID == "InfusionRateValue") {
-            object1.push({time: toTimeEpoch(data[i].Timestamp), rate: data[i].Value})
-        }
-        if (data[i].PhysioID == "BIS") {
-            object2.push({time: toTimeEpoch(data[i].Timestamp), BIS: data[i].Value})
-        }
-        if (data[i].PhysioID == "SQI") {
-            object2.push({time: toTimeEpoch(data[i].Timestamp), SQI: data[i].Value})
-        }
-    }
+    //this is "JSON file from VSCapture"
+    if (data[0].hasOwnProperty("Timestamp")) {
+	    for (i=0;i<data.length;i++) {
+	        if (data[i].PhysioID == "PlasmaConcentration") {
+	            object1.push({time: toTimeEpoch(data[i].Timestamp), CP: data[i].Value})
+	        }
+	        if (data[i].PhysioID == "EffectSiteConcentration") {
+	            object1.push({time: toTimeEpoch(data[i].Timestamp), CE: data[i].Value})
+	        }
+	        if (data[i].PhysioID == "VI_Value") {
+	            object1.push({time: toTimeEpoch(data[i].Timestamp), VI: data[i].Value})
+	        }
+	        if (data[i].PhysioID == "InfusionRateValue") {
+	            object1.push({time: toTimeEpoch(data[i].Timestamp), rate: data[i].Value})
+	        }
+	        if (data[i].PhysioID == "BIS") {
+	            object2.push({time: toTimeEpoch(data[i].Timestamp), BIS: data[i].Value})
+	        }
+	        if (data[i].PhysioID == "SQI") {
+	            object2.push({time: toTimeEpoch(data[i].Timestamp), SQI: data[i].Value})
+	        }
+	    }
+	  }
+    //this is "TEMPORARY CODE FOR CUSTOM JSON generated from CSV FILE FROM VS CAPTURE"
+    if (data[0].hasOwnProperty("BIS")) {
+	    for (i=0;i<data.length;i++) {
+	        tempTime = data[i].time;
+	        object2.push([
+	        	time: toTimeEpoch(tempTime),
+	        	BIS: data[i].BIS,
+	        	SQI: data[i].SQI
+	        	]);
+	    }
+	  }
 }
 
 function VSparseJSON(data) {
@@ -18471,27 +18485,34 @@ function VSparseInfusion(data) {
 
 function VSparseBIS(data) {
     timeprior = 0;
-    for (i=0; i<data.length; i++) {
-        workingclock = Math.floor(data[i].time/1000);
-        if (workingclock > timeprior) {
-        	//push undefined values first
-            if (data[i].hasOwnProperty("BIS")) {
-                objBIS.push({ time: workingclock, BIS: data[i].BIS, SQI: undefined});
-            }
-            if (data[i].hasOwnProperty("SQI")) {
-                objBIS.push({ time: workingclock, SQI: data[i].SQI, BIS: undefined});
-            }
+    
+    if (data[0].hasOwnProperty("BIS") && data[0].hasOwnProperty("SQI") && data[0].hasOwnProperty("time")) {
+    	objBIS = [...data];
+    } else {
+    	//assume this is the JSON file outputted from VS capture
+	    for (i=0; i<data.length; i++) {
+	        workingclock = Math.floor(data[i].time/1000);
+	        if (workingclock > timeprior) {
+	        	//push undefined values first
+	            if (data[i].hasOwnProperty("BIS")) {
+	                objBIS.push({ time: workingclock, BIS: data[i].BIS, SQI: undefined});
+	            }
+	            if (data[i].hasOwnProperty("SQI")) {
+	                objBIS.push({ time: workingclock, SQI: data[i].SQI, BIS: undefined});
+	            }
 
-        } else {
-            if (data[i].hasOwnProperty("SQI")) {
-                objBIS[objBIS.length-1].SQI= data[i].SQI;
-            }
-            if (data[i].hasOwnProperty("BIS")) {
-                objBIS[objBIS.length-1].BIS= data[i].BIS ;
-            }
-        }
-        timeprior = workingclock;
+	        } else {
+	            if (data[i].hasOwnProperty("SQI")) {
+	                objBIS[objBIS.length-1].SQI= data[i].SQI;
+	            }
+	            if (data[i].hasOwnProperty("BIS")) {
+	                objBIS[objBIS.length-1].BIS= data[i].BIS ;
+	            }
+	        }
+	        timeprior = workingclock;
+	    }
     }
+
 }
 
 /* failed code below 
