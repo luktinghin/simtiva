@@ -18432,11 +18432,11 @@ function preprocessJSON(data, object1, object2) {
     if (data[0].hasOwnProperty("BIS")) {
 	    for (i=0;i<data.length;i++) {
 	        tempTime = data[i].time;
-	        object2.push([
+	        object2.push({
 	        	time: toTimeEpoch(tempTime),
 	        	BIS: data[i].BIS,
 	        	SQI: data[i].SQI
-	        	]);
+	        	});
 	    }
 	  }
 }
