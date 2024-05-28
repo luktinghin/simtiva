@@ -18431,7 +18431,7 @@ function preprocessJSON(data, object1, object2) {
     //this is "TEMPORARY CODE FOR CUSTOM JSON generated from CSV FILE FROM VS CAPTURE"
     if (data[0].hasOwnProperty("BIS")) {
 	    for (i=0;i<data.length;i++) {
-	        tempTime = data[i].time;
+	        tempTime = data[i].Time;
 	        object2.push({
 	        	time: toTimeEpoch(tempTime),
 	        	BIS: data[i].BIS,
@@ -18487,7 +18487,17 @@ function VSparseBIS(data) {
     timeprior = 0;
     
     if (data[0].hasOwnProperty("BIS") && data[0].hasOwnProperty("SQI") && data[0].hasOwnProperty("time")) {
-    	objBIS = [...data];
+    	for (i=0; i<data.length; i++) {
+    		workingclock = Math.floor(data[i].time/1000);
+    		if (workingclock > timeprior) {
+    			objBIS.push({
+    				time: workingclock,
+    				BIS: data[i].BIS,
+    				SQI: data[i].SQI
+    			})
+    		}
+
+    	}
     } else {
     	//assume this is the JSON file outputted from VS capture
 	    for (i=0; i<data.length; i++) {
