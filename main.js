@@ -18280,24 +18280,24 @@ function VSaltertime2() {
 
 	VSimportdata.BISworking.length = 0;
 	VSimportdata.timeepoch1working.length = 0;
-	VSimportdata.timestring1working.length = 0;
+	//VSimportdata.timestring1working.length = 0;
 
 	VSimportdata.BISworking = JSON.parse(JSON.stringify(VSimportdata.BISoriginal));
 	VSimportdata.timeepoch1working = JSON.parse(JSON.stringify(VSimportdata.timeepoch1original));
-	VSimportdata.timestring1working = JSON.parse(JSON.stringify(VSimportdata.timestring1original));
+	//VSimportdata.timestring1working = JSON.parse(JSON.stringify(VSimportdata.timestring1original));
 
 
 	if (altertime < 0) {
 		for (i=0;i<(-1 * altertime);i++) {
 			VSimportdata.BISworking.unshift(undefined);
 			VSimportdata.timeepoch1working.unshift(undefined);
-			VSimportdata.timestring1working.unshift(undefined);
+			//VSimportdata.timestring1working.unshift(undefined);
 		}
 	} else {
 		for (i=0;i<altertime;i++) {
 			VSimportdata.BISworking.shift();
 			VSimportdata.timeepoch1working.shift();
-			VSimportdata.timestring1working.shift();
+			//VSimportdata.timestring1working.shift();
 		}
 	}
 
