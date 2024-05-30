@@ -2234,12 +2234,38 @@ setTimeout(
 	    		fill: false,
 	    		parsing: false,
 	    		hidden: false,
-	    		
 	    	},{
-	    		label: 'Custom curve', 
-	    		data: [{x:0, y:0}],
+	    		label: 'Custome calibration', 
+	    		data: [],
 	    		borderWidth:3,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(255,0,0,0.7)',
+	    		backgroundColor: 'rgb(255,0,0,0.7)',
+	    		pointBorderColor: 'rgb(255,0,0,0.7)',
+	    		pointBackgroundColor: 'rgb(255,0,0,0.7)',
+	    		tension:0.4,
+	    		fill: false,
+	    		parsing: false,
+	    		hidden: false,
+	    	},{
+	    		label: 'INDUCTION', 
+	    		data: [{x:0, y:0}],
+	    		borderWidth:0,
 	    		pointRadius:3,
+	    		borderJoinStyle: 'round',
+	    		borderColor: bluePri50,
+	    		backgroundColor: bluePri50,
+	    		pointBorderColor: bluePri50,
+	    		pointBackgroundColor: bluePri50,
+	    		fill: false,
+	    		parsing: false,
+	    		hidden:false,
+	    	},{
+	    		label: 'INTRAOP', 
+	    		data: [{x:0, y:0}],
+	    		borderWidth:0,
+	    		pointRadius:2,
 	    		borderJoinStyle: 'round',
 	    		borderColor: 'rgb(9, 203, 93,0.7)',
 	    		backgroundColor: 'rgb(9, 203, 93,0.4)',
@@ -2247,8 +2273,20 @@ setTimeout(
 	    		pointBackgroundColor: 'rgb(9, 203, 93,0.8)',
 	    		fill: false,
 	    		parsing: false,
-	    		hidden:true,
-	    		
+	    		hidden:false,
+	    	},{
+	    		label: 'EMERGENCE', 
+	    		data: [{x:0, y:0}],
+	    		borderWidth:0,
+	    		pointRadius:2,
+	    		borderJoinStyle: 'round',
+	    		borderColor: yellowPri50,
+	    		backgroundColor: yellowPri50,
+	    		pointBorderColor: yellowPri50,
+	    		pointBackgroundColor: yellowPri50,
+	    		fill: false,
+	    		parsing: false,
+	    		hidden:false,
 	    	}]
 	    }, //end data
 	    options: {
@@ -9999,6 +10037,137 @@ function BIS_generate_PD_curve() {
 		dataoutput.push( {x: x, y: i} );
 	}
 	return dataoutput;
+}
+
+function BIS_generate_custom_PD_curve(customCe50,customGamma) {
+	tempArray = new Array();
+	for (Ceinput=0;Ceinput<10;Ceinput = Ceinput + 0.2) {
+		customDrugEffect = Math.pow(Ceinput,customGamma) / (Math.pow(customCe50,customGamma) + Math.pow(Ceinput,customGamma));
+		customBIS = BIS_baseline * (1-customDrugEffect);
+		tempArray.push({
+				x: Ceinput,
+				y: customBIS
+			});
+	}
+	return tempArray;
+}
+
+function BIS_customfunction(x,a,b) {
+	//the sigmoid function takes the form of 
+	//BIS = BISbaseline * (1- EFFECT) where EFFECT is:
+	//                                CE^gamma / (Ce50^gamma + CE^gamma)
+	//so the resultant formula is:
+	y = BIS_baseline * (1- (Math.pow(x,b) / (Math.pow(a,b) + Math.pow(x,b))) );
+	return y;
+}
+
+function customfunction1() {
+    tempArray = new Array();
+    for (i=0;i<600;i++) {
+        if (VSimportdata.BISworking[i]>0) {
+            xdata = getce(i,2);
+            ydata = VSimportdata.BISworking[i];
+            tempArray.push({
+                x: xdata,
+                y: ydata
+            });
+        }
+    }
+    return tempArray;
+}
+
+function customfunction2() {
+    tempArray = new Array();
+    for (i=601;i<4320;i++) {
+        if (VSimportdata.BISworking[i]>0) {
+            xdata = getce(i,2);
+            ydata = VSimportdata.BISworking[i];
+            tempArray.push({
+                x: xdata,
+                y: ydata
+            });
+        }
+    }
+    return tempArray;
+}
+
+function customfunction3() {
+    tempArray = new Array();
+    for (i=4321;i<VSimportdata.BISworking.length;i++) {
+        if (VSimportdata.BISworking[i]>0) {
+            xdata = getce(i,2);
+            ydata = VSimportdata.BISworking[i];
+            tempArray.push({
+                x: xdata,
+                y: ydata
+            });
+        }
+    }
+    return tempArray;
+}
+
+function math_reformat_arrays(duration_start,duration_end) {
+	//this generate an array of two arrays: observed BIS , vs estimated BIS
+	tempArray1 = new Array();
+	tempArray2 = new Array();
+	for (i=duration_start;i<duration_end;i++) {
+		if (VSimportdata.BISworking[i]>0) {
+			tempArray1.push(VSimportdata.BISworking[i]);
+			tempArray2.push(BIS_estimated(getce(i,2)));
+		}
+	}
+	//output array as [actual],[predicted]
+	return [tempArray1,tempArray2];
+}
+
+function math_reformat_arrays_custom(duration_start,duration_end,a,b) {
+	//this generate an array of two arrays: observed BIS , vs  BIS from custom function
+	//a is custom ce50
+	//b is custom gamma
+	tempArray1 = new Array();
+	tempArray2 = new Array();
+	for (i=duration_start;i<duration_end;i++) {
+		if (VSimportdata.BISworking[i]>0) {
+			tempArray1.push(VSimportdata.BISworking[i]);
+			tempArray2.push(BIS_customfunction(getce(i,2),a,b));
+		}
+	}
+	//output array as [actual],[predicted]
+	return [tempArray1,tempArray2];
+}
+
+function math_mse(a, b) {
+	let error = 0
+	for (let i = 0; i < a.length; i++) {
+		error += Math.pow((b[i] - a[i]), 2)
+	}
+	return error / a.length
+}
+
+function math_solver(a, b, c, duration_start, duration_end) {
+	//a being initial CE50
+	//b being initial gamma
+	//c being the step, 0.01 by default
+	//initialize the search array, in the form a,b,mse
+	searchArray = new Array();
+	//binary search algorithm
+	testObject = new Array();
+	testObject = math_reformat_arrays_custom(duration_start, duration_end, a, b);
+	searchArray.push([a,b,math_mse(testObject[0],testObject[1])]);
+	//step up 200 
+	testObject = math_reformat_arrays_custom(duration_start, duration_end, a+200*c, b);
+	searchArray.push([a,b,math_mse(testObject[0],testObject[1])]);
+	//step down 200
+	testObject = math_reformat_arrays_custom(duration_start, duration_end, a-200*c, b);
+	searchArray.push([a,b,math_mse(testObject[0],testObject[1])]);
+	console.log(searchArray);
+	//console.log(opt_a,opt_b);
+	//return [opt_a,opt_b];
+
+	function getmse() {
+		testObject = math_reformat_arrays_custom(duration_start, duration_end, a, b);
+		math_mse(testObject[0],testObject[1]);
+	}
 }
 
 function proceedComplex() {
@@ -18524,6 +18693,8 @@ function VSparseBIS(data) {
     }
 
 }
+
+
 
 /* failed code below 
 
