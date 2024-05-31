@@ -10061,9 +10061,9 @@ function BIS_customfunction(x,a,b) {
 	return y;
 }
 
-function customfunction1() {
+function customfunction1(cutoff) {
     tempArray = new Array();
-    for (i=0;i<600;i++) {
+    for (i=0;i<cutoff;i++) {
         if (VSimportdata.BISworking[i]>0) {
             xdata = getce(i,2);
             ydata = VSimportdata.BISworking[i];
@@ -10076,9 +10076,9 @@ function customfunction1() {
     return tempArray;
 }
 
-function customfunction2() {
+function customfunction2(cutoff1,cutoff2) {
     tempArray = new Array();
-    for (i=601;i<4320;i++) {
+    for (i=cutoff1;i<cutoff2;i++) {
         if (VSimportdata.BISworking[i]>0) {
             xdata = getce(i,2);
             ydata = VSimportdata.BISworking[i];
@@ -10091,9 +10091,9 @@ function customfunction2() {
     return tempArray;
 }
 
-function customfunction3() {
+function customfunction3(cutoff) {
     tempArray = new Array();
-    for (i=4321;i<VSimportdata.BISworking.length;i++) {
+    for (i=cutoff;i<VSimportdata.BISworking.length;i++) {
         if (VSimportdata.BISworking[i]>0) {
             xdata = getce(i,2);
             ydata = VSimportdata.BISworking[i];
@@ -10144,29 +10144,276 @@ function math_mse(a, b) {
 	return error / a.length
 }
 
+function math_solver2(a,b,duration_start,duration_end) {
+	orig_a = a;
+	orig_b = b;
+	testArray = new Array();
+	testArray2 = new Array();
+	prior = 999;
+	store_counter_a = 999;
+	store_counter_b = 999;
+	for (counter = 1.5; counter<7.1; counter = counter + 0.5) {
+		//console.log("outer loop, a counter " + counter);
+		for (counter2 = 1.5; counter2<3.5; counter2 = counter2 + 0.1) {
+			//console.log("inner loop, b counter =" + counter2);
+			testArray.push([counter,counter2,getmse(counter,counter2)]);
+		}
+	}
+	for (counter3 = 0; counter3<testArray.length; counter3++) {
+		if (testArray[counter3][2]<prior) {
+			testArray2.push(testArray[counter3]);
+			prior = testArray[counter3][2];
+		}
+	}
+	console.log(testArray2);
+	a = testArray2[testArray2.length-1][0];
+	b = testArray2[testArray2.length-1][1];
+	c = 0.01;
+	for (outerloop = 0; outerloop<30; outerloop++) {
+		console.log("A RELATIVE TO B LOOP " + outerloop);
+
+		for (counter=0; counter<100; counter++) {
+			current = getmse(a,b);
+			smaller = getmse(a-c,b);
+			bigger = getmse(a+c,b);
+
+			if (smaller < current) { a = a-c};
+			if (bigger < current) { a = a+c};
+			if ((current<smaller) && (current<bigger)) {
+				console.log("solution of A: iteration " + counter + " mse is " + current + " ce50 is " + a);
+				store_counter_a = counter;
+				break;
+			}
+		}
+		for (counter=0; counter<100; counter++) {
+			current = getmse(a,b);
+			smaller = getmse(a,b-c);
+			bigger = getmse(a,b+c);
+
+			if (smaller < current) { b = b-c};
+			if (bigger < current) { b = b+c};
+			if ((current<smaller) && (current<bigger)) {
+				console.log("solution of B: iteration " + counter + " mse is " + current + " gamma is " + b);
+				store_counter_b = counter;
+				break;
+			}
+		}
+		if ((store_counter_a == 0) && (store_counter_b == 0)) {
+			console.log("conditions optimized");
+			break;
+		}
+	}
+	temp_a = a;
+	temp_b = b;
+	temp_current = current;
+
+	a = orig_a;
+	b = orig_b;
+	//try optimize b relative to a first
+
+	for (outerloop = 0; outerloop<30; outerloop++) {
+		console.log("B RELATIVE TO A LOOP " + outerloop);
+		for (counter=0; counter<100; counter++) {
+			current = getmse(a,b);
+			smaller = getmse(a,b-c);
+			bigger = getmse(a,b+c);
+
+			if (smaller < current) { b = b-c};
+			if (bigger < current) { b = b+c};
+			if ((current<smaller) && (current<bigger)) {
+				console.log("solution of B: iteration " + counter + " mse is " + current + " gamma is " + b);
+				store_counter_b = counter;
+				break;
+			}
+		}
+		for (counter=0; counter<100; counter++) {
+			current = getmse(a,b);
+			smaller = getmse(a-c,b);
+			bigger = getmse(a+c,b);
+
+			if (smaller < current) { a = a-c};
+			if (bigger < current) { a = a+c};
+			if ((current<smaller) && (current<bigger)) {
+				console.log("solution of A: iteration " + counter + " mse is " + current + " ce50 is " + a);
+				store_counter_a = counter;
+				break;
+			}
+		}
+
+		if ((store_counter_a == 0) && (store_counter_b == 0)) {
+			console.log("conditions optimized");
+			break;
+		}
+	}
+
+	//then compare current(s)
+	if (current > temp_current) {
+		//first outer loop is better
+		console.log("swapping first loop variables");
+		a = temp_a;
+		b = temp_b;
+		current = temp_current
+	} else if (temp_current > current) {
+		console.log("second outerloop is better, no change");
+	} else {
+		console.log("two outerloops same.");
+	}
+
+	function getmse(test_a,test_b) {
+		testObject = math_reformat_arrays_custom(duration_start, duration_end, test_a, test_b);
+		return math_mse(testObject[0],testObject[1]);
+	}
+	return [a,b,current];
+}
+
 function math_solver(a, b, c, duration_start, duration_end) {
 	//a being initial CE50
 	//b being initial gamma
 	//c being the step, 0.01 by default
-	//initialize the search array, in the form a,b,mse
-	searchArray = new Array();
-	//binary search algorithm
-	testObject = new Array();
-	testObject = math_reformat_arrays_custom(duration_start, duration_end, a, b);
-	searchArray.push([a,b,math_mse(testObject[0],testObject[1])]);
-	//step up 200 
-	testObject = math_reformat_arrays_custom(duration_start, duration_end, a+200*c, b);
-	searchArray.push([a,b,math_mse(testObject[0],testObject[1])]);
-	//step down 200
-	testObject = math_reformat_arrays_custom(duration_start, duration_end, a-200*c, b);
-	searchArray.push([a,b,math_mse(testObject[0],testObject[1])]);
-	console.log(searchArray);
-	//console.log(opt_a,opt_b);
-	//return [opt_a,opt_b];
+	if (c == undefined) {
+		c = 0.01;
+	}
+	orig_a = a;
+	orig_b = b;
+	store_counter_a = 999;
+	store_counter_b = 999;
 
-	function getmse() {
-		testObject = math_reformat_arrays_custom(duration_start, duration_end, a, b);
-		math_mse(testObject[0],testObject[1]);
+	c=c*10;
+	
+	for (outerloop = 0; outerloop<30; outerloop++) {
+		console.log("A RELATIVE TO B LOOP " + outerloop);
+
+		for (counter=0; counter<100; counter++) {
+			current = getmse(a,b);
+			smaller = getmse(a-c,b);
+			bigger = getmse(a+c,b);
+
+			if (smaller < current) { a = a-c};
+			if (bigger < current) { a = a+c};
+			if ((current<smaller) && (current<bigger)) {
+				console.log("solution of A: iteration " + counter + " mse is " + current + " ce50 is " + a);
+				store_counter_a = counter;
+				break;
+			}
+		}
+		for (counter=0; counter<100; counter++) {
+			current = getmse(a,b);
+			smaller = getmse(a,b-c);
+			bigger = getmse(a,b+c);
+
+			if (smaller < current) { b = b-c};
+			if (bigger < current) { b = b+c};
+			if ((current<smaller) && (current<bigger)) {
+				console.log("solution of B: iteration " + counter + " mse is " + current + " gamma is " + b);
+				store_counter_b = counter;
+				break;
+			}
+		}
+		if ((store_counter_a == 0) && (store_counter_b == 0)) {
+			console.log("conditions optimized");
+			break;
+		}
+	}
+
+	temp_a = a;
+	temp_b = b;
+	temp_current = current;
+
+	a = orig_a;
+	b = orig_b;
+	//try optimize b relative to a first
+
+	for (outerloop = 0; outerloop<30; outerloop++) {
+		console.log("B RELATIVE TO A LOOP " + outerloop);
+		for (counter=0; counter<100; counter++) {
+			current = getmse(a,b);
+			smaller = getmse(a,b-c);
+			bigger = getmse(a,b+c);
+
+			if (smaller < current) { b = b-c};
+			if (bigger < current) { b = b+c};
+			if ((current<smaller) && (current<bigger)) {
+				console.log("solution of B: iteration " + counter + " mse is " + current + " gamma is " + b);
+				store_counter_b = counter;
+				break;
+			}
+		}
+		for (counter=0; counter<100; counter++) {
+			current = getmse(a,b);
+			smaller = getmse(a-c,b);
+			bigger = getmse(a+c,b);
+
+			if (smaller < current) { a = a-c};
+			if (bigger < current) { a = a+c};
+			if ((current<smaller) && (current<bigger)) {
+				console.log("solution of A: iteration " + counter + " mse is " + current + " ce50 is " + a);
+				store_counter_a = counter;
+				break;
+			}
+		}
+
+		if ((store_counter_a == 0) && (store_counter_b == 0)) {
+			console.log("conditions optimized");
+			break;
+		}
+	}
+
+	//then compare current(s)
+	if (current > temp_current) {
+		//first outer loop is better
+		console.log("swapping first loop variables");
+		a = temp_a;
+		b = temp_b;
+	} else if (temp_current > current) {
+		console.log("second outerloop is better, no change");
+	} else {
+		console.log("two outerloops same.");
+	}
+
+
+	c=c/10;
+
+	for (outerloop = 0; outerloop<30; outerloop++) {
+		console.log("LOOP " + outerloop);
+
+		for (counter=0; counter<100; counter++) {
+			current = getmse(a,b);
+			smaller = getmse(a-c,b);
+			bigger = getmse(a+c,b);
+
+			if (smaller < current) { a = a-c};
+			if (bigger < current) { a = a+c};
+			if ((current<smaller) && (current<bigger)) {
+				console.log("solution of A: iteration " + counter + " mse is " + current + " ce50 is " + a);
+				store_counter_a = counter;
+				break;
+			}
+		}
+		for (counter=0; counter<100; counter++) {
+			current = getmse(a,b);
+			smaller = getmse(a,b-c);
+			bigger = getmse(a,b+c);
+
+			if (smaller < current) { b = b-c};
+			if (bigger < current) { b = b+c};
+			if ((current<smaller) && (current<bigger)) {
+				console.log("solution of B: iteration " + counter + " mse is " + current + " gamma is " + b);
+				store_counter_b = counter;
+				break;
+			}
+		}
+		if ((store_counter_a == 0) && (store_counter_b == 0)) {
+			console.log("conditions optimized");
+			break;
+		}
+	}
+
+	console.log(a,b,current);
+	return [a,b,current];
+
+	function getmse(test_a,test_b) {
+		testObject = math_reformat_arrays_custom(duration_start, duration_end, test_a, test_b);
+		return math_mse(testObject[0],testObject[1]);
 	}
 }
 
@@ -18694,6 +18941,18 @@ function VSparseBIS(data) {
 
 }
 
+
+function VSexplore(inputtime1,inputtime2) {
+	testArray = math_solver2(3,2,inputtime1,inputtime2);
+	document.getElementById("VSinputBaseline").innerHTML = BIS_baseline;
+	document.getElementById("VSinputCE50").innerHTML = Math.round(BIS_Ce50()*100)/100;
+	document.getElementById("VSinputGamma1").innerHTML = "1.89";
+	document.getElementById("VSinputGamma2").innerHTML = "1.47";
+	document.getElementById("VScustomCE50").innerHTML = Math.round(testArray[0]*100)/100;
+	document.getElementById("VScustomGamma").innerHTML = Math.round(testArray[1]*100)/100;
+	myChart5.data.datasets[1].data = BIS_generate_custom_PD_curve(testArray[0],testArray[1]);
+	myChart5.update();
+}
 
 
 /* failed code below 

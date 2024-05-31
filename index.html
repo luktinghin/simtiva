@@ -489,9 +489,15 @@
 						&nbsp;</span>, Gamma2: <span id="VSinputGamma2">&nbsp;</span>
 						<div>
 							Custom CE50: <span id="VScustomCE50">&nbsp;</span>,
-							Custom Gamma: <span id="VScustomGamma">&nbsp;</span>
+							Custom Gamma: <span id="VScustomGamma">&nbsp;</span>,
+							MSE: <span id="VSCustomMSE">&nbsp;</span>
 						</div>
-
+						<div>
+							Time1: <input id="VSinputTime1"> &nbsp; Time2: <input id="VSinputTime2"> &nbsp; Time3: <input id="VSinputTime3">
+							<br>
+							Custom CE50: <input id="VSinputCustomCE50"> &nbsp; Custom Gamma: <input id="VSinputCustomGamma">
+						</div>
+						<button onclick="VSexplore(document.getElementById('VSinputTime2').value *1, document.getElementById('VSinputTime3').value *1)">SOLVE</button>
 					</div>
 				</div><!--end modal body-->
 			</div>
