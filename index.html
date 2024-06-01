@@ -479,25 +479,35 @@
 		<div id="modalVSexplore" class="modal">
 			<div class="modal-content" id="modalVSexplorecontent">
 				<div class="modal-header" id="modalVSexploretitle">Calibration curve</div>
-				<div class="modal-body">
+				<div class="modal-body" id="calibrationmodalbody">
 					<div id="calibrationcurvecontainer">
 						<canvas id="myChart5"></canvas>
 					</div>
 					<div id="calibrationcurvecontrols">
-						Baseline BIS: <span id="VSinputBaseline">&nbsp;</span>,
-						CE50: <span id="VSinputCE50">&nbsp;</span>, Gamma1: <span id="VSinputGamma1">
-						&nbsp;</span>, Gamma2: <span id="VSinputGamma2">&nbsp;</span>
+						<div class="calibrationcontrolheader">Eleveld PD</div>
 						<div>
-							Custom CE50: <span id="VScustomCE50">&nbsp;</span>,
-							Custom Gamma: <span id="VScustomGamma">&nbsp;</span>,
-							MSE: <span id="VSCustomMSE">&nbsp;</span>
+							Baseline BIS: <span id="VSinputBaseline">&nbsp;</span>,
+							CE50: <span id="VSinputCE50">&nbsp;</span>, Gamma1: <span id="VSinputGamma1">
+							&nbsp;</span>, Gamma2: <span id="VSinputGamma2">&nbsp;</span>
 						</div>
+						<div class="calibrationcontrolheader">Personalized calibration curve</div>
 						<div>
-							Time1: <input id="VSinputTime1"> &nbsp; Time2: <input id="VSinputTime2"> &nbsp; Time3: <input id="VSinputTime3">
+							Enter time interval for data points used in optimization:<br>
+							<!--Time1: <input id="VSinputTime1"> &nbsp; -->Time1: <input id="VSinputTime2"> &nbsp;<br> Time2: <input id="VSinputTime3">
+							<hr>
+							CE50: <span id="VScustomCE50">&nbsp;</span>,
+							Gamma: <span id="VScustomGamma">&nbsp;</span>,
+							MSE: <span id="VScustomMSE">&nbsp;</span>
 							<br>
-							Custom CE50: <input id="VSinputCustomCE50"> &nbsp; Custom Gamma: <input id="VSinputCustomGamma">
+							<button onclick="VSexplore(document.getElementById('VSinputTime2').value *1, document.getElementById('VSinputTime3').value *1)">SOLVE</button>
 						</div>
-						<button onclick="VSexplore(document.getElementById('VSinputTime2').value *1, document.getElementById('VSinputTime3').value *1)">SOLVE</button>
+						<div class="calibrationcontrolheader">Custom values</div>
+						<div>
+							Custom CE50: <input id="VSinputCustomCE50"> &nbsp; <br>Custom Gamma: <input id="VSinputCustomGamma">
+							<br>
+							MSE: <span id="VScustomValuesMSE">&nbsp;</span>
+							<button onclick="VSexploreCustomValues()">APPLY CUSTOM VALUES</button>
+						</div>
 					</div>
 				</div><!--end modal body-->
 			</div>

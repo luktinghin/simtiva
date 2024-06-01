@@ -2368,9 +2368,23 @@ body.dark .loadduration {
   height: 380px;
   width: 100%;
 }
+#calibrationmodalbody {
+  display: flex;
+}
 #calibrationcurvecontainer {
   height: 400px;
-  width: 100%;
+  flex-basis: 75%;
+}
+#calibrationcurvecontrols {
+  flex-basis: 25%;
+  font-size: 0.75rem;
+}
+#calibrationcurvecontrols input {
+  width: 50px;
+}
+.calibrationcontrolheader {
+  font-weight: bold;
+  background: #ddd;
 }
 #chartwrapper {
   position:absolute;
