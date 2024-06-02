@@ -9567,7 +9567,7 @@ function readmodel(x, drug_set_index) {
 	}
 	*/
 
-	if (parseloading == 0) {
+	if ((parseloading == 0) && (drug_set_index != 2) {
 		document.getElementById("drugname").innerHTML = drug_sets[drug_set_index].drug_name;
 		if (x == "Eleveld-Remifentanil") x = "Eleveld";
 		document.getElementById("modelname").innerHTML = x;
