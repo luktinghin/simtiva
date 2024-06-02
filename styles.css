@@ -1854,13 +1854,11 @@ background-size: 200% 100%;
   border:2px solid rgb(220,220,220);
   border-radius:9px;
   padding:0.5rem 3px 0.5rem 3px;
-  margin-top:0.5rem;
-  margin-bottom:0.3rem;
+  margin-top:1.6rem;
+  margin-bottom:1.9rem;
   height:60px;
   width:100%;
   position:relative;
-  will-change:transform;
-  transition:0.3s transform ease;
   overflow-y:overlay;
   -ms-overflow-style:none;
   scrollbar-width:none;
@@ -1868,12 +1866,17 @@ background-size: 200% 100%;
 #valCard::-webkit-scrollbar {
   display:none;
 }
-#valCard.translate {
-  transform:translateY(35px);
-}
 #valCard.active {
   background: linear-gradient(90deg, rgb(213, 237, 214) 0px, rgb(213, 237, 214) 24px, rgb(255, 255, 255) 24px, rgb(255, 255, 255) 50%);
   border-color: rgb(155,201,157);
+}
+#valCard.obese {
+  /*activated when BMI exceed 35 */
+  border-color: rgb(247, 166, 45);
+  background: linear-gradient(90deg, rgb(251, 211, 152) 0px, rgb(251, 211, 152) 24px, rgb(255, 255, 255) 24px, rgb(255, 255, 255) 50%);
+}
+#valCard.obese #valLeft .tooltip.bodyicon {
+  color: rgb(182,112,7);
 }
 #valLeft {
     flex-basis:30px;
@@ -2322,6 +2325,13 @@ body.dark .loadduration {
   border-bottom: 1px solid #9bc99d;
   background: linear-gradient(78deg, rgba(240,255,240,0.5) 68%, rgba(213,237,214,1) 68%);
   box-shadow: inset 0px 6px 8px -5px rgba(0,0,0,0.15);
+}
+
+body.dark #emulatetitlecontainer {
+  margin: 10px 5px;
+  background: linear-gradient(78deg, rgba(10,25,10,1) 68%, rgba(16, 86, 63,1) 68%);
+  border: 1px solid #9bc99d;
+  border-radius: 9px;
 }
 
 #emulateswitch {
@@ -3131,12 +3141,12 @@ body.dark .modal-body a.button_paedimode:hover {
   color:white;
 }
 .displayleft {
-  flex-basis:36%;
+  flex-basis:32%;
   padding-left:0.5rem;
 }
 .displayright {
   border-left: 1px solid white;
-  flex-basis:64%;
+  flex-basis:68%;
 }
 .displaywrapper {
   border-radius:1rem;
@@ -6282,6 +6292,9 @@ body.dark .tooltip.bodyicon {
   color: rgb(102 177 105);
 }
 
+body.dark #valCard.obese #valLeft .tooltip.bodyicon {
+  color: rgb(235,167,30);
+}
 body.dark #chartwrapper {
   background: rgba(255,255,255,0.11);
   top: auto;
@@ -6347,6 +6360,12 @@ body.dark #pastscheme {
 body.dark #chartbuttons {
   background: #555;
   box-shadow: 0px 5px 7px -5px rgb(0 0 0 / 60%);
+}
+
+body.dark #emulatechartbuttons {
+  background: #555;
+  box-shadow: 0px 5px 7px -5px rgb(0 0 0 / 60%);
+  color: white;
 }
 
 body.dark #annotatebutton {
@@ -6471,6 +6490,11 @@ body.dark a.button.huge:hover, body.dark a.button.huge:active {
 body.dark #valCard.active {
  background: linear-gradient(90deg, rgba(9,51,38,1) 0px, rgba(9,51,38,1) 24px, rgba(0,0,0,1) 24px, rgba(0,0,0,1) 50%); 
  border: 1px solid rgb(9,51,38);
+ box-shadow: 0;
+}
+body.dark #valCard.obese {
+ background: linear-gradient(90deg, rgba(75,52,7,1) 0px, rgba(75,52,7,1) 24px, rgba(0,0,0,1) 24px, rgba(0,0,0,1) 50%);
+ border: 1px solid rgb(235,167,30);
  box-shadow: 0;
 }
 body.dark #patientCard {

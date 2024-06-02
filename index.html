@@ -262,7 +262,7 @@
 				-->
 					<!--<tr><td>Debug: Enter Sim Speed (1=default)</td><td><input type="number" id="simspeed" value="1"></td></tr>-->
 					</table>
-					<div id="valCard" class="translate">
+					<div id="valCard" class="">
 						<div id="valLeft"></div>
 						<div id="valRight">
 							<div style="position:relative">
@@ -281,14 +281,6 @@
 					<div id="validationDisplay">
 					</div>
 					
-					<div id="checkmarkDisplay">
-                    <label class="container" style="visibility:hidden;">I confirm the above data are correct.
-                        <input type="checkbox" onChange="sendToValidate(1);checkChecked();" id="checkConfirm"><span class="checkmark"></span>
-                    </label>
-                    <label class="container" style="visibility:hidden;">I agree to the disclaimer.
-                        <input type="checkbox" id="checkDisclaim" onChange="checkChecked();"><span class="checkmark"></span>
-                    </label>
-					</div>
 					<div>
 						<a class="button invert disabled" id="btn_initProceed">Proceed</a>
 						<a class="button muted right" id="btn_disclaimer" onclick="displayDisclaimer();">Disclaimer</a>
@@ -307,6 +299,8 @@
 						<div id="patientLeft">
 						</div>
 						<div id="patientRight">
+							<div id="patientRightUp"></div>
+							<div id="patientRightDown" style="font-size:70%; border-top:1px solid rgb(167 203 168); padding-top:3px; margin-top:3px; margin-right:5px"></div>
 						</div>
 						<div id="patientEdit">
 							<div onclick="toPageOne();">EDIT</div>
@@ -1948,7 +1942,7 @@
 			</div>
 		</div>
 		<div class="card" id="parameters">
-			<div class="cardtitle">MODEL PARAMETERS</div>
+			<div class="cardtitle collapsiblecard">MODEL PARAMETERS</div>
 			<div class="cardcontents"><span id="modeldescription"></span></div>
 		</div>
 		<div class="card" id="schemecopy">

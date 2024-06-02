@@ -9,6 +9,7 @@ var d = null; //to store date object
 var mass;
 var ABW; //for eleveld
 var lbm, height, gender;
+var ibw, AdjBW, useAdjBW;
 var conc1;
 var conc2;
 var conc3;
@@ -2248,6 +2249,15 @@ function initsubmit() {
 		readmodel(ElModel.value,0);
 		//infusate_concentration goes here
 		drug_sets[0].infusate_concentration = 10; //defaults 10 for propofol
+
+
+
+		//see if need to display emulation eleveld
+		if ((drug_sets[0].model_name == "Marsh") || (drug_sets[0].model_name == "Schnider")) {
+			document.getElementById("emulatecard").style.display = "block";
+		} else {
+			document.getElementById("emulatecard").style.display = "none";
+		}
 
 		if ((paedi_mode == 0 && document.getElementById("select_model").value == "Eleveld") || (paedi_mode == 1 && document.getElementById("select_model_paedi").value == "Eleveld")) {
 			PD_mode = 1;
@@ -9174,14 +9184,10 @@ function switchpaedimode(arg) {
 		paedi_mode = 1;
 	}
 
-	//clear the confirm buttons
-		El4 = document.getElementById("checkConfirm");
-		El5 = document.getElementById("checkDisclaim");
+
 		El6 = document.getElementById("btn_initProceed");
-		El4.checked = "";
-		El5.checked = "";
-		El4.parentElement.style.borderBottomColor = "transparent";
-		El5.parentElement.style.borderBottomColor = "transparent";
+
+
 		El6.classList.add("disabled");
 		El6.removeEventListener("click", toPageTwo);
 }
@@ -9191,7 +9197,12 @@ function readmodel(x, drug_set_index) {
 	drug_sets[drug_set_index] = {};
 	drug_sets[drug_set_index].model_name = x;
 	if (x == "Marsh") {
-		drug_sets[drug_set_index].vc = 0.228 * mass;
+		if (useAdjBW == 1) {
+			drug_sets[drug_set_index].vc = 0.228 * AdjBW;
+		} else {
+			drug_sets[drug_set_index].vc = 0.228 * mass;
+		}
+		
 		drug_sets[drug_set_index].k10 = 0.119;
 		drug_sets[drug_set_index].k12 = 0.112;
 		drug_sets[drug_set_index].k13 = 0.0419;
@@ -9219,7 +9230,15 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].vc = 4.27;
 		var v2 = 18.9-0.391*(age-53);
 		var v3 = 238;
-		var cl1 = 1.89+0.0456*(mass-77)-0.0681*(lbm-59)+0.0264*(height-177);
+		if (useAdjBW == 0) {
+			var cl1 = 1.89+0.0456*(mass-77)-0.0681*(lbm-59)+0.0264*(height-177);
+		} else {
+			if (gender == 0) 
+				{lbm2 = 1.1 * AdjBW - 128 * (AdjBW/height) * (AdjBW/height);}
+			else
+				{lbm2 = 1.07 * AdjBW - 148 * (AdjBW/height) * (AdjBW/height);}
+			var cl1 = 1.89+0.0456*(AdjBW-77)-0.0681*(lbm2-59)+0.0264*(height-177);
+		}
 		var cl2 = 1.29-0.024*(age-53); 
 		var cl3 = 0.836;
 		drug_sets[drug_set_index].k10 = cl1 / drug_sets[drug_set_index].vc;
@@ -10394,11 +10413,11 @@ function sendToValidate(arg) {
 	El1 = document.getElementById("valRightContainer1");
 	El2 = document.getElementById("valRightContainer2");
 	El3 = document.getElementById("valCard");
-	El4 = document.getElementById("checkConfirm");
-	El5 = document.getElementById("checkDisclaim");
 	El7 = document.getElementById("valLeft");
 	El8 = document.getElementById("patientLeft");
-	El9 = document.getElementById("patientRight");
+	El9 = document.getElementById("patientRightUp");
+	El10 = document.getElementById("patientRightDown");
+	Elproceed = document.getElementById("btn_initProceed");
 	if (paedi_mode==0) {
 		age = document.getElementById("inputAge").value*1;
 	} else {
@@ -10428,6 +10447,13 @@ function sendToValidate(arg) {
 	} else {
 		gender = 1;
 	}
+	if (gender == 0) {
+		ibw = 45.4 + 0.89 * (height - 152.4) + 4.5;
+	} else {
+		ibw = 45.4 + 0.89 * (height - 152.4);
+	}
+	AdjBW = ibw + 0.4 * (weight - ibw);
+
 	if (paedi_mode == 0) {
 		if ((document.getElementById("select_model").value === "Minto") || (document.getElementById("select_model").value === "Eleveld-Remifentanil")) {
 			document.getElementById("row_remidilution").style.display = "table-row";
@@ -10485,21 +10511,21 @@ function sendToValidate(arg) {
 		clearTimeout(timeoutVal);
 		El1.classList.remove("valClose");
 		El2.classList.add("valClose");
-		El4.parentElement.style.visibility = "hidden";
-		El5.parentElement.style.visibility = "hidden";
 		El3.classList.remove("active");
-		El3.classList.add("translate");
+		
 		El7.innerHTML = "";
 		El8.innerHTML = "";
 		El9.innerHTML = "";
+		El10.innerHTML = "";
+		Elproceed.classList.add("disabled");
+		Elproceed.removeEventListener("click", toPageTwo);
 	} else {
 		clearTimeout(timeoutVal);
+		Elproceed.classList.remove("disabled");
+		Elproceed.addEventListener("click", toPageTwo);
 		El1.classList.add("valClose");
 		El2.classList.remove("valClose");
-		El4.parentElement.style.visibility = "visible";
-		El5.parentElement.style.visibility = "visible";
-		El3.classList.add("active");
-		El3.classList.remove("translate");
+		El3.classList.add("active");		
 		if (age>=18) {
 			if (gender == 0) {
 				El7.innerHTML = arrBodyIcons[2][1];
@@ -10514,15 +10540,10 @@ function sendToValidate(arg) {
 			El7.innerHTML = "";
 		}
 		El8.innerHTML = El7.innerHTML;
-
-		
 		timeoutVal = setTimeout(function(){
-			validateData(age, gender, weight, height, arg);
-			
+			validateData(age, gender, weight, height, arg);		
 		}, debounce);
 	}
-
-
 }
 
 function checkChecked() {
@@ -10541,11 +10562,9 @@ function checkChecked() {
 		El5.parentElement.style.borderBottomColor = "transparent";
 	}
 	if (checked) {
-		El6.classList.remove("disabled");
-		El6.addEventListener("click", toPageTwo);
+
 	} else {
-		El6.classList.add("disabled");
-		El6.removeEventListener("click", toPageTwo);
+
 	}
 }
 
@@ -10553,13 +10572,8 @@ function toPageOne() {
   setTimeout(function(){setmodal("modalInitial")},200);
   document.getElementById("modalScreen2").classList.remove("fadein");
   document.getElementById("modalScreen2content").classList.remove("open");
-		El4 = document.getElementById("checkConfirm");
-		El5 = document.getElementById("checkDisclaim");
+
 		El6 = document.getElementById("btn_initProceed");
-		El4.checked = "";
-		El5.checked = "";
-		El4.parentElement.style.borderBottomColor = "transparent";
-		El5.parentElement.style.borderBottomColor = "transparent";
 		El6.classList.add("disabled");
 		El6.removeEventListener("click", toPageTwo);
 
@@ -10569,9 +10583,33 @@ function toPageOne() {
 }
 
 function toPageTwo() {
+	text = validateData(age, gender, weight, height, 1);	
+	if (text != undefined) {
+		if ((paedi_mode==0) && (bmi>=35) && ((document.getElementById("select_model").value == "Marsh") || (document.getElementById("select_model").value == "Schnider"))) {
+			text = "<div style='font-size:0.8rem'>" + text + `<br><b>Alert</b>: Errors may occur when using TCI models such as Marsh and Schnider in obesity with BMI>=35. To improve model performance, 
+			using adjusted body weight instead of total body weight can reduce predictive errors. 
+			Also, the infusion doses may be erroneously high in severely obese (BMI>42 for males, BMI>37 for females) when using the Schnider 
+			model due to the inaccurate lean body mass calculated by the James formula. 
+			It is recommended to use adjusted body weight (Adj.BW) instead of total body weight (TBW) in TCI calculations.
+			<table style="margin:1rem auto;width:50%">
+			<tr class="fr"><td>TBW:</td><td>${weight}</td></tr>
+			<tr><td>IBW:</td><td>${Math.round(ibw*10)/10}</td></tr>
+			<tr><td>Adj.BW: </td><td>${Math.round(AdjBW*10)/10}</td></tr>
+			</table>
+			</div>
+			<div><a class="button muted right" style="border-color:red" onclick="adjustBW(0);hidewarningmodal();">Keep using TBW</a>
+			<a class="button invert" onclick="adjustBW(1);hidewarningmodal();">Use Adj.BW</a><div>
+				`;
+			displayWarning("Warning",text);
+		} else {
+
+			displayWarning("Warning",text + "<br><br>Please check if the data entered is correct; otherwise edit the patient information before proceeding.");
+		}
+	}
 	if (initsubmit()==0) {
 		//alter the age thing here:
-		El9 = document.getElementById("patientRight");
+		El9 = document.getElementById("patientRightUp");
+		El10 = document.getElementById("patientRightDown");
 		if (paedi_mode == 0) {
 			El9.innerHTML = "Age: " + age + "years, " + document.getElementById("select_gender").value + "<br> BW: " + weight + "kg";
 		} else {
@@ -10582,20 +10620,14 @@ function toPageTwo() {
 			}
 		}
 		if (height>0) {El9.innerHTML = El9.innerHTML.concat(", BH: " + height + "cm")} else {};
-		El9.innerHTML = El9.innerHTML.concat("<div style='font-size:70%; border-top:1px solid rgb(167 203 168); padding-top:3px; margin-top:3px; margin-right:5px'>" + document.getElementById("valRightContainer2").innerHTML + "</div>");
-
+		El10.innerHTML = document.getElementById("valRightContainer2").innerHTML;
+		
 		toPageTwoTransition();
 		document.getElementById("rescuebuttons").style.display="none";
 		loadoptions();
 		if (complex_mode==0) applyoptions();
 	} else {
-		El4 = document.getElementById("checkConfirm");
-		El5 = document.getElementById("checkDisclaim");
 		El6 = document.getElementById("btn_initProceed");
-		El4.checked = "";
-		El5.checked = "";
-		El4.parentElement.style.borderBottomColor = "transparent";
-		El5.parentElement.style.borderBottomColor = "transparent";
 		El6.classList.add("disabled");
 		El6.removeEventListener("click", toPageTwo);
 	}
@@ -10751,6 +10783,7 @@ function validateData(age,sex,weight,height,arg) {
 	isAbnormalText = "";
 	bmi = weight / Math.pow((height/100),2);
 	bmiConverted = bmiConvert(bmi, age, sex);
+	document.getElementById("valCard").classList.remove("obese");
 	if (height>0) {
 		if (bmi>0 && bmi<99) {
 			document.getElementById("bmiDisplay").innerHTML = Math.round(bmi * 10)/10;
@@ -10781,16 +10814,21 @@ function validateData(age,sex,weight,height,arg) {
 		} else if (bmiConverted == 0) {
 			if (bmi<18.5) { 
 				document.getElementById("bmiForAgeDisplay").innerHTML = " (underweight)";
-				isAbnormal = 1;
-				isAbnormalText = "Patient is underweight.";
+				//isAbnormal = 1;
+				//isAbnormalText = "Patient is underweight.";
 			} else if ((bmi>=25) && (bmi<29.9)) {
 				document.getElementById("bmiForAgeDisplay").innerHTML = " (overweight)";
-				isAbnormal = 1;
-				isAbnormalText = "Patient is overweight.";
-			} else if (bmi>30) {
+				//isAbnormal = 1;
+				//isAbnormalText = "Patient is overweight.";
+			} else if ((bmi>30) && (bmi<35)) {
 				document.getElementById("bmiForAgeDisplay").innerHTML = " (obese)";
 				isAbnormal = 1;
 				isAbnormalText = "Patient is obese.";
+			} else if (bmi>=35) {
+				document.getElementById("bmiForAgeDisplay").innerHTML = " (obese)";
+				isAbnormal = 1;
+				isAbnormalText = "Patient is obese with BMI>=35.";
+				document.getElementById("valCard").classList.add("obese");
 			} else {
 				document.getElementById("bmiForAgeDisplay").innerHTML = " (normal)";
 			}
@@ -10822,9 +10860,24 @@ function validateData(age,sex,weight,height,arg) {
 
 	}
 	if ((isAbnormal == 1) && (arg == 1)) {
-		displayWarning("Warning", isAbnormalText);
+		return isAbnormalText;
 	}
+}
 
+function adjustBW(arg) {
+	if (arg == 1) {
+		useAdjBW = 1;	
+		initsubmit();
+		drug_sets[0].modeltext = drug_sets[0].modeltext + "<br>Adjusted BW was used in calculations.";
+		document.getElementById("modeldescription").innerHTML = drug_sets[0].modeltext;
+		document.getElementById("patientRightDown").innerHTML = "BMI: " + Math.round(bmi*10)/10 + ", Adjusted BW: " + Math.round(AdjBW*10/10) + "kg";
+		document.getElementById("bw").innerHTML = mass + "kg (Adj.BW:" + Math.round(AdjBW*10)/10 + "kg)";
+	} else {
+		useAdjBW = 0;
+		initsubmit();
+		document.getElementById("modeldescription").innerHTML = drug_sets[0].modeltext;
+		document.getElementById("bw").innerHTML = mass + "kg";
+	}
 }
 
 function bmiConvert(bmi, age, sex) {
@@ -12328,9 +12381,6 @@ function outputstring() {
 	var P_patient = outputpatientstring();
  	var dataobject = outputdataobject();
 
-	
-
-	
 	var P_d = d.toLocaleDateString() + " " + d.toLocaleTimeString();
 	
 	var name = document.getElementById("inputFileName").value;
@@ -12412,7 +12462,11 @@ function outputpatientstring() {
 		P_patient.push(drug_sets[0].drug_name);
 		P_patient.push(drug_sets[0].infusate_concentration);
 		P_patient.push(drug_sets[0].conc_units);
-		P_patient.push(mass);
+		if (useAdjBW == 0) {
+			P_patient.push(mass);	
+		} else {
+			P_patient.push([mass,AdjBW]);
+		}
 		P_patient.push(height);
 		//array pos 6 is age. if array -> paedi mode is ON.
 		if (paedi_mode == 0) {
@@ -14313,6 +14367,9 @@ function goDark(arg) {
 				myChartEmulate.options.scales.y.grid.borderColor = "rgba(255,255,255,0.6)";
 				myChartEmulate.options.scales.x.ticks.color = "rgba(255,255,255,0.6)";
 				myChartEmulate.options.scales.y.ticks.color = "rgba(255,255,255,0.6)";
+				myChartEmulate.options.scales.x.title.color = "rgb(255,255,255,0.6)";
+				myChartEmulate.options.scales.y.title.color = "rgb(255,255,255,0.6)";
+				myChartEmulate.options.plugins.legend.labels.color = "rgb(255,255,255,0.8)";
 				myChartEmulate.update();
 				}
 			myChart.update();
@@ -14365,6 +14422,9 @@ function goDark(arg) {
 				myChartEmulate.options.scales.y.grid.borderColor = "rgba(0,0,0,0.25)";
 				myChartEmulate.options.scales.x.ticks.color = "rgba(102,102,102,1)";
 				myChartEmulate.options.scales.y.ticks.color = "rgba(102,102,102,1)";
+				myChartEmulate.options.scales.x.title.color = "#666";
+				myChartEmulate.options.scales.y.title.color = "#666";
+				myChartEmulate.options.plugins.legend.labels.color = "#666";
 				myChartEmulate.update();
 				}
 				isDark = false;
