@@ -9,7 +9,8 @@ var d = null; //to store date object
 var mass;
 var ABW; //for eleveld
 var lbm, height, gender;
-var ibw, AdjBW, useAdjBW;
+var ibw, AdjBW;
+var useAdjBW = 0;
 var conc1;
 var conc2;
 var conc3;
@@ -2264,7 +2265,6 @@ function initsubmit() {
 			document.getElementById("chartoverlayoptionscontent").classList.add("PDoptions");
 			document.getElementById("select_effect_measure").value = "bis";
 			document.getElementById("select_effect_measure").disabled = true;
-			 
 			BIS40 = BIS_Ce_for_BIS(40);
 			BIS60 = BIS_Ce_for_BIS(60);
 			myChart.data.datasets[11].data = [{x:0, y:BIS60},{x:21600, y:BIS60}];
@@ -2277,6 +2277,10 @@ function initsubmit() {
 			document.getElementById("ptolcard").style.display = "flex";
 			document.getElementById("ptoltitle").innerHTML = "eBIS";
 			document.getElementById("ptoldesc").innerHTML = "Estimated BIS from Eleveld PD model";
+			myChart.update();
+		} else {
+			myChart.data.datasets[10].hidden = true;
+			myChart.data.datasets[11].hidden = true;
 			myChart.update();
 		}
 
@@ -9563,8 +9567,7 @@ function readmodel(x, drug_set_index) {
 	}
 	*/
 
-	//interface changes only for non-first entry
-	if (document.getElementById("drugname").innerHTML == "") {
+	if (parseloading == 0) {
 		document.getElementById("drugname").innerHTML = drug_sets[drug_set_index].drug_name;
 		if (x == "Eleveld-Remifentanil") x = "Eleveld";
 		document.getElementById("modelname").innerHTML = x;
@@ -9638,7 +9641,6 @@ function BIS_charting() {
 	length = drug_sets[0].cpt_cp.length;
 	myChart.data.datasets[11].data = [{x:0, y:BIS60},{x:length, y:BIS60}];
 	myChart.data.datasets[10].data = [{x:0, y:BIS40},{x:length, y:BIS40}];
-
 }
 
 
@@ -12463,6 +12465,7 @@ function outputpatientstring() {
 		P_patient.push(drug_sets[0].infusate_concentration);
 		P_patient.push(drug_sets[0].conc_units);
 		if (useAdjBW == 0) {
+			//mass field uses an Array to store AdjBW if AdjBW is used 
 			P_patient.push(mass);	
 		} else {
 			P_patient.push([mass,AdjBW]);
@@ -13267,7 +13270,7 @@ function parseobject(input_uid,external,extObject) {
 		document.getElementById("inputPMA").value=PMA;
 	}
 	height = object.P_patient[5];
-	if (typeof object.P_patient[4] == "number") {
+	if (!Array.isArray(object.P_patient[4])) {
 		mass = object.P_patient[4];	
 	} else {
 		mass = object.P_patient[4][0];
@@ -13400,9 +13403,6 @@ function parseobject(input_uid,external,extObject) {
 		e_state[3] = 0;
 		e_state[4] = 0;
 
-
-
-
 		//l1 = Math.exp(-lambda[1] ); 
 		//l2 = Math.exp(-lambda[2] );
 		//l3 = Math.exp(-lambda[3] );
@@ -13411,6 +13411,15 @@ function parseobject(input_uid,external,extObject) {
 	document.getElementById("status").innerHTML = "Loading simulation data...";
 
 	//assume this is simple mode
+
+	if (complex_mode == 0) {
+		if ((object.P_patient[0] == "Marsh") || (object.P_patient[0] == "Schnider")) {
+			//emulate on
+			document.getElementById("emulatecard").style.display = "block";
+		} else {
+			document.getElementById("emulatecard").style.display = "none";
+		}
+	}
 
 	if (parse_historyarray[0][0] == 1) { // CPT mode
 		mode = "CPT mode";
@@ -13620,9 +13629,6 @@ function parseobject(input_uid,external,extObject) {
 	//add complex mode parsing block
 	if (complex_mode == 1) {
 		active_drug_set_index = 1;
-
-
-
 		
 		//need special precaution for eleveld-remifentanil?
 		readmodel(object.P_patient[10],1);
@@ -13961,7 +13967,6 @@ function parseobject(input_uid,external,extObject) {
 			//styling for eBIS
 			PD_mode = 1;
 			
-			
 			document.getElementById("chartoverlayoptionscontent").classList.add("PDoptions");
 			document.getElementById("select_effect_measure").value = "bis";
 			document.getElementById("select_effect_measure2").value = "bis";
@@ -14179,6 +14184,10 @@ function parsedisplay(t,sex,model,VI,d,mode) {
 	document.getElementById("gender").innerHTML = sex;
 	document.getElementById("modelname").innerHTML = drug_sets[0].model_name;
 	document.getElementById("displayvolume").innerHTML = VI;
+
+		document.getElementById("drugname").innerHTML = drug_sets[0].drug_name;
+		document.getElementById("modelname").innerHTML = drug_sets[0].model_name;
+		document.getElementById("modeldescription").innerHTML = drug_sets[0].modeltext;
 
 	if (drug_sets[0].drug_name == "Remifentanil") {
   	document.getElementById("drugname").innerHTML = "Remifentanil <span style='opacity:0.5'>(" + drug_sets[0].infusate_concentration + "mcg/ml)</span>";
