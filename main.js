@@ -12868,7 +12868,7 @@ function renderFileList(inputkeysarray) {
 								<div class="file_content_line1">Started on ${tempObject.P_d} <div class="loadduration">${tempDuration}</div></div>
 								<div class="file_name">${tempObject.name}</div>
 								<div class="file_content_line2">${tempObject.P_patient[1]} (${tempObject.P_patient[0]}) - ${tempMode2}</div>
-								<div class="file_content_line3">${tempObject.P_patient[7]}/${tempAgeString}, BW:${tempObject.P_patient[4]}kg, BH: ${tempObject.P_patient[5]}cm</div>
+								<div class="file_content_line3">${tempObject.P_patient[7]}/${tempAgeString}, BW:${(Array.isArray(tempObject.P_patient[4]))?tempObject.P_patient[4][0]:tempObject.P_patient[4]}kg, BH: ${tempObject.P_patient[5]}cm</div>
 							</div>
 							<div class="deleteFileIcon" onclick="deleteFile(this.parentElement.id, this.parentElement.dataset.timestamp, this.parentElement.dataset.duration);">
 								<span class="fa-stack fa-2x">
@@ -13267,7 +13267,14 @@ function parseobject(input_uid,external,extObject) {
 		document.getElementById("inputPMA").value=PMA;
 	}
 	height = object.P_patient[5];
-	mass = object.P_patient[4];
+	if (typeof object.P_patient[4] == "number") {
+		mass = object.P_patient[4];	
+	} else {
+		mass = object.P_patient[4][0];
+		AdjBW = object.P_patient[4][1];
+		useAdjBW = 1;
+	}
+	
 	
 	//drug_sets[0].infusate_concentration = object.P_patient[2];
 	//drug_sets[0].conc_units = object.P_patient[3];
@@ -14142,7 +14149,14 @@ function parsedisplay(t,sex,model,VI,d,mode) {
 	document.getElementById("prompt_msg2").innerHTML = "Started at " + d;
 	document.querySelector(".cardscontainer").style.paddingTop = "1rem";
 	document.getElementById("clock").innerHTML = converttime(t);
-	document.getElementById("bw").innerHTML = mass + "kg";
+	if (useAdjBW == 1) {
+		document.getElementById("bw").innerHTML = mass + "kg (Adj.BW:" + Math.round(AdjBW*10)/10 + "kg)";	
+		drug_sets[0].modeltext = drug_sets[0].modeltext + "<br>Adjusted BW was used in calculations.";
+		document.getElementById("modeldescription").innerHTML = drug_sets[0].modeltext;
+	} else {
+		document.getElementById("bw").innerHTML = mass + "kg";	
+	}
+	
 	if (height>0) {
 		document.getElementById("bh").innerHTML = height + "cm";
 	} else {
@@ -14333,33 +14347,36 @@ function goDark(arg) {
 				myChart.options.scales.y.grid.borderColor = "rgba(255,255,255,0.6)";
 				myChart.options.scales.x.ticks.color = "rgba(255,255,255,0.6)";
 				myChart.options.scales.y.ticks.color = "rgba(255,255,255,0.6)";
-				myChart2.options.scales.x.grid.color = "rgba(255,255,255,0.2)";
-				myChart2.options.scales.y.grid.color = "rgba(255,255,255,0.2)";
-				myChart2.options.scales.x.grid.borderColor = "rgba(255,255,255,0.6)";
-				myChart2.options.scales.y.grid.borderColor = "rgba(255,255,255,0.6)";
-				myChart2.options.scales.x.ticks.color = "rgba(255,255,255,0.6)";
-				myChart2.options.scales.y.ticks.color = "rgba(255,255,255,0.6)";
-				myChart2.data.datasets[1].pointBackgroundColor = dotColor0dark;
-				myChart2.data.datasets[1].pointBorderColor = dotColor0dark;
-				myChart2.data.datasets[2].pointBackgroundColor = dotColor1dark;
-				myChart2.data.datasets[2].pointBorderColor = dotColor1dark;
-				myChart2.data.datasets[3].pointBackgroundColor = dotColor2dark;
-				myChart2.data.datasets[3].pointBorderColor = dotColor2dark;
-				myChart2.data.datasets[4].pointBackgroundColor = dotColor3dark;
-				myChart2.data.datasets[4].pointBorderColor = dotColor3dark;
-				myChart2.data.datasets[5].pointBackgroundColor = dotColor4dark;
-				myChart2.data.datasets[5].pointBorderColor = dotColor4dark;
-				myChart2.data.datasets[6].pointBackgroundColor = dotColor5dark;
-				myChart2.data.datasets[6].pointBorderColor = dotColor5dark;
-				myChart2.data.datasets[7].pointBackgroundColor = dotColor6dark;
-				myChart2.data.datasets[7].pointBorderColor = dotColor6dark;
-				myChart2.data.datasets[8].pointBackgroundColor = dotColor7dark;
-				myChart2.data.datasets[8].pointBorderColor = dotColor7dark;
-				myChart2.data.datasets[9].pointBackgroundColor = dotColor8dark;
-				myChart2.data.datasets[9].pointBorderColor = dotColor8dark;
-				myChart2.data.datasets[10].pointBorderColor = lineColor1dark;
-				myChart2.data.datasets[10].pointBackgroundColor = lineColor1dark;
-				myChart2.data.datasets[10].borderColor = lineColor1dark;
+				if (complex_mode == 1) {
+					myChart2.options.scales.x.grid.color = "rgba(255,255,255,0.2)";
+					myChart2.options.scales.y.grid.color = "rgba(255,255,255,0.2)";
+					myChart2.options.scales.x.grid.borderColor = "rgba(255,255,255,0.6)";
+					myChart2.options.scales.y.grid.borderColor = "rgba(255,255,255,0.6)";
+					myChart2.options.scales.x.ticks.color = "rgba(255,255,255,0.6)";
+					myChart2.options.scales.y.ticks.color = "rgba(255,255,255,0.6)";
+					myChart2.data.datasets[1].pointBackgroundColor = dotColor0dark;
+					myChart2.data.datasets[1].pointBorderColor = dotColor0dark;
+					myChart2.data.datasets[2].pointBackgroundColor = dotColor1dark;
+					myChart2.data.datasets[2].pointBorderColor = dotColor1dark;
+					myChart2.data.datasets[3].pointBackgroundColor = dotColor2dark;
+					myChart2.data.datasets[3].pointBorderColor = dotColor2dark;
+					myChart2.data.datasets[4].pointBackgroundColor = dotColor3dark;
+					myChart2.data.datasets[4].pointBorderColor = dotColor3dark;
+					myChart2.data.datasets[5].pointBackgroundColor = dotColor4dark;
+					myChart2.data.datasets[5].pointBorderColor = dotColor4dark;
+					myChart2.data.datasets[6].pointBackgroundColor = dotColor5dark;
+					myChart2.data.datasets[6].pointBorderColor = dotColor5dark;
+					myChart2.data.datasets[7].pointBackgroundColor = dotColor6dark;
+					myChart2.data.datasets[7].pointBorderColor = dotColor6dark;
+					myChart2.data.datasets[8].pointBackgroundColor = dotColor7dark;
+					myChart2.data.datasets[8].pointBorderColor = dotColor7dark;
+					myChart2.data.datasets[9].pointBackgroundColor = dotColor8dark;
+					myChart2.data.datasets[9].pointBorderColor = dotColor8dark;
+					myChart2.data.datasets[10].pointBorderColor = lineColor1dark;
+					myChart2.data.datasets[10].pointBackgroundColor = lineColor1dark;
+					myChart2.data.datasets[10].borderColor = lineColor1dark;
+					myChart2.update();
+				}
 				if (emulateOn == true) {
 				myChartEmulate.options.scales.x.grid.color = "rgba(255,255,255,0.2)";
 				myChartEmulate.options.scales.y.grid.color = "rgba(255,255,255,0.2)";
@@ -14373,7 +14390,6 @@ function goDark(arg) {
 				myChartEmulate.update();
 				}
 			myChart.update();
-			myChart2.update();
 			isDark = true;
 	} else {
 		var metaThemeColor = document.querySelector("meta[name=theme-color]");
@@ -14386,35 +14402,37 @@ function goDark(arg) {
 				myChart.options.scales.y.grid.borderColor = "rgba(0,0,0,0.25)";
 				myChart.options.scales.x.ticks.color = "rgba(102,102,102,1)";
 				myChart.options.scales.y.ticks.color = "rgba(102,102,102,1)";
-				myChart2.options.scales.x.grid.color = "rgba(0,0,0,0.1)";
-				myChart2.options.scales.y.grid.color = "rgba(0,0,0,0.1)";
-				myChart2.options.scales.x.grid.borderColor = "rgba(0,0,0,0.25)";
-				myChart2.options.scales.y.grid.borderColor = "rgba(0,0,0,0.25)";
-				myChart2.options.scales.x.ticks.color = "rgba(102,102,102,1)";
-				myChart2.options.scales.y.ticks.color = "rgba(102,102,102,1)";
-				myChart2.data.datasets[1].pointBackgroundColor = dotColor0;
-				myChart2.data.datasets[1].pointBorderColor = dotColor0;
-				myChart2.data.datasets[2].pointBackgroundColor = dotColor1;
-				myChart2.data.datasets[2].pointBorderColor = dotColor1;
-				myChart2.data.datasets[3].pointBackgroundColor = dotColor2;
-				myChart2.data.datasets[3].pointBorderColor = dotColor2;
-				myChart2.data.datasets[4].pointBackgroundColor = dotColor3;
-				myChart2.data.datasets[4].pointBorderColor = dotColor3;
-				myChart2.data.datasets[5].pointBackgroundColor = dotColor4;
-				myChart2.data.datasets[5].pointBorderColor = dotColor4;
-				myChart2.data.datasets[6].pointBackgroundColor = dotColor5;
-				myChart2.data.datasets[6].pointBorderColor = dotColor5;
-				myChart2.data.datasets[7].pointBackgroundColor = dotColor6;
-				myChart2.data.datasets[7].pointBorderColor = dotColor6;
-				myChart2.data.datasets[8].pointBackgroundColor = dotColor7;
-				myChart2.data.datasets[8].pointBorderColor = dotColor7;
-				myChart2.data.datasets[9].pointBackgroundColor = dotColor8;
-				myChart2.data.datasets[9].pointBorderColor = dotColor8;
-				myChart2.data.datasets[10].pointBorderColor = lineColor1;
-				myChart2.data.datasets[10].pointBackgroundColor = lineColor1;
-				myChart2.data.datasets[10].borderColor = lineColor1;
+				if (complex_mode == 1) {
+					myChart2.options.scales.x.grid.color = "rgba(0,0,0,0.1)";
+					myChart2.options.scales.y.grid.color = "rgba(0,0,0,0.1)";
+					myChart2.options.scales.x.grid.borderColor = "rgba(0,0,0,0.25)";
+					myChart2.options.scales.y.grid.borderColor = "rgba(0,0,0,0.25)";
+					myChart2.options.scales.x.ticks.color = "rgba(102,102,102,1)";
+					myChart2.options.scales.y.ticks.color = "rgba(102,102,102,1)";
+					myChart2.data.datasets[1].pointBackgroundColor = dotColor0;
+					myChart2.data.datasets[1].pointBorderColor = dotColor0;
+					myChart2.data.datasets[2].pointBackgroundColor = dotColor1;
+					myChart2.data.datasets[2].pointBorderColor = dotColor1;
+					myChart2.data.datasets[3].pointBackgroundColor = dotColor2;
+					myChart2.data.datasets[3].pointBorderColor = dotColor2;
+					myChart2.data.datasets[4].pointBackgroundColor = dotColor3;
+					myChart2.data.datasets[4].pointBorderColor = dotColor3;
+					myChart2.data.datasets[5].pointBackgroundColor = dotColor4;
+					myChart2.data.datasets[5].pointBorderColor = dotColor4;
+					myChart2.data.datasets[6].pointBackgroundColor = dotColor5;
+					myChart2.data.datasets[6].pointBorderColor = dotColor5;
+					myChart2.data.datasets[7].pointBackgroundColor = dotColor6;
+					myChart2.data.datasets[7].pointBorderColor = dotColor6;
+					myChart2.data.datasets[8].pointBackgroundColor = dotColor7;
+					myChart2.data.datasets[8].pointBorderColor = dotColor7;
+					myChart2.data.datasets[9].pointBackgroundColor = dotColor8;
+					myChart2.data.datasets[9].pointBorderColor = dotColor8;
+					myChart2.data.datasets[10].pointBorderColor = lineColor1;
+					myChart2.data.datasets[10].pointBackgroundColor = lineColor1;
+					myChart2.data.datasets[10].borderColor = lineColor1;
+					myChart2.update();
+				}
 				myChart.update();
-				myChart2.update();
 				if (emulateOn == true) {
 				myChartEmulate.options.scales.x.grid.color = "rgba(0,0,0,0.1)";
 				myChartEmulate.options.scales.y.grid.color = "rgba(0,0,0,0.1)";
@@ -17320,6 +17338,18 @@ function emulateDisplayToggle() {
 		document.getElementById("emulatechartcontainer").classList.add("open");
 		document.getElementById("emulatecontrols").classList.add("hide");
 		document.getElementById("emulatechartbuttons").classList.remove("hide");
+		if (isDark == true) {
+					myChartEmulate.options.scales.x.grid.color = "rgba(255,255,255,0.2)";
+					myChartEmulate.options.scales.y.grid.color = "rgba(255,255,255,0.2)";
+					myChartEmulate.options.scales.x.grid.borderColor = "rgba(255,255,255,0.6)";
+					myChartEmulate.options.scales.y.grid.borderColor = "rgba(255,255,255,0.6)";
+					myChartEmulate.options.scales.x.ticks.color = "rgba(255,255,255,0.6)";
+					myChartEmulate.options.scales.y.ticks.color = "rgba(255,255,255,0.6)";
+					myChartEmulate.options.scales.x.title.color = "rgb(255,255,255,0.6)";
+					myChartEmulate.options.scales.y.title.color = "rgb(255,255,255,0.6)";
+					myChartEmulate.options.plugins.legend.labels.color = "rgb(255,255,255,0.8)";
+					myChartEmulate.update();
+			}
 	} else {
 		document.getElementById("emulatechartcontainer").classList.remove("open");
 		document.getElementById("emulatecontrols").classList.remove("hide");
@@ -17543,6 +17573,7 @@ function emulatePopulateRatio() {
 	document.getElementById("emulateRatioX4start").innerHTML = Math.round(8/ratio*10)/10;
 	document.getElementById("emulateRatioX5start").innerHTML = Math.round(10/ratio*10)/10;
 	document.getElementById("emulateCE50").innerHTML = Math.round(BIS_Ce50()*10)/10;
+
 }
 /* failed code below 
 

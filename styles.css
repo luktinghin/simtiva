@@ -2328,7 +2328,7 @@ body.dark .loadduration {
 }
 
 body.dark #emulatetitlecontainer {
-  margin: 10px 5px;
+  margin: 5px 8px;
   background: linear-gradient(78deg, rgba(10,25,10,1) 68%, rgba(16, 86, 63,1) 68%);
   border: 1px solid #9bc99d;
   border-radius: 9px;
@@ -5405,7 +5405,9 @@ body.dark .infusionratedropdownitem:hover {
     display:none;
   }
 
-
+  body.dark #emulatetitlecontainer {
+    margin: 20px 8px;
+  }
 
 
 
