@@ -21,7 +21,14 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
 - To help deliver TCI in a setting where TCI pumps are not available
 
 ### Changelog
- Version 4.7 (Build 102) Current
+ Version 4.8 (Build 109) Current
+ - Feature: Emulation of Eleveld model when using Marsh/Schnider model
+ - Feature: Adjusted body weight for Marsh & Schnider with information prompt
+ - BW validation: only extreme BMI (e.g. BMI>=35) will trigger warning screen
+ - UI/UX: Omitted the "I confirm" and "Disclaimer" check on front screen
+ - Bugfixes: error in displaying model parameters after re-selecting a model
+ 
+ Version 4.7 (Build 102)
  - Bugfixes: graph options, eBIS after pause
  - Infusion duration increased to 6 hours (previously 2 hours)
  - User Manual: initial release
