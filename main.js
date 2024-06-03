@@ -10606,7 +10606,7 @@ function toPageTwo() {
 		} else {
 
 			displayWarning("Warning",text + `<br><br>Please check if the data entered is correct; otherwise edit the patient information before proceeding.
-				<br><div><a class="button muted" onclick="hidewarningmodal()">OK</a></div>
+				<br><br><div><a class="button muted right" onclick="hidewarningmodal()">OK</a></div>
 				`);
 		}
 	}
