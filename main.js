@@ -2254,7 +2254,7 @@ function initsubmit() {
 
 
 		//see if need to display emulation eleveld
-		if ((drug_sets[0].model_name == "Marsh") || (drug_sets[0].model_name == "Schnider")) {
+		if (((drug_sets[0].model_name == "Marsh") || (drug_sets[0].model_name == "Schnider")) && (height>0)) {
 			document.getElementById("emulatecard").style.display = "block";
 		} else {
 			document.getElementById("emulatecard").style.display = "none";
@@ -13413,7 +13413,7 @@ function parseobject(input_uid,external,extObject) {
 	//assume this is simple mode
 
 	if (complex_mode == 0) {
-		if ((object.P_patient[0] == "Marsh") || (object.P_patient[0] == "Schnider")) {
+		if (((object.P_patient[0] == "Marsh") || (object.P_patient[0] == "Schnider")) && height>0) {
 			//emulate on
 			document.getElementById("emulatecard").style.display = "block";
 		} else {
