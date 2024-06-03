@@ -890,6 +890,57 @@
 			</div>
 		</div>
 
+		<div id="emulatecard" class="card" style="display:none">
+			<div class="cardtitle">ELEVELD EMULATION</div>
+
+			<div id="emulatetitlecontainer">
+				<div id="emulatetitleleft"  style="padding:0.5rem;flex-basis:70%">
+					<span style="font-size:200%;font-weight:bold;line-height:1">eBIS</span>
+					<div style="font-size:80%;opacity:50%" id="">Estimated BIS from Eleveld PD model</div>
+				</div>
+				<div style="flex-basis: 25%;text-align:center;font-size:400%;font-weight:bold" id="emulatetitleright">
+				</div>
+			</div>
+			<div id="emulateswitch">
+				<a class="button" onclick="document.getElementById('emulateswitch').classList.add('hide');document.getElementById('emulatebox').classList.add('expand');emulatePopulateRatio();">Turn on emulation</a>
+			</div>
+			<div id="emulatebox">
+				<div id="emulatechartbuttons" class="hide"><a id="chartemulatebutton" onclick="emulateDisplayToggle()"><span style="padding-right: 6px"><i class="fas fa-question-circle"></i></span>Details</a></div>
+				<div id="emulatecontrols">
+					<div>
+						<span style="opacity:0.7;font-size:0.8rem;width:85%;margin:9px auto;white-space:normal;display:block">This table estimates the required target to emulate the Eleveld model. Use the induction target for initial 1-3mins then reduce to maintenance target. Ratio to convert <i>Eleveld target</i> to <i><span id="emulateRatioModel3">Marsh</span> target</i> is: <b><span id="emulateRatio" ></span></b></span>
+						<div class="customTableRow">
+							<span><b>Eleveld CET</b></span><span><b id="emulateRatioModel1">Marsh</b><br><b>Induction</b></span><span><b id="emulateRatioModel2">Marsh</b><br><b>Maintenance</b></span>
+						</div>
+						<div class="customTableRow">
+							<b><span>1</span></b><span id="emulateRatioX1start"></span><span id="emulateRatioX1"></span>
+						</div>
+						<div class="customTableRow">
+							<b><span>2</span></b><span id="emulateRatioX2start"></span><span id="emulateRatioX2"></span>
+						</div>
+						<div class="customTableRow">
+							<b><span>3</span></b><span id="emulateRatioX3start"></span><span id="emulateRatioX3"></span>
+						</div>
+						<div class="customTableRow">
+							<b><span>4</span></b><span id="emulateRatioX4start"></span><span id="emulateRatioX4"></span>
+						</div>
+						<div class="customTableRow noline">
+							<b><span>5</span></b><span id="emulateRatioX5start"></span><span id="emulateRatioX5"></span>
+						</div>
+						<div class="customTableRow noline">
+
+						</div>
+						<span style="opacity:0.7;font-size:0.8rem;width:85%;margin:9px auto;white-space:normal;display:block">Age-adjusted CE50 for Eleveld model is: <b><span id="emulateCE50"></span></b></span>
+					</div>
+					<div style="display:flex;width:100%;height: 40px;justify-content:center;align-items:center">
+						<a class="button invert" id="emulateStartBtn" onclick="emulateEleveldInit();emulateEleveldReal();emulateDisplayToggle();setTimeout(emulatePlot,3000);setTimeout(function() {document.getElementById('emulateStartBtn').setAttribute('onclick','emulateDisplayToggle()');document.getElementById('emulateStartBtn').innerHTML='Show Graph'},250);emulateOn = true;">Start Emulation</a>
+					</div>
+				</div>
+				<div id="emulatechartcontainer">
+					<canvas id="myChartEmulate"></canvas>
+				</div>
+			</div>
+		</div>
 
 		<div id="interactionscontainer">
 			<div id="interactionstabselector">
@@ -1213,7 +1264,7 @@
 
 		</div><!--controlpanel-->
 		<div class="footer">
-			<b>SIMTiva</b>&nbsp;|&nbsp;Terence Luk 2023
+			<b>SIMTiva</b>&nbsp;|&nbsp;Terence Luk 2024
 			<ul>
 				<li><a href="#" onclick="setmodal('modalAbout');">About</a></li>
 				<li><a href="https://simtiva.blogspot.com/" target="_blank">Blog</a></li>
