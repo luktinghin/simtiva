@@ -10829,16 +10829,10 @@ function validateData(age,sex,weight,height,arg) {
 		} else if (bmiConverted == 0) {
 			if (bmi<18.5) { 
 				document.getElementById("bmiForAgeDisplay").innerHTML = " (underweight)";
-				//isAbnormal = 1;
-				//isAbnormalText = "Patient is underweight.";
 			} else if ((bmi>=25) && (bmi<29.9)) {
 				document.getElementById("bmiForAgeDisplay").innerHTML = " (overweight)";
-				//isAbnormal = 1;
-				//isAbnormalText = "Patient is overweight.";
 			} else if ((bmi>30) && (bmi<35)) {
 				document.getElementById("bmiForAgeDisplay").innerHTML = " (obese)";
-				isAbnormal = 1;
-				isAbnormalText = "Patient is obese.";
 			} else if (bmi>=35) {
 				document.getElementById("bmiForAgeDisplay").innerHTML = " (obese)";
 				isAbnormal = 1;
