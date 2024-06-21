@@ -18304,6 +18304,8 @@ function preprocessInfusion(data) {
 	                	VSimportdata.CPworking.push(data[i][VSimportparams.CPkey])
 	                	VSimportdata.CEoriginal.push(data[i][VSimportparams.CEkey]);
 	                	VSimportdata.CEworking.push(data[i][VSimportparams.CEkey]);
+	                	VSimportdata.TCoriginal.push(data[i][VSimportparams.TCkey]);
+	                	VSimportdata.TCworking.push(data[i][VSimportparams.TCkey]);
 	                	VSimportdata.VIoriginal.push(data[i][VSimportparams.VIkey]);
 	                	VSimportdata.VIworking.push(data[i][VSimportparams.VIkey]);
 	                	VSimportdata.rateoriginal.push(speedmlh);
@@ -18324,6 +18326,8 @@ function preprocessInfusion(data) {
 			                	VSimportdata.CEworking.push(undefined);
 			                	VSimportdata.VIoriginal.push(undefined);
 			                	VSimportdata.VIworking.push(undefined);
+	                			VSimportdata.TCoriginal.push(undefined);
+	                			VSimportdata.TCworking.push(undefined);
 			                	VSimportdata.rateoriginal.push(undefined);
 			                	VSimportdata.rateworking.push(undefined);
 							}
@@ -18337,7 +18341,8 @@ function preprocessInfusion(data) {
 		                	VSimportdata.CEworking.push(data[i][VSimportparams.CEkey]);
 		                	VSimportdata.VIoriginal.push(data[i][VSimportparams.VIkey]);
 		                	VSimportdata.VIworking.push(data[i][VSimportparams.VIkey]);
-		                	
+	                		VSimportdata.TCoriginal.push(data[i][VSimportparams.TCkey]);
+	                		VSimportdata.TCworking.push(data[i][VSimportparams.TCkey]);
 		                	VSimportdata.rateoriginal.push(speedmlh);
 		                	VSimportdata.rateworking.push(speedmlh);
 		                }
@@ -18363,6 +18368,8 @@ function preprocessInfusion(data) {
 			                	VSimportdata.CEworking.push(undefined);
 			                	VSimportdata.VIoriginal.push(undefined);
 			                	VSimportdata.VIworking.push(undefined);
+	                			VSimportdata.TCoriginal.push(undefined);
+	                			VSimportdata.TCworking.push(undefined);
 			                	VSimportdata.rateoriginal.push(undefined);
 			                	VSimportdata.rateworking.push(undefined);
 							}
@@ -18376,6 +18383,8 @@ function preprocessInfusion(data) {
 		                	VSimportdata.CEworking.push(data[i][VSimportparams.CEkey]);
 		                	VSimportdata.VIoriginal.push(data[i][VSimportparams.VIkey]);
 		                	VSimportdata.VIworking.push(data[i][VSimportparams.VIkey]);
+	                		VSimportdata.TCoriginal.push(data[i][VSimportparams.TCkey]);
+	                		VSimportdata.TCworking.push(data[i][VSimportparams.TCkey]);
 		                	VSimportdata.rateoriginal.push(undefined);
 		                	VSimportdata.rateworking.push(undefined);
 							cursortimeprior = timeepoch;
@@ -18539,14 +18548,18 @@ function captureInfusion(suppressDialog) {
 	VSimportdata.VIworking = new Array();
 	VSimportdata.rateoriginal = new Array();
 	VSimportdata.rateworking = new Array();
+	VSimportdata.TCoriginal = new Array();
+	VSimportdata.TCworking = new Array();
 	//find the correct BIS key in data
 	VSimportparams.CPkey = "";
 	VSimportparams.CEkey = "";
 	VSimportparams.VIkey = "";
-	if (dataimportinfusion[0].hasOwnProperty("VolumeInfused") && dataimportinfusion[0].hasOwnProperty("PlasmaConcentration") && dataimportinfusion[0].hasOwnProperty("EffectSiteConcentration") ) {
+	VSimportparams.TCkey = "";
+	if (dataimportinfusion[0].hasOwnProperty("VolumeInfused") && dataimportinfusion[0].hasOwnProperty("PlasmaConcentration") && dataimportinfusion[0].hasOwnProperty("EffectSiteConcentration") && dataimportinfusion[0].hasOwnProperty("TargetConcentration")) {
 		VSimportparams.VIkey = "VolumeInfused";
 		VSimportparams.CPkey = "PlasmaConcentration";
 		VSimportparams.CEkey = "EffectSiteConcentration";
+		VSimportparams.TCkey = "TargetConcentration";
 		preprocessInfusion(dataimportinfusion);
 	}
 	if (VSimportparams.VIkey != "") {
@@ -18554,6 +18567,70 @@ function captureInfusion(suppressDialog) {
 	} else {
 		displayWarning("Infusion data loading failed","No suitable infusion data found in CSV file");
 	}
+}
+
+function VSgenerateInfScheme(mode) {
+	prior = 0;
+	tempArray = new Array();
+	for (count=0;count<VSimportdata.TCworking.length;count++) {
+		if (VSimportdata.TCworking[count] != undefined) {
+			if (VSimportdata.TCworking[count]*1 > 0) {
+				if (VSimportdata.TCworking[count]*1 != prior) {
+					tempArray.push([mode,0,count,VSimportdata.TCworking[count]*1]);	
+					prior = VSimportdata.TCworking[count]*1;
+				}
+			} else if (VSimportdata.TCworking[count]*1 == 0) {
+				if (prior != 0) {
+					tempArray.push([,0,count,0]);
+					prior = 0;	
+				}	
+			}
+		}
+	}
+
+	parse_historyarray = [...tempArray];
+
+			mode = "CET mode";
+			//in addition, add CET init params
+			drug_sets[0].cpt_active = 0;
+			drug_sets[0].cet_active = 0.5;
+			drug_sets[0].IB_active = 0;
+			drug_sets[0].cpt_pause = 0;
+			drug_sets[0].cet_pause = 0;
+			drug_sets[0].cet_lockdowntime = 0;
+			for (count=0; count<parse_historyarray.length; count++) {
+				if (parse_historyarray[count][1] == 0) {
+					drug_sets[0].desired = 0;
+					drug_sets[0].firstrun = 0;
+					drug_sets[0].running = 1;
+					time_in_s = parse_historyarray[count][2];
+					if (count > 0) {
+						result = getcp(time_in_s,0);
+						result_e = getce(time_in_s,0);
+						console.log("states retrieved, time " + time_in_s);
+						historydivs = document.getElementById("historywrapper").querySelectorAll("[data-time]"); 
+						if (parse_historyarray[count][3]>0) {
+							deliver_cet(parse_historyarray[count][3],0); 
+						} else {
+							pauseCpt(0);
+						}
+					} else {
+						if (parse_historyarray[count][3]>0) {
+							deliver_cet(parse_historyarray[count][3],0); 
+						} else {
+							pauseCpt(0);
+						}
+						//firstrun=0;
+						//running=1;
+					}
+				}
+			}
+			document.getElementById("pastscheme").classList.add("show");
+			document.getElementById("btn_displayhistory").innerHTML = "Scheme";
+			document.getElementById("historywrapperCOPY").innerHTML = document.getElementById("historywrapper").innerHTML;
+
+
+	return tempArray;
 }
 
 function VSaltertime() {
@@ -18881,7 +18958,7 @@ function VSexplorePlotBIS() {
 	time2 = document.getElementById("VSinputTime3").value *1;
 	myChart5.data.datasets[2].data = customfunction1(time1);
 	myChart5.data.datasets[3].data = customfunction2(time1+1,time2);
-	myChart5.data.datasets[5].data = customfunction3(time2+1);
+	myChart5.data.datasets[4].data = customfunction3(time2+1);
 	myChart5.update();
 }
 
@@ -18894,6 +18971,7 @@ function VSexplore(inputtime1,inputtime2) {
 	document.getElementById("VScustomCE50").innerHTML = Math.round(testArray[0]*100)/100;
 	document.getElementById("VScustomGamma").innerHTML = Math.round(testArray[1]*100)/100;
 	document.getElementById("VScustomMSE").innerHTML = Math.round(testArray[2]*100)/100;
+	VSexplorePlotBIS();
 	myChart5.data.datasets[1].data = BIS_generate_custom_PD_curve(testArray[0],testArray[1]);
 	myChart5.update();
 }
@@ -18901,6 +18979,9 @@ function VSexplore(inputtime1,inputtime2) {
 function VSexploreCustomValues() {
 	a1 = document.getElementById("VSinputCustomCE50").value *1;
 	b1 = document.getElementById("VSinputCustomGamma").value *1;
+	testObject = math_reformat_arrays_custom(document.getElementById("VSinputTime2").value *1,document.getElementById("VSinputTime3").value *1,a1,b1);
+	temp = math_mse(testObject[0],testObject[1]);
+	document.getElementById("VScustomValuesMSE").innerHTML = Math.round(temp*10)/10;
 	myChart5.data.datasets[1].data = BIS_generate_custom_PD_curve(a1,b1);
 	myChart5.update();
 }
