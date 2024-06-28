@@ -4366,6 +4366,10 @@ body.dark #ptolcard_switch {
   margin-top:15px;
 }
 
+.menucontent ul {
+  list-style-type: none;
+}
+
 .menucontent a {
   font-family: "Brandon Text", sans-serif;
   padding:7px 0px;
