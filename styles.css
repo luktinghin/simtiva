@@ -5388,7 +5388,9 @@ body.dark .infusionratedropdownitem:hover {
     break-before:column;
   }
   #outputcontainer {
-    height:500px;
+    height:50vh;
+    min-height: 350px;
+    max-height: 450px;
   }
   #outputcontainer.showscheme #pastscheme.show {
     display: none;
@@ -5406,6 +5408,11 @@ body.dark .infusionratedropdownitem:hover {
 
   #historywrapper2 {
     display:none;
+  }
+  #interactionscontainer {
+    height:50vh;
+    min-height: 350px;
+    max-height: 450px;
   }
 
   body.dark #emulatetitlecontainer {

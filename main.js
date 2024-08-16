@@ -11102,7 +11102,7 @@ function confirmretrospective() {
 }
 
 function init_rescue(input_uid,external_flag) {
-
+	loadoptions();
 	hideallmodal();
 	hidemodal("modalInitial");
 	hidemodal("modalLoad");
