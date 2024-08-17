@@ -313,12 +313,12 @@
 				<p>In view of the above, the Eleveld emulation tool can help anaesthetists to understand the Eleveld model better by deriving infusion data from a model they are more familiar with (Marsh or Schnider) and convert it into CP, CE, and estimated BIS values calculated from the Eleveld model. Using the graph provided, by moving the cursor over the time axis, you can learn about the differences between the models.</p>
 				<p>Prerequisites: you must provide age, body weight and body height, and choose either Marsh or Schnider models on the input screen. Complex mode is not supported at this time.</p>
 				<p>Note about obesity: you should enter the actual body weight on the first screen. If severe obesity is detected (BMI>=35), you may be prompted to use adjusted body weight (Adj.BW) instead of total body weight (TBW) to improve model performance of Marsh/Schnider. You can choose to use Adj.BW as suggested. The Eleveld emulation will then be based on TBW because Eleveld model does not require body weight adjustment, but the Marsh/Schnider model will be based on Adj.BW. So, in this scenario, you will be comparing between a Marsh/Schnider-Adj.BW model with an Eleveld-TBW model.</p>
-				<p class="m-h3">Demonstration 1</p>
+				<p class="m-h3">Demonstration 1 - Normal body weight, Marsh</p>
 				<p>Suppose we enter these patient characteristics: Marsh-CP targeting for a 50-year-old, 70kg, 170cm man. In the bottom of the main graph, there is the Eleveld emulation module. Click "Turn On Emulation" to begin.</p>
 				<div class="m-image-container">
 					<img src="manualresources/ss-3a-emulationturnon.webp">
 				</div>
-				<p>A table will be provided to help convert a Marsh-CP target to an Eleveld-CE target. A ratio for conversion will be provided. This ratio is to guide the delivery of an Eleveld CE target at steady state. The table provides "Induction" and "Maintenence" targets, where "Induction" target should be used for the initial 1-3minutes while the Marsh CP target should be dropped to "Maintenence" target afterwards. The emulation graph will show you more details of how the Eleveld CP, CE change over time. </p>
+				<p>A table will be provided to help convert a Marsh-CP target to an Eleveld-CE target. A ratio for conversion will be provided. This ratio is to guide the delivery of an Eleveld CE target at steady state. The table provides "Induction" and "Maintenence" targets, where "Induction" target should be used for the initial 1-3minutes while the Marsh CP target should be dropped to "Maintenence" target afterwards. The emulation graph will show you more details of how the Eleveld CP, CE change over time. Click "Start Emulation" to proceed with the emulation tool. You may refer to this emulation target reference table at a later time, by clicking the "Details" button on the emulation graph.</p>
 				<div class="m-image-container">
 					<img src="manualresources/ss-3a-emulationtable.webp">
 				</div>
@@ -326,11 +326,29 @@
 				<div class="m-image-container">
 					<img src="manualresources/ss-3a-emulationinfusion.webp">
 				</div>
-				<p>BIS prediction: the estimated BIS will be shown on top of the emulation module. On the graph, by moving the cursor, you can also preview the estimated BIS at different times. In this example, the initial CPT was set at 4mcg/ml, then reduced to 2.5mcg/ml at approximately 5mins.</p>
+				<p>BIS prediction: the estimated BIS will be shown on top of the emulation module. In this example, the initial CPT was set at 4mcg/ml, then reduced to 2.5mcg/ml at approximately 5mins. On the graph, by moving the cursor, you can also preview the estimated BIS at different times.</p>
 				<div class="m-image-container">
 					<img src="manualresources/ss-3a-emulationgraph.webp">
 				</div>
-				<p>From the above graph, you can see that at 30minutes, the Elevled predicted...</p>
+				<p>From the above graph, you can see that at around 30minutes, the Elevled predicted a CE level of 3.19mcg/ml, whereas Marsh model predicted a CE level of 2.54mcg/ml.</p>
+				<p class="m-h3">Demonstration 2 - Obese patient, Marsh</p>
+				<p>Like the example above, we used Simtiva emulation module to emulate Eleveld model from Marsh model. This time, the patient was an obese individual with BMI 41 (BW: 120kg, BH: 170cm). Please note that you should always enter the actual body weight into Simtiva app, the app will perform body weight adjustment for you. The app will prompt you to use "Adjusted body weight" to improve the performance of the model (when using Marsh). See "Allometric Scaling" and "Note on obesity" above for more background details.</p>
+				<p>Please watch the video below.</p>
+				<div class="m-video-container">
+					<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">Using adjusted BW can improve performance of Marsh model in severely obese. Using Eleveld emulation in <a href="https://t.co/4zrK2ZezXO">https://t.co/4zrK2ZezXO</a>, you can visualize the emulated Eleveld Cp/Ce when running an adj-BW Marsh infusion regimen. <a href="https://t.co/qVdwTCq0yb">pic.twitter.com/qVdwTCq0yb</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1801509344862998616?ref_src=twsrc%5Etfw">June 14, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+				</div>
+				<p>In this example, "Adjusted body weight" was used. The app will use adjusted body weight for calculation of Marsh model, and total body weight for calculation of Eleveld model.</p>
+				<p>A CP target of 6.1mcg/ml was chosen for induction. This approximates an Eleveld CE target of 3mcg/ml. Follow the infusion regimen suggested, and then later reduce the CP target to the maintenance target.</p>
+				<p class="m-h3">Example 3 - Obese patient using Schnider as an example</p>
+				<p>It is challenging to use the older TCI models in severely obese. As mentioned above, because of incorporation of James formula in calculating lean body mass in Schnider model, the infusion rate will be erroneously high because of a spuriously high clearance calculated. Hence, it is safer to use Adjusted body weight in the Schnider model. After entering the actual body weight into Simtiva, severe obesity is detected, and adjusted body weight is recommended. </p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-3a-schniderobese1.webp">
+				</div>
+				<p>Combining body weight adjustment feature with Eleveld emulation feature, we can compare the performance of using Adj.BW-Schnider with TBW-Eleveld in real time, as illustrated below. Schnider CE target was set at 4.5mcg/ml in this example. Corresponding Eleveld parameters such as Eleveld CE and eBIS will be displayed accordingly.</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-3a-schniderobese2.webp">
+				</div>
+				<p>Reference: Performance of propofol target-controlled infusion models in the obese: pharmacokinetic and pharmacodynamic analysis, Anesth Analg, Cortinez 2014.<a href="https://pubmed.ncbi.nlm.nih.gov/24977639/">https://pubmed.ncbi.nlm.nih.gov/24977639/</a></p>
 			</section>
 		</div><!--end m-main (ch3)-->
 		<div class="m-main" id="m-main-chapter4" data-name="Options" data-number="4">
