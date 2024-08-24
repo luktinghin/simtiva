@@ -1136,7 +1136,7 @@ function loadlanguage(lang,ind,omithistory) {
 
 	  		for (count=1;count<=10;count++) {
 	  			key2 = "chapter" + count;
-	  			console.log(key2);
+	  			console.log(key2 + "loaded");
 	  			if (data[key2] != undefined) {
 	    			tempHTML=JSON.parse(data[key2].text);
 	    			document.getElementById("m-main-" + key2).outerHTML = tempHTML;
