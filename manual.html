@@ -166,10 +166,10 @@
 				<p class="m-h3">Caution on accuracy</p>
 				<p>Please note that SimTIVA is a computer simulation program only to simulate the delivery of TIVA using a TCI pump; but it has no physical connection interface with a syringe pump. SimTIVA is designed in a way such that the user is assumed to have multiple busy tasks at hand and may not be free to adjust pump settings very frequently (say every 10 seconds). In a TCI pump, the infusion rates are updated frequently, e.g. every 10 seconds. However, in SimTIVA, the concept is to simplify the infusion regimen so that the infusion rates need to be adjusted just several times per hour (definitely not every other second or minute), otherwise it will be too cumbersome for the anaesthetist looking after the patient to frequently alter the infusion rate on the pump. With this in mind, in CPT or CET mode, SimTIVA infusion regimen only requires you to change infusion rates for typically 5-7 times for the first hour or so. The downside of this is accuracy, SimTIVA will not be able to deliver a perfect CP/CE target because the CP/CE will fluctuate if the infusion rates are not adjusted very frequently. </p>
 				<p class="m-h3">Realtime simulation</p>
-				<p>SimTIVA is designed to run in real time, i.e. parallel to the actual time sequence of a clinical case. The clock (displayed on the top left corner) will start ticking the moment you start your simulation. For advanced feature in resetting the timeline, or going back partially or going forward in time, read Chapter 6 - Working with timeline.</p>
+				<p>SimTIVA is designed to run in real time, i.e. parallel to the actual time sequence of a clinical case. The clock (displayed on the top left corner) will start ticking the moment you start your simulation. For advanced feature in resetting the timeline, or going back partially or going forward in time, read Chapter 7 - Working with timeline.</p>
 				<p class="m-h3">Overview of information display</p>
 				<p>In all modes, the current CP and CE are displayed on top. A third box will also appear, indicating the infusion rate in ml/h, if an infusion is running. The main pharmacokinetic graph visualizes the plot of CP/CE values over time. If you are using the <span class="m-emphasis">Eleveld</span> propofol model, a box will appear below the main pharmacokinetic graph, showing the predicted bispectral index (BIS) value, which is estimated from the Eleveld pharmacodynamic model.</p>
-				<p>For a more detailed walkthrough on using graphs in SimTIVA, proceed to Chapter 4: Working with Graphs.</p>
+				<p>For a more detailed walkthrough on using graphs in SimTIVA, proceed to Chapter 5: Working with Graphs.</p>
 			</section>
 			<section id="2-2" data-heading="CP Targeting">
 				<p class="m-h2">CP Targeting mode (plasma site)</p>
@@ -236,7 +236,7 @@
 			<section id="2-6" data-heading="Complex mode">
 				<p class="m-h2">Complex (Dual) mode</p>
 				<p>In this mode, you may run two-drug simulations simultaneously. For each drug, the functions for CP or CE targeting, manual infusion, or intermittent bolus mode are preserved. In addition, you may explore the pharmacodynamic (PD) interaction between propofol and opioid, as propofol and opioid demonstrate intense synergism. Probability of tolerance to laryngoscopy (PTOL) is used as a measure of potency of propofol-opioid combination. Isobologram charts illustrate the propofol-opioid combinations to achieve the same pharmacodynamic effect.</p>
-				<p><b>For details, please read Chapter 7: Complex mode</b></p>
+				<p><b>For details, please read Chapter 8: Complex mode</b></p>
 				<p>Isobologram: Using different combinations of CE-propofol and CE-remifentanil (effect-site concentrations of propofol and remifentanil respectively), all yielding the same predicted response (90% probability to tolerate laryngoscopy, PTOL90), a line (isobole) is drawn connecting all the possible combinations of CE-propofol/CE-remifentanil to achieve the same identical effect (van den Berg 2021). In our simulation programme, the same method is repeated for PTOL80, PTOL70... PTOL10 to generate a total of 9 isoboles on the 2-dimensional chart. The contour of the isoboles is typical of synergism, or supradditive interaction.</p>
 				<p>For the opioid, you may choose to use remifentanil, fentanyl, or alfentanil. The program converts the CE into equivalent doses.</p>
 				<p>Below is a video demostration of complex mode, with manual infusions of propofol and remifentanil. </p>
@@ -244,29 +244,7 @@
 					<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">(4/5) <br>When is anaesthedia &quot;too deep&quot; or &quot;too light&quot;? <a href="https://t.co/KXov8b2dRM">https://t.co/KXov8b2dRM</a> enables PD modelling &amp; displays a &quot;green zone&quot; to mark the CE margins required to achieve PTOL50-90. In this example, CE is in the green zone but is predicted to fall below PTOL50 margin beyond 7.5min <a href="https://t.co/KJ0ICsQdeT">pic.twitter.com/KJ0ICsQdeT</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1702847358290280870?ref_src=twsrc%5Etfw">September 16, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 				</div>
 			</section>
-			<section id="2-7" data-heading="Advanced features">
-				<p class="m-h2">Advanced Features</p>
-				<p class="m-h3">Retrospective</p>
-				<p>This feature allows you to retrospectively edit a manual bolus and infusion rate change. For example, the patient had surgical stimulation a few minutes ago, and you have given a manual bolus (25mg propofol) and adjusted the infusion rate to 60ml/h but you have forgotten to enter these information in SimTIVA, you can correct this in SimTIVA by using the Retrospective Function. Enter the information as in the picture below. A warning prompt will appear asking you to confirm the data. After this action, you are reminded to enter a new CP or CE target as soon as possible to continue with TCI functionality.</p>
-				<div class="m-image-container">
-					<img src="manualresources/ss-2-retrospective.webp">
-				</div>
-				<p class="m-h3">Volume Estimation</p>
-				<p>SimTIVA is running and you estimate the remaining surgery will take 30 minutes. How much propofol do you still need? The "Volume Estimation" panel will provide an answer, so that you will know if there is enough propofol in the syringe you are infusing, or how much more is required to be drawn up to avoid wastage.</p>
-				<div class="m-image-container">
-					<img src="manualresources/ss-2-volumeestimation.webp">
-				</div>
-				<p class="m-h3">Time Estimation</p>
-				<p>SimTIVA is running and you have a certain amount of propofol in the syringe that is currently being infused (e.g. 20mls remaining). Given the volume to be infused, what is the expected duration before this infusion is finished? The "Time Estimation" panel will provide an answer.</p>
-				<div class="m-image-container">
-					<img src="manualresources/ss-2-timeestimation.webp">
-				</div>
-				<p class="m-h3">Wakeup Time</p>
-				<p>This panel is based on decrement time from the current CE to drop to the designated "wakeup concentration" if the infusion is stopped at the current time point. Please note the patient characteristics, concurrent medications, duration of infusion etc all have an effect on wake-up time. </p>
-				<div class="m-image-container">
-					<img src="manualresources/ss-2-wakeuptime.webp">
-				</div>
-			</section>
+
 		</div><!--end m-main (ch2)-->
 		<div class="m-main" id="m-main-chapter3" data-name="Advanced Features" data-number="3">
 			<p class="m-h1">Advanced Features</p>
@@ -308,11 +286,11 @@
 				<p class="m-h3">Purpose</p>
 				<p>The purpose of this tool is to emulate Eleveld model by using an infusion profile generated from Marsh and Schnider TCI models. This way, you may use an existing TCI syringe pump programmed with these existing models and convert it into CP, CE, and estimated BIS in real time. You may also compare the older models (Marsh/Schnider) with the newer generation Eleveld model through the simulation graph.</p>
 				<p>The advantages of using Eleveld model include:</p>
-				<p>(1) Allometric scaling: by using fat-free mass, the model automatically corrects for obesity. This avoids dosing errors such as using actual body weight in Schnider model, which can lead to erroneously high infusion rates because of usage of James formula for calculating lean body mass in Schnider model.</p>
-				<p>(2) Prediction of BIS: from its large dataset of over 1,000 patients with BIS measurements, a calibration curve is provided, to convert CE to an estimated BIS. In a validation study, the estimated BIS was found to be accurate.</p>
+				<p>(1) <b>Allometric scaling</b>: by using fat-free mass, the model automatically corrects for obesity. This avoids dosing errors such as using actual body weight in Schnider model, which can lead to erroneously high infusion rates because of usage of James formula for calculating lean body mass in Schnider model.</p>
+				<p>(2) <b>Prediction of BIS</b>: from its large dataset of over 1,000 patients with BIS measurements, a calibration curve is provided, to convert CE to an estimated BIS. In a validation study, the estimated BIS was found to be accurate.</p>
 				<p>In view of the above, the Eleveld emulation tool can help anaesthetists to understand the Eleveld model better by deriving infusion data from a model they are more familiar with (Marsh or Schnider) and convert it into CP, CE, and estimated BIS values calculated from the Eleveld model. Using the graph provided, by moving the cursor over the time axis, you can learn about the differences between the models.</p>
 				<p>Prerequisites: you must provide age, body weight and body height, and choose either Marsh or Schnider models on the input screen. Complex mode is not supported at this time.</p>
-				<p>Note about obesity: you should enter the actual body weight on the first screen. If severe obesity is detected (BMI>=35), you may be prompted to use adjusted body weight (Adj.BW) instead of total body weight (TBW) to improve model performance of Marsh/Schnider. You can choose to use Adj.BW as suggested. The Eleveld emulation will then be based on TBW because Eleveld model does not require body weight adjustment, but the Marsh/Schnider model will be based on Adj.BW. So, in this scenario, you will be comparing between a Marsh/Schnider-Adj.BW model with an Eleveld-TBW model.</p>
+				<p><b>Note about obesity</b>: you should enter the actual body weight on the first screen. If severe obesity is detected (BMI>=35), you may be prompted to use adjusted body weight (Adj.BW) instead of total body weight (TBW) to improve model performance of Marsh/Schnider (Cortinez 2014). You can choose to use Adj.BW as suggested. The Eleveld emulation will then be based on TBW because Eleveld model does not require body weight adjustment, but the Marsh/Schnider model will be based on Adj.BW. So, in this scenario, you will be comparing between a Marsh/Schnider-Adj.BW model with an Eleveld-TBW model.</p>
 				<p class="m-h3">Demonstration 1 - Normal body weight, Marsh</p>
 				<p>Suppose we enter these patient characteristics: Marsh-CP targeting for a 50-year-old, 70kg, 170cm man. In the bottom of the main graph, there is the Eleveld emulation module. Click "Turn On Emulation" to begin.</p>
 				<div class="m-image-container">
@@ -441,7 +419,7 @@
 			</section>
 			<section id="5-5" data-heading="Isobologram graph">
 				<p class="m-h2">Isobologram</p>
-				<p>The isobologram graph will be explained in detail in Chapter 7: Complex Mode.</p>
+				<p>The isobologram graph will be explained in detail in Chapter 8: Complex Mode.</p>
 				<p>An example of an isobologram, which explores the relationship (specifically, the pharmacodynamic synergistic interaction) between propofol and remifentanil, is shown below.</p>
 				<div class="m-image-container">
 					<img src="manualresources/ss-7-isobologram.jpeg">
@@ -691,7 +669,7 @@
 		<div id="footer-up">
 			<div id="footer-up-left">
 				<div class="smalltext">Last updated:</div>
-				<div id="lastupdated">28 June 2024</div>
+				<div id="lastupdated">24 Aug 2024</div>
 			</div>
 			<div id="footer-up-right" onclick="toTop();">
 				<span style="border-radius: 2rem; width: 1.5rem;display:inline-block; margin-right:0.25rem"><i class="fas fa-chevron-circle-up"></i></span>TOP
