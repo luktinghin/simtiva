@@ -7415,6 +7415,7 @@ body.home {
   #footer-up-right {
     border-radius: 0 0 1rem 0;
     box-shadow: inset -1px -1px 0 white;
+    cursor: pointer;
   }
   #footer-previous {
     border-radius: 0 0 0 1rem;
