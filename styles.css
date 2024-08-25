@@ -7261,7 +7261,7 @@ body.home {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 120px;
+  width: 130px;
   padding: 4px 8px;
   cursor: pointer;
 }
@@ -7352,7 +7352,7 @@ body.home {
     display: flex;
     position: fixed;
     bottom: 60px;
-    left: calc(11.5% - 60px);
+    left: calc(11.5% - 65px);
   }
   .m-header {
     top: 60px;
@@ -7456,7 +7456,7 @@ body.home {
     width: 90%;
   }
   .m-aside > .languagebutton {
-    left: calc(15% - 60px);
+    left: calc(15% - 65px);
   }
 }
 
