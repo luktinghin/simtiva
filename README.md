@@ -21,7 +21,12 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
 - To help deliver TCI in a setting where TCI pumps are not available
 
 ### Changelog
- Version 4.8 (Build 109) Current
+ Version 4.81 (Build 111) Current
+ - Updated manual (v2.0) to add chapter on Advanced Features & Eleveld Emulation
+ - Improved graph dimensions on computer/widescreen devices
+ - Corrected minor issues (incorrect reference for pharmacodynamic interaction, arrow symbol in complex mode, bug on loading complex mode simfile)
+   
+ Version 4.8 (Build 109) 
  - Feature: Emulation of Eleveld model when using Marsh/Schnider model
  - Feature: Adjusted body weight for Marsh & Schnider with information prompt
  - BW validation: only extreme BMI (e.g. BMI>=35) will trigger warning screen
