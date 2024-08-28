@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- VERSION 2.0 -->
 <html lang="en">
 <head>
 	<link rel="stylesheet" href="styles.css">
@@ -27,7 +28,7 @@
 </head>
 <body>
 	<div id="menu2">
-						<div class="languagebutton" style="position:fixed;bottom:60px;left:calc(50% - 60px)" onclick="displayLanguagePanel();">
+						<div class="languagebutton" style="position:fixed;bottom:60px;left:calc(50% - 65px)" onclick="displayLanguagePanel();">
 							<span><i class="fas fa-globe"></i></span>
 							<span class="languagedescription">English</span>
 							<span class="languagechevron"><i class="fas fa-chevron-down"></i></span>
@@ -76,7 +77,7 @@
 					<div style="flex-basis: 75%">
 						<div id="welcomemessage">
 							<p style="color:white;font-weight:bold;font-size:0.9rem">Welcome!</p>
-							<h2 style="color:inherit;font-size:0.9rem;border:0;padding:0;margin:0;color:#eee">This is the user manual for <a href="https://simtiva.app" target="_blank">SimTIVA.app</a>, a web app to simulate target-controlled infusion (TCI).</h2><p style="color:#ddd;font-size:0.9rem">This manual contains 9 chapters: the first two chapters cover the basic functionalities to help you get started. We have translated the manual into multiple languages. Video tutorials are coming soon.</p>
+							<h2 style="color:inherit;font-size:0.9rem;border:0;padding:0;margin:0;color:#eee">This is the user manual for <a href="https://simtiva.app" target="_blank">SimTIVA.app</a>, a web app to simulate target-controlled infusion (TCI).</h2><p style="color:#ddd;font-size:0.9rem">This manual contains 10 chapters: the first two chapters cover the basic functionalities to help you get started. We have translated the manual into multiple languages. Video tutorials are coming soon.</p>
 						</div>
 						<div class="startbutton" style="" onclick="getChapter(1)">
 							<span><i class="fas fa-chevron-circle-right"></i></span>
@@ -158,7 +159,6 @@
 			</section>
 		</div>
 		<div class="m-main" id="m-main-chapter2" data-name="Running Simulations" data-number="2">
-
 			<p class="m-h1">Simulation modes</p>
 			<section id="2-1" data-heading="Introduction">
 				<p>There are 4 modes for single-drug simulation, namely CP targeting (plasma site targeting), CE targeting (effect site targeting), manual mode, or intermittent bolus mode. In addition there is a "Complex (Dual mode)" to simulate simultaneous infusions of propofol in combination with an opioid of your choice.</p>
@@ -166,10 +166,10 @@
 				<p class="m-h3">Caution on accuracy</p>
 				<p>Please note that SimTIVA is a computer simulation program only to simulate the delivery of TIVA using a TCI pump; but it has no physical connection interface with a syringe pump. SimTIVA is designed in a way such that the user is assumed to have multiple busy tasks at hand and may not be free to adjust pump settings very frequently (say every 10 seconds). In a TCI pump, the infusion rates are updated frequently, e.g. every 10 seconds. However, in SimTIVA, the concept is to simplify the infusion regimen so that the infusion rates need to be adjusted just several times per hour (definitely not every other second or minute), otherwise it will be too cumbersome for the anaesthetist looking after the patient to frequently alter the infusion rate on the pump. With this in mind, in CPT or CET mode, SimTIVA infusion regimen only requires you to change infusion rates for typically 5-7 times for the first hour or so. The downside of this is accuracy, SimTIVA will not be able to deliver a perfect CP/CE target because the CP/CE will fluctuate if the infusion rates are not adjusted very frequently. </p>
 				<p class="m-h3">Realtime simulation</p>
-				<p>SimTIVA is designed to run in real time, i.e. parallel to the actual time sequence of a clinical case. The clock (displayed on the top left corner) will start ticking the moment you start your simulation. For advanced feature in resetting the timeline, or going back partially or going forward in time, read Chapter 6 - Working with timeline.</p>
+				<p>SimTIVA is designed to run in real time, i.e. parallel to the actual time sequence of a clinical case. The clock (displayed on the top left corner) will start ticking the moment you start your simulation. For advanced feature in resetting the timeline, or going back partially or going forward in time, read Chapter 7 - Working with timeline.</p>
 				<p class="m-h3">Overview of information display</p>
 				<p>In all modes, the current CP and CE are displayed on top. A third box will also appear, indicating the infusion rate in ml/h, if an infusion is running. The main pharmacokinetic graph visualizes the plot of CP/CE values over time. If you are using the <span class="m-emphasis">Eleveld</span> propofol model, a box will appear below the main pharmacokinetic graph, showing the predicted bispectral index (BIS) value, which is estimated from the Eleveld pharmacodynamic model.</p>
-				<p>For a more detailed walkthrough on using graphs in SimTIVA, proceed to Chapter 4: Working with Graphs.</p>
+				<p>For a more detailed walkthrough on using graphs in SimTIVA, proceed to Chapter 5: Working with Graphs.</p>
 			</section>
 			<section id="2-2" data-heading="CP Targeting">
 				<p class="m-h2">CP Targeting mode (plasma site)</p>
@@ -188,7 +188,6 @@
 				<div class="m-image-container">
 					<img src="manualresources/ss-2-warning.webp">
 				</div>
-				
 			</section>
 			<section id="2-3" data-heading="CE Targeting">
 			<p class="m-h2">CE Targeting mode (effect site)</p>
@@ -237,7 +236,7 @@
 			<section id="2-6" data-heading="Complex mode">
 				<p class="m-h2">Complex (Dual) mode</p>
 				<p>In this mode, you may run two-drug simulations simultaneously. For each drug, the functions for CP or CE targeting, manual infusion, or intermittent bolus mode are preserved. In addition, you may explore the pharmacodynamic (PD) interaction between propofol and opioid, as propofol and opioid demonstrate intense synergism. Probability of tolerance to laryngoscopy (PTOL) is used as a measure of potency of propofol-opioid combination. Isobologram charts illustrate the propofol-opioid combinations to achieve the same pharmacodynamic effect.</p>
-				<p><b>For details, please read Chapter 7: Complex mode</b></p>
+				<p><b>For details, please read Chapter 8: Complex mode</b></p>
 				<p>Isobologram: Using different combinations of CE-propofol and CE-remifentanil (effect-site concentrations of propofol and remifentanil respectively), all yielding the same predicted response (90% probability to tolerate laryngoscopy, PTOL90), a line (isobole) is drawn connecting all the possible combinations of CE-propofol/CE-remifentanil to achieve the same identical effect (van den Berg 2021). In our simulation programme, the same method is repeated for PTOL80, PTOL70... PTOL10 to generate a total of 9 isoboles on the 2-dimensional chart. The contour of the isoboles is typical of synergism, or supradditive interaction.</p>
 				<p>For the opioid, you may choose to use remifentanil, fentanyl, or alfentanil. The program converts the CE into equivalent doses.</p>
 				<p>Below is a video demostration of complex mode, with manual infusions of propofol and remifentanil. </p>
@@ -245,7 +244,21 @@
 					<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">(4/5) <br>When is anaesthedia &quot;too deep&quot; or &quot;too light&quot;? <a href="https://t.co/KXov8b2dRM">https://t.co/KXov8b2dRM</a> enables PD modelling &amp; displays a &quot;green zone&quot; to mark the CE margins required to achieve PTOL50-90. In this example, CE is in the green zone but is predicted to fall below PTOL50 margin beyond 7.5min <a href="https://t.co/KJ0ICsQdeT">pic.twitter.com/KJ0ICsQdeT</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1702847358290280870?ref_src=twsrc%5Etfw">September 16, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 				</div>
 			</section>
-			<section id="2-7" data-heading="Advanced features">
+
+		</div><!--end m-main (ch2)-->
+		<div class="m-main" id="m-main-chapter3" data-name="Advanced Features" data-number="3">
+			<p class="m-h1">Advanced Features</p>
+			<section id="3-1" data-heading="Introduction">
+				<p>This chapter will cover the following advanced features:</p>
+				<ul>
+					<li><b>Retrospective:</b> Entering bolus or infusion data retrospectively</li>
+					<li><b>Volume estimation:</b> Compute the volume required for a given duration</li>
+					<li><b>Time estimation:</b> Compute how long the infusion is going to last given a volume-to-be-infused</li>
+					<li><b>Wakeup time:</b> Decrement time to a certain wakeup concentration</li>
+					<li><b>Eleveld emulation:</b> For Marsh or Schnider models for propofol, SimTIVA can emulate Eleveld model using the infusion profile from a Marsh or Schnider infusion regimen.
+				</ul>
+			</section>
+			<section id="3-2" data-heading="Advanced features">
 				<p class="m-h2">Advanced Features</p>
 				<p class="m-h3">Retrospective</p>
 				<p>This feature allows you to retrospectively edit a manual bolus and infusion rate change. For example, the patient had surgical stimulation a few minutes ago, and you have given a manual bolus (25mg propofol) and adjusted the infusion rate to 60ml/h but you have forgotten to enter these information in SimTIVA, you can correct this in SimTIVA by using the Retrospective Function. Enter the information as in the picture below. A warning prompt will appear asking you to confirm the data. After this action, you are reminded to enter a new CP or CE target as soon as possible to continue with TCI functionality.</p>
@@ -268,17 +281,64 @@
 					<img src="manualresources/ss-2-wakeuptime.webp">
 				</div>
 			</section>
-		</div><!--end m-main (ch2)-->
-		<div class="m-main" id="m-main-chapter3" data-name="Options" data-number="3">
+			<section id="3-3" data-heading="Eleveld emulation">
+				<p class="m-h2">Eleveld Emulation</p>
+				<p class="m-h3">Purpose</p>
+				<p>The purpose of this tool is to emulate Eleveld model by using an infusion profile generated from Marsh and Schnider TCI models. This way, you may use an existing TCI syringe pump programmed with these existing models and convert it into CP, CE, and estimated BIS in real time. You may also compare the older models (Marsh/Schnider) with the newer generation Eleveld model through the simulation graph.</p>
+				<p>The advantages of using Eleveld model include:</p>
+				<p>(1) <b>Allometric scaling</b>: by using fat-free mass, the model automatically corrects for obesity. This avoids dosing errors such as using actual body weight in Schnider model, which can lead to erroneously high infusion rates because of usage of James formula for calculating lean body mass in Schnider model.</p>
+				<p>(2) <b>Prediction of BIS</b>: from its large dataset of over 1,000 patients with BIS measurements, a calibration curve is provided, to convert CE to an estimated BIS. In a validation study, the estimated BIS was found to be accurate.</p>
+				<p>In view of the above, the Eleveld emulation tool can help anaesthetists to understand the Eleveld model better by deriving infusion data from a model they are more familiar with (Marsh or Schnider) and convert it into CP, CE, and estimated BIS values calculated from the Eleveld model. Using the graph provided, by moving the cursor over the time axis, you can learn about the differences between the models.</p>
+				<p>Prerequisites: you must provide age, body weight and body height, and choose either Marsh or Schnider models on the input screen. Complex mode is not supported at this time.</p>
+				<p><b>Note about obesity</b>: you should enter the actual body weight on the first screen. If severe obesity is detected (BMI>=35), you may be prompted to use adjusted body weight (Adj.BW) instead of total body weight (TBW) to improve model performance of Marsh/Schnider (Cortinez 2014). You can choose to use Adj.BW as suggested. The Eleveld emulation will then be based on TBW because Eleveld model does not require body weight adjustment, but the Marsh/Schnider model will be based on Adj.BW. So, in this scenario, you will be comparing between a Marsh/Schnider-Adj.BW model with an Eleveld-TBW model.</p>
+				<p class="m-h3">Demonstration 1 - Normal body weight, Marsh</p>
+				<p>Suppose we enter these patient characteristics: Marsh-CP targeting for a 50-year-old, 70kg, 170cm man. In the bottom of the main graph, there is the Eleveld emulation module. Click "Turn On Emulation" to begin.</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-3a-emulationturnon.webp">
+				</div>
+				<p>A table will be provided to help convert a Marsh-CP target to an Eleveld-CE target. A ratio for conversion will be provided. This ratio is to guide the delivery of an Eleveld CE target at steady state. The table provides "Induction" and "Maintenence" targets, where "Induction" target should be used for the initial 1-3minutes while the Marsh CP target should be dropped to "Maintenence" target afterwards. The emulation graph will show you more details of how the Eleveld CP, CE change over time. Click "Start Emulation" to proceed with the emulation tool. You may refer to this emulation target reference table at a later time, by clicking the "Details" button on the emulation graph.</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-3a-emulationtable.webp">
+				</div>
+				<p>By setting a CPT of 4, the infusion regimen generated by a Marsh-CPT program is as follows. The emulation module will feed in this infusion profile into an Eleveld model and generate Eleveld CP, CE, and estimated BIS.</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-3a-emulationinfusion.webp">
+				</div>
+				<p>BIS prediction: the estimated BIS will be shown on top of the emulation module. In this example, the initial CPT was set at 4mcg/ml, then reduced to 2.5mcg/ml at approximately 5mins. On the graph, by moving the cursor, you can also preview the estimated BIS at different times.</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-3a-emulationgraph.webp">
+				</div>
+				<p>From the above graph, you can see that at around 30minutes, the Elevled predicted a CE level of 3.19mcg/ml, whereas Marsh model predicted a CE level of 2.54mcg/ml.</p>
+				<p class="m-h3">Demonstration 2 - Obese patient, Marsh</p>
+				<p>Like the example above, we used Simtiva emulation module to emulate Eleveld model from Marsh model. This time, the patient was an obese individual with BMI 41 (BW: 120kg, BH: 170cm). Please note that you should always enter the actual body weight into Simtiva app, the app will perform body weight adjustment for you. The app will prompt you to use "Adjusted body weight" to improve the performance of the model (when using Marsh). See "Allometric Scaling" and "Note on obesity" above for more background details.</p>
+				<p>Please watch the video below.</p>
+				<div class="m-video-container">
+					<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">Using adjusted BW can improve performance of Marsh model in severely obese. Using Eleveld emulation in <a href="https://t.co/4zrK2ZezXO">https://t.co/4zrK2ZezXO</a>, you can visualize the emulated Eleveld Cp/Ce when running an adj-BW Marsh infusion regimen. <a href="https://t.co/qVdwTCq0yb">pic.twitter.com/qVdwTCq0yb</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1801509344862998616?ref_src=twsrc%5Etfw">June 14, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+				</div>
+				<p>In this example, "Adjusted body weight" was used. The app will use adjusted body weight for calculation of Marsh model, and total body weight for calculation of Eleveld model.</p>
+				<p>A CP target of 6.1mcg/ml was chosen for induction. This approximates an Eleveld CE target of 3mcg/ml. Follow the infusion regimen suggested, and then later reduce the CP target to the maintenance target.</p>
+				<p class="m-h3">Example 3 - Obese patient using Schnider as an example</p>
+				<p>It is challenging to use the older TCI models in severely obese. As mentioned above, because of incorporation of James formula in calculating lean body mass in Schnider model, the infusion rate will be erroneously high because of a spuriously high clearance calculated. Hence, it is safer to use Adjusted body weight in the Schnider model. After entering the actual body weight into Simtiva, severe obesity is detected, and adjusted body weight is recommended. </p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-3a-schniderobese1.webp">
+				</div>
+				<p>Combining body weight adjustment feature with Eleveld emulation feature, we can compare the performance of using Adj.BW-Schnider with TBW-Eleveld in real time, as illustrated below. Schnider CE target was set at 4.5mcg/ml in this example. Corresponding Eleveld parameters such as Eleveld CE and eBIS will be displayed accordingly.</p>
+				<div class="m-image-container">
+					<img src="manualresources/ss-3a-schniderobese2.webp">
+				</div>
+				<p>Reference: Performance of propofol target-controlled infusion models in the obese: pharmacokinetic and pharmacodynamic analysis, Anesth Analg, Cortinez 2014.<a href="https://pubmed.ncbi.nlm.nih.gov/24977639/">https://pubmed.ncbi.nlm.nih.gov/24977639/</a></p>
+			</section>
+		</div><!--end m-main (ch3)-->
+		<div class="m-main" id="m-main-chapter4" data-name="Options" data-number="4">
 			<p class="m-h1">OPTIONS</p>
-			<section id="3-1" data-heading="Changing options">
+			<section id="4-1" data-heading="Changing options">
 				<p>SimTIVA settings can be accessed on the welcome screen by clicking the <span style="display: inline-block; padding: 4px; width: 1.8rem; height: 1.8rem; background: #ddd; border-radius: 2rem"><i class="fas fa-cog fa-fw"></i></span> options button. Alternatively, you may change the options when simulation is running, by going to the options panel at the bottom of the page.</p>
 				<p class="m-h3">Dark mode</p>
 				<p>You can switch between Dark / Light modes by clicking on the floating icon <span style="display: inline-block; padding: 4px; width: 1.8rem; height: 1.8rem; background: #ddd; border-radius: 2rem"><i class='fas fa-adjust fa-fw'></i></span> / <span style="display: inline-block; padding: 4px; width: 1.8rem; height: 1.8rem; background: #ddd; border-radius: 2rem"><i class="fas fa-moon fa-fw"></i></span> at the right lower corner.</p>
 				<p class="m-h3">Saving options</p>
 				<p>All options are automatically saved, so that the next time you use SimTIVA the same settings are restored.</p>
 			</section>
-			<section id="3-2" data-heading="List of options">
+			<section id="4-2" data-heading="List of options">
 				<p class="m-h2">List of options</p>
 				<p>The options panel:</p>
 				<div class="m-image-container">
@@ -294,17 +354,17 @@
 				<p><span class="m-emphasis">Sound:</span> when the next rate change is imminent in CP/CE targeting mode, SimTIVA will sound an audio alarm (supported devices only).</p>
 				<p><span class="m-emphasis">Notifications:</span> when the next rate change is imminent in CP/CE targeting mode, SimTIVA will activate system notification (supported devices only).</p>
 			</section>
-			<section id="3-3" data-heading="Infusion unit in manual mode">
+			<section id="4-3" data-heading="Infusion unit in manual mode">
 				<p class="m-h3">Infusion unit in manual mode</p>
 				<p>This is a video demo of altering the infusion and bolus units. You can also click the <span class="m-icon-inline"><i class="fas fa-chevron-down"></i></span> dropdown triangle next to the "Infusion rate" or "Bolus" entry fields to change these units. The conversion between ml/h and mg/kg/h is automatic.</p>
 				<div class="m-video-container">
 					<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">Wrapping up 2023 with a New feature (<a href="https://t.co/4zrK2ZezXO">https://t.co/4zrK2ZezXO</a>): Bolus &amp; Infusion units- U may now switch between “mg” vs “mg/kg” vs “ml” for bolus, “ml/h” vs “mg/kg/h” (or appropriate units) for infusion in manual mode.<br>Can switch by tapping the dropdown 🔽 or via “Options”.<br>(1/2) <a href="https://t.co/hCthkRDMbO">pic.twitter.com/hCthkRDMbO</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1736365967851331753?ref_src=twsrc%5Etfw">December 17, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 				</div>
 			</section>
-		</div><!--end m-main (ch3)-->
-		<div class="m-main" id="m-main-chapter4" data-name="Working with Graphs" data-number="4">
+		</div><!--end m-main (ch4)-->
+		<div class="m-main" id="m-main-chapter5" data-name="Working with Graphs" data-number="5">
 			<p class="m-h1">Working with graphs</p>
-			<section id="4-1" data-heading="Overview">
+			<section id="5-1" data-heading="Overview">
 				<p class="m-h2">Overview</p>
 				<p>On mobile devices, the main graph looks like this:</p>
 				<div class="m-image-container">
@@ -317,14 +377,14 @@
 					<li><span class="m-emphasis">Graph options button:</span> Opens the options panel - you can adjust the time scale among other options. The <span class="m-icon-inline"><i class="fas fa-search-plus"></i></span> and <span class="m-icon-inline"><i class="fas fa-search-minus"></i></span> buttons will change the time scale to show the entire timeline or just the current portion.</li>
 				</ol>
 			</section>
-			<section id="4-2" data-heading="Quick view & time scale">
+			<section id="5-2" data-heading="Quick view & time scale">
 				<p class="m-h2">Video demo of quick view info box</p>
 				<p>In this video demonstration, you can see that an info box appears in the main graph as move your cursor. (On mobile devices this means tapping on graph area, on desktop computers this means hovering over the graph area with mouse.) By highlighting a certain timepoint, the info box will display important data such as CP, CE, infusion rate, and estimated BIS (available in Eleveld propofol model only). This video also shows how you can adjust the time scale to show more (or less) of the timeline.
 				<div class="m-video-container">
 					<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/tiva?src=hash&amp;ref_src=twsrc%5Etfw">#tiva</a> <a href="https://twitter.com/hashtag/tci?src=hash&amp;ref_src=twsrc%5Etfw">#tci</a> <a href="https://twitter.com/hashtag/anaesthesia?src=hash&amp;ref_src=twsrc%5Etfw">#anaesthesia</a><br>Showcasing the updated feature of <a href="https://t.co/qLpMHjFA1Q">https://t.co/qLpMHjFA1Q</a> - using Eleveld model, an estimated BIS value is displayed. The chart also shows the CE boundaries for BIS 40-60. This allows estimation of effect without pEEG.<br>Chart duration also extends to 2h. <a href="https://t.co/i6O9ITw7vv">pic.twitter.com/i6O9ITw7vv</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1701062106144190782?ref_src=twsrc%5Etfw">September 11, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 				</div>
 			</section>
-			<section id="4-3" data-heading="Graph options panel">
+			<section id="5-3" data-heading="Graph options panel">
 				<p class="m-h2">Graph options panel</p>
 				<p>To open this panel, click the <span class="m-icon-inline"><i class="fas fa-cog"></i></span> icon. </p>
 				<div class="m-image-container">
@@ -338,7 +398,7 @@
 				</ul>
 
 			</section>
-			<section id="4-4" data-heading="Fullscreen graph">
+			<section id="5-4" data-heading="Fullscreen graph">
 				<p class="m-h2">Fullscreen graph</p>
 				<p>Sometimes, it is advantageous to hold your mobile phone sideways and maximize the graph to fullscreen. In this fullscreen display mode, the user inputs and controls, such as setting the CP/CE target or manual bolus or infusion entry fields are hidden. The important data, such as CP, CE, and infusion rate will still be displayed, on right side of screen. In addition, grey bars will appear at the bottom of the fullscreen graph to visualize the infusion rate changes over time.</p>
 				<div class="m-image-container">
@@ -357,18 +417,18 @@
 					<img src="manualresources/ss-4-fullscreen-noinfo.webp">
 				</div>
 			</section>
-			<section id="4-5" data-heading="Isobologram graph">
+			<section id="5-5" data-heading="Isobologram graph">
 				<p class="m-h2">Isobologram</p>
-				<p>The isobologram graph will be explained in detail in Chapter 7: Complex Mode.</p>
+				<p>The isobologram graph will be explained in detail in Chapter 8: Complex Mode.</p>
 				<p>An example of an isobologram, which explores the relationship (specifically, the pharmacodynamic synergistic interaction) between propofol and remifentanil, is shown below.</p>
 				<div class="m-image-container">
 					<img src="manualresources/ss-7-isobologram.jpeg">
 				</div>
 			</section>
-		</div><!-- end m-main (ch4)-->
-		<div class="m-main" id="m-main-chapter5" data-name="Events" data-number="5">
+		</div><!-- end m-main (ch5)-->
+		<div class="m-main" id="m-main-chapter6" data-name="Events" data-number="6">
 			<p class="m-h1">Events</p>
-			<section id="5-1" data-heading="Overview">
+			<section id="6-1" data-heading="Overview">
 				<p>Events contain small segments of text, marked at a specific time, which help you to mark important events or information on the timeline. Examples of events you may enter are: "Induction", "Loss of consciousness", "Intubation", "Woke up", or vital signs that you can enter manually.</p>
 				<p>This feature is helpful when you wish to review the case. By marking the time point, when you highlight the time using the "Quick View" feature of the graph, you can also note the CP, CE, and infusion rate at that specific time point. </p>
 				<div class="m-image-container">
@@ -376,7 +436,7 @@
 				</div>
 				<p>An example is shown above. Note the CP, CE, and eBIS at the point of "Waking up". The timing of this event correlates with the time highlighted on "Quick View" box on the main graph. The CE was 1.77mcg/ml, eBIS was 65 at this time point.</p>
 			</section>
-			<section id="5-2" data-heading="Event creation & editing">
+			<section id="6-2" data-heading="Event creation & editing">
 				<p class="m-h2">Event creation</p>
 				<p>To create an event, tap the "Event button" on the main graph. This will take you to the event creation screen. You can set the time of the event.</p>
 				<div class="m-image-container">
@@ -390,10 +450,10 @@
 				<p>To edit the event, click on either the event marker (e.g. "02") on the main graph, or tap the event text at the bottom.</p>
 				<p>You can turn events on or off in the graph options panel, which can be accessed by the <span class="m-icon-inline"><i class="fas fa-cog"></i></span> options button.</p>
 			</section>
-		</div><!-- end m-main (ch5)-->
-		<div class="m-main" id="m-main-chapter6" data-name="Working with Timeline" data-number="6">
+		</div><!-- end m-main (ch6)-->
+		<div class="m-main" id="m-main-chapter7" data-name="Working with Timeline" data-number="7">
 			<p class="m-h1">Working with Timeline</p>
-			<section id="6-1" data-heading="Overview">
+			<section id="7-1" data-heading="Overview">
 				<p>SimTIVA is designed to be run in real-time, that is, in parallel to the time course of an actual clinical case. The clock starts to tick the moment the case has started, and the CP/CE displayed at the current time point will also be the predicted pharmacokinetic status at present. However, SimTIVA also offers timeline functions as follows:</p>
 				<ul>
 					<li><span class="m-emphasis">Quick reset:</span>
@@ -410,7 +470,7 @@
 				<p>Note that these functions will separate the simulation from working in real time, but may be advantageous in several situations. For example, you may wish to partially go back in time and try different dosing regimens by testing different infusion rates, or the effect of different doses of boluses. Or, you may have forgotten to start SimTIVA 5 minutes ago after you started actual clinical case, but you may still enter the infusion data into SimTIVA and jump forward 5 minutes and that would align the SimTIVA timeline to current time instance.</p>
 				<p>For programming complexity reasons, the timeline functions are limited to CP/CE targeting and manual infusion mode of single-drug regimen only.</p>
 			</section>
-			<section id="6-2" data-heading="Jumping to time">
+			<section id="7-2" data-heading="Jumping to time">
 				<p class="m-h2">Jumping to time</p>
 				<p>Opening the "Jump to time" window leads to one of the three options. You can move to a certain time point, or move back or move forward (relative to present). A time selection field is available. If the time entered is invalid, an error message will appear. Here is a video demo of the "Jump to time" feature: </p>
 				<div class="m-video-container">
@@ -419,10 +479,10 @@
 				<p>This feature has a few limitations. One, all SimTIVA simulations have a limit of up to 6 hours. The pharmacokinetic data is generated for this finite duration, and you may not jump forward to beyond 6 hours after the last infusion scheme change.</p>
 				<p>The other limitation is that, when going back partially in time, this will also remove any rate changes (or CP/CE target changes) along the way. If you have started your infusion, and changed the infusion rate from 50ml/h to 25ml/h at 30 minutes, and if you jump back from 1 hour (origin) to 10 minutes (destination), this will remove the infusion rate change at 30 minutes.</p>
 			</section>
-		</div><!--end m-main Ch6-->
-		<div class="m-main" id="m-main-chapter7" data-name="Complex mode" data-number="7">
+		</div><!--end m-main Ch7-->
+		<div class="m-main" id="m-main-chapter8" data-name="Complex mode" data-number="8">
 			<p class="m-h1">Complex Mode</p>
-			<section id="7-1" data-heading="Introduction">
+			<section id="8-1" data-heading="Introduction">
 				<p class="m-h2">Introduction</p>
 				<p class="m-h3">Entering the complex (dual) mode</p>
 				<p>Complex (dual) mode enables the simultaneous simulations of 2 drugs: propofol and an opioid such as remifentanil, alfentanil, or fentanyl. </p>
@@ -462,7 +522,7 @@
 				</ol>
 
 			</section>
-			<section id="7-2" data-heading="Synergism">
+			<section id="8-2" data-heading="Synergism">
 				<p class="m-h2">Synergism</p>
 				<p>Anaesthetists often combine medications to achieve accurate level of hypnosis and analgesia, with suppression of response to noxious stimulation. In total intravenous anaesthesia, propofol and opioids such as remifentanil demonstrate intense synergism. The interaction can be quantified using a hypnotic-analgesic endpoint such as ablating movement response to laryngoscopy. Bouillon and colleagues defined this as the probability to tolerate laryngoscopy, or PTOL. PTOL was suggested as an alternative to minimum alveolar concentration (MAC) when using propofol instead of volatile anaesthesia. For decades, the interaction between propofol and opioids has been studied using various clinical end-points, for example, algometry, tetanic stimulus, laryngoscopy and response to shaking and shouting (Kern 2004, Bouillon 2004). When studying the "response" to noxious stimulation, most contemporary anaesthetic depth monitors (which focus on hypnotic part of drug effect) and more recently developed analgesia monitors, were only partially successful in the correlation with response to noxious stimuli (Hannivoort 2016).</p>
 				<p>For simplicity, SimTIVA has chosen PTOL as the measurement of choice to quantify the combined pharmacodynamic effect of propofol and opioids. This measurement is well studied in the literature to characterize the interaction between propofol-remifentanil, propofol-sevoflurane, and sevoflurane-remifentanil. Another related index, the noxious stimulation response index (NSRI), is a derivative of PTOL and a new numerical marker of depth of anaesthesia. The NSRI is scaled from 0 (indicating extensive combined drug effects) to 100 (when no anaesthetic medications are administered), and as NSRI is directly derived from PTOL using mathematical formula, NSRI and PTOL are therefore interchangeable, they merely differ in scale (Hannivoort 2016, Luginbuhl 2010). For PTOL, a PTOL of 100 means total absence of response to laryngoscopy. These measurements have been incorporated in drug information advisory displays on anaesthetic monitors. Both PTOL and NSRI can be displayed in SimTIVA as a marker of combined pharmacodynamic effect.</p>
@@ -473,7 +533,7 @@
 				<p>For example, 4 pairs of CE-propofol/CE-remifentanil are described to achieve this identical effect endpoint, as shown above. The clinician can then choose a particular combination that is most beneficial to different clinical scenario based on hypnotic, analgesic, and haemodynamic effects. The concept of "rational opioid selection" was also suggested by Vuyk in 1997, that using an opioid as an adjuvant of anaesthesia, the required propofol concentration can be reduced and this can possibly reduce the time of return to consciousness. Vuyk also described an optimal CE-opioid that can maintain adequate anaesthesia, while maintaining rapid wakeup through reduction in propofol requirements. In practice, the clinician may reduce propofol concentration and increase remifentanil concentration to hasten emergence from anaesthesia.</p>
 				<p>The conversion of CE-remifentanil to two different opioids available in SimTIVA: CE-alfentanil and CE-fentanyl is based on opioid potency equivalence and the formula suggested by Vuyk, as given here: potency ratio of fentanyl:alfentanil:remifentanil was 1 : 1/70 : 1/2.3.</p>
 			</section>
-			<section id="7-3" data-heading="Isobologram">
+			<section id="8-3" data-heading="Isobologram">
 				<p class="m-h2">Isobologram Interpretation</p>
 				<p>The isobologram in SimTIVA contains 9 isoboles from PTOL10 to PTOL90. As mentioned before, using different combinations of CE-propofol and CE-remifentanil (effect-site concentrations of propofol and remifentanil respectively), all yielding the same predicted response (90% probability to tolerate laryngoscopy, PTOL90), a line (isobole) is drawn connecting all the possible combinations of CE-propofol/CE-remifentanil to achieve identical effect. The same method is repeated for PTOL80, PTOL70... PTOL10 to generate a total of 9 isoboles on the 2-dimensional chart. The contour of the isoboles is typical of synergism, or supradditive interaction.</p>
 				<p class="m-h3">How to read the isobologram in SimTIVA</p>
@@ -490,7 +550,7 @@
 				</div>
 				<p>In the above example, propofol 240mg bolus and remifentanil 50mcg bolus were given in an 80kg patient in a "dual mode" simulation. The resultant CE-propofol & CE-remifentanil values over time (the curved trend line) are plotted within this 2-dimensional space, overlapping on the isobole lines. The red dot represents the current time, with a PTOL of around 23%.</p>
 			</section>
-			<section id="7-4" data-heading="Examples">
+			<section id="8-4" data-heading="Examples">
 				<p class="m-h2">Examples</p>
 				<p class="m-h3">Example 1 - More propofol or more remifentanil for induction?</p>
 				<p>To illustrate the application of "Complex (Dual mode)", the first example is given. Imagine a patient of 35 years old and 80kg body weight receiving propofol bolus and remifentanil bolus for induction. Two regimens are tested: </p>
@@ -509,10 +569,10 @@
 					<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">(4/5) <br>When is anaesthedia &quot;too deep&quot; or &quot;too light&quot;? <a href="https://t.co/KXov8b2dRM">https://t.co/KXov8b2dRM</a> enables PD modelling &amp; displays a &quot;green zone&quot; to mark the CE margins required to achieve PTOL50-90. In this example, CE is in the green zone but is predicted to fall below PTOL50 margin beyond 7.5min <a href="https://t.co/KJ0ICsQdeT">pic.twitter.com/KJ0ICsQdeT</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1702847358290280870?ref_src=twsrc%5Etfw">September 16, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 				</div>
 			</section>
-		</div><!-- end m-main Ch7 -->
-		<div class="m-main" id="m-main-chapter8" data-name="Share Function" data-number="8">
+		</div><!-- end m-main Ch8 -->
+		<div class="m-main" id="m-main-chapter9" data-name="Share Function" data-number="9">
 			<p class="m-h1">Share Function</p>
-			<section id="8-0" data-heading="Introduction">
+			<section id="9-0" data-heading="Introduction">
 				<p class="m-h3">How to use the Share Function</p>
 				<p>To open the "Share" panel, click the <span class="m-icon-inline"><i class="fas fa-share-alt fa-fw"></i></span> Share button (A) on the right lower corner. SimTIVA allows you to share your simulation in two ways. One, you can share a static image (B), which will contain the main pharmacokinetic graph, the infusion scheme, and events. Two, you can share an interactive SimFile (C) which can be viewed by the online SimTIVA Viewer; via this function, you can either share this SimFile as a website link (weblink for short) on desktop PCs or quickly share this directly on your mobile devices.</p>
 				<div class="m-image-container">
@@ -526,7 +586,7 @@
 				</ol>
 				<p>You can also specify a "File Name" (D) to help identify this SimFile for record keeping. The same file name will be used as the SimFile saved locally on device, which you can later load and review - see next Chapter for details.</p>
 			</section>
-			<section id="8-1" data-heading="Share Image">
+			<section id="9-1" data-heading="Share Image">
 				<p class="m-h2">Share Image</p>
 				<p>This function is ideal for visualizing an overview of your case or inserting it as an image for your presentations. As mentioned, this function generates a static image of the current simulation at the current time point (it automatically updates while SimTIVA is running). In the single-drug mode, a sample image is shown below. Aside from pharmacokinetic data, the File Name and the date and time of starting simulation will be displayed. You can choose to "Download" the image on desktop or mobile devices, or "Share" it on mobile devices. </p>
 				<div class="m-image-container">
@@ -542,7 +602,7 @@
 					<img src="manualresources/ss-8-shareapps.webp">
 				</div>
 			</section>
-			<section id="8-2" data-heading="Weblink & SimTIVA Viewer">
+			<section id="9-2" data-heading="Weblink & SimTIVA Viewer">
 				<p class="m-h2">Share Weblink & SimTIVA Viewer</p>
 				<p>A copy of current simulation can be shared as a SimFile that can be viewed on the SimTIVA Viewer. All the data in the simulation becomes accessible on the weblink. Other users can then review the case interactively. A website link (weblink) is generated that functions as a SimFile.</p>
 				<p>You may choose to "Copy" the weblink to clipboard and paste it in another program; or you can "Share" it via apps on mobile devices. In the video demonstration below, a weblink is shared via Whatsapp. Clicking on the link will load the SimFile automatically. The case was a surgery for excision of a lipoma, and the anaesthetic was sedation with propofol with fentanyl. The event notes can also be viewed. You can see from the video, the PK graph of propofol and the drug regimen given, and then you can also review the fentanyl graph and drug regimen. The PD effect estimation can be switched to BIS mode and the CP/CE/Infusion rate/eBIS can be reviewed by dragging the cursor over the main graph using the "Quick View" function. Finally, the Viewer app can go into Fullscreen for a general overview of the case.</p>
@@ -552,10 +612,10 @@
 				<p>The weblink itself contains all the pharmacokinetic profile required to replay the entire simulation. The weblink to the above video is <a href="https://simtiva.app/view.html?P=N4IgdghgtgpiBcICiAPAxgSwM4YPZgAIQAaEABQH0AXDWBAJgEYBWR0ygBwhpjCoQDayADYwAbjGEATEuQBOuDrgBmuYSUYAGUlDQBzEgDYAnMUaHtAZgAcpAGIwoEUbKgGz2kAGUAFhGUwcrIOfBBgAJ7qZqRg7iC67myaAHTWjJYZjNYA7JaGacbZ9IYAuuwUMogALAD0jPQ19Jr0VQRa8PSW8MzGBACCALKylOKCApZVbCAAMn0gZQJV1p5eVBBy-Av1LaReHDCYsIS4AK5UBMkEXgBCZATZhvPEAkz02aQA6hAA1jAEMNcAJJeAiGR4lMrkCg+FBjATaJIeTQLbT0YjaZHPVHEPLEZiY+HRJhVDwo4ho4l4gkInH0NFaMloyx0qlktgZUwMrHknGWUz4xnEQxVQzEKrUnnGTSWMXMQX1Rjs6zy5g9dHywwZckS+nWVjqhaEthsehy7n09XmsXaAXc43ZTk6swO1l28nZWxcwkUj2u71CqqmcWCqWiqpm-0K5g45VWliGJIQyGUUSxKg+QRS-U5BMlAC+QA" target="_blank">here</a>.</p>
 				<textarea style="width:100%;height:120px;font-size:0.75rem;background:#ddd">https://simtiva.app/view.html?P=N4IgdghgtgpiBcICiAPAxgSwM4YPZgAIQAaEABQH0AXDWBAJgEYBWR0ygBwhpjCoQDayADYwAbjGEATEuQBOuDrgBmuYSUYAGUlDQBzEgDYAnMUaHtAZgAcpAGIwoEUbKgGz2kAGUAFhGUwcrIOfBBgAJ7qZqRg7iC67myaAHTWjJYZjNYA7JaGacbZ9IYAuuwUMogALAD0jPQ19Jr0VQRa8PSW8MzGBACCALKylOKCApZVbCAAMn0gZQJV1p5eVBBy-Av1LaReHDCYsIS4AK5UBMkEXgBCZATZhvPEAkz02aQA6hAA1jAEMNcAJJeAiGR4lMrkCg+FBjATaJIeTQLbT0YjaZHPVHEPLEZiY+HRJhVDwo4ho4l4gkInH0NFaMloyx0qlktgZUwMrHknGWUz4xnEQxVQzEKrUnnGTSWMXMQX1Rjs6zy5g9dHywwZckS+nWVjqhaEthsehy7n09XmsXaAXc43ZTk6swO1l28nZWxcwkUj2u71CqqmcWCqWiqpm-0K5g45VWliGJIQyGUUSxKg+QRS-U5BMlAC+QA</textarea>
 			</section>
-		</div><!--end m-main Ch8 -->
-		<div class="m-main" id="m-main-chapter9" data-name="File Management" data-number="9">
+		</div><!--end m-main Ch9 -->
+		<div class="m-main" id="m-main-chapter10" data-name="File Management" data-number="10">
 			<p class="m-h1">File Management</p>
-			<section id="9-1" data-heading="Saving/Loading">
+			<section id="10-1" data-heading="Saving/Loading">
 				<p class="m-h2">Saving/Loading SimFile</p>
 				<p>First of all, it is worth noting that you do not need to do anything to save SimFile on device. SimTIVA is a web application and utilizes an interface called the "Local Storage API" to manage the simulations that you have run on your device. As you run a simulation, it is automatically saved.</p>
 				<p>In the Share/Save panel, which can be easily accessed via the <span class="m-icon-inline"><i class="fas fa-share-alt fa-fw"></i></span> Share button, you can type a File Name for easy identification of the SimFile later on.</p>
@@ -571,7 +631,7 @@
 				<p class="m-h3">Rescue (Rescuing the last-saved SimFile)</p>
 				<p>Sometimes, accidents can happen. The browser window might have frozen or closed unexpectedly. By clicking <span class="m-icon-inline"><i class="fas fa-life-ring fa-fw"></i></span> "Rescue" on the first screen, the last-saved SimFile will be loaded and the data will be restored. Here you can resume from the last saved time point.</p>
 			</section>
-			<section id="9-2" data-heading="File Management">
+			<section id="10-2" data-heading="File Management">
 				<p class="m-h2">File Management</p>
 				<p class="m-h3">Deleting a SimFile</p>
 				<p>In the "Load File" panel, click "Manage". Next to each SimFile item, there will be a <span class="m-icon-inline"><i class="fas fa-trash-alt"></i></span> Delete icon. Click it to delete a SimFile. Click "Exit Manager" to go back to the initial "Load File" panel.</p>
@@ -589,14 +649,14 @@
 				</div>
 				<p>Also, the CSV file can be loaded into SimTIVA, so that you can use the SimTIVA app to retrieve the specific SimFile case for review. In the SimTIVA interface, it is possible to "Resume" from this previous case. See the sections below for details on how to load an external database CSV file and how to resume simulations.</p>
 			</section>
-			<section id="9-4" data-heading="Loading from external database">
+			<section id="10-4" data-heading="Loading from external database">
 				<p class="m-h2">Loading from external database</p>
 				<p>Suppose a database is exported using the "Export" Function as outlined above. You will have the file saved on disk. It is possible to load this CSV file into SimTIVA and retrieve all the recorded SimFiles stored there. From the first screen, choose <span class="m-icon-inline"><i class="fas fa-save fa-fw"></i></span>  "Load File", and then "Import from external database". Use the file selection box to select the file on device to load. Select the desired SimFile entry and click "Load Selection". Watch the video below for a demonstration.</p>
 				<div class="m-video-container">
 					<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">December Updates (1)<a href="https://t.co/4zrK2ZezXO">https://t.co/4zrK2ZezXO</a> has improved its import/export function. U may export your data to a .CSV file &amp; import it back to SimTIVA from the Load screen. <br>U may also review individual simfiles by opening the .CSV file in a spreadsheet app. <a href="https://t.co/sVhgN3HLOm">pic.twitter.com/sVhgN3HLOm</a></p>&mdash; SimTIVA (@simtiva_app) <a href="https://twitter.com/simtiva_app/status/1732959336065081710?ref_src=twsrc%5Etfw">December 8, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 				</div>
 			</section>
-			<section id="9-5" data-heading="Resuming from SimFile">
+			<section id="10-5" data-heading="Resuming from SimFile">
 				<p class="m-h2">Resuming from SimFile</p>
 				<p>A SimFile can be loaded from three sources. One, by clicking "Rescue" on the initial screen and it will load the last-saved SimFile. Two, by loading from device locally. Three, by loading from external database. These are covered in the previous sections.</p>
 				<p>After loading of the SimFile, you can view the data in the simulation such as CP/CE/Infusion scheme. You may also have the option to resume from the point when the simulation was suspended. You can enter the duration elapsed since the simulation was last suspended. You can continue with the case like a normal SimTIVA simulation.</p>
@@ -604,12 +664,12 @@
 					<img src="manualresources/ss-9-resume.webp">
 				</div>
 			</section>
-		</div><!--end of m-main Ch9 -->
+		</div><!--end of m-main Ch10 -->
 		<!-- end of main content -->
 		<div id="footer-up">
 			<div id="footer-up-left">
 				<div class="smalltext">Last updated:</div>
-				<div id="lastupdated">5 April 2024</div>
+				<div id="lastupdated">24 Aug 2024</div>
 			</div>
 			<div id="footer-up-right" onclick="toTop();">
 				<span style="border-radius: 2rem; width: 1.5rem;display:inline-block; margin-right:0.25rem"><i class="fas fa-chevron-circle-up"></i></span>TOP
@@ -877,8 +937,9 @@ let bodyElement = "";
 	    			"chapter7": {},
 	    			"chapter8": {},
 	    			"chapter9": {},
+	    			"chapter10": {},
 	    		};
-	    		for (count=1;count<=9;count++) {
+	    		for (count=1;count<=10;count++) {
 	    			key = "chapter" + count;
 	    			tempHTML = document.getElementById("m-main-" + key).outerHTML;
 	    			bodyElement[key].text = JSON.stringify(tempHTML);
@@ -999,7 +1060,7 @@ function updateChapterListings() {
     		string = chapters[count].dataset.name;
     		El2.setAttribute("onclick", "getChapter(0); goHome(); togglemenu2();");
     	} else {
-    		string = "<span style='color:white; width:1.4rem; display:inline-block'>" + chapters[count].dataset.number + ". " + "</span>" + chapters[count].dataset.name;
+    		string = "<span style='color:white; width:2rem; display:inline-block'>" + chapters[count].dataset.number + ". " + "</span>" + chapters[count].dataset.name;
     		El2.setAttribute("onclick", "getChapter(" + count + "); togglemenu2();");
     	}
     	El3.innerHTML = string;
@@ -1045,8 +1106,9 @@ function loadlanguage(lang,ind,omithistory) {
 	    			"chapter7": {},
 	    			"chapter8": {},
 	    			"chapter9": {},
+	    			"chapter10": {},
 	    		};
-	    		for (count=1;count<=9;count++) {
+	    		for (count=1;count<=10;count++) {
 	    			key = "chapter" + count;
 	    			tempHTML = document.getElementById("m-main-" + key).outerHTML;
 	    			bodyElement[key].text = JSON.stringify(tempHTML);
@@ -1072,8 +1134,9 @@ function loadlanguage(lang,ind,omithistory) {
 			//update intro
 			document.getElementById("welcomemessage").innerHTML = welcomeMessageArray[activeLanguageCode];
 
-	  		for (count=1;count<=9;count++) {
+	  		for (count=1;count<=10;count++) {
 	  			key2 = "chapter" + count;
+	  			console.log(key2 + "loaded");
 	  			if (data[key2] != undefined) {
 	    			tempHTML=JSON.parse(data[key2].text);
 	    			document.getElementById("m-main-" + key2).outerHTML = tempHTML;
@@ -1102,7 +1165,7 @@ function loadlanguage(lang,ind,omithistory) {
 	} else {
 		//load the English version
 		if (bodyElement != "") {
-	  		for (count=1;count<=9;count++) {
+	  		for (count=1;count<=10;count++) {
 	  			key = "chapter" + count;
 	    		tempHTML=JSON.parse(bodyElement[key].text);
 	    		document.getElementById("m-main-" + key).outerHTML = tempHTML;
@@ -1173,13 +1236,13 @@ disclaimerArray = [
 	"Перевод выполняется с использованием ChatGPT. ChatGPT может допускать ошибки. Пожалуйста, проверьте важную информацию самостоятельно."
 ]
 welcomeMessageArray = [
-	`<p style="color:white;font-weight:bold;font-size:0.9rem">Welcome!</p><h2 style="color:inherit;font-size:0.9rem;border:0;padding:0;margin:0;color:#eee">This is the user manual for <a href="https://simtiva.app" target="_blank">SimTIVA.app</a>, a web app to simulate target-controlled infusion (TCI).</h2><p style="color:#ddd;font-size:0.9rem">This manual contains 9 chapters: the first two chapters cover the basic functionalities to help you get started. We have translated the manual into multiple languages. Video tutorials are coming soon.</p>`,
-	`<p style="color:white;font-weight:bold;font-size:0.9rem">Bienvenue !</p><h2 style="color:inherit;font-size:0.9rem;border:0;padding:0;margin:0;color:#eee">Il s'agit du manuel de l'utilisateur pour <a href="https://simtiva.app" target="_blank">SimTIVA.app</a>, une application web pour simuler l'infusion contrôlée par cible (TCI).</h2><p style="color:#ddd;font-size:0.9rem">Ce manuel contient 9 chapitres : les deux premiers chapitres couvrent les fonctionnalités de base pour vous aider à démarrer. Nous avons traduit le manuel en plusieurs langues. Des tutoriels vidéo seront bientôt disponibles.</p>`,
-	`<p style="color:white;font-weight:bold;font-size:0.9rem">¡Bienvenido!</p><h2 style="color:inherit;font-size:0.9rem;border:0;padding:0;margin:0;color:#eee">Este es el manual del usuario para <a href="https://simtiva.app" target="_blank">SimTIVA.app</a>, una aplicación web para simular la infusión controlada por objetivo (TCI).</h2><p style="color:#ddd;font-size:0.9rem">Este manual contiene 9 capítulos: los dos primeros cubren las funcionalidades básicas para ayudarte a empezar. Hemos traducido el manual a varios idiomas. Pronto habrá tutoriales en vídeo.</p>`,
-	`<p style="color:white;font-weight:bold;font-size:0.9rem">欢迎！</p><h2 style="color:inherit;font-size:0.9rem;border:0;padding:0;margin:0;color:#eee">这是 <a href="https://simtiva.app" target="_blank">SimTIVA.app</a> 的用户手册，一个用于模拟目标控制输注（TCI）的网络应用程序。</h2><p style="color:#ddd;font-size:0.9rem">本手册包含9个章节：前两章涵盖了基本功能，以帮助您快速入门。我们已将手册翻译成多种语言。视频教程即将推出。</p>`,
-	`<p style="color:white;font-weight:bold;font-size:0.9rem">Bem-vindo!</p><h2 style="color:inherit;font-size:0.9rem;border:0;padding:0;margin:0;color:#eee">Este é o manual do usuário para <a href="https://simtiva.app" target="_blank">SimTIVA.app</a>, um aplicativo web para simular infusão controlada por alvo (TCI).</h2><p style="color:#ddd;font-size:0.9rem">Este manual contém 9 capítulos: os dois primeiros abordam as funcionalidades básicas para ajudá-lo a começar. Traduzimos o manual para vários idiomas. Vídeos tutoriais em breve.</p>`,
-	`<p style="color:white;font-weight:bold;font-size:0.9rem">ようこそ！</p><h2 style="color:inherit;font-size:0.9rem;border:0;padding:0;margin:0;color:#eee">これは、<a href="https://simtiva.app" target="_blank">SimTIVA.app</a> のユーザーマニュアルです。これは、ターゲット制御インフュージョン（TCI）をシミュレートするためのWebアプリケーションです。</h2><p style="color:#ddd;font-size:0.9rem">このマニュアルには、9つの章が含まれています。最初の2つの章では、基本機能について説明し、始めるのに役立ちます。マニュアルは複数の言語に翻訳されています。ビデオチュートリアルは近日公開予定です。</p>`,
-	`<p style="color:white;font-weight:bold;font-size:0.9rem">Добро пожаловать!</p><h2 style="color:inherit;font-size:0.9rem;border:0;padding:0;margin:0;color:#eee">Это руководство пользователя для <a href="https://simtiva.app" target="_blank">SimTIVA.app</a>, веб-приложения для симуляции инфузии с контролем по цели (TCI).</h2><p style="color:#ddd;font-size:0.9rem">Это руководство содержит 9 глав: первые две охватывают основные функции, чтобы помочь вам начать. Мы перевели руководство на несколько языков. Видеоуроки скоро.</p>`
+	`<p style="color:white;font-weight:bold;font-size:0.9rem">Welcome!</p><h2 style="color:inherit;font-size:0.9rem;border:0;padding:0;margin:0;color:#eee">This is the user manual for <a href="https://simtiva.app" target="_blank">SimTIVA.app</a>, a web app to simulate target-controlled infusion (TCI).</h2><p style="color:#ddd;font-size:0.9rem">This manual contains 10 chapters: the first two chapters cover the basic functionalities to help you get started. We have translated the manual into multiple languages. Video tutorials are coming soon.</p>`,
+	`<p style="color:white;font-weight:bold;font-size:0.9rem">Bienvenue !</p><h2 style="color:inherit;font-size:0.9rem;border:0;padding:0;margin:0;color:#eee">Il s'agit du manuel de l'utilisateur pour <a href="https://simtiva.app" target="_blank">SimTIVA.app</a>, une application web pour simuler l'infusion contrôlée par cible (TCI).</h2><p style="color:#ddd;font-size:0.9rem">Ce manuel contient 10 chapitres : les deux premiers chapitres couvrent les fonctionnalités de base pour vous aider à démarrer. Nous avons traduit le manuel en plusieurs langues. Des tutoriels vidéo seront bientôt disponibles.</p>`,
+	`<p style="color:white;font-weight:bold;font-size:0.9rem">¡Bienvenido!</p><h2 style="color:inherit;font-size:0.9rem;border:0;padding:0;margin:0;color:#eee">Este es el manual del usuario para <a href="https://simtiva.app" target="_blank">SimTIVA.app</a>, una aplicación web para simular la infusión controlada por objetivo (TCI).</h2><p style="color:#ddd;font-size:0.9rem">Este manual contiene 10 capítulos: los dos primeros cubren las funcionalidades básicas para ayudarte a empezar. Hemos traducido el manual a varios idiomas. Pronto habrá tutoriales en vídeo.</p>`,
+	`<p style="color:white;font-weight:bold;font-size:0.9rem">欢迎！</p><h2 style="color:inherit;font-size:0.9rem;border:0;padding:0;margin:0;color:#eee">这是 <a href="https://simtiva.app" target="_blank">SimTIVA.app</a> 的用户手册，一个用于模拟目标控制输注（TCI）的网络应用程序。</h2><p style="color:#ddd;font-size:0.9rem">本手册包含10个章节：前两章涵盖了基本功能，以帮助您快速入门。我们已将手册翻译成多种语言。视频教程即将推出。</p>`,
+	`<p style="color:white;font-weight:bold;font-size:0.9rem">Bem-vindo!</p><h2 style="color:inherit;font-size:0.9rem;border:0;padding:0;margin:0;color:#eee">Este é o manual do usuário para <a href="https://simtiva.app" target="_blank">SimTIVA.app</a>, um aplicativo web para simular infusão controlada por alvo (TCI).</h2><p style="color:#ddd;font-size:0.9rem">Este manual contém 10 capítulos: os dois primeiros abordam as funcionalidades básicas para ajudá-lo a começar. Traduzimos o manual para vários idiomas. Vídeos tutoriais em breve.</p>`,
+	`<p style="color:white;font-weight:bold;font-size:0.9rem">ようこそ！</p><h2 style="color:inherit;font-size:0.9rem;border:0;padding:0;margin:0;color:#eee">これは、<a href="https://simtiva.app" target="_blank">SimTIVA.app</a> のユーザーマニュアルです。これは、ターゲット制御インフュージョン（TCI）をシミュレートするためのWebアプリケーションです。</h2><p style="color:#ddd;font-size:0.9rem">このマニュアルには、10つの章が含まれています。最初の2つの章では、基本機能について説明し、始めるのに役立ちます。マニュアルは複数の言語に翻訳されています。ビデオチュートリアルは近日公開予定です。</p>`,
+	`<p style="color:white;font-weight:bold;font-size:0.9rem">Добро пожаловать!</p><h2 style="color:inherit;font-size:0.9rem;border:0;padding:0;margin:0;color:#eee">Это руководство пользователя для <a href="https://simtiva.app" target="_blank">SimTIVA.app</a>, веб-приложения для симуляции инфузии с контролем по цели (TCI).</h2><p style="color:#ddd;font-size:0.9rem">Это руководство содержит 10 глав: первые две охватывают основные функции, чтобы помочь вам начать. Мы перевели руководство на несколько языков. Видеоуроки скоро.</p>`
 
 ]
 

@@ -4366,6 +4366,14 @@ body.dark #ptolcard_switch {
   margin-top:15px;
 }
 
+.menucontent ul {
+  list-style-type: none;
+}
+
+.menucontent li:hover {
+  cursor: pointer;
+}
+
 .menucontent a {
   font-family: "Brandon Text", sans-serif;
   padding:7px 0px;
@@ -7260,7 +7268,7 @@ body.home {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 120px;
+  width: 130px;
   padding: 4px 8px;
   cursor: pointer;
 }
@@ -7351,7 +7359,7 @@ body.home {
     display: flex;
     position: fixed;
     bottom: 60px;
-    left: calc(11.5% - 60px);
+    left: calc(11.5% - 65px);
   }
   .m-header {
     top: 60px;
@@ -7414,6 +7422,7 @@ body.home {
   #footer-up-right {
     border-radius: 0 0 1rem 0;
     box-shadow: inset -1px -1px 0 white;
+    cursor: pointer;
   }
   #footer-previous {
     border-radius: 0 0 0 1rem;
@@ -7455,7 +7464,7 @@ body.home {
     width: 90%;
   }
   .m-aside > .languagebutton {
-    left: calc(15% - 60px);
+    left: calc(15% - 65px);
   }
 }
 
