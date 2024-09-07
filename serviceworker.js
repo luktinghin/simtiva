@@ -1,4 +1,4 @@
-const cacheName = "simtiva-v4-112-plusmanualv2";
+const cacheName = "simtiva-v4-113-plusmanualv2";
 const assets = [
 	"/",
 	"/index.html",
@@ -30,6 +30,7 @@ const assets = [
 	"/fonts/SourceSans3-It.otf.woff2",
 	"/fonts/SourceSans3-BoldIt.otf.woff2",
 	"/lz-string.js",
+	"/pwa.webp",
 	"/users.webp",
 	"/offermoney.webp"
 ]
