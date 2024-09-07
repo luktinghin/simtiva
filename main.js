@@ -10764,9 +10764,35 @@ function displayAbout2() {
 					<br>
 					<br><b>NB.</b> For the <span style="color:blue">blue</span> preview box, dosage recommendations may be slightly inaccurate because TCI is time-dependent: the moment you enter the target concentration, the preview starts to calculate; but this moment lags behind the moment of real target delivery when you click the 'Update Cpt/Cet' button.
 	`
+	let ElBanner = document.createElement("div");
+	ElBanner.innerHTML = `
+		<div class="customAboutBanner">
+			<div class='banneritem' style='background:#afcae1'>
+					<div class='bannericon' style='background:#5270AD'><img class='' src="pwa.webp"></div>
+					<div class='bannertextouter'>
+						<div class='bannertextinner1'>Progressive <b>Web App</b></div>
+						<div class='bannertextinner2'>SimTIVA is a TIVA/TCI simulator that runs on a web browser on any device</div>
+					</div>
+			</div>
+			<div class='banneritem' style='background:#c8c0f2'>
+				<div class='bannericon' style='background:#6e43be'><img class='' src="offermoney.webp"></div>
+					<div class='bannertextouter'>
+						<div class='bannertextinner1'><b>Free</b> & Open Source</div>
+						<div class='bannertextinner2'>Actively developed project hosted on GitHub</div>
+					</div>
+			</div>
+			<div class='banneritem' style='background:#a5d0a8'>
+				<div class='bannericon' style='background:#356038'><img class='' src="users.webp"></div>
+					<div class='bannertextouter'>
+						<div class='bannertextinner1'><b>2747</b> Monthly Users</div>
+						<div class='bannertextinner2'>Total 8018 simulations performed in August 2024</div>
+					</div>
+		</div>
+	`
 	El0.appendChild(El1);
 	El0.appendChild(ElAbout);
 	El0.appendChild(ElQuickGuide);
+	El0.appendChild(ElBanner);
 	displayWarning("Help", El0.innerHTML);
 
 }

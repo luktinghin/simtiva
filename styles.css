@@ -5472,6 +5472,77 @@ body.dark #pastschemeCOPY {
   margin-bottom: 12px;
 }
 
+.banneritem {
+  display: flex;
+  width: 100%;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: #ddd;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+}
+
+.banneritem:hover {
+  filter:  hue-rotate(-20deg) contrast(150%);
+}
+
+.bannericon {
+  flex-basis: 90px;
+  text-align: center;
+  background: #111;
+  border-radius: 12px;
+  height: 90px;
+}
+
+.bannericon img {
+  width: 70px;
+  height: 70px;
+  margin-top: 10px;
+  filter: drop-shadow(1px 1px 2px black);
+}
+
+.bannertextouter {
+  flex-basis: calc(100% - 90px);
+  display: flex;
+  height: 80px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #000;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  
+}
+
+.bannertextinner1 {
+  font-size: 1.2rem;
+  line-height: 16px;
+  border-bottom: 1px solid white;
+}
+
+.bannertextinner2 {
+  padding-top: 3px;
+  font-size: 75%;
+}
+
+@media (min-width:768px) {
+  .customAboutBanner {
+    display: flex;
+    gap: 9px;
+  }
+  .banneritem {
+    display: block;
+  }
+  .bannericon {
+    height: 110px;
+  }
+  .bannericon img {
+    margin-top: 20px;
+  }
+}
+
 body.dark .customAboutContainer.active {
   box-shadow: inset 0 -1px 0 0 #4CAF50;
   padding: 0;
