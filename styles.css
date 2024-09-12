@@ -1967,14 +1967,27 @@ background-size: 200% 100%;
   padding-top: 3px;
   padding-bottom: 3px;
 }
+.schemebolus .nobolus {
+  /* for CPT, nobolus*/
+  padding-bottom: 3px;
+}
 .schemeboluscet {
   padding-top: 3px;
   padding-bottom: 3px;
 }
+.schemeboluscet .nobolus {
+  padding-bottom: 0px;
+}
 .schemeboluscetduration {
   padding-bottom: 3px;
+}.schemeboluscptduration {
+  padding-bottom: 3px;
 }
+
 .schemeboluscetduration .timespan {
+  opacity: 0;
+}
+.schemeboluscptduration .timespan {
   opacity: 0;
 }
 .schemepausecet {
