@@ -1528,6 +1528,7 @@ a.button.wide {
   min-width:45%;
 }
 a.button.huge {
+  transition: 0.3s all ease;
   width:90%;
   font-size:130%;
   color:#555;
@@ -1954,6 +1955,59 @@ background-size: 200% 100%;
   font-weight:bold;
   cursor:pointer;
 }
+.page2subheading {
+  display: block;
+  position: absolute;
+  width: 90%;
+  left: 5%;
+  transition: 0.3s all ease;
+  opacity: 1;
+  pointer-events: auto;
+  
+}
+.page2subheading.hide {
+  opacity: 0;
+  transform: translateY(0);
+  pointer-events: none;
+}
+#page2intro {
+  transform: translateY(10px);
+}
+#page2cpt {
+  transform: translateY(30px);
+}
+#page2cet {
+  transform: translateY(84px);
+}
+#page2manual {
+  transform: translateY(138px);
+}
+#page2IB {
+  transform: translateY(194px);
+}
+#page2cpt.active, #page2cet.active, #page2manual.active {
+  transform: translateY(0px);
+  width: 100%;
+  left: 0px;
+  border: 0;
+  margin-top: 0;
+  border-radius: 9px 9px 0 0;
+  pointer-events: none;
+}
+#page2maxrate {
+  opacity: 0;
+  transition: 0.3s opacity ease;
+  transform: translateY(0);
+  pointer-events: none;
+}
+#page2maxrate.show {
+  opacity: 1;
+  position: absolute;
+  width: 90%;
+  transform: translateY(70px);
+  left: 5%;
+  pointer-events: auto;
+}
 #checkmarkDisplay {
   margin: 0.75rem 0 0.75rem 0;
 }
@@ -1967,8 +2021,8 @@ background-size: 200% 100%;
   padding-top: 3px;
   padding-bottom: 3px;
 }
-.schemebolus .nobolus {
-  /* for CPT, nobolus*/
+.schemebolus {
+  /*for cpt mode bolus */
   padding-bottom: 3px;
 }
 .schemeboluscet {

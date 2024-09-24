@@ -321,18 +321,51 @@
 						</div>
 					</div>
 					-->
-					<div id="simplemodeselection" style="padding-top:1rem; padding-bottom:0.5rem; text-align:center; border:2px solid #ccc; border-radius:9px;box-shadow:inset 0 4px 0 0 rgba(0,0,0,0.15);">Choose one of the following:<br>
-						<a class="button huge" onclick="initcpt();hideallmodal();document.getElementById('card_controlpanel').style.display='block';"><span style="border-bottom:1px solid LightCoral">CP</span> TARGETING<i class="fas fa-tint fa-fw" style="color:LightCoral;"></i></a>
-						<br>
-						<a class="button huge" onclick="initcet();hideallmodal();document.getElementById('card_controlpanel').style.display='block';"><span style="border-bottom:1px solid green">CE</span> TARGETING<i class="fas fa-brain fa-fw" style="color:green;"></i></a>
-						<br>
-						<a class="button huge" onclick="initmanual(0);hideallmodal();document.getElementById('card_controlpanel').style.display='block';">MANUAL<i class="fas fa-syringe fa-fw" style="color:rgb(81 203 238)"></i></a>
-						<br>
-						<a class="button huge" onclick="initcetbolus(0);hideallmodal();">INTERMITTENT BOLUS<i class="fas fa-hourglass-half fa-fw" style="color:#c19f14"></i></a>
+					<div id="simplemodeselection" style="text-align:center; border:2px solid #ccc; border-radius:9px;position:relative;height:270px">
+						<div id="page2intro" class="page2subheading">Choose one of the following:</div>
+						<a id="page2cpt" class="page2subheading button huge" onclick="pageTwoFunction(0)"><span style="border-bottom:1px solid LightCoral">CP</span> TARGETING<i class="fas fa-tint fa-fw" style="color:LightCoral;"></i></a>
+						
+						<a id="page2cet" class="page2subheading button huge" onclick="pageTwoFunction(1)"><span style="border-bottom:1px solid green">CE</span> TARGETING<i class="fas fa-brain fa-fw" style="color:green;"></i></a>
+						
+						<a id="page2manual" class="page2subheading button huge" onclick="initmanual(0);hideallmodal();document.getElementById('card_controlpanel').style.display='block';">MANUAL<i class="fas fa-syringe fa-fw" style="color:rgb(81 203 238)"></i></a>
+						
+						<a id="page2IB" class="page2subheading button huge" onclick="initcetbolus(0);hideallmodal();">INTERMITTENT BOLUS<i class="fas fa-hourglass-half fa-fw" style="color:#c19f14"></i></a>
+						<div id="page2maxrate" class="">
+							<table class="table-Init" style="text-align:left">
+								<tr class="fr">
+									<td>Induction max. speed:</td>
+									<td>
+										<select id="page2selectmaxrate">
+											<option value="0" selected>Flash</option>
+											<option value="600">600ml/h</option>
+											<option value="700">700ml/h</option>
+											<option value="800">800ml/h</option>
+											<option value="900">900ml/h</option>
+											<option value="1000">1000ml/h</option>
+											<option value="1100">1100ml/h</option>
+											<option value="1200">1200ml/h</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Maintenance accuracy:</td>
+									<td>
+										<select id="page2selectmaintenance">
+											<option value="0">Auto</option>
+											<option value="1">Lazy</option>
+											<option value="2">Accurate</option>
+										</select>
+									</td>
+								</tr>
+							</table>
+							<div style="padding-top:30px;width:100%;text-align:left">
+								<a class="button invert wide" style="padding-right:0" id="page2proceed">Proceed</a>
+								<a class="button muted right" onclick="pageTwoFunction();">Back</a>
+								
+							</div>
+						</div>
 					</div>
-					<div id="maxrateblock">
-						<input id="max_rate_input">
-					</div>
+
 					<div id="complexmodeselection0" style="margin-top: 10px; border:2px solid #ccc; border-radius:9px;box-shadow:inset 0 4px 0 0 rgba(0,0,0,0.15); padding: 0px 5px;">
 						<table class="" style="width:100%">
 							<tr class="fr" style="height: 4rem; vertical-align:bottom">
