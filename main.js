@@ -5285,7 +5285,7 @@ function preview_cet(x,ind) {
 
 			if (drug_sets[ind].preview_bolus > 0) {
 				//drug_sets[ind].cet_lockdowntime = working_clock + temp_peak -1;
-				drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeboluscet' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Bolus: " + drug_sets[ind].preview_bolus + drug_sets[ind].infused_units + "</div>");
+				drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeboluscet nobolus' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Bolus: " + drug_sets[ind].preview_bolus + drug_sets[ind].infused_units + "</div>");
 				drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeboluscetduration' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Given over " + converttime(bolus_duration) + " at " + max_rate_input + "ml/h</div>");
 				temp_time_bolus = working_clock + bolus_duration ;
 				drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemepausecet' data-time='" + temp_time_bolus + "'>" + "<div class='timespan'>" + converttime(temp_time_bolus) + "</div>Paused for " + converttime(temp_peak - temp_time_bolus) + "</div>");
