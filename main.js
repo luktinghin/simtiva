@@ -10955,14 +10955,12 @@ function sendToUpdateMax(input) {
 	input = input *1;
 	if (input == 0) {
 		text = "Flash: assume bolus given instantaneously. Ideal for manual rapid bolus.";
-	} else if (input == 200) {
-		text = "Set your syringe pump rate to 200ml/h to deliver programmed bolus. Note: slow bolus rate will lead to slow onset.";
 	} else if (input == 300) {
-		text = "Set your syringe pump rate to 300ml/h to deliver programmed bolus. Note: slow bolus rate will lead to slow onset.";
+		text = "Set syringe pump rate to 300ml/h to deliver programmed bolus. Note: slow bolus rate causes slower onset.";
 	} else if (input == 400) {
-		text = "Set your syringe pump rate to 400ml/h to deliver programmed bolus. Note: slow bolus rate will lead to slow onset.";
+		text = "Set syringe pump rate to 400ml/h to deliver programmed bolus. Note: slow bolus rate causes slower onset.";
 	} else if (input == 500) {
-		text = "Set your syringe pump rate to 500ml/h to deliver programmed bolus. Note: slow bolus rate will lead to slow onset."
+		text = "Set syringe pump rate to 500ml/h to deliver programmed bolus. Note: slow bolus rate causes slower onset."
 	} else if (input == 600) {
 		text = "For programmed bolus: set your syringe pump rate to 600ml/h to deliver the calculated volume.";
 	} else if (input == 700) {
