@@ -332,24 +332,31 @@
 						<a id="page2IB" class="page2subheading button huge" onclick="initcetbolus(0);hideallmodal();">INTERMITTENT BOLUS<i class="fas fa-hourglass-half fa-fw" style="color:#c19f14"></i></a>
 						<div id="page2maxrate" class="">
 							<table class="table-Init" style="text-align:left">
-								<tr class="fr">
-									<td>Induction max. speed:</td>
-									<td>
-										<select id="page2selectmaxrate">
+								<tr class="fr" style="height:2rem">
+									<td style="padding:0">Induction max. speed:</td>
+									<td style="padding:0">
+										<select id="page2selectmaxrate" onchange="sendToUpdateMax(this.value);">
 											<option value="0" selected>Flash</option>
-											<option value="600">600ml/h</option>
-											<option value="700">700ml/h</option>
-											<option value="800">800ml/h</option>
-											<option value="900">900ml/h</option>
-											<option value="1000">1000ml/h</option>
-											<option value="1100">1100ml/h</option>
 											<option value="1200">1200ml/h</option>
+											<option value="1100">1100ml/h</option>
+											<option value="1000">1000ml/h</option>
+											<option value="900">900ml/h</option>
+											<option value="800">800ml/h</option>
+											<option value="700">700ml/h</option>
+											<option value="600">600ml/h</option>
+											<option value="500">500ml/h</option>
+											<option value="400">400ml/h</option>
+											<option value="300">300ml/h</option>
+											<option value="200">200ml/h</option>
 										</select>
 									</td>
 								</tr>
-								<tr>
-									<td>Maintenance accuracy:</td>
-									<td>
+								<tr style="height:1rem">
+									<td colspan="2"  style="padding:0 0 3px 0;border-top:0;opacity:0.6;font-size:0.7rem;font-style:italic"><span id="page2bolustext">Flash: assume bolus given instantaneously. Ideal for manual rapid bolus.</span></td>
+								</tr>
+								<tr style="height:2rem;padding-top:3px">
+									<td style="padding:3px 0 0 0">Maintenance accuracy:</td>
+									<td style="padding:3px 0 0 0">
 										<select id="page2selectmaintenance">
 											<option value="0">Auto</option>
 											<option value="1">Lazy</option>
@@ -357,8 +364,11 @@
 										</select>
 									</td>
 								</tr>
+								<tr style="height:1rem">
+									<td colspan="2" style="padding:0;border-top:0;opacity:0.6;font-size:0.7rem;font-style:italic">Threshold for rate changes. Lazy: less frequent rate changes. Accurate: more frequent rate changes.</td>
+								</tr>
 							</table>
-							<div style="padding-top:30px;width:100%;text-align:left">
+							<div style="padding-top:20px;width:100%;text-align:left">
 								<a class="button invert wide" style="padding-right:0" id="page2proceed">Proceed</a>
 								<a class="button muted right" onclick="pageTwoFunction();">Back</a>
 								

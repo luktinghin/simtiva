@@ -3343,6 +3343,9 @@ function preview_cpt(x,ind) {
 	p_state2[1] = p_state[1];
 	p_state2[2] = p_state[2];
 	p_state2[3] = p_state[3];
+	p_state3[1] = p_state[1];
+	p_state3[2] = p_state[2];
+	p_state3[3] = p_state[3];
 
 	var test_rate; //real rate entered into virtual state
 	var trial_rate; //future rate
@@ -3376,7 +3379,7 @@ function preview_cpt(x,ind) {
 		} else {
 			temp_difference = (drug_sets[ind].desired-(p_state[1]+p_state[2]+p_state[3]));
 			max_rate_input_persec = max_rate_input * drug_sets[ind].infusate_concentration/60/60;
-			for (counter_rate = 1; counter_rate<200; counter_rate++) {
+			for (counter_rate = 1; counter_rate<302; counter_rate++) {
 				if (temp_difference/drug_sets[ind].p_udf[counter_rate] < max_rate_input_persec) break;
 			}
 			counter_rate = counter_rate -2;
@@ -3393,15 +3396,25 @@ function preview_cpt(x,ind) {
 
 
 		if (drug_sets[ind].cpt_bolus > 0) scheme_bolusadmin(drug_sets[ind].cpt_bolus, ind, max_rate_input);
-		if (bolus_duration>0) test_rate = max_rate_input * infusate_concentration/60/60;
+		if (bolus_duration>0) {
+			test_rate = max_rate_input * infusate_concentration/60/60;
+			//need normalize p_state
+			p_state3[1] = p_state2[1];
+			p_state3[2] = p_state2[2];
+			p_state3[3] = p_state2[3];
+		}
 		//if (drug_sets[ind].fentanyl_weightadjusted_flag==1) {
 			//drug_sets[ind].historytext = "<div class='schemecpt' data-time='" + working_clock + "'>" + "Preview scheme at " + converttime(working_clock) + " - <br>Cp target (" + drug_sets[ind].conc_units + "/ml): " + drug_sets[ind].fentanyl_weightadjusted_target_uncorrected + "</div>";
 		//} else {
 			//drug_sets[ind].historytext = "<div class='schemecpt' data-time='" + working_clock + "'>" + "Preview scheme at " + converttime(working_clock) + " - <br>Cp target (" + drug_sets[ind].conc_units + "/ml): " + drug_sets[ind].desired + "</div>";
 		//}
 		if (drug_sets[ind].cpt_bolus > 0) {
-			drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemebolus' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Bolus: " + drug_sets[ind].cpt_bolus + drug_sets[ind].infused_units + " <span style='opacity:0.5'>(" + Math.round(drug_sets[ind].cpt_bolus/drug_sets[ind].infusate_concentration*10)/10 + "ml)</span> over " + converttime(bolus_duration) + "</div>");
-			working_clock += bolus_duration;
+			if (bolus_duration>0) {
+				drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemebolus' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Bolus: " + drug_sets[ind].cpt_bolus + drug_sets[ind].infused_units + " <span style='opacity:0.5'>(" + Math.round(drug_sets[ind].cpt_bolus/drug_sets[ind].infusate_concentration*10)/10 + "ml)</span> over " + converttime(bolus_duration) + "</div>");
+				working_clock += bolus_duration;
+			} else {
+				drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemebolus' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Bolus: " + drug_sets[ind].cpt_bolus + drug_sets[ind].infused_units + " <span style='opacity:0.5'>(" + Math.round(drug_sets[ind].cpt_bolus/drug_sets[ind].infusate_concentration*10)/10 + "ml)</span></div>");
+			}
 		}
 
 		//if (drug_sets[ind].fentanyl_weightadjusted_flag==1) {
@@ -3458,29 +3471,20 @@ function preview_cpt(x,ind) {
 	for (i=0; i<60; i++) {
 		//if ((p_state2[1] == 0) || (skip == 1)) {
 			console.log(i*120);
-		if (p_state2[1] == 0) {
+		if (p_state3[1] == 0) {
 				test_rate = drug_sets[ind].desired / drug_sets[ind].p_udf[cpt_interval];
-				
 				drug_sets[ind].cpt_rates.push(test_rate);
 				console.log("testrate" + test_rate);
-		//	}
-		//	if (skip == 1) {
-		//		test_rate = cpt_rates_real[Math.floor(working_clock)-1];
-		//		cpt_times.push(i);
-		//		cpt_rates.push(test_rate);
-		//		skip = 0;
-		//		alert(test_rate);
-		//	}
 		} else { // taken from line 1970, double model(...
 			
-				est_cp = p_state2[1] + p_state2[2] + p_state2[3];
+				est_cp = p_state3[1] + p_state3[2] + p_state3[3];
 
 				console.log("-----" + converttime(i*120) + "------");
 
 				trial_cp = virtual_model( //need real lambda
-				 p_state2[1] * Math.exp(-drug_sets[ind].lambda[1]) + drug_sets[ind].p_coef[1] * test_rate * (1 - Math.exp(-drug_sets[ind].lambda[1])),
-				 p_state2[2] * Math.exp(-drug_sets[ind].lambda[2]) + drug_sets[ind].p_coef[2] * test_rate * (1 - Math.exp(-drug_sets[ind].lambda[2])),
-				 p_state2[3] * Math.exp(-drug_sets[ind].lambda[3]) + drug_sets[ind].p_coef[3] * test_rate * (1 - Math.exp(-drug_sets[ind].lambda[3])),0,cpt_interval,0,ind);
+				 p_state3[1] * Math.exp(-drug_sets[ind].lambda[1]) + drug_sets[ind].p_coef[1] * test_rate * (1 - Math.exp(-drug_sets[ind].lambda[1])),
+				 p_state3[2] * Math.exp(-drug_sets[ind].lambda[2]) + drug_sets[ind].p_coef[2] * test_rate * (1 - Math.exp(-drug_sets[ind].lambda[2])),
+				 p_state3[3] * Math.exp(-drug_sets[ind].lambda[3]) + drug_sets[ind].p_coef[3] * test_rate * (1 - Math.exp(-drug_sets[ind].lambda[3])),0,cpt_interval,0,ind);
 
 				if (drug_sets[ind].desired > trial_cp) {
 					trial_rate = (drug_sets[ind].desired - trial_cp)/drug_sets[ind].p_udf[cpt_interval];
@@ -3504,9 +3508,9 @@ function preview_cpt(x,ind) {
 
 		}
 
-			p_state2[1] = p_state2[1] * look_l1 + drug_sets[ind].p_coef[1] * test_rate * (1 - look_l1);
-			p_state2[2] = p_state2[2] * look_l2 + drug_sets[ind].p_coef[2] * test_rate * (1 - look_l2);
-			p_state2[3] = p_state2[3] * look_l3 + drug_sets[ind].p_coef[3] * test_rate * (1 - look_l3);
+			p_state3[1] = p_state3[1] * look_l1 + drug_sets[ind].p_coef[1] * test_rate * (1 - look_l1);
+			p_state3[2] = p_state3[2] * look_l2 + drug_sets[ind].p_coef[2] * test_rate * (1 - look_l2);
+			p_state3[3] = p_state3[3] * look_l3 + drug_sets[ind].p_coef[3] * test_rate * (1 - look_l3);
 			//est_cp = p_state2[1] + p_state2[2] + p_state2[3];
 			//console.log("est cp" + est_cp);
 	}
@@ -4164,37 +4168,39 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		//scheme_bolusadmin(Math.ceil(desired * vc /10)*10); // round up to the next 10mg for bolus
 		drug_sets[0].cpt_bolus = 0;
 		bolus_duration = 0;
-		if (max_rate_input == 0) {
-			if (drug_sets[ind].cpt_rates_real.length == 0) {
-				drug_sets[ind].cpt_bolus = (drug_sets[ind].desired-(p_state[1]+p_state[2]+p_state[3])) * drug_sets[ind].vc;  //bolus round up to 10mg
-			} else {
-				drug_sets[ind].cpt_bolus = (drug_sets[ind].desired-(p_state[1]+p_state[2]+p_state[3]))/drug_sets[ind].p_udf[1];
-			}
-				if (drug_sets[ind].cpt_bolus>=90) {
-					drug_sets[ind].cpt_bolus = Math.round(drug_sets[ind].cpt_bolus/10)*10;
-				} else if (drug_sets[ind].cpt_bolus>1) {
-					if ((mass>30) && (drug_sets[ind].cpt_bolus>=30)) {
-						drug_sets[ind].cpt_bolus = Math.ceil(drug_sets[ind].cpt_bolus/5)*5; //round up to nearest 5mg
-					} else {
-						drug_sets[ind].cpt_bolus = Math.ceil(drug_sets[ind].cpt_bolus) ;
-					}
+		if (effect_flag == 0) {
+			if (max_rate_input == 0) {
+				if (drug_sets[ind].cpt_rates_real.length == 0) {
+					drug_sets[ind].cpt_bolus = (drug_sets[ind].desired-(p_state[1]+p_state[2]+p_state[3])) * drug_sets[ind].vc;  //bolus round up to 10mg
 				} else {
-					drug_sets[ind].cpt_bolus = 0;
+					drug_sets[ind].cpt_bolus = (drug_sets[ind].desired-(p_state[1]+p_state[2]+p_state[3]))/drug_sets[ind].p_udf[1];
 				}
-		} else {
-			temp_difference = (drug_sets[ind].desired-(p_state[1]+p_state[2]+p_state[3]));
-			max_rate_input_persec = max_rate_input * drug_sets[ind].infusate_concentration/60/60;
-			for (counter_rate = 1; counter_rate<200; counter_rate++) {
-				if (temp_difference/drug_sets[ind].p_udf[counter_rate] < max_rate_input_persec) break;
+					if (drug_sets[ind].cpt_bolus>=90) {
+						drug_sets[ind].cpt_bolus = Math.round(drug_sets[ind].cpt_bolus/10)*10;
+					} else if (drug_sets[ind].cpt_bolus>1) {
+						if ((mass>30) && (drug_sets[ind].cpt_bolus>=30)) {
+							drug_sets[ind].cpt_bolus = Math.ceil(drug_sets[ind].cpt_bolus/5)*5; //round up to nearest 5mg
+						} else {
+							drug_sets[ind].cpt_bolus = Math.ceil(drug_sets[ind].cpt_bolus) ;
+						}
+					} else {
+						drug_sets[ind].cpt_bolus = 0;
+					}
+			} else {
+				temp_difference = (drug_sets[ind].desired-(p_state[1]+p_state[2]+p_state[3]));
+				max_rate_input_persec = max_rate_input * drug_sets[ind].infusate_concentration/60/60;
+				for (counter_rate = 1; counter_rate<302; counter_rate++) {
+					if (temp_difference/drug_sets[ind].p_udf[counter_rate] < max_rate_input_persec) break;
+				}
+				counter_rate = counter_rate -2;
+				if (counter_rate<=0) counter_rate = 0;
+				console.log(counter_rate);
+				drug_sets[ind].cpt_bolus = counter_rate * max_rate_input_persec;
+				console.log(drug_sets[ind].cpt_bolus);
 			}
-			counter_rate = counter_rate -2;
-			if (counter_rate<=0) counter_rate = 0;
-			console.log(counter_rate);
-			drug_sets[ind].cpt_bolus = counter_rate * max_rate_input_persec;
-			console.log(drug_sets[ind].cpt_bolus);
-		}
 
-		console.log("bolus mg " + drug_sets[ind].cpt_bolus + "entered into virtualstate");
+			console.log("bolus mg " + drug_sets[ind].cpt_bolus + "entered into virtualstate");
+		}
 		//drug_sets[ind].firstrun = 0;
 		//myChart.data.datasets[2].data.push({x:working_clock/60, y:trial_result});
 	//}
@@ -4203,21 +4209,26 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		if (drug_sets[ind].cpt_bolus > 0) {
 			bolus_duration = 0;
 			bolusadmin(drug_sets[ind].cpt_bolus, ind, max_rate_input);
-			working_clock += bolus_duration;
-			test_rate = drug_sets[ind].cpt_rates_real[working_clock-1];
-			p_state2[1] = p_state3[1];
-			p_state2[2] = p_state3[2];
-			p_state2[3] = p_state3[3];
-			e_state2[1] = e_state3[1];
-			e_state2[2] = e_state3[2];
-			e_state2[3] = e_state3[3];
-			e_state2[4] = e_state3[4];
-			drug_sets[ind].historyarray.push([Math.floor(time_in_s),0]);
-			let bolus_array = new Array();
-			bolus_array.push(drug_sets[ind].cpt_bolus);
-			bolus_array.push(max_rate_input);
-			bolus_array.push(bolus_duration);
-			drug_sets[ind].historyarray.push([Math.floor(time_in_s),bolus_array]); 
+			if (bolus_duration>0) {
+				working_clock += bolus_duration;
+				p_state2[1] = p_state3[1];
+				p_state2[2] = p_state3[2];
+				p_state2[3] = p_state3[3];
+				e_state2[1] = e_state3[1];
+				e_state2[2] = e_state3[2];
+				e_state2[3] = e_state3[3];
+				e_state2[4] = e_state3[4];
+				drug_sets[ind].historyarray.push([Math.floor(time_in_s),0]);
+				let bolus_array = new Array();
+				bolus_array.push(drug_sets[ind].cpt_bolus);
+				bolus_array.push(max_rate_input);
+				bolus_array.push(bolus_duration);
+				drug_sets[ind].historyarray.push([Math.floor(time_in_s),bolus_array]); 
+				test_rate = drug_sets[ind].cpt_rates_real[working_clock-1];
+			} else {
+				drug_sets[ind].historyarray.push([Math.floor(time_in_s),0]);
+			}
+
 		}
 
 		if (drug_sets[ind].fentanyl_weightadjusted_flag==1) {
@@ -4227,8 +4238,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		}
 		if (drug_sets[ind].cpt_bolus > 0) {
 			drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemebolus nobolus' data-time='" + Math.floor(time_in_s) + "'>" + "<div class='timespan'>" + converttime(Math.floor(time_in_s)) + "</div>Bolus: " + drug_sets[ind].cpt_bolus + drug_sets[ind].infused_units + " <span style='opacity:0.7;font-weight:normal'>(" + Math.round(drug_sets[ind].cpt_bolus/drug_sets[ind].infusate_concentration*10)/10 + "ml)</span></div>");
-			drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeboluscptduration' data-time='" + Math.floor(time_in_s) + "''>" + "<div class='timespan'>" + converttime(Math.floor(time_in_s)) + "</div>Given over " + converttime(bolus_duration) + " at " + max_rate_input + "ml/h </div>");
-
+			if (bolus_duration > 0) drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeboluscptduration' data-time='" + Math.floor(time_in_s) + "''>" + "<div class='timespan'>" + converttime(Math.floor(time_in_s)) + "</div>Given over " + converttime(bolus_duration) + " at " + max_rate_input + "ml/h </div>");
 		}
 
 
@@ -4296,10 +4306,8 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 			console.log(i*120);
 		if (p_state2[1] == 0) {
 				test_rate = drug_sets[ind].desired / drug_sets[ind].p_udf[cpt_interval];
-				
 				drug_sets[ind].cpt_rates.push(test_rate);
 				console.log("testrate" + test_rate);
-		//	}
 		//	if (skip == 1) {
 		//		test_rate = cpt_rates_real[Math.floor(working_clock)-1];
 		//		cpt_times.push(i);
@@ -5257,8 +5265,7 @@ function preview_cet(x,ind) {
 				temp_peak = find_peak(temp_peak, trial_rate, temp1e, temp2e, temp3e, temp4e, ind);
 				current = virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1,ind) + e_udf[temp_peak] * trial_rate;
 				}
-			drug_sets[ind].prior_peak_time = temp_peak;
-			next_time = working_clock + temp_peak;
+
 
 			if (drug_sets[ind].cpt_rates_real.length > 0) {
 				drug_sets[ind].preview_bolus = trial_rate;
@@ -5280,15 +5287,28 @@ function preview_cet(x,ind) {
 
 			if (drug_sets[ind].preview_bolus > 0) scheme_bolusadmin(drug_sets[ind].preview_bolus,ind,max_rate_input);
 
+			p_state3[1] = p_state2[1];
+			p_state3[2] = p_state2[2];
+			p_state3[3] = p_state2[3];
+
+			e_state3[1] = e_state2[1];
+			e_state3[2] = e_state2[2];
+			e_state3[3] = e_state2[3];
+			e_state3[4] = e_state2[4];
+			drug_sets[ind].prior_peak_time = temp_peak;
+			next_time = working_clock + temp_peak;
+
 			drug_sets[ind].previewhistorytext = "";
 			drug_sets[ind].previewhistoryarray.length = 0;
 
 			if (drug_sets[ind].preview_bolus > 0) {
 				//drug_sets[ind].cet_lockdowntime = working_clock + temp_peak -1;
 				drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeboluscet nobolus' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Bolus: " + drug_sets[ind].preview_bolus + drug_sets[ind].infused_units + "</div>");
-				drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeboluscetduration' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Given over " + converttime(bolus_duration) + " at " + max_rate_input + "ml/h</div>");
+				if (bolus_duration>0) drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeboluscetduration' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Given over " + converttime(bolus_duration) + " at " + max_rate_input + "ml/h</div>");
 				temp_time_bolus = working_clock + bolus_duration ;
-				drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemepausecet' data-time='" + temp_time_bolus + "'>" + "<div class='timespan'>" + converttime(temp_time_bolus) + "</div>Paused for " + converttime(temp_peak - temp_time_bolus) + "</div>");
+				if (temp_peak > bolus_duration) {
+					drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemepausecet' data-time='" + temp_time_bolus + "'>" + "<div class='timespan'>" + converttime(temp_time_bolus) + "</div>Paused for " + converttime(temp_peak - temp_time_bolus) + "</div>");
+				}
 				//if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
 				//	drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].fentanyl_weightadjusted_target_uncorrected]);	
 				//} else {
@@ -5306,38 +5326,27 @@ function preview_cet(x,ind) {
 			var look_l4 = Math.exp(-drug_sets[ind].lambda[4] );
 			var temp_result, temp_result_e;
 
-			for (j=0; j<temp_peak; j++) {
 
-				p_state3[1] = p_state3[1] * look_l1 ;
-				p_state3[2] = p_state3[2] * look_l2 ;
-				p_state3[3] = p_state3[3] * look_l3 ;
-				//if (effect_data)
-				//	{
-				e_state3[1] = e_state3[1] * look_l1 ;
-				e_state3[2] = e_state3[2] * look_l2 ;
-				e_state3[3] = e_state3[3] * look_l3 ;
-				e_state3[4] = e_state3[4] * look_l4 ;
-				
-				//prior_test_rate = test_rate;
-				temp_result = p_state3[1] + p_state3[2] + p_state3[3];
-				temp_result_e = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
-				//drug_sets[ind].cpt_rates_real.push(0);
-				//drug_sets[ind].cpt_cp.push([p_state3[1],p_state3[2],p_state3[3]]);
-				//drug_sets[ind].cpt_ce.push([e_state3[1],e_state3[2],e_state3[3],e_state3[4]]);
+			if (temp_peak>bolus_duration) {
+				for (j=0; j<temp_peak-bolus_duration; j++) {
 
-				//write to VI
-				//if ((j==0) && (drug_sets[ind].cet_bolus>0)) {
-				//	temp_vol += drug_sets[ind].cet_bolus/drug_sets[ind].infusate_concentration;
-				//	drug_sets[ind].volinf.push(temp_vol);
-				//} else {
-				//	drug_sets[ind].volinf.push(temp_vol);
-				//}
-
-				//if (j%60 ==0) {console.log(j + "real rate " + test_rate*3600/10 + " real Cp " + result);}
-				//if (j%10==0) {
-				//	myChart.data.datasets[ind*2+2].data.push({x:(working_clock+j)/60, y:temp_result});
-				//	myChart.data.datasets[ind*2+3].data.push({x:(working_clock+j)/60, y:temp_result_e});
-				//}
+					p_state3[1] = p_state3[1] * look_l1 ;
+					p_state3[2] = p_state3[2] * look_l2 ;
+					p_state3[3] = p_state3[3] * look_l3 ;
+					//if (effect_data)
+					//	{
+					e_state3[1] = e_state3[1] * look_l1 ;
+					e_state3[2] = e_state3[2] * look_l2 ;
+					e_state3[3] = e_state3[3] * look_l3 ;
+					e_state3[4] = e_state3[4] * look_l4 ;
+					
+					//prior_test_rate = test_rate;
+					temp_result = p_state3[1] + p_state3[2] + p_state3[3];
+					temp_result_e = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
+					console.log(temp_result);
+					console.log(temp_result_e);
+				}
+			
 			}
 			//try off the following lines to improve performance
 			//myChart.data.datasets[ind*2+2].hidden = false;
@@ -5360,14 +5369,10 @@ function preview_cet(x,ind) {
 
 
 	function deliver_cpt_alt() {
-
-			//need this for preview CPT to work for CPT algorithm
-			//new code to normalize p_states
+			console.log("next time in preview CET : " + next_time);
 			p_state2[1] = p_state3[1];
 			p_state2[2] = p_state3[2];
 			p_state2[3] = p_state3[3];
-
-			console.log("next time in preview CET : " + next_time);
 			working_clock = next_time;
 			drug_sets[ind].cpt_rates.length = 0;
 			drug_sets[ind].cpt_times.length = 0;
@@ -5885,8 +5890,7 @@ function deliver_cet_real(x, ind) {
 				temp_peak = find_peak(temp_peak, trial_rate, temp1e, temp2e, temp3e, temp4e, ind);
 				current = virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind) + drug_sets[ind].e_udf[temp_peak] * trial_rate;
 				}
-			drug_sets[ind].prior_peak_time = temp_peak;
-			next_time = working_clock + temp_peak;
+
 
 			if (drug_sets[ind].cpt_rates_real.length > 0) {
 				drug_sets[ind].cet_bolus = trial_rate;
@@ -5907,6 +5911,8 @@ function deliver_cet_real(x, ind) {
 			//scheme_bolusadmin(drug_sets[ind].cet_bolus,ind);
 
 			bolusadmin(drug_sets[ind].cet_bolus,ind,max_rate_input);
+			drug_sets[ind].prior_peak_time = temp_peak;
+			next_time = working_clock + temp_peak;
 			console.log("bolusduration" + bolus_duration);
 
 			if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
@@ -5918,7 +5924,7 @@ function deliver_cet_real(x, ind) {
 				drug_sets[ind].cet_lockdowntime = working_clock + temp_peak -1;
 				bolus_ml = Math.round(drug_sets[ind].cet_bolus / drug_sets[ind].infusate_concentration * 10)/10;
 				drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeboluscet nobolus' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Bolus: " + drug_sets[ind].cet_bolus + drug_sets[ind].infused_units + "<span style='font-weight:normal;opacity:0.7'> (" + bolus_ml + "ml)</span>" + "</div>");
-				drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeboluscetduration' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Given over " + converttime(bolus_duration) + " at " + max_rate_input + "ml/h</div>");
+				if (bolus_duration > 0) drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeboluscetduration' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Given over " + converttime(bolus_duration) + " at " + max_rate_input + "ml/h</div>");
 				temp_time_bolus = working_clock + bolus_duration ;
 				if (temp_peak > bolus_duration) {
 					drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemepausecet' data-time='" + temp_time_bolus + "'>" + "<div class='timespan'>" + converttime(temp_time_bolus) + "</div>Paused for " + converttime(temp_peak - bolus_duration) + "</div>");
@@ -6662,8 +6668,8 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 		max_1200 = 1200 * drug_sets[ind].infusate_concentration / 60 / 60;
 		//scale to 0.8-1.0
 		if (min_rate > max_rate) {
-			//bolus duration will exceed temp peak
-			rate_corr_factor = 1;
+			//bolus duration will exceed temp peak, take discount arbitrarily
+			rate_corr_factor = 0.8;
 		} else {
 			rate_corr_factor = 1 - ((max_1200 - max_rate) / (max_1200 - min_rate))*0.1;	
 		}
@@ -6674,34 +6680,46 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 	l3 = Math.exp(-drug_sets[ind].lambda[3]);
 	l4 = Math.exp(-drug_sets[ind].lambda[4]);
 
+	if (max_rate_input == 0) {
+		max_rate = x;
+			p_state2[1] = p_state2[1] * l1 + drug_sets[ind].p_coef[1] * max_rate * (1 - l1);
+			p_state2[2] = p_state2[2] * l2 + drug_sets[ind].p_coef[2] * max_rate * (1 - l2);
+			p_state2[3] = p_state2[3] * l3 + drug_sets[ind].p_coef[3] * max_rate * (1 - l3);
 
-	bolus_duration = Math.floor(x / max_rate * rate_corr_factor);
-	if (temp_peak != undefined) {
-		if (bolus_duration >= temp_peak) {
-			//cap at temp_peak
-			bolus_duration = temp_peak;
-		} else {
+			e_state2[1] = e_state2[1] * l1 + drug_sets[ind].e_coef[1] * max_rate * (1 - l1);
+			e_state2[2] = e_state2[2] * l2 + drug_sets[ind].e_coef[2] * max_rate * (1 - l2);
+			e_state2[3] = e_state2[3] * l3 + drug_sets[ind].e_coef[3] * max_rate * (1 - l3);
+			e_state2[4] = e_state2[4] * l4 + drug_sets[ind].e_coef[4] * max_rate * (1 - l4);
+	} else {
+		bolus_duration = Math.floor(x / max_rate * rate_corr_factor);
+		if (temp_peak != undefined) {
+			if (bolus_duration >= temp_peak) {
+				//extend to bolus duration
+				temp_peak = bolus_duration;
+			} else {
+			}
+		}
+		real_bolus = Math.round(max_rate * bolus_duration);
+		if (drug_sets[ind].cpt_active>0) {
+			drug_sets[ind].cpt_bolus = real_bolus;
+		} else if (drug_sets[ind].cet_active>0) {
+			drug_sets[ind].cet_bolus = real_bolus;
+			drug_sets[ind].preview_bolus = real_bolus;	
+		}
+
+
+		for (counter1 = 0; counter1 <= bolus_duration; counter1++) {
+			p_state2[1] = p_state2[1] * l1 + drug_sets[ind].p_coef[1] * max_rate * (1 - l1);
+			p_state2[2] = p_state2[2] * l2 + drug_sets[ind].p_coef[2] * max_rate * (1 - l2);
+			p_state2[3] = p_state2[3] * l3 + drug_sets[ind].p_coef[3] * max_rate * (1 - l3);
+
+			e_state2[1] = e_state2[1] * l1 + drug_sets[ind].e_coef[1] * max_rate * (1 - l1);
+			e_state2[2] = e_state2[2] * l2 + drug_sets[ind].e_coef[2] * max_rate * (1 - l2);
+			e_state2[3] = e_state2[3] * l3 + drug_sets[ind].e_coef[3] * max_rate * (1 - l3);
+			e_state2[4] = e_state2[4] * l4 + drug_sets[ind].e_coef[4] * max_rate * (1 - l4);
 		}
 	}
-	real_bolus = Math.round(max_rate * bolus_duration);
-	if (drug_sets[ind].cpt_active>0) {
-		drug_sets[ind].cpt_bolus = real_bolus;
-	} else if (drug_sets[ind].cet_active>0) {
-		drug_sets[ind].cet_bolus = real_bolus;
-		drug_sets[ind].preview_bolus = real_bolus;	
-	}
 
-
-	for (counter1 = 0; counter1 <= bolus_duration; counter1++) {
-		p_state2[1] = p_state2[1] * l1 + drug_sets[ind].p_coef[1] * max_rate * (1 - l1);
-		p_state2[2] = p_state2[2] * l2 + drug_sets[ind].p_coef[2] * max_rate * (1 - l2);
-		p_state2[3] = p_state2[3] * l3 + drug_sets[ind].p_coef[3] * max_rate * (1 - l3);
-
-		e_state2[1] = e_state2[1] * l1 + drug_sets[ind].e_coef[1] * max_rate * (1 - l1);
-		e_state2[2] = e_state2[2] * l2 + drug_sets[ind].e_coef[2] * max_rate * (1 - l2);
-		e_state2[3] = e_state2[3] * l3 + drug_sets[ind].e_coef[3] * max_rate * (1 - l3);
-		e_state2[4] = e_state2[4] * l4 + drug_sets[ind].e_coef[4] * max_rate * (1 - l4);
-	}
 	//volume_infused += x/infusate_concentration;
 	//historytext = historytext.concat("<br>" + "Time: " + time_in_s + "s - Bolus: " + x + "mg");
 	//displayresult(result, result_e);
@@ -9014,7 +9032,7 @@ function custombolus(arg) {
 }
 
 function bolusadmin(x, ind, max_rate_input) {
-
+	if (max_rate_input == undefined) max_rate_input = 0;
 	//addition to cap max bolus rate
 	//max bolus rate capped "max_rate_input"ml/h which is equivalent to:
 	max_rate = max_rate_input * drug_sets[ind].infusate_concentration / 60 / 60;
@@ -9027,8 +9045,8 @@ function bolusadmin(x, ind, max_rate_input) {
 		max_1200 = 1200 * drug_sets[ind].infusate_concentration / 60 / 60;
 		//scale to 0.8-1.0
 		if (min_rate > max_rate) {
-			//bolus duration will exceed temp peak
-			rate_corr_factor = 1;
+			//bolus duration will exceed temp peak, set to 0.75
+			rate_corr_factor = 0.8;
 		} else {
 			rate_corr_factor = 1 - ((max_1200 - max_rate) / (max_1200 - min_rate))*0.1;	
 		}
@@ -9061,49 +9079,36 @@ function bolusadmin(x, ind, max_rate_input) {
 				e_state[4] *= 1/drug_sets[ind].fentanyl_weightadjusted_factor;
 			}
 
+
 			drug_sets[ind].cpt_cp.length = working_clock;
 			drug_sets[ind].cpt_ce.length = working_clock;
 			drug_sets[ind].volinf.length = working_clock;
 			drug_sets[ind].cpt_rates_real.length = working_clock;	
-
 			drug_sets[ind].cpt_rates_real.push(drug_sets[ind].cpt_rates_real[working_clock-1]);
-
-			
-				myChart.data.datasets[ind*2+2].data.length = myChart.data.datasets[ind*2+2].data.findIndex((element)=>element.x>time_in_s/60);
-				myChart.data.datasets[ind*2+3].data.length = myChart.data.datasets[ind*2+3].data.findIndex((element)=>element.x>time_in_s/60);
-			
-			
-
+			myChart.data.datasets[ind*2+2].data.length = myChart.data.datasets[ind*2+2].data.findIndex((element)=>element.x>time_in_s/60);
+			myChart.data.datasets[ind*2+3].data.length = myChart.data.datasets[ind*2+3].data.findIndex((element)=>element.x>time_in_s/60);
 			temp_vol = drug_sets[ind].volinf[working_clock-1];
 		} else {
 			temp_vol = 0;
 			drug_sets[ind].cpt_rates_real.push(0);
 		}
+		p_state3[1] = p_state[1];
+		p_state3[2] = p_state[2];
+		p_state3[3] = p_state[3];
+		e_state3[1] = e_state[1];
+		e_state3[2] = e_state[2];
+		e_state3[3] = e_state[3];
+		e_state3[4] = e_state[4];
 	}
 
-	bolus_duration = Math.floor(x / max_rate * rate_corr_factor);
-	if (temp_peak != undefined) {
-		if (bolus_duration >= temp_peak) {
-			//cap at temp_peak
-			bolus_duration = temp_peak;
+	//branch off: bolus vs no_bolus
+	if (max_rate_input == 0) {
+		if (p_state[1] == 0) {
+			temp_vol = 0 
 		} else {
+			temp_vol = drug_sets[ind].volinf[working_clock-1];
 		}
-	}
-	real_bolus = Math.round(max_rate * bolus_duration);
-	if (drug_sets[ind].cpt_active>0) {
-		drug_sets[ind].cpt_bolus = real_bolus;
-	} else if (drug_sets[ind].cet_active>0) {
-		drug_sets[ind].cet_bolus = real_bolus;	
-	}
-	
-	console.log("bolus duration is" + bolus_duration);
-	console.log("real bolus amount is" + max_rate * bolus_duration);
-	if (p_state[1] == 0) {
-		temp_vol = 0 
-	} else {
-		temp_vol = drug_sets[ind].volinf[working_clock-1];
-	}
-	for (counter1 = 0; counter1 <= bolus_duration; counter1++) {
+		max_rate = x;
 		p_state3[1] = p_state3[1] * l1 + drug_sets[ind].p_coef[1] * max_rate * (1 - l1);
 		p_state3[2] = p_state3[2] * l2 + drug_sets[ind].p_coef[2] * max_rate * (1 - l2);
 		p_state3[3] = p_state3[3] * l3 + drug_sets[ind].p_coef[3] * max_rate * (1 - l3);
@@ -9116,34 +9121,63 @@ function bolusadmin(x, ind, max_rate_input) {
 		drug_sets[ind].cpt_ce.push([e_state3[1],e_state3[2],e_state3[3],e_state3[4]]);
 		temp_vol = temp_vol + max_rate/drug_sets[ind].infusate_concentration;
 		drug_sets[ind].volinf.push(temp_vol);
-		drug_sets[ind].cpt_rates_real.push(max_rate);
+		drug_sets[ind].cpt_rates_real.push(0);
+	} else {
+		bolus_duration = Math.floor(x / max_rate * rate_corr_factor);
+		if (temp_peak != undefined) {
+			if (bolus_duration >= temp_peak) {
+				//make temp_peak equal to bolus_duration
+				temp_peak = bolus_duration;
+			} else {
+			}
+		}
+		real_bolus = Math.round(max_rate * bolus_duration);
+		if (drug_sets[ind].cpt_active>0) {
+			drug_sets[ind].cpt_bolus = real_bolus;
+		} else if (drug_sets[ind].cet_active>0) {
+			drug_sets[ind].cet_bolus = real_bolus;	
+		}
+		console.log("corrfac" + rate_corr_factor);
+		console.log("bolus duration is" + bolus_duration);
+		console.log("real bolus amount is" + max_rate * bolus_duration);
+		if (p_state[1] == 0) {
+			temp_vol = 0 
+		} else {
+			temp_vol = drug_sets[ind].volinf[working_clock-1];
+		}
+		for (counter1 = 0; counter1 <= bolus_duration; counter1++) {
+			p_state3[1] = p_state3[1] * l1 + drug_sets[ind].p_coef[1] * max_rate * (1 - l1);
+			p_state3[2] = p_state3[2] * l2 + drug_sets[ind].p_coef[2] * max_rate * (1 - l2);
+			p_state3[3] = p_state3[3] * l3 + drug_sets[ind].p_coef[3] * max_rate * (1 - l3);
 
-					if (counter1%10==0) {
-						temp_result = p_state3[1] + p_state3[2] + p_state3[3];
-						temp_result_e = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
-						myChart.data.datasets[ind*2+2].data.push({x:(working_clock+counter1)/60, y:temp_result});
-						myChart.data.datasets[ind*2+3].data.push({x:(working_clock+counter1)/60, y:temp_result_e});
-					}
-	}
-	//p_state3[1] = p_state[1];
-	//p_state3[2] = p_state[2];
-	//p_state3[3] = p_state[3];
-	//e_state3[1] = e_state[1];
-	//e_state3[2] = e_state[2];
-	//e_state3[3] = e_state[3];
-	//e_state3[4] = e_state[4];
+			e_state3[1] = e_state3[1] * l1 + drug_sets[ind].e_coef[1] * max_rate * (1 - l1);
+			e_state3[2] = e_state3[2] * l2 + drug_sets[ind].e_coef[2] * max_rate * (1 - l2);
+			e_state3[3] = e_state3[3] * l3 + drug_sets[ind].e_coef[3] * max_rate * (1 - l3);
+			e_state3[4] = e_state3[4] * l4 + drug_sets[ind].e_coef[4] * max_rate * (1 - l4);
+			drug_sets[ind].cpt_cp.push([p_state3[1],p_state3[2],p_state3[3]]);
+			drug_sets[ind].cpt_ce.push([e_state3[1],e_state3[2],e_state3[3],e_state3[4]]);
+			temp_vol = temp_vol + max_rate/drug_sets[ind].infusate_concentration;
+			drug_sets[ind].volinf.push(temp_vol);
+			drug_sets[ind].cpt_rates_real.push(max_rate);
 
-	//p_state[1] = p_state[1] * l1 + drug_sets[ind].p_coef[1] * x * (1 - l1);
-	//p_state[2] = p_state[2] * l2 + drug_sets[ind].p_coef[2] * x * (1 - l2);
-	//p_state[3] = p_state[3] * l3 + drug_sets[ind].p_coef[3] * x * (1 - l3);
-
-	//e_state[1] = e_state[1] * l1 + drug_sets[ind].e_coef[1] * x * (1 - l1);
-	//e_state[2] = e_state[2] * l2 + drug_sets[ind].e_coef[2] * x * (1 - l2);
-	//e_state[3] = e_state[3] * l3 + drug_sets[ind].e_coef[3] * x * (1 - l3);
-	//e_state[4] = e_state[4] * l4 + drug_sets[ind].e_coef[4] * x * (1 - l4);
+						if (counter1%10==0) {
+							temp_result = p_state3[1] + p_state3[2] + p_state3[3];
+							temp_result_e = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
+							myChart.data.datasets[ind*2+2].data.push({x:(working_clock+counter1)/60, y:temp_result});
+							myChart.data.datasets[ind*2+3].data.push({x:(working_clock+counter1)/60, y:temp_result_e});
+						}
+		}
+	} //end no-bolus block
 
 
 	if (drug_sets[ind].manualmode_active == 1) {
+			p_state3[1] = p_state[1];
+	p_state[2] = p_state3[2];
+	p_state[3] = p_state3[3];
+	e_state[1] = e_state3[1];
+	e_state[2] = e_state3[2];
+	e_state[3] = e_state3[3];
+	e_state[4] = e_state3[4];
 		drug_sets[ind].cpt_cp.push([p_state[1],p_state[2],p_state[3]]);
 		drug_sets[ind].cpt_ce.push([e_state[1],e_state[2],e_state[3],e_state[4]]);
 		drug_sets[ind].volinf.push(temp_vol+x/drug_sets[ind].infusate_concentration);
@@ -9278,7 +9312,7 @@ function calculate_udfs(drug_sets_index) {
 
     /* calculate udf, plasma concentration, for an infusion of 1/second */
 	drug_sets[drug_sets_index].p_udf[0] = 0;
-	for (i = 1;  i < 199;  i++)
+	for (i = 1;  i < 301;  i++)
 		{
 		temp1 = temp1 * l1 + drug_sets[drug_sets_index].p_coef[1] * (1 - l1);
 		temp2 = temp2 * l2 + drug_sets[drug_sets_index].p_coef[2] * (1 - l2);
@@ -10870,14 +10904,21 @@ function toPageTwoTransition() {
 function pageTwoFunction(arg) {
 	if (arg == undefined) {
 		//arg undefined means reset
-		document.getElementById("page2intro").classList.remove("hide");
-		document.getElementById("page2cpt").classList.remove("active");
-		document.getElementById("page2cpt").classList.remove("hide");
-		document.getElementById("page2cet").classList.remove("active");
-	  document.getElementById("page2cet").classList.remove("hide");
-	  document.getElementById("page2manual").classList.remove("hide");
-	  document.getElementById("page2IB").classList.remove("hide");
-	  document.getElementById("page2maxrate").classList.remove("show");
+		document.getElementById("page2maxrate").classList.remove("show");
+		setTimeout(function() {
+				document.getElementById("page2cpt").classList.remove("active");
+				document.getElementById("page2cet").classList.remove("active");
+		},210)
+
+		setTimeout(function() {
+			document.getElementById("page2intro").classList.remove("hide");
+			document.getElementById("page2cpt").classList.remove("hide");
+		  document.getElementById("page2cet").classList.remove("hide");
+		  document.getElementById("page2manual").classList.remove("hide");
+		  document.getElementById("page2IB").classList.remove("hide");
+		},420)
+
+	  
 	} else {
 	  if (arg == 0) {
 	      document.getElementById("page2cpt").classList.add("active");
@@ -10906,8 +10947,38 @@ function pageTwoFunction(arg) {
 	  document.getElementById("page2intro").classList.add("hide");
 	  setTimeout(function() {
 	  document.getElementById("page2maxrate").classList.add("show");
-	  },300);
+	  },210);
 	}
+}
+
+function sendToUpdateMax(input) {
+	input = input *1;
+	if (input == 0) {
+		text = "Flash: assume bolus given instantaneously. Ideal for manual rapid bolus.";
+	} else if (input == 200) {
+		text = "Set your syringe pump rate to 200ml/h to deliver programmed bolus. Note: slow bolus rate will lead to slow onset.";
+	} else if (input == 300) {
+		text = "Set your syringe pump rate to 300ml/h to deliver programmed bolus. Note: slow bolus rate will lead to slow onset.";
+	} else if (input == 400) {
+		text = "Set your syringe pump rate to 400ml/h to deliver programmed bolus. Note: slow bolus rate will lead to slow onset.";
+	} else if (input == 500) {
+		text = "Set your syringe pump rate to 500ml/h to deliver programmed bolus. Note: slow bolus rate will lead to slow onset."
+	} else if (input == 600) {
+		text = "For programmed bolus: set your syringe pump rate to 600ml/h to deliver the calculated volume.";
+	} else if (input == 700) {
+		text = "For programmed bolus: set your syringe pump rate to 700ml/h to deliver the calculated volume.";
+	} else if (input == 800) {
+		text = "For programmed bolus: set your syringe pump rate to 800ml/h to deliver the calculated volume.";
+	} else if (input == 900) {
+		text = "For programmed bolus: set your syringe pump rate to 900ml/h to deliver the calculated volume.";
+	} else if (input == 1000) {
+		text = "For programmed bolus: set your syringe pump rate to 1000ml/h to deliver the calculated volume.";
+	} else if (input == 1100) {
+		text = "For programmed bolus: set your syringe pump rate to 1100ml/h to deliver the calculated volume.";
+	} else if (input == 1200) {
+		text = "For programmed bolus: set your syringe pump rate to 1200ml/h to deliver the calculated volume.";
+	}
+	document.getElementById("page2bolustext").innerText = text;
 }
 
 function cptevent() {

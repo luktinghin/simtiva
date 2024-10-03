@@ -1960,7 +1960,7 @@ background-size: 200% 100%;
   position: absolute;
   width: 90%;
   left: 5%;
-  transition: 0.3s all ease;
+  transition: 0.2s all ease;
   opacity: 1;
   pointer-events: auto;
   
@@ -1998,16 +1998,16 @@ background-size: 200% 100%;
 }
 #page2maxrate {
   opacity: 0;
-  transition: 0.3s opacity ease;
-  transform: translateY(0);
+  transition: 0.2s transform ease, 0.2s opacity ease;
+  transform: translateY(66px) scale(0.7);
+    left: 5%;
+    width: 90%;
+    position: absolute;
   pointer-events: none;
 }
 #page2maxrate.show {
   opacity: 1;
-  position: absolute;
-  width: 90%;
-  transform: translateY(70px);
-  left: 5%;
+  transform: translateY(66px) scale(1);
   pointer-events: auto;
 }
 #checkmarkDisplay {
