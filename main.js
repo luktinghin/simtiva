@@ -6655,7 +6655,7 @@ function find_trough(temp_trough,temp_time,temp_peak) {
 }
 
 function scheme_bolusadmin(x, ind, max_rate_input) {
-
+	if (max_rate_input == undefined) max_rate_input = 0;
 	//addition to cap max bolus rate
 	//max bolus rate capped "max_rate_input"ml/h which is equivalent to:
 	max_rate = max_rate_input * drug_sets[ind].infusate_concentration / 60 / 60;

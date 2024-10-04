@@ -1999,15 +1999,19 @@ background-size: 200% 100%;
 #page2maxrate {
   opacity: 0;
   transition: 0.2s transform ease, 0.2s opacity ease;
-  transform: translateY(52px) scale(0.7);
+  transform: translateY(40px) scale(0.7);
     left: 5%;
     width: 90%;
     position: absolute;
   pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 225px;
 }
 #page2maxrate.show {
   opacity: 1;
-  transform: translateY(52px) scale(1);
+  transform: translateY(40px) scale(1);
   pointer-events: auto;
 }
 #checkmarkDisplay {
