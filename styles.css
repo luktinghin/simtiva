@@ -1785,6 +1785,45 @@ a.interactionstab.active {
         opacity: 1;
     }
 }
+.optionscardtitle {
+  font-weight: bold;
+  width: 100%;
+  text-align: left;
+  height: 2rem;
+  line-height: 2rem;
+  background: rgba(128,128,128,0.15);
+  padding-left: 2px;
+  position: relative;
+  margin: 16px 0;
+  cursor: pointer;
+}
+.optionscardtitle::after {
+  content: '\f078'; /* Unicode character for chevrondown */
+  font-size: 13px;
+  display: inline-block;
+  position: absolute;
+  right: 5px;
+  font-family: 'Font Awesome 5 Free';
+  color: rgba(128,128,128,0.7);
+  transition: 0.3s transform ease;
+}
+.optionscardtitle.active {
+  margin-bottom: 8px;
+}
+.optionscardtitle.active::after {
+  transform: rotate(180deg);
+}
+.optionscardcontents {
+  transition: 0.3s opacity ease;
+}
+.optionscardcontents.collapsed {
+  opacity: 0;
+  display: none;
+}
+.optionscardcontents.animate {
+  animation: fadeInFromNone 0.5s ease-out;
+  animation-fill-mode: forwards;
+}
 #prompts_container {
   height:86px;
   display:block;
