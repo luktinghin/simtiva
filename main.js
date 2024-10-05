@@ -4256,7 +4256,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 			}
 		}
 		if (bolus_duration>0) {
-			drug_sets[ind].historyarrays.push([1,1,Math.floor(time_in_s),drug_sets[ind].cpt_bolus]);
+			drug_sets[ind].historyarrays.push([1,1,Math.floor(time_in_s),drug_sets[ind].cpt_bolus,max_rate_input,bolus_duration]);
 		} else {
 			drug_sets[ind].historyarrays.push([1,1,working_clock,drug_sets[ind].cpt_bolus]);	
 		}
@@ -6422,7 +6422,7 @@ function deliver_cet_alt(x) {
 			var look_l4 = Math.exp(-drug_sets[active_drug_set_index].lambda[4] );
 			var temp_result, temp_result_e;
 
-			for (j=0; j<temp_peak; j++) {
+			for (j=0; j<temp_peak-1; j++) {
 
 				p_state3[1] = p_state3[1] * look_l1 ;
 				p_state3[2] = p_state3[2] * look_l2 ;
@@ -6498,9 +6498,10 @@ function deliver_cet_alt(x) {
 				if (v==0) {
 					if (arg != undefined) {
 						//for breakpoint use, arg will take in next_time
-
 					} else {
-						next_time = drug_sets[active_drug_set_index].prior_peak_time;
+						//
+						next_time = working_clock + temp_peak;
+						//next_time = drug_sets[active_drug_set_index].prior_peak_time;
 					}
 				} else {
 					next_time = trough_time;
@@ -6508,10 +6509,15 @@ function deliver_cet_alt(x) {
 				console.log("******" + v);
 				console.log(converttime(next_time));
 				min_dif = drug_sets[active_drug_set_index].desired *0.0001; 
-				temp1e = drug_sets[active_drug_set_index].cpt_ce[next_time-1][0] * Math.exp(-drug_sets[active_drug_set_index].lambda[1]) ;
-				temp2e = drug_sets[active_drug_set_index].cpt_ce[next_time-1][1] * Math.exp(-drug_sets[active_drug_set_index].lambda[2]) ;
-				temp3e = drug_sets[active_drug_set_index].cpt_ce[next_time-1][2] * Math.exp(-drug_sets[active_drug_set_index].lambda[3]) ;
-				temp4e = drug_sets[active_drug_set_index].cpt_ce[next_time-1][3] * Math.exp(-drug_sets[active_drug_set_index].lambda[4]) ;
+				temp1e = drug_sets[active_drug_set_index].cpt_ce[next_time-1][0];
+				temp2e = drug_sets[active_drug_set_index].cpt_ce[next_time-1][1];
+				temp3e = drug_sets[active_drug_set_index].cpt_ce[next_time-1][2];
+				temp4e = drug_sets[active_drug_set_index].cpt_ce[next_time-1][3];
+				
+				//temp1e = drug_sets[active_drug_set_index].cpt_ce[next_time-1][0] * Math.exp(-drug_sets[active_drug_set_index].lambda[1]) ;
+				//temp2e = drug_sets[active_drug_set_index].cpt_ce[next_time-1][1] * Math.exp(-drug_sets[active_drug_set_index].lambda[2]) ;
+				//temp3e = drug_sets[active_drug_set_index].cpt_ce[next_time-1][2] * Math.exp(-drug_sets[active_drug_set_index].lambda[3]) ;
+				//temp4e = drug_sets[active_drug_set_index].cpt_ce[next_time-1][3] * Math.exp(-drug_sets[active_drug_set_index].lambda[4]) ;
 				console.log(temp1e+temp2e+temp3e+temp4e);
 						trial_rate = (next_cet - virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, active_drug_set_index)) / drug_sets[active_drug_set_index].e_udf[temp_peak];
 						temp_peak = find_peak(temp_peak, trial_rate, temp1e, temp2e, temp3e, temp4e, active_drug_set_index);
@@ -6526,7 +6532,7 @@ function deliver_cet_alt(x) {
 
 				next_cetbolus = Math.ceil(trial_rate);
 				
-				if ((next_cetbolus<5) && (v==0)) {
+				if (next_cetbolus<10) {
 					next_cetbolus = 0;
 				} 
 
@@ -6539,10 +6545,11 @@ function deliver_cet_alt(x) {
 				drug_sets[active_drug_set_index].cpt_ce.push([e_state2[1],e_state2[2],e_state2[3],e_state2[4]]);
 				temp_vol += next_cetbolus/drug_sets[active_drug_set_index].infusate_concentration;
 				drug_sets[active_drug_set_index].volinf.push(temp_vol);
+				working_clock = next_time;
 				trough_time = find_trough(drug_sets[active_drug_set_index].desired*(1-drug_sets[active_drug_set_index].IB_swing),next_time,temp_peak);
 
 				console.log(converttime(trough_time));
-				working_clock = next_time;
+				
 				for (j=0; j<trough_time-next_time-1; j++) {
 
 					p_state2[1] = p_state2[1] * look_l1 ;
@@ -6666,10 +6673,10 @@ function find_trough(temp_trough,temp_time,temp_peak) {
     temp3e = drug_sets[active_drug_set_index].cpt_ce[temp_time][2];
     temp4e = drug_sets[active_drug_set_index].cpt_ce[temp_time][3];
     value = temp1e+temp2e+temp3e+temp4e;
+    console.log(drug_sets[active_drug_set_index].cpt_ce.length);
 		console.log("entering find_trough; CE" + value+  "temp_time now is " + temp_time + "temp_peak is " + temp_peak);
 		var i;
-		for (i=temp_peak-10; i<=temp_peak+10*60; i++) {
-
+		for (i=temp_peak; i<=temp_peak+10*60; i++) {
 		    test_trough = virtual_model(temp1e,temp2e,temp3e,temp4e,i,1,active_drug_set_index);
 		    //console.log(test_trough);
 		    //console.log(temp_time+i);
@@ -6678,6 +6685,7 @@ function find_trough(temp_trough,temp_time,temp_peak) {
 		        break;
 		    }
 		}
+		console.log(converttime(temp_time+i));
 		return temp_time+i;
 }
 
@@ -6698,7 +6706,7 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 			//bolus duration will exceed temp peak, take discount arbitrarily
 			rate_corr_factor = 0.8;
 		} else {
-			rate_corr_factor = 1 - ((max_1200 - max_rate) / (max_1200 - min_rate))*0.1;	
+			rate_corr_factor = 0.97 - ((max_1200 - max_rate) / (max_1200 - min_rate))*0.1;	
 		}
 	}
 
@@ -9072,10 +9080,10 @@ function bolusadmin(x, ind, max_rate_input) {
 		max_1200 = 1200 * drug_sets[ind].infusate_concentration / 60 / 60;
 		//scale to 0.8-1.0
 		if (min_rate > max_rate) {
-			//bolus duration will exceed temp peak, set to 0.75
+			//bolus duration will exceed temp peak, set to 0.8
 			rate_corr_factor = 0.8;
 		} else {
-			rate_corr_factor = 1 - ((max_1200 - max_rate) / (max_1200 - min_rate))*0.1;	
+			rate_corr_factor = 0.97 - ((max_1200 - max_rate) / (max_1200 - min_rate))*0.1;	
 		}
 	} 
 
