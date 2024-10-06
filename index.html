@@ -78,7 +78,7 @@
 					<br>David Lam
 					<br>
 					<br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.
-					<br>Last updated 28/8/2024 (V4.81) Build 111.
+					<br>Last updated 6/10/2024 (V4.81) Build 113.
 					<br>
 					<br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i>
 					<br>Coding is done in Javascript. The code to the mathematical calculations are based on "STANPUMP", which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.
@@ -321,15 +321,60 @@
 						</div>
 					</div>
 					-->
-					<div id="simplemodeselection" style="padding-top:1rem; padding-bottom:0.5rem; text-align:center; border:2px solid #ccc; border-radius:9px;box-shadow:inset 0 4px 0 0 rgba(0,0,0,0.15);">Choose one of the following:<br>
-						<a class="button huge" onclick="initcpt();hideallmodal();document.getElementById('card_controlpanel').style.display='block';"><span style="border-bottom:1px solid LightCoral">CP</span> TARGETING<i class="fas fa-tint fa-fw" style="color:LightCoral;"></i></a>
-						<br>
-						<a class="button huge" onclick="initcet();hideallmodal();document.getElementById('card_controlpanel').style.display='block';"><span style="border-bottom:1px solid green">CE</span> TARGETING<i class="fas fa-brain fa-fw" style="color:green;"></i></a>
-						<br>
-						<a class="button huge" onclick="initmanual(0);hideallmodal();document.getElementById('card_controlpanel').style.display='block';">MANUAL<i class="fas fa-syringe fa-fw" style="color:rgb(81 203 238)"></i></a>
-						<br>
-						<a class="button huge" onclick="initcetbolus(0);hideallmodal();">INTERMITTENT BOLUS<i class="fas fa-hourglass-half fa-fw" style="color:#c19f14"></i></a>
+					<div id="simplemodeselection" style="text-align:center; border:2px solid #ccc; border-radius:9px;position:relative;height:270px">
+						<div id="page2intro" class="page2subheading">Choose one of the following:</div>
+						<a id="page2cpt" class="page2subheading button huge" onclick="pageTwoFunction(0)"><span style="border-bottom:1px solid LightCoral">CP</span> TARGETING<i class="fas fa-tint fa-fw" style="color:LightCoral;"></i></a>
+						
+						<a id="page2cet" class="page2subheading button huge" onclick="pageTwoFunction(1)"><span style="border-bottom:1px solid green">CE</span> TARGETING<i class="fas fa-brain fa-fw" style="color:green;"></i></a>
+						
+						<a id="page2manual" class="page2subheading button huge" onclick="initmanual(0);hideallmodal();document.getElementById('card_controlpanel').style.display='block';">MANUAL<i class="fas fa-syringe fa-fw" style="color:rgb(81 203 238)"></i></a>
+						
+						<a id="page2IB" class="page2subheading button huge" onclick="initcetbolus(0);hideallmodal();">INTERMITTENT BOLUS<i class="fas fa-hourglass-half fa-fw" style="color:#c19f14"></i></a>
+						<div id="page2maxrate" class="">
+							<table class="table-Init" style="text-align:left">
+								<tr class="fr" style="height:2rem">
+									<td style="padding:0">Induction max. speed:</td>
+									<td style="padding:0">
+										<select id="page2selectmaxrate" onchange="sendToUpdateMax(this.value);">
+											<option value="0" selected>Flash</option>
+											<option value="1200">1200ml/h</option>
+											<option value="1100">1100ml/h</option>
+											<option value="1000">1000ml/h</option>
+											<option value="900">900ml/h</option>
+											<option value="800">800ml/h</option>
+											<option value="700">700ml/h</option>
+											<option value="600">600ml/h</option>
+											<option value="500">500ml/h</option>
+											<option value="400">400ml/h</option>
+											<option value="300">300ml/h</option>
+										</select>
+									</td>
+								</tr>
+								<tr style="height:1rem">
+									<td colspan="2"  style="padding:0 0 3px 0;border-top:0;opacity:0.6;font-size:0.7rem;font-style:italic;pointer-events:none"><span id="page2bolustext">Flash: assume bolus given instantaneously. Ideal for manual rapid bolus.</span></td>
+								</tr>
+								<tr style="height:2rem;padding-top:3px">
+									<td style="padding:3px 0 0 0">Maintenance accuracy:</td>
+									<td style="padding:3px 0 0 0">
+										<select id="page2selectmaintenance">
+											<option value="0">Auto</option>
+											<option value="1">Lazy</option>
+											<option value="2">Accurate</option>
+										</select>
+									</td>
+								</tr>
+								<tr style="height:1rem">
+									<td colspan="2" style="padding:0;border-top:0;opacity:0.6;font-size:0.7rem;font-style:italic">Threshold for rate changes. Lazy: less frequent rate changes. Accurate: more frequent rate changes.</td>
+								</tr>
+							</table>
+							<div style="width:100%;text-align:left">
+								<a class="button invert wide" style="padding-right:0" id="page2proceed">Proceed</a>
+								<a class="button muted right" onclick="pageTwoFunction();">Back</a>
+								
+							</div>
+						</div>
 					</div>
+
 					<div id="complexmodeselection0" style="margin-top: 10px; border:2px solid #ccc; border-radius:9px;box-shadow:inset 0 4px 0 0 rgba(0,0,0,0.15); padding: 0px 5px;">
 						<table class="" style="width:100%">
 							<tr class="fr" style="height: 4rem; vertical-align:bottom">
@@ -2087,16 +2132,18 @@
 		<div class="card" id="card_options">
 			<div class="cardtitle">OPTIONS</div>
 			<div class="cardcontents">
-						<div id="ptolcardoptions">
-      <label class="container labelptolcontainer" style="">Display detailed tab info
-          <input type="checkbox" onChange="toggleshowtabinfo();" id="isTabInfo"><span class="checkmark"></span>
-      </label>
-      <!--<label class="container labelptolcontainer" style="">Display effective dose margins <span style='font-size: 80%'>(PTOL50-90)</span>
-          <input type="checkbox" id="" onChange="toggleshowPTOLmargins();" checked><span class="checkmark"></span>
-      </label>
-    -->
-    </div>
-				<i style="color:grey; font-size:90%; padding-top:10px; padding-bottom:10px; display:block;">Some options are experimental features and available on Android devices only: these include Vibrate, Sound, Wakelock, and Notifications.</i>
+
+    		<div class="optionscardtitle collapsiblecard">INFUSION SETTINGS</div>
+    		<div class="optionscardcontents">
+				<div id="ptolcardoptions">
+	      			<label class="container labelptolcontainer" style="">Display detailed tab info
+	          		<input type="checkbox" onChange="toggleshowtabinfo();" id="isTabInfo"><span class="checkmark"></span>
+	      			</label>
+	      <!--<label class="container labelptolcontainer" style="">Display effective dose margins <span style='font-size: 80%'>(PTOL50-90)</span>
+	          <input type="checkbox" id="" onChange="toggleshowPTOLmargins();" checked><span class="checkmark"></span>
+	      </label>
+	    -->
+	    		</div>
 				<table class="table-control">
 					<!--options array-->
 					<!-- 
@@ -2118,7 +2165,33 @@
 					[1,0]
 					-->
 					<!--end options array-->
-					<tr class="fr" id="option_unit_row"><td>Unit for propofol <i class="far fa-question-circle tooltip background"><span class="tooltiptext" style="width:160px">Secondary unit for propofol infusion rate apart from ml/h. Refresh your CPT/CET target after change.</span></i></td>
+					<tr id="option_bolusspeed_row" style="display:none" class="fr"><td>Bolus max. speed <i class="far fa-question-circle tooltip background"><span class="tooltiptext">Max bolus rate for programmed bolus. Flash means instantaneous bolus.</span></i></td>
+						<td>
+							<select id="select_bolusspeed" onchange="applybolusspeed();">
+											<option value="0" selected>Flash</option>
+											<option value="1200">1200ml/h</option>
+											<option value="1100">1100ml/h</option>
+											<option value="1000">1000ml/h</option>
+											<option value="900">900ml/h</option>
+											<option value="800">800ml/h</option>
+											<option value="700">700ml/h</option>
+											<option value="600">600ml/h</option>
+											<option value="500">500ml/h</option>
+											<option value="400">400ml/h</option>
+											<option value="300">300ml/h</option>
+							</select>
+						</td>
+					</tr>
+					<tr id="option_threshold_row" class="fr"><td>Maintenance accuracy <i class="far fa-question-circle tooltip background"><span class="tooltiptext" style="width:170px">Threshold of CPT/CET schemes. Lazy: less frequent rate changes. Accurate: more frequent changes.</span></i></td>
+						<td>
+							<select id="select_threshold">
+								<option value="0">Auto</option>
+								<option value="1">Lazy</option>
+								<option value="2">Accurate</option> <!--0.13, 0.565-->
+							</select>
+						</td>
+					</tr>
+					<tr id="option_unit_row"><td>Unit for propofol <i class="far fa-question-circle tooltip background"><span class="tooltiptext" style="width:160px">Secondary unit for propofol infusion rate apart from ml/h. Refresh your CPT/CET target after change.</span></i></td>
 						<td>
 							<select id="select_unit">
 								<option value="mgh">mg/kg/h</option>
@@ -2153,17 +2226,12 @@
 							</select>
 						</td>
 					</tr>
-
-					<tr id="option_threshold_row"><td>Threshold <i class="far fa-question-circle tooltip background"><span class="tooltiptext">Adjusts the threshold of CPT/CET infusion schemes. Lazy: less frequent rate changes. Accurate: more frequent rate changes.</span></i></td>
-						<td>
-							<select id="select_threshold">
-								<option value="0">Auto</option>
-								<option value="1">Lazy</option>
-								<option value="2">Accurate</option> <!--0.13, 0.565-->
-							</select>
-						</td>
-					</tr>
-					<tr><td>Wakelock <i class="far fa-question-circle tooltip background"><span class="tooltiptext">Keeps screen on. Experimental. Android & some desktop devices only.</span></i></td>
+				</table>
+			</div><!-- end infusion settings -->
+			<div class="optionscardtitle collapsiblecard">PROGRAM FEATURES</div>
+			<div class="optionscardcontents"><!-- start prograam features -->
+				<table class="table-control">
+					<tr class="fr"><td>Wakelock <i class="far fa-question-circle tooltip background"><span class="tooltiptext">Keeps screen on. Experimental. Android & some desktop devices only.</span></i></td>
 						<td>
 							<select id="select_wakelock">
 								<option value="off">Off</option>
@@ -2196,21 +2264,8 @@
 							</select>
 						</td>
 					</tr>
-					<!--
-					<tr><td>Intermittent bolus <i style="font-size:70%">(Unstable)</i></td>
-						<td>
-							<select id="select_PPinterval">
-								<option value="120">Q2min</option>
-								<option value="180" selected>Q3min</option>
-								<option value="300">Q5min</option>
-							</select>
-						</td>
-					</tr>
-				-->
-					
-
-					
 				</table>
+			</div>
 				<a class="button" id="btn_apply" onclick="applyoptions();">Apply</a>
 				<a class="button right muted" id="btn_defaultoptions" onclick="loadoptions('default');loadoptions();applyoptions();">Reset settings</a>
 				<!--
