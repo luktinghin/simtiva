@@ -1003,7 +1003,7 @@
 					<a id="pastschemebuttonCOPY" onclick="displaymodalhistory();"><i class="fas fa-history"></i> Past Schemes</a>
 				</div>
 		</div>
-		<div class="card" id="card_retrospective">
+		<div class="card hide" id="card_retrospective">
 			<div class="cardtitle collapsiblecard">RETROSPECTIVE</div>
 			<div class="cardcontents">
 				<i style="color:grey; font-size:90%; padding-top:10px; padding-bottom:10px; display:block;">If you have given a bolus or changed the infusion rate some time ago but forgot to enter into SimTIVA, you can do retrospective correction here.</i>
@@ -1059,7 +1059,7 @@
 				<a class="button" id="btn_retrospective" onclick="senddataretrospective();">Apply</a>
 			</div>
 		</div>
-		<div class="card" id="card_TimeEstimation">
+		<div class="card hide" id="card_TimeEstimation">
 			<div class="cardtitle collapsiblecard">TIME ESTIMATION</div>
 			<div class="cardcontents">
 				<i style="color:grey; font-size:90%; padding-top:10px; padding-bottom:10px; display:block;">You can estimate how long before the infusion ends given a certain volume remaining in the syringe. </i>
@@ -1077,7 +1077,7 @@
 				<a class="button" id="btn_timeEstimation" onclick="displayTimeEstimation();">Apply</a>
 			</div>
 		</div>
-		<div class="card" id="card_VolumeEstimation">
+		<div class="card hide" id="card_VolumeEstimation">
 			<div class="cardtitle collapsiblecard">VOLUME ESTIMATION</div>
 			<div class="cardcontents">
 				<i style="color:grey; font-size:90%; padding-top:10px; padding-bottom:10px; display:block;">You can estimate how much drug volume is required for a certain duration of infusion.</i>
@@ -1095,7 +1095,7 @@
 				<a class="button" id="btn_volumeEstimation" onclick="displayVolumeEstimation();">Apply</a>
 			</div>
 		</div>
-		<div class="card" id="card_wakeup">
+		<div class="card hide" id="card_wakeup">
 			<div class="cardtitle collapsiblecard">WAKE-UP TIME</div>
 			<div class="cardcontents">
 				<i style="color:grey; font-size:90%; padding-top:10px; padding-bottom:10px; display:block;">To predict the wake-up time, or decrement time (time to reach a designated 'wake-up' concentration at the effect site) if the infusion is stopped at the current point. Default is 1mcg/ml.</i>
@@ -1123,7 +1123,7 @@
 				<a class="button" id="btn_wakeup" onclick="sendtowakeup(document.getElementById('wakeupconc').value);">Apply</a>
 			</div>
 		</div>
-		<div class="card" id="card_options">
+		<div class="card hide" id="card_options">
 			<div class="cardtitle">OPTIONS</div>
 			<div class="cardcontents">
 						<div id="ptolcardoptions">

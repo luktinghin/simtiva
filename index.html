@@ -78,7 +78,7 @@
 					<br>David Lam
 					<br>
 					<br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.
-					<br>Last updated 6/10/2024 (V4.83) Build 116.
+					<br>Last updated 6/10/2024 (V4.83) Build 117.
 					<br>
 					<br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i>
 					<br>Coding is done in Javascript. The code to the mathematical calculations are based on "STANPUMP", which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.
@@ -337,6 +337,9 @@
 									<td style="padding:0">
 										<select id="page2selectmaxrate" onchange="sendToUpdateMax(this.value);">
 											<option value="0" selected>Flash</option>
+											<option value="1500">1500ml/h</option>
+											<option value="1400">1400ml/h</option>
+											<option value="1300">1300ml/h</option>
 											<option value="1200">1200ml/h</option>
 											<option value="1100">1100ml/h</option>
 											<option value="1000">1000ml/h</option>
@@ -2169,6 +2172,9 @@
 						<td>
 							<select id="select_bolusspeed" onchange="applybolusspeed();">
 											<option value="0" selected>Flash</option>
+											<option value="1500">1500ml/h</option>
+											<option value="1400">1400ml/h</option>
+											<option value="1300">1300ml/h</option>
 											<option value="1200">1200ml/h</option>
 											<option value="1100">1100ml/h</option>
 											<option value="1000">1000ml/h</option>

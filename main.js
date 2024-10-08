@@ -5021,6 +5021,7 @@ function preview_cet(x,ind) {
 	drug_sets[ind].preview_rate = 0;
 	max_rate_input = drug_sets[ind].max_rate;
 	bolus_duration = 0;
+	remaining = 0;
 	if (drug_sets[ind].previewhistoryarray == undefined) drug_sets[ind].previewhistoryarray = new Array();
 	drug_sets[ind].previewhistorytext = "";
 	if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
@@ -5096,7 +5097,7 @@ function preview_cet(x,ind) {
 	temp_peak = drug_sets[ind].prior_peak_time;
 	var min_dif = drug_sets[ind].desired *0.0001;
 
-	if ((drug_sets[ind].cet_lockdowntime>working_clock) && (drug_sets[ind].desired<drug_sets[ind].cet_priordesired) && (drug_sets[ind].inf_rate_mls==0)) {
+	if ((drug_sets[ind].cet_lockdowntime>working_clock) && (drug_sets[ind].desired<=drug_sets[ind].cet_priordesired) && (drug_sets[ind].cpt_rates_real[working_clock-1]==0)) {
 		//in lockdown phase
 		drug_sets[ind].preview_bolus = 0;
 		drug_sets[ind].preview_rate = 0;
@@ -5123,6 +5124,7 @@ function preview_cet(x,ind) {
 		}
 
 		working_clock = drug_sets[ind].cet_lockdowntime;
+		drug_sets[ind].preview_bolus = 0;
 		//update e_state2		
 		p_state2[1] = p_state3[1];
 		p_state2[2] = p_state3[2];
@@ -5257,116 +5259,130 @@ function preview_cet(x,ind) {
 			deliver_cpt_alt();
 			
 		} else {
-			// this is for est_ce not higher than desired
-			//if (temp_peak <= delta_seconds) temp_peak = delta_seconds + 1;
-			trial_rate = (drug_sets[ind].desired - virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind)) / drug_sets[ind].e_udf[temp_peak];
-			temp_peak = find_peak(temp_peak, trial_rate, temp1e, temp2e, temp3e, temp4e, ind);
-			current = virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind) + drug_sets[ind].e_udf[temp_peak] * trial_rate;
-			console.log(trial_rate);
-			console.log(temp_peak);
-			console.log(current);
-			/* Iterate until solution is found [ln 2009] */
-
-			while (Math.abs(current - drug_sets[ind].desired) > min_dif)
-				{
+			if (remaining==0) {
+				// this is for est_ce not higher than desired
+				//if (temp_peak <= delta_seconds) temp_peak = delta_seconds + 1;
 				trial_rate = (drug_sets[ind].desired - virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind)) / drug_sets[ind].e_udf[temp_peak];
 				temp_peak = find_peak(temp_peak, trial_rate, temp1e, temp2e, temp3e, temp4e, ind);
-				current = virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1,ind) + e_udf[temp_peak] * trial_rate;
+				current = virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind) + drug_sets[ind].e_udf[temp_peak] * trial_rate;
+				console.log(trial_rate);
+				console.log(temp_peak);
+				console.log(current);
+				/* Iterate until solution is found [ln 2009] */
+
+				while (Math.abs(current - drug_sets[ind].desired) > min_dif)
+					{
+					trial_rate = (drug_sets[ind].desired - virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind)) / drug_sets[ind].e_udf[temp_peak];
+					temp_peak = find_peak(temp_peak, trial_rate, temp1e, temp2e, temp3e, temp4e, ind);
+					current = virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1,ind) + e_udf[temp_peak] * trial_rate;
+					}
+
+				if (drug_sets[ind].cpt_rates_real.length > 0) {
+					drug_sets[ind].preview_bolus = trial_rate;
 				}
+				if (mass>15)  {
+					drug_sets[ind].preview_bolus = Math.ceil(drug_sets[ind].preview_bolus/5)*5
+				} else {
+					drug_sets[ind].preview_bolus = Math.ceil(drug_sets[ind].preview_bolus)
+				}; // round up to the next 5mg bolus if bw big 
 
+				preview_cetpause = temp_peak;
 
-			if (drug_sets[ind].cpt_rates_real.length > 0) {
-				drug_sets[ind].preview_bolus = trial_rate;
-			}
-			if (mass>15)  {
-				drug_sets[ind].preview_bolus = Math.ceil(drug_sets[ind].preview_bolus/5)*5
-			} else {
-				drug_sets[ind].preview_bolus = Math.ceil(drug_sets[ind].preview_bolus)
-			}; // round up to the next 5mg bolus if bw big 
+				console.log(temp1e + " " + temp2e + " " + temp3e + " " + temp4e);
+				console.log("debug cet, virtualmodel = " + virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1,ind));
+				console.log("debug cet, trialrate= " + trial_rate);
+				console.log("debug cet, cet_bolus= " + drug_sets[ind].preview_bolus);
+				console.log("debug cet, temp_peak= " + temp_peak);
+				console.log("debug cet, current= " + current);
 
-			preview_cetpause = temp_peak;
+				if (drug_sets[ind].preview_bolus > 0) scheme_bolusadmin(drug_sets[ind].preview_bolus,ind,max_rate_input);
 
-			console.log(temp1e + " " + temp2e + " " + temp3e + " " + temp4e);
-			console.log("debug cet, virtualmodel = " + virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1,ind));
-			console.log("debug cet, trialrate= " + trial_rate);
-			console.log("debug cet, cet_bolus= " + drug_sets[ind].preview_bolus);
-			console.log("debug cet, temp_peak= " + temp_peak);
-			console.log("debug cet, current= " + current);
+				p_state3[1] = p_state2[1];
+				p_state3[2] = p_state2[2];
+				p_state3[3] = p_state2[3];
 
-			if (drug_sets[ind].preview_bolus > 0) scheme_bolusadmin(drug_sets[ind].preview_bolus,ind,max_rate_input);
+				e_state3[1] = e_state2[1];
+				e_state3[2] = e_state2[2];
+				e_state3[3] = e_state2[3];
+				e_state3[4] = e_state2[4];
+				drug_sets[ind].prior_peak_time = temp_peak;
+				next_time = working_clock + temp_peak;
 
-			p_state3[1] = p_state2[1];
-			p_state3[2] = p_state2[2];
-			p_state3[3] = p_state2[3];
+				drug_sets[ind].previewhistorytext = "";
+				drug_sets[ind].previewhistoryarray.length = 0;
 
-			e_state3[1] = e_state2[1];
-			e_state3[2] = e_state2[2];
-			e_state3[3] = e_state2[3];
-			e_state3[4] = e_state2[4];
-			drug_sets[ind].prior_peak_time = temp_peak;
-			next_time = working_clock + temp_peak;
-
-			drug_sets[ind].previewhistorytext = "";
-			drug_sets[ind].previewhistoryarray.length = 0;
-
-			if (drug_sets[ind].preview_bolus > 0) {
-				//drug_sets[ind].cet_lockdowntime = working_clock + temp_peak -1;
-				drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeboluscet nobolus' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Bolus: " + drug_sets[ind].preview_bolus + drug_sets[ind].infused_units + "</div>");
-				if (bolus_duration>0) drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeboluscetduration' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Given over " + converttime(bolus_duration) + " at " + max_rate_input + "ml/h</div>");
-				temp_time_bolus = working_clock + bolus_duration ;
-				if (temp_peak > bolus_duration) {
-					drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemepausecet' data-time='" + temp_time_bolus + "'>" + "<div class='timespan'>" + converttime(temp_time_bolus) + "</div>Paused for " + converttime(temp_peak - temp_time_bolus) + "</div>");
-				}
-				//if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
-				//	drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].fentanyl_weightadjusted_target_uncorrected]);	
-				//} else {
-				//	drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].desired]);	
-				//}
-				
-				//drug_sets[ind].historyarrays.push([2,1,working_clock,drug_sets[ind].cet_bolus]);
-				//drug_sets[ind].historyarrays.push([2,3,temp_peak]);
-			}
-
-			//real delivery
-			var look_l1 = Math.exp(-drug_sets[ind].lambda[1] ); 
-			var look_l2 = Math.exp(-drug_sets[ind].lambda[2] );
-			var look_l3 = Math.exp(-drug_sets[ind].lambda[3] );
-			var look_l4 = Math.exp(-drug_sets[ind].lambda[4] );
-			var temp_result, temp_result_e;
-
-
-			if (temp_peak>bolus_duration) {
-				for (j=0; j<temp_peak-bolus_duration; j++) {
-
-					p_state3[1] = p_state3[1] * look_l1 ;
-					p_state3[2] = p_state3[2] * look_l2 ;
-					p_state3[3] = p_state3[3] * look_l3 ;
-					//if (effect_data)
-					//	{
-					e_state3[1] = e_state3[1] * look_l1 ;
-					e_state3[2] = e_state3[2] * look_l2 ;
-					e_state3[3] = e_state3[3] * look_l3 ;
-					e_state3[4] = e_state3[4] * look_l4 ;
+				if (drug_sets[ind].preview_bolus > 0) {
+					//drug_sets[ind].cet_lockdowntime = working_clock + temp_peak -1;
+					drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeboluscet nobolus' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Bolus: " + drug_sets[ind].preview_bolus + drug_sets[ind].infused_units + "</div>");
+					if (bolus_duration>0) drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemeboluscetduration' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Given over " + converttime(bolus_duration) + " at " + max_rate_input + "ml/h</div>");
+					temp_time_bolus = working_clock + bolus_duration ;
+					if (temp_peak > bolus_duration) {
+						drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemepausecet' data-time='" + temp_time_bolus + "'>" + "<div class='timespan'>" + converttime(temp_time_bolus) + "</div>Paused for " + converttime(temp_peak - temp_time_bolus) + "</div>");
+					}
+					//if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
+					//	drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].fentanyl_weightadjusted_target_uncorrected]);	
+					//} else {
+					//	drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].desired]);	
+					//}
 					
-					//prior_test_rate = test_rate;
-					temp_result = p_state3[1] + p_state3[2] + p_state3[3];
-					temp_result_e = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
-					console.log(temp_result);
-					console.log(temp_result_e);
+					//drug_sets[ind].historyarrays.push([2,1,working_clock,drug_sets[ind].cet_bolus]);
+					//drug_sets[ind].historyarrays.push([2,3,temp_peak]);
 				}
-			
+
+				//real delivery
+				var look_l1 = Math.exp(-drug_sets[ind].lambda[1] ); 
+				var look_l2 = Math.exp(-drug_sets[ind].lambda[2] );
+				var look_l3 = Math.exp(-drug_sets[ind].lambda[3] );
+				var look_l4 = Math.exp(-drug_sets[ind].lambda[4] );
+				var temp_result, temp_result_e;
+
+
+				if (temp_peak>bolus_duration) {
+					for (j=0; j<temp_peak-bolus_duration; j++) {
+
+						p_state3[1] = p_state3[1] * look_l1 ;
+						p_state3[2] = p_state3[2] * look_l2 ;
+						p_state3[3] = p_state3[3] * look_l3 ;
+						//if (effect_data)
+						//	{
+						e_state3[1] = e_state3[1] * look_l1 ;
+						e_state3[2] = e_state3[2] * look_l2 ;
+						e_state3[3] = e_state3[3] * look_l3 ;
+						e_state3[4] = e_state3[4] * look_l4 ;
+						
+						//prior_test_rate = test_rate;
+						temp_result = p_state3[1] + p_state3[2] + p_state3[3];
+						temp_result_e = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
+						console.log(temp_result);
+						console.log(temp_result_e);
+					}
+				
+				}
+				//try off the following lines to improve performance
+				//myChart.data.datasets[ind*2+2].hidden = false;
+				//myChart.data.datasets[ind*2+3].hidden = false;
+				//myChart.update();
+				//document.getElementById("historywrapper").innerHTML = drug_sets[ind].historytext;
+				//you've got to deliver the real bolus at this point too
+				
+				//drug_sets[ind].cet_priordesired = drug_sets[ind].desired;
+				//this line is necessary for scheme display
+				drug_sets[ind].previewhistoryarray.push([working_clock,0]); //write 0,0 first as I don't know what to write
+			} else {
+				next_time = working_clock;
+				drug_sets[ind].previewhistorytext = "";
+				drug_sets[ind].previewhistoryarray.length = 0;
+				//display data until up to cet_lockdown point
+				//for remaining > 0
+				if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
+					drug_sets[ind].previewhistorytext = "<div class='schemecet' data-time='" + Math.floor(time_in_s) + "'>" + "At " + converttime(Math.floor(time_in_s)) + " - Ce target (" + conc_units + "/ml): " + drug_sets[ind].fentanyl_weightadjusted_target_uncorrected + "</div>";
+				} else {
+					drug_sets[ind].previewhistorytext = "<div class='schemecet' data-time='" + Math.floor(time_in_s) + "'>" + "At " + converttime(Math.floor(time_in_s)) + " - Ce target (" + conc_units + "/ml): " + drug_sets[ind].desired + "</div>";
+				}
+				drug_sets[ind].previewhistorytext = drug_sets[ind].previewhistorytext.concat("<div class='schemepause' data-time='" + Math.floor(time_in_s) + "'>" + "<div class='timespan'>" + converttime(Math.floor(time_in_s)) + "</div>Paused for " + converttime(remaining) + "</div>");
+				drug_sets[ind].previewhistoryarray.push([Math.floor(time_in_s),0]); 
 			}
-			//try off the following lines to improve performance
-			//myChart.data.datasets[ind*2+2].hidden = false;
-			//myChart.data.datasets[ind*2+3].hidden = false;
-			//myChart.update();
-			//document.getElementById("historywrapper").innerHTML = drug_sets[ind].historytext;
-			//you've got to deliver the real bolus at this point too
-			
-			//drug_sets[ind].cet_priordesired = drug_sets[ind].desired;
-			//this line is necessary for scheme display
-			drug_sets[ind].previewhistoryarray.push([working_clock,0]); //write 0,0 first as I don't know what to write
-			
+
 			//insert deliverCPT code at this point
 			//pass on states to deliverCPT
 
@@ -5685,7 +5701,7 @@ function deliver_cet_real(x, ind) {
 
 	//first check if previous cet_lockdowntime is active , write CP and CE until CETpeak 
 	//the last argument in if statement is to check if currently actively delivering a CET bolus
-	if ((drug_sets[ind].cet_lockdowntime>working_clock) && (drug_sets[ind].desired<=drug_sets[ind].cet_priordesired) && (drug_sets[ind].inf_rate_mls==0)) {
+	if ((drug_sets[ind].cet_lockdowntime>working_clock) && (drug_sets[ind].desired<=drug_sets[ind].cet_priordesired) && (drug_sets[ind].cpt_rates_real[working_clock-1]==0)) {
 		remaining = drug_sets[ind].cet_lockdowntime-working_clock;
 		for (i=0; i<remaining; i++) {
 			p_state3[1] = p_state3[1] * Math.exp(-drug_sets[ind].lambda[1]);
@@ -5731,6 +5747,8 @@ function deliver_cet_real(x, ind) {
 	est_ce = e_state2[1]+e_state2[2]+e_state2[3]+e_state2[4];
 	est_cp = p_state2[1]+p_state2[2]+p_state2[3];
 
+
+
 	//if CET gets very close to desired, it is better to target CPT (STANPUMP 1952)
 	if ((Math.abs(drug_sets[ind].desired - est_ce) < drug_sets[ind].desired * 0.05) && (Math.abs(est_ce-est_cp) < est_ce * 0.1) && (working_clock>drug_sets[ind].cet_lockdowntime)) {
 		console.log("CET gets too close to Desired; escaped; to CPT -----");
@@ -5755,35 +5773,6 @@ function deliver_cet_real(x, ind) {
 		compensation = 0;
 		/* should the pump be off? until after this drops below Ce*/
 		if (est_ce >= drug_sets[ind].desired) {
-			/*
-			while (est_ce >= drug_sets[ind].desired) {
-				p_state2[1] = p_state2[1] * Math.exp(-drug_sets[ind].lambda[1]) ;
-				p_state2[2] = p_state2[2] * Math.exp(-drug_sets[ind].lambda[2]) ;
-				p_state2[3] = p_state2[3] * Math.exp(-drug_sets[ind].lambda[3]) ;
-				e_state2[1] = e_state2[1] * Math.exp(-drug_sets[ind].lambda[1]);
-				e_state2[2] = e_state2[2] * Math.exp(-drug_sets[ind].lambda[2]);
-				e_state2[3] = e_state2[3] * Math.exp(-drug_sets[ind].lambda[3]);
-				e_state2[4] = e_state2[4] * Math.exp(-drug_sets[ind].lambda[4]);
-
-				//temp1e=e_state2[1];
-				//temp2e=e_state2[2];
-				//temp3e=e_state2[3];
-				//temp4e=e_state2[4];
-				est_cp = p_state2[1] + p_state2[2] + p_state2[3];
-				est_ce = e_state2[1] + e_state2[2] + e_state2[3] + e_state2[4];
-
-				if (est_cp >= drug_sets[ind].desired) {
-					cpt_pause = cpt_pause +1;
-				}
-				cet_pause = cet_pause +1;
-				console.log("est_cp = " + est_cp + ", ----- cpt_pause = " + cpt_pause);
-				console.log("est_ce = " + est_ce + ", ----- cet_pause = " + cet_pause);
-			}
-			*/
-
-			//new find breakpoint code
-			//we want cp and ce to drop below desired
-
 			while (est_cp>=drug_sets[ind].desired) {
 				cpt_pause = cpt_pause + 1;
 				est_cp = virtual_model(p_state2[1],p_state2[2],p_state2[3],0,cpt_pause,0,ind);
@@ -5834,8 +5823,6 @@ function deliver_cet_real(x, ind) {
 
 			console.log("compensation, over 1secs, " + compensation);
 
-			//myChart.data.datasets[2].hidden = false;
-			//myChart.data.datasets[3].hidden = false;
 			myChart.update();
 
 			
@@ -5884,148 +5871,163 @@ function deliver_cet_real(x, ind) {
 			console.log(temp4e);
 			console.log(temp_peak);
 			console.log(drug_sets[ind].e_udf[temp_peak]);
-			trial_rate = (drug_sets[ind].desired - virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind)) / drug_sets[ind].e_udf[temp_peak];
-			console.log(trial_rate);
-			temp_peak = find_peak(temp_peak, trial_rate, temp1e, temp2e, temp3e, temp4e, ind);
-			console.log(temp_peak);
-			current = virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind) + drug_sets[ind].e_udf[temp_peak] * trial_rate;
-			console.log(current);
-
-			/* Iterate until solution is found [ln 2009] */
-			while (Math.abs(current - drug_sets[ind].desired) > min_dif)
-				{
+			if (remaining==0) {
+				//branch off into "yes" remaining vs "no" remaining code after no_bolus introduced (oct 2024)
 				trial_rate = (drug_sets[ind].desired - virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind)) / drug_sets[ind].e_udf[temp_peak];
+				console.log(trial_rate);
 				temp_peak = find_peak(temp_peak, trial_rate, temp1e, temp2e, temp3e, temp4e, ind);
+				console.log(temp_peak);
 				current = virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind) + drug_sets[ind].e_udf[temp_peak] * trial_rate;
+				console.log(current);
+
+				/* Iterate until solution is found [ln 2009] */
+				while (Math.abs(current - drug_sets[ind].desired) > min_dif)
+					{
+					trial_rate = (drug_sets[ind].desired - virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind)) / drug_sets[ind].e_udf[temp_peak];
+					temp_peak = find_peak(temp_peak, trial_rate, temp1e, temp2e, temp3e, temp4e, ind);
+					current = virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind) + drug_sets[ind].e_udf[temp_peak] * trial_rate;
+					}
+
+				if (drug_sets[ind].cpt_rates_real.length > 0) {
+					drug_sets[ind].cet_bolus = trial_rate;
 				}
+				if (mass>15)  {
+					drug_sets[ind].cet_bolus = Math.ceil(drug_sets[ind].cet_bolus/5)*5
+				} else {
+					drug_sets[ind].cet_bolus = Math.ceil(drug_sets[ind].cet_bolus)
+				}; // round up to the next 5mg bolus if bw big 
 
+				//console.log(temp1e + " " + temp2e + " " + temp3e + " " + temp4e);
+				//console.log("debug cet, virtualmodel = " + virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind));
+				//console.log("debug cet, trialrate= " + trial_rate);
+				//console.log("debug cet, cet_bolus= " + drug_sets[ind].cet_bolus);
+				//console.log("debug cet, temp_peak= " + temp_peak);
+				//console.log("debug cet, current= " + current);
 
-			if (drug_sets[ind].cpt_rates_real.length > 0) {
-				drug_sets[ind].cet_bolus = trial_rate;
-			}
-			if (mass>15)  {
-				drug_sets[ind].cet_bolus = Math.ceil(drug_sets[ind].cet_bolus/5)*5
-			} else {
-				drug_sets[ind].cet_bolus = Math.ceil(drug_sets[ind].cet_bolus)
-			}; // round up to the next 5mg bolus if bw big 
+				//scheme_bolusadmin(drug_sets[ind].cet_bolus,ind);
 
-			//console.log(temp1e + " " + temp2e + " " + temp3e + " " + temp4e);
-			//console.log("debug cet, virtualmodel = " + virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind));
-			//console.log("debug cet, trialrate= " + trial_rate);
-			//console.log("debug cet, cet_bolus= " + drug_sets[ind].cet_bolus);
-			//console.log("debug cet, temp_peak= " + temp_peak);
-			//console.log("debug cet, current= " + current);
+				bolusadmin(drug_sets[ind].cet_bolus,ind,max_rate_input);
+				drug_sets[ind].prior_peak_time = temp_peak;
+				next_time = working_clock + temp_peak;
+				console.log("bolusduration" + bolus_duration);
 
-			//scheme_bolusadmin(drug_sets[ind].cet_bolus,ind);
-
-			bolusadmin(drug_sets[ind].cet_bolus,ind,max_rate_input);
-			drug_sets[ind].prior_peak_time = temp_peak;
-			next_time = working_clock + temp_peak;
-			console.log("bolusduration" + bolus_duration);
-
-			if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
-				drug_sets[ind].historytext = "<div class='schemecet' data-time='" + working_clock + "'>" + "At " + converttime(working_clock) + " - Ce target (" + drug_sets[ind].conc_units + "/ml): " + drug_sets[ind].fentanyl_weightadjusted_target_uncorrected + "</div>";
-			} else {
-				drug_sets[ind].historytext = "<div class='schemecet' data-time='" + working_clock + "'>" + "At " + converttime(working_clock) + " - Ce target (" + drug_sets[ind].conc_units + "/ml): " + drug_sets[ind].desired + "</div>";
-			}
-			if (drug_sets[ind].cet_bolus > 0) {
-				drug_sets[ind].cet_lockdowntime = working_clock + temp_peak -1;
-				bolus_ml = Math.round(drug_sets[ind].cet_bolus / drug_sets[ind].infusate_concentration * 10)/10;
-				drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeboluscet nobolus' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Bolus: " + drug_sets[ind].cet_bolus + drug_sets[ind].infused_units + "<span style='font-weight:normal;opacity:0.7'> (" + bolus_ml + "ml)</span>" + "</div>");
-				if (bolus_duration > 0) drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeboluscetduration' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Given over " + converttime(bolus_duration) + " at " + max_rate_input + "ml/h</div>");
-				temp_time_bolus = working_clock + bolus_duration ;
-				if (temp_peak > bolus_duration) {
-					drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemepausecet' data-time='" + temp_time_bolus + "'>" + "<div class='timespan'>" + converttime(temp_time_bolus) + "</div>Paused for " + converttime(temp_peak - bolus_duration) + "</div>");
-				}
 				if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
-					if (max_rate_input > 0) {
-						drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].fentanyl_weightadjusted_target_uncorrected,max_rate_input]);	
-					} else {
-						drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].fentanyl_weightadjusted_target_uncorrected]);	
-					}
+					drug_sets[ind].historytext = "<div class='schemecet' data-time='" + working_clock + "'>" + "At " + converttime(working_clock) + " - Ce target (" + drug_sets[ind].conc_units + "/ml): " + drug_sets[ind].fentanyl_weightadjusted_target_uncorrected + "</div>";
 				} else {
-					if (max_rate_input > 0) {
-						drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].desired,max_rate_input]);	
-					} else {
-						drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].desired]);		
+					drug_sets[ind].historytext = "<div class='schemecet' data-time='" + working_clock + "'>" + "At " + converttime(working_clock) + " - Ce target (" + drug_sets[ind].conc_units + "/ml): " + drug_sets[ind].desired + "</div>";
+				}
+				if (drug_sets[ind].cet_bolus > 0) {
+					drug_sets[ind].cet_lockdowntime = working_clock + temp_peak -1;
+					bolus_ml = Math.round(drug_sets[ind].cet_bolus / drug_sets[ind].infusate_concentration * 10)/10;
+					drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeboluscet nobolus' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Bolus: " + drug_sets[ind].cet_bolus + drug_sets[ind].infused_units + "<span style='font-weight:normal;opacity:0.7'> (" + bolus_ml + "ml)</span>" + "</div>");
+					if (bolus_duration > 0) drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeboluscetduration' data-time='" + working_clock + "'>" + "<div class='timespan'>" + converttime(working_clock) + "</div>Given over " + converttime(bolus_duration) + " at " + max_rate_input + "ml/h</div>");
+					temp_time_bolus = working_clock + bolus_duration ;
+					if (temp_peak > bolus_duration) {
+						drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemepausecet' data-time='" + temp_time_bolus + "'>" + "<div class='timespan'>" + converttime(temp_time_bolus) + "</div>Paused for " + converttime(temp_peak - bolus_duration) + "</div>");
 					}
-					
+					if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
+						if (max_rate_input > 0) {
+							drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].fentanyl_weightadjusted_target_uncorrected,max_rate_input]);	
+						} else {
+							drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].fentanyl_weightadjusted_target_uncorrected]);	
+						}
+					} else {
+						if (max_rate_input > 0) {
+							drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].desired,max_rate_input]);	
+						} else {
+							drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].desired]);		
+						}
+					}
+					if (bolus_duration > 0) {
+						drug_sets[ind].historyarrays.push([2,1,working_clock,drug_sets[ind].cet_bolus,max_rate_input,bolus_duration]);	
+						drug_sets[ind].historyarrays.push([2,3,temp_time_bolus,temp_peak-bolus_duration]);	
+					} else {
+						drug_sets[ind].historyarrays.push([2,1,working_clock,drug_sets[ind].cet_bolus]);
+						drug_sets[ind].historyarrays.push([2,3,temp_peak]);
+					}
 				}
-				if (bolus_duration > 0) {
-					drug_sets[ind].historyarrays.push([2,1,working_clock,drug_sets[ind].cet_bolus,max_rate_input,bolus_duration]);	
-					drug_sets[ind].historyarrays.push([2,3,temp_time_bolus,temp_peak-bolus_duration]);	
-				} else {
-					drug_sets[ind].historyarrays.push([2,1,working_clock,drug_sets[ind].cet_bolus]);
-					drug_sets[ind].historyarrays.push([2,3,temp_peak]);
-				}
+				//real delivery
+				var look_l1 = Math.exp(-drug_sets[ind].lambda[1] ); 
+				var look_l2 = Math.exp(-drug_sets[ind].lambda[2] );
+				var look_l3 = Math.exp(-drug_sets[ind].lambda[3] );
+				var look_l4 = Math.exp(-drug_sets[ind].lambda[4] );
+				var temp_result, temp_result_e;
+
 				
-			}
+				if (temp_peak>bolus_duration) {
+					for (j=0; j<temp_peak-bolus_duration; j++) {
+
+						p_state3[1] = p_state3[1] * look_l1 ;
+						p_state3[2] = p_state3[2] * look_l2 ;
+						p_state3[3] = p_state3[3] * look_l3 ;
+						//if (effect_data)
+						//	{
+						e_state3[1] = e_state3[1] * look_l1 ;
+						e_state3[2] = e_state3[2] * look_l2 ;
+						e_state3[3] = e_state3[3] * look_l3 ;
+						e_state3[4] = e_state3[4] * look_l4 ;
+						
+						//prior_test_rate = test_rate;
+						temp_result = p_state3[1] + p_state3[2] + p_state3[3];
+						temp_result_e = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
+						drug_sets[ind].cpt_rates_real.push(0);
+						drug_sets[ind].cpt_cp.push([p_state3[1],p_state3[2],p_state3[3]]);
+						drug_sets[ind].cpt_ce.push([e_state3[1],e_state3[2],e_state3[3],e_state3[4]]);
+
+						//write to VI
+						if ((j==0) && (drug_sets[ind].cet_bolus>0)) {
+							temp_vol += drug_sets[ind].cet_bolus/drug_sets[ind].infusate_concentration;
+							drug_sets[ind].volinf.push(temp_vol);
+						} else {
+							drug_sets[ind].volinf.push(temp_vol);
+						}
 
 
-			//real delivery
-			var look_l1 = Math.exp(-drug_sets[ind].lambda[1] ); 
-			var look_l2 = Math.exp(-drug_sets[ind].lambda[2] );
-			var look_l3 = Math.exp(-drug_sets[ind].lambda[3] );
-			var look_l4 = Math.exp(-drug_sets[ind].lambda[4] );
-			var temp_result, temp_result_e;
-
-			
-			if (temp_peak>bolus_duration) {
-				for (j=0; j<temp_peak-bolus_duration; j++) {
-
-					p_state3[1] = p_state3[1] * look_l1 ;
-					p_state3[2] = p_state3[2] * look_l2 ;
-					p_state3[3] = p_state3[3] * look_l3 ;
-					//if (effect_data)
-					//	{
-					e_state3[1] = e_state3[1] * look_l1 ;
-					e_state3[2] = e_state3[2] * look_l2 ;
-					e_state3[3] = e_state3[3] * look_l3 ;
-					e_state3[4] = e_state3[4] * look_l4 ;
-					
-					//prior_test_rate = test_rate;
-					temp_result = p_state3[1] + p_state3[2] + p_state3[3];
-					temp_result_e = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
-					drug_sets[ind].cpt_rates_real.push(0);
-					drug_sets[ind].cpt_cp.push([p_state3[1],p_state3[2],p_state3[3]]);
-					drug_sets[ind].cpt_ce.push([e_state3[1],e_state3[2],e_state3[3],e_state3[4]]);
-
-					//write to VI
-					if ((j==0) && (drug_sets[ind].cet_bolus>0)) {
-						temp_vol += drug_sets[ind].cet_bolus/drug_sets[ind].infusate_concentration;
-						drug_sets[ind].volinf.push(temp_vol);
-					} else {
-						drug_sets[ind].volinf.push(temp_vol);
-					}
-
-
-					//if (j%60 ==0) {console.log(j + "real rate " + test_rate*3600/10 + " real Cp " + result);}
-					if (j%10==0) {
-						myChart.data.datasets[ind*2+2].data.push({x:(working_clock+bolus_duration+j)/60, y:temp_result});
-						myChart.data.datasets[ind*2+3].data.push({x:(working_clock+bolus_duration+j)/60, y:temp_result_e});
+						//if (j%60 ==0) {console.log(j + "real rate " + test_rate*3600/10 + " real Cp " + result);}
+						if (j%10==0) {
+							myChart.data.datasets[ind*2+2].data.push({x:(working_clock+bolus_duration+j)/60, y:temp_result});
+							myChart.data.datasets[ind*2+3].data.push({x:(working_clock+bolus_duration+j)/60, y:temp_result_e});
+						}
 					}
 				}
-			}
-			//try off the following lines to improve performance
-			//myChart.data.datasets[ind*2+2].hidden = false;
-			//myChart.data.datasets[ind*2+3].hidden = false;
-			//myChart.update();
-			document.getElementById("historywrapper").innerHTML = drug_sets[ind].historytext;
-			//you've got to deliver the real bolus at this point too
-			
-			drug_sets[ind].cet_priordesired = drug_sets[ind].desired;
-			//this line is necessary for scheme display
-			if (bolus_duration > 0) {
-				drug_sets[ind].historyarray.push([working_clock,0]);
-				let bolus_array = new Array();
-				bolus_array.push(drug_sets[ind].cet_bolus);
-				bolus_array.push(max_rate_input);
-				bolus_array.push(bolus_duration);
-				drug_sets[ind].historyarray.push([working_clock,bolus_array]);  //write the induction dose as an array
-					//need to push a zero state to historyarray for update() grey highlight to work properly
-					drug_sets[ind].historyarray.push([temp_time_bolus,0])
+				//try off the following lines to improve performance
+				//myChart.data.datasets[ind*2+2].hidden = false;
+				//myChart.data.datasets[ind*2+3].hidden = false;
+				//myChart.update();
+				document.getElementById("historywrapper").innerHTML = drug_sets[ind].historytext;
+				//you've got to deliver the real bolus at this point too
+				
+				drug_sets[ind].cet_priordesired = drug_sets[ind].desired;
+				//this line is necessary for scheme display
+				if (bolus_duration > 0) {
+					drug_sets[ind].historyarray.push([working_clock,0]);
+					let bolus_array = new Array();
+					bolus_array.push(drug_sets[ind].cet_bolus);
+					bolus_array.push(max_rate_input);
+					bolus_array.push(bolus_duration);
+					drug_sets[ind].historyarray.push([working_clock,bolus_array]);  //write the induction dose as an array
+						//need to push a zero state to historyarray for update() grey highlight to work properly
+						drug_sets[ind].historyarray.push([temp_time_bolus,0])
+				} else {
+					drug_sets[ind].historyarray.push([working_clock,0]);
+				}
 			} else {
-				drug_sets[ind].historyarray.push([working_clock,0]);
+				next_time = working_clock;
+				//display data until up to cet_lockdown point
+				//for remaining > 0
+				if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
+					drug_sets[ind].historytext = "<div class='schemecet' data-time='" + Math.floor(time_in_s) + "'>" + "At " + converttime(Math.floor(time_in_s)) + " - Ce target (" + conc_units + "/ml): " + drug_sets[ind].fentanyl_weightadjusted_target_uncorrected + "</div>";
+				} else {
+					drug_sets[ind].historytext = "<div class='schemecet' data-time='" + Math.floor(time_in_s) + "'>" + "At " + converttime(Math.floor(time_in_s)) + " - Ce target (" + conc_units + "/ml): " + drug_sets[ind].desired + "</div>";
+				}
+				drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemepause' data-time='" + Math.floor(time_in_s) + "'>" + "<div class='timespan'>" + converttime(Math.floor(time_in_s)) + "</div>Paused for " + converttime(remaining) + "</div>");
+				drug_sets[ind].historyarray.push([Math.floor(time_in_s),0]); 
+				if (drug_sets[ind].fentanyl_weightadjusted_flag == 1) {
+					drug_sets[ind].historyarrays.push([2,0,Math.floor(time_in_s),drug_sets[ind].fentanyl_weightadjusted_target_uncorrected]);
+				} else {
+					drug_sets[ind].historyarrays.push([2,0,Math.floor(time_in_s),drug_sets[ind].desired]);
+				}
+				drug_sets[ind].historyarrays.push([2,3,Math.floor(time_in_s),remaining]);
 			}
 			deliver_cpt(drug_sets[ind].desired, 1, 0, ind);
 		}
@@ -6705,8 +6707,10 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 		if (min_rate > max_rate) {
 			//bolus duration will exceed temp peak, take discount arbitrarily
 			rate_corr_factor = 0.8;
+		} else if (max_rate_input>1200) {
+			rate_corr_factor = 0.97;
 		} else {
-			rate_corr_factor = 0.97 - ((max_1200 - max_rate) / (max_1200 - min_rate))*0.1;	
+			rate_corr_factor = 0.97 - (Math.abs(max_1200 - max_rate) / (max_1200 - min_rate))*0.1;	
 		}
 	}
 
@@ -9082,8 +9086,10 @@ function bolusadmin(x, ind, max_rate_input) {
 		if (min_rate > max_rate) {
 			//bolus duration will exceed temp peak, set to 0.8
 			rate_corr_factor = 0.8;
+		} else if (max_rate_input>1200) {
+			rate_corr_factor = 0.97;
 		} else {
-			rate_corr_factor = 0.97 - ((max_1200 - max_rate) / (max_1200 - min_rate))*0.1;	
+			rate_corr_factor = 0.97 - ((max_1200 - max_rate) / (max_1200 - min_rate))*0.1;
 		}
 	} 
 
@@ -11015,20 +11021,22 @@ function sendToUpdateMax(input) {
 }
 
 function cptevent() {
+	initcpt();
 	drug_sets[0].max_rate = document.getElementById("page2selectmaxrate").value *1;
 	x = document.getElementById("page2selectmaintenance").value * 1;
 	document.getElementById("select_threshold").value = x;
 	applyoptions();
-	initcpt();hideallmodal();document.getElementById('card_controlpanel').style.display='block';
+	hideallmodal();document.getElementById('card_controlpanel').style.display='block';
 	updateBolusSpeedOptions()
 }
 
 function cetevent() {
+	initcet();
 	drug_sets[0].max_rate = document.getElementById("page2selectmaxrate").value *1;
 	x = document.getElementById("page2selectmaintenance").value * 1;
 	document.getElementById("select_threshold").value = x;
 	applyoptions();
-	initcet();hideallmodal();document.getElementById('card_controlpanel').style.display='block';
+	hideallmodal();document.getElementById('card_controlpanel').style.display='block';
 	updateBolusSpeedOptions()
 }
 
@@ -11086,7 +11094,7 @@ function displayDisclaimer() {
 
 function displayAbout() {
 	//obsolete
-	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk, 2024</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 6/10/2024 (V4.83) Build 116.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
+	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk, 2024</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 6/10/2024 (V4.83) Build 117.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
 	displayWarning("About", text);
 }
 
@@ -11137,7 +11145,7 @@ function displayAbout2() {
 		<br> - Eric Ng 
 		<br> - David Lam
 		<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.
-		<br>Last updated 6/10/2024 (V4.83) Build 116.
+		<br>Last updated 6/10/2024 (V4.83) Build 117.
 		<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i>
 		<br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.
 		<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>`;
