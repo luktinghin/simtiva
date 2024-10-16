@@ -84,3 +84,4 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
  #### Social
  - Blog: http://simtiva.blogspot.com
  - Twitter/X: http://x.com/simtiva_app
+ - LinkedIn: https://www.linkedin.com/in/terence-luk-3b89392b5
