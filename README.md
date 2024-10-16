@@ -21,7 +21,13 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
 - To help deliver TCI in a setting where TCI pumps are not available
 
 ### Changelog
- Version 4.81 (Build 111) Current
+ Version 4.84 (Build 118) Current
+ - New feature: bolus speed - allow user entry of induction bolus speed in CPT/CET mode, from 300ml/h to 1200ml/h, or flash (instantaneous)
+ - Bugfix: scheme generation bug in "share module"
+ - Viewer app bugfixes
+ - UI changes: options module layout changed
+
+ Version 4.81 (Build 111) 
  - Updated manual (v2.0) to add chapter on Advanced Features & Eleveld Emulation
  - Improved graph dimensions on computer/widescreen devices
  - Corrected minor issues (incorrect reference for pharmacodynamic interaction, arrow symbol in complex mode, bug on loading complex mode simfile)
