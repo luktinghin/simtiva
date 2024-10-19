@@ -13895,6 +13895,7 @@ function parseobject(input_uid,external,extObject) {
 							drug_sets[0].max_rate = parse_historyarray[count][4];
 							deliver_cpt(parse_historyarray[count][3],0,0,0);
 						} else {
+							drug_sets[0].max_rate = 0;
 							deliver_cpt(parse_historyarray[count][3],0,0,0); //for cpt mode effect flag is 0, third param is for compen, 4th param is drug_set
 						}
 					} else {
@@ -13902,10 +13903,11 @@ function parseobject(input_uid,external,extObject) {
 					}
 				} else {
 					if (parse_historyarray[count][3]>0) {
-						if (parse_historyarray[count].length>3) {
+						if (parse_historyarray[count].length>4) {
 							drug_sets[0].max_rate = parse_historyarray[count][4];
 							deliver_cpt(parse_historyarray[count][3],0,0,0);
 						} else {
+							drug_sets[0].max_rate = 0;
 							deliver_cpt(parse_historyarray[count][3],0,0,0); //for cpt mode effect flag is 0	
 						}
 						
@@ -13992,6 +13994,7 @@ function parseobject(input_uid,external,extObject) {
 								drug_sets[0].max_rate = parse_historyarray[count][4];
 								deliver_cet(parse_historyarray[count][3],0); 	
 							} else {
+								drug_sets[0].max_rate = 0;
 								deliver_cet(parse_historyarray[count][3],0); 
 							}
 						} else {
@@ -14003,6 +14006,7 @@ function parseobject(input_uid,external,extObject) {
 								drug_sets[0].max_rate = parse_historyarray[count][4];
 								deliver_cet(parse_historyarray[count][3],0); 	
 							} else {
+								drug_sets[0].max_rate = 0;
 								deliver_cet(parse_historyarray[count][3],0); 
 							}
 						} else {
@@ -14240,6 +14244,7 @@ function parseobject(input_uid,external,extObject) {
 									drug_sets[1].max_rate = parse_historyarray1[count][4];
 									deliver_cpt(parse_historyarray1[count][3],0,0,1); 
 								} else {
+									drug_sets[1].max_rate = 0;
 									deliver_cpt(parse_historyarray1[count][3],0,0,1); //for cpt mode effect flag is 0, third param is for compen, 4th param is drug_set	
 								}
 							} else {
@@ -14251,6 +14256,7 @@ function parseobject(input_uid,external,extObject) {
 									drug_sets[1].max_rate = parse_historyarray1[count][4];
 									deliver_cpt(parse_historyarray1[count][3],0,0,1); 
 								} else {
+									drug_sets[1].max_rate = 0;
 									deliver_cpt(parse_historyarray1[count][3],0,0,1); //for cpt mode effect flag is 0, third param is for compen, 4th param is drug_set	
 								}
 							} else {
@@ -14336,6 +14342,7 @@ function parseobject(input_uid,external,extObject) {
 										drug_sets[1].max_rate = parse_historyarray1[count][4];
 										deliver_cet(parse_historyarray1[count][3],1); 	
 									} else {
+										drug_sets[1].max_rate = 0;
 										deliver_cet(parse_historyarray1[count][3],1); 	
 									}
 								} else {
@@ -14347,6 +14354,7 @@ function parseobject(input_uid,external,extObject) {
 										drug_sets[1].max_rate = parse_historyarray1[count][4];
 										deliver_cet(parse_historyarray1[count][3],1); 	
 									} else {
+										drug_sets[1].max_rate = 0;
 										deliver_cet(parse_historyarray1[count][3],1); 	
 									}
 								} else {
