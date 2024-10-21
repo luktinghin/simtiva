@@ -4266,7 +4266,11 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 
 	//new first pass
 	est_cp = p_state2[1] + p_state2[2] + p_state2[3];
-	temp_vol = temp_vol = drug_sets[ind].volinf[working_clock-1];
+	if (working_clock==0) {
+		temp_vol = 0;
+	} else {
+		temp_vol = drug_sets[ind].volinf[working_clock-1];
+	};
 	cpt_pause = 0;
 	if ((effect_flag == 0) && (est_cp >= drug_sets[ind].desired) && (bolus_duration == 0)) {
 		while (est_cp>=drug_sets[ind].desired) {
@@ -4811,18 +4815,18 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 	var look_l2 = Math.exp(-drug_sets[ind].lambda[2] );
 	var look_l3 = Math.exp(-drug_sets[ind].lambda[3] );
 	var look_l4 = Math.exp(-drug_sets[ind].lambda[4] );
-	var temp_result, temp_result_e, temp_vol;
+	var temp_result, temp_result_e;
 
-	if (drug_sets[ind].volinf.length==0) {
+	if (working_clock==0) {
 		temp_vol = 0;
 	} else {
 		temp_vol = drug_sets[ind].volinf[working_clock-1];
 	};
 
 	//you've got to deliver the real bolus at this point too
-	//for CPT mode only
-	//if (effect_flag == 0) bolusadmin(drug_sets[0].cpt_bolus,ind);
-
+	if ((max_rate_input == 0) && (drug_sets[ind].cpt_bolus > 0)) {
+		temp_vol = temp_vol + drug_sets[ind].cpt_bolus/drug_sets[ind].infusate_concentration;
+	}
 	for (j=0; j<21600; j++) {
 
 		test_rate = drug_sets[ind].cpt_rates_real[j+working_clock];
@@ -9163,7 +9167,8 @@ function bolusadmin(x, ind, max_rate_input) {
 		drug_sets[ind].cpt_ce.push([e_state3[1],e_state3[2],e_state3[3],e_state3[4]]);
 		temp_vol = temp_vol + max_rate/drug_sets[ind].infusate_concentration;
 		drug_sets[ind].volinf.push(temp_vol);
-		drug_sets[ind].cpt_rates_real.push(0);
+		drug_sets[ind].cpt_rates_real.push(0.0001);
+		//fix division by zero bug in deliver cpt
 	} else {
 		bolus_duration = Math.floor(x / max_rate * rate_corr_factor);
 		if (temp_peak != undefined) {
@@ -9213,16 +9218,17 @@ function bolusadmin(x, ind, max_rate_input) {
 
 
 	if (drug_sets[ind].manualmode_active == 1) {
-			p_state3[1] = p_state[1];
-	p_state[2] = p_state3[2];
-	p_state[3] = p_state3[3];
-	e_state[1] = e_state3[1];
-	e_state[2] = e_state3[2];
-	e_state[3] = e_state3[3];
-	e_state[4] = e_state3[4];
-		drug_sets[ind].cpt_cp.push([p_state[1],p_state[2],p_state[3]]);
-		drug_sets[ind].cpt_ce.push([e_state[1],e_state[2],e_state[3],e_state[4]]);
-		drug_sets[ind].volinf.push(temp_vol+x/drug_sets[ind].infusate_concentration);
+		p_state3[1] = p_state[1];
+		p_state[2] = p_state3[2];
+		p_state[3] = p_state3[3];
+		e_state[1] = e_state3[1];
+		e_state[2] = e_state3[2];
+		e_state[3] = e_state3[3];
+		e_state[4] = e_state3[4];
+		//drug_sets[ind].cpt_cp.push([p_state[1],p_state[2],p_state[3]]);
+		//drug_sets[ind].cpt_ce.push([e_state[1],e_state[2],e_state[3],e_state[4]]);
+		//drug_sets[ind].volinf.push(temp_vol+x/drug_sets[ind].infusate_concentration);
+		//do not push volinf two times
 		drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div><div class='timespan'>" + converttime(working_clock) + "</div> Bolus: " + x + drug_sets[ind].infused_units + "</div>");
 		drug_sets[ind].historyarrays.push([0,1,working_clock,x]);
 		lookahead(1,21600,ind);
