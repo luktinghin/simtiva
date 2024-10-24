@@ -6053,7 +6053,7 @@ function deliver_cet_real(x, ind) {
 function apply_fentanyl_correction(ind) {
 	console.log("entering apply fentanyl correction function...");
 	working_clock = Math.floor(time_in_s);
-	for (counterfen=working_clock; counterfen<drug_sets[ind].cpt_rates_real.length; counterfen++) {
+	for (counterfen=working_clock; counterfen<drug_sets[ind].cpt_rates_real.length-1; counterfen++) {
 		drug_sets[ind].cpt_cp[counterfen][0] *= drug_sets[ind].fentanyl_weightadjusted_factor;
 		drug_sets[ind].cpt_cp[counterfen][1] *= drug_sets[ind].fentanyl_weightadjusted_factor;
 		drug_sets[ind].cpt_cp[counterfen][2] *= drug_sets[ind].fentanyl_weightadjusted_factor;
