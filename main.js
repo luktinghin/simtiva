@@ -16741,27 +16741,45 @@ function popup_dilution(targetid,targetname) {
 		temp = document.getElementById("popup_dilution_input").value * 1;
 		if ((temp > upperlimit) || (temp < lowerlimit)) {
 			text = `Invalid entry, value must be ${lowerlimit}-${upperlimit}`;
-			if (targetname == "fentanyl") {
-				document.getElementById("select_fendilution").value = "10";
-				document.getElementById("custom_fendilution").style.display = "none";
-			} else if (targetname == "remifentanil") {
-				document.getElementById("select_remidilution").value = "20";
-				document.getElementById("custom_remidilution").style.display = "none";
-			} else if (targetname == "alfentanil") {
-				document.getElementById("select_alfendilution").value = "100";
-				document.getElementById("custom_alfendilution").style.display = "none";
+			if (targetid == "opioiddilution") { //this is complex mode
+				if (targetname == "fentanyl") {
+					document.getElementById("select_opioiddilution").value = "10";
+					document.getElementById("custom_opioiddilution").style.display = "none";
+				} else if (targetname == "remifentanil") {
+					document.getElementById("select_opioiddilution").value = "20";
+					document.getElementById("custom_opioiddilution").style.display = "none";
+				} else if (targetname == "alfentanil") {
+					document.getElementById("select_opioiddilution").value = "100";
+					document.getElementById("custom_opioiddilution").style.display = "none";
+				}
+			} else {
+				if (targetname == "fentanyl") {
+					document.getElementById("select_fendilution").value = "10";
+					document.getElementById("custom_fendilution").style.display = "none";
+				} else if (targetname == "remifentanil") {
+					document.getElementById("select_remidilution").value = "20";
+					document.getElementById("custom_remidilution").style.display = "none";
+				} else if (targetname == "alfentanil") {
+					document.getElementById("select_alfendilution").value = "100";
+					document.getElementById("custom_alfendilution").style.display = "none";
+				}
 			}
 			document.getElementById("popup_dilution_message").innerText = text;
 		} else {
-			if (targetname == "fentanyl") {
-				document.getElementById("select_fendilution").value = "custom";
-				document.getElementById("custom_fendilution").style.display = "inline-block";
-			} else if (targetname == "remifentanil") {
-				document.getElementById("select_remidilution").value = "custom";
-				document.getElementById("custom_remidilution").style.display = "inline-block";
-			} else if (targetname == "alfentanil") {
-				document.getElementById("select_alfendilution").value = "custom";
-				document.getElementById("custom_alfendilution").style.display = "inline-block";
+			if (targetid == "opioiddilution") { 
+					document.getElementById("select_opioiddilution").value = "custom";
+					document.getElementById("custom_opioiddilution").style.display = "inline-block";
+			} else {
+				if (targetname == "fentanyl") {
+					document.getElementById("select_fendilution").value = "custom";
+					document.getElementById("custom_fendilution").style.display = "inline-block";
+				} else if (targetname == "remifentanil") {
+					document.getElementById("select_remidilution").value = "custom";
+					document.getElementById("custom_remidilution").style.display = "inline-block";
+				} else if (targetname == "alfentanil") {
+					document.getElementById("select_alfendilution").value = "custom";
+					document.getElementById("custom_alfendilution").style.display = "inline-block";
+				}
 			}
 			document.getElementById("popup_dilution_message").innerText = "&nbsp;";
 			ElTarget.innerHTML = temp;
