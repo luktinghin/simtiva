@@ -11108,7 +11108,7 @@ function displayDisclaimer() {
 
 function displayAbout() {
 	//obsolete
-	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk, 2024</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 16/10/2024 (V4.84) Build 121.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
+	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk, 2024</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 1/11/2024 (V4.85) Build 122.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
 	displayWarning("About", text);
 }
 
@@ -11159,7 +11159,7 @@ function displayAbout2() {
 		<br> - Eric Ng 
 		<br> - David Lam
 		<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.
-		<br>Last updated 16/10/2024 (V4.84) Build 121.
+		<br>Last updated 1/11/2024 (V4.85) Build 122.
 		<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i>
 		<br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.
 		<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>`;
@@ -11210,8 +11210,8 @@ function displayAbout2() {
 			<div class='banneritem' style='background:#a5d0a8'>
 				<div class='bannericon' style='background:#356038'><img class='' src="users.webp"></div>
 					<div class='bannertextouter'>
-						<div class='bannertextinner1'><b>2959</b> Monthly Users</div>
-						<div class='bannertextinner2'>Total 8896 simulations performed in September 2024</div>
+						<div class='bannertextinner1'><b>3623</b> Monthly Users</div>
+						<div class='bannertextinner2'>Total 11084 simulations performed in October 2024</div>
 					</div>
 		</div>
 	`
@@ -16707,27 +16707,67 @@ function change_opioiddilution(paramo) {
 }
 
 function popup_dilution(targetid,targetname) {
-	ElTarget = document.getElementById(targetid);
+	
+	let lowerlimit = 0.1;
+	let upperlimit;
 	if (targetname == "fentanyl") {
 		targetnamecaps = "Fentanyl";
+		upperlimit = 100;
 	} else if (targetname == "remifentanil") {
 		targetnamecaps = "Remifentanil";
+		upperlimit = 100;
 	} else {
 		targetnamecaps = "Alfentanil";
+		upperlimit = 500;
 	}
 	displayWarning(`Custom ${targetname} dilution`,
 		`
 			<table style='width:70%'>
 				<tr class='fr'>
 					<td>${targetnamecaps} dilution (mcg/ml)</td>
-					<td><input type='number' step='0.001' oninput='ElTarget.innerHTML=(this.value)'></td>
+					<td><input type='number' step='0.001' oninput='' id='popup_dilution_input'></td>
 				</tr>
 			</table>
+			<div><span id='popup_dilution_message' style='padding-top:6px;padding-bottom:6px;opacity:0.7;font-size:0.8rem;font-style:italic'>&nbsp;</span></div>
 			<div style='text-align:right'>
-			<a class='button muted' onclick='hideallmodal()'>OK</a>
+			<a class='button muted' onclick='popup_dilution_validate("${targetname}",${lowerlimit},${upperlimit},"${targetid}")'>OK</a>
 			</div>
 		`)
+
 }
+
+	function popup_dilution_validate(targetname,lowerlimit,upperlimit,targetid) {
+		ElTarget = document.getElementById(targetid);
+		temp = document.getElementById("popup_dilution_input").value * 1;
+		if ((temp > upperlimit) || (temp < lowerlimit)) {
+			text = `Invalid entry, value must be ${lowerlimit}-${upperlimit}`;
+			if (targetname == "fentanyl") {
+				document.getElementById("select_fendilution").value = "10";
+				document.getElementById("custom_fendilution").style.display = "none";
+			} else if (targetname == "remifentanil") {
+				document.getElementById("select_remidilution").value = "20";
+				document.getElementById("custom_remidilution").style.display = "none";
+			} else if (targetname == "alfentanil") {
+				document.getElementById("select_alfendilution").value = "100";
+				document.getElementById("custom_alfendilution").style.display = "none";
+			}
+			document.getElementById("popup_dilution_message").innerText = text;
+		} else {
+			if (targetname == "fentanyl") {
+				document.getElementById("select_fendilution").value = "custom";
+				document.getElementById("custom_fendilution").style.display = "inline-block";
+			} else if (targetname == "remifentanil") {
+				document.getElementById("select_remidilution").value = "custom";
+				document.getElementById("custom_remidilution").style.display = "inline-block";
+			} else if (targetname == "alfentanil") {
+				document.getElementById("select_alfendilution").value = "custom";
+				document.getElementById("custom_alfendilution").style.display = "inline-block";
+			}
+			document.getElementById("popup_dilution_message").innerText = "&nbsp;";
+			ElTarget.innerHTML = temp;
+			hidemodal('modalWarning')
+		}
+	}
 
 function popup_reset() {
 	displayWarning(`Quick Reset`,
