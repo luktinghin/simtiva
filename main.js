@@ -3036,6 +3036,7 @@ function common_start_calls() {
 		//custom umami tracker function
 		trackerprops = {};
 		if (complex_mode == 0) {
+			temptext0 = 'Simple';
 			trackerprops.model = drug_sets[0].model_name;
 			if (drug_sets[0].cpt_active > 0) {
 				trackerprops.mode = 'CPT';
@@ -3048,8 +3049,10 @@ function common_start_calls() {
 			} else if (drug_sets[0].manualmode_active > 0) {
 				trackerprops.mode = 'Manual';
 			}
+			temptext = trackerprops.mode + trackerprops.model;
 		} else {
 			trackerprops.model = 'Complex';
+			temptext0 = 'Complex';
 			temptext = '';
 			if (drug_sets[0].cpt_active > 0) {
 				temptext += 'CPT';
@@ -3078,7 +3081,10 @@ function common_start_calls() {
 			temptext += drug_sets[1].model_name;
 			trackerprops.mode = temptext;
 		}
+		combinedtext = temptext0 + ": " + temptext;
 		umami.track('run', trackerprops);
+		umami.track('data', {modelstring: combinedtext});
+		umami.identify(trackerprops);
 }
 
 function start_cet() {
