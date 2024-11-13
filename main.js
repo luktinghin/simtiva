@@ -3033,6 +3033,52 @@ function common_start_calls() {
 			loop3 = setInterval(updatechart, 5000, myChart);
 		loop7 = setInterval(displayWarningBanner, 60*2000);
 		initshare();
+		//custom umami tracker function
+		trackerprops = {};
+		if (complex_mode == 0) {
+			trackerprops.model = drug_sets[0].model_name;
+			if (drug_sets[0].cpt_active > 0) {
+				trackerprops.mode = 'CPT';
+			} else if (drug_sets[0].cet_active > 0) {
+				if (drug_sets[0].IB_active > 0) {
+					trackerprops.mode = 'IB';	
+				} else {
+					trackerprops.mode = 'CET';	
+				}
+			} else if (drug_sets[0].manualmode_active > 0) {
+				trackerprops.mode = 'Manual';
+			}
+		} else {
+			trackerprops.model = 'Complex';
+			temptext = '';
+			if (drug_sets[0].cpt_active > 0) {
+				temptext += 'CPT';
+			} else if (drug_sets[0].cet_active > 0) {
+				if (drug_sets[0].IB_active > 0) {
+					temptext += 'IB';	
+				} else {
+					temptext += 'CET';	
+				}
+			} else if (drug_sets[0].manualmode_active > 0) {
+				temptext += 'Manual';
+			}
+			temptext += drug_sets[0].model_name;
+			temptext += ' + ';
+			if (drug_sets[1].cpt_active > 0) {
+				temptext += 'CPT';
+			} else if (drug_sets[1].cet_active > 0) {
+				if (drug_sets[1].IB_active > 0) {
+					temptext += 'IB';	
+				} else {
+					temptext += 'CET';	
+				}
+			} else if (drug_sets[1].manualmode_active > 0) {
+				temptext += 'Manual';
+			}
+			temptext += drug_sets[1].model_name;
+			trackerprops.mode = temptext;
+		}
+		umami.track('run', trackerprops);
 }
 
 function start_cet() {
