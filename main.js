@@ -3081,9 +3081,42 @@ function common_start_calls() {
 			temptext += drug_sets[1].model_name;
 			trackerprops.mode = temptext;
 		}
+		//patient data 
+			if (bmi<18.5) { 
+				trackerprops.BMI = "<18.5";
+			} else if ((bmi>=18.5) && (bmi<25)) {
+				trackerprops.BMI = "normal";
+			} else if ((bmi>=25) && (bmi<29.9)) {
+				trackerprops.BMI = "25-30";
+			} else if ((bmi>30) && (bmi<35)) {
+				trackerprops.BMI = "30-35";
+			} else if (bmi>=35) {
+				trackerprops.BMI = ">35";
+			} else {
+				trackerprops.BMI = "unknown";
+			}
+			if (age<3) {
+				trackerprops.age = "<3";
+			} else if ((age>=3) && (age<16)) {
+				trackerprops.age = "3-16";
+			} else if ((age>=16) && (age<=70)) {
+				trackerprops.age = "16-70";
+			} else if (age>70) {
+				trackerprops.age = ">70";
+			} else {
+				trackerprops.age = "unknown";
+			}
+			if (gender == 0) {
+				trackerprops.sex = "male";
+			} else if (gender == 1) {
+				trackerprops.sex = "female";
+			} else {
+				trackerprops.sex = "unknown";
+			}
 		combinedtext = temptext0 + ": " + temptext;
+		combinedtext1 = "Age: " + trackerprops.age + "; Sex: " + trackerprops.sex + "; BMI: " + trackerprops.BMI;
 		umami.track('run', trackerprops);
-		umami.track('data', {modelstring: combinedtext});
+		umami.track('data', {modelstring: combinedtext, demographicsstring: combinedtext1});
 		umami.identify(trackerprops);
 }
 
