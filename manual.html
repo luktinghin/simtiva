@@ -922,6 +922,8 @@ function getChapter(number,omithistory,force) {
 
 window.addEventListener("popstate", (event) => {
 	loadChapterURL();
+	//custom umami event tracking
+	umami.track('manual', state);
 });
 
 let bodyElement = "";
@@ -1001,8 +1003,6 @@ function loadChapterURL() {
 			getChapter(0,1);
 		}
 	}
-	//custom umami event tracking
-	umami.track('manual', state);
 }
 
 
