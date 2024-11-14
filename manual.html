@@ -918,12 +918,12 @@ function getChapter(number,omithistory,force) {
 		}
 		toTop();
 	}
+	//custom umami event tracking
+	umami.track('manual', state);
 }
 
 window.addEventListener("popstate", (event) => {
 	loadChapterURL();
-	//custom umami event tracking
-	umami.track('manual', state);
 });
 
 let bodyElement = "";
