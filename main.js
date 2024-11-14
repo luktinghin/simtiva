@@ -3115,8 +3115,13 @@ function common_start_calls() {
 			}
 		combinedtext = temptext0 + ": " + temptext;
 		combinedtext1 = "Age: " + trackerprops.age + "; Sex: " + trackerprops.sex + "; BMI: " + trackerprops.BMI;
-		umami.track('run', trackerprops);
-		umami.track('data', {modelstring: combinedtext, demographicsstring: combinedtext1});
+		trackerprops.string_model = combinedtext;
+		trackerprops.string_demographics = combinedtext1;
+		if (parseloading == 0) {
+			umami.track('run', trackerprops);
+		} else {
+			umami.track('view', trackerprops);	
+		}
 		umami.identify(trackerprops);
 }
 

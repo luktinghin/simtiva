@@ -919,7 +919,9 @@ function getChapter(number,omithistory,force) {
 		toTop();
 	}
 	//custom umami event tracking
-	umami.track('manual', state);
+	if (number != 0) {
+		umami.track('manual', state);	
+	}
 }
 
 window.addEventListener("popstate", (event) => {
