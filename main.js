@@ -3033,6 +3033,35 @@ function common_start_calls() {
 			loop3 = setInterval(updatechart, 5000, myChart);
 		loop7 = setInterval(displayWarningBanner, 60*2000);
 		initshare();
+		trk();
+}
+
+var displaymode = '';
+
+function getPWADisplayMode() {
+  if (document.referrer.startsWith('android-app://'))
+    return 'twa';
+  if (window.matchMedia('(display-mode: browser)').matches)
+    return 'net-browser';
+  if (window.matchMedia('(display-mode: standalone)').matches)
+    return 'PWA-standalone';
+  if (window.matchMedia('(display-mode: minimal-ui)').matches)
+    return 'PWA-minimal-ui';
+  if (window.matchMedia('(display-mode: fullscreen)').matches)
+    return 'PWA-fullscreen';
+  if (window.matchMedia('(display-mode: window-controls-overlay)').matches)
+    return 'PWA-window-controls-overlay';
+
+  return 'unknown';
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  // Log launch display mode to analytics
+  displaymode = getPWADisplayMode();
+  console.log(displaymode);
+});
+
+function trk() {
 		//custom umami tracker function
 		trackerprops = {};
 		if (complex_mode == 0) {
@@ -3117,6 +3146,7 @@ function common_start_calls() {
 		combinedtext1 = "Age: " + trackerprops.age + "; Sex: " + trackerprops.sex + "; BMI: " + trackerprops.BMI;
 		trackerprops.string_model = combinedtext;
 		trackerprops.string_demographics = combinedtext1;
+		trackerprops.displaymode = displaymode;
 		if (parseloading == 0) {
 			umami.track('run', trackerprops);
 		} else {
@@ -14685,6 +14715,8 @@ function parseobject(input_uid,external,extObject) {
 			updatechart2();
 		},600);
 	}
+
+	trk();
 
 	function parsebolusadmin(x,ind) {
 		var working_clock2 = Math.floor(time_in_s);

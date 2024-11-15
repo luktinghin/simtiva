@@ -145,6 +145,7 @@ input, select, textarea {
 html {
 	-webkit-text-size-adjust:100%; /*fix iphone landscape font-size 20px bug */
   overscroll-behavior: none;
+  background: #000;
 }
 
 body {
