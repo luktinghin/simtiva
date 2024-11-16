@@ -11129,29 +11129,35 @@ function pageTwoFunction(arg) {
 function sendToUpdateMax(input) {
 	input = input *1;
 	if (input == 0) {
-		text = "Flash: assume bolus given instantaneously. Ideal for manual rapid bolus.";
+		maxtext = "Flash: assume bolus given instantaneously. Ideal for manual rapid bolus.";
 	} else if (input == 300) {
-		text = "Set syringe pump rate to 300ml/h to deliver programmed bolus. Note: slow bolus rate causes slower onset.";
+		maxtext = "Set syringe pump rate to 300ml/h to deliver programmed bolus. Note: slow bolus rate causes slower onset.";
 	} else if (input == 400) {
-		text = "Set syringe pump rate to 400ml/h to deliver programmed bolus. Note: slow bolus rate causes slower onset.";
+		maxtext = "Set syringe pump rate to 400ml/h to deliver programmed bolus. Note: slow bolus rate causes slower onset.";
 	} else if (input == 500) {
-		text = "Set syringe pump rate to 500ml/h to deliver programmed bolus. Note: slow bolus rate causes slower onset."
+		maxtext = "Set syringe pump rate to 500ml/h to deliver programmed bolus. Note: slow bolus rate causes slower onset."
 	} else if (input == 600) {
-		text = "For programmed bolus: set your syringe pump rate to 600ml/h to deliver the calculated volume.";
+		maxtext = "For programmed bolus: set your syringe pump rate to 600ml/h to deliver the calculated volume.";
 	} else if (input == 700) {
-		text = "For programmed bolus: set your syringe pump rate to 700ml/h to deliver the calculated volume.";
+		maxtext = "For programmed bolus: set your syringe pump rate to 700ml/h to deliver the calculated volume.";
 	} else if (input == 800) {
-		text = "For programmed bolus: set your syringe pump rate to 800ml/h to deliver the calculated volume.";
+		maxtext = "For programmed bolus: set your syringe pump rate to 800ml/h to deliver the calculated volume.";
 	} else if (input == 900) {
-		text = "For programmed bolus: set your syringe pump rate to 900ml/h to deliver the calculated volume.";
+		maxtext = "For programmed bolus: set your syringe pump rate to 900ml/h to deliver the calculated volume.";
 	} else if (input == 1000) {
-		text = "For programmed bolus: set your syringe pump rate to 1000ml/h to deliver the calculated volume.";
+		maxtext = "For programmed bolus: set your syringe pump rate to 1000ml/h to deliver the calculated volume.";
 	} else if (input == 1100) {
-		text = "For programmed bolus: set your syringe pump rate to 1100ml/h to deliver the calculated volume.";
+		maxtext = "For programmed bolus: set your syringe pump rate to 1100ml/h to deliver the calculated volume.";
 	} else if (input == 1200) {
-		text = "For programmed bolus: set your syringe pump rate to 1200ml/h to deliver the calculated volume.";
+		maxtext = "For programmed bolus: set your syringe pump rate to 1200ml/h to deliver the calculated volume.";
+	} else if (input == 1300) {
+		maxtext = "For programmed bolus: set your syringe pump rate to 1300ml/h to deliver the calculated volume.";
+	} else if (input == 1400) {
+		maxtext = "For programmed bolus: set your syringe pump rate to 1400ml/h to deliver the calculated volume.";
+	} else if (input == 1500) {
+		maxtext = "For programmed bolus: set your syringe pump rate to 1500ml/h to deliver the calculated volume.";
 	}
-	document.getElementById("page2bolustext").innerText = text;
+	document.getElementById("page2bolustext").innerText = maxtext;
 }
 
 function cptevent() {
@@ -11317,7 +11323,7 @@ function displayAbout2() {
 					<div class='bannericon' style='background:#5270AD'><img class='' src="pwa.webp"></div>
 					<div class='bannertextouter'>
 						<div class='bannertextinner1'>Progressive <b>Web App</b></div>
-						<div class='bannertextinner2'>SimTIVA is a TIVA/TCI simulator that runs on a web browser on any device</div>
+						<div class='bannertextinner2'>SimTIVA is a TIVA/TCI simulator that runs on a web browser</div>
 					</div>
 			</div>
 			<div class='banneritem' style='background:#c8c0f2'>

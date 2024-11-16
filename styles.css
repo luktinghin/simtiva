@@ -146,11 +146,11 @@ html {
 	-webkit-text-size-adjust:100%; /*fix iphone landscape font-size 20px bug */
   overscroll-behavior: none;
   background: #000;
+  font-size: 16px; 
 }
 
 body {
   font-family:  "SourceSans", "Calibri", "Trebuchet MS", "Lucida Sans", sans-serif;
-  font-size: 16px; 
   margin: 0px;
   background:#7B8092;
   overscroll-behavior-y: contain;
@@ -200,6 +200,7 @@ body{
 
 button, select, input {
   font-family:  "SourceSans", "Calibri", "Trebuchet MS", "Lucida Sans", sans-serif;
+  font-size: 0.9rem;
 }
 
 #modalAbout h1 {
@@ -842,7 +843,7 @@ input[type=number] {
   padding:2px;
   /*padding-right:20px;*/
   vertical-align:middle;
-  font-size:120%;
+  font-size:1.2rem;
   border:1px solid #aaa;
   outline: none;
   text-align:center;
@@ -1405,7 +1406,7 @@ body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom
     /*background-color: #5cb85c;*/
     background-color: #4caf50;
     color: white;
-    font-size:120%;
+    font-size:1.2rem;
     line-height:30px;
     font-weight:bold;
 }
@@ -1531,7 +1532,7 @@ a.button.wide {
 a.button.huge {
   transition: 0.3s all ease;
   width:90%;
-  font-size:130%;
+  font-size:1.2rem;
   color:#555;
   background:#eee;
   padding-left:10px;
@@ -1626,7 +1627,7 @@ a.outputtab {
   min-width:120px;
   border-radius:5px 5px 0 0;
   text-align:center;
-  font-size:85%;
+  font-size:0.8rem;
   color:#999;
   padding: 5px 10px;
   display:inline-block;
@@ -1650,7 +1651,7 @@ a.interactionstab {
   min-width:120px;
   border-radius:5px 5px 0 0;
   text-align:center;
-  font-size:85%;
+  font-size:0.8rem;
   color:#999;
   padding: 5px 10px;
   display:inline-block;
@@ -1895,8 +1896,8 @@ background-size: 200% 100%;
   border:2px solid rgb(220,220,220);
   border-radius:9px;
   padding:0.5rem 3px 0.5rem 3px;
-  margin-top:1.6rem;
-  margin-bottom:1.9rem;
+  margin-top:1rem;
+  margin-bottom:1.5rem;
   height:60px;
   width:100%;
   position:relative;
@@ -1966,10 +1967,10 @@ background-size: 200% 100%;
   padding:0.5rem 3px 0.5rem 3px;
   margin-top:0.5rem;
   margin-bottom:0.5rem;
-  height:95px;
+  height:100px;
   width:100%;
   position:relative;
-  box-shadow:inset 0 4px 0 0 rgba(167,203,168,0.75);
+  /*box-shadow:inset 0 4px 0 0 rgba(167,203,168,0.75);*/
 }
 
 #patientLeft {
@@ -3208,7 +3209,7 @@ input[type=range]:focus::-ms-fill-upper {
 .button_paedimode {
   color: #555;
   font-weight: bold;
-  font-size: 90%;
+  font-size: 0.8rem;
   cursor: pointer;
   flex-basis: 50%;
   text-align: center;
@@ -3273,7 +3274,7 @@ body.dark .modal-body a.button_paedimode:hover {
   padding:5px;
   line-height:1.3;
   /*margin-right:5px;*/
-  font-size:80%;
+  font-size:0.8rem;
 }
 
 /* END TCI STYLES*/
@@ -3789,7 +3790,7 @@ tr.subheading7 {
   font-weight: bold;
   font-size:90%;
   letter-spacing:1px;
-  margin-bottom:70px;
+  padding-bottom:70px;
 }
 
 .footer b {
@@ -3945,7 +3946,7 @@ tr.subheading7 {
 }
 
 .top_subtitle {
-  font-size:18px;
+  font-size:1.2rem;
   padding-bottom:2px;
   position: relative;
   top: 2px;
@@ -5644,7 +5645,7 @@ body.dark #pastschemeCOPY {
 
 .bannertextinner2 {
   padding-top: 3px;
-  font-size: 75%;
+  font-size: 0.8rem;
 }
 
 @media (min-width:768px) {
@@ -5674,7 +5675,7 @@ body.dark .customAboutContainer.active {
   flex-basis: 33%;
   padding: 5px;
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   transition: 0.3s all ease;
   cursor: pointer;
   margin-bottom: 5px;
@@ -5738,16 +5739,16 @@ body.dark .customAboutItem.active > .customAboutIcon {
   position: absolute;
   right: 1rem;
   z-index: 1;
-  top: 82px;
+  top: 78px;
   text-align: center;
-  height: 20px;
+  height: 24px;
   width: 100px;
   font-weight: bold;
   background: #a9c5e4;
-  font-size: 75%;
+  font-size: 0.8rem;
   color: black;
   border-radius: 0px 0px 9px 9px;
-  padding-top: 2px;
+  padding-top: 4px;
   display: none;
   cursor: pointer;
 }
@@ -5758,13 +5759,13 @@ body.dark .customAboutItem.active > .customAboutIcon {
   height: 0px;
   width: calc(100% - 2rem - 41px);
   box-shadow: 0px 6px 8px -5px rgba(0,0,0,0.15);
-  top: 81px;
+  top: 78px;
   right: 1rem;
   border-radius: 0px 0px 9px 9px;
   z-index: 0;
   border: 1px solid #ccc;
   border-top: 0;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   /* padding: 10px; -> removed to avoid animation got height bug */
   overflow-y: scroll;
   transition: 0.3s all ease;
@@ -5781,7 +5782,7 @@ body.dark .customAboutItem.active > .customAboutIcon {
 }
 
 #preview-expand-box > div:first-child {
-  margin-top: 26px;
+  margin-top: 28px;
 }
 
 #preview-expand-box > div > div.timespan {
@@ -6109,7 +6110,7 @@ body.dark #preview-expand-box > div > div.timespan {
   .inf-tableheading1 {font-size:1.6rem;}
   .bottom-bar {font-size:0.8rem;}
   .bottom-bar2 {background:black;}
-  #valRightContainer2 {font-size:90%; }
+  /*#valRightContainer2 {font-size:90%; }*/
   #valCard {padding-right:0px; height:70px;}
   .footer {
     display: block;
@@ -6134,16 +6135,26 @@ body.dark #preview-expand-box > div > div.timespan {
 
 }
 
-@media screen and (max-width: 361px) { /*small phone screen such as S22, S8 etc android. iphones can be 375 */
-  body {
+@media screen and (max-width: 376px) { /*target iphone SE*/
+  html {
     font-size: 14.5px;
   }
-  .modal-content {
+
+}
+@media screen and (max-width: 361px) { /*small phone screen such as S22, S8 etc android. iphones can be 375 */
+  html {
+    font-size: 13.5px;
+  }
+  body {
+    
+  }
+/*  .modal-content {
     font-size: 0.85rem;
   }
   .cardtitle {
     font-size: 109%;
   }
+*/
   .table-Init tr {
     height: 2.6rem;
   }
@@ -6153,9 +6164,12 @@ body.dark #preview-expand-box > div > div.timespan {
   #valCard {
     height: 60px;
   }
-
-
-
+  .modal-content {
+    width: calc(100% - 1rem);
+  }
+  #modalInitialcontent, #modalLoadcontent {
+    width: calc(100% - 1rem);
+  }
 }
 @media screen and (max-width:340px) { /*narrow screen phone iphone 5 width 320px*/
   .modal-body {
@@ -6988,7 +7002,7 @@ body.dark a.timeFxButton {
   font-weight: bold;
 }
 .timeFxLine2 {
-  font-size: 75%;
+  font-size: 0.72rem;
   opacity: 70%;
 }
 

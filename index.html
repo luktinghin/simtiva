@@ -307,7 +307,7 @@
 						</div>
 						<div id="patientRight">
 							<div id="patientRightUp"></div>
-							<div id="patientRightDown" style="font-size:70%; border-top:1px solid rgb(167 203 168); padding-top:3px; margin-top:3px; margin-right:5px"></div>
+							<div id="patientRightDown" style="font-size:0.72rem; border-top:1px solid rgb(167 203 168); padding-top:3px; margin-top:3px; margin-right:5px"></div>
 						</div>
 						<div id="patientEdit">
 							<div onclick="toPageOne();">EDIT</div>
@@ -356,7 +356,7 @@
 									</td>
 								</tr>
 								<tr style="height:1rem">
-									<td colspan="2"  style="padding:0 0 3px 0;border-top:0;opacity:0.6;font-size:0.7rem;font-style:italic;pointer-events:none"><span id="page2bolustext">Flash: assume bolus given instantaneously. Ideal for manual rapid bolus.</span></td>
+									<td colspan="2"  style="padding:0 0 3px 0;border-top:0;opacity:0.6;font-size:0.72rem;font-style:italic;pointer-events:none"><span id="page2bolustext">Flash: assume bolus given instantaneously. Ideal for manual rapid bolus.</span></td>
 								</tr>
 								<tr style="height:2rem;padding-top:3px">
 									<td style="padding:3px 0 0 0">Maintenance accuracy:</td>
@@ -369,7 +369,7 @@
 									</td>
 								</tr>
 								<tr style="height:1rem">
-									<td colspan="2" style="padding:0;border-top:0;opacity:0.6;font-size:0.7rem;font-style:italic">Threshold for rate changes. Lazy: less frequent rate changes. Accurate: more frequent rate changes.</td>
+									<td colspan="2" style="padding:0;border-top:0;opacity:0.6;font-size:0.72rem;font-style:italic">Threshold for rate changes. Lazy: less frequent rate changes. Accurate: more frequent rate changes.</td>
 								</tr>
 							</table>
 							<div style="width:100%;text-align:left">
@@ -725,7 +725,7 @@
 
 					<div id="shareimagecontainer">
 						<div style="margin:0; padding:0; height: calc(35vh + 2rem); text-align: center">
-							<span style="font-size:80%; opacity:0.7; letter-spacing: 1px; font-weight: bold">
+							<span style="font-size:0.8rem; opacity:0.7; letter-spacing: 1px; font-weight: bold">
 								IMAGE PREVIEW
 							</span>
 							<img id="shareimage">
@@ -1428,8 +1428,8 @@
 					<div class="prompts_close" onclick="hide_prompts(this.parentElement)"><i class="fas fa-times-circle"></i></div>
 					<div id="previewleft"><i class="fas fa-arrow-circle-up" id="previewicon"></i></div>
 					<div id="previewright">
-						<div style="font-size:79%; font-weight:bold; border-bottom:1px solid #a9c5e4; padding-bottom:2px; line-height:1.2">PREVIEW: To achieve target <div id="preview_cpt"></div></div>
-						<div style="line-height:1.2;padding-top:2px;font-size:91%" id="preview_msg"></div>
+						<div style="font-size:0.8rem; font-weight:bold; border-bottom:1px solid #a9c5e4; padding-bottom:2px; line-height:1.2">PREVIEW: To achieve target <div id="preview_cpt"></div></div>
+						<div style="line-height:1.2;padding-top:2px;font-size:0.9rem" id="preview_msg"></div>
 					</div>
 				</div>
 				<div class="" id="preview-expand-button" onclick="displaypreview_expand();"><i class="fas fa-angle-double-down"></i> &nbsp; <span>EXPAND</span></div>
@@ -1607,7 +1607,7 @@
 		<div class="input-container" id="card_cpt0" style="">
 			<div class="input-left">
 				<div class="input-target-icon"><i class="fas fa-tint fa-fw"></i></div>
-				<div class="input-description"><span id="input-description-cp-line1" style="font-size: 1.3rem;font-weight:bold;display:block"><span>Cp Target</span></span>(<span class="conc_units"></span>/ml)</div>
+				<div class="input-description"><span id="input-description-cp-line1" style="font-size: 1.2rem;font-weight:bold;display:block"><span>Cp Target</span></span>(<span class="conc_units"></span>/ml)</div>
 				<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesired0" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0)"></div>
 			</div>
 			<div class="input-right">
@@ -1620,7 +1620,7 @@
 		<div class="input-container" id="card_cpt1" style="display:none">
 			<div class="input-left">
 				<div class="input-target-icon"><i class="fas fa-tint fa-fw"></i></div>
-				<div class="input-description"><span id="input-description-cp1-line1" style="font-size: 1.3rem;font-weight:bold;display:block"><span>Cp Target</span></span>(<span class="conc_units"></span>/ml)</div>
+				<div class="input-description"><span id="input-description-cp1-line1" style="font-size: 1.2rem;font-weight:bold;display:block"><span>Cp Target</span></span>(<span class="conc_units"></span>/ml)</div>
 				<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesired1" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,1)"></div>
 			</div>
 			<div class="input-right">
@@ -1633,7 +1633,7 @@
 		<div class="input-container" id="card_cet0_new" style="">
 			<div class="input-left">
 				<div class="input-target-icon"><i class="fas fa-brain fa-fw"></i></div>
-				<div class="input-description"><span id="input-description-ce-line1" style="font-size: 1.3rem;font-weight:bold;display:block"><span>Ce Target</span></span>(<span class="conc_units"></span>/ml)</div>
+				<div class="input-description"><span id="input-description-ce-line1" style="font-size: 1.2rem;font-weight:bold;display:block"><span>Ce Target</span></span>(<span class="conc_units"></span>/ml)</div>
 				<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesiredCe0_new" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0)"></div>
 			</div>
 			<div class="input-right">
@@ -1645,7 +1645,7 @@
 		<div class="input-container" id="card_cet1_new" style="display:none">
 			<div class="input-left">
 				<div class="input-target-icon"><i class="fas fa-brain fa-fw"></i></div>
-				<div class="input-description"><span id="input-description-ce1-line1" style="font-size: 1.3rem;font-weight:bold;display:block"><span>Ce Target</span></span>(<span class="conc_units"></span>/ml)</div>
+				<div class="input-description"><span id="input-description-ce1-line1" style="font-size: 1.2rem;font-weight:bold;display:block"><span>Ce Target</span></span>(<span class="conc_units"></span>/ml)</div>
 				<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesiredCe1_new" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,1)"></div>
 			</div>
 			<div class="input-right">
