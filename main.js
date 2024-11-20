@@ -11,6 +11,7 @@ var ABW; //for eleveld
 var lbm, height, gender;
 var ibw, AdjBW;
 var useAdjBW = 0;
+var bmi;
 var conc1;
 var conc2;
 var conc3;
@@ -630,11 +631,12 @@ const chartInfRateLayer = {
 
 //charting scripts
 
+function createCharts() {
 
-	setTimeout(
-		function() {
-			var ctx = document.getElementById('myChart2').getContext('2d');
-			myChart2 = new Chart(ctx, {
+	
+		
+			var ctx2 = document.getElementById('myChart2').getContext('2d');
+			myChart2 = new Chart(ctx2, {
 				type: 'line',
 				data: {
 					datasets: [{ //dataset 0 - current dot
@@ -1371,14 +1373,8 @@ const chartInfRateLayer = {
 		console.log(myChart2.data.datasets[1].data(p0DataIndex).meta_minute);
 	}
 
-		},800)
 
-	setTimeout(
-
-		function() {
-
-
-		var ctx = document.getElementById('myChart').getContext('2d');
+		var ctx1 = document.getElementById('myChart').getContext('2d');
 
 		var y = document.getElementById('chartwrapper').offsetHeight*0.6;
 
@@ -1399,7 +1395,7 @@ const chartInfRateLayer = {
 			*/
 
 
-		myChart = new Chart(ctx, {
+		myChart = new Chart(ctx1, {
 	    type: 'line',
 	    data: {
 	    	datasets: [{
@@ -1761,21 +1757,12 @@ const chartInfRateLayer = {
 	}//end charting function
 	);
 
-
-},1100);
-
 // new chart code, for emulation
 
-	setTimeout(
 
-		function() {
+		var ctx3 = document.getElementById('myChartEmulate').getContext('2d');
 
-
-		var ctx = document.getElementById('myChartEmulate').getContext('2d');
-
-		
-
-		myChartEmulate = new Chart(ctx, {
+		myChartEmulate = new Chart(ctx3, {
 	    type: 'line',
 	    data: {
 	    	datasets: [{
@@ -2000,9 +1987,7 @@ const chartInfRateLayer = {
 
 	}//end charting function
 	);
-
-
-},1100);
+} //end createCharts function
 
 //dark mode activation
 	
@@ -2081,7 +2066,9 @@ document.addEventListener('touchend', function(event) {
     	if (popupon) {
     		popupchart.canvas.dispatchEvent(new Event("mouseout"));
     	} else {
-    		myChart.canvas.dispatchEvent(new Event("mouseout"));	
+    		if (myChart != undefined) {
+    			myChart.canvas.dispatchEvent(new Event("mouseout"));		
+    		}
     	}
       if (emulateOn) {
       	myChartEmulate.canvas.dispatchEvent(new Event("mouseout"));		
@@ -3111,6 +3098,7 @@ function trk() {
 			trackerprops.mode = temptext;
 		}
 		//patient data 
+		if (bmi != undefined) {
 			if (bmi<18.5) { 
 				trackerprops.BMI = "<18.5";
 			} else if ((bmi>=18.5) && (bmi<25)) {
@@ -3119,11 +3107,14 @@ function trk() {
 				trackerprops.BMI = "25-30";
 			} else if ((bmi>30) && (bmi<35)) {
 				trackerprops.BMI = "30-35";
-			} else if (bmi>=35) {
+			} else if ((bmi>=35) && (bmi<=9999)) {
 				trackerprops.BMI = ">35";
+			} else if (bmi == Infinity) {
+				trackerprops.BMI = "unknown";
 			} else {
 				trackerprops.BMI = "unknown";
 			}
+		}
 			if (age<3) {
 				trackerprops.age = "<3";
 			} else if ((age>=3) && (age<16)) {
@@ -11018,6 +11009,9 @@ function toPageOne() {
 }
 
 function toPageTwo() {
+	if (myChart == undefined) {
+		createCharts();
+	}
 	text = validateData(age, gender, weight, height, 1);	
 	if (text != undefined) {
 		if ((paedi_mode==0) && (bmi>=35) && ((document.getElementById("select_model").value == "Marsh") || (document.getElementById("select_model").value == "Schnider"))) {
@@ -13135,6 +13129,9 @@ function readURL() {
 	const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
 	const inputString = LZString.decompressFromEncodedURIComponent(urlParams.get("P"));
+	if (inputString == "") {
+		document.getElementById("viewmsg").innerHTML = "SimTIVA Viewer: No data loaded."
+	}
 	var object = JSON.parse(inputString);
 	console.log(object);
 	return object;
@@ -13227,6 +13224,9 @@ function loadobject(input_uid) {
 }
 
 function load() {
+	if (myChart == undefined) {
+		createCharts();
+	}
 	toLoadTransition();
 }
 

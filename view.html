@@ -61,6 +61,11 @@
     <script defer src="https://cloud.umami.is/script.js" data-website-id="fe14ba98-f4c0-4536-94fa-9a0a4c1ed75e"></script>
 </head>
 <body class="" id="windowbody">
+	<div id="viewoverlay" style="z-index:999;display:flex;width:100%;height:100%;background:rgb(0,0,0,0.8);justify-content:center;align-items:center;position:fixed">
+		<div id="viewmsg" style="flex-basis:70%;color:#fff;border-left:2px solid #198964;padding:1rem;font-weight:bold">
+			Loading SimTIVA viewer parameters...
+		</div>
+	</div>
 		<div id="modalHistory" class="modal">
 			<div class="modal-content" id="modalHistorycontent">
 				<div class="modal-header">PAST SCHEMES</div>
@@ -1308,7 +1313,6 @@
 	<script src="main.js"></script>
 	<script src="lz-string.js"></script>
 
-	<script>init();</script>
 	<script>
 
 
@@ -1488,6 +1492,6 @@ document.addEventListener('scroll', (event) => {
 	<script>
 
 	</script>
-	<script>setTimeout(function() {loadoptions();parseobject()},2000);</script>
+	<script>setTimeout(function() {loadoptions();createCharts();parseobject();document.getElementById("viewoverlay").style.display='none'},2000);</script>
 </body>
 </html>
