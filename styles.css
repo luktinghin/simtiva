@@ -4536,6 +4536,7 @@ body.dark #ptolcard_switch {
    bottom: 1rem;
    left: calc(50% - 40px);
    width: 80px;
+   display:none;
 }
 
 .social a.item {
