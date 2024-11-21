@@ -6,6 +6,7 @@ const assets = [
 	"/index.html",
 	"/manual.html",
 	"/main.js",
+	"/features.js",
 	"/chartjs-plugin-crosshair.min.js",
 	"/styles.css",
 	"/css/fontawesome.min.css",
