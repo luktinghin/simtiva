@@ -484,33 +484,8 @@ document.addEventListener('touchend', function(event) {
 })
 
 
-/*
-window.addEventListener('hashchange', function(event) {
-    // The popstate event is fired each time when the current history entry changes.
-
-    var r = confirm("You pressed a Back button! Are you sure?!");
-
-    if (r == true) {
-        // Call Back button programmatically as per user confirmation.
-        history.back();
-
-    } else {
-        // Stay on the current page.
-        history.pushState(null, null, window.location.pathname);
-    }
-
-    history.pushState(null, null, window.location.pathname);
-
-}, false);
-*/
-
-
-
-
 function init() {
-	
 	setmodal("modalInitial");	
-	
 }
 function initsubmit() {
 	//the validation function on clicking "proceed" on starting page 1
@@ -7366,7 +7341,6 @@ function complexinterface_init() {
 		document.getElementById("darkmodebutton").classList.add("complex");
 	}
 
-
 	//chart line border change
 	myChart.data.datasets[2].borderDash = [2,2];
 	myChart.data.datasets[4].borderDash = [2,2];
@@ -7381,10 +7355,7 @@ function complexinterface_init() {
 	    			borderWidth: ctx => behindPosition2(ctx, 8)
 	}
 	
-	
-
 	//chart fill change
-
 	myChart.data.datasets[2].fill = false;
 	myChart.data.datasets[3].backgroundColor = context => {
 	    			const chart = context.chart;
@@ -7487,7 +7458,6 @@ function cube(k10, k12, k21, k13, k31, r) {
 }
 
 function lookahead(bolusgiven, duration, ind) {
-
 	if (duration>0) {
 		//this turns arg into a limit for 7200 iterations
 	} else {
