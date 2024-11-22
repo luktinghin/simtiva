@@ -1,0 +1,373 @@
+/*new complex layout*/
+.narrowbodywrapper {
+  position: static;
+  width: calc(100% - 30px);
+  margin-left: 30px;
+}
+
+.narrowbodywrapper #parallax1 {
+  width: calc(100% - 30px);
+}
+
+.narrowbodywrapper #parallax2 {
+  width: calc(100% - 30px);
+}
+
+
+.leftbar {
+  position: fixed;
+  width: 30px;
+  left: 0;
+  top: 0;
+  height: 100%;
+  
+}
+.leftbar.hide {
+  display: none;
+}
+.propofol {
+  /*background: linear-gradient(90deg, rgba(0,0,0,1) 28px, rgba(255,210,80,1) 28px); */
+}
+.opioid {
+ /*background: linear-gradient(90deg, rgba(0,0,0,1) 28px, rgba(0,129,255,1) 28px);  */
+}
+
+.ptolcontainer {
+  height: 150px;
+  position: relative;
+}
+
+#ptol {
+  font-size: 16px;
+  font-weight: bold;
+  width: 100px;
+  position: absolute;
+  transform: rotate(-90deg) translateY(-36px) translateX(-40px);
+}
+
+.leftbarlabel {
+  display: block;
+  /*padding-left: 2px;*/
+  background: transparent;
+}
+
+.druglabelcontainer  {
+  border-radius: 7px 0px 0px 7px;
+  height: 200px;
+  position: relative;
+  background: transparent;
+  cursor: pointer;
+  padding-top: 2px;
+  margin-bottom: 2px;
+}
+
+.druglabelcontainer.propofol.active {
+  background: #fff;
+  border-left: 4px solid rgb(255,210,80);
+  /*border-right: 4px solid rgb(255,210,80);*/
+}
+
+.druglabelcontainer.opioid.active {
+  background: #fff;
+  border-left: 4px solid rgb(0,129,255);
+}
+
+
+body.dark .druglabelcontainer.propofol.active {
+  background: transparent;
+  border-left: 0;
+  border-right: 4px solid rgb(255,210,80) ;
+}
+
+body.dark .druglabelcontainer.opioid.active {
+  background: transparent;
+  border-left: 0;
+  border-right: 4px solid rgb(0,129,255) ;
+}
+
+
+body.dark .druglabelcontainer.propofol.active::after {
+  /*color: rgb(255,210,80);*/
+}
+
+
+body.dark .druglabelcontainer.opioid.active::after {
+  /*color: rgb(0,129,255);*/
+}
+
+.druglabelicon {
+  margin-left: 3px;
+  /*transform: translateY(5px);*/
+  border-radius: 2rem;
+  width: 22px;
+  height: 22px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+}
+.druglabelicon.propofol {
+  background: rgb(255,210,80);
+}
+.druglabelicon.opioid {
+  background: rgb(0,129,255); 
+}
+.druglabelicon.alert {
+  display: inline-block;
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  background: #f00;
+  padding-top: 2px;
+  color: white;
+  animation: ring 3s infinite;
+}
+.druglabelicon.alert.hide {
+  display: none;
+}
+.druglabeltext {
+  white-space: nowrap;
+  color: white;
+  width: 150px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: right;
+  background: transparent;
+  transform: rotate(-90deg) translateY(-61px) translateX(-68px);
+}
+.druglabeltext.propofol.active {
+  color: black;
+}
+.druglabeltext.opioid.active {
+  color: black;
+}
+body.dark .druglabeltext {
+  color: #ccc;
+}
+body.dark .druglabeltext.propofol.active {
+  color: white;
+}
+
+body.dark .druglabeltext.opioid.active {
+  color: white;
+}
+.line1.hide {
+  display: none;
+}
+.line2.hide {
+  display: none;
+}
+.line2text {
+  display: inline-block;
+  font-weight: normal;
+  font-size: 90%;
+}
+
+#ptolcard {
+  display: flex;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0.5rem;
+  padding: 0.25rem;
+  border-radius: 9px;
+  border: 1px solid #9bc99d;
+  background:linear-gradient(78deg, rgba(255,255,255,1) 68%, rgba(213,237,214,1) 68%);
+}
+
+#ptoltooltip {
+    font-size: 60%;
+    opacity: 0.5;
+    display: inline-block;
+    padding-left: 5px;
+    transform: translateY(-5px);
+    cursor: pointer;
+}
+
+body.dark #ptolcard {
+  background: linear-gradient(78deg, rgba(10,25,10,1) 68%, rgba(16, 86, 63,1) 68%);
+}
+
+body.dark #ptolcard_left {
+  color: #fff;
+}
+body.dark #ptolcard_right {
+  color: rgba(255,255,255,0.7);
+
+}
+body.dark #ptolcard_switch {
+  color: rgba(255,255,255,0.7);
+}
+
+@media screen and (min-width:768px) {
+    .leftbar {
+    padding-top: 100px;
+    width: 100px;
+    left: 0.5rem;
+    background: transparent;
+  }
+  .propofol {
+    background: transparent;
+  }
+  .opioid {
+    background: transparent;
+  }
+  .druglabelcontainer {
+    height: 120px;
+    padding-top: 0.5rem;
+  }
+  .druglabelcontainer.propofol.active {
+    background: #fff;
+    border-left: 5px solid rgb(255,210,80);
+    border-top: 0;
+    border-bottom: 0;
+  }
+  .druglabelcontainer.opioid.active {
+    background: #fff;
+    border-left: 5px solid rgb(0,129,255);
+    border-top: 0;
+    border-bottom: 0;
+  }
+  body.dark .druglabelcontainer.propofol.active {
+    background: #555;
+    border-left: 0;
+    border-top: 0;
+    border-bottom: 0;
+    border-right: 5px solid rgb(255,210,80);
+  }
+  body.dark .druglabelcontainer.opioid.active {
+    background: #555;
+    border-left: 0;
+    border-top: 0;
+    border-bottom: 0;
+    border-right: 5px solid rgb(0,129,255);
+  }
+  body.dark .druglabelcontainer.propofol.active::after {
+    top: 50px;
+    left: 96px;
+    color: rgb(255,210,80);
+  }
+  body.dark .druglabelcontainer.opioid.active::after {
+    top: 50px;
+    left: 96px;
+    color: rgb(0,129,255);
+  }
+
+  .druglabeltext {
+    width: 100%;
+    font-size: 12px;
+    transform: none;
+    background: transparent;
+    text-align: center;
+    padding-top: 5px;
+  }
+  body.dark .druglabeltext {
+    color: #ccc;
+  }
+  .druglabelicon {
+    margin-left: auto;
+    margin-right: auto;
+    transform: translateY(0);
+    width: 36px;
+    height: 36px;
+    font-size: 28px;
+  }
+  .druglabelicon.alert {
+    position: absolute;
+    left: 60px;
+    top: -5px;
+    font-size: 20px;
+    width: 28px;
+    height: 28px;
+  }
+  .line1 {
+    display: block;
+    
+  }
+  body.dark .line1 {
+    
+  }
+  .line2 {
+    display: block;
+    
+    width: 50%;
+    font-size: 16px;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  body.dark .line2 {
+    
+  }
+  .line2text {
+    display: block;
+    border-bottom: 1px solid #aaa;
+  }
+
+  .ptolcontainer {
+    height: 120px;
+  }
+
+}
+
+@media (max-height: 620px) {
+  .ptolcontainer {
+    height: 100px;
+  }
+  .leftbar {
+    padding-top: 0px;
+  }
+  .druglabelcontainer {
+    /*height: 180px;*/
+  }
+}
+
+@media (max-height:480px) and (max-width:610px) {
+  .narrowbodywrapper #parallax1 {
+    width: 100%;
+  }
+  .narrowbodywrapper #parallax2 {
+    width: 100%;
+  }
+  .druglabelcontainer {
+    height: 130px;
+  }
+  .druglabeltext {
+    font-size: 10px;
+  }
+  .ptolcontainer {
+    height: 100px;
+  }
+}
+
+@media (max-height:480px) and (min-width:610px) and (max-width:767px) {
+  .druglabelcontainer {
+    height: 130px;
+  }
+  .druglabeltext {
+    font-size: 10px;
+  }
+  .ptolcontainer {
+    height: 100px;
+  }
+}
+
+@media (max-width: 767px) {
+  body.dark .druglabelcontainer.propofol.active {
+    background: #555;
+  }
+
+  body.dark .druglabelcontainer.opioid.active {
+    background: #555;
+  }
+}
+
+
+@media screen and (min-width: 1024px) {
+  #bodywrapper.narrowbodywrapper {
+    width: 968px;
+  }
+  .leftbar {
+    left: calc(50% - 476px);
+  }
+
+}

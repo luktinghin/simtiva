@@ -137,22 +137,6 @@ button, select, input {
   padding:0;
 }
 
-
-nobr {
-  font-size:75%;
-  text-transform:uppercase;
-}
-
-.bodycontent { /*padding:2px 4px 2px 4px;*/ }
-.contentrow { 
-  padding-bottom: 5px;
-  animation: fadeeffect 1s;
-      -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-}
-
 a {
     -webkit-user-select: none;
      -moz-user-select: none;
@@ -165,115 +149,9 @@ a {
   to {opacity:1;}
 }
 
-#resuslayer { display:none; }
-#vitalslayer { display:none; }
-
-.entrybox {
-  /*background-image: url("pwh.gif");
-  background-repeat: no-repeat;
-  background-position: right bottom;
-  background-size: contain;*/
-  background-color:#eee; 
-  padding: 5px 0px 10px 10px; 
-  border-radius:10px;
-}
- 
-.column {
-  width:100%;
-  display:block;
-  padding: 0px 0px 0px 0px;
-  box-sizing: border-box;
-}
-
-.column-x4 {
-  width:100%;
-  display:block;
-  margin-top:14px;
-  padding: 0px 0px 0px 0px;
-  box-sizing: border-box;
-}
-
-.tableheading { 
-  margin: 14px 0px 6px 0px;
-  font-family:"Brandon Text", sans-serif;
-  line-height:2rem;
-  padding-top:5px;
-  font-weight: bold;
-  font-size:2rem;
-  color:#505050;
-  text-align: left;
-  background-color: #eee;
-  border-left:5px solid #4caf50;
-  padding-left:5px;
-  letter-spacing:-1px;
-  /*border-bottom: 1px solid #bbb;*/
-}
-
-.imageheading-intubation { 
-  max-width:100%;
-  max-height:56px;
-  margin-left:auto;margin-right:auto; display:block;
-}
-
-.bg-magenta {
-  background-color:#ce295e;
-  -webkit-box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.3);
-  -moz-box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.3);
-  box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.3);
-}
-
-.bg-gold {
-  background-color:#ffc000;
-  -webkit-box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.3);
-  -moz-box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.3);
-  box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.3);
-}
-
-
-.notcondensed {font-family: "SourceSans", "Calibri", "Trebuchet MS", sans-serif; }
-
 table {
-border-collapse:separate;
-border-spacing:0;
-}
-
-.nomobile { display:none; }
-
-/* intubation checklist stuffs here */
-
-#intubationlayer {
-  display:none;
-}
-
-.container-checklist {
-  font-size:120%;
-  padding: 10px 10px 10px 10px;
-}
-
-.bg-grey {
-  background-color:#f7f7f7;
-}
-
-.textlabel {
-  font-weight:bold;
-  padding-top:10px;
-  padding-bottom:10px;
-}
-
-.list2 {
-  list-style-type:none;
-  margin:0;
-  padding-left:10px;
-}
-
-.drugfloat {
-  float: right;
-  border-radius:3px;
-  padding:0 3px 0 3px;
-}
-
-hr {
-  border-top:1px solid #eee;
+  border-collapse:separate;
+  border-spacing:0;
 }
 
 .imageholder {
@@ -284,21 +162,10 @@ hr {
   max-height:45vh;
 }
 
-.fontsize80 {
-  font-size:100%;
-}
-
-/* end intubatino checklist stuffs */
-
-/*#vasotable td { padding: 4px 0px 4px 1px; }
-#otherdrugstable td { padding: 3px 0px 3px 2px; }*/
-
 tr {border-left: 0; border-right: 0; }
 tr.fr td { border:0; }
-/*tr:last-child {border-bottom: 0; }*/
 th { padding: 4px 0px 4px 2px;  }
 td { padding: 4px 0px 4px 2px; border-top: 1px solid #ccc;}
-
 
 #row_remidilution {
   display: none;
@@ -329,86 +196,6 @@ td { padding: 4px 0px 4px 2px; border-top: 1px solid #ccc;}
   height: 1rem;
 }
 
-
-
-.tablecellheightcontrol td { height:45px; }
-/*td.subheading { font-weight:bold; font-style:italic; }*/
-tr.noborderb { border-bottom:0; }
-tr.noborderb td {padding-bottom:0px;}
-tr.noborderu { border-top:0; font-size:80%; font-style:italic; }
-tr.noborderu td {padding-top:0px;}
-/*tr:hover {background-color: #eeeeee; }*/
-
-.tableGC tr {border: 0px;}
-.tableGC td {padding: 2px 2px 2px 2px;}
-.tableGC input[type=number] {vertical-align:middle;}
-.tableGC select {vertical-align:middle;}
-
-#table1,
-#table1 tr,
-#table1 td { border: 0}
-#table1 td { padding: 2px 0px 2px 0px; }
-#table1 tr:hover {background-color: transparent; }
-
-#about a:link,
-#about a:visited,
-#about a:active {color:#442222; text-decoration:none; font-weight:bold;}
-#about a:hover {background:#eee;}
-
-button.showhidebutton {
-  background-color:#666;
-  font-size:80%;
-  font-weight: bold;
-  color:#eee; border-radius:5px; border:1px solid grey; padding: 2px; line-height:14px; 
-  margin-top:2px;
-  float: right; 
-  outline:0;}
-  
-/*button.showhidebutton:hover {outline:0; background-color:#666; border:1px solid black; cursor:pointer;}*/
-button.showhidebutton:active, focus {outline:0; padding: 3px 1px 1px 3px; background-color:#333; color:#fff;}
-
-button.endbutton {
-  height: 26px;
-  background-color:#ddd;
-  margin: 5px 0px 5px 0px; padding: 1px 4px 1px 4px;
-  outline: none;
-  border: 1px solid #aaa;
-  font-weight:bold;
-  border-radius:5px;
-}
-button.endbutton:hover {
-  background-color:#efefef;
-  border: 1px solid rgba(81, 203, 238, 1);
-  box-shadow: 0 0 4px rgba(81, 203, 238, 1);}
-
-button.endbutton:active, focus {
-  background-color:#333;
-  border: 1px solid #000;
-  box-shadow: none;
-}
-
-button.bodybutton {
-  height: 40px;
-  font-size:120%;
-  font-weight:bold;
-  width:80%;
-  background-color:#aaa;
-  margin: 10px 0px 10px 0px; padding: 1px 4px 1px 4px;
-  outline: none;
-  border: 1px solid #999;
-  border-radius:8px;
-}
-button.bodybutton:hover {
-  background-color:#555;
-  border: 1px solid rgba(81, 203, 238, 1);
-  box-shadow: 0 0 4px rgba(81, 203, 238, 1);}
-
-button.bodybutton:active, focus {
-  background-color:#666;
-  border: 1px solid #000;
-  box-shadow: none;
-}
-
 select {
   height: 30px;
   border: 1px solid #aaa;
@@ -417,345 +204,12 @@ select {
   vertical-align:bottom;
   border-radius:4px;
   color: black;
-  /*border:1px solid #aaa;*/
 }
-
-/*
-tr {
-  background:transparent;
-}
-
-tr:focus-within {
-  background:#f0f0f0;
-}
-*/
 
 select:focus {
   border: 1px solid rgba(81, 203, 238, 1);
   box-shadow: 0 0 6px rgba(81, 203, 238, 1);
 }
-
-.inlineselect {
-  height:24px; vertical-align:middle; margin:0; 
-        -webkit-user-select: auto;
-     -moz-user-select: auto;
-      -ms-user-select: auto;
-          user-select: auto;
-}
-.inlineselect:focus {
-  border: 1px solid rgba(81, 203, 238, 1);
-  box-shadow: 0 0 4px rgba(81, 203, 238, 1);
-}
-#fontsizechanger {height:26px;}
-
-.bottombar {
-  margin:0; 
-  padding:10px;
-  overflow: hidden;
-  background-color: rgba(50,50,60,0.8);
-  position: fixed;
-  bottom:0;
-  width:100%;
-}
-
-/*new complex layout*/
-.narrowbodywrapper {
-  position: static;
-  width: calc(100% - 30px);
-  margin-left: 30px;
-}
-
-.leftbar {
-  position: fixed;
-  width: 30px;
-  left: 0;
-  top: 0;
-  height: 100%;
-  
-}
-.leftbar.hide {
-  display: none;
-}
-.propofol {
-  /*background: linear-gradient(90deg, rgba(0,0,0,1) 28px, rgba(255,210,80,1) 28px); */
-}
-.opioid {
- /*background: linear-gradient(90deg, rgba(0,0,0,1) 28px, rgba(0,129,255,1) 28px);  */
-}
-
-.ptolcontainer {
-  height: 150px;
-  position: relative;
-}
-
-#ptol {
-  font-size: 16px;
-  font-weight: bold;
-  width: 100px;
-  position: absolute;
-  transform: rotate(-90deg) translateY(-36px) translateX(-40px);
-}
-
-.leftbarlabel {
-  display: block;
-  /*padding-left: 2px;*/
-  background: transparent;
-}
-
-.druglabelcontainer  {
-  border-radius: 7px 0px 0px 7px;
-  height: 200px;
-  position: relative;
-  background: transparent;
-  cursor: pointer;
-  padding-top: 2px;
-  margin-bottom: 2px;
-}
-
-/*
-
-.druglabelcontainer.propofol.active::after {
-  position: absolute;
-  content: '\f04b';
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  color: transparent;
-  font-size: 16px;
-  top: 90px;
-  left: 26px;
-}
-*/
-.druglabelcontainer.propofol.active {
-  background: #fff;
-  border-left: 4px solid rgb(255,210,80);
-  /*border-right: 4px solid rgb(255,210,80);*/
-}
-
-.druglabelcontainer.opioid.active {
-  background: #fff;
-  border-left: 4px solid rgb(0,129,255);
-}
-/*
-.druglabelcontainer.opioid.active::after {
-  position: absolute;
-  content: '\f04b';
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  color: transparent;
-  font-size: 16px;
-  top: 90px;
-  left: 26px;
-}
-*/
-
-body.dark .druglabelcontainer.propofol.active {
-  background: transparent;
-  border-left: 0;
-  border-right: 4px solid rgb(255,210,80) ;
-}
-
-body.dark .druglabelcontainer.opioid.active {
-  background: transparent;
-  border-left: 0;
-  border-right: 4px solid rgb(0,129,255) ;
-}
-
-
-body.dark .druglabelcontainer.propofol.active::after {
-  /*color: rgb(255,210,80);*/
-}
-
-
-body.dark .druglabelcontainer.opioid.active::after {
-  /*color: rgb(0,129,255);*/
-}
-
-
-
-.druglabelicon {
-  margin-left: 3px;
-  /*transform: translateY(5px);*/
-  border-radius: 2rem;
-  width: 22px;
-  height: 22px;
-  text-align: center;
-  
-  font-size: 16px;
-  font-weight: bold;
-  color: black;
-}
-.druglabelicon.propofol {
-  background: rgb(255,210,80);
-}
-.druglabelicon.opioid {
-  background: rgb(0,129,255); 
-}
-.druglabelicon.alert {
-  display: inline-block;
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  background: #f00;
-  padding-top: 2px;
-  color: white;
-  animation: ring 3s infinite;
-}
-.druglabelicon.alert.hide {
-  display: none;
-}
-.druglabeltext {
-  white-space: nowrap;
-  color: white;
-  width: 150px;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: right;
-  background: transparent;
-  transform: rotate(-90deg) translateY(-61px) translateX(-68px);
-}
-.druglabeltext.propofol.active {
-  color: black;
-}
-.druglabeltext.opioid.active {
-  color: black;
-}
-body.dark .druglabeltext {
-  color: #ccc;
-}
-body.dark .druglabeltext.propofol.active {
-  color: white;
-}
-
-body.dark .druglabeltext.opioid.active {
-  color: white;
-}
-.line1.hide {
-  display: none;
-}
-.line2.hide {
-  display: none;
-}
-.line2text {
-  display: inline-block;
-  font-weight: normal;
-  font-size: 90%;
-}
-
-.narrowbodywrapper #parallax1 {
-  width: calc(100% - 30px);
-}
-
-.narrowbodywrapper #parallax2 {
-  width: calc(100% - 30px);
-}
-
-header {
-  display:block;
-  height:40px;
-  overflow: hidden;
-  background-image: linear-gradient(rgba(80, 80, 80, 1), rgba(60, 60, 60, 0.7));
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1; 
-  -webkit-box-shadow:inset 0px -2px 0px #4CAF50, 0px 0px 10px 1px rgba(0, 0, 0, 0.7);
-     -moz-box-shadow:inset 0px -2px 0px #4CAF50, 0px 0px 10px 1px rgba(0, 0, 0, 0.7);
-          box-shadow:inset 0px -2px 0px #4CAF50, 0px 0px 10px 1px rgba(0, 0, 0, 0.7);
-}
-
-header ul {
-  list-style-type: none;  
-  margin: 0;
-  padding: 0;
-  
-}
-
-header li {
-    float: left;
-    height:40px;
-    /*margin:0; padding:0;*/   
-}
-
-header li a {
-    display:inline-block;
-    color: white;
-    text-align: center;
-    padding: 11px 5px 11px 5px;
-    text-decoration: none;
-    
-}
-
-header li a:hover:not(.active) {
-  /*header icons x4 styles replaced in headericon class */
-  -webkit-box-shadow:inset 0px -2px 0px 0px #8cd98f;
-     -moz-box-shadow:inset 0px -2px 0px 0px #8cd98f;
-          box-shadow:inset 0px -2px 0px 0px #8cd98f;
-    background-image: linear-gradient(#444, #111, #111);
-}
-
-.headericon {
-    text-align: center;
-    padding:2px 4px 0px 4px;
-    height: 40px;
-    display:inline-block;
-    float:right;
-    cursor:pointer;
-    border:0; background:transparent; outline:0;
-}
-
-header .active {
-    background-color: #4CAF50;
-    font-weight:bold;
-}
-
-/*header li.right {float:right; height:40px;}*/
-
-footer {
-  margin:0; padding:0;
-  height:40px;
-  overflow: hidden;
-  background-image: linear-gradient(#111, #333, #333);
-  position: fixed;
-  bottom:0;
-  width:100%;
-  -webkit-box-shadow:inset 0px 2px 0px #4CAF50, 0px 0px 20px 10px #fff;
-     -moz-box-shadow:inset 0px 2px 0px #4CAF50, 0px 0px 20px 10px #fff;
-          box-shadow:inset 0px 2px 0px #4CAF50, 0px 0px 20px 10px #fff;
-  opacity:1;
-    -webkit-transform: none;
-      transform: none;
-  transition: opacity 0.5s ease-out;
-  pointer-events:auto;
-}
-
-footer ul {
-  list-style-type: none;  
-  margin: 0;
-  padding: 0 8px 0 8px;
-  text-align:center;
-  
-}
-
-.footerbutton {
-    display:inline-block;
-    color: #bbb;
-    text-align: center;
-    padding: 8px 13px 8px 13px;
-    text-decoration: none;
-    height: 30px;
-    cursor:pointer;
-}
-
-footer .active {
-    border-right:2px solid #4CAF50;
-    border-left:2px solid #4CAF50;
-    border-bottom:2px solid #4CAF50;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    background-image: linear-gradient(#fff, #fff, #ddd);
-    color:black;
-    font-weight:bold;
-}
-
 
 input[type=number] {
   position:relative;
@@ -3359,254 +2813,7 @@ body.dark .modal-body a.button_paedimode:hover {
 
 /* end numpad styles*/
 
-
-@media screen {
-#headerarea {font-size:10.5pt;}
-tr.vasostyle {
-  background: #C846C8; 
-  /*background: linear-gradient(to left, #9b25a3, #C846C8);*/
-  color: white; 
-  border-bottom: 2px solid purple;}
-tr.vasostyleHC {
-  background: purple; 
-  /*background: linear-gradient(to left, #9b25a3, #C846C8);*/
-  color: white; 
-  border-bottom: 2px solid red;}
-tr.subheading {
-  background: #eacfc9;
-  border-bottom: 1px solid #aaaaaa;
-  /*background: linear-gradient(to top, #c2d0ef, #e5eae9);*/
-} 
-tr.subheading2 {
-  /*blue for opioid*/
-  background: #cfe7f7;
-  border-bottom: 1px solid #355982;
-  /*background: linear-gradient(to top, #c2d0ef, #e5eae9);*/
-} 
-tr.subheading4 {
-  /*greenish for antiARR */
-  background: #d0e0d3;
-  border-bottom: 1px solid #1c5126;
-  /*background: linear-gradient(to top, #c2d0ef, #e5eae9);*/
-} 
-tr.subheading3 {
-  /*hypotensive*/
-  background: repeating-linear-gradient(
-    45deg,
-    #fac9ff,
-    #fac9ff 3px,
-    #fbe0ff 3px,
-    #fbe0ff 6px
-  );
-  border-bottom: 1px solid #662e7c;
-  /*background: linear-gradient(to top, #c2d0ef, #e5eae9);*/
-} 
-tr.subheading5 {
-  /*midaz etc*/
-  background: #ffd65b;
-  border-bottom: 1px solid #aa481e;
-  /*background: linear-gradient(to top, #c2d0ef, #e5eae9);*/
-}
-tr.subheading6 {
-  /*MR*/
-  background: #ff8282;
-  border-bottom: 1px solid #7a1919;
-  /*background: linear-gradient(to top, #c2d0ef, #e5eae9);*/
-}
-tr.subheading7 {
-  /*Misc*/
-  background: #eae9da;
-  border-bottom: 1px solid #605c21;
-  /*background: linear-gradient(to top, #c2d0ef, #e5eae9);*/
-}
-}
-
-.drugprep {
-  font-size:80%;
-  color:#666;
-}
-
-.drugvol {
-  /*background-color:#f5f5f5;
-  padding:3px;
-  border-radius:3px;*/
-  white-space: nowrap;
-}
-
-.drugdose {
-  background-color:#f5f5f5;
-  padding:3px;
-  border-radius:3px;
-  font-weight:bold;
-}
-
-.noscreen {
-  display:none;
-}
-
-/* new stuff */
-:root {
-  --widthcol1:19%;
-  --widthcol2:29%;
-  --widthcol3:23%;
-  --widthcol4:9%;
-  --widthcol5:20%;
-}
-
-.inf-nomobile {
-  display:none;
-}
-.inf-container {
-  padding:16px 0px 0px 0px;
-  font-family: "SourceSans", "Calibri", "Trebuchet MS", "Lucida Sans", sans-serif-condensed, sans-serif;
-  margin:0;
-  width:100%;
-  display:flex;
-  flex-wrap:wrap;
-  list-style:none;
-}
-.inf-items {
-  /*font-size:14px ;*/
-  line-height:32px;
-  padding:0px 2px 0px 2px;
-  margin:0;
-  border-bottom:1px solid #ccc;
-  /*border-bottom:1px solid white;*/
-  /*white-space:nowrap;*/
-}
-.inf-tableheading1 {
-  margin: 0px 0px 10px 0px;
-  font-family: "Brandon Text", sans-serif;
-  line-height:2rem;
-  padding-top:5px;
-  /*line-height:25px;*/
-  font-weight: bold;
-  text-align: left;
-  font-size:2rem;
-  background-color: #eee;
-  padding-left:5px;
-  border-left: 5px solid #4cAF50;
-  letter-spacing:-1px;
-  color:#505050;
-  flex-basis:100%;
-}
-.inf-heading1 {
-  flex-basis:36%;
-  font-weight:bold;
-}
-.inf-heading2 {
-  flex-basis:64%;
-}
-.inf-item1 {
-  flex-basis:36%;
-  padding-left:10px;
-}
-.inf-item2 {
-  flex-basis:64%;
-}
-.inf-item3 {
-  flex-basis:36%;
-  padding-left:10px;
-}
-.inf-item4 {
-  flex-basis:64%;
-}
-.inf-item5 {
-  flex-basis:36%;
-  padding-left:10px;
-}
-.inf-item6 {
-  flex-basis:64%;
-}
-.inf-tableheading3 {
-	line-height:25px;
-}
-.inf-tableheading4 {
-	line-height:25px;
-}
-.inf-tableheading5 {
-	line-height:25px;
-}
-.bg-purple {
-  background: #debfd9; 
-  /*color: white; */
-  border-bottom: 1px solid purple;
-}
-.bg-purplered {
-  background: purple; 
-  color: white; 
-  border-bottom: 1px solid red;
-}
-.bg-pink {
-  background: #eacfc9;
-  border-bottom: 1px solid #aaa;
-}
-.bg-antiHT {
-  background: repeating-linear-gradient(
-    -45deg,
-    #fac9ff,
-    #fac9ff 3px,
-    #fbe0ff 3px,
-    #fbe0ff 6px
-  );
-  border-bottom: 1px solid #662e7c;
-}
-.bg-opioid {
-  background: #cfe7f7;
-  border-bottom: 1px solid #355982;
-}
-.bg-sedate {
-  background: #ffd65b;
-  border-bottom: 1px solid #aa481e;
-}
-.bg-MR {
-  background: #ff8282;
-  border-bottom: 1px solid #7a1919;
-}
-.bg-ARR {
-  background: #d0e0d3;
-  border-bottom: 1px solid #1c5126;
-}
-.bg-others {
-  background: #eae9da;
-  border-bottom: 1px solid #605c21;
-}
-
-
-/* end new stuff */
-
 @media screen and (min-width:768px) {
-  h2 { border-bottom: 1px solid #ddd;}
-  /*input[type=number] {width:60px;}*/
-  .column {  width:50%;  vertical-align:top; display:inline-block; padding: 0px 5px 0px 5px;}
-  .column1 {  width:45%;  vertical-align:top; padding-top:10px; display:inline-block; }
-  .column2 {  width:55%;  vertical-align:top; display:inline-block; }
-  #contentintubation {display:flex;}
-  .column-x4 {width:25%; vertical-align:top; padding: 0px 5px 0px 5px;}
-  .nomobile { text-align:center; display:block; }
-
-
-  /* new stuff */
-  .inf-items {border-bottom-color:white;}
-  .inf-item1 {display:none;}
-  .inf-item3 {display:none;}
-  .inf-item5 {display:none;}
-
-  .inf-heading1 {flex-basis:var(--widthcol1); border-bottom:1px solid white; text-align:right; padding-right:7px}
-  .inf-heading2 {flex-basis:var(--widthcol2); background:transparent; color:black; border-bottom:1px solid white;}
-  .inf-item2 {flex-basis:var(--widthcol3);}
-  .inf-item4 {flex-basis:var(--widthcol4); font-weight:bold;}
-  .inf-item6 {flex-basis:var(--widthcol5);}
-
-  .inf-nomobile {display:inline-block;}
-  .inf-tableheading1 {flex-basis:48%; padding:5px 2px 2px 2px; margin:0;  border-bottom: 1px solid #505050;}
-  .inf-tableheading3 {flex-basis:var(--widthcol3);  font-weight:bold; padding:2px; border-bottom: 1px solid #505050; padding-top:10px;}
-  .inf-tableheading4 {flex-basis:var(--widthcol4);  font-weight:bold; padding:2px; border-bottom: 1px solid #505050; padding-top:10px;}
-  .inf-tableheading5 {flex-basis:var(--widthcol5);  font-weight:bold; padding:2px; border-bottom: 1px solid #505050;padding-top:10px;}
-
-  .row-even {background-color:#eee;}
-  /* end new stuff */
-
   .imageholder {
     text-align:center;
   }
@@ -3615,7 +2822,6 @@ tr.subheading7 {
     max-width:1200px;
     max-height:2000px;
   }
-  .fontsize80 {font-size:80%;}
   .bodybutton {
     display:none;
   }
@@ -4341,44 +3547,6 @@ tr.subheading7 {
   transform: rotate(45deg) translate(-3px, -10px) ;
 }
 
-#ptolcard {
-  display: flex;
-  height: 100px;
-  justify-content: center;
-  align-items: center;
-  margin: 1rem 0.5rem;
-  padding: 0.25rem;
-  border-radius: 9px;
-  border: 1px solid #9bc99d;
-  background:linear-gradient(78deg, rgba(255,255,255,1) 68%, rgba(213,237,214,1) 68%);
-}
-
-#ptoltooltip {
-    font-size: 60%;
-    opacity: 0.5;
-    display: inline-block;
-    padding-left: 5px;
-    transform: translateY(-5px);
-    cursor: pointer;
-}
-
-
-body.dark #ptolcard {
-  background: linear-gradient(78deg, rgba(10,25,10,1) 68%, rgba(16, 86, 63,1) 68%);
-
-}
-
-body.dark #ptolcard_left {
-  color: #fff;
-}
-body.dark #ptolcard_right {
-  color: rgba(255,255,255,0.7);
-
-}
-body.dark #ptolcard_switch {
-  color: rgba(255,255,255,0.7);
-}
-
 .menuwrapper {
   height:100%;
   width:100%;
@@ -4437,8 +3605,6 @@ body.dark #ptolcard_switch {
   transition: transform 0.3s ease-in-out;
   transform-origin: 0% 50%;
 }
-
-
 
 .menucontent a:hover, .menucontent a:focus {
   color:#fff;
@@ -4507,93 +3673,6 @@ body.dark #ptolcard_switch {
   display:none;
 }
 
-
-.ticker {
-  display:none;
-  position:fixed;
-  bottom:0;
-  width:100%;
-  overflow-x:auto;
-  white-space:nowrap;
-  background:linear-gradient(180deg, rgba(76,175,80,1) 0%, rgba(76,175,80,0.7) 100%);
-  -webkit-box-shadow: 0px -5px 14px -3px rgba(0,0,0,0.5); 
-  box-shadow: 0px -5px 14px -3px rgba(0,0,0,0.5);
-  border-top:2px solid #4CAF50;
-  -ms-overflow-style:none;
-  scrollbar-width:none;
-}
-.ticker::before {
-  display:block;
-  position:fixed;
-  content: '\f48e';
-  font-size:24px;
-  color:white;
-  font-family: 'Font Awesome 5 Free';
-  font-weight:900;
-  bottom:75px;
-  left:0.5rem;
-  border-radius: 9px 9px 0px 0px;
-  padding:4px;
-  height:26px;
-  background:#4CAF50;
-}
-.ticker::-webkit-scrollbar {
-  display:none;
-}
-
-
-.tickerleft {
-  display:inline-block;
-  border:2px solid white;
-  margin:3px 5px 5px 5px;
-  padding:5px;
-  border-radius:9px;
-  width:200px;
-  background:linear-gradient(112deg, rgb(238 238 238) 45%, rgb(123 128 146) 45%);
-}
-
-.tickerright {
-  display:inline-block;
-  width:200px;
-  background:#ccc;
-  margin:3px 5px 5px 5px;
-  padding:5px;
-  border-radius:9px;
-  border:2px solid #ccc;
-  background:linear-gradient(112deg, rgb(120 120 120) 45%, rgb(30 30 30) 45%);
-  width:200px;
-}
-
-.A1 {
-  display:inline-block;
-  width:60%;
-}
-.A2 {
-  display:block;
-  font-size:70%;
-}
-.A3 {
-  display:block;
-  font-size:130%;
-  font-weight:bold;
-}
-
-.B1 {
-  display:inline-block;
-  text-align:right;
-  width:40%;
-  color:white;
-  padding-right:5px;
-}
-.B2 {
-  font-size:70%;
-  display:block;
-}
-.B3 {
-  display:block;
-  font-size:130%;
-  font-weight:bold;
-}
 #progressoutside {
   display:block;
   background:transparent;
@@ -4962,23 +4041,6 @@ body.dark .file_outerbox.active {
   top: -2px;
 }
 
-/*
-
-.parallax_drug_conc {
-  font-weight: normal;
-  text-transform: none;
-  display: inline-block;
-  border-radius: 2rem;
-  margin-right: 3px;
-  margin-left: 3px;
-  border: 1px solid white;
-  font-size: 80%;
-  min-width: 66px;
-  text-align: center;
-  white-space: nowrap;
-  background: #ddd;
-}
-*/
 
 .parallax_right {
   flex-basis: 30%;
@@ -5091,42 +4153,6 @@ body.dark .infusionratedropdown {
   color: #eee;
   box-shadow: 2px 4px 6px 0px #000;
 }
-
-/*
-#infusionratecontainer1 {
-  position: relative;
-}
-
-#infusionrateselector1 {
-  transition: 0.3s transform ease;
-  display: inline-block;
-  cursor: pointer;
-}
-
-#infusionrateselector1.active {
-  transform: rotate(180deg);
-}
-
-#infusionratedropdown1 {
-  position: absolute;
-  width: 150px;
-  background: rgba(213,237,214,1);
-  border: 2px solid #4caf50;
-  box-shadow: 2px 6px 7px 0px rgba(0,0,0,0.15);
-  color: black;
-  border-radius: 9px;
-  padding: 4px;
-  margin-top: 2px;
-  display: none;
-}
-
-body.dark #infusionratedropdown1 {
-  border: 2px solid #506150;
-  background: #555;
-  color: #eee;
-  box-shadow: 2px 4px 6px 0px #000;
-}
-*/
 
 .infusionratedropdownitem {
   display: block;
@@ -5299,113 +4325,6 @@ body.dark .infusionratedropdownitem:hover {
   }
   .narrowbodywrapper .prompts_card {
     width: calc(100% - 1rem);
-  }
-  .leftbar {
-    padding-top: 100px;
-    width: 100px;
-    left: 0.5rem;
-    background: transparent;
-  }
-  .propofol {
-    background: transparent;
-  }
-  .opioid {
-    background: transparent;
-  }
-  .druglabelcontainer {
-    height: 120px;
-    padding-top: 0.5rem;
-  }
-  .druglabelcontainer.propofol.active {
-    background: #fff;
-    border-left: 5px solid rgb(255,210,80);
-    border-top: 0;
-    border-bottom: 0;
-  }
-  .druglabelcontainer.opioid.active {
-    background: #fff;
-    border-left: 5px solid rgb(0,129,255);
-    border-top: 0;
-    border-bottom: 0;
-  }
-  body.dark .druglabelcontainer.propofol.active {
-    background: #555;
-    border-left: 0;
-    border-top: 0;
-    border-bottom: 0;
-    border-right: 5px solid rgb(255,210,80);
-  }
-  body.dark .druglabelcontainer.opioid.active {
-    background: #555;
-    border-left: 0;
-    border-top: 0;
-    border-bottom: 0;
-    border-right: 5px solid rgb(0,129,255);
-  }
-  body.dark .druglabelcontainer.propofol.active::after {
-    top: 50px;
-    left: 96px;
-    color: rgb(255,210,80);
-  }
-  body.dark .druglabelcontainer.opioid.active::after {
-    top: 50px;
-    left: 96px;
-    color: rgb(0,129,255);
-  }
-
-  .druglabeltext {
-    width: 100%;
-    font-size: 12px;
-    transform: none;
-    background: transparent;
-    text-align: center;
-    padding-top: 5px;
-  }
-  body.dark .druglabeltext {
-    color: #ccc;
-  }
-  .druglabelicon {
-    margin-left: auto;
-    margin-right: auto;
-    transform: translateY(0);
-    width: 36px;
-    height: 36px;
-    font-size: 28px;
-  }
-  .druglabelicon.alert {
-    position: absolute;
-    left: 60px;
-    top: -5px;
-    font-size: 20px;
-    width: 28px;
-    height: 28px;
-  }
-  .line1 {
-    display: block;
-    
-  }
-  body.dark .line1 {
-    
-  }
-  .line2 {
-    display: block;
-    
-    width: 50%;
-    font-size: 16px;
-    text-align: left;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  body.dark .line2 {
-    
-  }
-  .line2text {
-    display: block;
-    border-bottom: 1px solid #aaa;
-  }
-
-  .ptolcontainer {
-    height: 120px;
   }
   body.dark #prompts_container {
     background: #303030;
@@ -5750,12 +4669,6 @@ body.dark #preview-expand-box > div > div.timespan {
   .menucontent {
     top:0;
   }
-  .ticker {
-    position:static;
-  }
-  .ticker::before {
-    display:none;
-  }
 }
 
 
@@ -5765,15 +4678,7 @@ body.dark #preview-expand-box > div > div.timespan {
     opacity: 0;
     pointer-events: none;
   }
-  .ptolcontainer {
-    height: 100px;
-  }
-  .leftbar {
-    padding-top: 0px;
-  }
-  .druglabelcontainer {
-    /*height: 180px;*/
-  }
+
   .sharebutton.complex {
     opacity: 0;
     pointer-events: none;
@@ -5815,30 +4720,6 @@ body.dark #preview-expand-box > div > div.timespan {
     opacity: 0;
     pointer-events: none;
   }
-  .narrowbodywrapper #parallax1 {
-    width: 100%;
-  }
-  .narrowbodywrapper #parallax2 {
-    width: 100%;
-  }
-  .druglabelcontainer {
-    height: 130px;
-  }
-  .druglabeltext {
-    font-size: 10px;
-  }
-  .ptolcontainer {
-    height: 100px;
-  }
-  /*
-  .druglabelcontainer.propofol.active::after {
-    top: 55px;
-  }
-  .druglabelcontainer.opioid.active::after {
-    top: 55px;
-  }
-  */
-
 }
 
 @media (max-height:480px) and (min-width:610px) and (max-width:767px) {
@@ -5895,15 +4776,7 @@ body.dark #preview-expand-box > div > div.timespan {
   .narrowbodywrapper #parallax2 {
     width: 100%;
   }
-  .druglabelcontainer {
-    height: 130px;
-  }
-  .druglabeltext {
-    font-size: 10px;
-  }
-  .ptolcontainer {
-    height: 100px;
-  }
+
   .darkmodebutton {
     opacity: 0;
   }
@@ -6360,13 +5233,7 @@ body.dark #chart2wrapper {
 
 @media (max-width: 767px) {
 
-  body.dark .druglabelcontainer.propofol.active {
-    background: #555;
-  }
 
-  body.dark .druglabelcontainer.opioid.active {
-    background: #555;
-  }
   body.dark .card {
     margin: 1rem 0rem;
     background: #303030;
@@ -6559,12 +5426,7 @@ body.dark #addeventtext{
 }
 
 @media screen and (min-width: 1024px) {
-  #bodywrapper.narrowbodywrapper {
-    width: 968px;
-  }
-  .leftbar {
-    left: calc(50% - 476px);
-  }
+
   .narrowbodywrapper>#controlpanel {
     width: calc(868px - 0.5rem);
   }
