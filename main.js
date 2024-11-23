@@ -8089,6 +8089,7 @@ function toPageOne() {
 
 function toPageTwo() {
 	if (myChart == undefined) {
+		dynamicLoad();
 		createCharts();
 	}
 	text = validateData(age, gender, weight, height, 1);	
