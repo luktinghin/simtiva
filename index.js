@@ -1,4 +1,4 @@
-const componentsCards = `
+const componentsCardsHTML = `
 		<div id="ptolcard" class="">
 			<div id="ptolcard_left" style="padding:0.5rem;flex-basis:70%">
 				<div style="font-size:200%;font-weight:bold;line-height:1" id=""><span id="ptoltitle">PTOL</span><span id="ptoltooltip" onclick="ptolwarning();" style="display:none"><i class="far fa-question-circle"></i></span></div>
@@ -259,7 +259,7 @@ const componentsCards = `
 		</div>
 
 `
-const componentsModals = 
+const componentsModalsHTML = 
 `		<div id="modalReset" class="modal">
 			<div class="modal-content" id="modalResetcontent">
 				<div class="modal-header">RELOAD</div>
@@ -823,3 +823,11 @@ const componentsModals =
 			</div>
 		</div><!--end modalJump-->
 `
+
+//window.onLoad = dynamicLoad();
+
+function dynamicLoad() {
+	document.getElementById("componentsCards").innerHTML = componentsCardsHTML;
+	document.getElementById("componentsModals").innerHTML = componentsModalsHTML;
+}
+
