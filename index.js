@@ -824,7 +824,7 @@ const componentsModalsHTML =
 		</div><!--end modalJump-->
 `
 
-//window.onLoad = dynamicLoad();
+window.onLoad = dynamicLoad();
 
 function dynamicLoad() {
 	document.getElementById("componentsCards").innerHTML = componentsCardsHTML;
