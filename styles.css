@@ -4651,7 +4651,7 @@ body.dark #preview-expand-box > div > div.timespan {
 }
 
 #logo {
-  position:fixed;width:100%;left:0;top:calc(90% - 15px);z-index:91;
+  position:fixed;width:100%;left:0;bottom:63px;z-index:91;
 }
 
 @media (max-height:660px) {
