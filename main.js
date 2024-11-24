@@ -1803,7 +1803,6 @@ function switchpaedimode(arg) {
 			
 
 		}
-		document.getElementById("rescuebuttons").style.display = "block";
 		paedi_mode = 0;
 	} else {
 		//paedi mode 1
@@ -1835,7 +1834,6 @@ function switchpaedimode(arg) {
 			} else {
 				document.getElementById("row_eleveldopioid").style.display = "none";	
 			}
-		document.getElementById("rescuebuttons").style.display = "none";
 		paedi_mode = 1;
 	}
 
@@ -2194,14 +2192,14 @@ function toLoadTransition() {
   setTimeout(function(){  
   	document.getElementById("modalInitial").classList.remove("fadein");
   	document.getElementById("modalInitialcontent").classList.remove("open");},200);
-
 }
 
 function toPageOneFromLoad() {
 	setmodal("modalInitial");
+	document.getElementById("modalLoadcontent").classList.remove("open");
 	setTimeout(function(){
-		  document.getElementById("modalLoad").classList.remove("fadein");
-  		document.getElementById("modalLoadcontent").classList.remove("open");
+		document.getElementById("modalLoad").classList.remove("fadein");
+		document.getElementById("logo").style.display="block";
 		//reset styles
 	  	document.getElementById("modalLoadDescription").innerHTML = "Select a SIM-FILE to load:";
 	  	document.getElementById("modalLoadDescription").style.display = "none";
@@ -2217,6 +2215,7 @@ function toPageOneFromLoad() {
 	},200);
 
   	document.getElementById("rescuebuttons").style.display="block";
+  	
 
   	if (manageFileListState == 1) {
   		manageFileList();
@@ -3096,6 +3095,7 @@ function loadSourceExt() {
 	`
 		<div>After loading, the database of external sim-files will appear here.</div>
 	`
+	document.getElementById("logo").style.display = "none";
 	//document.getElementById("loadfile_container").style.display = "block";
 	//importDialog();
 }
@@ -3117,7 +3117,7 @@ function loadSourceLocal() {
 		importDataArray.length = 0;
 
 	}
-
+	document.getElementById("logo").style.display = "none";
 }
 
 function rescue() {
