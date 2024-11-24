@@ -1,5 +1,5 @@
 
-const cacheName = "simtiva-v4-122-plusmanualv2";
+const cacheName = "simtiva-v4-123-plusmanualv2";
 
 const assets = [
 	"/",
@@ -7,22 +7,19 @@ const assets = [
 	"/manual.html",
 	"/main.js",
 	"/features.js",
+	"/pharmacology.js",
+	"/index.js",
 	"/chartjs-plugin-crosshair.min.js",
 	"/styles.css",
+	"/styles-extra.css",
 	"/css/fontawesome.min.css",
 	"/css/regular.min.css",
 	"/css/solid.min.css",
-	"/webfonts/fa-solid-900.ttf",
 	"/webfonts/fa-solid-900.woff2",
-	"/webfonts/fa-regular-400.ttf",
 	"/webfonts/fa-regular-400.woff2",
 	"/chart.min.js",
 	"/beep.mp3",
 	"/beep-2.mp3",
-	"/eleveld1.gif",
-	"/eleveld2.gif",
-	"/icon.png",
-	"/icon1024.webp",
 	"/apple-touch-icon-180x180.png",
 	"/fonts/BrandonText-Bold.otf",
 	"/fonts/SourceSans3-Regular.otf.woff2",
@@ -30,7 +27,6 @@ const assets = [
 	"/fonts/SourceSans3-It.otf.woff2",
 	"/fonts/SourceSans3-BoldIt.otf.woff2",
 	"/lz-string.js",
-
 ]
 
 self.addEventListener('activate', event => {
