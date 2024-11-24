@@ -346,7 +346,51 @@ function togglemenu() {
 }
 
 //section: components for swapping
-const componentsCardsHTML = `
+
+const xLeftbarHTML = `
+  <div class="leftbar propofol hide">
+  	<div class="ptolcontainer">
+  		<div id="">&nbsp;
+  		</div>
+  	</div>
+  	<div class="leftbarlabel">
+  		<div class="druglabelcontainer propofol active" onclick="tabswitch(0);">
+  			<div class="druglabelicon alert hide"><i class="fas fa-bell"></i></div>
+  			<div class="druglabelicon propofol">
+  				P
+  			</div>
+  			<div class="druglabeltext propofol active">
+  				<div class="line1">PROPOFOL</div>
+  				<div class="line2 hide">
+  					<div class="line2text"><i class="fas fa-tint fa-fw"></i>&nbsp;<span id="cp_propo"></span>&nbsp;&nbsp;</div>
+  					<div class="line2text"><i class="fas fa-brain fa-fw"></i>&nbsp;<span id="ce_propo"></span>&nbsp;&nbsp;</div>
+  					<div class="line2text"><i class="fas fa-running fa-fw"></i>&nbsp;<span id="inf_propo"></span></div>
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+  	<div class="spacer">
+  	</div>
+  	<div class="leftbarlabel">
+  		<div class="druglabelcontainer opioid " onclick="tabswitch(1);">
+  			<div class="druglabelicon alert hide"><i class="fas fa-bell"></i></div>
+  			<div class="druglabelicon opioid">
+  				R
+  			</div>
+  			<div class="druglabeltext opioid ">
+  				<div class="line1">REMIFENTANIL</div>
+  				<div class="line2 hide">
+  					<div class="line2text"><i class="fas fa-tint fa-fw"></i>&nbsp;<span id="cp_opioid"></span>&nbsp;&nbsp;</div>
+  					<div class="line2text"><i class="fas fa-brain fa-fw"></i>&nbsp;<span id="ce_opioid"></span>&nbsp;&nbsp;</div>
+  					<div class="line2text"><i class="fas fa-running fa-fw"></i>&nbsp;<span id="inf_opioid"></span></div>
+  				</div>
+  			</div>
+
+  		</div>
+  	</div>
+  </div>
+`;
+const xCardsHTML = `
 		<div id="ptolcard" class="">
 			<div id="ptolcard_left" style="padding:0.5rem;flex-basis:70%">
 				<div style="font-size:200%;font-weight:bold;line-height:1" id=""><span id="ptoltitle">PTOL</span><span id="ptoltooltip" onclick="ptolwarning();" style="display:none"><i class="far fa-question-circle"></i></span></div>
@@ -607,7 +651,7 @@ const componentsCardsHTML = `
 		</div>
 
 `
-const componentsModalsHTML = 
+const xModalsHTML = 
 `		<div id="modalReset" class="modal">
 			<div class="modal-content" id="modalResetcontent">
 				<div class="modal-header">RELOAD</div>
@@ -1173,7 +1217,8 @@ const componentsModalsHTML =
 `
 
 function dynamicLoad() {
-	document.getElementById("componentsCards").innerHTML = componentsCardsHTML;
-	document.getElementById("componentsModals").innerHTML = componentsModalsHTML;
+	document.getElementById("xLeftbar").innerHTML = xLeftbarHTML;
+	document.getElementById("xCards").innerHTML = xCardsHTML;
+	document.getElementById("xModals").innerHTML = xModalsHTML;
 }
 
