@@ -1852,9 +1852,6 @@ function switchpaedimode(arg) {
 //z score calculated by : ((BMI/M)^L - 1) / (S * L)
 
 function sendToValidate(arg) {
-	if (initiated == false) {
-		dynamicLoad();
-	}
 	El1 = document.getElementById("valRightContainer1");
 	El2 = document.getElementById("valRightContainer2");
 	El3 = document.getElementById("valCard");

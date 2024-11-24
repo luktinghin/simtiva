@@ -1496,6 +1496,8 @@ const xModalsHTML =
 		</div><!--end modalJump-->
 `
 
+document.getElementById('inputBW').addEventListener('blur',dynamicLoad);
+
 function dynamicLoad() {
 	if (initiated == false) {
 	console.log("initiation. component swaps ready.");
