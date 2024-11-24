@@ -1504,10 +1504,12 @@ function dynamicLoad() {
 	document.getElementById("xModals").innerHTML = xModalsHTML;
 	collapsiblefunction();
 	document.getElementById("hamburger").style.display = "block";
+	document.getElementById("bodywrapper").style.opacity = 1;
+	document.getElementById("parallax3").style.opacity = 1;
 }
 
 function dynamicLoadVIEW() {
-	
+
 }
 
 function collapsiblefunction() {
