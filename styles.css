@@ -662,7 +662,7 @@ body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom
 }
 
 body.dark #modalInitial, body.dark #modalLoad {
-  background:linear-gradient(124deg, #7b8092 -150%, #000000 150%);
+  background:linear-gradient(124deg, #7b8092 -150%, #000000 100%);
   background-color: #222
 }
 
