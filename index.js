@@ -332,6 +332,175 @@ function togglemenu() {
 
 //section: components for swapping
 
+const parallax2HTML = `
+			<div class="top-bar-container">
+				<div class="topleft stop" id="iconplay" onclick="window.scrollTo(0,0);"><i class="fas fa-pause fa-lg"></i></div><!--
+				--><div class="topright">
+					<div class="top_subtitle " id="top_subtitle"><b>SimTIVA</b> - <span style="opacity: 50%; white-space:nowrap;" id="top_subtitle2">Simple TIVA simulator</span></div> 
+					<div class="top_title " id="top_title">
+						<div class="top_title_box cp" id="top_cp"><span id="cp">-</span></div>
+						<div class="top_title_box ce" id="top_ce"><span id="ce">-</span></div>
+						<div class="top_title_box infrate" id="top_infrate"><span id="infrate">-</span></div>
+					</div>
+				</div>
+			</div>`;
+
+const xInputCardsHTML = `
+		<div class="input-container" id="card_cpt0" style="">
+			<div class="input-left">
+				<div class="input-target-icon"><i class="fas fa-tint fa-fw"></i></div>
+				<div class="input-description"><span id="input-description-cp-line1" style="font-size: 1.2rem;font-weight:bold;display:block"><span>Cp Target</span></span>(<span class="conc_units"></span>/ml)</div>
+				<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesired0" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0)"></div>
+			</div>
+			<div class="input-right">
+				<div class="input-button-container"><a class="button input-button newbuttongreen" id="btn_startCpt0_new" onclick="start_cpt();"><div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Start</div></a></div>
+				<div class="input-button-container"><a class="button input-button newbuttongrey" id="btn_pauseCpt0_new" onclick="pauseCpt(0);drug_sets[0].cpt_active=0.5;"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
+			</div>
+		</div>
+		<div class="input-container" id="card_cpt1" style="display:none">
+			<div class="input-left">
+				<div class="input-target-icon"><i class="fas fa-tint fa-fw"></i></div>
+				<div class="input-description"><span id="input-description-cp1-line1" style="font-size: 1.2rem;font-weight:bold;display:block"><span>Cp Target</span></span>(<span class="conc_units"></span>/ml)</div>
+				<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesired1" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,1)"></div>
+			</div>
+			<div class="input-right">
+				<div class="input-button-container"><a class="button input-button newbuttongreen" id="btn_startCpt1_new" onclick="start_cpt_complex(document.getElementById('inputDesired1').value*1,1)"><div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Start</div></a></div>
+				<div class="input-button-container"><a class="button input-button newbuttongrey" id="btn_pauseCpt1_new" onclick="pauseCpt(1); drug_sets[1].cpt_active=0.5;"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
+			</div>
+		</div>
+		<div class="input-container" id="card_cet0_new" style="">
+			<div class="input-left">
+				<div class="input-target-icon"><i class="fas fa-brain fa-fw"></i></div>
+				<div class="input-description"><span id="input-description-ce-line1" style="font-size: 1.2rem;font-weight:bold;display:block"><span>Ce Target</span></span>(<span class="conc_units"></span>/ml)</div>
+				<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesiredCe0_new" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0)"></div>
+			</div>
+			<div class="input-right">
+				<div class="input-button-container"><a class="button input-button newbuttongreen" id="btn_startCet0_new" onclick="start_cet();"><div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Start</div></a></div>
+				<div class="input-button-container"><a class="button input-button newbuttongrey" id="btn_pauseCet0_new" onclick="pauseCpt(0);"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
+			</div>
+		</div>
+		<div class="input-container" id="card_cet1_new" style="display:none">
+			<div class="input-left">
+				<div class="input-target-icon"><i class="fas fa-brain fa-fw"></i></div>
+				<div class="input-description"><span id="input-description-ce1-line1" style="font-size: 1.2rem;font-weight:bold;display:block"><span>Ce Target</span></span>(<span class="conc_units"></span>/ml)</div>
+				<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesiredCe1_new" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,1)"></div>
+			</div>
+			<div class="input-right">
+				<div class="input-button-container"><a class="button input-button newbuttongreen" id="btn_startCet1_new" onclick="start_cet_complex(document.getElementById('inputDesiredCe1_new').value*1,1);"><div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Start</div></a></div>
+				<div class="input-button-container"><a class="button input-button newbuttongrey" id="btn_pauseCet1_new" onclick="pauseCpt(1);"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
+			</div>
+		</div>
+		<!-- end new interface styles -->
+		<div class="card" id="card_cet0" style="">
+			<div class="cardtitle">Ce TARGETING</div>
+			<div class="cardcontents">
+				<table class="table-control space" id="tableCet">
+					<tr class="fr"><td>Enter Ce (<span class="conc_units"></span>/ml)</td><td><input type="number" inputmode="decimal" style="border-radius:1rem; width:75px; border-width:2px" id="inputDesiredCe0" onfocus="this.nextElementSibling.style.display='inline-block';" min="0.1" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0);this.nextElementSibling.style.display='inline-block';" onblur="x=this;setTimeout(function(){x.nextElementSibling.style.display='none';},300)"><button id="" class="closeicon" onclick="clearInput('inputDesiredCe0');"></button></td></tr>
+					<tr id="IB_swing_select_row0" class="IB_elements">
+						<td>Peak/trough level</td>
+						<td>
+							<select id="IB_swing_select0" onchange="drug_sets[0].IB_swing=this.value*1">
+								<option value="0.025">±2.5%</option>
+								<option value="0.05" selected>±5%</option>
+								<option value="0.075">±7.5%</option>
+								<option value="0.1">±10%</option>
+								<option value="0.125">±12.5%</option>
+								<option value="0.15">±15%</option>
+							</select>
+						</td>
+					</tr>
+					<tr id="IB_interval_row0" class="IB_elements">
+						<td>Bolus interval
+						</td>
+						<td id="IB_interval0">
+						</td>
+					</tr>
+				</table>
+				<a class="button" id="btn_startCet0" onclick="start_cet();">Start</a>
+				<a class="button" id="btn_pauseCet0" onclick="pauseCpt(0);">Pause</a>
+				
+				<span id="IB_about_btn0" onclick="displayIBabout();"><i class="fas fa-question-circle"></i></span>
+			</div>
+		</div>
+		<div class="card" id="card_cet1" style="display:none;">
+			<div class="cardtitle">Ce TARGETING.</div>
+			<div class="cardcontents">
+				<table class="table-control space" id="tableCet1">
+					<tr class="fr"><td>Enter Ce (<span class="conc_units"></span>/ml)</td><td><input type="number" inputmode="decimal" style="border-radius:1rem; width:75px; border-width:2px" id="inputDesiredCe1" onfocus="this.nextElementSibling.style.display='inline-block';" min="0.1" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,1);this.nextElementSibling.style.display='inline-block';" onblur="x=this;setTimeout(function(){x.nextElementSibling.style.display='none';},300)"><button id="" class="closeicon" onclick="clearInput('inputDesiredCe1');"></button></td></tr>
+					<tr id="IB_swing_select_row1" class="IB_elements">
+						<td>Peak/trough level</td>
+						<td>
+							<select id="IB_swing_select1" onchange="drug_sets[1].IB_swing=this.value*1">
+								<option value="0.025">±2.5%</option>
+								<option value="0.05" selected>±5%</option>
+								<option value="0.075">±7.5%</option>
+								<option value="0.1">±10%</option>
+								<option value="0.125">±12.5%</option>
+								<option value="0.15">±15%</option>
+							</select>
+						</td>
+					</tr>
+					<tr id="IB_interval_row1" class="IB_elements">
+						<td>Bolus interval
+						</td>
+						<td id="IB_interval1">
+						</td>
+					</tr>
+				</table>
+				<a class="button" id="btn_startCet1" onclick="start_cet_complex(document.getElementById('inputDesiredCe1').value*1,1);">Start</a>
+				<a class="button" id="btn_pauseCet1" onclick="pauseCpt(1);">Pause</a>
+				<span id="IB_about_btn1" onclick="displayIBabout();"><i class="fas fa-question-circle"></i></span>
+			</div>
+		</div>
+		<div class="card" id="card_bolus0" style="display:none;">
+			<div class="cardtitle">BOLUS</div>
+			<div class="cardcontents">
+				<table class="table-control space">
+					<tr class="fr">
+						<td>
+							<div class="infusionratecontainer" id="boluscontainercopy0"><span id="bolusdescriptioncopy0">Custom bolus (<span class="infused_units"></span>)</span> <span class="infusionrateselector" id="bolusselectorcopy0" onclick="dropdownshowbolus(0,'copy')"><i class="fas fa-chevron-down"></i></span>
+							</div>
+								<div class="infusionratedropdown" id="bolusdropdowncopy0">
+									<a class="infusionratedropdownitem" id="bolusoptioncopy0_0" onclick="setBolusUnit(0)"><i class="far fa-check-circle infusioncheck"></i>&nbsp; <span class="infused_units"></span></a>
+									<a class="infusionratedropdownitem" id="bolusoptioncopy1_0" onclick="setBolusUnit(1)"><i class="far fa-circle infusioncheck"></i>&nbsp; <span class="infused_units"></span>/kg</a>
+									<a class="infusionratedropdownitem" id="bolusoptioncopy2_0" onclick="setBolusUnit(2)"><i class="far fa-circle infusioncheck"></i>&nbsp; ml</a>
+								</div>
+						</td>
+						<td width="30px"><input type="number" id="inputBolus0" min="0" max="2000" step="0.01" placeholder=" "></td>
+						<td><a class="button custom" id="" onclick="bolusadmin(custombolus(0),0);">Go!</button></a></td>
+					</tr></table>
+				
+				<a class="button bolus" id="bolus3" onclick="bolusadmin(30,0);"><div class="bolus_outside">Bolus</div><div class="bolus_inside">30<span class="infused_units"></span></div></a>
+				<a class="button bolus" id="bolus2" onclick="bolusadmin(20,0);"><div class="bolus_outside">Bolus</div><div class="bolus_inside">20<span class="infused_units"></span></div></a>
+				<a class="button bolus" id="bolus1" onclick="bolusadmin(10,0);"><div class="bolus_outside">Bolus</div><div class="bolus_inside">10<span class="infused_units"></span></div></a>
+			</div>
+		</div>
+		<div class="card" id="card_bolus1" style="display:none;">
+			<div class="cardtitle">BOLUS.</div>
+			<div class="cardcontents">
+				<table class="table-control space">
+					<tr class="fr">
+						<td>
+							<div class="infusionratecontainer" id="boluscontainercopy1"><span id="bolusdescriptioncopy1">Custom bolus (<span class="infused_units"></span>)</span>
+								<span class="infusionrateselector" id="bolusselectorcopy1" onclick="dropdownshowbolus(0,'')"><i class="fas fa-chevron-down"></i></span>
+							</div>
+								<div class="infusionratedropdown" id="bolusdropdowncopy1">
+									<a class="infusionratedropdownitem" id="bolusoptioncopy0_1" onclick="setBolusUnit(0)"><i class="far fa-check-circle infusioncheck"></i>&nbsp; <span class="infused_units"></span></a>
+									<a class="infusionratedropdownitem" id="bolusoptioncopy1_1" onclick="setBolusUnit(1)"><i class="far fa-circle infusioncheck"></i>&nbsp; <span class="infused_units"></span>/kg</a>
+									<a class="infusionratedropdownitem" id="bolusoptioncopy2_1" onclick="setBolusUnit(2)"><i class="far fa-circle infusioncheck"></i>&nbsp; ml</a>
+								</div>
+							</div>
+						</td>
+						<td width="30px"><input type="number" id="inputBolus1" min="0" max="2000" step="0.01" placeholder=" " ></td>
+						<td><a class="button custom" id="" onclick="bolusadmin(custombolus(1),1);">Go!</button></a></td>
+					</tr></table>
+				
+				<a class="button bolus" id="bolus3_1" onclick="bolusadmin(30,1);"><div class="bolus_outside">Bolus</div><div class="bolus_inside">30<span class="infused_units"></span></div></a>
+				<a class="button bolus" id="bolus2_1" onclick="bolusadmin(20,1);"><div class="bolus_outside">Bolus</div><div class="bolus_inside">20<span class="infused_units"></span></div></a>
+				<a class="button bolus" id="bolus1_1" onclick="bolusadmin(10,1);"><div class="bolus_outside">Bolus</div><div class="bolus_inside">10<span class="infused_units"></span></div></a>
+			</div>
+		</div>
+`;
 const xLeftbarHTML = `
   <div class="leftbar propofol hide">
   	<div class="ptolcontainer">
@@ -1202,6 +1371,8 @@ const xModalsHTML =
 `
 
 function dynamicLoad() {
+	document.getElementById("parallax2").innerHTML = parallax2HTML;
+	document.getElementById("xInputCards").innerHTML = xInputCardsHTML;
 	document.getElementById("xLeftbar").innerHTML = xLeftbarHTML;
 	document.getElementById("xCards").innerHTML = xCardsHTML;
 	document.getElementById("xModals").innerHTML = xModalsHTML;
