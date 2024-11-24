@@ -1,5 +1,296 @@
 //section: core pharmacology functions
 
+function initcet() {
+	document.getElementById("card_infusion0").style.display = "none";
+	document.getElementById("card_cpt0").style.display = "none";
+	document.getElementById("card_cet0").style.display = "none";
+	document.getElementById("btn_displayhistory").innerHTML = "Scheme";
+	document.getElementById("status").innerHTML="Waiting to start";
+
+	//moved from start_cpt
+		//set drug_sets_index to zero
+		active_drug_set_index = 0;
+		drug_sets[active_drug_set_index].cpt_active = 0;
+		drug_sets[active_drug_set_index].cet_active = 0.5;
+		drug_sets[active_drug_set_index].IB_active = 0;
+		drug_sets[active_drug_set_index].firstrun = -1;
+		calculate_udfs(active_drug_set_index);  
+
+
+			drug_sets[active_drug_set_index].cpt_rates = new Array();
+			drug_sets[active_drug_set_index].cpt_times = new Array();
+			drug_sets[active_drug_set_index].cpt_cp = new Array();
+			drug_sets[active_drug_set_index].cpt_ce = new Array();
+			drug_sets[active_drug_set_index].cpt_rates_real = new Array();
+			drug_sets[active_drug_set_index].volinf = new Array();
+			drug_sets[active_drug_set_index].historyarray = new Array();
+			drug_sets[active_drug_set_index].historyarrays = new Array();
+			drug_sets[active_drug_set_index].historytexts = new Array();
+			drug_sets[active_drug_set_index].cpt_bolus = 0;
+			drug_sets[active_drug_set_index].cet_bolus = 0;
+			drug_sets[active_drug_set_index].cpt_pause = 0;
+			drug_sets[active_drug_set_index].cet_pause = 0;
+			drug_sets[active_drug_set_index].cet_lockdowntime = 0;
+			drug_sets[active_drug_set_index].p_state = new Array();
+			drug_sets[active_drug_set_index].e_state = new Array();
+
+		p_state[1] = 0;
+		p_state[2] = 0;
+		p_state[3] = 0;
+		e_state[1] = 0;
+		e_state[2] = 0;
+		e_state[3] = 0;
+		e_state[4] = 0;
+		/*?can remove -> used for bolus admin stuff
+		l1 = Math.exp(-lambda[1] ); 
+		l2 = Math.exp(-lambda[2] );
+		l3 = Math.exp(-lambda[3] );
+		l4 = Math.exp(-lambda[4] );
+		*/
+		
+}
+
+function initcet_complex(drug_sets_index) {
+	document.getElementById("card_cet" + drug_sets_index + "_new").style.display = "";
+	document.getElementById("card_cet" + drug_sets_index + "_new").classList.add("hide");
+	document.getElementById("card_infusion" + drug_sets_index).style.display = "none";
+	document.getElementById("card_cpt" + drug_sets_index).style.display = "none";
+	document.getElementById("card_cet" + drug_sets_index).style.display = "none";
+	document.getElementById("btn_displayhistory").innerHTML = "Scheme";
+	
+	document.getElementById("status").innerHTML="Waiting to start";
+
+		drug_sets[drug_sets_index].cet_active = 0.5;
+		drug_sets[drug_sets_index].firstrun = -1;
+		drug_sets[drug_sets_index].IB_active = 0;
+		calculate_udfs(drug_sets_index);  
+
+			// initialize params
+			drug_sets[drug_sets_index].cpt_rates = new Array();
+			drug_sets[drug_sets_index].cpt_times = new Array();
+			drug_sets[drug_sets_index].cpt_cp = new Array();
+			drug_sets[drug_sets_index].cpt_ce = new Array();
+			drug_sets[drug_sets_index].cpt_rates_real = new Array();
+			drug_sets[drug_sets_index].volinf = new Array();
+			drug_sets[drug_sets_index].historyarray = new Array();
+			drug_sets[drug_sets_index].historyarrays = new Array();
+			drug_sets[drug_sets_index].historytexts = new Array();
+			drug_sets[drug_sets_index].cpt_bolus = 0;
+			drug_sets[drug_sets_index].cet_bolus = 0;
+			drug_sets[drug_sets_index].cpt_pause = 0;
+			drug_sets[drug_sets_index].cet_pause = 0;
+			drug_sets[drug_sets_index].cet_lockdowntime = 0;
+		drug_sets[drug_sets_index].p_state = new Array();
+		drug_sets[drug_sets_index].e_state = new Array();
+
+		p_state[1] = 0;
+		p_state[2] = 0;
+		p_state[3] = 0;
+		e_state[1] = 0;
+		e_state[2] = 0;
+		e_state[3] = 0;
+		e_state[4] = 0;
+}
+
+function initcpt_complex(drug_sets_index) {
+	document.getElementById("card_cpt" + drug_sets_index).style.display = "";
+	document.getElementById("card_cpt" + drug_sets_index).classList.add("hide");
+	document.getElementById("card_infusion" + drug_sets_index).style.display = "none";
+	document.getElementById("card_cet" + drug_sets_index).style.display = "none";
+	document.getElementById("card_cet" + drug_sets_index + "_new").style.display = "none";
+	document.getElementById("btn_displayhistory").innerHTML = "Scheme";
+	
+	document.getElementById("status").innerHTML="Waiting to start";
+
+		drug_sets[drug_sets_index].cpt_active = 0.5;
+		drug_sets[drug_sets_index].firstrun = -1;
+		
+		calculate_udfs(drug_sets_index);  
+
+			// initialize params
+			drug_sets[drug_sets_index].cpt_rates = new Array();
+			drug_sets[drug_sets_index].cpt_times = new Array();
+			drug_sets[drug_sets_index].cpt_cp = new Array();
+			drug_sets[drug_sets_index].cpt_ce = new Array();
+			drug_sets[drug_sets_index].cpt_rates_real = new Array();
+			drug_sets[drug_sets_index].volinf = new Array();
+			drug_sets[drug_sets_index].historyarray = new Array();
+			drug_sets[drug_sets_index].historyarrays = new Array();
+			drug_sets[drug_sets_index].historytexts = new Array();
+			drug_sets[drug_sets_index].cpt_bolus = 0;
+			drug_sets[drug_sets_index].cet_bolus = 0;
+			drug_sets[drug_sets_index].cpt_pause = 0;
+			drug_sets[drug_sets_index].cet_pause = 0;
+			drug_sets[drug_sets_index].cet_lockdowntime = 0;
+		drug_sets[drug_sets_index].p_state = new Array();
+		drug_sets[drug_sets_index].e_state = new Array();
+
+		p_state[1] = 0;
+		p_state[2] = 0;
+		p_state[3] = 0;
+		e_state[1] = 0;
+		e_state[2] = 0;
+		e_state[3] = 0;
+		e_state[4] = 0;
+}
+
+function initcetbolus(ind) {
+	document.getElementById("card_infusion" + ind).style.display = "none";
+	document.getElementById("card_cpt" + ind).style.display = "none";
+	document.getElementById("card_cet" + ind + "_new").style.display = "none";
+	document.getElementById("card_cet" + ind).style.display = "";
+	document.getElementById("card_cet" + ind).classList.add("hide");
+	document.getElementById("btn_displayhistory").innerHTML = "Scheme";
+
+		drug_sets[ind].cpt_active = 0;
+		drug_sets[ind].cet_active = 0.5;
+		drug_sets[ind].IB_active = 1;
+		drug_sets[ind].IB_swing = 0.05;
+		drug_sets[ind].firstrun = -1;
+		calculate_udfs(ind);  
+
+
+			drug_sets[ind].cpt_rates = new Array();
+			drug_sets[ind].cpt_times = new Array();
+			drug_sets[ind].cpt_cp = new Array();
+			drug_sets[ind].cpt_ce = new Array();
+			drug_sets[ind].cpt_rates_real = new Array();
+			drug_sets[ind].volinf = new Array();
+			drug_sets[ind].historyarray = new Array();
+			drug_sets[ind].historyarrays = new Array();
+			drug_sets[ind].historytexts = new Array();
+			drug_sets[ind].cpt_bolus = 0;
+			drug_sets[ind].cet_bolus = 0;
+			drug_sets[ind].cpt_pause = 0;
+			drug_sets[ind].cet_pause = 0;
+			drug_sets[ind].cet_lockdowntime = 0;
+			drug_sets[ind].p_state = new Array();
+			drug_sets[ind].e_state = new Array();
+
+
+	document.getElementById("status").innerHTML="Waiting to start";
+
+	//moved from start_cpt
+		
+		p_state[1] = 0;
+		p_state[2] = 0;
+		p_state[3] = 0;
+		e_state[1] = 0;
+		e_state[2] = 0;
+		e_state[3] = 0;
+		e_state[4] = 0;
+		//l1 = Math.exp(-drug_sets[active_drug_set_index].lambda[1] ); 
+		//l2 = Math.exp(-drug_sets[active_drug_set_index].lambda[2] );
+		//l3 = Math.exp(-drug_sets[active_drug_set_index].lambda[3] );
+		//l4 = Math.exp(-drug_sets[active_drug_set_index].lambda[4] );
+
+		//UI change
+		document.getElementById("card_cet" + ind).querySelector(".cardtitle").innerHTML = "INTERMITTENT BOLUS";
+		document.getElementById("btn_startCet" + ind).setAttribute("onclick", "start_cet_bolus()");
+		document.getElementById("IB_about_btn" + ind).style.display = "block";
+		document.getElementById("progressbar").style.display = "block";
+		//document.getElementById("IB_description").style.display = "block";
+		//var IBelem = document.getElementsByClassName("IB_elements");
+		//for (u=0; u<IBelem.length; u++) {
+		//	IBelem[u].style.display= "table-row";
+		//}
+		document.getElementById("IB_swing_select_row" + ind).style.display = "table-row";
+		document.getElementById("IB_interval_row" + ind).style.display = "table-row";
+
+		var tempmodel = document.getElementById("modelname").innerText;
+
+		if (drug_sets[ind].drug_name=="Propofol") {
+			if (tempmodel=="Marsh") {
+				document.getElementById("IB_interval" + ind).innerText = "1.5-2min";
+			}
+			if (tempmodel=="Schnider") {
+				document.getElementById("IB_interval" + ind).innerText = "1.5-2min";
+			}
+			if (tempmodel=="Eleveld") {
+				document.getElementById("IB_interval" + ind).innerText = "3.5-4min";	
+			}
+			if (tempmodel=="Paedfusor") {
+				document.getElementById("IB_interval" + ind).innerText = "2.5-3.5min";		
+			}
+			if (tempmodel=="Maitre") {
+				document.getElementById("IB_interval" + ind).innerText = "2.5-5min";	
+			}
+		}
+
+		if (drug_sets[ind].drug_name=="Remifentanil") {
+			document.getElementById("IB_swing_select" + ind).options[0].disabled = true;
+			document.getElementById("IB_swing_select" + ind).options[1].disabled = true;
+			document.getElementById("IB_swing_select" + ind).options[2].selected = true;
+			drug_sets[ind].IB_swing = 0.075;
+			document.getElementById("IB_swing_select" + ind).value = drug_sets[ind].IB_swing;
+		}
+
+		//unhide if propofol
+		if (ind == 0) {
+			document.getElementById("card_cet" + ind).classList.remove("hide");
+		}
+		
+}
+
+function initmanual(ind) {
+		drug_sets[ind].cpt_active = 0;
+		drug_sets[ind].cet_active = 0;
+		drug_sets[ind].manualmode_active = 1;
+		
+		drug_sets[ind].firstrun = -1;
+		calculate_udfs(ind);  
+
+			// initialize params
+			drug_sets[ind].cpt_rates = new Array();
+			drug_sets[ind].cpt_times = new Array();
+			drug_sets[ind].cpt_cp = new Array();
+			drug_sets[ind].cpt_ce = new Array();
+			drug_sets[ind].cpt_rates_real = new Array();
+			drug_sets[ind].volinf = new Array();
+			drug_sets[ind].historyarray = new Array();
+			drug_sets[ind].historyarrays = new Array();
+			drug_sets[ind].historytexts = new Array();
+			drug_sets[ind].cpt_bolus = 0;
+			drug_sets[ind].cet_bolus = 0;
+
+			drug_sets[ind].historytext = "";
+
+
+		
+		p_state[1] = 0;
+		p_state[2] = 0;
+		p_state[3] = 0;
+		e_state[1] = 0;
+		e_state[2] = 0;
+		e_state[3] = 0;
+		e_state[4] = 0;
+		drug_sets[ind].desired = 0;
+
+		//l1 = Math.exp(-drug_sets[active_drug_set_index].lambda[1] ); 
+		//l2 = Math.exp(-drug_sets[active_drug_set_index].lambda[2] );
+		//l3 = Math.exp(-drug_sets[active_drug_set_index].lambda[3] );
+		//l4 = Math.exp(-drug_sets[active_drug_set_index].lambda[4] );
+
+		document.getElementById("card_infusion" + ind).style.display = "";
+		document.getElementById("card_infusion" + ind).classList.add("hide");
+		//document.getElementById("card_bolus" + ind).style.display = "none"; -->no need this, otherwise tabswitch bug
+		document.getElementById("card_bolus" + ind).classList.add("hide");
+		document.getElementById('card_cpt' + ind).style.display = 'none';
+		document.getElementById('card_cet' + ind).style.display = 'none';
+		document.getElementById('card_cet' + ind + "_new").style.display = 'none';
+		//document.getElementById('card_TimeEstimation').style.display = 'none';
+		//document.getElementById('card_VolumeEstimation').style.display = 'none';
+		document.getElementById("schemecopytitle").innerHTML = "HISTORY";
+		document.getElementById("pastschemeCOPY").style.display = "none";
+
+		//unhide if this is propofol, first run
+		if (ind==0) {
+			document.getElementById("card_infusion" + ind).classList.remove("hide");
+		}
+
+}
+
+
 function start_cet() {
 	active_drug_set_index = 0;
 
@@ -285,6 +576,418 @@ function start_cet_bolus() {
 	}
 	alert_api(0);
 }
+
+function start_manual(ind) { //this is new	
+
+	if (complex_mode == 1) {
+		if ((drug_sets[active_drug_set_index].firstrun == -1) && (drug_sets[alt_drug_set_index].firstrun == -1)) {
+			common_start_calls();
+		}
+	} else if (drug_sets[ind].firstrun == -1) {
+		common_start_calls();
+	}
+
+	if (drug_sets[ind].firstrun == -1) { //first run
+		//document.getElementById("top_subtitle").classList.add("topClose");
+		//document.getElementById("top_title").classList.add("topOpen");
+		//initshare();
+		offset = Date.now();
+		if (optionsarray_infusionunit[0][0] == 1) {
+			drug_sets[ind].inf_rate_mls = document.getElementById("inputInfusion" + ind).value *1; 
+		} else {
+			//otherwise convert to ml/h first
+			drug_sets[ind].inf_rate_mls = document.getElementById("inputInfusion" + ind).value/drug_sets[active_drug_set_index].infusate_concentration/drug_sets[active_drug_set_index].inf_rate_permass_factor*mass;
+		}
+
+		//special code to account for "lost time" for delayed start in complex mode
+		if (complex_mode == 1) {
+			working_clock = Math.floor(time_in_s);
+			for (i=0; i<working_clock; i++) {
+				drug_sets[ind].cpt_rates_real.push(0);
+				drug_sets[ind].cpt_cp.push([0,0,0]);
+				drug_sets[ind].cpt_ce.push([0,0,0,0]);
+				drug_sets[ind].volinf.push(0)
+
+			}
+			myChart.data.datasets[ind*2+2].data.push({x:(working_clock-1)/60, y:0});
+			myChart.data.datasets[ind*2+3].data.push({x:(working_clock-1)/60, y:0});
+			//loop4 = setInterval(updatechart2, 1000);
+			//loop5 = setInterval(updatechart3, 1000*30);
+			setTimeout(function(){
+				updatechart3(1);
+			},500);
+		}
+
+		drug_sets[ind].firstrun = 0;
+		drug_sets[ind].running = 1;
+
+		if (document.getElementById("inputBolus_initial" + ind).value>0) {
+			temp_bolus = document.getElementById("inputBolus_initial" + ind).value * 1;
+			if (optionsarray_infusionunit[1][0] == 1) {
+				bolusadmin(temp_bolus,ind);	
+			} else if (optionsarray_infusionunit[1][1] == 1) {
+				bolusadmin(temp_bolus * mass,ind);	
+			} else {
+				bolusadmin(temp_bolus * drug_sets[ind].infusate_concentration,ind);	
+			}
+			
+		} else {
+			lookahead(0,21600,ind);
+		}
+
+
+		//UI code goes here
+		document.getElementById("btn_start" + ind).innerHTML = "Update Rate";
+		document.getElementById("tableInitialBolus" + ind).style.display = "none";
+		document.getElementById("tableInfusionRate" + ind).classList.remove("line");
+		document.getElementById("card_bolus" + ind).style.display ="";
+		document.getElementById("card_bolus" + ind).classList.remove("hide");
+		
+		document.getElementById("status").innerHTML="Running";
+		document.getElementById("iconplay").classList.remove("stop");
+		document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
+		
+		
+		if ((complex_mode == 1) && (drug_sets[0].firstrun > -1) && (drug_sets[1].firstrun > -1)) {
+			loop4 = setInterval(updatechart2, 5000);
+			loop5 = setInterval(updatechart3, 1000);
+			setTimeout(function(){
+				updatechart3(1);
+			},500);
+		}
+	} else {
+		document.getElementById("prompt_msg2").innerHTML = "Current rate";
+		if (optionsarray_infusionunit[0][0] == 1) {
+			drug_sets[ind].inf_rate_mls = document.getElementById("inputInfusion" + ind).value *1; 
+		} else {
+			//otherwise convert to ml/h first
+			drug_sets[ind].inf_rate_mls = document.getElementById("inputInfusion" + ind).value/drug_sets[active_drug_set_index].infusate_concentration/drug_sets[active_drug_set_index].inf_rate_permass_factor*mass;
+		}
+		document.getElementById("status").innerHTML="Running";
+		document.getElementById("iconplay").classList.remove("stop");
+		document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
+		
+		lookahead(0,21600,ind);//start button name already changed to "updaterate"	
+		
+	}
+}
+
+
+function start() { // this will be obsolete
+	if (firstrun == -1) { //first run
+		offset = Date.now();
+		inf_rate_mls = document.getElementById("inputInfusion").value *1; 
+		inf_rate_mgperkg = inf_rate_mls*10/mass;
+		historytext = "<br>" + "Time: " + time_in_s + "s - Rate: " + inf_rate_mls + "ml/h";
+		
+		calculate_udfs();
+		p_state[1] = 0;
+		p_state[2] = 0;
+		p_state[3] = 0;
+		e_state[1] = 0;
+		e_state[2] = 0;
+		e_state[3] = 0;
+		e_state[4] = 0;
+		desired = 0;
+		
+		loop1 = setInterval(update, 100);
+		//init patient states
+		loop2 = setInterval(runinfusion, refresh_interval);
+		loop3 = setInterval(updatechart, 3000, myChart);
+		loop4 = setInterval(lookahead, 6000);
+
+		if (document.getElementById("inputBolus_initial").value>0) {
+			bolusadmin(document.getElementById("inputBolus_initial").value * 1);
+		}
+		firstrun = 0;
+		running = 1;
+		document.getElementById("btn_start").innerHTML = "Update Rate";
+		document.getElementById("tableInitialBolus").style.display = "none";
+		document.getElementById("tableInfusionRate").classList.remove("line");
+		document.getElementById("card_bolus").style.display ="block";
+		document.getElementById("card_cpt").style.display ="none";
+		document.getElementById("status").innerHTML="Running";
+		document.getElementById("iconplay").classList.remove("stop");
+		document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
+		document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
+	} else {
+		updateinfusion();//start button name already changed to "updaterate"		
+	}
+}
+
+
+
+function start_cpt() {
+	//enter read 'desired' code here, otherwise manual command line entry
+	//reading 'desired' code here
+	active_drug_set_index = 0;
+
+	if (complex_mode == 1) {
+		if ((drug_sets[active_drug_set_index].firstrun == -1) && (drug_sets[alt_drug_set_index].firstrun == -1)) {
+			common_start_calls();
+		}
+	} else if (drug_sets[active_drug_set_index].firstrun == -1) {
+		common_start_calls();
+	}
+
+	if (drug_sets[active_drug_set_index].firstrun == -1) {
+		if (document.getElementById("inputDesired0").value>0) {
+			offset = Date.now();
+		
+			desired = document.getElementById("inputDesired0").value *1;
+		
+			drug_sets[active_drug_set_index].cpt_active = 1;
+
+			drug_sets[active_drug_set_index].desired = desired;
+			drug_sets[active_drug_set_index].firstrun = 0;
+			drug_sets[active_drug_set_index].running = 1;
+
+			deliver_cpt(desired, 0, 0, 0); // 4th argument is drug set index (3rd arg is compensation)
+
+		//UI code goes here
+			
+			document.getElementById("status").innerHTML="";
+			document.getElementById("btn_startCpt0_new").innerHTML = `<div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Enter</div></a>`;
+			document.getElementById("iconplay").classList.remove("stop");
+			document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
+			document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
+			document.getElementById("pastscheme").classList.add("show");
+		} else {
+			displayWarning("Warning","CP Target Invalid.");
+			document.getElementById("inputDesired0").value = "";
+		}
+	} else {
+		if (document.getElementById("inputDesired0").value>0) {
+			desired = document.getElementById("inputDesired0").value *1;
+			drug_sets[active_drug_set_index].cpt_active = 1;
+			drug_sets[active_drug_set_index].running = 1;
+			document.getElementById("status").innerHTML="";
+			document.getElementById("iconplay").classList.remove("stop");
+			document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
+			document.getElementById("iconplay").innerHTML="<i class='fas fa-play fa-lg'></i>";
+			deliver_cpt(desired, 0, 0,0);
+		} else {
+			displayWarning("Warning","CP Target Invalid.");
+			document.getElementById("inputDesired0").value = "";
+		}
+		
+	}
+	alert_api(0);
+	displaypreview_hide_onsubmit();
+}
+
+function pause(ind) {
+	drug_sets[ind].inf_rate_mls = 0;
+	document.getElementById("inputInfusion" + ind).value = "0";
+	lookahead(0,21600,ind);
+	document.getElementById("iconplay").classList.add("stop");
+	document.getElementById("iconplay").innerHTML="<i class='fas fa-pause fa-lg'></i>";
+	document.getElementById("status").innerHTML="Paused";
+}
+function pauseCpt(ind) {
+	drug_sets[ind].desired = 0;
+	if (parseloading == 0) {
+		document.getElementById("inputDesired" + ind).value = "0";
+		document.getElementById("inputDesiredCe" + ind + "_new").value = "0";
+	}
+	drug_sets[ind].running=0;
+
+	var working_clock = Math.floor(time_in_s);
+		//backup current P state and E state s
+
+	if (drug_sets[ind].cpt_cp.length>0) {
+		p_state[1] = drug_sets[ind].cpt_cp[working_clock-1][0];
+		p_state[2] = drug_sets[ind].cpt_cp[working_clock-1][1];
+		p_state[3] = drug_sets[ind].cpt_cp[working_clock-1][2];
+
+		e_state[1] = drug_sets[ind].cpt_ce[working_clock-1][0];
+		e_state[2] = drug_sets[ind].cpt_ce[working_clock-1][1];
+		e_state[3] = drug_sets[ind].cpt_ce[working_clock-1][2];
+		e_state[4] = drug_sets[ind].cpt_ce[working_clock-1][3];
+	}
+
+
+	p_state2[1] = p_state[1];
+	p_state2[2] = p_state[2];
+	p_state2[3] = p_state[3];
+	e_state2[1] = e_state[1];
+	e_state2[2] = e_state[2];
+	e_state2[3] = e_state[3];
+	e_state2[4] = e_state[4];
+
+	p_state3[1] = p_state[1];
+	p_state3[2] = p_state[2];
+	p_state3[3] = p_state[3];
+	e_state3[1] = e_state[1];
+	e_state3[2] = e_state[2];
+	e_state3[3] = e_state[3];
+	e_state3[4] = e_state[4];
+
+	//pop the arrays
+	drug_sets[ind].cpt_rates.length = 0;
+	drug_sets[ind].cpt_times.length = 0;
+	drug_sets[ind].historyarray.length = 0;
+	//set the real rates delivery array to current length in time_in_s
+	drug_sets[ind].cpt_rates_real.length = working_clock;
+	drug_sets[ind].cpt_cp.length = working_clock;
+	drug_sets[ind].cpt_ce.length = working_clock;
+	drug_sets[ind].volinf.length = working_clock;
+	myChart.data.datasets[ind*2+2].data.length = myChart.data.datasets[ind*2+2].data.findIndex((element)=>element.x>time_in_s/60);
+	myChart.data.datasets[ind*2+3].data.length = myChart.data.datasets[ind*2+3].data.findIndex((element)=>element.x>time_in_s/60);
+
+
+	var look_l1 = Math.exp(-drug_sets[ind].lambda[1] ); 
+	var look_l2 = Math.exp(-drug_sets[ind].lambda[2] );
+	var look_l3 = Math.exp(-drug_sets[ind].lambda[3] );
+	var look_l4 = Math.exp(-drug_sets[ind].lambda[4] );
+	var temp_result, temp_result_e;
+	var temp_vol = drug_sets[ind].volinf[working_clock-1];
+
+	for (j=0; j<21600; j++) {
+
+		p_state3[1] = p_state3[1] * look_l1 ;
+		p_state3[2] = p_state3[2] * look_l2 ;
+		p_state3[3] = p_state3[3] * look_l3 ;
+		//if (effect_data)
+		//	{
+		e_state3[1] = e_state3[1] * look_l1 ;
+		e_state3[2] = e_state3[2] * look_l2 ;
+		e_state3[3] = e_state3[3] * look_l3 ;
+		e_state3[4] = e_state3[4] * look_l4 ;
+		
+		//prior_test_rate = test_rate;
+		temp_result = p_state3[1] + p_state3[2] + p_state3[3];
+		temp_result_e = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
+
+		drug_sets[ind].cpt_cp.push([p_state3[1],p_state3[2],p_state3[3]]);
+		drug_sets[ind].cpt_ce.push([e_state3[1],e_state3[2],e_state3[3],e_state3[4]]);
+		drug_sets[ind].volinf.push(temp_vol);
+		drug_sets[ind].cpt_rates_real.push(0);
+		//if (j%60 ==0) {console.log(j + "real rate " + test_rate*3600/10 + " real Cp " + result);}
+		if ((j<1800) && (j%10==0)) {
+			myChart.data.datasets[ind*2+2].data.push({x:(working_clock+j)/60, y:temp_result});
+			myChart.data.datasets[ind*2+3].data.push({x:(working_clock+j)/60, y:temp_result_e});
+		}
+		if ((j>=1800) && (j<7200) && (j%60==0)) {
+			myChart.data.datasets[ind*2+2].data.push({x:(working_clock+j)/60, y:temp_result});
+			myChart.data.datasets[ind*2+3].data.push({x:(working_clock+j)/60, y:temp_result_e});			
+		}
+		if ((j>=7200) && (j%120==0)) {
+			myChart.data.datasets[ind*2+2].data.push({x:(working_clock+j)/60, y:temp_result});
+			myChart.data.datasets[ind*2+3].data.push({x:(working_clock+j)/60, y:temp_result_e});			
+		}
+	}
+
+	processhistory();
+	drug_sets[ind].historytext = "<div class='schemecpt' data-time='" + working_clock + "'>" + "At " + converttime(working_clock) + " - target set zero.</div>";
+	drug_sets[ind].historytext = drug_sets[ind].historytext.concat("<div class='schemeinf' data-time='" + working_clock + "'>" + "Infusion paused</div>");	
+	drug_sets[ind].historyarray.push([working_clock, 0]);
+	drug_sets[ind].historyarrays.push([,0,working_clock,0]);
+	document.getElementById("historywrapper").innerHTML = drug_sets[ind].historytext;
+	historydivs = document.getElementById("historywrapper").querySelectorAll("[data-time]"); // need to self-write history divs because of update() will not function
+
+	document.getElementById("iconplay").classList.add("stop");
+	document.getElementById("iconplay").innerHTML="<i class='fas fa-pause fa-lg'></i>";
+	document.getElementById("status").innerHTML="Paused";
+	document.getElementById("prompt_msg2").innerHTML = "Current target: 0";
+	document.getElementById("warning").style.display = "none";
+	document.getElementById("infusiondescriptor").innerHTML="";
+	document.getElementById("top_infrate").style.display = "none";
+	if (parseloading == 0) {
+		savefile_data();	
+		ptol_generate_margins(ind,0.9,0.5);
+	} else {
+		myChart.update();
+	}
+	
+}
+
+function runinfusion2() {
+	drug_sets[0].inf_rate_mls = getinfusionrate(time_in_s,0);
+	drug_sets[0].inf_rate_permass = drug_sets[0].inf_rate_mls*drug_sets[0].infusate_concentration*drug_sets[0].inf_rate_permass_factor/mass;
+	result = Math.round(getcp(time_in_s,0)*100)/100;
+	result_e = Math.round(getce(time_in_s,0)*100)/100;
+	displayresult(result, result_e);
+}
+
+function runinfusion_complex() {
+	
+	if (drug_sets[active_drug_set_index].running > -1) {
+		drug_sets[active_drug_set_index].inf_rate_mls = getinfusionrate(time_in_s,active_drug_set_index);
+		drug_sets[active_drug_set_index].inf_rate_permass = drug_sets[active_drug_set_index].inf_rate_mls*drug_sets[active_drug_set_index].infusate_concentration*drug_sets[active_drug_set_index].inf_rate_permass_factor/mass;
+		result = Math.round(getcp(time_in_s,active_drug_set_index)*10)/10;
+		result_e = Math.round(getce(time_in_s,active_drug_set_index)*10)/10;
+	
+		displayresult(result,result_e) ;
+	} else {
+		displayresult(0,0);
+	}
+	//document.getElementById("cp_propo").innerHTML = result;
+	//document.getElementById("ce_propo").innerHTML = result_e;
+	//document.getElementById("inf_propo").innerHTML = drug_sets[active_drug_set_index].inf_rate_mls;
+
+	//if (drug_sets[active_drug_set_index].manualmode_active == 1) {
+	//	displayresult(result, result_e);
+	//}
+	
+	if (drug_sets.length==2) {
+		drug_sets[alt_drug_set_index].inf_rate_mls = getinfusionrate(time_in_s,alt_drug_set_index);
+		drug_sets[alt_drug_set_index].inf_rate_permass = drug_sets[alt_drug_set_index].inf_rate_mls*drug_sets[alt_drug_set_index].infusate_concentration*drug_sets[alt_drug_set_index].inf_rate_permass_factor/mass;
+		alt_result = Math.round(getcp(time_in_s,alt_drug_set_index)*10)/10;
+		alt_result_e = Math.round(getce(time_in_s,alt_drug_set_index)*10)/10;
+		//document.getElementById("cp_opioid").innerHTML = alt_result;
+		//document.getElementById("ce_opioid").innerHTML = alt_result_e;
+		//document.getElementById("inf_opioid").innerHTML = drug_sets[alt_drug_set_index].inf_rate_mls;
+
+		//code to target alt drug imminent rate change
+		if (drug_sets[alt_drug_set_index].historyarray.length>0) {
+			let nextIndex = drug_sets[alt_drug_set_index].historyarray.findIndex((element)=>element[0]>time_in_s);
+			if (nextIndex > 0) {
+				difference = drug_sets[alt_drug_set_index].historyarray[nextIndex][0] - time_in_s;
+				if (difference < 30) { 
+					if (ringbell2active == 0) {
+						ringbell2(difference*1000/simspeed);
+					}
+					//ding twice to alert to alert alt drug change
+					if (alert_sound_on == 1) {
+						if (alert_sound_on == 1) {
+							if (!alert_sound_2) {
+								alert_sound_2 = setInterval("alert_sound_object2.play()",3000);	
+							}
+						}   
+						if (alert_vibrate_on == 1) {
+							if (!alert_vibrate_2) {
+								alert_vibrate_2 = setInterval("window.navigator.vibrate(500)",3000);
+							}
+						} 
+					}
+				} else if (difference < 5) {
+					if ((notificationallowed == 1) && (notificationactive == 1)) {
+						if (drug_sets[alt_drug_set_index].IB_active == 1) {
+							tempMessage2 = "Next Bolus: " + drug_sets[alt_drug_set_index].historyarray[nextIndex][2] + drug_sets[alt_drug_set_index].infused_units;
+						} else {
+							tempMessage2 = "Infuse at " + Math.round(drug_sets[alt_drug_set_index].historyarray[nextIndex][1]*3600/drug_sets[alt_drug_set_index].infusate_concentration*10)/10 + "ml/h";
+						}
+
+						showNotification(tempMessage2, alt_drug_set_index);
+					}
+				} else { // not within 30s window
+					if (alert_sound_on == 1)		{clearInterval(alert_sound_2); alert_sound_2 = null;}
+					if (alert_vibrate_on == 1) 	{clearInterval(alert_vibrate_2); alert_vibrate_2 = null;}
+				}
+			} else { // to cater for findIndex not found, returns -1, means it is time is past the last of historyarray of alt
+					if (alert_sound_on == 1)		{clearInterval(alert_sound_2); alert_sound_2 = null;}
+					if (alert_vibrate_on == 1) 	{clearInterval(alert_vibrate_2); alert_vibrate_2 = null;}
+			}
+		} else { 
+			// to account for alt drug may not be CPT/CET; may be manual etc, off notif at this point
+					if (alert_sound_on == 1)		{clearInterval(alert_sound_2); alert_sound_2 = null;}
+					if (alert_vibrate_on == 1) 	{clearInterval(alert_vibrate_2); alert_vibrate_2 = null;}
+		}
+	}
+}
+
+
 
 function preview_cpt(x,ind) {
 	drug_sets[ind].desired = x;
@@ -5085,3 +5788,38 @@ function confirmretrospective() {
 	window.scrollTo(0,0);
 	hideallmodal();
 }
+
+//section: volume and time estimation functions
+
+function timeEstimation(inputVolume) {
+	var currenttime = Math.floor(time_in_s);
+	var futureVolume = inputVolume + drug_sets[active_drug_set_index].volinf[currenttime];
+	var lastTill = drug_sets[active_drug_set_index].volinf.findIndex((element) => element > futureVolume);
+  return (lastTill-currenttime);
+}
+
+function displayTimeEstimation() {
+	var x = document.getElementById("inputVolume").value*1;
+	var y = timeEstimation(x);
+	if (y>0) {
+		document.getElementById("timeEstimation_output").innerHTML = converttime(y);
+	} else {
+		document.getElementById("timeEstimation_output").innerHTML = "Error";
+	}
+}
+
+function volumeEstimation(inputTime) {
+	var currenttime = Math.floor(time_in_s);
+	return Math.round((drug_sets[active_drug_set_index].volinf[inputTime+currenttime] - drug_sets[active_drug_set_index].volinf[currenttime])*10)/10;
+}
+
+function displayVolumeEstimation() {
+	var x = document.getElementById("inputTime").value*60;
+	var y = volumeEstimation(x);
+	if (y>0) {
+		document.getElementById("volumeEstimation_output").innerHTML = y + "mls";
+	} else {
+		document.getElementById("volumeEstimation_output").innerHTML = "Error";
+	}
+}
+

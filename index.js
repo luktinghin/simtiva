@@ -1,3 +1,351 @@
+//section: sound and ringbell
+
+function sound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = function(){
+    this.sound.play();
+  }
+  this.stop = function(){
+    this.sound.pause();
+  }
+}
+
+
+function ringbell(duration) {
+	let El1 = document.querySelector(".topleft");
+	if (duration>60*1000) duration = 60*1000;
+	if (!El1.classList.contains("notif")) {
+		El1.dataOrig = El1.innerHTML;
+		El1.classList.add("notif");
+		El1.innerHTML = "<i class='fas fa-bell fa-lg'></i>"
+		clearTimeout(ringtimeout);
+		ringactive = 1;
+		ringtimeout = setTimeout(ringtimeoutcallback, duration);
+	}
+}
+
+function ringtimeoutcallback() {
+	let El1 = document.querySelector(".topleft");
+				El1.classList.remove("notif");
+				El1.innerHTML = El1.dataOrig;
+				clearTimeout(ringtimeout);
+				ringtimeout = null;
+				ringactive = 0;			
+}
+
+
+function ringbell2(duration2) {
+	if (active_drug_set_index == 0) {
+		ElBell = document.querySelector(".druglabelcontainer.opioid > .druglabelicon.alert");
+	} else {
+		ElBell = document.querySelector(".druglabelcontainer.propofol > .druglabelicon.alert");
+	}
+	if (duration2>30*1000) duration2 = 30*1000;
+	
+	if (ElBell.classList.contains("hide")) {
+		
+		ElBell.classList.remove("hide");
+		ringbell2active = 1;
+		clearTimeout(ringbell2timeout);
+		ringbell2timeout = setTimeout(ringbell2timeoutcallback, duration2);
+	}
+}
+
+function ringbell2timeoutcallback() {
+	ElBell = document.querySelector(".druglabelcontainer.opioid > .druglabelicon.alert");
+	ElBell2 = document.querySelector(".druglabelcontainer.propofol > .druglabelicon.alert");
+	ElBell.classList.add("hide");
+	ElBell2.classList.add("hide");
+	ringbell2active = 0;
+	clearTimeout(ringbell2timeout);
+	ringbell2timeout = null;
+}
+
+//section: show-hide various components
+
+function show_graph() {
+	document.getElementById("chartwrapper").classList.remove("hide");
+	document.getElementById("historywrapper2").classList.remove("open");
+	document.getElementById("outputcontainer").classList.remove("showscheme");
+	document.getElementById("btn_displayhistory").classList.remove("active");
+	document.getElementById("btn_displaychart").classList.add("active");
+}
+function show_history() {
+	document.getElementById("chartwrapper").classList.add("hide");
+	document.getElementById("historywrapper2").classList.add("open");
+	document.getElementById("outputcontainer").classList.add("showscheme");
+	document.getElementById("btn_displayhistory").classList.add("active");
+	document.getElementById("btn_displaychart").classList.remove("active");
+}
+function show_isobologram() {
+	document.getElementById("chart2wrapper").classList.remove("hide");
+	document.getElementById("legendwrapper").classList.remove("open");
+	//document.getElementById("outputcontainer").classList.remove("showscheme");
+	document.getElementById("btn_displaylegend").classList.remove("active");
+	document.getElementById("btn_displayisobologram").classList.add("active");
+}
+function show_legend() {
+	document.getElementById("chart2wrapper").classList.add("hide");
+	document.getElementById("legendwrapper").classList.add("open");
+	//document.getElementById("outputcontainer").classList.add("showscheme");
+	document.getElementById("btn_displaylegend").classList.add("active");
+	document.getElementById("btn_displayisobologram").classList.remove("active");
+}
+
+
+
+//section: various display modals and options and menu
+
+function displayDisclaimer() {
+	text = "<span style='font-size:85%'>SimTIVA is a simulation program for educational purposes only. The information presented is not medical advice. All reasonable precautions have been taken to verify the calculations in this app. However, the accuracy cannot be guaranteed and the information is provided without warranty of any kind, either express or implied. The responsibility for the use and interpretation of the information provided lies with the user. In no event shall the author be liable for damages arising from using this app. Do not proceed if you do not agree to this disclaimer.</span>"
+	displayWarning("Disclaimer", text);
+}
+
+function displayAbout() {
+	//obsolete
+	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk, 2024</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 1/11/2024 (V4.85) Build 122.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
+	displayWarning("About", text);
+}
+
+function displayAbout2() {
+	let El1 = document.createElement("div");
+	El1.classList.add("customAboutContainer");
+	El1.innerHTML = `
+		<div class="customAboutItem" id="customAbout1" onclick="
+				document.querySelector('.customAboutText').style.display = 'block';
+				document.querySelector('.customAboutQuickGuideText').style.display = 'none';
+				document.getElementById('customAbout1').classList.add('active');
+				document.getElementById('customAbout2').classList.remove('active');
+				document.querySelector('.customAboutContainer').classList.add('active');
+			">
+			<span class="customAboutIcon"><i class="fas fa-info-circle fa-fw"></i></span>
+			<span>About</span>
+		</div>
+		<div class="customAboutItem" id="customAbout2" onclick="
+				document.querySelector('.customAboutText').style.display = 'none';
+				document.querySelector('.customAboutQuickGuideText').style.display = 'block';
+				document.getElementById('customAbout1').classList.remove('active');
+				document.getElementById('customAbout2').classList.add('active');
+				document.querySelector('.customAboutContainer').classList.add('active');
+			">
+			<span class="customAboutIcon"><i class="fas fa-question fa-fw"></i></span>
+			<span>Quick Start Guide</span>
+		</div>
+		<div class="customAboutItem" onclick="
+				window.open('https://manual.simtiva.app', '_blank');
+				document.getElementById('customAbout1').classList.remove('active');
+				document.getElementById('customAbout2').classList.remove('active');
+				document.querySelector('.customAboutQuickGuideText').style.display = 'none';
+				document.querySelector('.customAboutText').style.display = 'none';
+				document.querySelector('.customAboutContainer').classList.remove('active');
+
+			">
+			<span class="customAboutIcon"><i class="fas fa-book-open fa-fw"></i></span>
+			<span>User Manual</span>
+		</div>
+	`;
+	let El0 = document.createElement("div");
+	let ElAbout = document.createElement("div");
+	ElAbout.classList.add("customAboutText");
+	ElAbout.innerHTML = `<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1>
+		<br><b>Written by Terence Luk, 2024</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!
+		<br><br>Contributed by:
+		<br> - George Zhong (@propofoldream)
+		<br> - Eric Ng 
+		<br> - David Lam
+		<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.
+		<br>Last updated 1/11/2024 (V4.85) Build 122.
+		<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i>
+		<br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.
+		<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>`;
+	let ElQuickGuide = document.createElement("div");
+	ElQuickGuide.classList.add("customAboutQuickGuideText");
+	ElQuickGuide.innerHTML = `
+	<b>Instructions for use</b>
+					<br>This is the Quick Start Guide. For details, please visit the separate User Manual.
+					<br><b>1.</b> Enter patient data on the first screen you see.
+					<br><b>2.</b> Choose a model
+					<br><b>3.</b> There are four modes: CP targeting, CE targeting, manual infusion, and intermittent bolus.
+					<br><b>4.</b> In addition, there is a Complex mode, which allows simultaneous simulation of propofol and an opioid.
+					<br>
+					<br><b>CP/CE targeting mode</b>
+					<br><b>1.</b> Enter desired CP/CE target.
+					<br><img src="preview.gif" style="width:100%; max-width:600px" loading="lazy">
+					<br><b>2.</b> While you are entering your target, a <span style="color:blue">blue</span> preview box will appear. This will guide your initial bolus and infusion rate.
+					<br><b>3.</b> Press Start, when your syringe pump setup is ready to go.
+					<br><b>4.</b> The predicted CP and CE will appear on top part of the screen. The 'Graph' section will preview CP/CE of the infusion regimen and the 'Scheme' section will guide you through the next rate changes to achieve and maintain your desired target concentration.
+					<br><img src="preview2.gif" style="width:100%; max-width:600px" loading="lazy">
+					<br><b>5.</b> When the next rate change is imminent, a <span style="color:red">red</span> reminder box will appear to notify you of the changes. Make the necessary change on your syringe pump.
+					<br>
+					<br><b>Intermittent Bolus Mode</b>
+					<br>In some settings, such as a short case in a remote location, or in low resource environment, it may not be possible to use any syringe pump at all. With the intermittent bolus mode, a series of repeated small manual boluses are generated, to simulate a target-controlled infusion as close as possible. The accuracy of the repeated intermittent manual bolus scheme is affected by the fluctuation of CE.
+					<br>
+					<br><b>Complex mode</b>
+					<br>In this mode, you may run two-drug simulations simultaneously. For each drug, the functions for CP or CE targeting, manual infusion, or intermittent bolus mode are preserved. In addition, you may explore the pharmacodynamic (PD) interaction between propofol and opioid, as propofol and opioid demonstrate intense synergism. Probability of tolerance to laryngoscopy (PTOL) is used as a measure of potency of propofol-opioid combination. Isobologram charts illustrate the propofol-opioid combinations to achieve the same pharmacodynamic effect.
+					<br>
+					<br><b>NB.</b> For the <span style="color:blue">blue</span> preview box, dosage recommendations may be slightly inaccurate because TCI is time-dependent: the moment you enter the target concentration, the preview starts to calculate; but this moment lags behind the moment of real target delivery when you click the 'Update Cpt/Cet' button.
+	`
+	let ElBanner = document.createElement("div");
+	ElBanner.innerHTML = `
+		<div class="customAboutBanner">
+			<div class='banneritem' style='background:#afcae1'>
+					<div class='bannericon' style='background:#5270AD'><img class='' src="pwa.webp"></div>
+					<div class='bannertextouter'>
+						<div class='bannertextinner1'>Progressive <b>Web App</b></div>
+						<div class='bannertextinner2'>SimTIVA is a TIVA/TCI simulator that runs on a web browser</div>
+					</div>
+			</div>
+			<div class='banneritem' style='background:#c8c0f2'>
+				<div class='bannericon' style='background:#6e43be'><img class='' src="offermoney.webp"></div>
+					<div class='bannertextouter'>
+						<div class='bannertextinner1'><b>Free</b> & Open Source</div>
+						<div class='bannertextinner2'>Actively developed project hosted on GitHub</div>
+					</div>
+			</div>
+			<div class='banneritem' style='background:#a5d0a8'>
+				<div class='bannericon' style='background:#356038'><img class='' src="users.webp"></div>
+					<div class='bannertextouter'>
+						<div class='bannertextinner1'><b>3623</b> Monthly Users</div>
+						<div class='bannertextinner2'>Total 11084 simulations performed in October 2024</div>
+					</div>
+		</div>
+	`
+	El0.appendChild(El1);
+	El0.appendChild(ElAbout);
+	El0.appendChild(ElQuickGuide);
+	El0.appendChild(ElBanner);
+	displayWarning("Help", El0.innerHTML);
+
+}
+
+
+function displayloadabout() {
+	text = "The sim-files are saved automatically when simulation is running. To save with a file name for easier access later on, simply type a file name in the share/save popup module. All the data in the sim-files are stored locally on your device via the local-storage API and will never be accessed or stored by our server in any way.<br><br><b>Exporting sim-file database</b><br>You may export local sim-files by clicking 'Manage' -> 'Export all'. This will generate a .CSV (comma-seperated values) file which you may access with a spreadsheet program or with SimTIVA.<br><br><b>Importing database (.CSV)</b><br>You may import a previously exported database file by choosing this option in the 'Load' menu. The database will be loaded and the sim-files stored in the database can be accessed.";
+	displayWarning("About Sim-Files", text);
+}
+
+function displayIBabout() {
+	temp_1 = Math.round((1+IB_swing)*1000)/100*10;
+	temp_2 = Math.round((1-IB_swing)*1000)/100*10;
+	text = `<div>This mode generates a scheme of repeated intermittent boluses to achieve and maintain a desired CE target. The bolus amount and time interval will vary according to the CE target as well as the anticipated level of fluctuation of CE - described as peak/trough levels in this app.</div>
+	<div>The peak/trough levels represent the magnitude of fluctuation for Ce. For example, when set to ±${IB_swing*100}%, the Ce will reach a maximum of ${temp_1}% of target and then drop to a minimum of ${temp_2}% of target. At the trough level, another bolus will be administered, and the cycle repeats.
+	</div>`;
+	displayWarning("Intermittent Bolus Mode", text);	
+}
+
+
+function displayModalOptions() {
+	loadoptions();
+	temp_unit = document.getElementById("select_defaultrateunit").options[1].textContent;
+	temp_unit_bolus = document.getElementById("select_defaultbolusunit").options[0].textContent;
+	text = `
+		<table class="table-control">
+					<tr class="fr" id=""><td>Unit <i class="far fa-question-circle tooltip2"><span class="tooltiptext">Preferred secondary unit for propofol infusion.</span></i></td>
+						<td>
+							<select id="" onchange="document.getElementById('select_unit').value=this.value">
+								<option value="mgh" ${(optionsarray[0][0]==1) ? 'selected':''}>mg/kg/h</option>
+								<option value="mcgmin" ${(optionsarray[0][1]==1) ? 'selected':''}>mcg/kg/m</option>
+							</select>
+						</td>
+					<tr class="" id=""><td>Default rate unit  <i class="far fa-question-circle tooltip background"><span class="tooltiptext" style="width:160px">Unit for entering manual mode infusion rate, e.g. "ml/h" vs "mg/kg/h" (or appropriate units)</span></i></td>
+						<td>
+							<select id="" onchange="document.getElementById('select_defaultrateunit').value=this.value">
+								<option value="mlh" ${(optionsarray_infusionunit[0][0]==1) ? 'selected':''}>ml/h</option>
+								<option value="unitkgtime" ${(optionsarray_infusionunit[0][0]!=1) ? 'selected':''}>${temp_unit}</option>
+							</select>
+						</td>
+					</tr>
+					<tr class="" id=""><td>Default bolus unit  <i class="far fa-question-circle tooltip background"><span class="tooltiptext" style="width:160px">Unit for entering manual mode bolus, e.g. "mg" vs "mg/kg" vs "ml" (or appropriate units)</span></i></td>
+						<td>
+							<select id="" onchange="document.getElementById('select_defaultbolusunit').value=this.value">
+								<option value="mg" ${(optionsarray_infusionunit[1][0]==1) ? 'selected':''}>${temp_unit_bolus}</option>
+								<option value="mgkg" ${(optionsarray_infusionunit[1][1]==1) ? 'selected':''}>${temp_unit_bolus}/kg</option>
+								<option value="ml" ${(optionsarray_infusionunit[1][2]==1) ? 'selected':''}>ml</option>
+							</select>
+						</td>
+					</tr>
+					<tr id=""><td>Simspeed</td>
+						<td>
+							<select id="" onchange="document.getElementById('select_simspeed').value=this.value">
+								<option value="1 ${(optionsarray[1][0]==1) ? 'selected':''}">1x (Normal)</option>
+								<option value="5" ${(optionsarray[1][1]==1) ? 'selected':''}>5x (Fast)</option>
+								<option value="25" ${(optionsarray[1][2]==1) ? 'selected':''}>25x (Very fast)</option>
+								<option value="50" ${(optionsarray[1][3]==1) ? 'selected':''}>50x (Super fast)</option>
+							</select>
+						</td>
+					</tr>
+
+					<tr id=""><td>Threshold <i class="far fa-question-circle tooltip2"><span class="tooltiptext">Accurate mode: more frequent rate changes for CPT/CET schemes.</span></i></td>
+						<td>
+							<select id="" onchange="document.getElementById('select_threshold').value=this.value">
+								<option value="0" ${(optionsarray[2][0]==1) ? 'selected':''}>Auto</option>
+								<option value="1" ${(optionsarray[2][1]==1) ? 'selected':''}>Lazy</option>
+								<option value="2" ${(optionsarray[2][2]==1) ? 'selected':''}>Accurate</option> <!--0.13, 0.565-->
+							</select>
+						</td>
+					</tr>
+					<tr><td>Wakelock <i class="far fa-question-circle tooltip2"><span class="tooltiptext">Keeps screen on. Android/some desktop devices only.</span></i></td>
+						<td>
+							<select id="" onchange="document.getElementById('select_wakelock').value=this.value">
+								<option value="off" ${(optionsarray[3][0]==1) ? 'selected':''}>Off</option>
+								<option value="on" ${(optionsarray[3][1]==1) ? 'selected':''}>On</option>
+							</select>
+						</td>
+					</tr>
+					<tr><td>Vibrate</td>
+						<td>
+							<select id="" onchange="document.getElementById('select_vibrate').value=this.value">
+								<option value="off" ${(optionsarray[4][0]==1) ? 'selected':''}>Off</option>
+								<option value="on" ${(optionsarray[4][1]==1) ? 'selected':''}>On</option>
+							</select>
+						</td>
+					</tr>
+					<tr><td>Sound</td>
+						<td>
+							<select id="" onchange="document.getElementById('select_sound').value=this.value">
+								<option value="off" ${(optionsarray[5][0]==1) ? 'selected':''}>Off</option>
+								<option value="on" ${(optionsarray[5][1]==1) ? 'selected':''}>On</option>
+							</select>
+						</td>
+					</tr>
+
+					<tr><td>Notifications</td>
+						<td>
+							<select id="" onchange="document.getElementById('select_notification').value=this.value">
+								<option value="off" ${(optionsarray[6][0]==1) ? 'selected':''}>Off</option>
+								<option value="on" ${(optionsarray[6][1]==1) ? 'selected':''}>On</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+				<a class="button invert" id="" onclick="applyoptions();hidewarningmodal();">Apply</a>
+				<a class="button right muted" id="" onclick="loadoptions('default');displayModalOptions();loadoptions();applyoptions();">Reset settings</a>
+	`
+	displayWarning("Options", text);
+
+}
+
+
+function togglemenu() {
+  document.getElementById("hamburger").classList.toggle("change");
+  if (document.getElementById("hamburger").classList.contains("change")) {
+    document.getElementById("menu").classList.add("open");
+    //document.getElementById("bodywrapper").classList.add("blurry");
+    //navscrollable = false;
+  } else {
+    document.getElementById("menu").classList.remove("open");
+    //document.getElementById("bodywrapper").classList.remove("blurry");
+    //navscrollable = true;
+  }
+
+}
+
+//section: components for swapping
 const componentsCardsHTML = `
 		<div id="ptolcard" class="">
 			<div id="ptolcard_left" style="padding:0.5rem;flex-basis:70%">
