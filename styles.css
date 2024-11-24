@@ -4645,6 +4645,9 @@ body.dark #preview-expand-box > div > div.timespan {
   border-color: #999;
 }
 
+#logo {
+  position:fixed;width:100%;left:0;bottom:75px;z-index:91;
+}
 
 @media (max-height:480px) {
   #parallax3 {
@@ -4679,7 +4682,9 @@ body.dark #preview-expand-box > div > div.timespan {
 
 
 @media (max-height: 620px) {
-
+  #logo {
+    display: none;
+  }
   #rescuebuttons {
     opacity: 0;
     pointer-events: none;
@@ -4857,6 +4862,10 @@ body.dark #preview-expand-box > div > div.timespan {
 
 @media (hover:hover) and (pointer:fine) and (min-width:1025px) {
   /* add hover status to those that can hover and larger than an ipad*/
+  #logo {
+    width:700px;
+    left:calc(50% - 350px);
+  }
   .headericon:hover {
     -webkit-box-shadow:inset 0px -2px 0px 0px #8cd98f;
      -moz-box-shadow:inset 0px -2px 0px 0px #8cd98f;
