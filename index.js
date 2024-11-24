@@ -1496,8 +1496,6 @@ const xModalsHTML =
 		</div><!--end modalJump-->
 `
 
-window.onLoad = dynamicLoad();
-
 function dynamicLoad() {
 	document.getElementById("parallax2").innerHTML = parallax2HTML;
 	document.getElementById("xInputCards").innerHTML = xInputCardsHTML;
