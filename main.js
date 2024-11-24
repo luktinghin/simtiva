@@ -1992,7 +1992,9 @@ function toPageOne() {
   setTimeout(function(){setmodal("modalInitial")},200);
   document.getElementById("modalScreen2").classList.remove("fadein");
   document.getElementById("modalScreen2content").classList.remove("open");
-
+  setTimeout(function() {
+  	document.getElementById("logo").style.display = "block";
+  },300);
 		El6 = document.getElementById("btn_initProceed");
 		El6.classList.add("disabled");
 		El6.removeEventListener("click", toPageTwo);
@@ -2007,6 +2009,7 @@ function toPageTwo() {
 		dynamicLoad();
 		createCharts();
 	}
+	document.getElementById("logo").style.display = "none";
 	text = validateData(age, gender, weight, height, 1);	
 	if (text != undefined) {
 		if ((paedi_mode==0) && (bmi>=35) && ((document.getElementById("select_model").value == "Marsh") || (document.getElementById("select_model").value == "Schnider"))) {
