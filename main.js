@@ -2186,14 +2186,18 @@ function applybolusspeed() {
 }
 
 function toLoadTransition() {
-  setTimeout(function(){setmodal("modalLoad")},200);
-  document.getElementById("modalInitial").classList.remove("fadein");
-  document.getElementById("modalInitialcontent").classList.remove("open");
+	setmodal("modalLoad")
+  setTimeout(function(){  
+  	document.getElementById("modalInitial").classList.remove("fadein");
+  	document.getElementById("modalInitialcontent").classList.remove("open");},200);
+
 }
 
 function toPageOneFromLoad() {
+	setmodal("modalInitial");
 	setTimeout(function(){
-		setmodal("modalInitial");
+		  document.getElementById("modalLoad").classList.remove("fadein");
+  		document.getElementById("modalLoadcontent").classList.remove("open");
 		//reset styles
 	  	document.getElementById("modalLoadDescription").innerHTML = "Select a SIM-FILE to load:";
 	  	document.getElementById("modalLoadDescription").style.display = "none";
@@ -2207,8 +2211,7 @@ function toPageOneFromLoad() {
 	  	document.getElementById("loadfile_container").classList.remove("compress");
 	  	document.getElementById("loadfile_container").classList.remove("collapse");
 	},200);
-  	document.getElementById("modalLoad").classList.remove("fadein");
-  	document.getElementById("modalLoadcontent").classList.remove("open");
+
   	document.getElementById("rescuebuttons").style.display="block";
 
   	if (manageFileListState == 1) {
