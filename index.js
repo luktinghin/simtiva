@@ -1497,6 +1497,8 @@ const xModalsHTML =
 `
 
 function dynamicLoad() {
+	if (initiated == false) {
+	console.log("initiation. component swaps ready.");
 	document.getElementById("parallax2").innerHTML = parallax2HTML;
 	document.getElementById("xInputCards").innerHTML = xInputCardsHTML;
 	document.getElementById("xLeftbar").innerHTML = xLeftbarHTML;
@@ -1506,6 +1508,8 @@ function dynamicLoad() {
 	document.getElementById("hamburger").style.display = "block";
 	document.getElementById("bodywrapper").style.opacity = 1;
 	document.getElementById("parallax3").style.opacity = 1;
+	initiated = true;
+	}
 }
 
 function dynamicLoadVIEW() {
