@@ -657,10 +657,12 @@ body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom
 
 #modalInitial, #modalLoad {
   padding-top: 5vw; /*this is deliberate to make the top, left, right paddings the same*/
+  background: linear-gradient(124deg, #7b8092 -20%, #000000 250%);
   background-color:  #7B8092;
 }
 
 body.dark #modalInitial, body.dark #modalLoad {
+  background:linear-gradient(124deg, #7b8092 -150%, #000000 150%);
   background-color: #222
 }
 
