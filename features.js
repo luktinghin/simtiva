@@ -529,6 +529,7 @@ function parseobject(input_uid,external,extObject) {
 		console.log('complex mode 1');
 		parse_historyarray = object.P_hx[0];
 		parse_historyarray1 = object.P_hx[1];
+		createCharts(1);
 	}
 
 	

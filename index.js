@@ -1502,5 +1502,40 @@ function dynamicLoad() {
 	document.getElementById("xLeftbar").innerHTML = xLeftbarHTML;
 	document.getElementById("xCards").innerHTML = xCardsHTML;
 	document.getElementById("xModals").innerHTML = xModalsHTML;
+	collapsiblefunction();
+	document.getElementById("hamburger").style.display = "block";
 }
 
+function dynamicLoadVIEW() {
+	
+}
+
+function collapsiblefunction() {
+	let collapsibles = document.getElementsByClassName("collapsible");
+	let i;
+
+	for (i = 0; i < collapsibles.length; i++) {
+	  collapsibles[i].addEventListener("click", function() {
+	    this.classList.toggle("active");
+	    var content = this.nextElementSibling;
+	    if (content.style.display === "block") {
+	      content.style.display = "none";
+	    } else {
+	      content.style.display = "block";
+	    }
+	  });
+	  if (collapsibles[i].classList.contains("active")) {
+	    collapsibles[i].nextElementSibling.style.display = "block";
+	  }
+	}
+
+	let collapsiblecards = document.getElementsByClassName("collapsiblecard");
+
+	for (i=0; i<collapsiblecards.length; i++) {
+		collapsiblecards[i].nextElementSibling.style.display = "none";
+		collapsiblecards[i].nextElementSibling.classList.add("collapsed");
+		collapsiblecards[i].addEventListener("click", function() {
+			toggleCard(this);
+		});
+	}
+}

@@ -240,34 +240,6 @@ var numpadValue = 0;
 var numpadOrig;
 var opioid = 1; //arbitrary default opioid = 1 for eleveld. to be re-set to 0 or 1 at first input screen
 
-var collapsibles = document.getElementsByClassName("collapsible");
-var i;
-
-for (i = 0; i < collapsibles.length; i++) {
-  collapsibles[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
-  if (collapsibles[i].classList.contains("active")) {
-    collapsibles[i].nextElementSibling.style.display = "block";
-  }
-}
-
-var collapsiblecards = document.getElementsByClassName("collapsiblecard");
-
-for (i=0; i<collapsiblecards.length; i++) {
-	collapsiblecards[i].nextElementSibling.style.display = "none";
-	collapsiblecards[i].nextElementSibling.classList.add("collapsed");
-	collapsiblecards[i].addEventListener("click", function() {
-		toggleCard(this);
-	});
-}
-
 function toggleCard(x) {
 	var content = x.nextElementSibling;
 	x.classList.toggle("active");

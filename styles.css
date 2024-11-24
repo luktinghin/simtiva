@@ -2461,8 +2461,8 @@ input[type=range]:focus::-ms-fill-upper {
   font-size: 10px;
   border-radius: 10px;
 }
-#eventcontainer {
-
+#eventscontainer {
+  font-size:0.8rem;
 }
 .eventitem {
   padding-left: 0.5rem;
@@ -2484,7 +2484,7 @@ input[type=range]:focus::-ms-fill-upper {
   margin-left: 5px;
   border: 1px solid white;
   font-size: 78%;
-  min-width: 66px;
+  min-width: 60px;
   text-align: center;
   white-space: nowrap;
   background: #eee;
@@ -3680,7 +3680,7 @@ body.dark .modal-body a.button_paedimode:hover {
   width:100%;
 }
 #progressbar {
-  border:1px solid #198964;
+  border:1.5px solid #198964;
   background: #198964;
   width:100%;
   display: none;
