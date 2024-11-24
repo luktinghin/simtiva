@@ -2613,8 +2613,378 @@ const chartInfRateLayer = {
 
 //charting scripts
 
-function createCharts() {
-		
+function createCharts(chartparam) {
+	//default
+	if ((chartparam == 0) || (chartparam == undefined)) {
+		var ctx1 = document.getElementById('myChart').getContext('2d');
+
+		var y = document.getElementById('chartwrapper').offsetHeight*0.6;
+
+		myChart = new Chart(ctx1, {
+	    type: 'line',
+	    data: {
+	    	datasets: [{
+	    		label: 'Cp_', //obsolete
+	    		data: [{x: 0, y: 0}],
+	    		borderWidth:7,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(231, 50, 39,0.7)',
+	    		backgroundColor: 'rgb(231, 50, 39,0.4)',
+	    		pointBorderColor: 'rgb(231, 50, 39,0.8)',
+	    		pointBackgroundColor: 'rgb(231, 50, 39,0.8)',
+	    		fill: true,
+	    		parsing: false
+	    	},{
+	    		label: 'Ce_', //obsolete
+	    		data: [{x:0, y:0}],
+	    		borderWidth:7,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(9, 203, 93,0.7)',
+	    		backgroundColor: 'rgb(9, 203, 93,0.4)',
+	    		pointBorderColor: 'rgb(9, 203, 93,0.8)',
+	    		pointBackgroundColor: 'rgb(9, 203, 93,0.8)',
+	    		fill: true,
+	    		parsing: false
+	    	},{
+	    		label: 'Cp-Prop',
+	    		data: [{x: 0, y: 0}],
+	    		borderWidth:3,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(231, 50, 39,0.5)',
+	    		//borderDash: [2,2],
+	    		//borderColor: yellowSec,
+	    		//backgroundColor: gradientRed,//'rgb(100, 90, 90,0.1)',
+	    		
+	    		backgroundColor: context => {
+	    			const chart = context.chart;
+	    			const { ctx, chartArea, scales } = chart;
+	    			if (!chartArea) {
+	    				return null ;
+	    			}
+	    			return getGradientRed(ctx, chartArea, scales);
+	    		},
+	    		
+	    		//backgroundColor: 'rgb(0,0,0,0)',
+	    		segment: {
+	    			borderColor: ctx => behindPosition(ctx, 'rgb(231,50,39,0.7)'),
+	    			borderWidth: ctx => behindPosition2(ctx, 8)
+	    		},
+	    		
+	    		fill: true,
+	    		hidden: false,
+	    		parsing: false
+	    	},{
+	    		label: 'Ce-Prop',
+	    		data: [{x:0, y:0}],
+	    		borderWidth:3,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(9, 203, 93,0.5)',
+	    		//borderColor: yellowPri50,
+	    		//backgroundColor: gradientGreen,//'rgb(90, 100, 90,0.1)',
+	    		
+	    		backgroundColor: context => {
+	    			const chart = context.chart;
+	    			const { ctx, chartArea, scales } = chart;
+	    			if (!chartArea) {
+	    				return null ;
+	    			}
+	    			return getGradientGreen(ctx, chartArea, scales);
+	    		},
+	    		
+	    		//backgroundColor: 'rgb(0,0,0,0)',
+	    		segment: {
+	    			borderColor: ctx => behindPosition(ctx, 'rgb(9,203,93,0.7)'),
+	    			borderWidth: ctx => behindPosition2(ctx, 8)
+	    		},
+	    		fill: true,
+	    		hidden: false,
+	    		parsing: false
+	    	},{
+	    		label: 'Cp-Remi',
+	    		data: [{x: 0, y: 0}],
+	    		borderWidth:3,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		//borderDash: [2,2],
+	    		borderColor: bluePri,
+	    		//backgroundColor: gradientRed,//'rgb(100, 90, 90,0.1)',
+	    		/*
+	    		backgroundColor: context => {
+	    			const chart = context.chart;
+	    			const { ctx, chartArea, scales } = chart;
+	    			if (!chartArea) {
+	    				return null ;
+	    			}
+	    			return getGradientRed(ctx, chartArea, scales);
+	    		},
+	    		*/
+	    		//backgroundColor: 'rgb(0,0,0,0)',
+	    		segment: {
+	    			borderColor: ctx => behindPosition(ctx, blueLight),
+	    			borderWidth: ctx => behindPosition2(ctx, 8)
+	    		},
+	    		fill: false,
+	    		hidden: true,
+	    		parsing: false
+	    	},{
+	    		label: 'Ce-Remi',
+	    		data: [{x:0, y:0}],
+	    		borderWidth:3,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: blueLight,
+	    		//backgroundColor: gradientGreen,//'rgb(90, 100, 90,0.1)',
+	    		
+	    		backgroundColor: context => {
+	    			const chart = context.chart;
+	    			const { ctx, chartArea, scales } = chart;
+	    			if (!chartArea) {
+	    				return null ;
+	    			}
+	    			return getGradientBlue(ctx, chartArea, scales);
+	    		},
+	    		
+	    		
+	    		segment: {
+	    			borderColor: ctx => behindPosition(ctx, blueSec),
+	    			borderWidth: ctx => behindPosition2(ctx, 8)
+	    		},
+	    		fill: true,
+	    		hidden: true,
+	    		parsing: false
+	    	},{    //index = 6 for propofol margins
+	    		label: 'P(upper)',
+	    		data: [{x:0, y:0}],
+	    		borderWidth:1,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: greenShadeDark,
+	    		backgroundColor: greenShade,
+	    		fill: '+1',
+	    		parsing: false
+	    	},{
+	    		label: 'P(lower)',
+	    		data: [{x:0, y:0}],
+	    		borderWidth:1,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: greenShadeDark,
+	    		fill: false,
+	    		parsing: false
+	    	},{     //index = 8 for remi margins
+	    		label: 'P(upper)',
+	    		data: [{x:0, y:0}],
+	    		borderWidth:1,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: greenShadeDark,
+	    		backgroundColor: greenShade,
+	    		fill: '+1',
+	    		parsing: false
+	    	},{
+	    		label: 'P(lower)',
+	    		data: [{x:0, y:0}],
+	    		borderWidth:1,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: greenShadeDark,
+	    		fill: false,
+	    		parsing: false
+	    	},{    //index = 10 for BIS margins
+	    		label: 'P(upper)',
+	    		data: [{x:0, y:0}],
+	    		borderWidth:1,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: greenShadeDark,
+	    		backgroundColor: greenShade,
+	    		fill: '+1',
+	    		parsing: false
+	    	},{
+	    		label: 'P(lower)',
+	    		data: [{x:0, y:0}],
+	    		borderWidth:1,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: greenShadeDark,
+	    		fill: false,
+	    		parsing: false
+	    	}]
+	    }, //end data
+	    options: {
+	    	maintainAspectRatio: false,
+	    	interaction: {
+
+	    	},
+	    	scales: {
+	    		y: {
+	    			display: true,
+	    			min: 0,
+	    			max: 5,
+					title: {
+						display: true,
+						text:'Concentration'
+					}
+	    		},
+	    		x: {
+	    			type: 'linear',
+	    			display: true,
+	    			position:'bottom',
+	    			min:0,
+	    			max:20,
+					title: {
+						display: true,
+						text:'Time (minutes)'
+					}
+	    		}
+	    	},
+	        animation: {
+	        	duration: 200
+	        },
+	        transitions: {
+	        	active: {
+	        		animation: {
+	        			duration: 200
+	        		}
+	        	}
+	        },
+
+		    plugins: { //start plugins
+		    	//shadingArea,
+			    legend: {
+			    		onClick: null,
+				    	labels: {
+				    	boxWidth: 20,
+				    	filter: function(item, chart) {
+				    		var index = item.datasetIndex;
+				    		if ((index <= 1) || (index >= drug_sets.length*2+2)) {
+				    			return false;
+				    		} else {
+				    			return true;
+				    		}
+				    	}
+			    	}
+			    },
+			    tooltip: {
+			    	mode: 'index',
+			    	intersect: false,
+			    	footerFont: {
+			    		weight: 'normal',
+			    		size: 10
+			    	},
+	            	filter: function(tooltipItem, data) {
+	            		var index = tooltipItem.datasetIndex;
+	            		if ((index >= 2) && (index <=5)) {
+	            			return true;
+	            		} else {
+	            			return false;
+	            		}
+	            	},
+	            	position: 'nearest',
+	            	caretSize: 0,
+	            	backgroundColor: 'rgba(0,0,0,0.5)',
+					callbacks: {
+						title: function(context) {
+							var title = context[0].parsed.x || "";
+							if (title) {
+								title = title*60; //to s
+								return converttime(title);
+							}
+						},
+						
+	                	label: function(context) {
+	                		
+	                    	var label = context.dataset.label || '';
+
+	                    	if (label) {
+	                    		if ((label == "Cp-Prop") || (label == "Cp-Remi") || (label == "Cp-Fen") || (label == "Cp-Alfen")) label = "Cp:";
+	                    		if ((label == "Ce-Prop") || (label == "Ce-Remi") || (label == "Ce-Fen") || (label == "Ce-Alfen")) label = "Ce:";
+		                    	label += Math.round(context.parsed.y * 100) / 100;
+		                    	return label;
+	                    	}
+	                	},
+
+	                	footer: function(tooltipItems) {
+
+	                		var infrate = "Inf rate: ";
+
+	                		var vitext = "VI: ";
+
+	                		var parsedx = tooltipItems[0].parsed.x;
+
+	                		infrate = infrate + getinfusionrate(parsedx * 60,active_drug_set_index) + "ml/h";
+
+	                		vitext = vitext + Math.round(drug_sets[active_drug_set_index].volinf[Math.round(parsedx*60)]*10)/10 + "ml";
+
+	                		if ((PD_mode == 1) && (active_drug_set_index == 0)) {
+	                			PD_text = "eBIS: " + BIS_array[Math.round(parsedx*60)];
+	                			return [infrate, vitext, PD_text];
+	                		} else if ((PD_mode == 2) && (ptolcouplesarray.length>0)) {
+	                			temp_ptol_elem = ptolcouplesarray[Math.round(parsedx*2)];
+	                			if (temp_ptol_elem == undefined) {
+	                				PD_text = "";
+	                			} else {
+	                				PD_text = "PTOL: " + Math.round(temp_ptol_elem.meta_ptol * 100);
+	                			}
+	                			return [infrate, vitext, PD_text];
+	                		} else {
+	                			return [infrate, vitext];	
+	                		}
+
+	                		
+
+	                	}
+	                	
+	                }
+			    },
+		    	crosshair: {
+		    		line: {
+		    			color: '#66F',
+		    			width: 1,
+		    			//dashPattern: [20,5]
+		    		},
+			        sync: {
+			          enabled: true,            // enable trace line syncing with other charts
+			          group: 1,                 // chart group
+			          suppressTooltips: false   // suppress tooltips when showing a synced tracer
+			        },
+			        zoom: {
+			        	enabled: false,
+			        }
+		    	},
+		    	/*
+		    	annotation: {
+		    		annotations: {
+		    			line0: {
+		    				type: 'line',
+		    				drawTime: 'beforeDatasetsDraw',
+		    				xMin: getEventLine(0),
+		    				xMax: getEventLine(0),
+		    				borderColor: 'rgba(255,0,0,0.2)',
+		    				borderWidth: 2,
+		    				label: {
+		    					content: getEventLabel(0),
+		    					enabled: true
+		    				}
+		    			}
+		    		}
+		    	}
+		    	*/
+		    } //endplugins
+	    } //end options
+	    //, plugins: [multiply],
+
+
+	}//end charting function
+	);
+
+
+	};
+		if (chartparam == 1) {
 			var ctx2 = document.getElementById('myChart2').getContext('2d');
 			myChart2 = new Chart(ctx2, {
 				type: 'line',
@@ -3322,8 +3692,9 @@ function createCharts() {
 			    	}
 			    	
 		    	}
-				}
-			})
+				}//end options
+			}
+			)//end myChart2 creation;
 
 
 	/*
@@ -3350,395 +3721,13 @@ function createCharts() {
 	*/
 
 			function behindPositionDot1(ctx, value) {
-		console.log(myChart2.data.datasets[1].data(p0DataIndex).meta_minute);
-	}
+				console.log(myChart2.data.datasets[1].data(p0DataIndex).meta_minute);
+			}
 
-
-		var ctx1 = document.getElementById('myChart').getContext('2d');
-
-		var y = document.getElementById('chartwrapper').offsetHeight*0.6;
-
-		/*
-		var gradientGreen = ctx.createLinearGradient(0, 100, 0, y+100);  //x0y0x1y1  //y+100 last param
-			gradientGreen.addColorStop(0.4, 'rgba(9, 203, 93,0.4)');   
-			gradientGreen.addColorStop(1, 'rgba(9, 203, 93,0.05)');
-
-			console.log(gradientGreen);
-			*/
-
-
-		/*
-		var gradientRed = ctx.createLinearGradient(0, 0, 0, y); // y last param
-			gradientRed.addColorStop(0.4, 'rgba(231, 50, 39,0.4)');   
-			gradientRed.addColorStop(1, 'rgba(231, 50, 39,0)');
-
-			*/
-
-
-		myChart = new Chart(ctx1, {
-	    type: 'line',
-	    data: {
-	    	datasets: [{
-	    		label: 'Cp_', //obsolete
-	    		data: [{x: 0, y: 0}],
-	    		borderWidth:7,
-	    		pointRadius:0,
-	    		borderJoinStyle: 'round',
-	    		borderColor: 'rgb(231, 50, 39,0.7)',
-	    		backgroundColor: 'rgb(231, 50, 39,0.4)',
-	    		pointBorderColor: 'rgb(231, 50, 39,0.8)',
-	    		pointBackgroundColor: 'rgb(231, 50, 39,0.8)',
-	    		fill: true,
-	    		parsing: false
-	    	},{
-	    		label: 'Ce_', //obsolete
-	    		data: [{x:0, y:0}],
-	    		borderWidth:7,
-	    		pointRadius:0,
-	    		borderJoinStyle: 'round',
-	    		borderColor: 'rgb(9, 203, 93,0.7)',
-	    		backgroundColor: 'rgb(9, 203, 93,0.4)',
-	    		pointBorderColor: 'rgb(9, 203, 93,0.8)',
-	    		pointBackgroundColor: 'rgb(9, 203, 93,0.8)',
-	    		fill: true,
-	    		parsing: false
-	    	},{
-	    		label: 'Cp-Prop',
-	    		data: [{x: 0, y: 0}],
-	    		borderWidth:3,
-	    		pointRadius:0,
-	    		borderJoinStyle: 'round',
-	    		borderColor: 'rgb(231, 50, 39,0.5)',
-	    		//borderDash: [2,2],
-	    		//borderColor: yellowSec,
-	    		//backgroundColor: gradientRed,//'rgb(100, 90, 90,0.1)',
-	    		
-	    		backgroundColor: context => {
-	    			const chart = context.chart;
-	    			const { ctx, chartArea, scales } = chart;
-	    			if (!chartArea) {
-	    				return null ;
-	    			}
-	    			return getGradientRed(ctx, chartArea, scales);
-	    		},
-	    		
-	    		//backgroundColor: 'rgb(0,0,0,0)',
-	    		segment: {
-	    			borderColor: ctx => behindPosition(ctx, 'rgb(231,50,39,0.7)'),
-	    			borderWidth: ctx => behindPosition2(ctx, 8)
-	    		},
-	    		
-	    		fill: true,
-	    		hidden: false,
-	    		parsing: false
-	    	},{
-	    		label: 'Ce-Prop',
-	    		data: [{x:0, y:0}],
-	    		borderWidth:3,
-	    		pointRadius:0,
-	    		borderJoinStyle: 'round',
-	    		borderColor: 'rgb(9, 203, 93,0.5)',
-	    		//borderColor: yellowPri50,
-	    		//backgroundColor: gradientGreen,//'rgb(90, 100, 90,0.1)',
-	    		
-	    		backgroundColor: context => {
-	    			const chart = context.chart;
-	    			const { ctx, chartArea, scales } = chart;
-	    			if (!chartArea) {
-	    				return null ;
-	    			}
-	    			return getGradientGreen(ctx, chartArea, scales);
-	    		},
-	    		
-	    		//backgroundColor: 'rgb(0,0,0,0)',
-	    		segment: {
-	    			borderColor: ctx => behindPosition(ctx, 'rgb(9,203,93,0.7)'),
-	    			borderWidth: ctx => behindPosition2(ctx, 8)
-	    		},
-	    		fill: true,
-	    		hidden: false,
-	    		parsing: false
-	    	},{
-	    		label: 'Cp-Remi',
-	    		data: [{x: 0, y: 0}],
-	    		borderWidth:3,
-	    		pointRadius:0,
-	    		borderJoinStyle: 'round',
-	    		//borderDash: [2,2],
-	    		borderColor: bluePri,
-	    		//backgroundColor: gradientRed,//'rgb(100, 90, 90,0.1)',
-	    		/*
-	    		backgroundColor: context => {
-	    			const chart = context.chart;
-	    			const { ctx, chartArea, scales } = chart;
-	    			if (!chartArea) {
-	    				return null ;
-	    			}
-	    			return getGradientRed(ctx, chartArea, scales);
-	    		},
-	    		*/
-	    		//backgroundColor: 'rgb(0,0,0,0)',
-	    		segment: {
-	    			borderColor: ctx => behindPosition(ctx, blueLight),
-	    			borderWidth: ctx => behindPosition2(ctx, 8)
-	    		},
-	    		fill: false,
-	    		hidden: true,
-	    		parsing: false
-	    	},{
-	    		label: 'Ce-Remi',
-	    		data: [{x:0, y:0}],
-	    		borderWidth:3,
-	    		pointRadius:0,
-	    		borderJoinStyle: 'round',
-	    		borderColor: blueLight,
-	    		//backgroundColor: gradientGreen,//'rgb(90, 100, 90,0.1)',
-	    		
-	    		backgroundColor: context => {
-	    			const chart = context.chart;
-	    			const { ctx, chartArea, scales } = chart;
-	    			if (!chartArea) {
-	    				return null ;
-	    			}
-	    			return getGradientBlue(ctx, chartArea, scales);
-	    		},
-	    		
-	    		
-	    		segment: {
-	    			borderColor: ctx => behindPosition(ctx, blueSec),
-	    			borderWidth: ctx => behindPosition2(ctx, 8)
-	    		},
-	    		fill: true,
-	    		hidden: true,
-	    		parsing: false
-	    	},{    //index = 6 for propofol margins
-	    		label: 'P(upper)',
-	    		data: [{x:0, y:0}],
-	    		borderWidth:1,
-	    		pointRadius:0,
-	    		borderJoinStyle: 'round',
-	    		borderColor: greenShadeDark,
-	    		backgroundColor: greenShade,
-	    		fill: '+1',
-	    		parsing: false
-	    	},{
-	    		label: 'P(lower)',
-	    		data: [{x:0, y:0}],
-	    		borderWidth:1,
-	    		pointRadius:0,
-	    		borderJoinStyle: 'round',
-	    		borderColor: greenShadeDark,
-	    		fill: false,
-	    		parsing: false
-	    	},{     //index = 8 for remi margins
-	    		label: 'P(upper)',
-	    		data: [{x:0, y:0}],
-	    		borderWidth:1,
-	    		pointRadius:0,
-	    		borderJoinStyle: 'round',
-	    		borderColor: greenShadeDark,
-	    		backgroundColor: greenShade,
-	    		fill: '+1',
-	    		parsing: false
-	    	},{
-	    		label: 'P(lower)',
-	    		data: [{x:0, y:0}],
-	    		borderWidth:1,
-	    		pointRadius:0,
-	    		borderJoinStyle: 'round',
-	    		borderColor: greenShadeDark,
-	    		fill: false,
-	    		parsing: false
-	    	},{    //index = 10 for BIS margins
-	    		label: 'P(upper)',
-	    		data: [{x:0, y:0}],
-	    		borderWidth:1,
-	    		pointRadius:0,
-	    		borderJoinStyle: 'round',
-	    		borderColor: greenShadeDark,
-	    		backgroundColor: greenShade,
-	    		fill: '+1',
-	    		parsing: false
-	    	},{
-	    		label: 'P(lower)',
-	    		data: [{x:0, y:0}],
-	    		borderWidth:1,
-	    		pointRadius:0,
-	    		borderJoinStyle: 'round',
-	    		borderColor: greenShadeDark,
-	    		fill: false,
-	    		parsing: false
-	    	}]
-	    }, //end data
-	    options: {
-	    	maintainAspectRatio: false,
-	    	interaction: {
-
-	    	},
-	    	scales: {
-	    		y: {
-	    			display: true,
-	    			min: 0,
-	    			max: 5,
-					title: {
-						display: true,
-						text:'Concentration'
-					}
-	    		},
-	    		x: {
-	    			type: 'linear',
-	    			display: true,
-	    			position:'bottom',
-	    			min:0,
-	    			max:20,
-					title: {
-						display: true,
-						text:'Time (minutes)'
-					}
-	    		}
-	    	},
-	        animation: {
-	        	duration: 200
-	        },
-	        transitions: {
-	        	active: {
-	        		animation: {
-	        			duration: 200
-	        		}
-	        	}
-	        },
-
-		    plugins: { //start plugins
-		    	//shadingArea,
-			    legend: {
-			    		onClick: null,
-				    	labels: {
-				    	boxWidth: 20,
-				    	filter: function(item, chart) {
-				    		var index = item.datasetIndex;
-				    		if ((index <= 1) || (index >= drug_sets.length*2+2)) {
-				    			return false;
-				    		} else {
-				    			return true;
-				    		}
-				    	}
-			    	}
-			    },
-			    tooltip: {
-			    	mode: 'index',
-			    	intersect: false,
-			    	footerFont: {
-			    		weight: 'normal',
-			    		size: 10
-			    	},
-	            	filter: function(tooltipItem, data) {
-	            		var index = tooltipItem.datasetIndex;
-	            		if ((index >= 2) && (index <=5)) {
-	            			return true;
-	            		} else {
-	            			return false;
-	            		}
-	            	},
-	            	position: 'nearest',
-	            	caretSize: 0,
-	            	backgroundColor: 'rgba(0,0,0,0.5)',
-					callbacks: {
-						title: function(context) {
-							var title = context[0].parsed.x || "";
-							if (title) {
-								title = title*60; //to s
-								return converttime(title);
-							}
-						},
-						
-	                	label: function(context) {
-	                		
-	                    	var label = context.dataset.label || '';
-
-	                    	if (label) {
-	                    		if ((label == "Cp-Prop") || (label == "Cp-Remi") || (label == "Cp-Fen") || (label == "Cp-Alfen")) label = "Cp:";
-	                    		if ((label == "Ce-Prop") || (label == "Ce-Remi") || (label == "Ce-Fen") || (label == "Ce-Alfen")) label = "Ce:";
-		                    	label += Math.round(context.parsed.y * 100) / 100;
-		                    	return label;
-	                    	}
-	                	},
-
-	                	footer: function(tooltipItems) {
-
-	                		var infrate = "Inf rate: ";
-
-	                		var vitext = "VI: ";
-
-	                		var parsedx = tooltipItems[0].parsed.x;
-
-	                		infrate = infrate + getinfusionrate(parsedx * 60,active_drug_set_index) + "ml/h";
-
-	                		vitext = vitext + Math.round(drug_sets[active_drug_set_index].volinf[Math.round(parsedx*60)]*10)/10 + "ml";
-
-	                		if ((PD_mode == 1) && (active_drug_set_index == 0)) {
-	                			PD_text = "eBIS: " + BIS_array[Math.round(parsedx*60)];
-	                			return [infrate, vitext, PD_text];
-	                		} else if ((PD_mode == 2) && (ptolcouplesarray.length>0)) {
-	                			temp_ptol_elem = ptolcouplesarray[Math.round(parsedx*2)];
-	                			if (temp_ptol_elem == undefined) {
-	                				PD_text = "";
-	                			} else {
-	                				PD_text = "PTOL: " + Math.round(temp_ptol_elem.meta_ptol * 100);
-	                			}
-	                			return [infrate, vitext, PD_text];
-	                		} else {
-	                			return [infrate, vitext];	
-	                		}
-
-	                		
-
-	                	}
-	                	
-	                }
-			    },
-		    	crosshair: {
-		    		line: {
-		    			color: '#66F',
-		    			width: 1,
-		    			//dashPattern: [20,5]
-		    		},
-			        sync: {
-			          enabled: true,            // enable trace line syncing with other charts
-			          group: 1,                 // chart group
-			          suppressTooltips: false   // suppress tooltips when showing a synced tracer
-			        },
-			        zoom: {
-			        	enabled: false,
-			        }
-		    	},
-		    	/*
-		    	annotation: {
-		    		annotations: {
-		    			line0: {
-		    				type: 'line',
-		    				drawTime: 'beforeDatasetsDraw',
-		    				xMin: getEventLine(0),
-		    				xMax: getEventLine(0),
-		    				borderColor: 'rgba(255,0,0,0.2)',
-		    				borderWidth: 2,
-		    				label: {
-		    					content: getEventLabel(0),
-		    					enabled: true
-		    				}
-		    			}
-		    		}
-		    	}
-		    	*/
-		    } //endplugins
-	    } //end options
-	    //, plugins: [multiply],
-
-
-	}//end charting function
-	);
+		}//end chart param 1 if block
 
 // new chart code, for emulation
-
+		if ((chartparam == 2) && (myChartEmulate == undefined)) {
 
 		var ctx3 = document.getElementById('myChartEmulate').getContext('2d');
 
@@ -3967,45 +3956,111 @@ function createCharts() {
 
 	}//end charting function
 	);
-
+	}
 
 	setTimeout(function() {
 		//dark mode for chart activation here
-		if (isDark) {
+		if (!isDark) {
+				myChart.options.scales.x.grid.color = "rgba(0,0,0,0.1)";
+				myChart.options.scales.y.grid.color = "rgba(0,0,0,0.1)";
+				myChart.options.scales.x.grid.borderColor = "rgba(0,0,0,0.25)";
+				myChart.options.scales.y.grid.borderColor = "rgba(0,0,0,0.25)";
+				myChart.options.scales.x.ticks.color = "rgba(102,102,102,1)";
+				myChart.options.scales.y.ticks.color = "rgba(102,102,102,1)";
+				if (complex_mode == 1) {
+					myChart2.options.scales.x.grid.color = "rgba(0,0,0,0.1)";
+					myChart2.options.scales.y.grid.color = "rgba(0,0,0,0.1)";
+					myChart2.options.scales.x.grid.borderColor = "rgba(0,0,0,0.25)";
+					myChart2.options.scales.y.grid.borderColor = "rgba(0,0,0,0.25)";
+					myChart2.options.scales.x.ticks.color = "rgba(102,102,102,1)";
+					myChart2.options.scales.y.ticks.color = "rgba(102,102,102,1)";
+					myChart2.data.datasets[1].pointBackgroundColor = dotColor0;
+					myChart2.data.datasets[1].pointBorderColor = dotColor0;
+					myChart2.data.datasets[2].pointBackgroundColor = dotColor1;
+					myChart2.data.datasets[2].pointBorderColor = dotColor1;
+					myChart2.data.datasets[3].pointBackgroundColor = dotColor2;
+					myChart2.data.datasets[3].pointBorderColor = dotColor2;
+					myChart2.data.datasets[4].pointBackgroundColor = dotColor3;
+					myChart2.data.datasets[4].pointBorderColor = dotColor3;
+					myChart2.data.datasets[5].pointBackgroundColor = dotColor4;
+					myChart2.data.datasets[5].pointBorderColor = dotColor4;
+					myChart2.data.datasets[6].pointBackgroundColor = dotColor5;
+					myChart2.data.datasets[6].pointBorderColor = dotColor5;
+					myChart2.data.datasets[7].pointBackgroundColor = dotColor6;
+					myChart2.data.datasets[7].pointBorderColor = dotColor6;
+					myChart2.data.datasets[8].pointBackgroundColor = dotColor7;
+					myChart2.data.datasets[8].pointBorderColor = dotColor7;
+					myChart2.data.datasets[9].pointBackgroundColor = dotColor8;
+					myChart2.data.datasets[9].pointBorderColor = dotColor8;
+					myChart2.data.datasets[10].pointBorderColor = lineColor1;
+					myChart2.data.datasets[10].pointBackgroundColor = lineColor1;
+					myChart2.data.datasets[10].borderColor = lineColor1;
+					myChart2.update();
+				}
+				myChart.update();
+				if (emulateOn == true) {
+				myChartEmulate.options.scales.x.grid.color = "rgba(0,0,0,0.1)";
+				myChartEmulate.options.scales.y.grid.color = "rgba(0,0,0,0.1)";
+				myChartEmulate.options.scales.x.grid.borderColor = "rgba(0,0,0,0.25)";
+				myChartEmulate.options.scales.y.grid.borderColor = "rgba(0,0,0,0.25)";
+				myChartEmulate.options.scales.x.ticks.color = "rgba(102,102,102,1)";
+				myChartEmulate.options.scales.y.ticks.color = "rgba(102,102,102,1)";
+				myChartEmulate.options.scales.x.title.color = "#666";
+				myChartEmulate.options.scales.y.title.color = "#666";
+				myChartEmulate.options.plugins.legend.labels.color = "#666";
+				myChartEmulate.update();
+				}
+
+			} else {
 				myChart.options.scales.x.grid.color = "rgba(255,255,255,0.2)";
 				myChart.options.scales.y.grid.color = "rgba(255,255,255,0.2)";
 				myChart.options.scales.x.grid.borderColor = "rgba(255,255,255,0.6)";
 				myChart.options.scales.y.grid.borderColor = "rgba(255,255,255,0.6)";
 				myChart.options.scales.x.ticks.color = "rgba(255,255,255,0.6)";
 				myChart.options.scales.y.ticks.color = "rgba(255,255,255,0.6)";
-				myChart2.options.scales.x.grid.color = "rgba(255,255,255,0.2)";
-				myChart2.options.scales.y.grid.color = "rgba(255,255,255,0.2)";
-				myChart2.options.scales.x.grid.borderColor = "rgba(255,255,255,0.6)";
-				myChart2.options.scales.y.grid.borderColor = "rgba(255,255,255,0.6)";
-				myChart2.options.scales.x.ticks.color = "rgba(255,255,255,0.6)";
-				myChart2.options.scales.y.ticks.color = "rgba(255,255,255,0.6)";
-				myChart2.data.datasets[1].pointBackgroundColor = dotColor0dark;
-				myChart2.data.datasets[1].pointBorderColor = dotColor0dark;
-				myChart2.data.datasets[2].pointBackgroundColor = dotColor1dark;
-				myChart2.data.datasets[2].pointBorderColor = dotColor1dark;
-				myChart2.data.datasets[3].pointBackgroundColor = dotColor2dark;
-				myChart2.data.datasets[3].pointBorderColor = dotColor2dark;
-				myChart2.data.datasets[4].pointBackgroundColor = dotColor3dark;
-				myChart2.data.datasets[4].pointBorderColor = dotColor3dark;
-				myChart2.data.datasets[5].pointBackgroundColor = dotColor4dark;
-				myChart2.data.datasets[5].pointBorderColor = dotColor4dark;
-				myChart2.data.datasets[6].pointBackgroundColor = dotColor5dark;
-				myChart2.data.datasets[6].pointBorderColor = dotColor5dark;
-				myChart2.data.datasets[7].pointBackgroundColor = dotColor6dark;
-				myChart2.data.datasets[7].pointBorderColor = dotColor6dark;
-				myChart2.data.datasets[8].pointBackgroundColor = dotColor7dark;
-				myChart2.data.datasets[8].pointBorderColor = dotColor7dark;
-				myChart2.data.datasets[9].pointBackgroundColor = dotColor8dark;
-				myChart2.data.datasets[9].pointBorderColor = dotColor8dark;
-				myChart2.data.datasets[10].pointBorderColor = lineColor1dark;
-				myChart2.data.datasets[10].pointBackgroundColor = lineColor1dark;
-				myChart2.data.datasets[10].borderColor = lineColor1dark;
-
+				if (complex_mode == 1) {
+					myChart2.options.scales.x.grid.color = "rgba(255,255,255,0.2)";
+					myChart2.options.scales.y.grid.color = "rgba(255,255,255,0.2)";
+					myChart2.options.scales.x.grid.borderColor = "rgba(255,255,255,0.6)";
+					myChart2.options.scales.y.grid.borderColor = "rgba(255,255,255,0.6)";
+					myChart2.options.scales.x.ticks.color = "rgba(255,255,255,0.6)";
+					myChart2.options.scales.y.ticks.color = "rgba(255,255,255,0.6)";
+					myChart2.data.datasets[1].pointBackgroundColor = dotColor0dark;
+					myChart2.data.datasets[1].pointBorderColor = dotColor0dark;
+					myChart2.data.datasets[2].pointBackgroundColor = dotColor1dark;
+					myChart2.data.datasets[2].pointBorderColor = dotColor1dark;
+					myChart2.data.datasets[3].pointBackgroundColor = dotColor2dark;
+					myChart2.data.datasets[3].pointBorderColor = dotColor2dark;
+					myChart2.data.datasets[4].pointBackgroundColor = dotColor3dark;
+					myChart2.data.datasets[4].pointBorderColor = dotColor3dark;
+					myChart2.data.datasets[5].pointBackgroundColor = dotColor4dark;
+					myChart2.data.datasets[5].pointBorderColor = dotColor4dark;
+					myChart2.data.datasets[6].pointBackgroundColor = dotColor5dark;
+					myChart2.data.datasets[6].pointBorderColor = dotColor5dark;
+					myChart2.data.datasets[7].pointBackgroundColor = dotColor6dark;
+					myChart2.data.datasets[7].pointBorderColor = dotColor6dark;
+					myChart2.data.datasets[8].pointBackgroundColor = dotColor7dark;
+					myChart2.data.datasets[8].pointBorderColor = dotColor7dark;
+					myChart2.data.datasets[9].pointBackgroundColor = dotColor8dark;
+					myChart2.data.datasets[9].pointBorderColor = dotColor8dark;
+					myChart2.data.datasets[10].pointBorderColor = lineColor1dark;
+					myChart2.data.datasets[10].pointBackgroundColor = lineColor1dark;
+					myChart2.data.datasets[10].borderColor = lineColor1dark;
+					myChart2.update();
+				}
+				if (emulateOn == true) {
+				myChartEmulate.options.scales.x.grid.color = "rgba(255,255,255,0.2)";
+				myChartEmulate.options.scales.y.grid.color = "rgba(255,255,255,0.2)";
+				myChartEmulate.options.scales.x.grid.borderColor = "rgba(255,255,255,0.6)";
+				myChartEmulate.options.scales.y.grid.borderColor = "rgba(255,255,255,0.6)";
+				myChartEmulate.options.scales.x.ticks.color = "rgba(255,255,255,0.6)";
+				myChartEmulate.options.scales.y.ticks.color = "rgba(255,255,255,0.6)";
+				myChartEmulate.options.scales.x.title.color = "rgb(255,255,255,0.6)";
+				myChartEmulate.options.scales.y.title.color = "rgb(255,255,255,0.6)";
+				myChartEmulate.options.plugins.legend.labels.color = "rgb(255,255,255,0.8)";
+				myChartEmulate.update();
+				}
+			myChart.update();
 			}
 		},1500);
 } //end createCharts function
@@ -5599,6 +5654,7 @@ function togglepopupoptions() {
 
 
 function proceedComplex() {
+	createCharts(1);
 	complex_mode = 1;
 	//add chart options PD overlay box
 	document.getElementById("chartoverlayoptionscontent").classList.add("PDoptions");
@@ -6952,6 +7008,9 @@ function emulateDisplayToggle() {
 }
 
 function emulateEleveldInit() {
+	if (myChartEmulate == undefined) {
+		createCharts(2);
+	}
 	drug_sets[2] = {};
 	opioid = 1;
 	if (drug_sets[0].model_name == "Marsh") {

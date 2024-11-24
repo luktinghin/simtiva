@@ -71,7 +71,7 @@ var corX=0; //for chartjs
 var corY=0; //for chartjs
 var historytext = ""; //for history writing
 var modeltext = "&nbsp;"; //for modeldescription
-var myChart;
+var myChart, myChart2, myChartEmulate;
 var desired;
 
 var cpt_threshold_auto =1;
