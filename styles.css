@@ -4654,6 +4654,46 @@ body.dark #preview-expand-box > div > div.timespan {
   position:fixed;width:100%;left:0;bottom:63px;z-index:91;
 }
 
+#cornerblock {
+  width:100%;z-index:92;position:sticky;bottom:0px;padding:0px 0.5rem 0 0.5rem
+}
+
+#cornerblock2 {
+  position:relative;width:100%;height:32px;background:#7b8092;
+  padding-top:4px;
+  display:flex;
+  justify-content:space-between;
+  align-items:stretch;
+  gap:4px;
+}
+
+#cornerblock2:before {
+  content: "";
+  position:absolute;top:-40px;left:0;height:40px;width:10px;
+  background-color:transparent;
+  border-bottom-left-radius:9px;
+  box-shadow:0 10px 0 0 #7B8092;
+}
+
+#cornerblock2:after {
+  content: "";
+  position:absolute;top:-40px;right:0;height:40px;width:10px;
+  background-color:transparent;
+  border-bottom-right-radius:9px;
+  box-shadow:0 10px 0 0 #7B8092;
+}
+
+.cornermessage {
+  flex-grow:1;
+  align-self:flex-start;
+}
+.cornericon {
+  flex-basis:30px;
+  height:30px;
+  color:white;
+  font-size:18px;
+  text-align:center;
+}
 @media (max-height:660px) {
   #logo {display:none}
 }
