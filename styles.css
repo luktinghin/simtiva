@@ -4464,6 +4464,9 @@ body.dark #cornerblock2:after {
 
 @media (max-height:480px) and (min-width:610px) and (max-width:767px) {
   /*narrow screen phone with reduced height - landscape*/
+  #cornerblock {
+    display:none;
+  }
   #controlpanel {
     margin-top:10px;
     padding-top:80px;
@@ -4479,7 +4482,7 @@ body.dark #cornerblock2:after {
   }
   body.dark #prompts_container {
     background: #303030;
-    border: 1px solid #999;
+    border: 1px solid #666;
     border-left: 0;
   }
   #prompts_container {
