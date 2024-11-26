@@ -1,4 +1,5 @@
 var initiated = false;
+var umami;
 var complex_mode = 0;
 var paedi_mode = 0;
 var PMA;
@@ -913,6 +914,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function trk() {
+	if (umami != undefined) {
 		//custom umami tracker function
 		trackerprops = {};
 		if (complex_mode == 0) {
@@ -1008,6 +1010,7 @@ function trk() {
 			umami.track('view', trackerprops);	
 		}
 		umami.identify(trackerprops);
+	}
 }
 
 function postprocessing(needstartcet) {
@@ -3768,11 +3771,7 @@ function showNotification(text,indicator) {
 }
 
 function goDark(arg) {
-
-
 	isDark = document.body.classList.contains("dark");
-
-
 	if (!isDark) {
 		var metaThemeColor = document.querySelector("meta[name=theme-color]");
 		metaThemeColor.setAttribute("content", "#000");

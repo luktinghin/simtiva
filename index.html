@@ -515,12 +515,6 @@
         </div>
     	</div>
 
-		<div class="sharebutton" id="sharebutton" onclick="sharefunction();">
-			<i class="fas fa-share-alt fa-fw"></i>
-		</div>
-		<div class="darkmodebutton" id="darkmodebutton" onclick="goDark();">
-			<i class="fas fa-moon fa-fw"></i>
-		</div>
 		<div class="installbutton" id="installbutton">
 			<i class="fas fa-download fa-fw" style="transform: translateY(2px);"></i>
 			<div class="installtext" id="installtext">INSTALL</div>
@@ -528,8 +522,6 @@
 		</div>
 
 	<div id="bodywrapper" class="" style="opacity:0">
-
-
 		<div class="hamburger"  id="hamburger" onclick="togglemenu();" style="display:none">
           <div class="bar1"></div>
           <div class="bar2"></div>
@@ -968,8 +960,8 @@
 		<div id="cornerblock" style="">
 			<div style="" id="cornerblock2">
 				<div class="cornermessage"></div>
-				<div class="cornericon"><i class="fas fa-share-alt fa-fw"></i></div>
-				<div class="cornericon"><i class="fas fa-moon fa-fw"></i></div>
+				<div class="cornericon" id="sharebutton" onclick="sharefunction()"><i class="fas fa-share-alt fa-fw"></i></div>
+				<div class="cornericon" id="darkmodebutton" onclick="goDark();"><i class="fas fa-moon fa-fw"></i></div>
 			</div>
 		</div>
 		<div class="suspendbanner" id="suspendBanner">
@@ -988,17 +980,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="footer">
-			<b>SIMTiva</b>&nbsp;|&nbsp;Terence Luk 2024
-			<ul>
-				<li><a href="#" onclick="setmodal('modalAbout');">About</a></li>
-				<li><a href="https://simtiva.blogspot.com/" target="_blank">Blog</a></li>
-				<li><a href="https://simtiva.blogspot.com/p/readme.html" target="_blank">Readme</a></li>
-				<li><a href="https://simtiva.blogspot.com/p/feedback.html" target="_blank">Contact</a></li>
-			</ul>
-		</div>
-
-	
 	</div><!--bodywrapper-->
 	
 	<script src="main.js"></script>
@@ -1096,44 +1077,6 @@ document.getElementById("installclose").addEventListener('click', function() {
 function hideInstallPromotion() {
 	document.getElementById("installbutton").classList.remove("show");
 }
-
-
-// function for scroll detection
-var prevScrollpos = 0;
-var scrolldistancetimeout = null;
-let installbutton = document.getElementById("installbutton");
-let sharebutton = document.getElementById("sharebutton");
-let darkmodebutton = document.getElementById("darkmodebutton");
-let footer = document.querySelector(".footer");
-var viewportheight = window.innerHeight;
-
-document.addEventListener('scroll', (event) => {
-  var currentScrollPos = window.pageYOffset;
-  var distance = currentScrollPos - prevScrollpos;
-  var y = footer.offsetTop - viewportheight;
-
-  clearTimeout(scrolldistancetimeout);
-  scrolldistancetimeout = setTimeout(function() {
-
-  	if (currentScrollPos < y) {
-	  	if (distance > 10) {
-	  		installbutton.classList.add("scrollhide");
-	  		sharebutton.classList.add("scrollhide");
-	  		darkmodebutton.classList.add("scrollhide");
-	  	} else {
-	  		installbutton.classList.remove("scrollhide");
-	  		sharebutton.classList.remove("scrollhide");
-	  		darkmodebutton.classList.remove("scrollhide");
-	  	}
-	  } else {
-	  		installbutton.classList.remove("scrollhide");
-	  		sharebutton.classList.remove("scrollhide");
-	  		darkmodebutton.classList.remove("scrollhide");
-	  }
-  	prevScrollpos = currentScrollPos;
-
-  },100)
-}, false)
 
 	</script>
 	<!-- chart.js from https://cdnjs.com/libraries/Chart.js-->
