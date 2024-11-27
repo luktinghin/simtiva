@@ -228,6 +228,7 @@ function displayIBabout() {
 
 
 function displayModalOptions() {
+	if (initiated == false) dynamicLoad();
 	loadoptions();
 	temp_unit = document.getElementById("select_defaultrateunit").options[1].textContent;
 	temp_unit_bolus = document.getElementById("select_defaultbolusunit").options[0].textContent;
