@@ -199,6 +199,9 @@ body.dark #ptolcard_switch {
 }
 
 @media screen and (min-width:768px) {
+  .narrowbodywrapper #logo2 {
+    margin-left: calc(100px + 1rem);
+  }
     .leftbar {
     padding-top: 100px;
     width: 100px;
@@ -340,6 +343,13 @@ body.dark #ptolcard_switch {
 }
 
 @media (max-height:480px) and (min-width:610px) and (max-width:767px) {
+  .narrowbodywrapper .prompts_card {
+    width: calc(100% - 1rem);  
+    height: 74px;
+  }
+  .narrowbodywrapper #parallax2 {
+    width: 100%;
+  }
   .druglabelcontainer {
     height: 130px;
   }
@@ -369,5 +379,32 @@ body.dark #ptolcard_switch {
   .leftbar {
     left: calc(50% - 476px);
   }
+}
 
+@media screen and (min-width: 1024px) {
+  .narrowbodywrapper>#controlpanel {
+    width: calc(868px - 0.5rem);
+  }
+  .narrowbodywrapper #cornerblock {
+    width: 868px;
+  }
+  .narrowbodywrapper #prompts_container {
+    left: calc(50% + 24px);
+    width: 460px;
+  }
+  .narrowbodywrapper #parallax1container {
+    width: 402px;
+  }
+  .narrowbodywrapper #parallax1 {
+    width: 968px;
+  }
+  .narrowbodywrapper #parallax2 {
+    width: 868px;
+  }
+  .narrowbodywrapper .hamburger {
+    right: calc((100% - 968px)/2 + 16px);
+  }
+  body.dark .narrowbodywrapper .hamburger {
+    right: calc((100% - 968px)/2 + 2px);
+  }
 }

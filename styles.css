@@ -657,12 +657,12 @@ body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom
 
 #modalInitial, #modalLoad {
   padding-top: 5vw; /*this is deliberate to make the top, left, right paddings the same*/
-  background: linear-gradient(124deg, #7b8092 -20%, #000000 250%);
+  background: radial-gradient(circle at -50px -50px, #7b8092 0%, #000000 180%);
   background-color:  #7B8092;
 }
 
 body.dark #modalInitial, body.dark #modalLoad {
-  background:linear-gradient(124deg, #7b8092 -150%, #000000 100%);
+  background:radial-gradient(circle at -50% -80%, #7b8092 0%, #000000 110%);
   background-color: #222
 }
 
@@ -1411,7 +1411,7 @@ background-size: 200% 100%;
   transform: translateY(194px);
 }
 #page2cpt.active, #page2cet.active, #page2manual.active {
-  transform: translateY(0px);
+  transform: translateY(-1px);
   width: 100%;
   left: 0px;
   border: 0;
@@ -4310,6 +4310,10 @@ body.dark #preview-expand-box > div > div.timespan {
   position:fixed;width:100%;left:0;bottom:63px;z-index:91;
 }
 
+#logo2 {
+  display:flex; align-items:center; justify-content:center;height:60px;color:white;opacity:0.7;
+}
+
 #cornerblock {
   width:100%;z-index:19;position:sticky;bottom:0px;
   padding:0px 0.5rem 0 0.5rem
@@ -4318,7 +4322,7 @@ body.dark #preview-expand-box > div > div.timespan {
 #cornerblock2 {
   position:relative;width:100%;height:32px;background:#7b8092;
   padding-top:4px;
-  padding-right:4px;
+  padding-right:0.5rem;
   display:flex;
   justify-content:space-between;
   align-items:stretch;
@@ -4341,9 +4345,14 @@ body.dark #preview-expand-box > div > div.timespan {
   box-shadow:0 10px 0 0 #7B8092;
 }
 
-.cornermessage {
+#cornermessage {
+  color:#cecece;
   flex-grow:1;
   align-self:flex-start;
+  padding-left:1rem;
+  padding-top:3px;
+  font-size:0.8rem;
+  text-shadow:1px 1px 2px #0005;
 }
 .cornericon {
   flex-basis:30px;
@@ -4352,6 +4361,11 @@ body.dark #preview-expand-box > div > div.timespan {
   font-size:18px;
   text-align:center;
   cursor:pointer;
+  color:#cecece;
+  text-shadow:1px 1px 2px #0005;
+}
+.cornericon:hover {
+  color:white;
 }
 
 .narrowbodywrapper #cornerblock {
@@ -4466,7 +4480,7 @@ body.dark #cornerblock2:after {
 @media (max-height:480px) and (min-width:610px) and (max-width:767px) {
   /*narrow screen phone with reduced height - landscape*/
   #cornerblock {
-    display:none;
+    position:static;
   }
   #controlpanel {
     margin-top:10px;
@@ -4513,13 +4527,7 @@ body.dark #cornerblock2:after {
   #preview-expand-box {
     display: none;
   }
-  .narrowbodywrapper .prompts_card {
-    width: calc(100% - 1rem);  
-    height: 74px;
-  }
-  .narrowbodywrapper #parallax2 {
-    width: 100%;
-  }
+
 
   .darkmodebutton {
     opacity: 0;
@@ -4751,6 +4759,7 @@ body.dark .modal-header.alt {
 body.dark #controlpanel {
   background: #222;
   border: 1px solid #666;
+  border-bottom:0;
 }
 
 body.dark td {
@@ -4957,6 +4966,12 @@ body.dark #chart2wrapper {
   .narrowbodywrapper #cornerblock {
     width: calc(100% - 100px - 0.5rem);
     margin-left: calc(100px + 0.5rem);
+  }
+  .menuwrapper {
+    padding-left:100px;
+  }
+  .social {
+    margin-left:100px;
   }
 }
 
@@ -5387,34 +5402,7 @@ body.dark #addeventtext{
   filter: blur(5px);
 }
 
-@media screen and (min-width: 1024px) {
 
-  .narrowbodywrapper>#controlpanel {
-    width: calc(868px - 0.5rem);
-  }
-  .narrowbodywrapper #cornerblock {
-    width: calc(868px - 0.5rem);
-  }
-  .narrowbodywrapper #prompts_container {
-    left: calc(50% + 24px);
-    width: 460px;
-  }
-  .narrowbodywrapper #parallax1container {
-    width: 402px;
-  }
-  .narrowbodywrapper #parallax1 {
-    width: 968px;
-  }
-  .narrowbodywrapper #parallax2 {
-    width: 868px;
-  }
-  .narrowbodywrapper .hamburger {
-    right: calc((100% - 968px)/2 + 16px);
-  }
-  body.dark .narrowbodywrapper .hamburger {
-    right: calc((100% - 968px)/2 + 2px);
-  }
-}
 
 /* new suspend banner styles */
 .suspendbanner {

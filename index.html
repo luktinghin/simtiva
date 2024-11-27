@@ -482,33 +482,14 @@
 		--><div id="parallax3" style="opacity:0"></div>
     <div class="menuwrapper" id="menu">
         <div class="menucontent">
-            <!--<a href="#" 
-            onclick="showbaselayer(); window.scrollTo(0,0); togglemenu();" 
-            ontouchstart="showbaselayer(); window.scrollTo(0,0); event.preventDefault(); togglemenu();">Home</a>-->
-            <!--ontouchstart="setmodal('modalAbout'); event.preventDefault(); togglemenu();"-->
-            <a href="#" 
-            onclick="displayAbout2(); togglemenu();" 
-            >Help</a>
-            <a href="#" 
-            onclick="setmodal('modalReset'); togglemenu();" 
-            >Reload</a>
-            <!--<a href="#" 
-            onclick="setmodal('modalHelp'); togglemenu();" 
-            >Help</a>-->
-            <a href="#" 
-            onclick="setmodal('modalDocumentation'); togglemenu();" 
-            >Documentation</a>
-            <a href="#"
-            onclick="sharefunction(); togglemenu();"
-            >Share</a><!--
-            <a href="#" 
-            onclick="setmodal('modalExport'); togglemenu();" 
-            ontouchstart="document.getElementById('inputMaxDuration').value = Math.floor(time_in_s); setmodal('modalExport'); event.preventDefault(); togglemenu();">Export</a>-->
+            <a href="#" onclick="displayAbout2(0); togglemenu();">About</a>
+            <a href="#" onclick="displayAbout2(); togglemenu();" >Help</a>
+            <a href="#" onclick="setmodal('modalReset'); togglemenu();">Reload</a>
+            <a href="#" onclick="setmodal('modalDocumentation'); togglemenu();">Documentation</a>
+            <a href="#" onclick="sharefunction(); togglemenu();">Share</a>
             <a href="https://simtiva.blogspot.com/p/feedback.html" target="_blank" 
             onclick="togglemenu();" 
-            >Contact</a>
-            <!--<a href="#" onclick="setmodal('modaldisclaimer'); togglemenu();" ontouchstart="setmodal('modaldisclaimer'); event.preventDefault(); togglemenu();">Disclaimer</a>-->
-            
+            >Blog/Contact</a>            
         </div>
         <!--end of menucontent-->
         <div class="social">
@@ -959,7 +940,7 @@
 		</div><!--controlpanel-->
 		<div id="cornerblock" style="">
 			<div style="" id="cornerblock2">
-				<div class="cornermessage"></div>
+				<div id="cornermessage"></div>
 				<div class="cornericon" id="sharebutton" onclick="sharefunction()"><i class="fas fa-share-alt fa-fw"></i></div>
 				<div class="cornericon" id="darkmodebutton" onclick="goDark();"><i class="fas fa-moon fa-fw"></i></div>
 			</div>
@@ -980,7 +961,7 @@
 				</div>
 			</div>
 		</div>
-		<div style="display:flex; align-items:center; justify-content:center;height:60px;color:white;opacity:0.7">
+		<div id="logo2" style="">
 			<div style="font-weight:bold; letter-spacing:2px; font-stretch:110%;">SimTIVA <span style="opacity:0.3">| Terence Luk 2024</span></div>
 		</div>
 	</div><!--bodywrapper-->

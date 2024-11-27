@@ -1562,11 +1562,15 @@ function update() {
 					document.getElementById("warning").style.display = "none";
 					alert_api(0);
 				}
+				temp_message2 = "Next: ";
+				temp_message2 += Math.round(drug_sets[active_drug_set_index].historyarray[i][1]*3600/drug_sets[active_drug_set_index].infusate_concentration*10)/10 + "ml/h in <span style='color:#fff'>" + converttime(temp_time) +"</span>";
+				document.getElementById("cornermessage").innerHTML = temp_message2;
 			} else { //hence i<0, or =-1, means not found, means current time exceeds last element of historyarray
 					document.getElementById("warning").style.display = "none";
 					alert_api(0);
 					//redefine i as the length
 					i = drug_sets[active_drug_set_index].historyarray.length;
+					document.getElementById("cornermessage").innerHTML = "";
 			}
 		}
 

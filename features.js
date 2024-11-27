@@ -6684,8 +6684,10 @@ function tabswitch(index) {
 		alt_drug_set_index = 1;
 		document.getElementById("drugname").innerHTML = "Propofol";
 		document.getElementById("modelname").innerHTML = drug_sets[0].model_name;
-		document.getElementById("historywrapper").innerHTML = drug_sets[0].historytext;
-		document.getElementById("historywrapperCOPY").innerHTML = drug_sets[0].historytext;
+		if (drug_sets[0].historytext != undefined) {
+			document.getElementById("historywrapper").innerHTML = drug_sets[0].historytext;
+			document.getElementById("historywrapperCOPY").innerHTML = drug_sets[0].historytext;
+		}
 		document.querySelector(".leftbar").classList.remove("opioid");
 		document.querySelector(".leftbar").classList.add("propofol");
 		document.querySelector(".druglabelcontainer.propofol").classList.add("active");
@@ -6747,9 +6749,10 @@ function tabswitch(index) {
 		} else {
 			document.getElementById("modelname").innerHTML = drug_sets[1].model_name;
 		}
-		
-		document.getElementById("historywrapper").innerHTML = drug_sets[1].historytext;
-		document.getElementById("historywrapperCOPY").innerHTML = drug_sets[1].historytext;
+		if (drug_sets[1].historytext != undefined) {
+			document.getElementById("historywrapper").innerHTML = drug_sets[1].historytext;
+			document.getElementById("historywrapperCOPY").innerHTML = drug_sets[1].historytext;
+		}
 		document.querySelector(".leftbar").classList.remove("propofol");
 		document.querySelector(".leftbar").classList.add("opioid");
 		document.querySelector(".druglabelcontainer.propofol").classList.remove("active");
@@ -6914,7 +6917,7 @@ function tabswitch(index) {
 	} else {
 		myChart.options.scales.y.title.text = "Concentration (ng/ml)";
 	}
-
+	document.getElementById("cornermessage").innerHTML = "";
 	updatechart(myChart);
 	updateBolusSpeedOptions();
 }
