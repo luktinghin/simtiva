@@ -558,7 +558,20 @@ body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom
   z-index: 2;
 }
 
+.ring {
+  border-radius:1rem;
+  border:1px solid #ddd;
+  width:19px;height:19px;border:2px solid #ddd;
+  font-size:12px;
+  text-align:center;
+  padding-top:2px;
+  position:relative;
+  top:-1px;
+}
 
+body.dark .ring {
+  border-color:#777;
+}
 
 /* Tooltip text */
 .tooltip .tooltiptext, .tooltip2 .tooltiptext, .tooltip3 .tooltiptext, .tooltip.background .tooltiptext {
@@ -574,7 +587,7 @@ body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom
   width: 150px;
   height: 36px;
   top: -10px;
-  left: 200%;
+  left: 150%;
   /* Position the tooltip text - see examples below! */
   position: absolute;
   z-index:100; 
@@ -584,7 +597,7 @@ body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom
 .tooltip2 .tooltiptext {
   font-weight: normal;
   width:200px;
-  left:200%;
+  left:150%;
   text-align:left;
 }
 
@@ -626,7 +639,7 @@ body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom
   z-index: 3;
   font-weight: normal;
   width:200px;
-  left:200%;
+  left:150%;
   height: auto;
   top: -100%;
   text-align:left;

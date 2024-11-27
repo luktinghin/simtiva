@@ -85,11 +85,11 @@
 					</div>
 					<table class="table-Init">
 					<tr class="fr" id="row_age_adultmode">
-						<td >Age (y) <i class="far fa-question-circle tooltip"><span class="tooltiptext" style="width: 80px; line-height:20px">0-100y</span></i></td>
+						<td>Age (y) <i class="fas fa-question tooltip ring"><span class="tooltiptext" style="width: 80px; line-height:20px">0-100y</span></i></td>
 						<td><input type="number" inputmode="decimal" id="inputAge" min="0.1" max="99" step="0.1" placeholder=" " onkeyup="sendToValidate(0)" required/></td>
 					</tr>
 					<tr class="fr" id="row_age_paedimode" style="display:none">
-						<td>Age <i class="far fa-question-circle tooltip"><span class="tooltiptext">Actual chronological age</span></i></td>
+						<td>Age <i class="fas fa-question tooltip ring"><span class="tooltiptext">Actual chronological age</span></i></td>
 						<td>
 							<input type="number" inputmode="decimal" id="inputAgePaedi" placeholder=" " onkeyup="sendToValidate(0)"/>
 							<select id="select_age_unit">
@@ -100,7 +100,7 @@
 							</select>
 					</tr>
 					<tr id="row_PMA_paedimode" style="display:none">
-						<td><span style="letter-spacing: -0.5px">Post-menstrual age </span><i class="far fa-question-circle tooltip"><span class="tooltiptext" style="">Covariate for Eleveld; affects clearance in <6mo</span></i>
+						<td><span style="letter-spacing: -0.5px">Post-menstrual age </span><i class="fas fa-question tooltip ring"><span class="tooltiptext" style="">Covariate for Eleveld; affects clearance in <6mo</span></i>
 						</td>
 						<td>
 							<div id="PMA_td">
@@ -110,11 +110,11 @@
 						</td>
 					</tr>
 					<tr>
-						<td>Weight (kg) <i class="far fa-question-circle tooltip"><span class="tooltiptext">0-200kg, validation with BMI & weight-for-age</span></i></td>
+						<td>Weight (kg) <i class="fas fa-question tooltip ring"><span class="tooltiptext">0-200kg, validation with BMI & weight-for-age</span></i></td>
 						<td><input type="number" inputmode="decimal" id="inputBW" min="0.1" max="200" step="0.01" placeholder=" " onkeyup="sendToValidate(0)" required/></td>
 					</tr>
 					<tr id="row_height">
-						<td>Height (cm) <i class="far fa-question-circle tooltip"><span class="tooltiptext">0-250cm, required for Schnider/Eleveld</span></i></td>
+						<td>Height (cm) <i class="fas fa-question tooltip ring"><span class="tooltiptext">0-250cm, required for Schnider/Eleveld</span></i></td>
 						<td><input type="number" inputmode="decimal" id="inputBH" min="0.1" max="250" step="0.1" placeholder=" " onkeyup="sendToValidate(0)" ></td>
 					</tr>
 					<tr id="row_gender"><td>Gender</td>
@@ -125,7 +125,7 @@
 							</select>
 						</td>
 					</tr>
-					<tr><td>Model <i class="far fa-question-circle tooltip2"><span class="tooltiptext">Paedfusor: for children. Marsh/Schnider/Minto: for adults.</span></i></td>
+					<tr><td>Model <i class="fas fa-question tooltip2 ring"><span class="tooltiptext">Paedfusor: for children. Marsh/Schnider/Minto: for adults.</span></i></td>
 						<td>
 							<select id="select_model" onchange="sendToValidate(0)" >
 								
@@ -189,7 +189,7 @@
 							</div>
 						</td>
 					</tr>
-					<tr id="row_fen_weightadjusted"><td>Weight adjusted? <i class="far fa-question-circle tooltip3"><span class="tooltiptext">If YES: PK model adjusted to BW according to Shibutani, 2004; recommended for obese.</span></i></td>
+					<tr id="row_fen_weightadjusted"><td>Weight adjusted? <i class="fas fa-question tooltip3 ring"><span class="tooltiptext">If YES: PK model adjusted to BW according to Shibutani, 2004; recommended for obese.</span></i></td>
 						<td>
 							<select id="select_fen_weightadjusted">
 								<option value="0" >No</option>
@@ -820,7 +820,7 @@
 					[1,0]
 					-->
 					<!--end options array-->
-					<tr id="option_bolusspeed_row" style="display:none" class="fr"><td>Max bolus speed <i class="far fa-question-circle tooltip background"><span class="tooltiptext">Max bolus rate for programmed bolus. Flash means instantaneous bolus.</span></i></td>
+					<tr id="option_bolusspeed_row" style="display:none" class="fr"><td>Max bolus speed <i class="fas fa-question tooltip background ring"><span class="tooltiptext">Max bolus rate for programmed bolus. Flash means instantaneous bolus.</span></i></td>
 						<td>
 							<select id="select_bolusspeed" onchange="applybolusspeed();">
 											<option value="0" selected>Flash</option>
@@ -840,7 +840,7 @@
 							</select>
 						</td>
 					</tr>
-					<tr id="option_threshold_row" class="fr"><td>Maintenance accuracy <i class="far fa-question-circle tooltip background"><span class="tooltiptext" style="width:170px">Threshold of CPT/CET schemes. Lazy: less frequent rate changes. Accurate: more frequent changes.</span></i></td>
+					<tr id="option_threshold_row" class="fr"><td>Maintenance accuracy <i class="fas fa-question tooltip background ring"><span class="tooltiptext" style="width:170px">Threshold of CPT/CET schemes. Lazy: less frequent rate changes. Accurate: more frequent changes.</span></i></td>
 						<td>
 							<select id="select_threshold">
 								<option value="0">Auto</option>
@@ -849,7 +849,7 @@
 							</select>
 						</td>
 					</tr>
-					<tr id="option_unit_row"><td>Unit for propofol <i class="far fa-question-circle tooltip background"><span class="tooltiptext" style="width:160px">Secondary unit for propofol infusion rate apart from ml/h. Refresh your CPT/CET target after change.</span></i></td>
+					<tr id="option_unit_row"><td>Unit for propofol <i class="fas fa-question tooltip background ring"><span class="tooltiptext" style="width:160px">Secondary unit for propofol infusion rate apart from ml/h. Refresh your CPT/CET target after change.</span></i></td>
 						<td>
 							<select id="select_unit">
 								<option value="mgh">mg/kg/h</option>
@@ -857,7 +857,7 @@
 							</select>
 						</td>
 					</tr>
-					<tr class="" id="option_defaultrateunit"><td>Default rate unit <i class="far fa-question-circle tooltip background"><span class="tooltiptext" style="width:160px">Unit for entering manual mode infusion rate, e.g. "ml/h" vs "mg/kg/h" (or appropriate units)</span></i></td>
+					<tr class="" id="option_defaultrateunit"><td>Default rate unit <i class="fas fa-question tooltip background ring"><span class="tooltiptext" style="width:160px">Unit for entering manual mode infusion rate, e.g. "ml/h" vs "mg/kg/h" (or appropriate units)</span></i></td>
 						<td>
 							<select id="select_defaultrateunit">
 								<option value="mlh">ml/h</option>
@@ -865,7 +865,7 @@
 							</select>
 						</td>
 					</tr>
-					<tr class="" id="option_defaultbolusunit"><td>Default bolus unit <i class="far fa-question-circle tooltip background"><span class="tooltiptext" style="width:160px">Unit for entering manual mode bolus, e.g. "mg" vs "mg/kg" vs "ml" (or appropriate units)</span></i></td>
+					<tr class="" id="option_defaultbolusunit"><td>Default bolus unit <i class="fas fa-question tooltip background ring"><span class="tooltiptext" style="width:160px">Unit for entering manual mode bolus, e.g. "mg" vs "mg/kg" vs "ml" (or appropriate units)</span></i></td>
 						<td>
 							<select id="select_defaultbolusunit">
 								<option value="mg">mg</option>
@@ -889,7 +889,7 @@
 			<div class="optionscardtitle collapsiblecard">PROGRAM FEATURES</div>
 			<div class="optionscardcontents"><!-- start prograam features -->
 				<table class="table-control">
-					<tr class="fr"><td>Wakelock <i class="far fa-question-circle tooltip background"><span class="tooltiptext">Keeps screen on. Experimental. Android & some desktop devices only.</span></i></td>
+					<tr class="fr"><td>Wakelock <i class="fas fa-question tooltip background ring"><span class="tooltiptext">Keeps screen on. Experimental. Android & some desktop devices only.</span></i></td>
 						<td>
 							<select id="select_wakelock">
 								<option value="off">Off</option>
