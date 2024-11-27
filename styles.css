@@ -59,6 +59,7 @@ input, select, textarea {
 html {
 	-webkit-text-size-adjust:100%; /*fix iphone landscape font-size 20px bug */
   overscroll-behavior: none;
+  background:#000;
   font-size: 16px; 
 }
 
@@ -5018,7 +5019,7 @@ body.dark #chart2wrapper {
     padding-top:180px;
   }
   #parallax1container {
-    box-shadow:0px 6px 8px -5px rgb(0 0 0 / 15%);
+    box-shadow:0px 6px 6px -5px rgb(0 0 0 / 15%);
     border-radius: 9px 0 0 0;
     background:#fff;
     width:calc(50% - 50px);
@@ -5056,7 +5057,7 @@ body.dark #chart2wrapper {
     border-radius: 0 9px 0 0 ;
     background:#fff;
     height:95px;
-    box-shadow:0px 6px 8px -5px rgb(0 0 0 / 15%);
+    box-shadow:0px 6px 6px -5px rgb(0 0 0 / 15%);
     border-bottom:2px solid #ddd;
   }
 

@@ -97,7 +97,7 @@ function displayAbout() {
 	displayWarning("About", text);
 }
 
-function displayAbout2() {
+function displayAbout2(aboutparam) {
 	let El1 = document.createElement("div");
 	El1.classList.add("customAboutContainer");
 	El1.innerHTML = `
@@ -200,12 +200,15 @@ function displayAbout2() {
 					</div>
 		</div>
 	`
-	El0.appendChild(El1);
-	El0.appendChild(ElAbout);
-	El0.appendChild(ElQuickGuide);
-	El0.appendChild(ElBanner);
-	displayWarning("Help", El0.innerHTML);
-
+	if ((aboutparam == undefined) || (aboutparam == 1)) {
+		El0.appendChild(El1);
+		El0.appendChild(ElAbout);
+		El0.appendChild(ElQuickGuide);
+		El0.appendChild(ElBanner);
+		displayWarning("Help", El0.innerHTML);
+	} else if (aboutparam == 0) {
+		displayWarning("About", ElAbout.innerHTML);
+	}
 }
 
 
