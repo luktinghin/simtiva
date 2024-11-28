@@ -4071,8 +4071,32 @@ body.dark .file_outerbox.active {
   z-index: 19; /*below menu*/
 }
 
+.infusionratedropdown .ring {
+  font-size: 13px;
+  color: black;
+  border-radius:2rem;
+  border:2px solid black;
+  width:18px;
+  height:18px;
+  top:1px;
+  left:2px;
+}
+
+.infusionratedropdown .blank {
+  color:transparent;
+}
+
+body.dark .infusionratedropdown .ring {
+  border-color: #cecece;
+  color:#cecece;
+}
+
+body.dark .infusionratedropdown .blank {
+  color: transparent;
+}
+
 body.dark .infusionratedropdown {
-  border: 2px solid #506150;
+  border: 2px solid #666;
   background: #555;
   color: #eee;
   box-shadow: 2px 4px 6px 0px #000;

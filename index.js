@@ -234,14 +234,14 @@ function displayModalOptions() {
 	temp_unit_bolus = document.getElementById("select_defaultbolusunit").options[0].textContent;
 	text = `
 		<table class="table-control">
-					<tr class="fr" id=""><td>Unit <i class="far fa-question-circle tooltip2"><span class="tooltiptext">Preferred secondary unit for propofol infusion.</span></i></td>
+					<tr class="fr" id=""><td>Unit <i class="fas fa-question ring tooltip2"><span class="tooltiptext">Preferred secondary unit for propofol infusion.</span></i></td>
 						<td>
 							<select id="" onchange="document.getElementById('select_unit').value=this.value">
 								<option value="mgh" ${(optionsarray[0][0]==1) ? 'selected':''}>mg/kg/h</option>
 								<option value="mcgmin" ${(optionsarray[0][1]==1) ? 'selected':''}>mcg/kg/m</option>
 							</select>
 						</td>
-					<tr class="" id=""><td>Default rate unit  <i class="far fa-question-circle tooltip background"><span class="tooltiptext" style="width:160px">Unit for entering manual mode infusion rate, e.g. "ml/h" vs "mg/kg/h" (or appropriate units)</span></i></td>
+					<tr class="" id=""><td>Default rate unit  <i class="fas fa-question ring tooltip background"><span class="tooltiptext" style="width:160px">Unit for entering manual mode infusion rate, e.g. "ml/h" vs "mg/kg/h" (or appropriate units)</span></i></td>
 						<td>
 							<select id="" onchange="document.getElementById('select_defaultrateunit').value=this.value">
 								<option value="mlh" ${(optionsarray_infusionunit[0][0]==1) ? 'selected':''}>ml/h</option>
@@ -249,7 +249,7 @@ function displayModalOptions() {
 							</select>
 						</td>
 					</tr>
-					<tr class="" id=""><td>Default bolus unit  <i class="far fa-question-circle tooltip background"><span class="tooltiptext" style="width:160px">Unit for entering manual mode bolus, e.g. "mg" vs "mg/kg" vs "ml" (or appropriate units)</span></i></td>
+					<tr class="" id=""><td>Default bolus unit  <i class="fas fa-question ring tooltip background"><span class="tooltiptext" style="width:160px">Unit for entering manual mode bolus, e.g. "mg" vs "mg/kg" vs "ml" (or appropriate units)</span></i></td>
 						<td>
 							<select id="" onchange="document.getElementById('select_defaultbolusunit').value=this.value">
 								<option value="mg" ${(optionsarray_infusionunit[1][0]==1) ? 'selected':''}>${temp_unit_bolus}</option>
@@ -269,7 +269,7 @@ function displayModalOptions() {
 						</td>
 					</tr>
 
-					<tr id=""><td>Threshold <i class="far fa-question-circle tooltip2"><span class="tooltiptext">Accurate mode: more frequent rate changes for CPT/CET schemes.</span></i></td>
+					<tr id=""><td>Threshold <i class="fas fa-question ring tooltip2"><span class="tooltiptext">Accurate mode: more frequent rate changes for CPT/CET schemes.</span></i></td>
 						<td>
 							<select id="" onchange="document.getElementById('select_threshold').value=this.value">
 								<option value="0" ${(optionsarray[2][0]==1) ? 'selected':''}>Auto</option>
@@ -278,7 +278,7 @@ function displayModalOptions() {
 							</select>
 						</td>
 					</tr>
-					<tr><td>Wakelock <i class="far fa-question-circle tooltip2"><span class="tooltiptext">Keeps screen on. Android/some desktop devices only.</span></i></td>
+					<tr><td>Wakelock <i class="fas fa-question ring tooltip2"><span class="tooltiptext">Keeps screen on. Android/some desktop devices only.</span></i></td>
 						<td>
 							<select id="" onchange="document.getElementById('select_wakelock').value=this.value">
 								<option value="off" ${(optionsarray[3][0]==1) ? 'selected':''}>Off</option>
@@ -365,8 +365,8 @@ const xInputCardsHTML = `
 							<div class="infusionratecontainer" id="infusionratecontainer0"><span id="infusionratedescription0">Infusion rate (ml/h)</span> 
 								<span class="infusionrateselector" id="infusionrateselector0" onclick="dropdownshow(0)"><i class="fas fa-chevron-down"></i></span>
 								<div class="infusionratedropdown" id="infusionratedropdown0">
-									<a class="infusionratedropdownitem" id="infusionrateoption0" onclick="setInfusionUnit(0)"><i class="far fa-check-circle infusioncheck"></i>&nbsp; ml/h</a>
-									<a class="infusionratedropdownitem" id="infusionrateoption1" onclick="setInfusionUnit(1)"><i class="far fa-circle infusioncheck"></i>&nbsp; mg/kg/h</a>
+									<a class="infusionratedropdownitem" id="infusionrateoption0" onclick="setInfusionUnit(0)"><i class="fas fa-check infusioncheck ring"></i>&nbsp; ml/h</a>
+									<a class="infusionratedropdownitem" id="infusionrateoption1" onclick="setInfusionUnit(1)"><i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; mg/kg/h</a>
 								</div>
 							</div>
 						</td>
@@ -379,9 +379,9 @@ const xInputCardsHTML = `
 								<span class="infusionrateselector" id="bolusselector0" onclick="dropdownshowbolus(0,'')"><i class="fas fa-chevron-down"></i></span>
 							</div>
 								<div class="infusionratedropdown" id="bolusdropdown0">
-									<a class="infusionratedropdownitem" id="bolusoption0_0" onclick="setBolusUnit(0)"><i class="far fa-check-circle infusioncheck"></i>&nbsp; <span class="infused_units"></span></a>
-									<a class="infusionratedropdownitem" id="bolusoption1_0" onclick="setBolusUnit(1)"><i class="far fa-circle infusioncheck"></i>&nbsp; <span class="infused_units"></span>/kg</a>
-									<a class="infusionratedropdownitem" id="bolusoption2_0" onclick="setBolusUnit(2)"><i class="far fa-circle infusioncheck"></i>&nbsp; ml</a>
+									<a class="infusionratedropdownitem" id="bolusoption0_0" onclick="setBolusUnit(0)"><i class="fas fa-check infusioncheck ring"></i>&nbsp; <span class="infused_units"></span></a>
+									<a class="infusionratedropdownitem" id="bolusoption1_0" onclick="setBolusUnit(1)"><i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; <span class="infused_units"></span>/kg</a>
+									<a class="infusionratedropdownitem" id="bolusoption2_0" onclick="setBolusUnit(2)"><i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml</a>
 								</div>
 							</div>
 						</td><td><input type="number" inputmode="decimal" id="inputBolus_initial0" min="0" max="2000" step="0.01" placeholder=" " ></td></tr>
@@ -399,8 +399,8 @@ const xInputCardsHTML = `
 							<div class="infusionratecontainer" id="infusionratecontainer1"><span id="infusionratedescription1">Infusion rate (ml/h)</span> 
 								<span class="infusionrateselector" id="infusionrateselector1" onclick="dropdownshow(1)"><i class="fas fa-chevron-down"></i></span>
 								<div class="infusionratedropdown" id="infusionratedropdown1">
-									<a class="infusionratedropdownitem" id="infusionrateoptioncopy0" onclick="setInfusionUnit(0)"><i class="far fa-check-circle infusioncheck"></i>&nbsp; ml/h</a>
-									<a class="infusionratedropdownitem" id="infusionrateoptioncopy1" onclick="setInfusionUnit(1)"><i class="far fa-circle infusioncheck"></i>&nbsp; mg/kg/h</a>
+									<a class="infusionratedropdownitem" id="infusionrateoptioncopy0" onclick="setInfusionUnit(0)"><i class="fas fa-check infusioncheck ring"></i>&nbsp; ml/h</a>
+									<a class="infusionratedropdownitem" id="infusionrateoptioncopy1" onclick="setInfusionUnit(1)"><i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; mg/kg/h</a>
 								</div>
 							</div>
 						</td>
@@ -413,9 +413,9 @@ const xInputCardsHTML = `
 								<span class="infusionrateselector" id="bolusselector1" onclick="dropdownshowbolus(1,'')"><i class="fas fa-chevron-down"></i></span>
 							</div>
 								<div class="infusionratedropdown" id="bolusdropdown1">
-									<a class="infusionratedropdownitem" id="bolusoption0_1" onclick="setBolusUnit(0)"><i class="far fa-check-circle infusioncheck"></i>&nbsp; <span class="infused_units"></span></a>
-									<a class="infusionratedropdownitem" id="bolusoption1_1" onclick="setBolusUnit(1)"><i class="far fa-circle infusioncheck"></i>&nbsp; <span class="infused_units"></span>/kg</a>
-									<a class="infusionratedropdownitem" id="bolusoption2_1" onclick="setBolusUnit(2)"><i class="far fa-circle infusioncheck"></i>&nbsp; ml</a>
+									<a class="infusionratedropdownitem" id="bolusoption0_1" onclick="setBolusUnit(0)"><i class="fas fa-check infusioncheck ring"></i>&nbsp; <span class="infused_units"></span></a>
+									<a class="infusionratedropdownitem" id="bolusoption1_1" onclick="setBolusUnit(1)"><i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; <span class="infused_units"></span>/kg</a>
+									<a class="infusionratedropdownitem" id="bolusoption2_1" onclick="setBolusUnit(2)"><i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml</a>
 								</div>
 							</div>
 						</td>
@@ -540,9 +540,9 @@ const xInputCardsHTML = `
 							<div class="infusionratecontainer" id="boluscontainercopy0"><span id="bolusdescriptioncopy0">Custom bolus (<span class="infused_units"></span>)</span> <span class="infusionrateselector" id="bolusselectorcopy0" onclick="dropdownshowbolus(0,'copy')"><i class="fas fa-chevron-down"></i></span>
 							</div>
 								<div class="infusionratedropdown" id="bolusdropdowncopy0">
-									<a class="infusionratedropdownitem" id="bolusoptioncopy0_0" onclick="setBolusUnit(0)"><i class="far fa-check-circle infusioncheck"></i>&nbsp; <span class="infused_units"></span></a>
-									<a class="infusionratedropdownitem" id="bolusoptioncopy1_0" onclick="setBolusUnit(1)"><i class="far fa-circle infusioncheck"></i>&nbsp; <span class="infused_units"></span>/kg</a>
-									<a class="infusionratedropdownitem" id="bolusoptioncopy2_0" onclick="setBolusUnit(2)"><i class="far fa-circle infusioncheck"></i>&nbsp; ml</a>
+									<a class="infusionratedropdownitem" id="bolusoptioncopy0_0" onclick="setBolusUnit(0)"><i class="fas fa-check infusioncheck ring"></i>&nbsp; <span class="infused_units"></span></a>
+									<a class="infusionratedropdownitem" id="bolusoptioncopy1_0" onclick="setBolusUnit(1)"><i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; <span class="infused_units"></span>/kg</a>
+									<a class="infusionratedropdownitem" id="bolusoptioncopy2_0" onclick="setBolusUnit(2)"><i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml</a>
 								</div>
 						</td>
 						<td width="30px"><input type="number" id="inputBolus0" min="0" max="2000" step="0.01" placeholder=" "></td>
@@ -683,7 +683,7 @@ const xLeftbarHTML = `
 const xCardsHTML = `
 		<div id="ptolcard" class="">
 			<div id="ptolcard_left" style="padding:0.5rem;flex-basis:70%">
-				<div style="font-size:200%;font-weight:bold;line-height:1" id=""><span id="ptoltitle">PTOL</span><span id="ptoltooltip" onclick="ptolwarning();" style="display:none"><i class="far fa-question-circle"></i></span></div>
+				<div style="font-size:200%;font-weight:bold;line-height:1" id=""><span id="ptoltitle">PTOL</span><span id="ptoltooltip" onclick="ptolwarning();" style="display:none"><i class="fas fa-question ring"></i></span></div>
 				<div style="font-size:80%;opacity:50%" id="ptoldesc">Probability of tolerance to laryngoscopy (%)</div>
 			</div><!--
 			--><div id="ptolcard_right" style="flex-basis: 25%;text-align:center;font-size:400%;font-weight:bold">

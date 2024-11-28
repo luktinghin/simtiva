@@ -4232,19 +4232,19 @@ function dropdownshow(ind) {
 	temp_parameter = (optionsarray_infusionunit[0][0] == 1) ? 0 : 1;
 	if (ind == 0) {
 		if (temp_parameter == 0) { // this means ml/h
-			document.getElementById("infusionrateoption0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ml/h';
-			document.getElementById("infusionrateoption1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+			document.getElementById("infusionrateoption0").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ml/h';
+			document.getElementById("infusionrateoption1").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit;
 		} else {
-			document.getElementById("infusionrateoption0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml/h';
-			document.getElementById("infusionrateoption1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+			document.getElementById("infusionrateoption0").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml/h';
+			document.getElementById("infusionrateoption1").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ' + temp_unit;
 		}
 	} else {
 		if (temp_parameter == 0) { // this means ml/h
-			document.getElementById("infusionrateoptioncopy0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ml/h';
-			document.getElementById("infusionrateoptioncopy1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+			document.getElementById("infusionrateoptioncopy0").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ml/h';
+			document.getElementById("infusionrateoptioncopy1").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit;
 		} else {
-			document.getElementById("infusionrateoptioncopy0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml/h';
-			document.getElementById("infusionrateoptioncopy1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+			document.getElementById("infusionrateoptioncopy0").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml/h';
+			document.getElementById("infusionrateoptioncopy1").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ' + temp_unit;
 		}
 	}
 	document.getElementById("infusionrateselector" + ind).classList.add("active");
@@ -4266,17 +4266,17 @@ function dropdownshowbolus(ind, source) {
 	}
 	if (ind == 0) {
 		if (temp_parameter == 0) { // this means mg
-			document.getElementById("bolusoption" + source + "0_" + ind).innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit;
-			document.getElementById("bolusoption" + source + "1_" + ind).innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
-			document.getElementById("bolusoption" + source + "2_" + ind).innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
+			document.getElementById("bolusoption" + source + "0_" + ind).innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ' + temp_unit;
+			document.getElementById("bolusoption" + source + "1_" + ind).innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit + "/kg";
+			document.getElementById("bolusoption" + source + "2_" + ind).innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml';
 		} else if (temp_parameter == 1) {
-			document.getElementById("bolusoption" + source + "0_" + ind).innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
-			document.getElementById("bolusoption" + source + "1_" + ind).innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
-			document.getElementById("bolusoption" + source + "2_" + ind).innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
+			document.getElementById("bolusoption" + source + "0_" + ind).innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit;
+			document.getElementById("bolusoption" + source + "1_" + ind).innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ' + temp_unit + "/kg";
+			document.getElementById("bolusoption" + source + "2_" + ind).innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml';
 		} else {
-			document.getElementById("bolusoption" + source + "0_" + ind).innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
-			document.getElementById("bolusoption" + source + "1_" + ind).innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
-			document.getElementById("bolusoption" + source + "2_" + ind).innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ml';
+			document.getElementById("bolusoption" + source + "0_" + ind).innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit;
+			document.getElementById("bolusoption" + source + "1_" + ind).innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit + "/kg";
+			document.getElementById("bolusoption" + source + "2_" + ind).innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ml';
 		}
 	} 
 	document.getElementById("bolusselector" + source + ind).classList.add("active");
@@ -4331,13 +4331,13 @@ function setInfusionUnit(parameter) {
 			//make sure the display of the select dropdown in options is correct, otherwise bug
 			document.getElementById("select_defaultrateunit").value = "mlh";
 			//visual changes
-			document.getElementById("infusionrateoption0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ml/h';
-			document.getElementById("infusionrateoption1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+			document.getElementById("infusionrateoption0").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ml/h';
+			document.getElementById("infusionrateoption1").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit;
 			//change description
 			document.getElementById("infusionratedescription0").innerHTML = "Infusion rate (ml/h)";
 			if (complex_mode == 1) {
-				document.getElementById("infusionrateoptioncopy0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ml/h';
-				document.getElementById("infusionrateoptioncopy1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + drug_sets[1].inf_rate_permass_unit;
+				document.getElementById("infusionrateoptioncopy0").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ml/h';
+				document.getElementById("infusionrateoptioncopy1").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + drug_sets[1].inf_rate_permass_unit;
 				document.getElementById("infusionratedescription1").innerHTML = "Infusion rate (ml/h)";
 			}
 			//update the input field(s)
@@ -4351,12 +4351,12 @@ function setInfusionUnit(parameter) {
 			}
 		} else {
 			document.getElementById("select_defaultrateunit").value = "unitkgtime";
-			document.getElementById("infusionrateoption0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml/h';
-			document.getElementById("infusionrateoption1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit;
+			document.getElementById("infusionrateoption0").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml/h';
+			document.getElementById("infusionrateoption1").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ' + temp_unit;
 			document.getElementById("infusionratedescription0").innerHTML = "Infusion rate (" + temp_unit + ")";
 			if (complex_mode == 1) {
-				document.getElementById("infusionrateoptioncopy0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml/h';
-				document.getElementById("infusionrateoptioncopy1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + drug_sets[1].inf_rate_permass_unit;
+				document.getElementById("infusionrateoptioncopy0").innerHTML = '<i class="fas fa-circle infusioncheck ring"></i>&nbsp; ml/h';
+				document.getElementById("infusionrateoptioncopy1").innerHTML = '<i class="fas fa-check infusioncheck ring blank"></i>&nbsp; ' + drug_sets[1].inf_rate_permass_unit;
 				document.getElementById("infusionratedescription1").innerHTML = "Infusion rate (" + drug_sets[1].inf_rate_permass_unit + ")";
 			}
 			//update the input field(s)
@@ -4412,23 +4412,23 @@ function setBolusUnit(parameter) {
 			//make sure the display of the select dropdown in options is correct, otherwise bug
 			document.getElementById("select_defaultbolusunit").value = "mg";
 			//visual changes
-			document.getElementById("bolusoption0_0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit;
-			document.getElementById("bolusoption1_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
-			document.getElementById("bolusoption2_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
-			document.getElementById("bolusoptioncopy0_0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit;
-			document.getElementById("bolusoptioncopy1_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
-			document.getElementById("bolusoptioncopy2_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
+			document.getElementById("bolusoption0_0").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ' + temp_unit;
+			document.getElementById("bolusoption1_0").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit + "/kg";
+			document.getElementById("bolusoption2_0").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml';
+			document.getElementById("bolusoptioncopy0_0").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ' + temp_unit;
+			document.getElementById("bolusoptioncopy1_0").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit + "/kg";
+			document.getElementById("bolusoptioncopy2_0").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml';
 			//change description
 			document.getElementById("bolusdescription0").innerHTML = "Initial bolus (" + temp_unit + ")";
 			document.getElementById("bolusdescriptioncopy0").innerHTML = "Custom bolus (" + temp_unit + ")";
 			if (complex_mode == 1) {
 				temp_unit = drug_sets[1].infused_units;
-				document.getElementById("bolusoption0_1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit;
-				document.getElementById("bolusoption1_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
-				document.getElementById("bolusoption2_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
-				document.getElementById("bolusoptioncopy0_1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit;
-				document.getElementById("bolusoptioncopy1_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
-				document.getElementById("bolusoptioncopy2_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
+				document.getElementById("bolusoption0_1").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ' + temp_unit;
+				document.getElementById("bolusoption1_1").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit + "/kg";
+				document.getElementById("bolusoption2_1").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml';
+				document.getElementById("bolusoptioncopy0_1").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ' + temp_unit;
+				document.getElementById("bolusoptioncopy1_1").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit + "/kg";
+				document.getElementById("bolusoptioncopy2_1").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml';
 				document.getElementById("bolusdescription1").innerHTML = "Initial bolus (" + temp_unit + ")";
 				document.getElementById("bolusdescriptioncopy1").innerHTML = "Custom bolus (" + temp_unit + ")";
 			}
@@ -4470,23 +4470,23 @@ function setBolusUnit(parameter) {
 			//make sure the display of the select dropdown in options is correct, otherwise bug
 			document.getElementById("select_defaultbolusunit").value = "mgkg";
 			//visual changes
-			document.getElementById("bolusoption0_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
-			document.getElementById("bolusoption1_0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
-			document.getElementById("bolusoption2_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
-			document.getElementById("bolusoptioncopy0_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
-			document.getElementById("bolusoptioncopy1_0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
-			document.getElementById("bolusoptioncopy2_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
+			document.getElementById("bolusoption0_0").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit;
+			document.getElementById("bolusoption1_0").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ' + temp_unit + "/kg";
+			document.getElementById("bolusoption2_0").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml';
+			document.getElementById("bolusoptioncopy0_0").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit;
+			document.getElementById("bolusoptioncopy1_0").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ' + temp_unit + "/kg";
+			document.getElementById("bolusoptioncopy2_0").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml';
 			//change description
 			document.getElementById("bolusdescription0").innerHTML = "Initial bolus (" + temp_unit + "/kg)";
 			document.getElementById("bolusdescriptioncopy0").innerHTML = "Custom bolus (" + temp_unit + "/kg)";
 			if (complex_mode == 1) {
 				temp_unit = drug_sets[1].infused_units;
-				document.getElementById("bolusoption0_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
-				document.getElementById("bolusoption1_1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
-				document.getElementById("bolusoption2_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
-				document.getElementById("bolusoptioncopy0_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
-				document.getElementById("bolusoptioncopy1_1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
-				document.getElementById("bolusoptioncopy2_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ml';
+				document.getElementById("bolusoption0_1").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit;
+				document.getElementById("bolusoption1_1").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ' + temp_unit + "/kg";
+				document.getElementById("bolusoption2_1").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml';
+				document.getElementById("bolusoptioncopy0_1").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit;
+				document.getElementById("bolusoptioncopy1_1").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ' + temp_unit + "/kg";
+				document.getElementById("bolusoptioncopy2_1").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml';
 				document.getElementById("bolusdescription1").innerHTML = "Initial bolus (" + temp_unit + "/kg)";
 				document.getElementById("bolusdescriptioncopy1").innerHTML = "Custom bolus (" + temp_unit + "/kg)";
 			}
@@ -4528,23 +4528,23 @@ function setBolusUnit(parameter) {
 			//make sure the display of the select dropdown in options is correct, otherwise bug
 			document.getElementById("select_defaultbolusunit").value = "ml";
 			//visual changes
-			document.getElementById("bolusoption0_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
-			document.getElementById("bolusoption1_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
-			document.getElementById("bolusoption2_0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ml';
-			document.getElementById("bolusoptioncopy0_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
-			document.getElementById("bolusoptioncopy1_0").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
-			document.getElementById("bolusoptioncopy2_0").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ml';
+			document.getElementById("bolusoption0_0").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit;
+			document.getElementById("bolusoption1_0").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit + "/kg";
+			document.getElementById("bolusoption2_0").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ml';
+			document.getElementById("bolusoptioncopy0_0").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit;
+			document.getElementById("bolusoptioncopy1_0").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit + "/kg";
+			document.getElementById("bolusoptioncopy2_0").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ml';
 			//change description
 			document.getElementById("bolusdescription0").innerHTML = "Initial bolus (ml)";
 			document.getElementById("bolusdescriptioncopy0").innerHTML = "Custom bolus (ml)";
 			if (complex_mode == 1) {
 				temp_unit = drug_sets[1].infused_units;
-				document.getElementById("bolusoption0_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
-				document.getElementById("bolusoption1_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
-				document.getElementById("bolusoption2_1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ml';
-				document.getElementById("bolusoptioncopy0_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit;
-				document.getElementById("bolusoptioncopy1_1").innerHTML = '<i class="far fa-circle infusioncheck"></i>&nbsp; ' + temp_unit + "/kg";
-				document.getElementById("bolusoptioncopy2_1").innerHTML = '<i class="far fa-check-circle infusioncheck"></i>&nbsp; ml';
+				document.getElementById("bolusoption0_1").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit;
+				document.getElementById("bolusoption1_1").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit + "/kg";
+				document.getElementById("bolusoption2_1").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ml';
+				document.getElementById("bolusoptioncopy0_1").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit;
+				document.getElementById("bolusoptioncopy1_1").innerHTML = '<i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ' + temp_unit + "/kg";
+				document.getElementById("bolusoptioncopy2_1").innerHTML = '<i class="fas fa-check infusioncheck ring"></i>&nbsp; ml';
 				document.getElementById("bolusdescription1").innerHTML = "Initial bolus (ml)";
 				document.getElementById("bolusdescriptioncopy1").innerHTML = "Custom bolus (ml)";
 			}
