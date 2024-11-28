@@ -564,9 +564,9 @@ const xInputCardsHTML = `
 								<span class="infusionrateselector" id="bolusselectorcopy1" onclick="dropdownshowbolus(0,'')"><i class="fas fa-chevron-down"></i></span>
 							</div>
 								<div class="infusionratedropdown" id="bolusdropdowncopy1">
-									<a class="infusionratedropdownitem" id="bolusoptioncopy0_1" onclick="setBolusUnit(0)"><i class="far fa-check-circle infusioncheck"></i>&nbsp; <span class="infused_units"></span></a>
-									<a class="infusionratedropdownitem" id="bolusoptioncopy1_1" onclick="setBolusUnit(1)"><i class="far fa-circle infusioncheck"></i>&nbsp; <span class="infused_units"></span>/kg</a>
-									<a class="infusionratedropdownitem" id="bolusoptioncopy2_1" onclick="setBolusUnit(2)"><i class="far fa-circle infusioncheck"></i>&nbsp; ml</a>
+									<a class="infusionratedropdownitem" id="bolusoptioncopy0_1" onclick="setBolusUnit(0)"><i class="fas fa-check infusioncheck ring"></i>&nbsp; <span class="infused_units"></span></a>
+									<a class="infusionratedropdownitem" id="bolusoptioncopy1_1" onclick="setBolusUnit(1)"><i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; <span class="infused_units"></span>/kg</a>
+									<a class="infusionratedropdownitem" id="bolusoptioncopy2_1" onclick="setBolusUnit(2)"><i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml</a>
 								</div>
 							</div>
 						</td>

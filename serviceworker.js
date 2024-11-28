@@ -13,7 +13,6 @@ const assets = [
 	"/styles.css",
 	"/styles-extra.css",
 	"/css/fontawesome.min.css",
-	"/css/regular.min.css",
 	"/css/solid.min.css",
 	"/webfonts/fa-solid-900.woff2",
 	"/webfonts/fa-regular-400.woff2",

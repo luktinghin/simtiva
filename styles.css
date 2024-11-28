@@ -567,6 +567,7 @@ body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom
   padding-top:2px;
   position:relative;
   top:-1px;
+  cursor:pointer;
 }
 
 body.dark .ring {
