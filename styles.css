@@ -580,6 +580,7 @@ body.dark .ring {
 .tooltip .tooltiptext, .tooltip2 .tooltiptext, .tooltip3 .tooltiptext, .tooltip.background .tooltiptext {
   font-family:"SourceSans", "Calibri", "Trebuchet MS", "Lucida Sans", sans-serif;
   font-size:0.8rem;
+  letter-spacing:-0.2px;
   visibility: hidden;
   vertical-align:middle;
   background-color: rgba(0, 0, 0, 0.6);
@@ -657,7 +658,7 @@ body.dark .ring {
     display: block; 
     position: fixed; 
     z-index: 90; 
-    padding-top: 15vh; 
+    padding-top: 11vh; 
     left: 0;
     top: 0;
     width: 100%; 
@@ -688,7 +689,7 @@ body.dark #modalInitial, body.dark #modalLoad {
 
 
 .modal.alt {
-  padding-top:16vh;
+  padding-top:13vh;
   z-index:98;
 }
 
@@ -3484,10 +3485,11 @@ body.dark .modal-body a.button_paedimode:hover {
 }
 
 .menuwrapper i {
-  font-size:90%;
-  padding-top:3px;
+  font-size:70%;
+  position:relative;
   opacity:0.5;
   padding-right:5px;
+  top:-2px;
 }
 
 .menuwrapper.open {
@@ -3548,7 +3550,7 @@ body.dark .modal-body a.button_paedimode:hover {
   text-align: center;
   position: absolute;
    bottom: 1rem;
-   left: 15%;
+   left: calc(50% - 80px);
    width: 160px;
    gap:18px;
    display:flex;
@@ -5017,7 +5019,7 @@ body.dark #chart2wrapper {
   .menuwrapper {
     padding-left:100px;
   }
-  .social {
+  .narrowbodywrapper .social {
     margin-left:100px;
   }
 }

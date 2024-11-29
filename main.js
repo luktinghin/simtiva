@@ -3271,7 +3271,7 @@ function renderFileList(inputkeysarray) {
 				}
 			}
 		} else {
-			tempIconMode = "<i class='fas fa-random fa-fw' style='color:rgb(128,128,128);font-size:14px;transform:translateY(-15px)'></i>"
+			tempIconMode = "<i class='fas fa-code-branch fa-fw' style='color:rgb(128,128,128);font-size:14px;transform:translateY(-15px)'></i>"
 			if (tempObject.P_hx[0].length == 0) {
 				tempMode1 = "Error";
 			} else {
