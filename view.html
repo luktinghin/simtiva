@@ -330,12 +330,7 @@
 
 	<div id="bodywrapper" class="">
 
-		<div class="sharebutton" id="sharebutton" onclick="sharefunction();">
-			<i class="fas fa-share-alt fa-fw"></i>
-		</div>
-		<div class="darkmodebutton" id="darkmodebutton" onclick="goDark();">
-			<i class="fas fa-moon fa-fw"></i>
-		</div>
+
 		<div class="installbutton" id="installbutton">
 			<i class="fas fa-download fa-fw" style="transform: translateY(2px);"></i>
 			<div class="installtext" id="installtext">INSTALL</div>
@@ -1372,90 +1367,6 @@ document.getElementById("installclose").addEventListener('click', function() {
 function hideInstallPromotion() {
 	document.getElementById("installbutton").classList.remove("show");
 }
-
-
-// function for scroll detection
-var prevScrollpos = 0;
-var scrolldistancetimeout = null;
-let installbutton = document.getElementById("installbutton");
-let sharebutton = document.getElementById("sharebutton");
-let darkmodebutton = document.getElementById("darkmodebutton");
-let footer = document.querySelector(".footer");
-var viewportheight = window.innerHeight;
-
-document.addEventListener('scroll', (event) => {
-  var currentScrollPos = window.pageYOffset;
-  var distance = currentScrollPos - prevScrollpos;
-  var y = footer.offsetTop - viewportheight;
-
-  clearTimeout(scrolldistancetimeout);
-  scrolldistancetimeout = setTimeout(function() {
-
-  	if (currentScrollPos < y) {
-	  	if (distance > 10) {
-	  		installbutton.classList.add("scrollhide");
-	  		sharebutton.classList.add("scrollhide");
-	  		darkmodebutton.classList.add("scrollhide");
-	  	} else {
-	  		installbutton.classList.remove("scrollhide");
-	  		sharebutton.classList.remove("scrollhide");
-	  		darkmodebutton.classList.remove("scrollhide");
-	  	}
-	  } else {
-	  		installbutton.classList.remove("scrollhide");
-	  		sharebutton.classList.remove("scrollhide");
-	  		darkmodebutton.classList.remove("scrollhide");
-	  }
-  	prevScrollpos = currentScrollPos;
-
-  },100)
-
-  /*
-  var distance = currentScrollPos - prevScrollpos;
-  var y = document.getElementById("bottom-bar").offsetTop - window.innerHeight;
-  if (viewportheight > 520) {
-
-    var z = Math.round(currentScrollPos/2.3);//larger denominator = move faster
-    var zz = (currentScrollPos < 150) ? 1 : (250-currentScrollPos)/100;
-    
-    
-
-    if (scrolltimeout) {
-      window.cancelAnimationFrame(scrolltimeout);
-    }
-
-    scrolltimeout = window.requestAnimationFrame( function() {
-        if (currentScrollPos < 300) {
-          document.getElementById("parallax").style.transform = "translateY(" + z +"px)";
-          document.getElementById("parallax").style.opacity = zz;
-        }
-      });
-  }
-
-  clearTimeout(scrolldistancetimeout);
-  scrolldistancetimeout = setTimeout(function() {
-      
-        if (distance > 8) {
-          document.getElementById("navbar").classList.add("hidden");
-          document.getElementById("logo").classList.add("small");
-        } else {
-          if (distance < -8) {
-            document.getElementById("navbar").classList.remove("hidden");
-            document.getElementById("logo").classList.remove("small");
-          }
-        }
-        if (currentScrollPos > y) {
-          document.getElementById("footer1").classList.add("hidden");
-        } else {
-          document.getElementById("footer1").classList.remove("hidden");
-        }
-        prevScrollpos = currentScrollPos;
-      
-
-    }, 50);
-
-*/
-}, false)
 
 	</script>
 	<script src="index.js" defer></script>
