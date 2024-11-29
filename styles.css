@@ -4379,8 +4379,8 @@ body.dark #preview-expand-box > div > div.timespan {
   justify-content:space-between;
   align-items:stretch;
   gap:4px;
-  /*padding-bottom:0px;
-  padding-bottom:env(safe-area-inset-bottom);*/
+  padding-bottom:0px;
+  padding-bottom:env(safe-area-inset-bottom);
 }
 
 #cornerblock2:before {
