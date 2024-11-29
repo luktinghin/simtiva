@@ -68,9 +68,6 @@ body {
   margin: 0px;
   background:#7B8092;
   overscroll-behavior-y: contain;
-  padding-left:env(safe-area-inset-left);
-  padding-right:env(safe-area-inset-left);
-  padding-bottom:env(safe-area-inset-bottom);
 }
 
 .iconsvg {
@@ -4372,15 +4369,15 @@ body.dark #preview-expand-box > div > div.timespan {
 }
 
 #cornerblock2 {
-  position:relative;width:100%;height:32px;background:#7b8092;
+  position:relative;width:100%;background:#7b8092;
   padding-top:4px;
   padding-right:0.5rem;
   display:flex;
   justify-content:space-between;
   align-items:stretch;
   gap:4px;
-  padding-bottom:0px;
-  padding-bottom:env(safe-area-inset-bottom);
+  padding-bottom:10px;
+  padding-top:5px;
 }
 
 #cornerblock2:before {
@@ -5264,6 +5261,19 @@ body.dark #pastschemeCOPY {
   }
 }
 
+
+@media (max-height:480px) and (min-width:768px) {
+  /*need to target it again, long screen, narrow width, landscape mode*/
+  #controlpanel {
+    padding-top:90px;
+  }
+  #prompts_container {
+    position:absolute;
+  }
+  #cornerblock {
+    position:static;
+  }
+}
 @media (max-width: 767px) {
 
 
