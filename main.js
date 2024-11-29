@@ -1562,9 +1562,13 @@ function update() {
 					document.getElementById("warning").style.display = "none";
 					alert_api(0);
 				}
-				temp_message2 = "Next: ";
-				temp_message2 += Math.round(drug_sets[active_drug_set_index].historyarray[i][1]*3600/drug_sets[active_drug_set_index].infusate_concentration*10)/10 + "ml/h in <span style='color:#fff'>" + converttime(temp_time) +"</span>";
-				document.getElementById("cornermessage").innerHTML = temp_message2;
+				if (drug_sets[active_drug_set_index].historyarray[i][1]>0) {
+						temp_message2 = "Next: ";
+						temp_message2 += Math.round(drug_sets[active_drug_set_index].historyarray[i][1]*3600/drug_sets[active_drug_set_index].infusate_concentration*10)/10 + "ml/h in <span style='color:#fff'>" + converttime(temp_time) +"</span>";
+						document.getElementById("cornermessage").innerHTML = temp_message2;	
+				} else {
+					document.getElementById("cornermessage").innerHTML = "";
+				}
 			} else { //hence i<0, or =-1, means not found, means current time exceeds last element of historyarray
 					document.getElementById("warning").style.display = "none";
 					alert_api(0);
@@ -2164,7 +2168,7 @@ function cptevent() {
 	x = document.getElementById("page2selectmaintenance").value * 1;
 	document.getElementById("select_threshold").value = x;
 	applyoptions();
-	hideallmodal();document.getElementById('card_controlpanel').style.display='block';
+	hidemodal('modalScreen2');document.getElementById('card_controlpanel').style.display='block';
 	updateBolusSpeedOptions()
 }
 
@@ -2174,7 +2178,7 @@ function cetevent() {
 	x = document.getElementById("page2selectmaintenance").value * 1;
 	document.getElementById("select_threshold").value = x;
 	applyoptions();
-	hideallmodal();document.getElementById('card_controlpanel').style.display='block';
+	hidemodal('modalScreen2');document.getElementById('card_controlpanel').style.display='block';
 	updateBolusSpeedOptions()
 }
 
@@ -2587,6 +2591,7 @@ function hidemodal(param) {
 function hidewarningmodal() {
   document.getElementById("modalWarning").classList.remove("fadein");
   document.getElementById("modalWarningcontent").classList.remove("open");
+  modal = undefined;
 }
 function setmodal(modalname) {
   modal = document.getElementById(modalname);
@@ -3470,6 +3475,11 @@ function exportDataFile(input_uid) {
 				tempAgeString = outputDataObject.P_patient[6][0] + outputDataObject.P_patient[6][1];	
 			}		
 		}
+		if (typeof outputDataObject.P_patient[4] == "number") {
+				tempMass2 = outputDataObject.P_patient[4];
+		} else {
+			tempMass2 = outputDataObject.P_patient[4][0];
+		}
 		//patientstring = outputDataObject.P_patient[7] + "," + tempAgeString;
 		modestring = "";
 		modelstring = "";
@@ -3495,7 +3505,7 @@ function exportDataFile(input_uid) {
 				"\"" + outputDataObject.name + "\"," + 
 				tempAgeString + "," +  
 				outputDataObject.P_patient[7] + "," + //sex
-				outputDataObject.P_patient[4] + "," +  //bw
+				tempMass2 + "," +  //bw
 				outputDataObject.P_patient[5] + "," +  //bh
 				modestring + "," + 
 				modelstring + "," + 

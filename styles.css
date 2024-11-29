@@ -75,6 +75,8 @@ body {
   height: 1em;
   vertical-align: -0.125em;  
   fill: currentColor;
+  margin-left:2px;
+  margin-right:2px;
 }
 
 /* block to prevent pinch zoom and overscroll (pull down to refresh in iOS)*/
@@ -3481,6 +3483,13 @@ body.dark .modal-body a.button_paedimode:hover {
   /*transition: transform 0.5s ease-out;*/
 }
 
+.menuwrapper i {
+  font-size:90%;
+  padding-top:3px;
+  opacity:0.5;
+  padding-right:5px;
+}
+
 .menuwrapper.open {
       -webkit-transform: none;
       transform: none;
@@ -4390,7 +4399,7 @@ body.dark #preview-expand-box > div > div.timespan {
   padding-left:1rem;
   padding-top:3px;
   font-size:0.8rem;
-  text-shadow:1px 1px 2px #0005;
+  text-shadow:1px 1px 2px #0006;
 }
 .cornericon {
   flex-basis:30px;
@@ -4400,7 +4409,7 @@ body.dark #preview-expand-box > div > div.timespan {
   text-align:center;
   cursor:pointer;
   color:#cecece;
-  text-shadow:1px 1px 2px #0005;
+  text-shadow:1px 1px 2px #0006;
 }
 .cornericon:hover {
   color:white;
