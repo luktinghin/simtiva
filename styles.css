@@ -87,8 +87,10 @@ body {
       min-height: 100.3%;
       overscroll-behavior-y: none;
     }
+
   }
 }
+
 /* prevent pull-to-refresh for Safari 9~15 */
 @media screen and (pointer: coarse) {
   @supports (-webkit-backdrop-filter: blur(1px)) and (not (overscroll-behavior-y: none))  {
@@ -4376,8 +4378,8 @@ body.dark #preview-expand-box > div > div.timespan {
   justify-content:space-between;
   align-items:stretch;
   gap:4px;
-  padding-bottom:10px;
-  padding-top:5px;
+  padding-bottom:5px;
+  padding-top:2px;
 }
 
 #cornerblock2:before {
@@ -5797,3 +5799,15 @@ body.dark a.button.newbuttongrey:hover {
   align-self: center;
 }
 /* end new input styles */
+
+
+
+@supports (-webkit-touch-callout: none) { 
+    /*add custom style to add bottom padding for iOS devices*/
+    #cornerblock2 {
+      padding-bottom:12px;
+    }
+    body {
+      padding-bottom:12px;
+    }
+}
