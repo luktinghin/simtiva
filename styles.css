@@ -4379,7 +4379,6 @@ body.dark #preview-expand-box > div > div.timespan {
   align-items:stretch;
   gap:4px;
   padding-bottom:5px;
-  padding-top:2px;
 }
 
 #cornerblock2:before {
@@ -5805,9 +5804,9 @@ body.dark a.button.newbuttongrey:hover {
 @supports (-webkit-touch-callout: none) { 
     /*add custom style to add bottom padding for iOS devices*/
     #cornerblock2 {
-      padding-bottom:12px;
+      padding-bottom:14px;
     }
     body {
-      padding-bottom:12px;
+      padding-bottom:14px;
     }
 }
