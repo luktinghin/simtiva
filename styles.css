@@ -68,6 +68,10 @@ body {
   margin: 0px;
   background:#7B8092;
   overscroll-behavior-y: contain;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-left); /*this is deliberate*/
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .iconsvg {
@@ -4366,7 +4370,7 @@ body.dark #preview-expand-box > div > div.timespan {
 }
 
 #cornerblock {
-  width:100%;z-index:19;position:sticky;bottom:0px;
+  width:100%;z-index:19;bottom:0px;
   padding:0px 0.5rem 0 0.5rem
 }
 
