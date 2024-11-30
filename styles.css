@@ -4597,9 +4597,6 @@ body.dark #cornerblock2:after {
 
 @media (max-height:480px) and (min-width:768px) {
   /*wide screen phone with reduced height, e.g. landscape*/
-  body {
-    background:#525769;
-  }
   #controlpanel {
     margin-top:10px;
     padding-top:80px;
@@ -5277,6 +5274,12 @@ body.dark #pastschemeCOPY {
   }
   #cornerblock {
     position:static;
+  }
+  #parallax3 {
+    display:none;
+  }
+  #parallax2 {
+    background:transparent;
   }
 }
 @media (max-width: 767px) {
