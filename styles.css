@@ -5174,10 +5174,15 @@ body.dark #chart2wrapper {
   }
 
   .cardscontainer {
-    column-count:2;
-    column-gap:0px;
+    display:flex;
+    width:100%;
+  }
+  #xCards {
+    flex-basis:50%;
     padding-top:10px;
-    height:min-content;
+  }
+  #xInputCards {
+    flex-basis:50%;
   }
   .cardscontainer div {
     break-inside:avoid;

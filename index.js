@@ -636,51 +636,76 @@ const xInputCardsHTML = `
 				<a class="button" id="btn_reanimate" onclick="submit_reanimate();">Resume simulation</a>
 			</div>
 		</div>
-`;
-const xLeftbarHTML = `
-  <div class="leftbar propofol hide">
-  	<div class="ptolcontainer">
-  		<div id="">&nbsp;
-  		</div>
-  	</div>
-  	<div class="leftbarlabel">
-  		<div class="druglabelcontainer propofol active" onclick="tabswitch(0);">
-  			<div class="druglabelicon alert hide"><i class="fas fa-bell"></i></div>
-  			<div class="druglabelicon propofol">
-  				P
-  			</div>
-  			<div class="druglabeltext propofol active">
-  				<div class="line1">PROPOFOL</div>
-  				<div class="line2 hide">
-  					<div class="line2text"><i class="fas fa-tint fa-fw"></i>&nbsp;<span id="cp_propo"></span>&nbsp;&nbsp;</div>
-  					<div class="line2text"><i class="fas fa-brain fa-fw"></i>&nbsp;<span id="ce_propo"></span>&nbsp;&nbsp;</div>
-  					<div class="line2text"><i class="fas fa-running fa-fw"></i>&nbsp;<span id="inf_propo"></span></div>
-  				</div>
-  			</div>
-  		</div>
-  	</div>
-  	<div class="spacer">
-  	</div>
-  	<div class="leftbarlabel">
-  		<div class="druglabelcontainer opioid " onclick="tabswitch(1);">
-  			<div class="druglabelicon alert hide"><i class="fas fa-bell"></i></div>
-  			<div class="druglabelicon opioid">
-  				R
-  			</div>
-  			<div class="druglabeltext opioid ">
-  				<div class="line1">REMIFENTANIL</div>
-  				<div class="line2 hide">
-  					<div class="line2text"><i class="fas fa-tint fa-fw"></i>&nbsp;<span id="cp_opioid"></span>&nbsp;&nbsp;</div>
-  					<div class="line2text"><i class="fas fa-brain fa-fw"></i>&nbsp;<span id="ce_opioid"></span>&nbsp;&nbsp;</div>
-  					<div class="line2text"><i class="fas fa-running fa-fw"></i>&nbsp;<span id="inf_opioid"></span></div>
-  				</div>
-  			</div>
-
-  		</div>
-  	</div>
-  </div>
-`;
-const xCardsHTML = `
+		<div id="outputcontainer">
+			<div id="outputselector">
+				<a class="outputtab active" id="btn_displaychart" onclick="show_graph();">Graph</a>
+				<a class="outputtab" id="btn_displayhistory" onclick="show_history();">History</a>
+			</div>
+			<div id="chartwrapper">
+				<div id="chartoverlay">
+					<div id="chartoverlaytext">Updating chart...</div>
+				</div>
+				<div id="chartbuttons">
+					<a id="chartzoomin" onclick="chartZoomToggle(1);"><i class="fas fa-search-plus"></i></a>
+					<a id="chartoptions" onclick="chartOptionsToggle();"><i class="fas fa-cog"></i></a>
+					<a id="chartzoomout" onclick="chartZoomToggle(0);"><i class="fas fa-search-minus"></i></a>
+				</div>
+				<div id="chartoverlayoptions">
+					<div id="chartoverlayoptionscontent">
+						<div id="closeoptions" onclick="chartOptionsToggle();">&times;</div>
+						<div id="" style="font-weight:bold; margin-top:5px; margin-bottom:5px">Chart Options</div>
+						<div id="chartoptionscheckbox">
+				      <label class="container labeloptionscontainer" style="">Display events
+				          <input type="checkbox" onChange="toggleshowevents();" id="isShowEvents" checked><span class="checkmark"></span>
+				      </label>
+				      <label class="container labeloptionscontainer" style="">Automatic time scale
+				          <input type="checkbox" id="isTimeAutomatic" onChange="toggleautotime();" checked><span class="checkmark"></span>
+				      </label>
+						</div>
+						<div style="padding-left:30px">Custom time range (min):</div>
+						<div id="timerangeslider">
+							<div id="leftslidercontainer">
+								<input id="range0" value="10" min="0" max="30" step="5" type="range" oninput="processrange(0);">
+								<div class="timerangetext" id="rangetext0">0</div>
+							</div>
+							<div id="rightslidercontainer">
+								<input id="range1" value="90" min="30" max="120" step="5" type="range" oninput="processrange(1);">
+								<div class="timerangetext" id="rangetext1">30</div>
+							</div>		
+						</div>
+						<div style="margin-top:30px" id="PD_options_group">
+				      <label class="container labeloptionscontainer" style="margin-bottom:0px">PD Effect estimation
+				          <input type="checkbox" id="isEffectEstimationOn" onChange="toggleEffectEst();" checked><span class="checkmark"></span>
+				      </label>
+				      <select id="select_effect_measure" style="margin-left:30px;width:calc(100% - 30px)" onChange="toggleEffectEst();">
+				      	<option value="bis">BIS 40-60</option>
+				      	<option value="ptol">PTOL 50-90</option>
+				      	<option value="nsri">NSRI 20-50</option>
+				      </select>
+						</div>
+					</div>
+					<div id="chartoverlayoptionscontentarrow"></div>
+				</div>
+				<div id="annotatebutton" style="display:none" onclick="setnow(Math.floor(time_in_s));document.getElementById('modalAnnotatetitle').innerHTML='ADD EVENT';document.getElementById('addeventtext').value='';document.getElementById('btn_submitevent').setAttribute('onclick','createEvent2(-1)');document.getElementById('btn_deleteevent').style.display='none';setmodal('modalAnnotate')">
+					<i class="fas fa-pencil-alt"></i>
+				</div>
+				<div id="expandbutton" style="display:none" onclick="openpopupchart();">
+					<i class="fas fa-expand-alt"></i>
+				</div>
+				<div id="chartcontainer">
+					<canvas id="myChart"></canvas>
+				</div>
+			</div>
+			<div id="historywrapper2">
+				<div id="historywrapper">
+				</div>
+			</div>
+				<div id="pastscheme">
+					<a id="pastschemebutton" onclick="displaymodalhistory();"><i class="fas fa-history"></i> Past Schemes</a>
+				</div>
+		</div>
+		<div id="eventscontainer" style="display:block">
+		</div>
 		<div id="ptolcard" class="">
 			<div id="ptolcard_left" style="padding:0.5rem;flex-basis:70%">
 				<div style="font-size:200%;font-weight:bold;line-height:1" id=""><span id="ptoltitle">PTOL</span><span id="ptoltooltip" onclick="ptolwarning();" style="display:none"><i class="fas fa-question ring"></i></span></div>
@@ -805,6 +830,51 @@ const xCardsHTML = `
 			<div class="cardtitle collapsiblecard">MODEL PARAMETERS</div>
 			<div class="cardcontents"><span id="modeldescription"></span></div>
 		</div>
+`;
+const xLeftbarHTML = `
+  <div class="leftbar propofol hide">
+  	<div class="ptolcontainer">
+  		<div id="">&nbsp;
+  		</div>
+  	</div>
+  	<div class="leftbarlabel">
+  		<div class="druglabelcontainer propofol active" onclick="tabswitch(0);">
+  			<div class="druglabelicon alert hide"><i class="fas fa-bell"></i></div>
+  			<div class="druglabelicon propofol">
+  				P
+  			</div>
+  			<div class="druglabeltext propofol active">
+  				<div class="line1">PROPOFOL</div>
+  				<div class="line2 hide">
+  					<div class="line2text"><i class="fas fa-tint fa-fw"></i>&nbsp;<span id="cp_propo"></span>&nbsp;&nbsp;</div>
+  					<div class="line2text"><i class="fas fa-brain fa-fw"></i>&nbsp;<span id="ce_propo"></span>&nbsp;&nbsp;</div>
+  					<div class="line2text"><i class="fas fa-running fa-fw"></i>&nbsp;<span id="inf_propo"></span></div>
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+  	<div class="spacer">
+  	</div>
+  	<div class="leftbarlabel">
+  		<div class="druglabelcontainer opioid " onclick="tabswitch(1);">
+  			<div class="druglabelicon alert hide"><i class="fas fa-bell"></i></div>
+  			<div class="druglabelicon opioid">
+  				R
+  			</div>
+  			<div class="druglabeltext opioid ">
+  				<div class="line1">REMIFENTANIL</div>
+  				<div class="line2 hide">
+  					<div class="line2text"><i class="fas fa-tint fa-fw"></i>&nbsp;<span id="cp_opioid"></span>&nbsp;&nbsp;</div>
+  					<div class="line2text"><i class="fas fa-brain fa-fw"></i>&nbsp;<span id="ce_opioid"></span>&nbsp;&nbsp;</div>
+  					<div class="line2text"><i class="fas fa-running fa-fw"></i>&nbsp;<span id="inf_opioid"></span></div>
+  				</div>
+  			</div>
+
+  		</div>
+  	</div>
+  </div>
+`;
+const xCardsHTML = `
 		<div class="card" id="schemecopy">
 			<div class="cardtitle" id="schemecopytitle">SCHEME</div>
 			<div class="cardcontents" id="schemecopycontainer">
@@ -937,6 +1007,154 @@ const xCardsHTML = `
 					</tr>
 				</table>
 				<a class="button" id="btn_wakeup" onclick="sendtowakeup(document.getElementById('wakeupconc').value);">Apply</a>
+			</div>
+		</div>
+		<div class="card" id="card_options">
+			<div class="cardtitle">OPTIONS</div>
+			<div class="cardcontents">
+
+    		<div class="optionscardtitle collapsiblecard">INFUSION SETTINGS</div>
+    		<div class="optionscardcontents">
+				<div id="ptolcardoptions">
+	      			<label class="container labelptolcontainer" style="">Display detailed tab info
+	          		<input type="checkbox" onChange="toggleshowtabinfo();" id="isTabInfo"><span class="checkmark"></span>
+	      			</label>
+	      <!--<label class="container labelptolcontainer" style="">Display effective dose margins <span style='font-size: 80%'>(PTOL50-90)</span>
+	          <input type="checkbox" id="" onChange="toggleshowPTOLmargins();" checked><span class="checkmark"></span>
+	      </label>
+	    -->
+	    		</div>
+				<table class="table-control">
+					<!--options array-->
+					<!-- 
+					0[0:mg/kg/h, 1:mcg/kg/min],
+					1[0:1x, 1:5x, 2:25x, 3:50x],
+					2[0:auto, 1:lazy, 2:accurate],
+					3[0:wakelockoff, 1:wakelockon],
+					4[0:vibrateoff, 1:vibrateon],
+					5[0:soundoff, 1:soundon],
+					6[0:notifoff, 1:notifon]
+
+					default is:
+					[1,0],
+					[1,0,0,0],
+					[1,0,0],
+					[1,0],
+					[1,0],
+					[1,0],
+					[1,0]
+					-->
+					<!--end options array-->
+					<tr id="option_bolusspeed_row" style="display:none" class="fr"><td>Max bolus speed <i class="fas fa-question tooltip background ring"><span class="tooltiptext">Max bolus rate for programmed bolus. Flash means instantaneous bolus.</span></i></td>
+						<td>
+							<select id="select_bolusspeed" onchange="applybolusspeed();">
+											<option value="0" selected>Flash</option>
+											<option value="1500">1500ml/h</option>
+											<option value="1400">1400ml/h</option>
+											<option value="1300">1300ml/h</option>
+											<option value="1200">1200ml/h</option>
+											<option value="1100">1100ml/h</option>
+											<option value="1000">1000ml/h</option>
+											<option value="900">900ml/h</option>
+											<option value="800">800ml/h</option>
+											<option value="700">700ml/h</option>
+											<option value="600">600ml/h</option>
+											<option value="500">500ml/h</option>
+											<option value="400">400ml/h</option>
+											<option value="300">300ml/h</option>
+							</select>
+						</td>
+					</tr>
+					<tr id="option_threshold_row" class="fr"><td style="letter-spacing:-0.5px;font-stretch:90%">Maintenance accuracy <i class="fas fa-question tooltip background ring"><span class="tooltiptext" style="width:170px">Threshold of CPT/CET schemes. Lazy: less frequent rate changes. Accurate: more frequent changes.</span></i></td>
+						<td>
+							<select id="select_threshold">
+								<option value="0">Auto</option>
+								<option value="1">Lazy</option>
+								<option value="2">Accurate</option> <!--0.13, 0.565-->
+							</select>
+						</td>
+					</tr>
+					<tr id="option_unit_row"><td>Unit for propofol <i class="fas fa-question tooltip background ring"><span class="tooltiptext" style="width:160px">Secondary unit for propofol infusion rate apart from ml/h. Refresh your CPT/CET target after change.</span></i></td>
+						<td>
+							<select id="select_unit">
+								<option value="mgh">mg/kg/h</option>
+								<option value="mcgmin">mcg/kg/m</option>
+							</select>
+						</td>
+					</tr>
+					<tr class="" id="option_defaultrateunit"><td>Default rate unit <i class="fas fa-question tooltip background ring"><span class="tooltiptext" style="width:160px">Unit for entering manual mode infusion rate, e.g. "ml/h" vs "mg/kg/h" (or appropriate units)</span></i></td>
+						<td>
+							<select id="select_defaultrateunit">
+								<option value="mlh">ml/h</option>
+								<option value="unitkgtime">mg/kg/h</option>
+							</select>
+						</td>
+					</tr>
+					<tr class="" id="option_defaultbolusunit"><td>Default bolus unit <i class="fas fa-question tooltip background ring"><span class="tooltiptext" style="width:160px">Unit for entering manual mode bolus, e.g. "mg" vs "mg/kg" vs "ml" (or appropriate units)</span></i></td>
+						<td>
+							<select id="select_defaultbolusunit">
+								<option value="mg">mg</option>
+								<option value="mgkg">mg/kg</option>
+								<option value="ml">ml</option>
+							</select>
+						</td>
+					</tr>
+					<tr id="option_simspeed_row"><td>Simspeed</td>
+						<td>
+							<select id="select_simspeed">
+								<option value="1">1x (Normal)</option>
+								<option value="5">5x (Fast)</option>
+								<option value="25">25x (Very fast)</option>
+								<option value="50">50x (Super fast)</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+			</div><!-- end infusion settings -->
+			<div class="optionscardtitle collapsiblecard">PROGRAM FEATURES</div>
+			<div class="optionscardcontents"><!-- start prograam features -->
+				<table class="table-control">
+					<tr class="fr"><td>Wakelock <i class="fas fa-question tooltip background ring"><span class="tooltiptext">Keeps screen on. Experimental. Android & some desktop devices only.</span></i></td>
+						<td>
+							<select id="select_wakelock">
+								<option value="off">Off</option>
+								<option value="on">On</option>
+							</select>
+						</td>
+					</tr>
+					<tr><td>Vibrate</td>
+						<td>
+							<select id="select_vibrate">
+								<option value="off">Off</option>
+								<option value="on">On</option>
+							</select>
+						</td>
+					</tr>
+					<tr><td>Sound</td>
+						<td>
+							<select id="select_sound">
+								<option value="off">Off</option>
+								<option value="on">On</option>
+							</select>
+						</td>
+					</tr>
+
+					<tr><td>Notifications</td>
+						<td>
+							<select id="select_notification">
+								<option value="off">Off</option>
+								<option value="on">On</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+			</div>
+				<a class="button" id="btn_apply" onclick="applyoptions();">Apply</a>
+				<a class="button right muted" id="btn_defaultoptions" onclick="loadoptions('default');loadoptions();applyoptions();">Reset settings</a>
+				<!--
+				<a class="button" id="btn_test_alert" onclick="testalert();">Test alert</a>
+				<a class="button" id="btn_test_alertoff" onclick="testalertoff();">Alert Off</a>
+				-->
 			</div>
 		</div>
 
