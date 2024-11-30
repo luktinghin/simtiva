@@ -68,10 +68,6 @@ body {
   margin: 0px;
   background:#7B8092;
   overscroll-behavior-y: contain;
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-left); /*this is deliberate*/
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .iconsvg {
@@ -86,13 +82,13 @@ body {
 /* block to prevent pinch zoom and overscroll (pull down to refresh in iOS)*/
 /* prevent pull-to-refresh for Safari 16+ */
 @media screen and (pointer: coarse) {
-  @supports (-webkit-backdrop-filter: blur(1px)) and (overscroll-behavior-y: none)  {
+  /*@supports (-webkit-backdrop-filter: blur(1px)) and (overscroll-behavior-y: none)  {
     html {
       min-height: 100.3%;
       overscroll-behavior-y: none;
     }
 
-  }
+  }*/
 }
 
 /* prevent pull-to-refresh for Safari 9~15 */
@@ -4370,7 +4366,7 @@ body.dark #preview-expand-box > div > div.timespan {
 }
 
 #cornerblock {
-  width:100%;z-index:19;bottom:0px;
+  width:100%;z-index:19;position:sticky;bottom:0px;
   padding:0px 0.5rem 0 0.5rem
 }
 
