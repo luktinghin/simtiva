@@ -5177,7 +5177,7 @@ body.dark #chart2wrapper {
     column-count:2;
     column-gap:0px;
     padding-top:10px;
-    background:red;
+    height:min-content;
   }
   .cardscontainer div {
     break-inside:avoid;
