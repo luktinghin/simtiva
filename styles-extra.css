@@ -206,7 +206,8 @@ body.dark #ptolcard_switch {
     padding-top: 100px;
     width: 100px;
     left: 0.5rem;
-    background: transparent;
+    left: calc(env(safe-area-inset-left) + 0.5rem);
+    background: red;
   }
   .propofol {
     background: transparent;
@@ -410,11 +411,5 @@ body.dark #ptolcard_switch {
   }
   body.dark .narrowbodywrapper .hamburger {
     right: calc((100% - 968px)/2 + 2px);
-  }
-}
-
-@media (min-width: 768px) {
-  .leftbar {
-    left: calc(env(safe-area-inset-left) + 0.5rem);
   }
 }
