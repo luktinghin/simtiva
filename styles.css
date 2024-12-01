@@ -68,8 +68,8 @@ body {
   margin: 0px;
   background:#7B8092;
   overscroll-behavior-y: contain;
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
+  /*padding-left: env(safe-area-inset-left);*/
+  /*padding-right: env(safe-area-inset-right);*/
 }
 
 #popupchartdiv {
@@ -4645,7 +4645,6 @@ body.dark #cornerblock2:after {
   .prompts_card {
     margin-top:0.5rem;
     width:calc(768px - 320px - 1.5rem);
-    width:calc(768px - 320px - 1.5rem - env(safe-area-inset-left) - env(safe-area-inset-right));
   }
   .darkmodebutton {
     opacity: 0;
@@ -5308,23 +5307,23 @@ body.dark #pastschemeCOPY {
     background:transparent;
   }
   #bodywrapper {
-    width: calc(768px - env(safe-area-inset-left) - env(safe-area-inset-right));
+    
   }
   #prompts_container {
-    left:calc((100% - 768px)/2 + 320px - env(safe-area-inset-right) + env(safe-area-inset-left));
-    width:calc(768px - 320px - 0.5rem - env(safe-area-inset-left) - env(safe-area-inset-right));
+    
+    
   }
   .prompts_card {
-    width:calc(768px - 320px - 1.5rem - env(safe-area-inset-left) - env(safe-area-inset-right));
+    
   }
   .hamburger {
-    right:calc((100% - 768px) / 2 + env(safe-area-inset-left) + env(safe-area-inset-right) + 16px);
+    
   }
   body.dark .hamburger {
-    right:calc((100% - 768px) / 2 + env(safe-area-inset-left) + env(safe-area-inset-right));
+    
   }
   #parallax1container {
-    max-width:320px;
+    
   }
 }
 @media (max-width: 767px) {
