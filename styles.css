@@ -5071,7 +5071,6 @@ body.dark #chart2wrapper {
   }
   .hamburger {
     right: calc((100% - 768px)/2 + 16px);
-    right: calc((100% - 768px)/2 + 16px + env(safe-area-inset-right));
   }
   .narrowbodywrapper .hamburger {
     right: 1rem;
@@ -5319,7 +5318,7 @@ body.dark #pastschemeCOPY {
     width:calc(768px - 320px - 1.5rem - env(safe-area-inset-left) - env(safe-area-inset-right));
   }
   .hamburger {
-    right:calc((100% - 768px) / 2 + env(safe-area-inset-left) + env(safe-area-inset-right));
+    right:calc((100% - 768px) / 2 + env(safe-area-inset-left) + env(safe-area-inset-right) + 16px);
   }
   body.dark .hamburger {
     right:calc((100% - 768px) / 2 + env(safe-area-inset-left) + env(safe-area-inset-right));
