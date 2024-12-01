@@ -2221,7 +2221,9 @@ body.dark #timecopy {
 #chartoverlayoptionscontentarrow2 {
   position: absolute;
   bottom: 47px;
+  bottom: calc(env(safe-area-inset-bottom) + 47px);
   right: 108px;
+  right: calc(env(safe-area-inset-right) + 108px);
   display:block;
   width: 0;
   height: 0;

@@ -207,6 +207,7 @@ body.dark #ptolcard_switch {
     width: 100px;
     left: 0.5rem;
     margin-left: env(safe-area-inset-left);
+    border:2px solid red;
   }
   .propofol {
     background: transparent;
