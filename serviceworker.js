@@ -15,7 +15,6 @@ const assets = [
 	"/css/fontawesome.min.css",
 	"/css/solid.min.css",
 	"/webfonts/fa-solid-900.woff2",
-	"/webfonts/fa-regular-400.woff2",
 	"/chart.min.js",
 	"/beep.mp3",
 	"/beep-2.mp3",

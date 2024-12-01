@@ -4645,6 +4645,7 @@ body.dark #cornerblock2:after {
   .prompts_card {
     margin-top:0.5rem;
     width:calc(768px - 320px - 1.5rem);
+    width:calc(768px - 320px - 1.5rem - env(safe-area-inset-left));
   }
   .darkmodebutton {
     opacity: 0;
@@ -5070,6 +5071,7 @@ body.dark #chart2wrapper {
   }
   .hamburger {
     right: calc((100% - 768px)/2 + 16px);
+    right: calc((100% - 768px)/2 + 16px + env(safe-area-inset-right));
   }
   .narrowbodywrapper .hamburger {
     right: 1rem;
@@ -5134,7 +5136,9 @@ body.dark #chart2wrapper {
     top:80px;
     z-index:10;
     left:calc((100% - 768px)/2 + 320px);
+    left:calc((100% - 768px)/2 + 320px - env(safe-area-inset-right) + env(safe-area-inset-left));
     width:calc(768px - 320px - 0.5rem);
+    width:calc(768px - 320px - 0.5rem - env(safe-area-inset-left));
     padding-right:0.5rem;
     padding-left:0.5rem;
     padding-top:0.5rem;
@@ -5169,8 +5173,9 @@ body.dark #chart2wrapper {
   }
   .narrowbodywrapper #prompts_container {
     left: calc(50% - 0.5rem);
-    left: calc(50% - 0.5rem - env(safe-area-inset-right));
+    left: calc(50% - 0.5rem - env(safe-area-inset-right) + env(safe-area-inset-left));
     width: 50%;
+    width: calc(50% - env(safe-area-inset-left));
   }
   .narrowbodywrapper .prompts_card {
     width: calc(100% - 1rem);
