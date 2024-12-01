@@ -68,8 +68,6 @@ body {
   margin: 0px;
   background:#7B8092;
   overscroll-behavior-y: contain;
-  /*padding-left: env(safe-area-inset-left);*/
-  /*padding-right: env(safe-area-inset-right);*/
 }
 
 #popupchartdiv {
@@ -5305,6 +5303,10 @@ body.dark #pastschemeCOPY {
   }
   #parallax2 {
     background:transparent;
+  }
+  .narrowbodywrapper {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
   #bodywrapper {
     
