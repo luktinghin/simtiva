@@ -2176,7 +2176,9 @@ body.dark #timecopy {
   border-radius: 9px;
   position: absolute;
   bottom: 40px;
+  bottom: calc(env(safe-area-inset-bottom) + 40px);
   right: 123px;
+  right: calc(env(safe-area-inset-right) + 123px);
   background: #0009;
   padding: 10px;
   display: block;
