@@ -205,9 +205,8 @@ body.dark #ptolcard_switch {
   .leftbar {
     padding-top: 100px;
     width: 100px;
-    left: 0.5rem;
+    left: 200px;
     left: calc(env(safe-area-inset-left) + 0.5rem);
-    background: red;
   }
   .propofol {
     background: transparent;
