@@ -68,6 +68,8 @@ body {
   margin: 0px;
   background:#7B8092;
   overscroll-behavior-y: contain;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 #popupchartdiv {
@@ -2010,6 +2012,7 @@ body.dark #emulatetitlecontainer {
   position: absolute;
   top: 10px;
   right: 98px;
+  right: calc(env(safe-area-inset-right) + 98px);
   white-space: nowrap;
   overflow: hidden;
   transition: 0.3s all ease;
@@ -3159,6 +3162,7 @@ body.dark .modal-body a.button_paedimode:hover {
 #pop_button_options {
   position: absolute;
   right: 32px;
+  right: calc(env(safe-area-inset-right) + 32px);
   bottom: 32px;
 }
 #pop_right_edit_cp {
@@ -3328,7 +3332,10 @@ body.dark .modal-body a.button_paedimode:hover {
   background: linear-gradient(90deg, rgba(204,204,204,1) 105px, rgba(255,255,255,1) 105px, rgba(255,255,255,1) 106px, rgba(170,170,170,1) 106px);
   color: #666;
   position: fixed;
-  bottom: 1rem;
+  bottom: 3rem;
+  @supports (bottom: env(safe-area-inset-bottom)) {
+    bottom: calc(env(safe-area-inset-bottom) + 3rem);
+  }
   left: 1rem;
   text-align: center;
   width: 140px;
@@ -5061,6 +5068,7 @@ body.dark #chart2wrapper {
   }
   .narrowbodywrapper .hamburger {
     right: 1rem;
+    right: calc(1rem + env(safe-area-inset-right));
   }
   body.dark .narrowbodywrapper .hamburger {
     right: 2px;
@@ -5156,6 +5164,7 @@ body.dark #chart2wrapper {
   }
   .narrowbodywrapper #prompts_container {
     left: calc(50% - 0.5rem);
+    left: calc(50% - 0.5rem - env(safe-area-inset-right));
     width: 50%;
   }
   .narrowbodywrapper .prompts_card {
@@ -5182,6 +5191,7 @@ body.dark #chart2wrapper {
     padding-top:10px;
   }
   #xInputCards {
+    padding-top:10px;
     flex-basis:50%;
   }
   .cardscontainer div {
