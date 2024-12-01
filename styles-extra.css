@@ -206,10 +206,8 @@ body.dark #ptolcard_switch {
     padding-top: 100px;
     width: 100px;
     left: 0.5rem;
+    left: calc(env(safe-area-inset-left) + 0.5rem);
     background: transparent;
-    @supports (left:env(safe-area-inset-left)) {
-      left: calc(env(safe-area-inset-left + 0.5rem));
-    }
   }
   .propofol {
     background: transparent;
@@ -315,7 +313,6 @@ body.dark #ptolcard_switch {
   /*target parallax2 again*/
   .narrowbodywrapper #parallax2 {
     width: calc(100% - 100px - 0.5rem);
-    width: calc(100% - 100px - 0.5rem - env(safe-area-inset-left) - env(safe-area-inset-right));
   }
 
 }

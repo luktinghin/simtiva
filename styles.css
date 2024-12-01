@@ -3164,6 +3164,7 @@ body.dark .modal-body a.button_paedimode:hover {
   right: 32px;
   right: calc(env(safe-area-inset-right) + 32px);
   bottom: 32px;
+  bottom: calc(env(safe-area-inset-bottom) + 32px);
 }
 #pop_right_edit_cp {
   text-align: center;
