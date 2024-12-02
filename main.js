@@ -2019,7 +2019,6 @@ function toPageTwo() {
 		dynamicLoad();
 		createCharts();
 	}
-	document.getElementById("windowbody").style.overflowY = "overlay";
 	document.getElementById("logo").style.display = "none";
 	text = validateData(age, gender, weight, height, 1);	
 	if (text != undefined) {
