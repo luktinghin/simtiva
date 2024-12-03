@@ -5075,6 +5075,7 @@ body.dark #chart2wrapper {
   }
   body.dark .narrowbodywrapper .hamburger {
     right: 2px;
+    right: calc(2px + env(safe-area-inset-right));
   }
 
   .top_subtitle {
@@ -5308,29 +5309,8 @@ body.dark #pastschemeCOPY {
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
   }
-  #bodywrapper {
-    
-  }
-  #prompts_container {
-    
-    
-  }
-  .prompts_card {
-    
-  }
-  .hamburger {
-    
-  }
-  body.dark .hamburger {
-    
-  }
-  #parallax1container {
-    
-  }
 }
 @media (max-width: 767px) {
-
-
   body.dark .card {
     margin: 1rem 0rem;
     background: #303030;
