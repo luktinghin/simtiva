@@ -1619,7 +1619,7 @@ function update() {
 
 		document.getElementById("displayvolume").innerHTML = Math.round(drug_sets[active_drug_set_index].volinf[Math.floor(time_in_s)]*10)/10;
 		if (drug_sets[active_drug_set_index].inf_rate_mls>0) {
-			
+			document.getElementById("prompt_msg2").innerHTML = "Current rate";
 			document.getElementById("infusiondescriptor").innerHTML = " at " + drug_sets[active_drug_set_index].inf_rate_mls + "ml/h (" + Math.round(drug_sets[active_drug_set_index].inf_rate_mls*drug_sets[active_drug_set_index].infusate_concentration*drug_sets[active_drug_set_index].inf_rate_permass_factor/mass*drug_sets[active_drug_set_index].inf_rate_permass_dp)/drug_sets[active_drug_set_index].inf_rate_permass_dp + drug_sets[active_drug_set_index].inf_rate_permass_unit + ")";
 			document.getElementById("top_infrate").style.display = "inline-block";
 			document.getElementById("infrate").innerHTML = drug_sets[active_drug_set_index].inf_rate_mls;

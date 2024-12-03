@@ -5906,7 +5906,7 @@ function ptol_generate_margins(ind,param1,param2) {
 				//but actually we need to update the alternative drug sets margins as well because now it's been changed
 				setTimeout(function(){
 					ptol_generate_data_r(param1,param2);
-				},1000);
+				},2000);
 		
 				//see if propofol effect margins have never been generated before
 				if (myChart.data.datasets[6].data.length==1) {
@@ -5932,7 +5932,7 @@ function ptol_generate_margins(ind,param1,param2) {
 			} else {
 				setTimeout(function(){
 					ptol_generate_data_p(param1,param2);
-				},1000);
+				},2000);
 				//see if opioid effect margins have never been generated before
 				if (myChart.data.datasets[8].data.length==1) {
 					ptol_generate_data_r(param1,param2);
@@ -5952,10 +5952,10 @@ function ptol_generate_margins(ind,param1,param2) {
 			setTimeout(function(){
 					ptol_generate_ptol_based_on_couples();
 					myChart2.update();
-				},250);
+				},500);
 			setTimeout(function(){
 				updatechart3(1);
-				},500);
+				},1000);
 		},500);//end debounce
 	} else { // end if complex mode, start simple mode
 		if (drug_sets[0].model_name == "Eleveld") {
@@ -6153,7 +6153,7 @@ function ptol_generate_data_p(probability1,probability2) { // this creates CEpro
 		]);
 		working_clock_min = working_clock_min + resolution;
 	}
-	resolution = 2;
+	resolution = 3;
 	for (working_clock_min; working_clock_min<drug_sets[1].cpt_cp.length/60; working_clock_min = working_clock_min + resolution) {
 		CeRemi = getce(working_clock_min*60,1);
 		if (CeRemi == undefined) CeRemi = 0;
@@ -6233,7 +6233,7 @@ function ptol_generate_data_r(probability1,probability2) { // this creates CErem
 		);
 		working_clock_min = working_clock_min + resolution;
 	}
-	resolution = 2;
+	resolution = 3;
 	for (working_clock_min; working_clock_min < drug_sets[0].cpt_cp.length/60; working_clock_min = working_clock_min + resolution) {
 		
 		CeProp = getce(working_clock_min*60,0);
