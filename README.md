@@ -21,7 +21,12 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
 - To help deliver TCI in a setting where TCI pumps are not available
 
 ### Changelog
- Version 4.84 (Build 118) Current
+ Version 5.0 (Build 125) 🎄 Current
+ - UI/UX improvement: status bar with next change prompt for CPT/CET modes
+ - UI/UX in iOS: optimized landscape display with compliance to "safe areas"
+ - Performance improvements: deleted fontawesome-regular file and optimized loading times; division into smaller sections of CSS/JS files
+
+ Version 4.84 (Build 118)
  - New feature: bolus speed - allow user entry of induction bolus speed in CPT/CET mode, from 300ml/h to 1200ml/h, or flash (instantaneous)
  - Bugfix: scheme generation bug in "share module"
  - Viewer app bugfixes
