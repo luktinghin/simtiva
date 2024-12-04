@@ -142,9 +142,7 @@ var user_hide=0; // for warning prompt - NOT hide by default
 var timeout2 = null; // for delay display cpt prompt
 var optionsarray = new Array();
 var optionsarray_infusionunit = new Array();
-
 var PD_mode = 0 ; //PD effect estimtation: 0 is off, 1 is BIS, 2 is PTOL, 3 is NSRI
-
 var alert_vibrate_on = 0;
 var alert_sound_on = 0;
 var alertinterval_vibrate = null; //for alert api use - it is a setinterval function
@@ -153,12 +151,9 @@ var alert_sound_object = new sound("beep.mp3");
 var alert_sound_object2 = new sound("beep-2.mp3");
 var historytexts = new Array();
 var chartprofile = 0;
-
 var arrPOINTERS = new Array();
 var arrTEMP = new Array();
-
 var IB_swing = 0.05; //this is intermittent bolus swing
-
 var PP_mode;
 var PP_tickertime;
 var PP_interval=180;
@@ -167,20 +162,15 @@ var PP_next = PP_interval;
 var PP_temp_bolus_store = 0;
 var PP_temp_bolustime_store = 0;
 var ticker_active = 0;
-
 var notificationallowed = 0;
 var notificationactive = 0;
-
 var UI_borderon = 0;
 var UI_infrateon = 0;
-
 var manageFileListState = 0;
-
 var modal = undefined;
-
 var prior_half_minute_clock = 0;
-
 var time_of_stop = -1;
+var yxratio; //for use in myChart2 to calculate angle of arrow
 
 window.ptolcouplesarray = []; //ptol couples over time
 //var ptol0overtime = new Array(); //ptol chart data for 0 over time, series based on chart data
@@ -1519,6 +1509,12 @@ function update() {
 						document.getElementById("prompt_msg2").innerHTML = "Current target: " + drug_sets[active_drug_set_index].desired + drug_sets[active_drug_set_index].conc_units + "/ml";
 					}
 				}
+			} else {
+					if (drug_sets[active_drug_set_index].fentanyl_weightadjusted_flag==1) {
+						document.getElementById("prompt_msg2").innerHTML = "Current target: " + drug_sets[active_drug_set_index].fentanyl_weightadjusted_target_uncorrected + drug_sets[active_drug_set_index].conc_units + "/ml";
+					} else {
+						document.getElementById("prompt_msg2").innerHTML = "Current target: " + drug_sets[active_drug_set_index].desired + drug_sets[active_drug_set_index].conc_units + "/ml";
+					}
 			}
 			document.getElementById("status").innerHTML = "";
 			document.getElementById("infusiondescriptor").innerHTML = "Infusion temporarily paused";	
@@ -1619,11 +1615,12 @@ function update() {
 
 		document.getElementById("displayvolume").innerHTML = Math.round(drug_sets[active_drug_set_index].volinf[Math.floor(time_in_s)]*10)/10;
 		if (drug_sets[active_drug_set_index].inf_rate_mls>0) {
-			
+			document.getElementById("prompt_msg2").innerHTML = "Current rate";
 			document.getElementById("infusiondescriptor").innerHTML = " at " + drug_sets[active_drug_set_index].inf_rate_mls + "ml/h (" + Math.round(drug_sets[active_drug_set_index].inf_rate_mls*drug_sets[active_drug_set_index].infusate_concentration*drug_sets[active_drug_set_index].inf_rate_permass_factor/mass*drug_sets[active_drug_set_index].inf_rate_permass_dp)/drug_sets[active_drug_set_index].inf_rate_permass_dp + drug_sets[active_drug_set_index].inf_rate_permass_unit + ")";
 			document.getElementById("top_infrate").style.display = "inline-block";
 			document.getElementById("infrate").innerHTML = drug_sets[active_drug_set_index].inf_rate_mls;
 		} else {
+			document.getElementById("prompt_msg2").innerHTML = "Current rate";
 			document.getElementById("infusiondescriptor").innerHTML = "";
 			document.getElementById("top_infrate").style.display = "none";
 		}

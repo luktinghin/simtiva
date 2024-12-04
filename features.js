@@ -5906,7 +5906,7 @@ function ptol_generate_margins(ind,param1,param2) {
 				//but actually we need to update the alternative drug sets margins as well because now it's been changed
 				setTimeout(function(){
 					ptol_generate_data_r(param1,param2);
-				},1000);
+				},2000);
 		
 				//see if propofol effect margins have never been generated before
 				if (myChart.data.datasets[6].data.length==1) {
@@ -5932,7 +5932,7 @@ function ptol_generate_margins(ind,param1,param2) {
 			} else {
 				setTimeout(function(){
 					ptol_generate_data_p(param1,param2);
-				},1000);
+				},2000);
 				//see if opioid effect margins have never been generated before
 				if (myChart.data.datasets[8].data.length==1) {
 					ptol_generate_data_r(param1,param2);
@@ -5952,10 +5952,10 @@ function ptol_generate_margins(ind,param1,param2) {
 			setTimeout(function(){
 					ptol_generate_ptol_based_on_couples();
 					myChart2.update();
-				},250);
+				},500);
 			setTimeout(function(){
 				updatechart3(1);
-				},500);
+				},1000);
 		},500);//end debounce
 	} else { // end if complex mode, start simple mode
 		if (drug_sets[0].model_name == "Eleveld") {
@@ -6153,7 +6153,7 @@ function ptol_generate_data_p(probability1,probability2) { // this creates CEpro
 		]);
 		working_clock_min = working_clock_min + resolution;
 	}
-	resolution = 2;
+	resolution = 3;
 	for (working_clock_min; working_clock_min<drug_sets[1].cpt_cp.length/60; working_clock_min = working_clock_min + resolution) {
 		CeRemi = getce(working_clock_min*60,1);
 		if (CeRemi == undefined) CeRemi = 0;
@@ -6233,7 +6233,7 @@ function ptol_generate_data_r(probability1,probability2) { // this creates CErem
 		);
 		working_clock_min = working_clock_min + resolution;
 	}
-	resolution = 2;
+	resolution = 3;
 	for (working_clock_min; working_clock_min < drug_sets[0].cpt_cp.length/60; working_clock_min = working_clock_min + resolution) {
 		
 		CeProp = getce(working_clock_min*60,0);
@@ -6279,7 +6279,6 @@ function ptol_generate_ptol_based_on_couples() { //this creates ptol over time c
 	}
 }
 
-
 function ptol_fill_history_future_dots(force_redraw) {
 	var half_minute_clock = Math.floor(time_in_s/30);
 	//dataset 10 is trendline
@@ -6311,19 +6310,13 @@ function ptol_fill_history_future_dots(force_redraw) {
 		}
 		
 		y2=myChart2.data.datasets[10].data[myChart2.data.datasets[10].data.length-1].y;
-		y1=myChart2.data.datasets[10].data[myChart2.data.datasets[10].data.length-4].y;
+		y1=myChart2.data.datasets[10].data[myChart2.data.datasets[10].data.length-2].y;
 		x2=myChart2.data.datasets[10].data[myChart2.data.datasets[10].data.length-1].x;
-		x1=myChart2.data.datasets[10].data[myChart2.data.datasets[10].data.length-4].x;
-		calc_angle = Math.atan2(y2-y1,x2-x1);
-		//atan returns value in radian from -pi to +pi
-		if ( calc_angle < 0 ) 
-		    {
-		         calc_angle += Math.PI * 2;
-		    }
+		x1=myChart2.data.datasets[10].data[myChart2.data.datasets[10].data.length-2].x;
+		calc_angle = Math.atan2((y2-y1)*yxratio,x2-x1);
 		calc_angle = calc_angle * ( 180 / Math.PI );
-		calc_angle = 360 - calc_angle + 90;
-
-		myChart2.data.datasets[10].pointRotation = calc_angle;
+		calc_angle = 90 - calc_angle;
+		myChart2.data.datasets[10].pointRotation = calc_angle;	
 		prior_half_minute_clock = half_minute_clock;
 	}
 	myChart2.update();
@@ -6360,6 +6353,8 @@ function alignPtolLabels() {
 			document.getElementById('ptollabel' + tempname).style = 'transform: translate(' + xvalue + 'px, ' + yvalue + 'px) rotate(' + tempname/10 + 'deg)';	
 		}
 	}
+	//also realign angle correction y / x
+	yxratio = (myChart2.scales.y.getPixelForValue(0) - myChart2.scales.y.getPixelForValue(10)) / (myChart2.scales.x.getPixelForValue(10) - myChart2.scales.x.getPixelForValue(0));
 }
 
 function resetPtolLabels() {
