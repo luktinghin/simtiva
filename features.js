@@ -6279,7 +6279,6 @@ function ptol_generate_ptol_based_on_couples() { //this creates ptol over time c
 	}
 }
 
-
 function ptol_fill_history_future_dots(force_redraw) {
 	var half_minute_clock = Math.floor(time_in_s/30);
 	//dataset 10 is trendline
@@ -6311,19 +6310,13 @@ function ptol_fill_history_future_dots(force_redraw) {
 		}
 		
 		y2=myChart2.data.datasets[10].data[myChart2.data.datasets[10].data.length-1].y;
-		y1=myChart2.data.datasets[10].data[myChart2.data.datasets[10].data.length-4].y;
+		y1=myChart2.data.datasets[10].data[myChart2.data.datasets[10].data.length-2].y;
 		x2=myChart2.data.datasets[10].data[myChart2.data.datasets[10].data.length-1].x;
-		x1=myChart2.data.datasets[10].data[myChart2.data.datasets[10].data.length-4].x;
-		calc_angle = Math.atan2(y2-y1,x2-x1);
-		//atan returns value in radian from -pi to +pi
-		if ( calc_angle < 0 ) 
-		    {
-		         calc_angle += Math.PI * 2;
-		    }
+		x1=myChart2.data.datasets[10].data[myChart2.data.datasets[10].data.length-2].x;
+		calc_angle = Math.atan2((y2-y1)*yxratio,x2-x1);
 		calc_angle = calc_angle * ( 180 / Math.PI );
-		calc_angle = 360 - calc_angle + 90;
-
-		myChart2.data.datasets[10].pointRotation = calc_angle;
+		calc_angle = 90 - calc_angle;
+		myChart2.data.datasets[10].pointRotation = calc_angle;	
 		prior_half_minute_clock = half_minute_clock;
 	}
 	myChart2.update();
@@ -6360,6 +6353,8 @@ function alignPtolLabels() {
 			document.getElementById('ptollabel' + tempname).style = 'transform: translate(' + xvalue + 'px, ' + yvalue + 'px) rotate(' + tempname/10 + 'deg)';	
 		}
 	}
+	//also realign angle correction y / x
+	yxratio = (myChart2.scales.y.getPixelForValue(0) - myChart2.scales.y.getPixelForValue(10)) / (myChart2.scales.x.getPixelForValue(10) - myChart2.scales.x.getPixelForValue(0));
 }
 
 function resetPtolLabels() {
