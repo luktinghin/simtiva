@@ -2703,6 +2703,7 @@ body.dark .modal-body a.button_paedimode:hover {
   top: 0;
   left: 0;
   width: calc(100% - 98px);
+  width: calc(100% - 98px - env(safe-area-inset-right));
   height: 100%;
   z-index: 97;
   background: rgb(0,0,0,0.5);
@@ -2712,6 +2713,7 @@ body.dark .modal-body a.button_paedimode:hover {
 #numpadPreview {
   top: 10px;
   right: 97px;
+  right: calc(env(safe-area-inset-right) + 97px);
   font-size: 0.85rem;
   width: 281px;
   height: 55px;
@@ -2734,6 +2736,7 @@ body.dark .modal-body a.button_paedimode:hover {
   position: absolute;
   display: block;
   right: 95px;
+  right: calc(env(safe-area-inset-right) + 95px);
   top: 155px;
   z-index: 99;
   display: none;
@@ -2750,6 +2753,7 @@ body.dark .modal-body a.button_paedimode:hover {
   position: absolute;
   top: 75px;
   right: 128px;
+  right: calc(env(safe-area-inset-right) + 128px);
   z-index: 99;
   display: none;
 }

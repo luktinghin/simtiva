@@ -3130,6 +3130,11 @@ function loadSourceLocal() {
 }
 
 function rescue() {
+	if (myChart == undefined) {
+		dynamicLoad();
+		createCharts();
+	}
+	document.getElementById("logo").style.display = "none";
 	if (localStorage.getItem("lastkey") == null) {
 		displayWarning("No saved data", "No previously saved sim-file data.")
 	} else {

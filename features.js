@@ -6348,13 +6348,15 @@ function alignPtolLabels() {
 		for (counteral=0;counteral<labelArray.length;counteral++) {
 			tempname = labelArray[counteral].id.slice(-2);
 			datasetid = 20-tempname/10;
-	xvalue = myChart2.scales.x.getPixelForValue(myChart2.options.scales.x.max * 0.8);
-	yvalue = myChart2.scales.y.getPixelForValue(ptol_function_solve_p(myChart2.options.scales.x.max * 0.8,tempname/100));
+			xvalue = myChart2.scales.x.getPixelForValue(myChart2.options.scales.x.max * 0.8);
+			yvalue = myChart2.scales.y.getPixelForValue(ptol_function_solve_p(myChart2.options.scales.x.max * 0.8,tempname/100));
 			document.getElementById('ptollabel' + tempname).style = 'transform: translate(' + xvalue + 'px, ' + yvalue + 'px) rotate(' + tempname/10 + 'deg)';	
 		}
 	}
-	//also realign angle correction y / x
-	yxratio = (myChart2.scales.y.getPixelForValue(0) - myChart2.scales.y.getPixelForValue(10)) / (myChart2.scales.x.getPixelForValue(10) - myChart2.scales.x.getPixelForValue(0));
+	if (myChart2 != undefined) {
+		//also realign angle correction y / x
+		yxratio = (myChart2.scales.y.getPixelForValue(0) - myChart2.scales.y.getPixelForValue(10)) / (myChart2.scales.x.getPixelForValue(10) - myChart2.scales.x.getPixelForValue(0));
+	}
 }
 
 function resetPtolLabels() {
