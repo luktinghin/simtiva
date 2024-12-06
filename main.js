@@ -566,6 +566,24 @@ function initsubmit() {
 		document.getElementById("ptolcard").style.display = "flex";
 		document.getElementById("ptolcardoptions").style.display = "block";
 		document.getElementById("interactionscontainer").style.display = "block";
+		document.getElementById("ptolcard_switch").style.display = "block";
+		PD_mode = 2;
+		document.getElementById("select_effect_measure").value = "ptol";
+		document.getElementById("chartoverlayoptionscontent").classList.add("PDoptions");
+		document.getElementById("select_effect_measure").disabled = false;
+		document.getElementById("ptoltitle").innerHTML = "PTOL";
+		document.getElementById("ptoldesc").innerHTML = "Probability of tolerance to laryngoscopy (%)";
+			
+			myChart.data.datasets[10].backgroundColor = greenShade;
+			myChart.data.datasets[10].borderColor = greenShadeDark;
+			myChart.data.datasets[11].borderColor = greenShadeDark;
+			myChart.data.datasets[6].hidden = false;
+			myChart.data.datasets[7].hidden = false;
+			
+			myChart.data.datasets[10].hidden = true;
+			myChart.data.datasets[11].hidden = true;
+
+			myChart.update();
 	} else {
 
 		complex_mode = 0;
@@ -602,6 +620,8 @@ function initsubmit() {
 			document.getElementById("chartoverlayoptionscontent").classList.add("PDoptions");
 			document.getElementById("select_effect_measure").value = "bis";
 			document.getElementById("select_effect_measure").disabled = true;
+			document.getElementById("ptoltitle").innerHTML = "eBIS";
+			document.getElementById("ptoldesc").innerHTML = "Estimated BIS from Eleveld PD model";
 			BIS40 = BIS_Ce_for_BIS(40);
 			BIS60 = BIS_Ce_for_BIS(60);
 			myChart.data.datasets[11].data = [{x:0, y:BIS60},{x:21600, y:BIS60}];
@@ -609,8 +629,12 @@ function initsubmit() {
 			myChart.data.datasets[10].backgroundColor = yellowPri30;
 			myChart.data.datasets[10].borderColor = yellowPri50;
 			myChart.data.datasets[11].borderColor = yellowPri50;
+			myChart.data.datasets[6].hidden = true;
+			myChart.data.datasets[7].hidden = true;
 			myChart.data.datasets[10].hidden = false;
 			myChart.data.datasets[11].hidden = false;
+			myChart.update();
+
 			document.getElementById("ptolcard").style.display = "flex";
 			document.getElementById("ptoltitle").innerHTML = "eBIS";
 			document.getElementById("ptoldesc").innerHTML = "Estimated BIS from Eleveld PD model";

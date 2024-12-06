@@ -2408,7 +2408,11 @@ function BIS_charting() {
 	BIS_solve_eBIS();
 	BIS40 = BIS_Ce_for_BIS(40);
 	BIS60 = BIS_Ce_for_BIS(60);
-	length = drug_sets[0].cpt_cp.length;
+	if (drug_sets[0].cpt_cp.length == 0) {
+		length = 21600;
+	} else {
+		length = drug_sets[0].cpt_cp.length;	
+	}
 	myChart.data.datasets[11].data = [{x:0, y:BIS60},{x:length, y:BIS60}];
 	myChart.data.datasets[10].data = [{x:0, y:BIS40},{x:length, y:BIS40}];
 }
