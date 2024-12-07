@@ -1023,6 +1023,8 @@ function trk() {
 		} else {
 			umami.track('view', trackerprops);	
 		}
+		testprops = {name: "test"};
+		umami.track('trial',testprops);
 		umami.identify(trackerprops);
 	}
 }
