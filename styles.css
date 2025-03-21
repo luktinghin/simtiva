@@ -2158,6 +2158,7 @@ body.dark #timecopy {
   opacity: 1;
 }
 #chartoverlayoptionscontent {
+  font-size:14px;
   width: 90%;
   height: 220px;
   border-radius: 9px;
@@ -2186,7 +2187,7 @@ body.dark #timecopy {
 }
 
 #chartoverlayoptionscontent.PDoptions {
-  height: 295px;
+  height: 265px;
 }
 #PD_options_group {
   display: none;
