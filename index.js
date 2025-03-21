@@ -653,12 +653,32 @@ const xInputCardsHTML = `
 				<div id="chartoverlayoptions">
 					<div id="chartoverlayoptionscontent">
 						<div id="closeoptions" onclick="chartOptionsToggle();">&times;</div>
-						<div id="" style="font-weight:bold; margin-top:5px; margin-bottom:5px">Chart Options</div>
 						<div id="chartoptionscheckbox">
-				      <label class="container labeloptionscontainer" style="">Display events
+				      <label class="container labeloptionscontainer" style="margin-top:10px;width:60%">Display events
 				          <input type="checkbox" onChange="toggleshowevents();" id="isShowEvents" checked><span class="checkmark"></span>
 				      </label>
-				      <label class="container labeloptionscontainer" style="">Automatic time scale
+				      <label class="container labeloptionscontainer" style="margin-top:6px">Auto. concentration scale (y-axis)
+				          <input type="checkbox" onChange="toggleautoconc()" id="isConcAutomatic" checked><span class="checkmark"></span>
+				      </label>
+				      <div style="padding-left:30px">
+				      	Custom max concentration:
+				      	<select id="customconcselect" style="" onChange="setcustomconc(this.value)">
+				      	<option value="15">15mcg/ml</option>
+				      	<option value="14">14mcg/ml</option>
+				      	<option value="13">13mcg/ml</option>
+				      	<option value="12">12mcg/ml</option>
+				      	<option value="11">11mcg/ml</option>
+				      	<option value="10" selected>10mcg/ml</option>
+				      	<option value="9">9mcg/ml</option>
+				      	<option value="8">8mcg/ml</option>
+				      	<option value="7">7mcg/ml</option>
+				      	<option value="6">6mcg/ml</option>
+				      	<option value="5">5mcg/ml</option>
+				      	<option value="4">4mcg/ml</option>
+				      	<option value="3">3mcg/ml</option>
+				      	</select>
+				      </div>
+				      <label class="container labeloptionscontainer" style="margin-top:6px">Auto. time scale (x-axis)
 				          <input type="checkbox" id="isTimeAutomatic" onChange="toggleautotime();" checked><span class="checkmark"></span>
 				      </label>
 						</div>

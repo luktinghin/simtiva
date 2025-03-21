@@ -2158,13 +2158,13 @@ body.dark #timecopy {
   opacity: 1;
 }
 #chartoverlayoptionscontent {
-  width: 80%;
+  width: 90%;
   height: 220px;
   border-radius: 9px;
   position: absolute;
-  bottom: 102px;
-  right: 20px;
-  background: #0009;
+  bottom: 96px;
+  right: 5%;
+  background: #000B;
   padding: 3px 10px;
   display: block;
 }
@@ -2186,7 +2186,7 @@ body.dark #timecopy {
 }
 
 #chartoverlayoptionscontent.PDoptions {
-  height: 255px;
+  height: 295px;
 }
 #PD_options_group {
   display: none;
@@ -2207,7 +2207,7 @@ body.dark #timecopy {
 
 #chartoverlayoptionscontentarrow {
   position: absolute;
-  bottom: 92px;
+  bottom: 87px;
   right: 74px;
   display:block;
   width: 0;
@@ -2215,6 +2215,7 @@ body.dark #timecopy {
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-top: 10px solid #0009;
+  z-index:6;
 }
 #chartoverlayoptionscontentarrow2 {
   position: absolute;
@@ -2238,6 +2239,12 @@ body.dark #timecopy {
   margin-top:40px;
   color:white;
   font-weight:bold;
+}
+
+#chartoverlayoptionscontent select {
+  height:1.3rem;
+  font-size:0.8rem;
+  margin:0;
 }
 
 input[type=range] {
@@ -2412,7 +2419,7 @@ input[type=range]:focus::-ms-fill-upper {
   width:126px;
     justify-content: center;
   align-items: center;
-  z-index:5;
+  z-index:2;
 }
 #chartbuttons a:hover, a:active {
   color:black;
@@ -4388,7 +4395,7 @@ body.dark #preview-expand-box > div > div.timespan {
 
 #cornerblock {
   width:100%;z-index:19;position:sticky;bottom:0px;
-  padding:0px 0.5rem 0 0.5rem
+  padding:0px 0.475rem 0 0.475rem
 }
 
 #cornerblock2 {

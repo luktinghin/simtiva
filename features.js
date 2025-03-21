@@ -4159,48 +4159,8 @@ function updatechart(chart) {
 			chart.options.scales.x.max = 1440; // max 24h
 			chart.options.scales.x.ticks.stepSize = 60;
 		}
-		if (corY>0.1 && corY<=1.6) {
-			if (drug_sets[active_drug_set_index].drug_name == "Propofol" || drug_sets[active_drug_set_index].drug_name == "Remifentanil") {
-				chart.options.scales.y.max = 5;
-				chart.options.scales.y.ticks.stepSize = 0.5;
-			} else {
-				chart.options.scales.y.max = 3;
-				chart.options.scales.y.ticks.stepSize = 0.5;
-			}
-		} else if (corY>1.6 && corY<=4) {
-			chart.options.scales.y.max = 5;
-			chart.options.scales.y.ticks.stepSize = 0.5;
-		} else if (corY>4 && corY<=7) {
-			chart.options.scales.y.max = 8;
-			chart.options.scales.y.ticks.stepSize = 1;		
-		} else if (corY>7 && corY<=11) {
-			chart.options.scales.y.max = 12;
-			chart.options.scales.y.ticks.stepSize = 1;		
-		} else if (corY>11) {
-			chart.options.scales.y.max = 15;
-			chart.options.scales.y.ticks.stepSize = 1;				
-		} 
-		if (drug_sets[active_drug_set_index].drug_name == "Alfentanil") {
-			if (corY<=70) {
-				chart.options.scales.y.max = 100;
-				chart.options.scales.y.ticks.stepSize = 20;
-			} else if (corY>70 && corY<=120) {
-				chart.options.scales.y.max = 160;
-				chart.options.scales.y.ticks.stepSize = 20;
-			} else if (corY>120 && corY<=180) {
-				chart.options.scales.y.max = 200;
-				chart.options.scales.y.ticks.stepSize = 20;
-			} else if (corY>180 && corY<=280) {
-				chart.options.scales.y.max = 300;
-				chart.options.scales.y.ticks.stepSize = 50;
-			} else if (corY>280 && corY<400) {
-				chart.options.scales.y.max = 500;
-				chart.options.scales.y.ticks.stepSize = 50;
-			} else {
-				chart.options.scales.y.max = 600;
-				chart.options.scales.y.ticks.stepSize = 50;
-			}
-		}
+
+		adjustYaxis();
 
 	} else if (chartprofile == 1) { // zoom view
 
@@ -4281,94 +4241,9 @@ function updatechart(chart) {
 			chart.options.scales.x.max = 1440;
 			chart.options.scales.x.ticks.stepSize = 20;
 		}
-		if (corY>0.1 && corY<=1.6) {
-			if (drug_sets[active_drug_set_index].drug_name == "Propofol") {
-				chart.options.scales.y.max = 5;
-				chart.options.scales.y.ticks.stepSize = 0.5;
-			} else {
-				chart.options.scales.y.max = 3;
-				chart.options.scales.y.ticks.stepSize = 0.5;
-			}
-		} else if (corY>1.6 && corY<=4) {
-			chart.options.scales.y.max = 5;
-			chart.options.scales.y.ticks.stepSize = 0.5;
-		} else if (corY>4 && corY<=7) {
-			chart.options.scales.y.max = 8;
-			chart.options.scales.y.ticks.stepSize = 1;		
-		} else if (corY>7 && corY<=11) {
-			chart.options.scales.y.max = 12;
-			chart.options.scales.y.ticks.stepSize = 1;		
-		} else if (corY>11) {
-			chart.options.scales.y.max = 15;
-			chart.options.scales.y.ticks.stepSize = 1;				
-		}
-		if (drug_sets[active_drug_set_index].drug_name == "Alfentanil") {
-			if (corY<=70) {
-				chart.options.scales.y.max = 100;
-				chart.options.scales.y.ticks.stepSize = 20;
-			} else if (corY>70 && corY<=120) {
-				chart.options.scales.y.max = 160;
-				chart.options.scales.y.ticks.stepSize = 20;
-			} else if (corY>120 && corY<=180) {
-				chart.options.scales.y.max = 200;
-				chart.options.scales.y.ticks.stepSize = 20;
-			} else if (corY>180 && corY<=280) {
-				chart.options.scales.y.max = 300;
-				chart.options.scales.y.ticks.stepSize = 50;
-			} else if (corY>280 && corY<400) {
-				chart.options.scales.y.max = 500;
-				chart.options.scales.y.ticks.stepSize = 50;
-			} else {
-				chart.options.scales.y.max = 600;
-				chart.options.scales.y.ticks.stepSize = 50;
-			}
-		}
-
+		adjustYaxis();
 	} else if (chartprofile == 2) { //custom view
-
-		if (corY>0.1 && corY<=1.6) {
-			if (drug_sets[active_drug_set_index].drug_name == "Propofol") {
-				chart.options.scales.y.max = 5;
-				chart.options.scales.y.ticks.stepSize = 0.5;
-			} else {
-				chart.options.scales.y.max = 3;
-				chart.options.scales.y.ticks.stepSize = 0.5;
-			}
-		} else if (corY>1.6 && corY<=4) {
-			chart.options.scales.y.max = 5;
-			chart.options.scales.y.ticks.stepSize = 0.5;
-		} else if (corY>4 && corY<=7) {
-			chart.options.scales.y.max = 8;
-			chart.options.scales.y.ticks.stepSize = 1;		
-		} else if (corY>7 && corY<=11) {
-			chart.options.scales.y.max = 12;
-			chart.options.scales.y.ticks.stepSize = 1;		
-		} else if (corY>11) {
-			chart.options.scales.y.max = 15;
-			chart.options.scales.y.ticks.stepSize = 1;				
-		}
-
-		if (drug_sets[active_drug_set_index].drug_name == "Alfentanil") {
-			if (corY<=70) {
-				chart.options.scales.y.max = 100;
-				chart.options.scales.y.ticks.stepSize = 20;
-			} else if (corY>70 && corY<=120) {
-				chart.options.scales.y.max = 160;
-				chart.options.scales.y.ticks.stepSize = 20;
-			} else if (corY>120 && corY<=180) {
-				chart.options.scales.y.max = 200;
-				chart.options.scales.y.ticks.stepSize = 20;
-			} else if (corY>180 && corY<=280) {
-				chart.options.scales.y.max = 300;
-				chart.options.scales.y.ticks.stepSize = 50;
-			} else if (corY>280 && corY<400) {
-				chart.options.scales.y.max = 500;
-				chart.options.scales.y.ticks.stepSize = 50;
-			} else {
-				chart.options.scales.y.max = 600;
-				chart.options.scales.y.ticks.stepSize = 50;
-			}
-		}
+		adjustYaxis();
 	}
 
 
@@ -4388,6 +4263,69 @@ function updatechart(chart) {
 		if ((chart.scales.x.min != xprior0) || (chart.scales.x.max != xprior1) || (chart.scales.y.max != yprior)) {
 			alignEvents();
 		}
+	}
+
+	function adjustYaxis() {
+		if (chartprofileconc == 0) {
+			if (corY>0.1 && corY<=1.6) {
+				if (drug_sets[active_drug_set_index].drug_name == "Propofol" || drug_sets[active_drug_set_index].drug_name == "Remifentanil") {
+					chart.options.scales.y.max = 5;
+					chart.options.scales.y.ticks.stepSize = 0.5;
+				} else {
+					chart.options.scales.y.max = 3;
+					chart.options.scales.y.ticks.stepSize = 0.5;
+				}
+			} else if (corY>1.6 && corY<=4) {
+				chart.options.scales.y.max = 5;
+				chart.options.scales.y.ticks.stepSize = 0.5;
+			} else if (corY>4 && corY<=7) {
+				chart.options.scales.y.max = 8;
+				chart.options.scales.y.ticks.stepSize = 1;		
+			} else if (corY>7 && corY<=11) {
+				chart.options.scales.y.max = 12;
+				chart.options.scales.y.ticks.stepSize = 1;		
+			} else if (corY>11) {
+				chart.options.scales.y.max = 15;
+				chart.options.scales.y.ticks.stepSize = 1;				
+			} 
+			if (drug_sets[active_drug_set_index].drug_name == "Alfentanil") {
+				if (corY<=70) {
+					chart.options.scales.y.max = 100;
+					chart.options.scales.y.ticks.stepSize = 25;
+				} else if (corY>70 && corY<=120) {
+					chart.options.scales.y.max = 160;
+					chart.options.scales.y.ticks.stepSize = 25;
+				} else if (corY>120 && corY<=180) {
+					chart.options.scales.y.max = 200;
+					chart.options.scales.y.ticks.stepSize = 50;
+				} else if (corY>180 && corY<=280) {
+					chart.options.scales.y.max = 300;
+					chart.options.scales.y.ticks.stepSize = 50;
+				} else if (corY>280 && corY<400) {
+					chart.options.scales.y.max = 500;
+					chart.options.scales.y.ticks.stepSize = 50;
+				} else {
+					chart.options.scales.y.max = 600;
+					chart.options.scales.y.ticks.stepSize = 50;
+				}
+			}
+			//end auto conc scale
+		} else {
+			//start custom conc scale
+			if (chart.options.scales.y.max <= 4) {
+				chart.options.scales.y.ticks.stepSize = 0.5;
+			} else {
+				chart.options.scales.y.ticks.stepSize = 1;
+			}
+			if (drug_sets[active_drug_set_index].drug_name == "Alfentanil") {
+				if (chart.options.scales.y.max <= 150) {
+					chart.options.scales.y.ticks.stepSize = 25;
+				} else {
+					chart.options.scales.y.ticks.stepSize = 50;
+				}
+			}
+		}
+
 	}
 
 }
@@ -5620,21 +5558,29 @@ function processrange(rangenum) {
 	alignEvents();
 }
 
+function setcustomconc(inputval) {
+	chartprofileconc = 1;
+	maxconc = inputval * 1;
+	myChart.options.scales.y.max = maxconc;
+	updatechart(myChart);
+	document.getElementById("isConcAutomatic").checked = false;
+}
+
 function chartOptionsToggle() {
 	if (time_in_s > 0) {
-	ElOptions = document.getElementById("chartoverlayoptions");
-	if (ElOptions.classList.contains("show")) {
-		ElOptions.classList.remove("show");
-		
-	} else {
-		if (chartprofile == 2) {
-			document.getElementById("isTimeAutomatic").checked = false;
+		ElOptions = document.getElementById("chartoverlayoptions");
+		if (ElOptions.classList.contains("show")) {
+			ElOptions.classList.remove("show");
 		} else {
-			document.getElementById("isTimeAutomatic").checked = true;
+			if (chartprofile == 2) {
+				document.getElementById("isTimeAutomatic").checked = false;
+			} else {
+				document.getElementById("isTimeAutomatic").checked = true;
+			}
+			preparerange(); 
+			ElOptions.classList.add("show");
 		}
-		preparerange(); 
-		ElOptions.classList.add("show");
-	}
+		updateConcOptions();
 	}
 }
 
@@ -5653,6 +5599,121 @@ function togglepopupoptions() {
 			ElOptions.classList.add("show");
 		}
 	}
+}
+
+function updateConcOptions() {
+	drug = drug_sets[active_drug_set_index].drug_name;
+	el = document.getElementById("customconcselect");
+	if (drug == "Propofol") {
+		el.options[0].value = "15";
+		el.options[0].textContent = "15mcg/ml";
+		el.options[1].value = "14";
+		el.options[1].textContent = "14mcg/ml";
+		el.options[2].value = "13";
+		el.options[2].textContent = "13mcg/ml";
+		el.options[3].value = "12";
+		el.options[3].textContent = "12mcg/ml";
+		el.options[4].value = "11";
+		el.options[4].textContent = "11mcg/ml";
+		el.options[5].value = "10";
+		el.options[5].textContent = "10mcg/ml";
+		el.options[6].value = "9";
+		el.options[6].textContent = "9mcg/ml";
+		el.options[7].value = "8";
+		el.options[7].textContent = "8mcg/ml";
+		el.options[8].value = "7";
+		el.options[8].textContent = "7mcg/ml";
+		el.options[9].value = "6";
+		el.options[9].textContent = "6mcg/ml";
+		el.options[10].value = "5";
+		el.options[10].textContent = "5mcg/ml";
+		el.options[11].value = "4";
+		el.options[11].textContent = "4mcg/ml";
+		el.options[12].value = "3";
+		el.options[12].textContent = "3mcg/ml";
+	} else if (drug == "Remifentanil") {
+		el.options[0].value = "13";
+		el.options[0].textContent = "13ng/ml";
+		el.options[1].value = "12";
+		el.options[1].textContent = "12ng/ml";
+		el.options[2].value = "11";
+		el.options[2].textContent = "11ng/ml";
+		el.options[3].value = "10";
+		el.options[3].textContent = "10ng/ml";
+		el.options[4].value = "9";
+		el.options[4].textContent = "9ng/ml";
+		el.options[5].value = "8";
+		el.options[5].textContent = "8ng/ml";
+		el.options[6].value = "7";
+		el.options[6].textContent = "7ng/ml";
+		el.options[7].value = "6";
+		el.options[7].textContent = "6ng/ml";
+		el.options[8].value = "5";
+		el.options[8].textContent = "5ng/ml";
+		el.options[9].value = "4";
+		el.options[9].textContent = "5ng/ml";
+		el.options[10].value = "3";
+		el.options[10].textContent = "3ng/ml";
+		el.options[11].value = "2";
+		el.options[11].textContent = "2ng/ml";
+		el.options[12].value = "1";
+		el.options[12].textContent = "1ng/ml";
+	} else if (drug == "Alfentanil") {
+		el.options[0].value = "650";
+		el.options[0].textContent = "650ng/ml";
+		el.options[1].value = "600";
+		el.options[1].textContent = "600ng/ml";
+		el.options[2].value = "550";
+		el.options[2].textContent = "550ng/ml";
+		el.options[3].value = "500";
+		el.options[3].textContent = "500ng/ml";
+		el.options[4].value = "450";
+		el.options[4].textContent = "450ng/ml";
+		el.options[5].value = "400";
+		el.options[5].textContent = "400ng/ml";
+		el.options[6].value = "350";
+		el.options[6].textContent = "350ng/ml";
+		el.options[7].value = "300";
+		el.options[7].textContent = "300ng/ml";
+		el.options[8].value = "250";
+		el.options[8].textContent = "250ng/ml";
+		el.options[9].value = "200";
+		el.options[9].textContent = "200ng/ml";
+		el.options[10].value = "150";
+		el.options[10].textContent = "150ng/ml";
+		el.options[11].value = "100";
+		el.options[11].textContent = "100ng/ml";
+		el.options[12].value = "50";
+		el.options[12].textContent = "50ng/ml";
+	} else if (drug == "Fentanyl") {
+		el.options[0].value = "13";
+		el.options[0].textContent = "13ng/ml";
+		el.options[1].value = "12";
+		el.options[1].textContent = "12ng/ml";
+		el.options[2].value = "11";
+		el.options[2].textContent = "11ng/ml";
+		el.options[3].value = "10";
+		el.options[3].textContent = "10ng/ml";
+		el.options[4].value = "9";
+		el.options[4].textContent = "9ng/ml";
+		el.options[5].value = "8";
+		el.options[5].textContent = "8ng/ml";
+		el.options[6].value = "7";
+		el.options[6].textContent = "7ng/ml";
+		el.options[7].value = "6";
+		el.options[7].textContent = "6ng/ml";
+		el.options[8].value = "5";
+		el.options[8].textContent = "5ng/ml";
+		el.options[9].value = "4";
+		el.options[9].textContent = "4ng/ml";
+		el.options[10].value = "3";
+		el.options[10].textContent = "3ng/ml";
+		el.options[11].value = "2";
+		el.options[11].textContent = "2ng/ml";
+		el.options[12].value = "1";
+		el.options[12].textContent = "1ng/ml";
+	}
+	el.value = myChart.options.scales.y.max;
 }
 
 //section: complex mode

@@ -151,6 +151,7 @@ var alert_sound_object = new sound("beep.mp3");
 var alert_sound_object2 = new sound("beep-2.mp3");
 var historytexts = new Array();
 var chartprofile = 0;
+var chartprofileconc = 0;
 var arrPOINTERS = new Array();
 var arrTEMP = new Array();
 var IB_swing = 0.05; //this is intermittent bolus swing
@@ -3967,6 +3968,22 @@ function toggleautotime() {
 		processrange(1);
 	}
 	alignEvents();
+}
+
+function toggleautoconc() {
+	if (chartprofileconc == 0) {
+		setcustomconc(document.getElementById("customconcselect").value);
+		chartprofileconc = 1;
+		updatechart(myChart);
+	} else {
+		chartprofileconc = 0;
+		updatechart(myChart);
+	}
+}
+
+function setcustomconc() {
+	customval = document.getElementById("customconcselect").value;
+
 }
 
 function toggleEffectEst() {
