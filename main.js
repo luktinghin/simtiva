@@ -2215,11 +2215,6 @@ function cetevent() {
 	updateBolusSpeedOptions()
 }
 
-function RSI_start() {
-	cetevent();
-	document.getElementById("card_RSI").style.display = "block";
-}
-
 function updateBolusSpeedOptions() {
 	if (drug_sets[active_drug_set_index].max_rate != undefined) {
 		document.getElementById("select_bolusspeed").value = drug_sets[active_drug_set_index].max_rate;

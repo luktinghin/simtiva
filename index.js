@@ -458,10 +458,13 @@ const xInputCardsHTML = `
 				<div class="input-button-container"><a class="button input-button newbuttongrey" id="btn_pauseCet0_new" onclick="pauseCpt(0);"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
 			</div>
 		</div>
-		<div class="" id="card_RSI" style="display:none">
+		<div class="" id="card_RSI" style="display:none;background:#eee;padding:10px;margin-bottom:10px">
+			<div style="display:flex"><div style="width:32px; height:32px; background: #333; border-radius:4rem"><img src="iconintubation.png" style="width:90%;padding-left:10%;padding-top:10%"></div><div style="align-self:center;font-weight:bold;padding-left:10px">RSI mode</div></div>
 			<div style="display:flex">
-				<div>CE target:</div><div><input type="number" id="input_RSI_CE" step="0.01"></div>
-				<div>Target time:</div><div><input type="number" id="input_RSI_time"></div>
+				<div style="flex-basis:60%">CE target:</div><div><input type="number" inputmode="decimal" id="input_RSI_CE" step="0.01"></div>
+			</div>
+			<div style="display:flex">
+				<div style="flex-basis:60%">Achieved at (time in s):</div><div><input type="number" id="input_RSI_time" inputmode="decimal"></div>
 			</div>
 			<div id="RSI_message"></div>
 			<button id="proceed_RSI" onclick="deliver_RSI();">Proceed to RSI</button>
