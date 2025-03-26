@@ -172,6 +172,8 @@ var modal = undefined;
 var prior_half_minute_clock = 0;
 var time_of_stop = -1;
 var yxratio; //for use in myChart2 to calculate angle of arrow
+var RSI_mode = false;
+var RSI_interval = 90;
 
 window.ptolcouplesarray = []; //ptol couples over time
 //var ptol0overtime = new Array(); //ptol chart data for 0 over time, series based on chart data
@@ -2127,6 +2129,10 @@ function pageTwoFunction(arg) {
 	      //set the button action
 	      document.getElementById("page2proceed").removeEventListener('click', cetevent);
 	      document.getElementById("page2proceed").addEventListener('click', cptevent);
+	      document.getElementById("page2proceed").classList.add("wide");
+	      document.getElementById("page2RSI").style.display = "none";
+	      
+
 	  }
 	  if (arg == 1) {
 	      document.getElementById("page2cet").classList.add("active");
@@ -2135,6 +2141,11 @@ function pageTwoFunction(arg) {
 	      document.getElementById("page2IB").classList.add("hide");
 	      document.getElementById("page2proceed").addEventListener('click', cetevent);
 	      document.getElementById("page2proceed").removeEventListener('click', cptevent);
+	      //show RSI mode if needed
+	      if (drug_sets[0].drug_name == "Propofol") {
+	      	document.getElementById("page2proceed").classList.remove("wide");
+	      	document.getElementById("page2RSI").style.display = "inline-block";
+	      }
 	  }
 	  if (optionsarray[2][0] == 1) {
 	  	document.getElementById("page2selectmaintenance").value = "0";
@@ -2202,6 +2213,11 @@ function cetevent() {
 	applyoptions();
 	hidemodal('modalScreen2');document.getElementById('card_controlpanel').style.display='block';
 	updateBolusSpeedOptions()
+}
+
+function RSI_start() {
+	cetevent();
+	document.getElementById("card_RSI").style.display = "block";
 }
 
 function updateBolusSpeedOptions() {

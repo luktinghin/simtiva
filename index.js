@@ -458,6 +458,14 @@ const xInputCardsHTML = `
 				<div class="input-button-container"><a class="button input-button newbuttongrey" id="btn_pauseCet0_new" onclick="pauseCpt(0);"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
 			</div>
 		</div>
+		<div class="" id="card_RSI" style="display:none">
+			<div style="display:flex">
+				<div>CE target:</div><div><input type="number" id="input_RSI_CE" step="0.01"></div>
+				<div>Target time:</div><div><input type="number" id="input_RSI_time"></div>
+			</div>
+			<div id="RSI_message"></div>
+			<button id="proceed_RSI" onclick="deliver_RSI();">Proceed to RSI</button>
+		</div>
 		<div class="input-container" id="card_cet1_new" style="display:none">
 			<div class="input-left">
 				<div class="input-target-icon"><i class="fas fa-brain fa-fw"></i></div>

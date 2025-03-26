@@ -4293,7 +4293,7 @@ function updatechart(chart) {
 					chart.options.scales.y.max = 100;
 					chart.options.scales.y.ticks.stepSize = 25;
 				} else if (corY>70 && corY<=120) {
-					chart.options.scales.y.max = 160;
+					chart.options.scales.y.max = 150;
 					chart.options.scales.y.ticks.stepSize = 25;
 				} else if (corY>120 && corY<=180) {
 					chart.options.scales.y.max = 200;

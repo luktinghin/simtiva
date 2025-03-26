@@ -3559,14 +3559,68 @@ function deliver_cet_real(x, ind) {
 				console.log(temp_peak);
 				current = virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind) + drug_sets[ind].e_udf[temp_peak] * trial_rate;
 				console.log(current);
-
-				/* Iterate until solution is found [ln 2009] */
-				while (Math.abs(current - drug_sets[ind].desired) > min_dif)
-					{
-					trial_rate = (drug_sets[ind].desired - virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind)) / drug_sets[ind].e_udf[temp_peak];
-					temp_peak = find_peak(temp_peak, trial_rate, temp1e, temp2e, temp3e, temp4e, ind);
-					current = virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind) + drug_sets[ind].e_udf[temp_peak] * trial_rate;
+				additional_pause_time = 0;
+				if (RSI_mode == true) {
+					//first check if peak time is less than interval time, in which case RSI mode is not necessary
+					if (temp_peak <= RSI_interval) {
+						//revert normal CE mode
+						console.log("RSI mode deemed unnecessary");
+						while (Math.abs(current - drug_sets[ind].desired) > min_dif)
+							{
+							trial_rate = (drug_sets[ind].desired - virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind)) / drug_sets[ind].e_udf[temp_peak];
+							temp_peak = find_peak(temp_peak, trial_rate, temp1e, temp2e, temp3e, temp4e, ind);
+							current = virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind) + drug_sets[ind].e_udf[temp_peak] * trial_rate;
+							}
+					} else {
+						console.log("enter RSI bolus determination");
+						if (max_rate_input == 0) max_rate_input = 7200;
+						//store real peak
+						real_peak = temp_peak;
+						trial_rate = RSIfunction(drug_sets[0].desired,RSI_interval);
+						temp_peak = find_peak(temp_peak, trial_rate, temp1e, temp2e, temp3e, temp4e, ind);
+						drug_sets[ind].cet_bolus = trial_rate;				
+						temp1 = drug_sets[0].p_coef[1] * trial_rate * (1 - Math.exp(-drug_sets[ind].lambda[1]));
+						temp2 = drug_sets[0].p_coef[2] * trial_rate * (1 - Math.exp(-drug_sets[ind].lambda[2]));
+						temp3 = drug_sets[0].p_coef[3] * trial_rate * (1 - Math.exp(-drug_sets[ind].lambda[3]));
+						temp1e = drug_sets[0].e_coef[1] * trial_rate * (1 - Math.exp(-drug_sets[ind].lambda[1]));
+						temp2e = drug_sets[0].e_coef[2] * trial_rate * (1 - Math.exp(-drug_sets[ind].lambda[2]));
+						temp3e = drug_sets[0].e_coef[3] * trial_rate * (1 - Math.exp(-drug_sets[ind].lambda[3]));
+						temp4e = drug_sets[0].e_coef[4] * trial_rate * (1 - Math.exp(-drug_sets[ind].lambda[4]));
+						est_cp = temp1+temp2+temp3;
+						est_ce = temp1e+temp2e+temp3e+temp4e;
+						//iterate till cp/ce drop
+						cpt_pause = 0;
+						cet_pause = 0;
+						while (est_cp>=drug_sets[0].desired) {
+							cpt_pause = cpt_pause + 1;
+							est_cp = virtual_model(temp1,temp2,temp3,0,cpt_pause,0,0);
+						}
+						console.log("cpt_pause" + cpt_pause);
+						est_ce = virtual_model(temp1e,temp2e,temp3e,temp4e,cpt_pause,1,0);
+						cet_pause = cpt_pause;
+						while (est_ce>=drug_sets[0].desired) {
+							cet_pause = cet_pause+1;
+							est_ce = virtual_model(temp1e,temp2e,temp3e,temp4e,cet_pause,1,0);
+						}
+						console.log("cet_pause" + cet_pause);
+						sigmoidx = (cet_pause - 300)/50;
+						sigmoid = 1/(1+Math.exp(-sigmoidx));
+						sigmoidcorrfactor = 0.5 * sigmoid; //this will make sure the corrfactor max = 0.5
+						breakpoint = Math.floor((cet_pause - cpt_pause)*sigmoidcorrfactor + cpt_pause);
+						console.log("entering breakpoint -- " + breakpoint);
+						temp_peak = breakpoint;
 					}
+
+				} else {
+					/* Iterate until solution is found [ln 2009] */
+					while (Math.abs(current - drug_sets[ind].desired) > min_dif)
+						{
+						trial_rate = (drug_sets[ind].desired - virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind)) / drug_sets[ind].e_udf[temp_peak];
+						temp_peak = find_peak(temp_peak, trial_rate, temp1e, temp2e, temp3e, temp4e, ind);
+						current = virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind) + drug_sets[ind].e_udf[temp_peak] * trial_rate;
+						}
+				}
+
 
 				if (drug_sets[ind].cpt_rates_real.length > 0) {
 					drug_sets[ind].cet_bolus = trial_rate;
@@ -3587,6 +3641,7 @@ function deliver_cet_real(x, ind) {
 				//scheme_bolusadmin(drug_sets[ind].cet_bolus,ind);
 
 				bolusadmin(drug_sets[ind].cet_bolus,ind,max_rate_input);
+				
 				drug_sets[ind].prior_peak_time = temp_peak;
 				next_time = working_clock + temp_peak;
 				console.log("bolusduration" + bolus_duration);
@@ -3690,6 +3745,11 @@ function deliver_cet_real(x, ind) {
 						drug_sets[ind].historyarray.push([temp_time_bolus,0])
 				} else {
 					drug_sets[ind].historyarray.push([working_clock,0]);
+				}
+				if (RSI_mode == true) {
+					RSI_mode = false;
+					temp_peak = real_peak;
+					drug_sets[ind].prior_peak_time = temp_peak;
 				}
 			} else {
 				next_time = working_clock;
@@ -4553,17 +4613,25 @@ function bolusadmin(x, ind, max_rate_input) {
 	//i.e. approx 3.3mg per sec for propofol for 1200ml/h
 	//this is for CET
 	if (temp_peak != undefined) {
-		//however, needs to have a correction factor, because if max_rate too slow, will overshoot CE
-		min_rate = x / temp_peak; //in mg sec-1
-		max_1200 = 1200 * drug_sets[ind].infusate_concentration / 60 / 60;
-		//scale to 0.8-1.0
-		if (min_rate > max_rate) {
-			//bolus duration will exceed temp peak, set to 0.8
-			rate_corr_factor = 0.8;
-		} else if (max_rate_input>1200) {
-			rate_corr_factor = 0.97;
+		if (RSI_mode == true) {
+			//no need correction, you want to inc CE as fast as possible
+			//but for practical reasons, change max_rate_input = 0 to 7200
+			if (max_rate_input == 0) {
+				max_rate = 7200 * drug_sets[ind].infusate_concentration / 60 / 60;
+			}
 		} else {
-			rate_corr_factor = 0.97 - ((max_1200 - max_rate) / (max_1200 - min_rate))*0.1;
+			//however, needs to have a correction factor, because if max_rate too slow, will overshoot CE
+			min_rate = x / temp_peak; //in mg sec-1
+			max_1200 = 1200 * drug_sets[ind].infusate_concentration / 60 / 60;
+			//scale to 0.8-1.0
+			if (min_rate > max_rate) {
+				//bolus duration will exceed temp peak, set to 0.8
+				rate_corr_factor = 0.8;
+			} else if (max_rate_input>1200) {
+				rate_corr_factor = 0.97;
+			} else {
+				rate_corr_factor = 0.97 - ((max_1200 - max_rate) / (max_1200 - min_rate))*0.1;
+			}
 		}
 	} 
 
@@ -4617,7 +4685,7 @@ function bolusadmin(x, ind, max_rate_input) {
 	}
 
 	//branch off: bolus vs no_bolus
-	if (max_rate_input == 0) {
+	if (max_rate == 0) {
 		if (p_state[1] == 0) {
 			temp_vol = 0 
 		} else {
@@ -4653,6 +4721,7 @@ function bolusadmin(x, ind, max_rate_input) {
 		} else if (drug_sets[ind].cet_active>0) {
 			drug_sets[ind].cet_bolus = real_bolus;	
 		}
+
 		console.log("corrfac" + rate_corr_factor);
 		console.log("bolus duration is" + bolus_duration);
 		console.log("real bolus amount is" + max_rate * bolus_duration);
@@ -4682,6 +4751,185 @@ function bolusadmin(x, ind, max_rate_input) {
 							myChart.data.datasets[ind*2+2].data.push({x:(working_clock+counter1)/60, y:temp_result});
 							myChart.data.datasets[ind*2+3].data.push({x:(working_clock+counter1)/60, y:temp_result_e});
 						}
+		}
+		if (RSI_mode == true) {
+			//need further bolus to push up CE?
+			if (bolus_duration > RSI_interval) {
+				temptext = "bolus duration > interval, cannot achieve desired CE at interval, orig bolus duration" + bolus_duration;
+				est_ce = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
+				if (est_ce <= drug_sets[0].desired) {
+					for (rc = 0; rc<100; rc++) {
+						
+						p_state3[1] = p_state3[1] * l1 + drug_sets[ind].p_coef[1] * max_rate * (1 - l1);
+						p_state3[2] = p_state3[2] * l2 + drug_sets[ind].p_coef[2] * max_rate * (1 - l2);
+						p_state3[3] = p_state3[3] * l3 + drug_sets[ind].p_coef[3] * max_rate * (1 - l3);
+
+						e_state3[1] = e_state3[1] * l1 + drug_sets[ind].e_coef[1] * max_rate * (1 - l1);
+						e_state3[2] = e_state3[2] * l2 + drug_sets[ind].e_coef[2] * max_rate * (1 - l2);
+						e_state3[3] = e_state3[3] * l3 + drug_sets[ind].e_coef[3] * max_rate * (1 - l3);
+						e_state3[4] = e_state3[4] * l4 + drug_sets[ind].e_coef[4] * max_rate * (1 - l4);
+						drug_sets[ind].cpt_cp.push([p_state3[1],p_state3[2],p_state3[3]]);
+						drug_sets[ind].cpt_ce.push([e_state3[1],e_state3[2],e_state3[3],e_state3[4]]);
+						temp_vol = temp_vol + max_rate/drug_sets[ind].infusate_concentration;
+						drug_sets[ind].volinf.push(temp_vol);
+						drug_sets[ind].cpt_rates_real.push(max_rate);
+
+						//if (rc%10==0) {
+						//	temp_result = p_state3[1] + p_state3[2] + p_state3[3];
+						//	temp_result_e = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
+						//	myChart.data.datasets[ind*2+2].data.push({x:(working_clock+rc)/60, y:temp_result});
+						//	myChart.data.datasets[ind*2+3].data.push({x:(working_clock+rc)/60, y:temp_result_e});
+						//}
+						bolus_duration += 1;
+						real_bolus = Math.round(max_rate * bolus_duration);
+						drug_sets[ind].cet_bolus = real_bolus;	
+						est_ce = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
+						if (est_ce >= drug_sets[0].desired) break;
+					}
+				}
+				temptext = temptext + ". final bolus duration is " + bolus_duration;
+					//calc alt peak time	
+					tempprior = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
+					for (rcc = 1; rcc<1000; rcc++) {
+						tempvalue = virtual_model(e_state3[1],e_state3[2],e_state3[3],e_state3[4],rcc,1,0);
+						if (tempvalue <= tempprior) {
+							//peak achieved
+							alt_peak = tempvalue;
+							dur = bolus_duration + rcc;
+							break;
+						} else {
+							tempprior = tempvalue;
+						}
+					}
+					temptext = temptext + ". final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + " at " + dur; 
+				document.getElementById("RSI_message").innerHTML = temptext;
+			} else {
+				//check if can reach CE
+				//iterate till CE above desired at interval
+				difference = RSI_interval - bolus_duration;
+				est_ce = virtual_model(e_state3[1],e_state3[2],e_state3[3],e_state3[4],difference,1,0);
+				if (est_ce < drug_sets[0].desired) {
+					continuation_flag = false;
+					for (rc = 0; rc<difference; rc++) {
+						distance = difference - rc;
+						est_ce = virtual_model(e_state3[1],e_state3[2],e_state3[3],e_state3[4],distance,1,0);
+						console.log("---" + distance + "-CE-" + est_ce);
+						if (est_ce <= drug_sets[0].desired) {
+							p_state3[1] = p_state3[1] * l1 + drug_sets[ind].p_coef[1] * max_rate * (1 - l1);
+							p_state3[2] = p_state3[2] * l2 + drug_sets[ind].p_coef[2] * max_rate * (1 - l2);
+							p_state3[3] = p_state3[3] * l3 + drug_sets[ind].p_coef[3] * max_rate * (1 - l3);
+
+							e_state3[1] = e_state3[1] * l1 + drug_sets[ind].e_coef[1] * max_rate * (1 - l1);
+							e_state3[2] = e_state3[2] * l2 + drug_sets[ind].e_coef[2] * max_rate * (1 - l2);
+							e_state3[3] = e_state3[3] * l3 + drug_sets[ind].e_coef[3] * max_rate * (1 - l3);
+							e_state3[4] = e_state3[4] * l4 + drug_sets[ind].e_coef[4] * max_rate * (1 - l4);
+							drug_sets[ind].cpt_cp.push([p_state3[1],p_state3[2],p_state3[3]]);
+							drug_sets[ind].cpt_ce.push([e_state3[1],e_state3[2],e_state3[3],e_state3[4]]);
+							temp_vol = temp_vol + max_rate/drug_sets[ind].infusate_concentration;
+							drug_sets[ind].volinf.push(temp_vol);
+							drug_sets[ind].cpt_rates_real.push(max_rate);
+
+							//if (rc%10==0) {
+							//	temp_result = p_state3[1] + p_state3[2] + p_state3[3];
+							//	temp_result_e = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
+							//	myChart.data.datasets[ind*2+2].data.push({x:(working_clock+rc)/60, y:temp_result});
+							//	myChart.data.datasets[ind*2+3].data.push({x:(working_clock+rc)/60, y:temp_result_e});
+							//}
+							bolus_duration += 1;
+							real_bolus = Math.round(max_rate * bolus_duration);
+							drug_sets[ind].cet_bolus = real_bolus;
+							if (distance == 1) {
+								continuation_flag = true;
+							}	
+						} else {
+							break;
+						}
+					}
+					if (continuation_flag == true) {
+						est_ce = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
+						if (est_ce < drug_sets[0].desired) {
+							for (rc = 0; rc<100; rc++) {
+								p_state3[1] = p_state3[1] * l1 + drug_sets[ind].p_coef[1] * max_rate * (1 - l1);
+								p_state3[2] = p_state3[2] * l2 + drug_sets[ind].p_coef[2] * max_rate * (1 - l2);
+								p_state3[3] = p_state3[3] * l3 + drug_sets[ind].p_coef[3] * max_rate * (1 - l3);
+
+								e_state3[1] = e_state3[1] * l1 + drug_sets[ind].e_coef[1] * max_rate * (1 - l1);
+								e_state3[2] = e_state3[2] * l2 + drug_sets[ind].e_coef[2] * max_rate * (1 - l2);
+								e_state3[3] = e_state3[3] * l3 + drug_sets[ind].e_coef[3] * max_rate * (1 - l3);
+								e_state3[4] = e_state3[4] * l4 + drug_sets[ind].e_coef[4] * max_rate * (1 - l4);
+								drug_sets[ind].cpt_cp.push([p_state3[1],p_state3[2],p_state3[3]]);
+								drug_sets[ind].cpt_ce.push([e_state3[1],e_state3[2],e_state3[3],e_state3[4]]);
+								temp_vol = temp_vol + max_rate/drug_sets[ind].infusate_concentration;
+								drug_sets[ind].volinf.push(temp_vol);
+								drug_sets[ind].cpt_rates_real.push(max_rate);
+
+								//if (rc%10==0) {
+								//	temp_result = p_state3[1] + p_state3[2] + p_state3[3];
+								//	temp_result_e = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
+								//	myChart.data.datasets[ind*2+2].data.push({x:(working_clock+rc)/60, y:temp_result});
+								//	myChart.data.datasets[ind*2+3].data.push({x:(working_clock+rc)/60, y:temp_result_e});
+								//}
+								bolus_duration += 1;
+								real_bolus = Math.round(max_rate * bolus_duration);
+								drug_sets[ind].cet_bolus = real_bolus;	
+								est_ce = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
+								if (est_ce >= drug_sets[0].desired) break;
+							}
+						}
+					}
+				}
+				temptext = "RSI bolus dose " + real_bolus + " and bolus duration " + bolus_duration;
+				if (bolus_duration>RSI_interval) {
+					temptext = temptext + ". bolus duration has excceded the interval!";
+				} else {
+					//calc alt peak time	
+					tempprior = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
+					for (rcc = 1; rcc<1000; rcc++) {
+						tempvalue = virtual_model(e_state3[1],e_state3[2],e_state3[3],e_state3[4],rcc,1,0);
+						if (tempvalue <= tempprior) {
+							//peak achieved
+							alt_peak = tempvalue;
+							dur = bolus_duration + rcc;
+							break;
+						} else {
+							tempprior = tempvalue;
+						}
+					}
+					temptext = temptext + " final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + " at " + dur; 
+				}
+				document.getElementById("RSI_message").innerHTML = temptext;
+			}
+			//recalculate next time
+					cpt_pause = 0;
+					cet_pause = 0;
+					temp1 = p_state3[1];
+					temp2 = p_state3[2];
+					temp3 = p_state3[3];
+					temp1e = e_state3[1];
+					temp2e = e_state3[2];
+					temp3e = e_state3[3];
+					temp4e = e_state3[4];
+					est_cp = temp1+temp2+temp3;
+					est_ce = temp1e+temp2e+temp3e+temp4e;
+					//iterate till cp/ce drop
+					while (est_cp>=drug_sets[0].desired) {
+						cpt_pause = cpt_pause + 1;
+						est_cp = virtual_model(temp1,temp2,temp3,0,cpt_pause,0,0);
+					}
+					console.log("new cpt_pause" + cpt_pause);
+					est_ce = virtual_model(temp1e,temp2e,temp3e,temp4e,cpt_pause,1,0);
+					cet_pause = cpt_pause;
+					while (est_ce>=drug_sets[0].desired) {
+						cet_pause = cet_pause+1;
+						est_ce = virtual_model(temp1e,temp2e,temp3e,temp4e,cet_pause,1,0);
+					}
+					console.log("new cet_pause" + cet_pause);
+					sigmoidx = (cet_pause - 300)/50;
+					sigmoid = 1/(1+Math.exp(-sigmoidx));
+					sigmoidcorrfactor = 0.5 * sigmoid; //this will make sure the corrfactor max = 0.5
+					breakpoint = Math.floor((cet_pause - cpt_pause)*sigmoidcorrfactor + cpt_pause);
+					console.log("entering breakpoint -- " + breakpoint);
+					temp_peak = breakpoint;
 		}
 	} //end no-bolus block
 
@@ -5821,5 +6069,28 @@ function displayVolumeEstimation() {
 	} else {
 		document.getElementById("volumeEstimation_output").innerHTML = "Error";
 	}
+}
+
+
+//section: for RSI
+function RSIfunction(desired,interval) {
+    trialbolus = (desired - virtual_model(0, 0, 0, 0, temp_peak, 1, 0)) / drug_sets[0].e_udf[temp_peak];
+    current = trialbolus;
+    for (test=0; test<1000; test++) {
+        desired_trial = drug_sets[0].e_udf[interval] * current;
+        more_trial = drug_sets[0].e_udf[interval] * (current + 1);
+        current = current + 1;
+        console.log("RSI FUNCTION" + " - bolus size " + current + " est CE " + desired_trial);
+        if (more_trial > desired) break;
+    }
+    return current;
+}
+
+function deliver_RSI() {
+	inputCE = document.getElementById("input_RSI_CE").value *1;
+	RSI_interval = document.getElementById("input_RSI_time").value *1;
+	RSI_mode = true;
+	document.getElementById("inputDesiredCe0_new").value = inputCE;
+	start_cet();
 }
 
