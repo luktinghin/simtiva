@@ -458,16 +458,42 @@ const xInputCardsHTML = `
 				<div class="input-button-container"><a class="button input-button newbuttongrey" id="btn_pauseCet0_new" onclick="pauseCpt(0);"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
 			</div>
 		</div>
-		<div class="" id="card_RSI" style="display:none;background:#eee;padding:10px;margin-bottom:10px">
-			<div style="display:flex"><div style="width:32px; height:32px; background: #333; border-radius:4rem"><img src="iconintubation.png" style="width:90%;padding-left:10%;padding-top:10%"></div><div style="align-self:center;font-weight:bold;padding-left:10px">RSI mode</div></div>
-			<div style="display:flex">
-				<div style="flex-basis:60%">CE target:</div><div><input type="number" inputmode="decimal" id="input_RSI_CE" step="0.01"></div>
+		<div class="" id="card_RSI" style="display:none;margin:10px;border-radius:9px;background:cornsilk;border:1px solid darkorange">
+			<div style="display:flex;padding:10px;border-radius:9px 9px 0 0;color:white;background:darkorange"><div style="width:32px; height:32px; background: #5c5c5c; border-radius:4rem"><img src="iconintubation.png" style="width:90%;padding-left:10%;padding-top:10%"></div><div style="align-self:center;font-weight:bold;padding-left:10px">RSI mode</div></div>
+			<div style="padding:10px" id="card_RSI_contents">
+				<div style="display:flex">
+					<div style="flex-basis:45%">CE target (mcg/ml):</div><div><input type="number" inputmode="decimal" id="input_RSI_CE" step="0.01" onkeyup="preview_RSI_debounce();"></div>
+				</div>
+				<div style="display:flex">
+					<div style="flex-basis:45%">Bolus speed:</div>
+					<div>
+						<select id="input_RSI_bolusspeed" onchange="preview_RSI();">
+							<option value="0">Manual push (7200ml/h)</option>
+							<option value="1500">1500ml/h</option>
+							<option value="1200">1200ml/h</option>
+						</select>
+					</div>
+				</div>
+				<div style="display:flex">
+					<div style="flex-basis:45%">To be achieved at:</div>
+					<div>
+						<select id="input_RSI_time" onchange="preview_RSI();">
+							<option value="60" selected>60s</option>
+							<option value="65">65s</option>
+							<option value="70">70s</option>
+							<option value="75">75s</option>
+							<option value="80">80s</option>
+							<option value="85">85s</option>
+							<option value="90">90s</option>
+						</select>
+					</div>
+				</div>
+				<div style="min-height:100px; display:flex">
+					<div id="RSI_preview" style="display:none; font-size:0.8rem;background:white;border:1px solid darkorange;padding:10px;border-radius:9px;align-self:center"></div>
+					<div id="RSI_message" style="display:none; font-size:0.8rem;background:white;border:1px solid darkorange;padding:10px;border-radius:9px;align-self:center"></div>
+				</div>
+				<button id="proceed_RSI" onclick="deliver_RSI();">Proceed to RSI</button>
 			</div>
-			<div style="display:flex">
-				<div style="flex-basis:60%">Achieved at (time in s):</div><div><input type="number" id="input_RSI_time" inputmode="decimal"></div>
-			</div>
-			<div id="RSI_message"></div>
-			<button id="proceed_RSI" onclick="deliver_RSI();">Proceed to RSI</button>
 		</div>
 		<div class="input-container" id="card_cet1_new" style="display:none">
 			<div class="input-left">
