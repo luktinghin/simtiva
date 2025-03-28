@@ -4562,7 +4562,7 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 		if (RSI_mode == true) {
 			//need further bolus to push up CE?
 			if (bolus_duration > RSI_interval) {
-				temptext = "bolus duration > interval, cannot achieve desired CE at interval, orig bolus duration" + bolus_duration;
+				temptext = "Bolus duration > interval, cannot achieve desired CE at interval. ";
 				est_ce = e_state2[1] + e_state2[2] + e_state2[3] + e_state2[4];
 				if (est_ce <= drug_sets[0].desired) {
 					for (rc = 0; rc<100; rc++) {
@@ -4590,7 +4590,7 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 						if (est_ce >= drug_sets[0].desired) break;
 					}
 				}
-				temptext = temptext + ". final bolus duration is " + bolus_duration;
+				temptext = temptext + "Bolus dose is " + real_bolus + "mg (bolus duration <b>" + converttime(bolus_duration) + "</b>). ";
 					//calc alt peak time	
 					tempprior = e_state2[1] + e_state2[2] + e_state2[3] + e_state2[4];
 					for (rcc = 1; rcc<1000; rcc++) {
@@ -4604,7 +4604,7 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 							tempprior = tempvalue;
 						}
 					}
-					temptext = temptext + ". final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + " at " + dur; 
+					temptext = temptext + "Final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + "mcg/ml at <b>" + converttime(dur) + "</b>."; 
 				document.getElementById("RSI_preview").innerHTML = "PREVIEW: " + temptext;
 			} else {
 				//check if can reach CE
@@ -4673,9 +4673,9 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 						}
 					}
 				}
-				temptext = "RSI bolus dose " + real_bolus + " and bolus duration " + bolus_duration;
+				temptext = "RSI bolus dose: " + real_bolus + "mg (bolus duration <b>" + converttime(bolus_duration) + "</b>). ";
 				if (bolus_duration>RSI_interval) {
-					temptext = temptext + ". bolus duration has excceded the interval!";
+					temptext = temptext + "Bolus duration has exceeded the interval! ";
 				} else {
 					//calc alt peak time	
 					tempprior = e_state2[1] + e_state2[2] + e_state2[3] + e_state2[4];
@@ -4690,7 +4690,7 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 							tempprior = tempvalue;
 						}
 					}
-					temptext = temptext + " final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + " at " + dur; 
+					temptext = temptext + "Final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + "mcg/ml at <b>" + converttime(dur) + "</b>."; 
 				}
 				document.getElementById("RSI_preview").innerHTML = "PREVIEW: " + temptext;
 			}
@@ -4984,7 +4984,7 @@ function bolusadmin(x, ind, max_rate_input) {
 		if (RSI_mode == true) {
 			//need further bolus to push up CE?
 			if (bolus_duration > RSI_interval) {
-				temptext = "bolus duration > interval, cannot achieve desired CE at interval, orig bolus duration" + bolus_duration;
+				temptext = "Bolus duration > interval, cannot achieve desired CE at interval. ";
 				est_ce = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
 				if (est_ce <= drug_sets[0].desired) {
 					for (rc = 0; rc<100; rc++) {
@@ -5016,7 +5016,7 @@ function bolusadmin(x, ind, max_rate_input) {
 						if (est_ce >= drug_sets[0].desired) break;
 					}
 				}
-				temptext = temptext + ". final bolus duration is " + bolus_duration;
+				temptext = temptext + "Bolus dose is " + real_bolus + "mg (bolus duration <b>" + converttime(bolus_duration) + "</b>). ";
 					//calc alt peak time	
 					tempprior = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
 					for (rcc = 1; rcc<1000; rcc++) {
@@ -5030,7 +5030,7 @@ function bolusadmin(x, ind, max_rate_input) {
 							tempprior = tempvalue;
 						}
 					}
-					temptext = temptext + ". final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + " at " + dur; 
+					temptext = temptext + "Final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + "mcg/ml at <b>" + converttime(dur) + "."; 
 				document.getElementById("RSI_message").innerHTML = temptext;
 			} else {
 				//check if can reach CE
@@ -5107,9 +5107,9 @@ function bolusadmin(x, ind, max_rate_input) {
 						}
 					}
 				}
-				temptext = "RSI bolus dose " + real_bolus + " and bolus duration " + bolus_duration;
+				temptext = "RSI bolus dose: " + real_bolus + "mg (bolus duration <b>" + converttime(bolus_duration) + "</b>). ";
 				if (bolus_duration>RSI_interval) {
-					temptext = temptext + ". bolus duration has excceded the interval!";
+					temptext = temptext + "Bolus duration has exceeded the interval! ";
 				} else {
 					//calc alt peak time	
 					tempprior = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
@@ -5124,7 +5124,7 @@ function bolusadmin(x, ind, max_rate_input) {
 							tempprior = tempvalue;
 						}
 					}
-					temptext = temptext + " final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + " at " + dur; 
+					temptext = temptext + "Final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + "mcg/ml at <b>" + converttime(dur) + "</b>."; 
 				}
 				document.getElementById("RSI_message").innerHTML = temptext;
 			}
@@ -6350,6 +6350,7 @@ function preview_RSI_debounce() {
 
 function RSI_start() {
 	cetevent();
+	document.getElementById("card_cet0_new").style.display = "none";
 	document.getElementById("card_RSI").style.display = "block";
 	text = `
 		In rapid sequence induction (RSI) mode, you may set an effect site concentration (CE) target to be achieved within 60-90 seconds, as defined by the user. The program will determine a suitable induction dose, depending on the injection speed on induction (more on this below), to achieve the target CE at the target time point. In most models, this will cause the effect site concentration to overshoot, meaning that the final peak CE will exceed the predetermined CE target. The program will display the appropriate pause duration, after which the infusion will be continued in order to maintain the CE at the target level.<br>
