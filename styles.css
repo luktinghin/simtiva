@@ -911,7 +911,7 @@ body.dark #modalInitial, body.dark #modalLoad {
 
 a.button {
   border-radius:2em;
-  min-width:100px;
+  min-width:85px;
   text-align:center;
   border:1px solid #4CAF50;
   display:inline-block;
@@ -1451,8 +1451,8 @@ background-size: 200% 100%;
   opacity: 0;
   transition: 0.2s transform ease, 0.2s opacity ease;
   transform: translateY(40px) scale(0.7);
-    left: 5%;
-    width: 90%;
+    left: 4%;
+    width: 92%;
     position: absolute;
   pointer-events: none;
   display: flex;
@@ -5214,7 +5214,7 @@ body.dark #chart2wrapper {
   .cardscontainer div {
     break-inside:avoid;
   }
-  #card_infusion0, #card_cpt0, #card_cet0, #schemecopy, #card_reanimate {
+  #card_infusion0, #card_cpt0, #card_cet0, #schemecopy, #card_reanimate, #card_RSI {
     margin-top:0px;
   }
   #card_infusion1, #card_cpt1, #card_cet1 {
@@ -5636,6 +5636,16 @@ body.dark #addeventtext{
   line-height: 30px;
   text-align: center;
 }
+
+#card_RSI {
+  display:none;margin:10px;border-radius:10px 10px 9px 9px;background:cornsilk;border:1px solid darkorange;
+}
+
+#card_RSI_title {
+  display:flex;padding:5px;border-radius:9px 9px 0 0;color:white;background:darkorange;
+}
+
+
 
 body.dark .input-target-icon {
   background: #303030;
