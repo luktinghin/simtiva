@@ -447,21 +447,10 @@ const xInputCardsHTML = `
 				<div class="input-button-container"><a class="button input-button newbuttongrey" id="btn_pauseCpt1_new" onclick="pauseCpt(1); drug_sets[1].cpt_active=0.5;"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
 			</div>
 		</div>
-		<div class="input-container" id="card_cet0_new" style="">
-			<div class="input-left">
-				<div class="input-target-icon"><i class="fas fa-brain fa-fw"></i></div>
-				<div class="input-description"><span id="input-description-ce-line1" style="font-size: 1.2rem;font-weight:bold;display:block"><span>Ce Target</span></span>(<span class="conc_units"></span>/ml)</div>
-				<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesiredCe0_new" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0)"></div>
-			</div>
-			<div class="input-right">
-				<div class="input-button-container"><a class="button input-button newbuttongreen" id="btn_startCet0_new" onclick="start_cet();"><div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Start</div></a></div>
-				<div class="input-button-container"><a class="button input-button newbuttongrey" id="btn_pauseCet0_new" onclick="pauseCpt(0);"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
-			</div>
-		</div>
 		<div class="" id="card_RSI">
-			<div id="card_RSI_title"><div style="width:35px; height:35px; background: #5c5c5c; border-radius:4rem"><img src="iconintubation.png" style="width:100%;"></div><div style="align-self:center;font-weight:bold;padding-left:10px">RSI mode</div><div style="flex:1"></div><div id="expandRSIbutton" style="align-self:center" onclick="toggleRSI();"><i class="fas fa-angle-double-up"></i>HIDE</div></div>
-			<div style="display:flex;flex-direction:vertical" id="card_RSI_contents">
-				<div style="display:flex; align-items:center">
+			<div id="card_RSI_title"><div style="width:35px; height:35px; background: #5c5c5c; border-radius:4rem"><img src="iconintubation.png" style="width:100%;"></div><div style="align-self:center;font-weight:bold;padding-left:10px">RSI mode</div><div style="flex:1"></div><div id="expandRSIbutton" style="" onclick="toggleRSI();"><i class="fas fa-angle-double-up"></i>&nbsp; HIDE</div></div>
+			<div style="" id="card_RSI_contents">
+				<div style="display:flex; align-items:center;">
 					<div style="flex-basis:45%">CE target (mcg/ml):</div><div><input type="number" inputmode="decimal" id="input_RSI_CE" step="0.01" onkeyup="preview_RSI_debounce();"></div>
 				</div>
 				<div style="display:flex; align-items:center">
@@ -488,11 +477,24 @@ const xInputCardsHTML = `
 						</select>
 					</div>
 				</div>
-				<div style="min-height:50px; display:flex">
+				<div style="display:flex">
 					<div id="RSI_preview" style="" class="RSI_box">...</div>
 					<div id="RSI_message" style="" class="RSI_box">...</div>
 				</div>
-				<button id="proceed_RSI" onclick="deliver_RSI();">Proceed to RSI</button>
+				<div style="text-align:center; display:none" id="proceed_RSI_div">
+					<a class="button wide invert" id="proceed_RSI" onclick="deliver_RSI();">Proceed to RSI</a>
+				</div>
+			</div>
+		</div>
+		<div class="input-container" id="card_cet0_new" style="">
+			<div class="input-left">
+				<div class="input-target-icon"><i class="fas fa-brain fa-fw"></i></div>
+				<div class="input-description"><span id="input-description-ce-line1" style="font-size: 1.2rem;font-weight:bold;display:block"><span>Ce Target</span></span>(<span class="conc_units"></span>/ml)</div>
+				<div class="input-entry"><input class="input-entry-field" type="number" inputmode="decimal" style="" id="inputDesiredCe0_new" min="0" max="200" step="0.1" placeholder=" " onkeyup="displaypreview(this.value,0)"></div>
+			</div>
+			<div class="input-right">
+				<div class="input-button-container"><a class="button input-button newbuttongreen" id="btn_startCet0_new" onclick="start_cet();"><div class="icon"><i class="fas fa-play fa-fw"></i></div><div class="input-button-text">Start</div></a></div>
+				<div class="input-button-container"><a class="button input-button newbuttongrey" id="btn_pauseCet0_new" onclick="pauseCpt(0);"><div class="icon"><i class="fas fa-pause fa-fw"></i></div><div class="input-button-text">Pause</div></a></div>
 			</div>
 		</div>
 		<div class="input-container" id="card_cet1_new" style="display:none">

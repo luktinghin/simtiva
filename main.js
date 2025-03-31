@@ -177,6 +177,7 @@ var RSI_interval = 90;
 var preview_chart = new Array();
 preview_chart.push([]);
 preview_chart.push([]);
+preview_chart.push([]);//index 2 for max CE and dur
 
 window.ptolcouplesarray = []; //ptol couples over time
 //var ptol0overtime = new Array(); //ptol chart data for 0 over time, series based on chart data

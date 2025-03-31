@@ -1115,11 +1115,12 @@ a.interactionstab.active {
 }
 
 #card_RSI {
-  display:none;margin:10px;border-radius:10px 10px 9px 9px;background:cornsilk;border:1px solid darkorange;
+  display:none;margin:20px 0.5rem;
+  border-radius:10px 10px 9px 9px;background:cornsilk;border:1px solid darkorange;
 }
 
 .RSI_box {
-  display:none; font-size:0.8rem;background:white;border:1px solid darkorange;padding:10px;border-radius:9px;align-self:center;margin:20px 0
+  display:none; font-size:0.8rem;background:white;border:1px solid darkorange;padding:10px;border-radius:9px;align-self:center;margin:10px 0
 }
 
 body.dark #card_RSI {
@@ -1146,6 +1147,16 @@ body.dark .RSI_box {
 
 #card_RSI_contents.collapse {
   height:0;
+}
+
+#expandRSIbutton {
+  align-self:center;
+  background:#fff3;
+  border:1px solid #fff6;
+  border-radius:2rem;
+  padding:0 10px;
+  font-size:0.8rem;
+  font-weight:bold;
 }
 /*
 .card:focus-within {

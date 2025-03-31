@@ -2952,6 +2952,7 @@ function preview_cet(x,ind) {
 					working_clock = 0;
 					preview_chart[0].length = 0;
 					preview_chart[1].length = 0;
+					preview_chart[2].length = 0;
 					document.getElementById("RSI_preview").innerHTML = "";
 					//first check if peak time is less than interval time, in which case RSI mode is not necessary
 					if (temp_peak <= RSI_interval) {
@@ -3344,7 +3345,7 @@ function preview_cet(x,ind) {
 				}
 			}
 
-			roundup = Math.round((temp1e + temp2e + temp3e + temp4e)*1.5 + 1);
+			roundup = Math.round(preview_chart[2][0] * 1.25);
 			myChart.options.scales.y.max = roundup;
 			myChart.data.datasets[12].data = preview_chart[0];
 			myChart.data.datasets[13].data = preview_chart[1];
@@ -4659,6 +4660,8 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 						}
 					}
 					temptext = temptext + "Bolus duration has exceeded the interval! ";
+					preview_chart[2].push(tempvalue);
+					preview_chart[2].push(dur);
 					temptext = temptext + "Final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + "mcg/ml at <b>" + converttime(dur) + "</b>."; 
 				document.getElementById("RSI_preview").innerHTML = "PREVIEW: " + temptext;
 			} else {
@@ -4728,7 +4731,7 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 				temptext = "RSI bolus dose: " + real_bolus + "mg (bolus duration <b>" + converttime(bolus_duration) + "</b>). ";
 				if (bolus_duration>RSI_interval) {
 					temptext = temptext + "Bolus duration has exceeded the interval! ";
-				} else {
+				}
 					//calc alt peak time	
 					tempprior = e_state2[1] + e_state2[2] + e_state2[3] + e_state2[4];
 					for (rcc = 1; rcc<1000; rcc++) {
@@ -4742,7 +4745,9 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 							tempprior = tempvalue;
 						}
 					}
-				}
+				
+				preview_chart[2].push(tempvalue);
+				preview_chart[2].push(dur);
 				temptext = temptext + "Final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + "mcg/ml at <b>" + converttime(dur) + "</b>."; 
 				document.getElementById("RSI_preview").innerHTML = "PREVIEW: " + temptext;
 			}
@@ -6391,15 +6396,18 @@ function deliver_RSI() {
 }
 
 function preview_RSI() {
-	bs = document.getElementById("input_RSI_bolusspeed").value;
-	document.getElementById("select_bolusspeed").value = bs;
-	applybolusspeed();
-	document.getElementById("RSI_preview").style.display = "block";
 	inputCE = document.getElementById("input_RSI_CE").value *1;
-	RSI_interval = document.getElementById("input_RSI_time").value *1;
-	RSI_mode = true;
-	document.getElementById("inputDesiredCe0_new").value = inputCE;
-	displaypreview(inputCE,0);
+	if (inputCE>0) {
+		bs = document.getElementById("input_RSI_bolusspeed").value;
+		document.getElementById("select_bolusspeed").value = bs;
+		applybolusspeed();
+		document.getElementById("RSI_preview").style.display = "block";
+		document.getElementById("proceed_RSI_div").style.display = "block";
+		RSI_interval = document.getElementById("input_RSI_time").value *1;
+		RSI_mode = true;
+		document.getElementById("inputDesiredCe0_new").value = inputCE;
+		displaypreview(inputCE,0);
+	}
 }
 
 RSI_debounce = null;
@@ -6435,9 +6443,9 @@ function toggleRSI() {
 	isCollapsed = document.getElementById("card_RSI_contents").classList.contains("collapse");
 	if (isCollapsed) {
 		document.getElementById("card_RSI_contents").classList.remove("collapse");
-		document.getElementById("expandRSIbutton").innerHTML = '<i class="fas fa-angle-double-up"></i>HIDE';
+		document.getElementById("expandRSIbutton").innerHTML = '<i class="fas fa-angle-double-up"></i>&nbsp; HIDE';
 	} else {
 		document.getElementById("card_RSI_contents").classList.add("collapse");
-		document.getElementById("expandRSIbutton").innerHTML = '<i class="fas fa-angle-double-down"></i>SHOW';
+		document.getElementById("expandRSIbutton").innerHTML = '<i class="fas fa-angle-double-down"></i>&nbsp; SHOW';
 	}
 }
