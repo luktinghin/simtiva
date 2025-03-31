@@ -2818,6 +2818,27 @@ function createCharts(chartparam) {
 	    		borderColor: greenShadeDark,
 	    		fill: false,
 	    		parsing: false
+	    	},{ //index = 12 for preview
+	    		label: 'Preview-CP',
+	    		data: [],
+	    		borderWidth:5,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(255,0,0,0.75)',
+	    		borderDash: [6,3],
+	    		fill: false,
+	    		parsing: false
+	    	},{
+	    		label: 'Preview-CE',
+	    		data: [],
+	    		borderWidth:5,
+	    		pointRadius:0,
+	    		borderJoinStyle: 'round',
+	    		borderColor: 'rgb(0,192,0,0.75)',
+	    		borderDash: [6,3],
+	    		fill: false,
+	    		parsing:false
+
 	    	}]
 	    }, //end data
 	    options: {
@@ -2883,7 +2904,7 @@ function createCharts(chartparam) {
 			    	},
 	            	filter: function(tooltipItem, data) {
 	            		var index = tooltipItem.datasetIndex;
-	            		if ((index >= 2) && (index <=5)) {
+	            		if (((index >= 2) && (index <=5)) || (index==12) || (index==13)) {
 	            			return true;
 	            		} else {
 	            			return false;
@@ -2914,33 +2935,28 @@ function createCharts(chartparam) {
 	                	},
 
 	                	footer: function(tooltipItems) {
-
-	                		var infrate = "Inf rate: ";
-
-	                		var vitext = "VI: ";
-
-	                		var parsedx = tooltipItems[0].parsed.x;
-
-	                		infrate = infrate + getinfusionrate(parsedx * 60,active_drug_set_index) + "ml/h";
-
-	                		vitext = vitext + Math.round(drug_sets[active_drug_set_index].volinf[Math.round(parsedx*60)]*10)/10 + "ml";
-
-	                		if ((PD_mode == 1) && (active_drug_set_index == 0)) {
-	                			PD_text = "eBIS: " + BIS_array[Math.round(parsedx*60)];
-	                			return [infrate, vitext, PD_text];
-	                		} else if ((PD_mode == 2) && (ptolcouplesarray.length>0)) {
-	                			temp_ptol_elem = ptolcouplesarray[Math.round(parsedx*2)];
-	                			if (temp_ptol_elem == undefined) {
-	                				PD_text = "";
+	                			if ((tooltipItems[0].dataset.label == "Preview-CP") || (tooltipItems[0].dataset.label == "Preview-CE")) {
 	                			} else {
-	                				PD_text = "PTOL: " + Math.round(temp_ptol_elem.meta_ptol * 100);
-	                			}
-	                			return [infrate, vitext, PD_text];
-	                		} else {
-	                			return [infrate, vitext];	
-	                		}
-
-	                		
+			                		var infrate = "Inf rate: ";
+			                		var vitext = "VI: ";
+			                		var parsedx = tooltipItems[0].parsed.x;
+			                		infrate = infrate + getinfusionrate(parsedx * 60,active_drug_set_index) + "ml/h";
+			                		vitext = vitext + Math.round(drug_sets[active_drug_set_index].volinf[Math.round(parsedx*60)]*10)/10 + "ml";
+			                		if ((PD_mode == 1) && (active_drug_set_index == 0)) {
+			                			PD_text = "eBIS: " + BIS_array[Math.round(parsedx*60)];
+			                			return [infrate, vitext, PD_text];
+			                		} else if ((PD_mode == 2) && (ptolcouplesarray.length>0)) {
+			                			temp_ptol_elem = ptolcouplesarray[Math.round(parsedx*2)];
+			                			if (temp_ptol_elem == undefined) {
+			                				PD_text = "";
+			                			} else {
+			                				PD_text = "PTOL: " + Math.round(temp_ptol_elem.meta_ptol * 100);
+			                			}
+			                			return [infrate, vitext, PD_text];
+			                		} else {
+			                			return [infrate, vitext];	
+			                		}
+		                		}
 
 	                	}
 	                	

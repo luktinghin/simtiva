@@ -174,6 +174,9 @@ var time_of_stop = -1;
 var yxratio; //for use in myChart2 to calculate angle of arrow
 var RSI_mode = false;
 var RSI_interval = 90;
+var preview_chart = new Array();
+preview_chart.push([]);
+preview_chart.push([]);
 
 window.ptolcouplesarray = []; //ptol couples over time
 //var ptol0overtime = new Array(); //ptol chart data for 0 over time, series based on chart data

@@ -1113,6 +1113,40 @@ a.interactionstab.active {
   animation: fadeeffect 1s;
   background:transparent;
 }
+
+#card_RSI {
+  display:none;margin:10px;border-radius:10px 10px 9px 9px;background:cornsilk;border:1px solid darkorange;
+}
+
+.RSI_box {
+  display:none; font-size:0.8rem;background:white;border:1px solid darkorange;padding:10px;border-radius:9px;align-self:center;margin:20px 0
+}
+
+body.dark #card_RSI {
+  background: #333;
+}
+
+body.dark .RSI_box {
+  background: black;
+}
+
+#card_RSI_title {
+  display:flex;padding:5px;border-radius:9px;color:white;background:darkorange;
+}
+
+#card_RSI_contents {
+  height:260px;
+  padding:0 10px;
+  transition:0.3s all ease;
+  overflow-y: hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+#card_RSI_contents.collapse {
+  height:0;
+}
 /*
 .card:focus-within {
   background:#efefef;
@@ -5637,13 +5671,6 @@ body.dark #addeventtext{
   text-align: center;
 }
 
-#card_RSI {
-  display:none;margin:10px;border-radius:10px 10px 9px 9px;background:cornsilk;border:1px solid darkorange;
-}
-
-#card_RSI_title {
-  display:flex;padding:5px;border-radius:9px 9px 0 0;color:white;background:darkorange;
-}
 
 
 

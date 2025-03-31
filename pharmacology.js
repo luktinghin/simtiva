@@ -1991,11 +1991,9 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 	//first pass
 	for (i=0; i<180; i++) {
 		//if ((p_state2[1] == 0) || (skip == 1)) {
-			console.log(i*120);
 		if (p_state2[1] == 0) {
 				test_rate = drug_sets[ind].desired / drug_sets[ind].p_udf[cpt_interval];
 				drug_sets[ind].cpt_rates.push(test_rate);
-				console.log("testrate" + test_rate);
 		//	if (skip == 1) {
 		//		test_rate = cpt_rates_real[Math.floor(working_clock)-1];
 		//		cpt_times.push(i);
@@ -2951,6 +2949,9 @@ function preview_cet(x,ind) {
 				/* Iterate until solution is found [ln 2009] */
 
 				if (RSI_mode == true) {
+					working_clock = 0;
+					preview_chart[0].length = 0;
+					preview_chart[1].length = 0;
 					document.getElementById("RSI_preview").innerHTML = "";
 					//first check if peak time is less than interval time, in which case RSI mode is not necessary
 					if (temp_peak <= RSI_interval) {
@@ -3087,6 +3088,12 @@ function preview_cet(x,ind) {
 						//prior_test_rate = test_rate;
 						temp_result = p_state3[1] + p_state3[2] + p_state3[3];
 						temp_result_e = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
+						if (RSI_mode == true) {
+							if (j%10==0) {
+								preview_chart[0].push({x:(working_clock+bolus_duration+j)/60, y:temp_result});
+								preview_chart[1].push({x:(working_clock+bolus_duration+j)/60, y:temp_result_e});
+							}
+						}
 					}
 				
 				}
@@ -3303,6 +3310,50 @@ function preview_cet(x,ind) {
 				}
 			} //end else
 		} //end for
+		//real delivery, for preview chart generation, for RSI
+		if (RSI_mode == true) {
+			temp1 = p_state3[1];
+			temp2 = p_state3[2];
+			temp3 = p_state3[3];
+			temp1e = e_state3[1];
+			temp2e = e_state3[2];
+			temp3e = e_state3[3];
+			temp4e = e_state3[4];
+			tempcp = temp1 + temp2 + temp3;
+			tempce = temp1e + temp2e + temp3e + temp4e;
+			for (counterp = next_time; counterp<3590; counterp++) {
+				foundIndex = drug_sets[0].previewhistoryarray.findIndex((element) => element[0]>=counterp);
+				if (foundIndex == -1) {
+					foundIndex = drug_sets[0].previewhistoryarray.length - 1;
+				} else {
+					foundIndex = foundIndex - 1;
+				}
+				currate = drug_sets[0].previewhistoryarray[foundIndex][1];
+				temp1 = temp1 * Math.exp(-drug_sets[ind].lambda[1]) + drug_sets[0].p_coef[1] * currate * (1 - Math.exp(-drug_sets[ind].lambda[1]));
+				temp2 = temp2 * Math.exp(-drug_sets[ind].lambda[2]) + drug_sets[0].p_coef[2] * currate * (1 - Math.exp(-drug_sets[ind].lambda[2]));
+				temp3 = temp3 * Math.exp(-drug_sets[ind].lambda[3]) + drug_sets[0].p_coef[3] * currate * (1 - Math.exp(-drug_sets[ind].lambda[3]));
+				temp1e = temp1e * Math.exp(-drug_sets[ind].lambda[1]) + drug_sets[0].e_coef[1] * currate * (1 - Math.exp(-drug_sets[ind].lambda[1]));
+				temp2e = temp2e * Math.exp(-drug_sets[ind].lambda[2]) + drug_sets[0].e_coef[2] * currate * (1 - Math.exp(-drug_sets[ind].lambda[2]));
+				temp3e = temp3e * Math.exp(-drug_sets[ind].lambda[3]) + drug_sets[0].e_coef[3] * currate * (1 - Math.exp(-drug_sets[ind].lambda[3]));
+				temp4e = temp4e * Math.exp(-drug_sets[ind].lambda[4]) + drug_sets[0].e_coef[4] * currate * (1 - Math.exp(-drug_sets[ind].lambda[4]));
+				tempcp = temp1 + temp2 + temp3;
+				tempce = temp1e + temp2e + temp3e + temp4e;
+				if (counterp % 30 == 0) {
+					preview_chart[0].push({x:counterp/60,y:tempcp});
+					preview_chart[1].push({x:counterp/60,y:tempce});
+				}
+			}
+
+			roundup = Math.round((temp1e + temp2e + temp3e + temp4e)*1.5 + 1);
+			myChart.options.scales.y.max = roundup;
+			myChart.data.datasets[12].data = preview_chart[0];
+			myChart.data.datasets[13].data = preview_chart[1];
+			myChart.data.datasets[12].hidden = false;
+			myChart.data.datasets[13].hidden = false;
+			myChart.update();	
+
+				
+		}
 
 	} // end private function deliver cpt alt
 
@@ -3770,9 +3821,6 @@ function deliver_cet_real(x, ind) {
 						} else {
 							drug_sets[ind].volinf.push(temp_vol);
 						}
-
-
-						//if (j%60 ==0) {console.log(j + "real rate " + test_rate*3600/10 + " real Cp " + result);}
 						if (j%10==0) {
 							myChart.data.datasets[ind*2+2].data.push({x:(working_clock+bolus_duration+j)/60, y:temp_result});
 							myChart.data.datasets[ind*2+3].data.push({x:(working_clock+bolus_duration+j)/60, y:temp_result_e});
@@ -4500,6 +4548,7 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 			if (max_rate_input == 0) {
 				max_rate = 7200 * drug_sets[ind].infusate_concentration / 60 / 60;
 			}
+			working_clock = 0;
 		} else {
 			//however, needs to have a correction factor, because if max_rate too slow, will overshoot CE
 			min_rate = x / temp_peak; //in mg sec-1
@@ -4548,7 +4597,6 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 			drug_sets[ind].preview_bolus = real_bolus;	
 		}
 
-
 		for (counter1 = 0; counter1 <= bolus_duration; counter1++) {
 			p_state2[1] = p_state2[1] * l1 + drug_sets[ind].p_coef[1] * max_rate * (1 - l1);
 			p_state2[2] = p_state2[2] * l2 + drug_sets[ind].p_coef[2] * max_rate * (1 - l2);
@@ -4558,8 +4606,17 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 			e_state2[2] = e_state2[2] * l2 + drug_sets[ind].e_coef[2] * max_rate * (1 - l2);
 			e_state2[3] = e_state2[3] * l3 + drug_sets[ind].e_coef[3] * max_rate * (1 - l3);
 			e_state2[4] = e_state2[4] * l4 + drug_sets[ind].e_coef[4] * max_rate * (1 - l4);
+			if (RSI_mode == true) {
+				if (counter1 % 10 == 0) {
+					tempcp = p_state2[1] + p_state2[2] + p_state2[3];
+					tempce = e_state2[1] + e_state2[2] + e_state2[3] + e_state2[4];
+					preview_chart[0].push({x:(working_clock + counter1)/60, y:tempcp});
+					preview_chart[1].push({x:(working_clock + counter1)/60, y:tempce});
+				}
+			}
 		}
 		if (RSI_mode == true) {
+
 			//need further bolus to push up CE?
 			if (bolus_duration > RSI_interval) {
 				est_ce = e_state2[1] + e_state2[2] + e_state2[3] + e_state2[4];
@@ -4575,17 +4632,15 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 						e_state2[3] = e_state2[3] * l3 + drug_sets[ind].e_coef[3] * max_rate * (1 - l3);
 						e_state2[4] = e_state2[4] * l4 + drug_sets[ind].e_coef[4] * max_rate * (1 - l4);
 
-
-						//if (rc%10==0) {
-						//	temp_result = p_state3[1] + p_state3[2] + p_state3[3];
-						//	temp_result_e = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
-						//	myChart.data.datasets[ind*2+2].data.push({x:(working_clock+rc)/60, y:temp_result});
-						//	myChart.data.datasets[ind*2+3].data.push({x:(working_clock+rc)/60, y:temp_result_e});
-						//}
 						bolus_duration += 1;
 						real_bolus = Math.round(max_rate * bolus_duration);
 						drug_sets[ind].preview_bolus = real_bolus;	
+						est_cp = p_state2[1] + p_state2[2] + p_state2[3];
 						est_ce = e_state2[1] + e_state2[2] + e_state2[3] + e_state2[4];
+						if (bolus_duration % 10 == 0) {
+							preview_chart[0].push({x:(working_clock + bolus_duration)/60, y:est_cp});
+							preview_chart[1].push({x:(working_clock + bolus_duration)/60, y:est_ce});
+						}
 						if (est_ce >= drug_sets[0].desired) break;
 					}
 				}
@@ -4627,16 +4682,15 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 							e_state2[3] = e_state2[3] * l3 + drug_sets[ind].e_coef[3] * max_rate * (1 - l3);
 							e_state2[4] = e_state2[4] * l4 + drug_sets[ind].e_coef[4] * max_rate * (1 - l4);
 
-
-							//if (rc%10==0) {
-							//	temp_result = p_state3[1] + p_state3[2] + p_state3[3];
-							//	temp_result_e = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
-							//	myChart.data.datasets[ind*2+2].data.push({x:(working_clock+rc)/60, y:temp_result});
-							//	myChart.data.datasets[ind*2+3].data.push({x:(working_clock+rc)/60, y:temp_result_e});
-							//}
 							bolus_duration += 1;
 							real_bolus = Math.round(max_rate * bolus_duration);
 							drug_sets[ind].preview_bolus = real_bolus;
+							if (bolus_duration % 10 == 0) {
+								tempcp = p_state2[1] + p_state2[2] + p_state2[3];
+								tempce = e_state2[1] + e_state2[2] + e_state2[3] + e_state2[4];
+								preview_chart[0].push({x:(working_clock + bolus_duration)/60, y:tempcp});
+								preview_chart[1].push({x:(working_clock + bolus_duration)/60, y:tempce});
+							}
 							if (distance == 1) {
 								continuation_flag = true;
 							}	
@@ -4657,17 +4711,15 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 								e_state2[3] = e_state2[3] * l3 + drug_sets[ind].e_coef[3] * max_rate * (1 - l3);
 								e_state2[4] = e_state2[4] * l4 + drug_sets[ind].e_coef[4] * max_rate * (1 - l4);
 
-
-								//if (rc%10==0) {
-								//	temp_result = p_state3[1] + p_state3[2] + p_state3[3];
-								//	temp_result_e = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
-								//	myChart.data.datasets[ind*2+2].data.push({x:(working_clock+rc)/60, y:temp_result});
-								//	myChart.data.datasets[ind*2+3].data.push({x:(working_clock+rc)/60, y:temp_result_e});
-								//}
 								bolus_duration += 1;
 								real_bolus = Math.round(max_rate * bolus_duration);
 								drug_sets[ind].preview_bolus = real_bolus;	
+								est_cp = p_state2[1] + p_state2[2] + p_state2[3];
 								est_ce = e_state2[1] + e_state2[2] + e_state2[3] + e_state2[4];
+								if (bolus_duration % 10 == 0) {
+									preview_chart[0].push({x:(working_clock + bolus_duration)/60, y:est_cp});
+									preview_chart[1].push({x:(working_clock + bolus_duration)/60, y:est_ce});
+								}
 								if (est_ce >= drug_sets[0].desired) break;
 							}
 						}
@@ -4690,8 +4742,8 @@ function scheme_bolusadmin(x, ind, max_rate_input) {
 							tempprior = tempvalue;
 						}
 					}
-					temptext = temptext + "Final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + "mcg/ml at <b>" + converttime(dur) + "</b>."; 
 				}
+				temptext = temptext + "Final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + "mcg/ml at <b>" + converttime(dur) + "</b>."; 
 				document.getElementById("RSI_preview").innerHTML = "PREVIEW: " + temptext;
 			}
 			//recalculate next time
@@ -5124,8 +5176,8 @@ function bolusadmin(x, ind, max_rate_input) {
 							tempprior = tempvalue;
 						}
 					}
-					temptext = temptext + "Final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + "mcg/ml at <b>" + converttime(dur) + "</b>."; 
 				}
+				temptext = temptext + "Final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + "mcg/ml at <b>" + converttime(dur) + "</b>."; 
 				document.getElementById("RSI_message").innerHTML = temptext;
 			}
 			//recalculate next time
@@ -6316,6 +6368,10 @@ function RSIfunction(desired,interval) {
 }
 
 function deliver_RSI() {
+	myChart.data.datasets[12].data.length = 0;
+	myChart.data.datasets[13].data.length = 0;
+	myChart.data.datasets[12].hidden = true;
+	myChart.data.datasets[13].hidden = true;
 	inputCE = document.getElementById("input_RSI_CE").value *1;
 	RSI_interval = document.getElementById("input_RSI_time").value *1;
 	RSI_mode = true;
@@ -6323,11 +6379,15 @@ function deliver_RSI() {
 	document.getElementById("RSI_preview").style.display = "none";
 	document.getElementById("RSI_message").style.display = "block";
 	document.getElementById("input_RSI_CE").disabled = true;
+	document.getElementById("input_RSI_CE").style.borderColor = "transparent";
 	document.getElementById("input_RSI_bolusspeed").disabled = true;
+	document.getElementById("input_RSI_bolusspeed").style.borderColor = "transparent";
 	document.getElementById("input_RSI_time").disabled = true;
+	document.getElementById("input_RSI_time").style.borderColor = "transparent";
 	document.getElementById("proceed_RSI").style.display = "none";
 	document.getElementById("card_cet0_new").style.display = "flex";
 	start_cet();
+
 }
 
 function preview_RSI() {
@@ -6346,7 +6406,7 @@ RSI_debounce = null;
 
 function preview_RSI_debounce() {
 	clearTimeout(RSI_debounce);
-	RSI_debounce = setTimeout(preview_RSI,1000);
+	RSI_debounce = setTimeout(preview_RSI,500);
 }
 
 function RSI_start() {
@@ -6369,4 +6429,15 @@ function RSI_start() {
 	applybolusspeed();
 	applyoptions();
 	
+}
+
+function toggleRSI() {
+	isCollapsed = document.getElementById("card_RSI_contents").classList.contains("collapse");
+	if (isCollapsed) {
+		document.getElementById("card_RSI_contents").classList.remove("collapse");
+		document.getElementById("expandRSIbutton").innerHTML = '<i class="fas fa-angle-double-up"></i>HIDE';
+	} else {
+		document.getElementById("card_RSI_contents").classList.add("collapse");
+		document.getElementById("expandRSIbutton").innerHTML = '<i class="fas fa-angle-double-down"></i>SHOW';
+	}
 }

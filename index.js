@@ -459,12 +459,12 @@ const xInputCardsHTML = `
 			</div>
 		</div>
 		<div class="" id="card_RSI">
-			<div id="card_RSI_title"><div style="width:35px; height:35px; background: #5c5c5c; border-radius:4rem"><img src="iconintubation.png" style="width:100%;"></div><div style="align-self:center;font-weight:bold;padding-left:10px">RSI mode</div></div>
-			<div style="padding:10px" id="card_RSI_contents">
-				<div style="display:flex">
+			<div id="card_RSI_title"><div style="width:35px; height:35px; background: #5c5c5c; border-radius:4rem"><img src="iconintubation.png" style="width:100%;"></div><div style="align-self:center;font-weight:bold;padding-left:10px">RSI mode</div><div style="flex:1"></div><div id="expandRSIbutton" style="align-self:center" onclick="toggleRSI();"><i class="fas fa-angle-double-up"></i>HIDE</div></div>
+			<div style="display:flex;flex-direction:vertical" id="card_RSI_contents">
+				<div style="display:flex; align-items:center">
 					<div style="flex-basis:45%">CE target (mcg/ml):</div><div><input type="number" inputmode="decimal" id="input_RSI_CE" step="0.01" onkeyup="preview_RSI_debounce();"></div>
 				</div>
-				<div style="display:flex">
+				<div style="display:flex; align-items:center">
 					<div style="flex-basis:45%">Bolus speed:</div>
 					<div>
 						<select id="input_RSI_bolusspeed" onchange="preview_RSI();">
@@ -474,7 +474,7 @@ const xInputCardsHTML = `
 						</select>
 					</div>
 				</div>
-				<div style="display:flex">
+				<div style="display:flex; align-items:center">
 					<div style="flex-basis:45%">To be achieved at:</div>
 					<div>
 						<select id="input_RSI_time" onchange="preview_RSI();">
@@ -488,9 +488,9 @@ const xInputCardsHTML = `
 						</select>
 					</div>
 				</div>
-				<div style="min-height:100px; display:flex">
-					<div id="RSI_preview" style="display:none; font-size:0.8rem;background:white;border:1px solid darkorange;padding:10px;border-radius:9px;align-self:center;margin:20px 0">...</div>
-					<div id="RSI_message" style="display:none; font-size:0.8rem;background:white;border:1px solid darkorange;padding:10px;border-radius:9px;align-self:center;margin:20px 0">...</div>
+				<div style="min-height:50px; display:flex">
+					<div id="RSI_preview" style="" class="RSI_box">...</div>
+					<div id="RSI_message" style="" class="RSI_box">...</div>
 				</div>
 				<button id="proceed_RSI" onclick="deliver_RSI();">Proceed to RSI</button>
 			</div>
