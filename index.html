@@ -126,7 +126,8 @@
 					</tr>
 					<tr><td>Model <i class="fas fa-question tooltip2 ring"><span class="tooltiptext">Paedfusor: for children. Marsh/Schnider/Minto: for adults.</span></i></td>
 						<td>
-							<select id="select_model" onchange="sendToValidate(0)" >
+							<div id="modelSelector" onclick="displayModelOptions()"><div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Eleveld</div></div>
+							<select id="select_model" onchange="sendToValidate(0)" style="display:none">
 								
 									<option value="Marsh">Propofol (Marsh)</option>
 									<option value="Schnider">Propofol (Schnider)</option>
@@ -279,7 +280,7 @@
 						<a id="page2IB" class="page2subheading button huge" onclick="initcetbolus(0);hideallmodal();">INTERMITTENT BOLUS<i class="fas fa-hourglass-half fa-fw" style="color:#c19f14"></i></a>
 						<div id="page2maxrate" class="">
 							<table class="table-Init" style="text-align:left">
-								<tr class="fr" style="height:2rem">
+								<tr class="fr" style="height:2rem;width:50%">
 									<td style="padding:0">Max bolus speed:</td>
 									<td style="padding:0">
 										<select id="page2selectmaxrate" onchange="sendToUpdateMax(this.value);">

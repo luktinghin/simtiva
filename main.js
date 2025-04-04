@@ -1808,8 +1808,30 @@ function switchpaedimode(arg) {
 		document.getElementById("row_age_adultmode").style.display = "table-row";
 		document.getElementById("paedimode0").classList.add("active");
 		document.getElementById("paedimode1").classList.remove("active");
-		document.getElementById("select_model_paedi").style.display = "none";
-		document.getElementById("select_model").style.display = "block";
+		//update model selector display
+		tempmodel = document.getElementById("select_model").value;
+		if (tempmodel == "Eleveld") {
+			temptext = `<div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Eleveld</div>`;
+		} else if (tempmodel == "Marsh") {
+			temptext = `<div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Marsh</div>`;
+		} else if (tempmodel == "Schnider") {
+			temptext = `<div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Schnider</div>`;
+		} else if (tempmodel == "Paedfusor") {
+			temptext = `<div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Paedfusor</div>`;
+		} else if (tempmodel == "Minto") {
+			temptext = `<div class="modelOptionLine1">Remifentanil</div><div class="modelOptionLine2">Minto</div>`;
+		} else if (tempmodel == "Eleveld-Remifentanil") {
+			temptext = `<div class="modelOptionLine1">Remifentanil</div><div class="modelOptionLine2">Eleveld</div>`;
+		} else if (tempmodel == "Shafer") {
+			temptext = `<div class="modelOptionLine1">Fentanyl</div><div class="modelOptionLine2">Shafer</div>`;
+		} else if (tempmodel == "Maitre") {
+			temptext = `<div class="modelOptionLine1">Alfentanil</div><div class="modelOptionLine2">Maitre</div>`;
+		} else if (tempmodel == "Hannivoort") {
+			temptext = `<div class="modelOptionLine1">Dexmedetomidine</div><div class="modelOptionLine2">Hannivoort</div>`;
+		} else if (tempmodel == "Complex") {
+			temptext = `<div class="modelOptionLine1">Propofol + Opioid</div><div class="modelOptionLine2">Complex</div>`;
+		}
+		document.getElementById("modelSelector").innerHTML = temptext;
 		//on or off fentanyl / remifentanil depend on model
 		if ((document.getElementById("select_model").value == "Eleveld-Remifentanil") || (document.getElementById("select_model").value == "Minto") || (document.getElementById("select_model").value == "Shafer") || (document.getElementById("select_model").value == "Maitre") || (document.getElementById("select_model").value == "Hannivoort"))  {
 			if (document.getElementById("select_model").value == "Eleveld-Remifentanil") {
@@ -1872,6 +1894,30 @@ function switchpaedimode(arg) {
 		//paedi mode 1
 		document.querySelector(".table-Init").classList.add("paedimode");
 		document.getElementById("row_age_paedimode").style.display = "table-row";
+		//update model selector display
+		tempmodel = document.getElementById("select_model_paedi").value;
+		if (tempmodel == "Eleveld") {
+			temptext = `<div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Eleveld</div>`;
+		} else if (tempmodel == "Marsh") {
+			temptext = `<div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Marsh</div>`;
+		} else if (tempmodel == "Schnider") {
+			temptext = `<div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Schnider</div>`;
+		} else if (tempmodel == "Paedfusor") {
+			temptext = `<div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Paedfusor</div>`;
+		} else if (tempmodel == "Minto") {
+			temptext = `<div class="modelOptionLine1">Remifentanil</div><div class="modelOptionLine2">Minto</div>`;
+		} else if (tempmodel == "Eleveld-Remifentanil") {
+			temptext = `<div class="modelOptionLine1">Remifentanil</div><div class="modelOptionLine2">Eleveld</div>`;
+		} else if (tempmodel == "Shafer") {
+			temptext = `<div class="modelOptionLine1">Fentanyl</div><div class="modelOptionLine2">Shafer</div>`;
+		} else if (tempmodel == "Maitre") {
+			temptext = `<div class="modelOptionLine1">Alfentanil</div><div class="modelOptionLine2">Maitre</div>`;
+		} else if (tempmodel == "Hannivoort") {
+			temptext = `<div class="modelOptionLine1">Dexmedetomidine</div><div class="modelOptionLine2">Hannivoort</div>`;
+		} else if (tempmodel == "Complex") {
+			temptext = `<div class="modelOptionLine1">Propofol + Opioid</div><div class="modelOptionLine2">Complex</div>`;
+		}
+		document.getElementById("modelSelector").innerHTML = temptext;
 		if (document.getElementById("select_model_paedi").value == "Eleveld") {
 			document.getElementById("row_PMA_paedimode").style.display = "table-row";
 		} else {
@@ -1880,8 +1926,6 @@ function switchpaedimode(arg) {
 		document.getElementById("row_age_adultmode").style.display = "none";
 		document.getElementById("paedimode0").classList.remove("active");
 		document.getElementById("paedimode1").classList.add("active");
-		document.getElementById("select_model_paedi").style.display = "block";
-		document.getElementById("select_model").style.display = "none";
 		//off fentanyl changes
 			document.getElementById("row_gender").style.display = "table-row";
 			document.getElementById("row_height").style.display = "table-row";
@@ -2013,7 +2057,7 @@ function sendToValidate(arg) {
 			document.getElementById("row_dexdilution").style.display = "none";
 		}
 	}
-	if ((paedi_mode == 0) && (document.getElementById("select_model").value != "Shafer") && (document.getElementById("select_model").value != "Maitre")) {
+	if ((paedi_mode == 0) && (document.getElementById("select_model").value != "Shafer") && (document.getElementById("select_model").value != "Maitre") && (document.getElementById("select_model").value != "Hannivoort")) {
 			document.getElementById("row_gender").style.display = "table-row";
 			document.getElementById("row_height").style.display = "table-row";
 	}
@@ -2057,6 +2101,71 @@ function sendToValidate(arg) {
 	}
 }
 
+function displayModelOptions() {
+	if (paedi_mode == 0) {
+		text = `
+			<div class="modelOptionContainerOuter">
+				<div class="modelOptionContainer">
+					<div class="modelOption" id="modelEleveld"><div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Eleveld</div></div>
+					<div class="modelOption" id="modelMarsh"><div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Marsh</div></div>
+					<div class="modelOption" id="modelSchnider"><div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Schnider</div></div>
+					<div class="modelOption" id="modelPaedfusor"><div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Paedfusor</div></div>
+				</div>
+				<div class="modelOptionContainer">
+					<div class="modelOption" id="modelMinto"><div class="modelOptionLine1">Remifentanil</div><div class="modelOptionLine2">Minto</div></div>
+					<div class="modelOption" id="modelEleveld-Remifentanil"><div class="modelOptionLine1">Remifentanil</div><div class="modelOptionLine2">Eleveld</div></div>
+					<div class="modelOption" id="modelShafer"><div class="modelOptionLine1">Fentanyl</div><div class="modelOptionLine2">Shafer</div></div>
+					<div class="modelOption" id="modelMaitre"><div class="modelOptionLine1">Alfentanil</div><div class="modelOptionLine2">Maitre</div></div>
+					<div class="modelOption" id="modelHannivoort"><div class="modelOptionLine1">Dexmedetomidine</div><div class="modelOptionLine2">Hannivoort</div></div>				
+				</div>
+			</div>
+			<div class="modelHR"></div>
+			<div class="modelOption" id="modelComplex"><div class="modelOptionLine1">Propofol + Opioid</div><div class="modelOptionLine2">Complex</div></div>
+		`;
+	} else {
+		text = `
+			<div class="modelOption" id="modelEleveld"><div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Eleveld</div></div>
+			<div class="modelOption" id="modelPaedfusor"><div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Paedfusor</div></div>
+			<div class="modelOption" id="modelEleveld-Remifentanil"><div class="modelOptionLine1">Remifentanil</div><div class="modelOptionLine2">Eleveld</div></div>
+			<div class="modelHR"></div>
+			<div class="modelOption" id="modelComplex"><div class="modelOptionLine1">Propofol + Opioid</div><div class="modelOptionLine2">Complex</div></div>
+		`;
+	}
+
+	displayWarning("Choose model", text);
+	//program the model option buttons
+	value = document.getElementById("select_model").value;
+	ElList = document.getElementsByClassName("modelOption");
+	for (dmmc = 0; dmmc<ElList.length; dmmc++) {
+		if (ElList[dmmc].id.slice(5) == value) {
+			ElList[dmmc].classList.add("modelActive");
+		} 
+		ElList[dmmc].addEventListener('click',modelOptionEvent);
+	}
+	function modelOptionEvent(event) {
+		identry = event.currentTarget.id;
+		idtemp = identry.slice(5);
+		ElList = document.getElementsByClassName("modelOption");
+		for (dmmc = 0; dmmc<ElList.length; dmmc++) {
+			if (ElList[dmmc].id.slice(5) == idtemp) {
+				ElList[dmmc].classList.add("modelActive");
+			} else {
+				ElList[dmmc].classList.remove("modelActive");
+			}
+		}
+		if (paedi_mode == 0) {
+			document.getElementById("select_model").value = idtemp;	
+		} else {
+			document.getElementById("select_model_paedi").value = idtemp;	
+		}
+		document.getElementById("modelSelector").innerHTML = event.currentTarget.innerHTML;
+		sendToValidate(0);
+		setTimeout(function() {
+			hidemodal('modalWarning');
+		},500);
+	}
+
+}
 
 function toPageOne() {
   setTimeout(function(){setmodal("modalInitial")},200);

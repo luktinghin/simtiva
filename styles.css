@@ -541,9 +541,73 @@ input[type=number]:not(:placeholder-shown):focus:valid {
   cursor: pointer;
 }
 
-body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom_opioiddilution body.dark #custom_dexdilution, body.dark #PMA_explanation {
+body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom_opioiddilution, body.dark #custom_dexdilution, body.dark #PMA_explanation {
   background: #187f18;
   color: white;
+}
+
+#modelSelector {
+  display: inline-block;
+  letter-spacing: -0.5px;
+  background: rgb(213,237,214);
+  border-radius: 1rem;
+  padding: 0 10px;
+  line-height: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#modelSelector .modelOptionLine1 {
+  font-weight: normal;
+  font-style:italic;
+  font-size:0.8rem;
+  display:inline-block;
+}
+
+#modelSelector .modelOptionLine2 {
+  display:inline-block;
+  padding-left:5px;
+  font-size:0.9rem;
+}
+
+.modelOptionContainerOuter {
+  display: flex;
+  gap:10px;
+}
+.modelOptionContainer {
+  flex:1;
+}
+
+.modelOption {
+  margin-bottom:5px;
+  border-radius:9px;
+  cursor:pointer;
+  border:2px solid #ddd;
+  background: #eee;
+  padding: 5px 10px;
+}
+
+.modelOptionLine1 {
+  font-size:0.8rem;
+}
+
+.modelOptionLine2 {
+  font-weight:bold;
+  font-size:1rem;
+}
+
+.modelHR {
+  height:0;
+  border-bottom:1px solid #ddd;
+  padding-top:5px;
+  margin-bottom:10px;
+}
+
+.modelActive {
+  border: 2px solid rgba(0,255,0,0.5);
+  background:#198964;
+  color:white;
+  font-weight:bold;
 }
 
 .tooltip {
