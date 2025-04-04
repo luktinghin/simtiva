@@ -6625,12 +6625,10 @@ function dex_populate_speed() {
 	El1.options[1].innerText = ratearray[5] + "ml/h (5mcg/kg/h)";
 	El1.options[2].innerText = ratearray[4] + "ml/h (4mcg/kg/h)";
 	El1.options[3].innerText = ratearray[3] + "ml/h (3mcg/kg/h)";
-	El1.options[4].innerText = ratearray[2] + "ml/h (2mcg/kg/h)";
-	El1.options[5].innerText = ratearray[1] + "ml/h (1mcg/kg/h)";
+
 	El2.options[0].innerText = ratearray[6] + "ml/h (6mcg/kg/h)";
 	El2.options[1].innerText = ratearray[5] + "ml/h (5mcg/kg/h)";
 	El2.options[2].innerText = ratearray[4] + "ml/h (4mcg/kg/h)";
 	El2.options[3].innerText = ratearray[3] + "ml/h (3mcg/kg/h)";
-	El2.options[4].innerText = ratearray[2] + "ml/h (2mcg/kg/h)";
-	El2.options[5].innerText = ratearray[1] + "ml/h (1mcg/kg/h)";
+
 }

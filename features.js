@@ -4287,6 +4287,9 @@ function updatechart(chart) {
 				if (drug_sets[active_drug_set_index].drug_name == "Propofol" || drug_sets[active_drug_set_index].drug_name == "Remifentanil") {
 					chart.options.scales.y.max = 5;
 					chart.options.scales.y.ticks.stepSize = 0.5;
+				} else if (drug_sets[active_drug_set_index].drug_name == "Dexmedetomidine") {
+					chart.options.scales.y.max = 2;
+					chart.options.scales.y.ticks.stepSize = 0.2;
 				} else {
 					chart.options.scales.y.max = 3;
 					chart.options.scales.y.ticks.stepSize = 0.5;
@@ -4340,6 +4343,14 @@ function updatechart(chart) {
 					chart.options.scales.y.ticks.stepSize = 50;
 				}
 			}
+			if (drug_sets[active_drug_set_index].drug_name == "Dexmedetomidine") {
+				if (chart.options.scales.y.max <= 2) {
+					chart.options.scales.y.ticks.stepSize = 0.2;
+				} else {
+					chart.options.scales.y.ticks.stepSize = 0.5;
+				}
+			}
+
 		}
 
 	}
@@ -5728,6 +5739,33 @@ function updateConcOptions() {
 		el.options[11].textContent = "2ng/ml";
 		el.options[12].value = "1";
 		el.options[12].textContent = "1ng/ml";
+	} else if (drug == "Dexmedetomidine") {
+		el.options[0].value = "6";
+		el.options[0].textContent = "6ng/ml";
+		el.options[1].value = "5.5";
+		el.options[1].textContent = "5.5ng/ml";
+		el.options[2].value = "5";
+		el.options[2].textContent = "5ng/ml";
+		el.options[3].value = "4.5";
+		el.options[3].textContent = "4.5ng/ml";
+		el.options[4].value = "4";
+		el.options[4].textContent = "4ng/ml";
+		el.options[5].value = "3.5";
+		el.options[5].textContent = "3.5ng/ml";
+		el.options[6].value = "3";
+		el.options[6].textContent = "3ng/ml";
+		el.options[7].value = "2.5";
+		el.options[7].textContent = "2.5ng/ml";
+		el.options[8].value = "2";
+		el.options[8].textContent = "2ng/ml";
+		el.options[9].value = "1.5";
+		el.options[9].textContent = "1.5ng/ml";
+		el.options[10].value = "1";
+		el.options[10].textContent = "1ng/ml";
+		el.options[11].value = "0.8";
+		el.options[11].textContent = "0.8ng/ml";
+		el.options[12].value = "0.6";
+		el.options[12].textContent = "0.6ng/ml";
 	}
 	el.value = myChart.options.scales.y.max;
 }
