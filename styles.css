@@ -582,9 +582,15 @@ body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom
   margin-bottom:5px;
   border-radius:9px;
   cursor:pointer;
-  border:2px solid #ddd;
-  background: #eee;
+  border:2px solid #d0d0d0;
+  background: #e0e0e0;
   padding: 5px 10px;
+  transition:0.3s all ease;
+}
+
+.modelOption:hover {
+  background:#eee;
+  border-color:#ddd;
 }
 
 .modelOptionLine1 {
@@ -609,6 +615,43 @@ body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom
   color:white;
   font-weight:bold;
 }
+
+.modelActive:hover {
+  border: 2px solid rgba(0,255,0,0.9);
+  background:#198964;
+  color:white;
+  font-weight:bold;
+}
+
+body.dark .modelOption {
+  background:#333;
+  border-color:#666;
+}
+
+body.dark .modelOption:hover {
+  background:#444;
+  border-color: rgb(80,160,80);
+}
+
+body.dark .modelOptionLine1 {
+  opacity:0.6;
+}
+
+body.dark .modelActive {
+  border: 2px solid rgba(0,255,0,0.5);
+  background:#198964;
+  color:white;
+  font-weight:bold;
+}
+
+body.dark .modelActive:hover {
+  border: 2px solid rgba(0,255,0,1);
+  background:#198964;
+  color:white;
+  font-weight:bold;
+}
+
+
 
 .tooltip {
   position: relative;

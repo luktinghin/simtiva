@@ -2151,6 +2151,7 @@ function displayModelOptions() {
 				ElList[dmmc].classList.add("modelActive");
 			} else {
 				ElList[dmmc].classList.remove("modelActive");
+				ElList[dmmc].style.opacity = 0.5;
 			}
 		}
 		if (paedi_mode == 0) {
@@ -2162,7 +2163,7 @@ function displayModelOptions() {
 		sendToValidate(0);
 		setTimeout(function() {
 			hidemodal('modalWarning');
-		},500);
+		},300);
 	}
 
 }
@@ -2301,7 +2302,7 @@ function pageTwoFunction(arg) {
 	      document.getElementById("page2proceed").addEventListener('click', cetevent);
 	      document.getElementById("page2proceed").removeEventListener('click', cptevent);
 	      //show RSI mode if needed
-	      if (drug_sets[0].drug_name == "Propofol") {
+	      if ((drug_sets[0].drug_name == "Propofol") && ((drug_sets[0].model_name=="Marsh")||(drug_sets[0].model_name=="Eleveld"))) {
 	      	document.getElementById("page2proceed").classList.remove("wide");
 	      	document.getElementById("page2RSI").style.display = "inline-block";
 	      }
