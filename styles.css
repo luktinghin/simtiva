@@ -541,11 +541,6 @@ input[type=number]:not(:placeholder-shown):focus:valid {
   cursor: pointer;
 }
 
-body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom_opioiddilution, body.dark #custom_dexdilution, body.dark #PMA_explanation {
-  background: #187f18;
-  color: white;
-}
-
 #modelSelector {
   display: inline-block;
   letter-spacing: -0.5px;
@@ -568,6 +563,11 @@ body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom
   display:inline-block;
   padding-left:5px;
   font-size:0.9rem;
+}
+
+body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom_opioiddilution, body.dark #custom_dexdilution, body.dark #PMA_explanation, body.dark #modelSelector {
+  background: #187f18;
+  color: white;
 }
 
 .modelOptionContainerOuter {
