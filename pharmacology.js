@@ -287,6 +287,12 @@ function initmanual(ind) {
 		if (ind==0) {
 			document.getElementById("card_infusion" + ind).classList.remove("hide");
 		}
+		//off bolus for dexmedetomidine
+		if (drug_sets[0].drug_name == "Dexmedetomidine") {
+			document.getElementById("card_bolus0").style.display = "none";
+			document.getElementById("tableInitialBolus" + ind).style.display = "none";
+			document.getElementById("tableInfusionRate" + ind).classList.remove("line");
+		}
 
 }
 
@@ -638,10 +644,13 @@ function start_manual(ind) { //this is new
 
 		//UI code goes here
 		document.getElementById("btn_start" + ind).innerHTML = "Update Rate";
-		document.getElementById("tableInitialBolus" + ind).style.display = "none";
-		document.getElementById("tableInfusionRate" + ind).classList.remove("line");
-		document.getElementById("card_bolus" + ind).style.display ="";
-		document.getElementById("card_bolus" + ind).classList.remove("hide");
+		if (drug_sets[ind].drug_name != "Dexmedetomidine") {
+			document.getElementById("tableInitialBolus" + ind).style.display = "none";
+			document.getElementById("tableInfusionRate" + ind).classList.remove("line");
+			document.getElementById("card_bolus" + ind).style.display ="";
+			document.getElementById("card_bolus" + ind).classList.remove("hide");
+		}
+
 		
 		document.getElementById("status").innerHTML="Running";
 		document.getElementById("iconplay").classList.remove("stop");
@@ -1870,6 +1879,10 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 				}
 				counter_rate = counter_rate -2;
 				if (counter_rate<=0) counter_rate = 0;
+				console.log("temp difference" + temp_difference);
+				console.log("max rate" + max_rate_input_persec);
+				console.log("orig bolus " + (drug_sets[ind].desired-(p_state[1]+p_state[2]+p_state[3]))/drug_sets[ind].p_udf[1]);
+				console.log(temp_difference/drug_sets[ind].p_udf[counter_rate]);
 				console.log(counter_rate);
 				drug_sets[ind].cpt_bolus = counter_rate * max_rate_input_persec;
 				console.log(drug_sets[ind].cpt_bolus);
@@ -2087,6 +2100,16 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 				//if (cpt_bolus>0) cpt_bolus = cpt_bolus +5; // up the bolus
 			}
 		}
+	} else if (drug_sets[ind].drug_name == "Dexmedetomidine") {
+		if (cpt_threshold_auto == 1) {
+			if (drug_sets[ind].cpt_rates[5]*360 > 10) {
+				cpt_threshold = 0.25;
+				cpt_avgfactor = 0.5;
+			} else {
+				cpt_threshold = 0.15;
+				cpt_avgfactor = 0.75;
+			}
+		}
 	} else {
 		if (cpt_threshold_auto == 1) {
 			if (drug_sets[ind].cpt_rates[5]*360 >= 30) {
@@ -2099,6 +2122,8 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 			}
 		}
 	}
+
+
 
 
 	//new second pass (downsample infusion rates from cpt_rates and write to cpt_rates_real)
@@ -3737,17 +3762,13 @@ function deliver_cet_real(x, ind) {
 					drug_sets[ind].cet_bolus = Math.ceil(drug_sets[ind].cet_bolus)
 				}; // round up to the next 5mg bolus if bw big 
 
-				//console.log(temp1e + " " + temp2e + " " + temp3e + " " + temp4e);
-				//console.log("debug cet, virtualmodel = " + virtual_model(temp1e, temp2e, temp3e, temp4e, temp_peak, 1, ind));
-				//console.log("debug cet, trialrate= " + trial_rate);
-				//console.log("debug cet, cet_bolus= " + drug_sets[ind].cet_bolus);
-				//console.log("debug cet, temp_peak= " + temp_peak);
-				//console.log("debug cet, current= " + current);
-
-				//scheme_bolusadmin(drug_sets[ind].cet_bolus,ind);
-
 				bolusadmin(drug_sets[ind].cet_bolus,ind,max_rate_input);
 				
+				if (drug_sets[ind].drug_name == "Dexmedetomidine") {
+					//set pause time to zero
+					real_peak = temp_peak;
+					temp_peak = bolus_duration;
+				}
 				drug_sets[ind].prior_peak_time = temp_peak;
 				next_time = working_clock + temp_peak;
 				console.log("bolusduration" + bolus_duration);
@@ -3851,6 +3872,10 @@ function deliver_cet_real(x, ind) {
 				}
 				if (RSI_mode == true) {
 					RSI_mode = false;
+					temp_peak = real_peak;
+					drug_sets[ind].prior_peak_time = temp_peak;
+				}
+				if (drug_sets[ind].drug_name == "Dexmedetomidine") {
 					temp_peak = real_peak;
 					drug_sets[ind].prior_peak_time = temp_peak;
 				}
@@ -4913,6 +4938,9 @@ function bolusadmin(x, ind, max_rate_input) {
 			if (min_rate > max_rate) {
 				//bolus duration will exceed temp peak, set to 0.8
 				rate_corr_factor = 0.8;
+				if (drug_sets[ind].drug_name == "Dexmedetomidine") {
+					rate_corr_factor = 1;
+				}
 			} else if (max_rate_input>1200) {
 				rate_corr_factor = 0.97;
 			} else {
@@ -5038,6 +5066,71 @@ function bolusadmin(x, ind, max_rate_input) {
 							myChart.data.datasets[ind*2+3].data.push({x:(working_clock+counter1)/60, y:temp_result_e});
 						}
 		}
+		// CPT mode check if can reach CP esp for slow max rate
+		if (drug_sets[ind].cpt_active > 0) {
+			est_cp = p_state3[1] + p_state3[2] + p_state3[3];
+			if (est_cp < drug_sets[0].desired) {
+				for (cpec = 0; cpec<600; cpec++) {
+					p_state3[1] = p_state3[1] * l1 + drug_sets[ind].p_coef[1] * max_rate * (1 - l1);
+					p_state3[2] = p_state3[2] * l2 + drug_sets[ind].p_coef[2] * max_rate * (1 - l2);
+					p_state3[3] = p_state3[3] * l3 + drug_sets[ind].p_coef[3] * max_rate * (1 - l3);
+
+					e_state3[1] = e_state3[1] * l1 + drug_sets[ind].e_coef[1] * max_rate * (1 - l1);
+					e_state3[2] = e_state3[2] * l2 + drug_sets[ind].e_coef[2] * max_rate * (1 - l2);
+					e_state3[3] = e_state3[3] * l3 + drug_sets[ind].e_coef[3] * max_rate * (1 - l3);
+					e_state3[4] = e_state3[4] * l4 + drug_sets[ind].e_coef[4] * max_rate * (1 - l4);
+					drug_sets[ind].cpt_cp.push([p_state3[1],p_state3[2],p_state3[3]]);
+					drug_sets[ind].cpt_ce.push([e_state3[1],e_state3[2],e_state3[3],e_state3[4]]);
+					temp_vol = temp_vol + max_rate/drug_sets[ind].infusate_concentration;
+					drug_sets[ind].volinf.push(temp_vol);
+					drug_sets[ind].cpt_rates_real.push(max_rate);
+					est_cp = p_state3[1] + p_state3[2] + p_state3[3];
+					est_ce = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
+					bolus_duration += 1;
+					real_bolus = Math.round(max_rate * bolus_duration);
+						if (cpec%10==0) {
+							myChart.data.datasets[ind*2+2].data.push({x:(working_clock+bolus_duration)/60, y:est_cp});
+							myChart.data.datasets[ind*2+3].data.push({x:(working_clock+bolus_duration)/60, y:est_ce});
+						}
+					if (est_cp > drug_sets[0].desired) break;
+				}
+			}
+		}
+		/*
+		if ((drug_sets[ind].cet_active > 0) && (drug_sets[ind].drug_name == "Dexmedetomidine")) {
+			est_ce = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
+			if (est_ce < drug_sets[0].desired*0.7) {
+				for (ceec = 0; ceec<600; ceec++) {
+					p_state3[1] = p_state3[1] * l1 + drug_sets[ind].p_coef[1] * max_rate * (1 - l1);
+					p_state3[2] = p_state3[2] * l2 + drug_sets[ind].p_coef[2] * max_rate * (1 - l2);
+					p_state3[3] = p_state3[3] * l3 + drug_sets[ind].p_coef[3] * max_rate * (1 - l3);
+
+					e_state3[1] = e_state3[1] * l1 + drug_sets[ind].e_coef[1] * max_rate * (1 - l1);
+					e_state3[2] = e_state3[2] * l2 + drug_sets[ind].e_coef[2] * max_rate * (1 - l2);
+					e_state3[3] = e_state3[3] * l3 + drug_sets[ind].e_coef[3] * max_rate * (1 - l3);
+					e_state3[4] = e_state3[4] * l4 + drug_sets[ind].e_coef[4] * max_rate * (1 - l4);
+					drug_sets[ind].cpt_cp.push([p_state3[1],p_state3[2],p_state3[3]]);
+					drug_sets[ind].cpt_ce.push([e_state3[1],e_state3[2],e_state3[3],e_state3[4]]);
+					temp_vol = temp_vol + max_rate/drug_sets[ind].infusate_concentration;
+					drug_sets[ind].volinf.push(temp_vol);
+					drug_sets[ind].cpt_rates_real.push(max_rate);
+					est_cp = p_state3[1] + p_state3[2] + p_state3[3];
+					est_ce = e_state3[1] + e_state3[2] + e_state3[3] + e_state3[4];
+					bolus_duration += 1;
+					real_bolus = Math.round(max_rate * bolus_duration);
+						if (ceec%10==0) {
+							myChart.data.datasets[ind*2+2].data.push({x:(working_clock+bolus_duration)/60, y:est_cp});
+							myChart.data.datasets[ind*2+3].data.push({x:(working_clock+bolus_duration)/60, y:est_ce});
+						}
+					if (est_ce > drug_sets[0].desired*0.7) break;
+				}
+			}
+			drug_sets[ind].cet_bolus = real_bolus;	
+			console.log("CET mode add more bolus, new bolus is "+ real_bolus);
+			console.log("new bolus duration is " + bolus_duration);
+		}
+		*/
+	
 		if (RSI_mode == true) {
 			//need further bolus to push up CE?
 			if (bolus_duration > RSI_interval) {
@@ -5729,7 +5822,6 @@ function readmodel(x, drug_set_index) {
 
 	}
 	if (x == "Maitre") {
-
 		if (gender == 1)
 			{
 				drug_sets[drug_set_index].vc = 0.111 * mass;
@@ -5768,6 +5860,44 @@ function readmodel(x, drug_set_index) {
 		"k31 = " + drug_sets[drug_set_index].k31 + "<br>" +
 		"ke0 = " + drug_sets[drug_set_index].k41 + ";<br>" +
 		"ke0 derived from Scott & Stanski (J Pharmacol Exp Ther 1987;240:159-166)";
+	}
+	if (x == "Hannivoort") {
+		drug_sets[drug_set_index].vc = 1.78 * (mass/70);
+		v2 = 30.3 * (mass/70);
+		v3 = 52 * (mass/70);
+		cl1 = 0.686 * Math.pow((mass/70),0.75);
+		cl2 = 2.98 * Math.pow((v2/30.3),0.75);
+		cl3 = 0.602 * Math.pow((v3/52),0.75);
+		drug_sets[drug_set_index].k10 = cl1 / drug_sets[drug_set_index].vc;
+		drug_sets[drug_set_index].k12 = cl2 / drug_sets[drug_set_index].vc;
+		drug_sets[drug_set_index].k13 = cl3 / drug_sets[drug_set_index].vc;
+		drug_sets[drug_set_index].k21 = cl2 / v2;
+		drug_sets[drug_set_index].k31 = cl3 / v3;
+		drug_sets[drug_set_index].k41 = 0.0428;
+		//Colin 2017, for MOAA/S : ke0 = 0.0428
+		//Colin 2017, for BIS : ke0 = 0.12
+		drug_sets[drug_set_index].drug_name = "Dexmedetomidine";
+		drug_sets[drug_set_index].conc_units = "ng";
+		drug_sets[drug_set_index].infused_units = "mcg";
+		drug_sets[drug_set_index].inf_rate_permass_factor = 1;
+		drug_sets[drug_set_index].inf_rate_permass_unit = "mcg/kg/h";
+		drug_sets[drug_set_index].inf_rate_permass_dp = 100;
+		drug_sets[drug_set_index].modeltext = "Hannivoort model (Anesthesiology 2015;123:357-367)" + "<br>" +
+		"vc = " + drug_sets[drug_set_index].vc + "<br>" +
+		"k10 = " + drug_sets[drug_set_index].k10 + "<br>" + 
+		"k12 = " + drug_sets[drug_set_index].k12 + "<br>" +
+		"k13 = " + drug_sets[drug_set_index].k13 + "<br>" +
+		"k21 = " + drug_sets[drug_set_index].k21 + "<br>" +
+		"k31 = " + drug_sets[drug_set_index].k31 + "<br>" +
+		"ke0 = " + drug_sets[drug_set_index].k41 + ";<br>" +
+		"ke0 (MOAA-Sedation scale): from Colin et al (BJA 2017; 119:200-210)";
+		console.log("Dex");
+		console.log(drug_sets[drug_set_index].vc);
+		console.log(v2);
+		console.log(v3);
+		console.log(cl1);
+		console.log(cl2);
+		console.log(cl3);
 	}
 	/*
 	if (x == "Shafer (Weight adjusted)") {
@@ -6448,4 +6578,35 @@ function toggleRSI() {
 		document.getElementById("card_RSI_contents").classList.add("collapse");
 		document.getElementById("expandRSIbutton").innerHTML = '<i class="fas fa-angle-double-down"></i>&nbsp; SHOW';
 	}
+}
+
+//dexmedetomidine functions
+function dex_generate_limits() {
+	masstable = new Array();
+	masstable.push(0);
+	masstable.push(Math.round(mass*1/drug_sets[0].infusate_concentration));
+	masstable.push(Math.round(mass*2/drug_sets[0].infusate_concentration));
+	masstable.push(Math.round(mass*3/drug_sets[0].infusate_concentration));
+	masstable.push(Math.round(mass*4/drug_sets[0].infusate_concentration));
+	masstable.push(Math.round(mass*5/drug_sets[0].infusate_concentration));
+	masstable.push(Math.round(mass*6/drug_sets[0].infusate_concentration));
+	return masstable;
+}
+
+function dex_populate_speed() {
+	El1 = document.getElementById("page2selectmaxratedex");
+	El2 = document.getElementById("select_bolusspeeddex");
+	ratearray = dex_generate_limits();
+	El1.options[0].innerText = ratearray[6] + "ml/h (6mcg/kg/h)";
+	El1.options[1].innerText = ratearray[5] + "ml/h (5mcg/kg/h)";
+	El1.options[2].innerText = ratearray[4] + "ml/h (4mcg/kg/h)";
+	El1.options[3].innerText = ratearray[3] + "ml/h (3mcg/kg/h)";
+	El1.options[4].innerText = ratearray[2] + "ml/h (2mcg/kg/h)";
+	El1.options[5].innerText = ratearray[1] + "ml/h (1mcg/kg/h)";
+	El2.options[0].innerText = ratearray[6] + "ml/h (6mcg/kg/h)";
+	El2.options[1].innerText = ratearray[5] + "ml/h (5mcg/kg/h)";
+	El2.options[2].innerText = ratearray[4] + "ml/h (4mcg/kg/h)";
+	El2.options[3].innerText = ratearray[3] + "ml/h (3mcg/kg/h)";
+	El2.options[4].innerText = ratearray[2] + "ml/h (2mcg/kg/h)";
+	El2.options[5].innerText = ratearray[1] + "ml/h (1mcg/kg/h)";
 }

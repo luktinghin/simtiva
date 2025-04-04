@@ -1122,6 +1122,14 @@ const xCardsHTML = `
 											<option value="400">400ml/h</option>
 											<option value="300">300ml/h</option>
 							</select>
+							<select id="select_bolusspeeddex" onchange="applybolusspeeddex();">
+								<option value="6" selected></option>
+								<option value="5"></option>
+								<option value="4"></option>
+								<option value="3"></option>
+								<option value="2"></option>
+								<option value="1"></option>
+							</select>
 						</td>
 					</tr>
 					<tr id="option_threshold_row" class="fr"><td style="letter-spacing:-0.5px;font-stretch:90%">Maintenance accuracy <i class="fas fa-question tooltip background ring"><span class="tooltiptext" style="width:170px">Threshold of CPT/CET schemes. Lazy: less frequent rate changes. Accurate: more frequent changes.</span></i></td>

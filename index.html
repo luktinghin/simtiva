@@ -132,14 +132,11 @@
 									<option value="Schnider">Propofol (Schnider)</option>
 									<option value="Paedfusor">Propofol (Paedfusor)</option>
 									<option value="Eleveld" selected>Propofol (Eleveld)</option>
-								
 									<option value="Minto">Remifentanil (Minto)</option>
 									<option value="Eleveld-Remifentanil">Remifentanil (Eleveld)</option>
-								
 									<option value="Maitre">Alfentanil (Maitre)</option>
-								
 									<option value="Shafer">Fentanyl (Shafer)</option>
-
+									<option value="Hannivoort">Dexmedetomidine (Hannivoort)</option>
 									<option value="Complex">Complex (Dual mode)</option>
 								
 							</select>
@@ -211,9 +208,17 @@
 							</div>
 						</td>
 					</tr>
-					<tr id="row_dexmededilution"><td>Drug dilution (mcg/ml)</td>
+					<tr id="row_dexdilution"><td style="letter-spacing:-0.5px">Concentration <span style="font-size: 85%">(mcg/ml)</span></td>
 						<td>
-							<input type="number" inputmode="decimal" id="inputDexmedeDilution" value="4">
+							<select id="select_dexdilution" onchange="change_dexdilution(this.value)">
+								<option value="2">2mcg/ml</option>
+								<option value="4" selected>4mcg/ml</option>
+								<option value="8">8mcg/ml</option>
+								<option value="custom">Custom</option>
+							</select>
+							<div id="custom_dexdilution" onclick="popup_dilution('dexdilution','dexmedetomidine')">
+								<span id="dexdilution">_</span>mcg/ml
+							</div>
 						</td>
 					</tr>
 					</table>
@@ -292,6 +297,14 @@
 											<option value="500">500ml/h</option>
 											<option value="400">400ml/h</option>
 											<option value="300">300ml/h</option>
+										</select>
+										<select id="page2selectmaxratedex" onchange="sendToUpdateMaxDex(this.value);">
+											<option value="6" selected></option>
+											<option value="5"></option>
+											<option value="4"></option>
+											<option value="3"></option>
+											<option value="2"></option>
+											<option value="1"></option>
 										</select>
 									</td>
 								</tr>

@@ -202,7 +202,7 @@ td { padding: 4px 0px 4px 2px; border-top: 1px solid #ccc;}
   display: none;
  }
 
-#row_dexmededilution {
+#row_dexdilution {
   display: none;
   height: 1rem;
 }
@@ -500,6 +500,17 @@ input[type=number]:not(:placeholder-shown):focus:valid {
   margin-bottom: 4px;
   cursor: pointer;
 }
+#custom_dexdilution {
+  display: none;
+  font-size: 90%;
+  background: rgb(213,237,214);
+  font-weight: bold;
+  border-radius: 1rem;
+  padding: 0 5px;
+  line-height: 24px;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
 
 #custom_opioiddilution {
   display: none;
@@ -530,7 +541,7 @@ input[type=number]:not(:placeholder-shown):focus:valid {
   cursor: pointer;
 }
 
-body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom_opioiddilution, body.dark #PMA_explanation {
+body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom_opioiddilution body.dark #custom_dexdilution, body.dark #PMA_explanation {
   background: #187f18;
   color: white;
 }

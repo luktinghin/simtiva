@@ -673,7 +673,6 @@ function initsubmit() {
 	  	}
 	  }
 
-
 		if ((paedi_mode == 0) && (document.getElementById("select_model").value === "Shafer")) {
 			if (document.getElementById("select_fendilution").value == "custom") {
 				drug_sets[0].infusate_concentration = document.getElementById("fendilution").innerHTML *1;
@@ -729,6 +728,21 @@ function initsubmit() {
 			document.querySelector("#bolus1>.bolus_inside").innerHTML = "100" + "<span class='infused_units'></span>";
 			document.querySelector("#bolus1").setAttribute("onclick","bolusadmin(100,0)");
 		}
+
+		if ((paedi_mode == 0) && (document.getElementById("select_model").value == "Hannivoort")) {
+			if (document.getElementById("select_dexdilution").value == "custom") {
+				drug_sets[0].infusate_concentration = document.getElementById("dexdilution").innerHTML *1;
+			} else {
+				drug_sets[0].infusate_concentration = document.getElementById("select_dexdilution").value * 1;
+			}
+	  	document.getElementById("drugname").innerHTML = "Dexmedetomidine <span style='opacity:0.5'>(" + drug_sets[drug_sets_index].infusate_concentration + "mcg/ml)</span>";
+	  	document.getElementById("card_retrospective").style.display = "none";
+	  	document.getElementById("card_wakeup").style.display = "none";
+			//} else {
+			//	drug_sets[0].infusate_concentration = document.getElementById("select_alfendilution").value * 1;
+			//}
+			//need change the following - bolus templates
+			}
 
 	  if (paedi_mode == 0) {
 			if ((document.getElementById("select_model").value === "Minto") || (document.getElementById("select_model").value === "Eleveld-Remifentanil")) {
@@ -1797,13 +1811,14 @@ function switchpaedimode(arg) {
 		document.getElementById("select_model_paedi").style.display = "none";
 		document.getElementById("select_model").style.display = "block";
 		//on or off fentanyl / remifentanil depend on model
-		if ((document.getElementById("select_model").value == "Eleveld-Remifentanil") || (document.getElementById("select_model").value == "Minto") || (document.getElementById("select_model").value == "Shafer") || (document.getElementById("select_model").value == "Maitre"))  {
+		if ((document.getElementById("select_model").value == "Eleveld-Remifentanil") || (document.getElementById("select_model").value == "Minto") || (document.getElementById("select_model").value == "Shafer") || (document.getElementById("select_model").value == "Maitre") || (document.getElementById("select_model").value == "Hannivoort"))  {
 			if (document.getElementById("select_model").value == "Eleveld-Remifentanil") {
 				document.getElementById("row_remidilution").style.display = "table-row";
 				document.getElementById("row_fendilution").style.display = "none";	
 				document.getElementById("row_fen_weightadjusted").style.display = "none";
 				document.getElementById("row_alfendilution").style.display = "none";
 				document.getElementById("row_height").style.display = "table-row";
+				document.getElementById("row_dexdilution").style.display = "none";
 			}
 			if (document.getElementById("select_model").value == "Minto") {
 				document.getElementById("row_remidilution").style.display = "table-row";
@@ -1811,6 +1826,7 @@ function switchpaedimode(arg) {
 				document.getElementById("row_fen_weightadjusted").style.display = "none";
 				document.getElementById("row_alfendilution").style.display = "none";	
 				document.getElementById("row_height").style.display = "table-row";
+				document.getElementById("row_dexdilution").style.display = "none";
 			}
 			if (document.getElementById("select_model").value == "Shafer") {
 				document.getElementById("row_remidilution").style.display = "none";
@@ -1819,12 +1835,21 @@ function switchpaedimode(arg) {
 				document.getElementById("row_fen_weightadjusted").style.display = "none";
 				document.getElementById("row_fen_weightadjusted").style.display = "table-row";
 				document.getElementById("row_height").style.display = "none";
+				document.getElementById("row_dexdilution").style.display = "none";
 			}
 			if (document.getElementById("select_model").value == "Maitre") {
 				document.getElementById("row_remidilution").style.display = "none";
 				document.getElementById("row_fendilution").style.display = "none";
 				document.getElementById("row_alfendilution").style.display = "table-row";	
 				document.getElementById("row_height").style.display = "none";
+				document.getElementById("row_dexdilution").style.display = "none";
+			}
+			if (document.getElementById("select_model").value == "Hannivoort") {
+				document.getElementById("row_remidilution").style.display = "none";
+				document.getElementById("row_fendilution").style.display = "none";
+				document.getElementById("row_alfendilution").style.display = "none";	
+				document.getElementById("row_height").style.display = "none";
+				document.getElementById("row_dexdilution").style.display = "table-row";
 			}
 		} else {
 			//not fentanyl or remi
@@ -1863,6 +1888,7 @@ function switchpaedimode(arg) {
 			document.getElementById("row_fendilution").style.display = "none";
 			document.getElementById("row_fen_weightadjusted").style.display = "none";
 			document.getElementById("row_alfendilution").style.display = "none";
+			document.getElementById("row_dexdilution").style.display = "none";
 		//on or off remi depend on model paedi
 		if (document.getElementById("select_model_paedi").value == "Eleveld-Remifentanil") {
 			document.getElementById("row_PMA_paedimode").style.display = "none";
@@ -1978,7 +2004,13 @@ function sendToValidate(arg) {
 			document.getElementById("row_alfendilution").style.display = "table-row";
 		} else {
 			document.getElementById("row_alfendilution").style.display = "none";
-			
+		}
+		if (document.getElementById("select_model").value === "Hannivoort") {
+			document.getElementById("row_gender").style.display = "none";
+			document.getElementById("row_height").style.display = "none";
+			document.getElementById("row_dexdilution").style.display = "table-row";
+		} else {
+			document.getElementById("row_dexdilution").style.display = "none";
 		}
 	}
 	if ((paedi_mode == 0) && (document.getElementById("select_model").value != "Shafer") && (document.getElementById("select_model").value != "Maitre")) {
@@ -2073,6 +2105,7 @@ function toPageTwo() {
 				`);
 		}
 	}
+
 	if (initsubmit()==0) {
 		//alter the age thing here:
 		El9 = document.getElementById("patientRightUp");
@@ -2088,7 +2121,20 @@ function toPageTwo() {
 		}
 		if (height>0) {El9.innerHTML = El9.innerHTML.concat(", BH: " + height + "cm")} else {};
 		El10.innerHTML = document.getElementById("valRightContainer2").innerHTML;
-		
+		if (document.getElementById("select_model").value == "Hannivoort") {
+			dex_populate_speed();
+			sendToUpdateMaxDex(6);
+			document.getElementById("page2selectmaxratedex").style.display = "block";			
+			document.getElementById("page2selectmaxrate").style.display = "none";
+			document.getElementById("page2IB").style.display = "none";
+			document.getElementById("simplemodeselection").style.height = "225px";
+		} else {
+			document.getElementById("page2bolustext").innerHTML = "Flash: assume bolus given instantaneously. Ideal for manual rapid bolus.";
+			document.getElementById("page2selectmaxrate").style.display = "block";
+			document.getElementById("page2selectmaxratedex").style.display = "none";
+			document.getElementById("page2IB").style.display = "block";
+			document.getElementById("simplemodeselection").style.height = "270px";
+		}
 		toPageTwoTransition();
 		document.getElementById("rescuebuttons").style.display="none";
 		loadoptions();
@@ -2199,9 +2245,17 @@ function sendToUpdateMax(input) {
 	document.getElementById("page2bolustext").innerText = maxtext;
 }
 
+function sendToUpdateMaxDex(input) {
+	input = input *1;
+	speed = Math.round(input * mass / drug_sets[0].infusate_concentration);
+	drug_sets[0].max_rate = speed;
+	maxtext = "Set programmed bolus for induction with maximum bolus speed limited to: " + speed + "ml/h ("+ input + "mcg/kg/h)";
+	document.getElementById("page2bolustext").innerText = maxtext;
+}
+
 function cptevent() {
 	initcpt();
-	drug_sets[0].max_rate = document.getElementById("page2selectmaxrate").value *1;
+	if (drug_sets[0].drug_name != "Dexmedetomidine") drug_sets[0].max_rate = document.getElementById("page2selectmaxrate").value *1;
 	x = document.getElementById("page2selectmaintenance").value * 1;
 	document.getElementById("select_threshold").value = x;
 	applyoptions();
@@ -2211,7 +2265,7 @@ function cptevent() {
 
 function cetevent() {
 	initcet();
-	drug_sets[0].max_rate = document.getElementById("page2selectmaxrate").value *1;
+	if (drug_sets[0].drug_name != "Dexmedetomidine") drug_sets[0].max_rate = document.getElementById("page2selectmaxrate").value *1;
 	x = document.getElementById("page2selectmaintenance").value * 1;
 	document.getElementById("select_threshold").value = x;
 	applyoptions();
@@ -2221,9 +2275,18 @@ function cetevent() {
 
 function updateBolusSpeedOptions() {
 	if (drug_sets[active_drug_set_index].max_rate != undefined) {
-		document.getElementById("select_bolusspeed").value = drug_sets[active_drug_set_index].max_rate;
 		document.getElementById("option_bolusspeed_row").style.display = "table-row";
 		document.getElementById("option_threshold_row").classList.remove("fr");
+		if (drug_sets[active_drug_set_index].drug_name == "Dexmedetomidine") {
+			document.getElementById("select_bolusspeeddex").style.display = "block";
+			document.getElementById("select_bolusspeed").style.display = "none";
+			valuedex = Math.round(drug_sets[active_drug_set_index].max_rate / mass * drug_sets[active_drug_set_index].infusate_concentration);
+			document.getElementById("select_bolusspeeddex").value = valuedex;	
+		} else {
+			document.getElementById("select_bolusspeeddex").style.display = "none";
+			document.getElementById("select_bolusspeed").style.display = "block";
+			document.getElementById("select_bolusspeed").value = drug_sets[active_drug_set_index].max_rate;	
+		}
 	} else {
 		document.getElementById("option_bolusspeed_row").style.display = "none";
 		document.getElementById("option_threshold_row").classList.add("fr");
@@ -2233,6 +2296,12 @@ function updateBolusSpeedOptions() {
 function applybolusspeed() {
 	value = document.getElementById("select_bolusspeed").value * 1;
 	drug_sets[active_drug_set_index].max_rate = value;
+}
+
+function applybolusspeeddex() {
+	input = document.getElementById("select_bolusspeeddex").value * 1;
+	speed = Math.round(input * mass / drug_sets[0].infusate_concentration);
+	drug_sets[active_drug_set_index].max_rate = speed;
 }
 
 function toLoadTransition() {
@@ -4179,6 +4248,15 @@ function change_alfendilution(paramalfen) {
 	}
 }
 
+function change_dexdilution(paramdex) {
+	if (paramdex=="custom") {
+		document.getElementById("custom_dexdilution").style.display = 'inline-block';
+		popup_dilution('dexdilution','dexmedetomidine');
+	} else {
+		document.getElementById("custom_dexdilution").style.display = 'none';
+	}
+}
+
 function change_opioiddilution(paramo) {
 	if (paramo=="custom") {
 		document.getElementById("custom_opioiddilution").style.display = 'inline-block';
@@ -4205,9 +4283,12 @@ function popup_dilution(targetid,targetname) {
 	} else if (targetname == "remifentanil") {
 		targetnamecaps = "Remifentanil";
 		upperlimit = 100;
-	} else {
+	} else if (targetname == "alfentanil") {
 		targetnamecaps = "Alfentanil";
 		upperlimit = 500;
+	} else if (targetname == "dexmedetomidine") {
+		targetnamecaps = "Dexmedetomidine";
+		upperlimit = 20;
 	}
 	displayWarning(`Custom ${targetname} dilution`,
 		`
