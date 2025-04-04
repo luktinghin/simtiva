@@ -468,21 +468,18 @@ const xInputCardsHTML = `
 					<div>
 						<select id="input_RSI_time" onchange="preview_RSI();">
 							<option value="60" selected>60s</option>
-							<option value="65">65s</option>
-							<option value="70">70s</option>
-							<option value="75">75s</option>
-							<option value="80">80s</option>
-							<option value="85">85s</option>
 							<option value="90">90s</option>
 						</select>
 					</div>
 				</div>
-				<div style="display:flex">
-					<div id="RSI_preview" style="" class="RSI_box">...</div>
-					<div id="RSI_message" style="" class="RSI_box">...</div>
+				<div id="RSI_preview" style="" class="RSI_box">...</div>
+				<div id="RSI_message" style="" class="RSI_box">...</div>
+				<div id="RSI_scheme" class="hide"></div>
+				<div style="display:flex;justify-content:flex-end">
+					<div id="RSI_displayschemebutton" style="float:right" onclick="RSI_togglescheme();"><i class="fas fa-angle-double-down"></i> &nbsp;Show scheme</div>
 				</div>
-				<div style="text-align:center; display:none" id="proceed_RSI_div">
-					<a class="button wide invert" id="proceed_RSI" onclick="deliver_RSI();">Proceed to RSI</a>
+				<div style="display:none" id="proceed_RSI_div">
+					<a class="button wide invert" id="proceed_RSI" onclick="deliver_RSI();" style="display:flex;width:50%;align-items:center"><div class="icon"><i class="fas fa-play fa-fw"></i></div><div style="flex:1;text-align:center">Start RSI</div></a>
 				</div>
 			</div>
 		</div>

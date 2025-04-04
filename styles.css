@@ -1195,7 +1195,34 @@ a.interactionstab.active {
 }
 
 .RSI_box {
-  display:none; font-size:0.8rem;background:white;border:1px solid darkorange;padding:10px;border-radius:9px;align-self:center;margin:10px 0
+  display:none; font-size:0.8rem;background:white;border:1px solid darkorange;padding:10px;border-radius:9px;align-self:center;margin-top:10px;
+}
+#RSI_displayschemebutton {
+  width:120px;
+  text-align:center;
+  color:white;
+  margin-right:10px;
+  background:darkorange;
+  border:1px solid darkorange;
+  border-radius:0 0 9px 9px;
+  padding:0 10px;
+  font-size:0.8rem;
+  font-weight:bold;
+  cursor:pointer;
+  display:none;
+}
+#RSI_scheme {
+  height:120px;
+  font-size:0.8rem;
+  padding:4px 0;
+  overflow-y:auto;
+  scrollbar-width:none;
+  transition:0.3s all ease;
+  border-bottom:1px solid darkorange;
+}
+#RSI_scheme.hide {
+  height:0px;
+  border-bottom:1px solid transparent;
 }
 
 body.dark #card_RSI {
@@ -1218,6 +1245,10 @@ body.dark .RSI_box {
   display:flex;
   flex-direction:column;
   justify-content:center;
+}
+
+#card_RSI_contents.expandheight {
+  height:380px;
 }
 
 #card_RSI_contents.collapse {
@@ -1361,6 +1392,10 @@ body.dark .RSI_box {
   display:block;
   position: relative;
   transition: 0.3s all ease;
+}
+#prompts_container.RSImode {
+  height:0px;
+  visibility:hidden;
 }
 @media screen and (max-width:767px) {
   #prompts_container.expand {
@@ -4771,6 +4806,10 @@ body.dark #cornerblock2:after {
     padding-top:0px;
     /*box-shadow:inset 0px 9px 8px -6px rgb(0 0 0 / 30%);*/
   }
+  #prompts_container.RSImode {
+    height:92px;
+    visibility:visible;
+  }
 
   .prompts_card {
     margin-top:0.5rem;
@@ -5275,7 +5314,10 @@ body.dark #chart2wrapper {
     box-shadow:0px 6px 6px -5px rgb(0 0 0 / 15%);
     border-bottom:2px solid #ddd;
   }
-
+  #prompts_container.RSImode {
+    height:95px;
+    visibility:visible;
+  }
   #bodywrapper.narrowbodywrapper {
     width: 100%;
     position: static;  /*changed from relative to static to avoid bug of no cursor: pointer on leftbar*/

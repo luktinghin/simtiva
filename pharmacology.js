@@ -6544,9 +6544,12 @@ function deliver_RSI() {
 	document.getElementById("input_RSI_time").disabled = true;
 	document.getElementById("input_RSI_time").style.borderColor = "transparent";
 	document.getElementById("proceed_RSI").style.display = "none";
+	document.getElementById("RSI_displayschemebutton").style.display = "none";
 	document.getElementById("card_cet0_new").style.display = "flex";
+	document.getElementById("RSI_scheme").classList.add("hide");
+	document.getElementById("card_RSI_contents").classList.remove("expandheight");
+	document.getElementById("prompts_container").classList.remove("RSImode");
 	start_cet();
-
 }
 
 function preview_RSI() {
@@ -6557,10 +6560,14 @@ function preview_RSI() {
 		applybolusspeed();
 		document.getElementById("RSI_preview").style.display = "block";
 		document.getElementById("proceed_RSI_div").style.display = "block";
+		document.getElementById("RSI_displayschemebutton").style.display = "block";
 		RSI_interval = document.getElementById("input_RSI_time").value *1;
 		RSI_mode = true;
 		document.getElementById("inputDesiredCe0_new").value = inputCE;
-		displaypreview(inputCE,0);
+		displaypreview2(inputCE,0);
+		temptext = drug_sets[0].previewhistorytext;
+		el = document.getElementById("RSI_scheme");
+		el.innerHTML = temptext;
 	}
 }
 
@@ -6569,6 +6576,24 @@ RSI_debounce = null;
 function preview_RSI_debounce() {
 	clearTimeout(RSI_debounce);
 	RSI_debounce = setTimeout(preview_RSI,500);
+}
+
+function RSI_togglescheme() {
+	temptext = drug_sets[0].previewhistorytext;
+	elself = document.getElementById("RSI_displayschemebutton");
+	el = document.getElementById("RSI_scheme");
+	el2 = document.getElementById("card_RSI_contents");
+	el.innerHTML = temptext;
+	if (el.classList.contains("hide")) {
+		el.classList.remove("hide");
+		el2.classList.add("expandheight");
+		elself.innerHTML = `<i class="fas fa-angle-double-up"></i> &nbsp;Hide scheme`;
+	} else {
+		el.classList.add("hide");
+		el2.classList.remove("expandheight");
+		elself.innerHTML = `<i class="fas fa-angle-double-down"></i> &nbsp;Show scheme`;
+	}
+	
 }
 
 function RSI_start() {
@@ -6588,9 +6613,9 @@ function RSI_start() {
 		document.getElementById("select_bolusspeed").value = 0;
 		document.getElementById("input_RSI_bolusspeed").value = 0;
 	}
+	document.getElementById("prompts_container").classList.add("RSImode");
 	applybolusspeed();
 	applyoptions();
-	
 }
 
 function toggleRSI() {
