@@ -2127,13 +2127,13 @@ function toPageTwo() {
 			document.getElementById("page2selectmaxratedex").style.display = "block";			
 			document.getElementById("page2selectmaxrate").style.display = "none";
 			document.getElementById("page2IB").style.display = "none";
-			document.getElementById("simplemodeselection").style.height = "225px";
+
 		} else {
 			document.getElementById("page2bolustext").innerHTML = "Flash: assume bolus given instantaneously. Ideal for manual rapid bolus.";
 			document.getElementById("page2selectmaxrate").style.display = "block";
 			document.getElementById("page2selectmaxratedex").style.display = "none";
 			document.getElementById("page2IB").style.display = "block";
-			document.getElementById("simplemodeselection").style.height = "270px";
+			
 		}
 		toPageTwoTransition();
 		document.getElementById("rescuebuttons").style.display="none";

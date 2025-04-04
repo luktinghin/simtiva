@@ -5713,7 +5713,7 @@ body.dark .input-target-icon {
 }
 
 input[type=number].input-entry-field {
-  border-radius: 1rem 0 0 1rem;
+  border-radius: 2rem 0 0 2rem;
   border: 1px solid #4CAF50;
   margin: 0;
   width: 100%;
@@ -5853,7 +5853,7 @@ body.dark a.timeFxButton {
 }
 
 a.newbuttongreen {
-  border-radius: 0 1rem 1rem 0;
+  border-radius: 0 2rem 2rem 0;
   background: #4CAF50;
 }
 
