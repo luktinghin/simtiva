@@ -600,6 +600,11 @@ function parseobject(input_uid,external,extObject) {
 			}
 		}
 	}
+	//determine RSI mode, RSI time stored in index 5
+	if (parse_historyarray[0].length == 6) {
+		RSI_mode = true;
+		RSI_interval = parse_historyarray[0][5];
+	}
 
 	readmodel(object.P_patient[0],0);
 

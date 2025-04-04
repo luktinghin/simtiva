@@ -4030,6 +4030,7 @@ body.dark #progressbar {
 
 .file_content_line2 {
   font-size: 90%;
+  text-wrap: nowrap;
 }
 
 .file_content_line3 {

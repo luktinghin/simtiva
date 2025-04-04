@@ -3821,13 +3821,18 @@ function deliver_cet_real(x, ind) {
 						}
 					} else {
 						if (max_rate_input > 0) {
-							drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].desired,max_rate_input]);	
+							if (RSI_mode == true) {
+								tempvalrt = document.getElementById("input_RSI_time").value * 1;
+								drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].desired,max_rate_input,tempvalrt]);		
+							} else {
+								drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].desired,max_rate_input]);		
+							}
 						} else {
 							drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].desired]);		
 						}
 					}
 					if (bolus_duration > 0) {
-						drug_sets[ind].historyarrays.push([2,1,working_clock,drug_sets[ind].cet_bolus,max_rate_input,bolus_duration]);	
+						drug_sets[ind].historyarrays.push([2,1,working_clock,drug_sets[ind].cet_bolus,max_rate_input,bolus_duration]);		
 						drug_sets[ind].historyarrays.push([2,3,temp_time_bolus,temp_peak-bolus_duration]);	
 					} else {
 						drug_sets[ind].historyarrays.push([2,1,working_clock,drug_sets[ind].cet_bolus]);
