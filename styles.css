@@ -1201,6 +1201,8 @@ a.interactionstab.active {
   width:120px;
   text-align:center;
   color:white;
+  position:relative;
+  top:-1px;
   margin-right:10px;
   background:darkorange;
   border:1px solid darkorange;
@@ -1214,7 +1216,7 @@ a.interactionstab.active {
 #RSI_scheme {
   height:120px;
   font-size:0.8rem;
-  padding:4px 0;
+  padding-top:4px;
   overflow-y:auto;
   scrollbar-width:none;
   transition:0.3s all ease;
@@ -1222,6 +1224,7 @@ a.interactionstab.active {
 }
 #RSI_scheme.hide {
   height:0px;
+  padding-top:0px;
   border-bottom:1px solid transparent;
 }
 
@@ -1263,6 +1266,7 @@ body.dark .RSI_box {
   padding:0 10px;
   font-size:0.8rem;
   font-weight:bold;
+  cursor:pointer;
 }
 /*
 .card:focus-within {
