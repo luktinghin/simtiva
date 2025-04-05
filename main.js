@@ -591,6 +591,7 @@ function initsubmit() {
 			myChart.data.datasets[11].hidden = true;
 
 			myChart.update();
+			if (myChart2 == undefined) createCharts(1);
 	} else {
 
 		complex_mode = 0;

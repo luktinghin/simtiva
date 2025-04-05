@@ -5967,12 +5967,17 @@ function readmodel(x, drug_set_index) {
 	}
 	*/
 
-	if ((parseloading == 0) && (drug_set_index != 2)) {
+	if ((parseloading == 0) && (drug_sets.length == 1)) {
 		document.getElementById("drugname").innerHTML = drug_sets[drug_set_index].drug_name;
 		if (x == "Eleveld-Remifentanil") x = "Eleveld";
 		document.getElementById("modelname").innerHTML = x;
 		document.getElementById("modeldescription").innerHTML = drug_sets[drug_set_index].modeltext;
-	} else {
+	}
+	if ((parseloading == 0) && (complex_mode == 1))  {
+		document.getElementById("drugname").innerHTML = drug_sets[0].drug_name;
+		document.getElementById("modelname").innerHTML = drug_sets[0].model_name;
+		document.getElementById("modeldescription").innerHTML = drug_sets[0].modeltext;
+
 	}
 }
 

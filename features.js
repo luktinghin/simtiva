@@ -4731,8 +4731,10 @@ function openpopupchart() {
 function togglePopupInfo() {
 	if (document.getElementById("chartinfooverlay").classList.contains("open")) {
 		document.getElementById("chartinfooverlay").classList.remove("open");
+		document.getElementById("timecopy").style.display = "none";
 	} else {
 		document.getElementById("chartinfooverlay").classList.add("open");
+		setTimeout(function() {document.getElementById("timecopy").style.display = "block"},150);
 	}
 }
 function populatepopupinfo() {
@@ -5804,7 +5806,7 @@ function updateConcOptions() {
 
 
 function proceedComplex() {
-	createCharts(1);
+	if (myChart2 == undefined) createCharts(1);
 	complex_mode = 1;
 	//add chart options PD overlay box
 	document.getElementById("chartoverlayoptionscontent").classList.add("PDoptions");
@@ -5962,18 +5964,6 @@ function proceedComplex() {
 }
 
 function complexinterface_init() {
-	//assume the following
-	//hypnotic_drug_set = 0;
-	//analgesic_drug_set = 1;
-	//active_drug_set_index = 0;
-	//alt_drug_set_index = 1;
-
-	//document.querySelector("#parallaxtop .parallax_drug_name1").innerHTML = drug_sets[active_drug_set_index].drug_name;
-	//document.querySelector("#parallaxtop .parallax_drug_model_name").innerHTML = drug_sets[active_drug_set_index].model_name;
-	//document.querySelector("#parallaxtop .parallax_drug_conc").innerHTML = "<b>" + drug_sets[active_drug_set_index].infusate_concentration + "</b>" + drug_sets[active_drug_set_index].infused_units + "/ml";
-	//document.querySelector("#parallaxbottom .parallax_drug_name1").innerHTML = drug_sets[alt_drug_set_index].drug_name;
-	//document.querySelector("#parallaxbottom .parallax_drug_model_name").innerHTML = drug_sets[alt_drug_set_index].model_name;
-	//document.querySelector("#parallaxbottom .parallax_drug_conc").innerHTML = "<b>" + drug_sets[alt_drug_set_index].infusate_concentration + "</b>" + drug_sets[alt_drug_set_index].infused_units + "/ml";
 	document.querySelector(".leftbar").classList.remove("hide");
 	document.getElementById("parallax3").classList.add("hide");
 	document.getElementById("bodywrapper").classList.add("narrowbodywrapper");
@@ -6007,16 +5997,6 @@ function complexinterface_init() {
 	    			}
 	    			return getGradientYellow(ctx, chartArea, scales);
 	    		}
-	//myChart.data.datasets[5].backgroundColor = context => {
-	//    			const chart = context.chart;
-	//    			const { ctx, chartArea, scales } = chart;
-	//    			if (!chartArea) {
-	//    				return null ;
-	//    			}
-	//    			return getGradientBlue(ctx, chartArea, scales);
-	//    		}
-	//myChart.data.datasets[2].fill = false;
-	//myChart.data.datasets[4].fill = false;
 
 
 	document.getElementById("cp_propo").innerHTML = "0";

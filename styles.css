@@ -2218,7 +2218,7 @@ body.dark #emulatetitlecontainer {
   width: 20px;
   background: rgba(128,128,128,0.5);
   border-radius: 1rem 0rem 0rem 1rem;
-  height: 120px;
+  height: 100px;
   position: absolute;
   top: 10px;
   right: 98px;
@@ -2230,7 +2230,7 @@ body.dark #emulatetitlecontainer {
 #chartinfoleft {
   display: block;
   position: absolute;
-  top: 54px;
+  top: 40px;
   left: 1px;
   width: 20px;
   height: 20px;
@@ -2257,10 +2257,10 @@ body.dark #emulatetitlecontainer {
   color: white;
 }
 #chartinfooverlay.complex {
-  height: 130px;
+  height: 112px;
 }
 #chartinfooverlay.complex > #chartinforleft {
-  top: 58px;
+  top: 55px;
 }
 #chartinfooverlay.complex > #chartinforight {
   padding: 7px 5px 5px 30px;
@@ -2294,21 +2294,23 @@ body.dark #chartinfooverlay.open > #chartinfoleft {
   color: white;
   transform: scale(1.15);
   background: #666;
+  position:absolute;
+  right:5px;
 }
 body.dark #timecopy {
   background: #333;
 }
 #drugnamecopy {
-  font-size: 1.5rem;
-  line-height: 1.2;
+  font-size: 1.3rem;
+  line-height: 0.5;
   font-weight: bold;
   text-transform: uppercase;
+  padding-top:5px;
 }
 #modelnamecopy {
   font-size: 0.7rem;
   font-weight: bold;
   text-transform: uppercase;
-  padding-left: 5px;
 }
 #conccopy {
   padding-left: 5px;
