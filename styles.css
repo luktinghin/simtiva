@@ -1311,6 +1311,16 @@ body.dark .RSI_box {
   font-weight:bold;
   cursor:pointer;
 }
+
+#proceed_RSI:hover {
+  background-color: #187f18;
+  color:white;
+}
+
+body.dark #proceed_RSI:hover {
+  background-color: #187f18;
+  color:white;
+}
 /*
 .card:focus-within {
   background:#efefef;
@@ -2373,14 +2383,15 @@ body.dark #timecopy {
 }
 #chartoverlayoptions2content {
   width: 50%;
-  height: 180px;
+  height: 190px;
   border-radius: 9px;
   position: absolute;
   bottom: 40px;
   bottom: calc(env(safe-area-inset-bottom) + 40px);
   right: 123px;
   right: calc(env(safe-area-inset-right) + 123px);
-  background: #0009;
+  background: #000B;
+  border:2px solid #666;
   padding: 10px;
   display: block;
 }
@@ -2399,7 +2410,7 @@ body.dark #timecopy {
 }
 
 #chartoverlayoptions2content.PDoptions {
-  height: 260px;
+  height: 265px;
 }
 #PD_options_group2 {
   display: none;
@@ -2429,7 +2440,7 @@ body.dark #timecopy {
   display:block;
   width: 0;
   height: 0;
-  border-left: 15px solid #0009;
+  border-left: 15px solid #666;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
 }
@@ -2445,6 +2456,12 @@ body.dark #timecopy {
 }
 
 #chartoverlayoptionscontent select {
+  height:1.3rem;
+  font-size:0.8rem;
+  margin:0;
+}
+
+#chartoverlayoptions2content select {
   height:1.3rem;
   font-size:0.8rem;
   margin:0;

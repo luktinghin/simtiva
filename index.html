@@ -280,8 +280,8 @@
 						<a id="page2IB" class="page2subheading button huge" onclick="initcetbolus(0);hideallmodal();">INTERMITTENT BOLUS<i class="fas fa-hourglass-half fa-fw" style="color:#c19f14"></i></a>
 						<div id="page2maxrate" class="">
 							<table class="table-Init" style="text-align:left">
-								<tr class="fr" style="height:2rem;width:50%">
-									<td style="padding:0">Max bolus speed:</td>
+								<tr class="fr" style="height:2rem">
+									<td style="padding:0;width:50%">Max bolus speed:</td>
 									<td style="padding:0">
 										<select id="page2selectmaxrate" onchange="sendToUpdateMax(this.value);">
 											<option value="0" selected>Flash</option>
@@ -617,13 +617,33 @@
 				<div id="chartoverlayoptions2" >
 					<div id="chartoverlayoptions2content">
 						<div id="closeoptions2" onclick="togglepopupoptions();">&times;</div>
-						<div id="" style="font-weight:bold; margin-top:6px; margin-bottom:7px">Chart Options</div>
 						<div id="chartoptionscheckbox2">
-				      <label class="container labeloptionscontainer" style="">Automatic time scale
-				          <input type="checkbox" id="isTimeAutomatic2" onChange="toggleautotime();" checked><span class="checkmark"></span>
-				      </label>
+					      <label class="container labeloptionscontainer" style="margin-top:6px; max-width:70%">Auto. concentration scale (y-axis)
+					          <input type="checkbox" onChange="toggleautoconc()" id="isConcAutomatic2" checked><span class="checkmark"></span>
+					      </label>
+					      <div style="padding-left:32px">
+					      	Custom max concentration:
+					      	<select id="customconcselect2" style="" onChange="setcustomconc(this.value)">
+					      	<option value="15">15mcg/ml</option>
+					      	<option value="14">14mcg/ml</option>
+					      	<option value="13">13mcg/ml</option>
+					      	<option value="12">12mcg/ml</option>
+					      	<option value="11">11mcg/ml</option>
+					      	<option value="10" selected>10mcg/ml</option>
+					      	<option value="9">9mcg/ml</option>
+					      	<option value="8">8mcg/ml</option>
+					      	<option value="7">7mcg/ml</option>
+					      	<option value="6">6mcg/ml</option>
+					      	<option value="5">5mcg/ml</option>
+					      	<option value="4">4mcg/ml</option>
+					      	<option value="3">3mcg/ml</option>
+					      	</select>
+					      </div>
+					      <label class="container labeloptionscontainer" style="">Auto. time scale (x-axis)
+					          <input type="checkbox" id="isTimeAutomatic2" onChange="toggleautotime();" checked><span class="checkmark"></span>
+					      </label>
 						</div>
-						<div style="padding-left:30px">Custom time range (min):</div>
+						<div style="padding-left:32px">Custom time range (min):</div>
 						<div id="timerangeslider2">
 							<div id="leftslidercontainer2">
 								<input id="range0copy" value="10" min="0" max="30" step="5" type="range" oninput="processrange(0);">
@@ -638,7 +658,7 @@
 				      <label class="container labeloptionscontainer" style="margin-bottom:0px">PD Effect estimation
 				          <input type="checkbox" id="isEffectEstimationOn2" onChange="if (document.getElementById('isEffectEstimationOn').checked == true) {document.getElementById('isEffectEstimationOn').checked = false} else {document.getElementById('isEffectEstimationOn').checked = true;}toggleEffectEst();" checked><span class="checkmark"></span>
 				      </label>
-				      <select id="select_effect_measure2" style="margin-left:30px;width:calc(100% - 30px)" onChange="document.getElementById('select_effect_measure').value=document.getElementById('select_effect_measure2').value;toggleEffectEst();">
+				      <select id="select_effect_measure2" style="margin-left:32px;width:calc(100% - 30px)" onChange="document.getElementById('select_effect_measure').value=document.getElementById('select_effect_measure2').value;toggleEffectEst();">
 				      	<option value="bis">BIS 40-60</option>
 				      	<option value="ptol">PTOL 50-90</option>
 				      	<option value="nsri">NSRI 20-50</option>
@@ -754,7 +774,7 @@
 			</div>
 		</div>
 		<div id="logo2" style="">
-			<div style="font-weight:bold; letter-spacing:2px; font-stretch:110%; text-shadow:1px 1px 2px #0005">SimTIVA <span style="opacity:0.3">| Terence Luk 2024</span></div>
+			<div style="font-weight:bold; letter-spacing:2px; font-stretch:110%; text-shadow:1px 1px 2px #0005">SimTIVA <span style="opacity:0.3">| Terence Luk 2025</span></div>
 		</div>
 	</div><!--bodywrapper-->
 	

@@ -5593,9 +5593,15 @@ function processrange(rangenum) {
 function setcustomconc(inputval) {
 	chartprofileconc = 1;
 	maxconc = inputval * 1;
-	myChart.options.scales.y.max = maxconc;
-	updatechart(myChart);
-	document.getElementById("isConcAutomatic").checked = false;
+	if (popupon == true) {
+		popupchart.options.scales.y.max = maxconc;
+		updatechart(popupchart);
+		document.getElementById("isConcAutomatic2").checked = false;
+	} else {
+		myChart.options.scales.y.max = maxconc;
+		updatechart(myChart);
+		document.getElementById("isConcAutomatic").checked = false;
+	}
 }
 
 function chartOptionsToggle() {
@@ -5611,6 +5617,11 @@ function chartOptionsToggle() {
 			}
 			preparerange(); 
 			ElOptions.classList.add("show");
+		}
+		if (chartprofileconc == 0) {
+			document.getElementById("isConcAutomatic").checked = true;
+		} else {
+			document.getElementById("isConcAutomatic").checked = false;
 		}
 		updateConcOptions();
 	}
@@ -5630,12 +5641,22 @@ function togglepopupoptions() {
 			preparerange();
 			ElOptions.classList.add("show");
 		}
+		if (chartprofileconc == 0) {
+			document.getElementById("isConcAutomatic2").checked = true;
+		} else {
+			document.getElementById("isConcAutomatic2").checked = false;
+		}
+		updateConcOptions();
 	}
 }
 
 function updateConcOptions() {
 	drug = drug_sets[active_drug_set_index].drug_name;
-	el = document.getElementById("customconcselect");
+	if (popupon == true) {
+		el = document.getElementById("customconcselect2");
+	} else {
+		el = document.getElementById("customconcselect");	
+	}
 	if (drug == "Propofol") {
 		el.options[0].value = "15";
 		el.options[0].textContent = "15mcg/ml";
@@ -5772,7 +5793,11 @@ function updateConcOptions() {
 		el.options[12].value = "0.6";
 		el.options[12].textContent = "0.6ng/ml";
 	}
-	el.value = myChart.options.scales.y.max;
+	if (popupon == true) {
+		el.value = popupchart.options.scales.y.max;
+	} else {
+		el.value = myChart.options.scales.y.max;	
+	}
 }
 
 //section: complex mode

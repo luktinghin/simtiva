@@ -4165,19 +4165,22 @@ function toggleautotime() {
 }
 
 function toggleautoconc() {
+	if (popupon == true) {
+		valuect = document.getElementById("customconcselect2").value;
+	} else {
+		valuect = document.getElementById("customconcselect").value;
+	}
 	if (chartprofileconc == 0) {
-		setcustomconc(document.getElementById("customconcselect").value);
+		setcustomconc(valuect);
 		chartprofileconc = 1;
 		updatechart(myChart);
 	} else {
 		chartprofileconc = 0;
 		updatechart(myChart);
 	}
-}
-
-function setcustomconc() {
-	customval = document.getElementById("customconcselect").value;
-
+	if (popupon == true) {
+		updatechart(popupchart);
+	}
 }
 
 function toggleEffectEst() {

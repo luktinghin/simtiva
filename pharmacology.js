@@ -6606,7 +6606,7 @@ function RSI_start() {
 	document.getElementById("card_cet0_new").style.display = "none";
 	document.getElementById("card_RSI").style.display = "block";
 	text = `
-		In rapid sequence induction (RSI) mode, you may set an effect site concentration (CE) target to be achieved within 60-90 seconds, as defined by the user. The program will determine a suitable induction dose, depending on the injection speed on induction (more on this below), to achieve the target CE at the target time point. In most models, this will cause the effect site concentration to overshoot, meaning that the final peak CE will exceed the predetermined CE target. The program will display the appropriate pause duration, after which the infusion will be continued in order to maintain the CE at the target level.<br>
+		In rapid sequence induction (RSI) mode, you may set an effect site concentration (CE) target to be achieved within 60-90 seconds, as defined by the user. The program will determine a suitable induction dose, depending on the injection speed on induction (more on this below), to achieve the target CE at the target time point. This will cause the effect site concentration to overshoot, meaning that the final peak CE will exceed the predetermined CE target. The program will display the appropriate pause duration, after which the infusion will be continued in order to maintain the CE at the target level.<br>
 		<br><i>Note on injection speed on induction:</i> You may set the injection speed to be "Manual bolus", which assumes a rate of 7200ml/h (2ml/second) to simulate a manual fast bolus push, or a syringe pump delivered bolus at a rate of 1200-1500ml/h.
 	`;
 	displayWarning("RSI mode",text);
