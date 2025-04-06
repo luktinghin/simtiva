@@ -4597,10 +4597,10 @@ function generateBoxes() {
 
 
 function openpopupchart() {
-	
+	//this line for iphones, before fullscreen launch
+	window.scrollTo(0,1);
 	//check if it's really running first
 	if (drug_sets[active_drug_set_index].cpt_rates_real.length>0) {
-		document.getElementById("chartinfooverlay").classList.remove("open");
 		/*
 		docEl = document.documentElement;
 		var requestFullScreen = 
@@ -4708,7 +4708,11 @@ function openpopupchart() {
 			populatepopupinfo();
 			mirrorpopup();
 			updatechart(popupchart);
-			setTimeout(function() {document.getElementById("chartinfooverlay").classList.add("open");}, 1000);
+			if (document.getElementById("chartinfooverlay").classList.contains("open")) {
+				//programmatically open the clock timer
+				setTimeout(function() {document.getElementById("timecopy").style.display = "block"},150);
+			}
+			//setTimeout(function() {document.getElementById("chartinfooverlay").classList.add("open");}, 1000);
 		}, 300);
 
 		document.getElementById("controlpanel").style.opacity = 0;
@@ -4732,7 +4736,9 @@ function togglePopupInfo() {
 	if (document.getElementById("chartinfooverlay").classList.contains("open")) {
 		document.getElementById("chartinfooverlay").classList.remove("open");
 		document.getElementById("timecopy").style.display = "none";
+		document.getElementById("chartinfoleft").setAttribute("data-after","SHOW");
 	} else {
+		document.getElementById("chartinfoleft").setAttribute("data-after","HIDE");
 		document.getElementById("chartinfooverlay").classList.add("open");
 		setTimeout(function() {document.getElementById("timecopy").style.display = "block"},150);
 	}
@@ -4911,8 +4917,6 @@ function popupUpdateFunction(dur) {
 //numpad code goes here
 
 
-
-
 function keypress(num) {
 	let numString = document.getElementById("numpadOutputDisplay").innerHTML;
 	//case: check preceding zero
@@ -4926,11 +4930,9 @@ function keypress(num) {
 	} else {
 		numString = numString + num;	
 	}
-
 	//write to values
 	document.getElementById("numpadOutputDisplay").innerHTML = numString;
 	numpadValue = numString * 1;
-
 	//compute displaypreview
 	mirrorPreview();
 }
@@ -5009,23 +5011,29 @@ function displayNumpad(parameter) {
 	document.getElementById("numpadContainer").style.display = "block";
 	document.getElementById("chartinfooverlay").classList.remove("open");
 	document.getElementById("numpad_preview_msg").innerHTML = "Waiting for user input";
-	if (drug_sets[active_drug_set_index].fentanyl_weightadjusted_flag == 1) {
-		numpadValue = Math.round(drug_sets[active_drug_set_index].fentanyl_weightadjusted_target_uncorrected*10)/10;
+	if (drug_sets[active_drug_set_index].drug_name == "Fentanyl") {
+		if (drug_sets[active_drug_set_index].fentanyl_weightadjusted_flag == 1) {
+			numpadValue = Math.round(drug_sets[active_drug_set_index].fentanyl_weightadjusted_target_uncorrected*10)/10;
+		} else {
+			numpadValue = Math.round(drug_sets[active_drug_set_index].desired*10)/10;	
+		}
 	} else {
 		numpadValue = Math.round(drug_sets[active_drug_set_index].desired*10)/10;
 	}
-	if (parameter == "ce") {
-		document.getElementById("pop_ce").classList.add("active");
-		document.getElementById("numpadOutputDisplay").innerHTML = numpadValue;
-		document.getElementById("numpadLine").classList.add("ce");
-		document.getElementById("numpadTitle").innerHTML = "Quick Edit CE Target";
-	} else if (parameter == "cp") {
-		document.getElementById("pop_cp").classList.add("active");
-		document.getElementById("numpadOutputDisplay").innerHTML = numpadValue;
-		document.getElementById("numpadLine").classList.add("cp");
-		document.getElementById("numpadTitle").innerHTML = "Quick Edit CP Target";
+	if (numpadValue > 0) {
+		if (parameter == "ce") {
+			document.getElementById("pop_ce").classList.add("active");
+			document.getElementById("numpadOutputDisplay").innerHTML = numpadValue;
+			document.getElementById("numpadLine").classList.add("ce");
+			document.getElementById("numpadTitle").innerHTML = "Quick Edit CE Target";
+		} else if (parameter == "cp") {
+			document.getElementById("pop_cp").classList.add("active");
+			document.getElementById("numpadOutputDisplay").innerHTML = numpadValue;
+			document.getElementById("numpadLine").classList.add("cp");
+			document.getElementById("numpadTitle").innerHTML = "Quick Edit CP Target";
+		}
+		numpadOrig = numpadValue;
 	}
-	numpadOrig = numpadValue;
 }
 
 function resetNumpad() {

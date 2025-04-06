@@ -1317,8 +1317,13 @@ body.dark .RSI_box {
   color:white;
 }
 
+body.dark #proceed_RSI {
+  background-color: rgb(16, 86, 63);
+  color:#cecece;
+}
+
 body.dark #proceed_RSI:hover {
-  background-color: #187f18;
+  background-color: #4CAF50;
   color:white;
 }
 /*
@@ -2239,6 +2244,20 @@ body.dark #emulatetitlecontainer {
   transition: 0.3s all ease;
   color: #333;
 }
+#chartinfoleft::after {
+  content:attr(data-after);
+  position:absolute;
+  top:150%;
+  left:-45%;
+  transform:rotate(270deg);
+  font-weight:bold;
+  font-size:0.8rem;
+  height:17px;
+  width:38px;
+  text-align:center;
+  color:#0003;
+  letter-spacing: -0.5px;
+}
 #chartinforight {
   display: inline-block;
   width: 300px;
@@ -2259,8 +2278,8 @@ body.dark #emulatetitlecontainer {
 #chartinfooverlay.complex {
   height: 112px;
 }
-#chartinfooverlay.complex > #chartinforleft {
-  top: 55px;
+#chartinfooverlay.complex > #chartinfoleft {
+  top: 45px;
 }
 #chartinfooverlay.complex > #chartinforight {
   padding: 7px 5px 5px 30px;
@@ -2296,6 +2315,7 @@ body.dark #chartinfooverlay.open > #chartinfoleft {
   background: #666;
   position:absolute;
   right:5px;
+  display:none;
 }
 body.dark #timecopy {
   background: #333;
