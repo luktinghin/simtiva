@@ -4597,8 +4597,6 @@ function generateBoxes() {
 
 
 function openpopupchart() {
-	//this line for iphones, before fullscreen launch
-	window.scrollTo(0,1);
 	//check if it's really running first
 	if (drug_sets[active_drug_set_index].cpt_rates_real.length>0) {
 		/*
@@ -5009,7 +5007,6 @@ function displayNumpad(parameter) {
 	document.getElementById("numpadPreview").style.display = "block";
 	document.getElementById("numpadBackground").style.display = "block";
 	document.getElementById("numpadContainer").style.display = "block";
-	document.getElementById("chartinfooverlay").classList.remove("open");
 	document.getElementById("numpad_preview_msg").innerHTML = "Waiting for user input";
 	if (drug_sets[active_drug_set_index].drug_name == "Fentanyl") {
 		if (drug_sets[active_drug_set_index].fentanyl_weightadjusted_flag == 1) {
@@ -5094,7 +5091,6 @@ function hideNumpad() { //
 	document.getElementById("numpadPreview").style.display = "none";
 	document.getElementById("numpadBackground").style.display = "none";
 	document.getElementById("numpadContainer").style.display = "none";
-	document.getElementById("chartinfooverlay").classList.add("open");
 	
 		document.getElementById("numpadLine").classList.remove("ce");
 		document.getElementById("numpadLine").classList.remove("cp");
@@ -5714,7 +5710,7 @@ function updateConcOptions() {
 		el.options[8].value = "5";
 		el.options[8].textContent = "5ng/ml";
 		el.options[9].value = "4";
-		el.options[9].textContent = "5ng/ml";
+		el.options[9].textContent = "4ng/ml";
 		el.options[10].value = "3";
 		el.options[10].textContent = "3ng/ml";
 		el.options[11].value = "2";
@@ -5794,10 +5790,10 @@ function updateConcOptions() {
 		el.options[7].textContent = "2.5ng/ml";
 		el.options[8].value = "2";
 		el.options[8].textContent = "2ng/ml";
-		el.options[9].value = "1.5";
-		el.options[9].textContent = "1.5ng/ml";
-		el.options[10].value = "1";
-		el.options[10].textContent = "1ng/ml";
+		el.options[9].value = "1.6";
+		el.options[9].textContent = "1.6ng/ml";
+		el.options[10].value = "1.2";
+		el.options[10].textContent = "1.2ng/ml";
 		el.options[11].value = "0.8";
 		el.options[11].textContent = "0.8ng/ml";
 		el.options[12].value = "0.6";
