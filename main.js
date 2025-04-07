@@ -173,7 +173,7 @@ var prior_half_minute_clock = 0;
 var time_of_stop = -1;
 var yxratio; //for use in myChart2 to calculate angle of arrow
 var RSI_mode = false;
-var RSI_interval = 90;
+var RSI_interval = 60;
 var preview_chart = new Array();
 preview_chart.push([]);
 preview_chart.push([]);
@@ -2769,7 +2769,6 @@ function init_rescue(input_uid,external_flag) {
 }
 
 function hide_prompts(object) {
-	object.style.display="none";
 	if (document.getElementById("prompts_container").classList.contains("expand")) {
 		document.getElementById("preview-expand-button").classList.remove("animate2");
 		document.getElementById("preview-expand-button").style.display = "none";
@@ -2778,8 +2777,10 @@ function hide_prompts(object) {
 		document.getElementById("preview-expand-box").classList.remove("expand");
 		document.getElementById("preview-expand-button").innerHTML = `<i class="fas fa-angle-double-down"></i> &nbsp; <span>EXPAND</span>`;
 		document.getElementById("preview-expand-button").setAttribute("onclick","displaypreview_expand()");
-
+	} else {
+		document.getElementById("preview-expand-button").style.display = "none";
 	}
+	object.style.display="none";
 }
 
 function hideallmodal() {

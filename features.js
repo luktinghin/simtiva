@@ -4651,25 +4651,25 @@ function openpopupchart() {
 			document.getElementById("pop_ce").classList.remove("shadow");
 			document.getElementById("pop_cp").classList.remove("active");
 			document.getElementById("pop_ce").classList.remove("active");
-			if (active_drug_set_index == 0 && drug_sets[0].cpt_active > 0) {
+			if (active_drug_set_index == 0 && drug_sets[0].cpt_active > 0 && drug_sets[0].desired != undefined) {
 				document.getElementById("pop_right_edit_cp").style.display = "block";
 				document.getElementById("pop_cp").classList.add("shadow");
 				document.getElementById("pop_right_edit_cp").setAttribute('onclick','displayNumpad("cp")');
 				document.getElementById('btn_confirm_numpad').setAttribute('onclick','confirmNumpad("inputDesired0")');
 			}
-			if (active_drug_set_index == 0 && drug_sets[0].cet_active > 0 && drug_sets[0].IB_active == 0) {
+			if (active_drug_set_index == 0 && drug_sets[0].cet_active > 0 && drug_sets[0].IB_active == 0 && drug_sets[0].desired != undefined) {
 				document.getElementById("pop_right_edit_ce").style.display = "block";
 				document.getElementById("pop_ce").classList.add("shadow");
 				document.getElementById("pop_right_edit_ce").setAttribute('onclick','displayNumpad("ce")');
 				document.getElementById('btn_confirm_numpad').setAttribute('onclick','confirmNumpad("inputDesiredCe0_new")');
 			}
-			if (active_drug_set_index == 1 && drug_sets[1].cpt_active > 0) {
+			if (active_drug_set_index == 1 && drug_sets[1].cpt_active > 0 && drug_sets[1].desired != undefined) {
 				document.getElementById("pop_right_edit_cp").style.display = "block";
 				document.getElementById("pop_cp").classList.add("shadow");
 				document.getElementById("pop_right_edit_cp").setAttribute('onclick','displayNumpad("cp")');
 				document.getElementById('btn_confirm_numpad').setAttribute('onclick','confirmNumpad("inputDesired1")');
 			}
-			if (active_drug_set_index == 1 && drug_sets[1].cet_active > 0 && drug_sets[1].IB_active == 0) {
+			if (active_drug_set_index == 1 && drug_sets[1].cet_active > 0 && drug_sets[1].IB_active == 0 && drug_sets[1].desired != undefined) {
 				document.getElementById("pop_right_edit_ce").style.display = "block";
 				document.getElementById("pop_ce").classList.add("shadow");
 				document.getElementById("pop_right_edit_ce").setAttribute('onclick','displayNumpad("ce")');

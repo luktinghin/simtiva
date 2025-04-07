@@ -3822,8 +3822,7 @@ function deliver_cet_real(x, ind) {
 					} else {
 						if (max_rate_input > 0) {
 							if (RSI_mode == true) {
-								tempvalrt = document.getElementById("input_RSI_time").value * 1;
-								drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].desired,max_rate_input,tempvalrt]);		
+								drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].desired,max_rate_input,RSI_interval]);		
 							} else {
 								drug_sets[ind].historyarrays.push([2,0,working_clock,drug_sets[ind].desired,max_rate_input]);		
 							}
@@ -5210,7 +5209,9 @@ function bolusadmin(x, ind, max_rate_input) {
 					}
 					temptext = temptext + "Bolus duration has exceeded the interval! ";
 					temptext = temptext + "Final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + "mcg/ml at <b>" + converttime(dur) + "."; 
-				document.getElementById("RSI_message").innerHTML = temptext;
+				if (parseloading == 0) {
+					document.getElementById("RSI_message").innerHTML = temptext;	
+				}
 			} else {
 				//check if can reach CE
 				//iterate till CE above desired at interval
@@ -5303,9 +5304,10 @@ function bolusadmin(x, ind, max_rate_input) {
 							tempprior = tempvalue;
 						}
 					}
+				}temptext = temptext + "Final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + "mcg/ml at <b>" + converttime(dur) + "</b>."; 
+				if (parseloading == 0) {
+					document.getElementById("RSI_message").innerHTML = temptext;
 				}
-				temptext = temptext + "Final peak (overshoot CE) is " + Math.round(tempvalue*100)/100 + "mcg/ml at <b>" + converttime(dur) + "</b>."; 
-				document.getElementById("RSI_message").innerHTML = temptext;
 			}
 			//recalculate next time
 					cpt_pause = 0;
