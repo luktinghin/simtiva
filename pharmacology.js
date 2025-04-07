@@ -6555,7 +6555,7 @@ function deliver_RSI() {
 	document.getElementById("input_RSI_bolusspeed").style.borderColor = "transparent";
 	document.getElementById("input_RSI_time").disabled = true;
 	document.getElementById("input_RSI_time").style.borderColor = "transparent";
-	document.getElementById("proceed_RSI").style.display = "none";
+	document.getElementById("proceed_RSI_div").style.display = "none";
 	document.getElementById("RSI_displayschemebutton").style.display = "none";
 	document.getElementById("card_cet0_new").style.display = "flex";
 	document.getElementById("RSI_scheme").classList.add("hide");

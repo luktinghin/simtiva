@@ -6527,6 +6527,10 @@ function resetPtolLabels() {
 function timeFxReset() {
 	conditions = ((time_in_s>1) && (drug_sets[0].cpt_rates_real.length > 1));
 	if (conditions) {
+		if (drug_sets[0].drug_name == "Dexmedetomidine") {
+			//get orig max rate
+			orig_max_rate = drug_sets[0].max_rate;
+		}
 		document.getElementById("timeFxRowSuspend").classList.remove("hide");
 		document.getElementById("timeFxRowResume").classList.add("hide");
 		timeFxSuspend();
@@ -6589,6 +6593,32 @@ function timeFxReset() {
 		document.getElementById("timeFxRowSuspend").classList.remove("hide");
 		document.getElementById("timeFxRowResume").classList.add("hide");
 		document.getElementById("suspendBanner").style.display = "none";
+		//RSI Resets
+		if (document.getElementById("card_RSI").style.display == "block") {
+			document.getElementById("input_RSI_CE").disabled = false;
+			document.getElementById("input_RSI_CE").style.borderColor = "";
+			document.getElementById("input_RSI_bolusspeed").disabled = false;
+			document.getElementById("input_RSI_bolusspeed").style.borderColor = "";
+			document.getElementById("input_RSI_time").disabled = false;
+			document.getElementById("input_RSI_time").style.borderColor = "";
+			document.getElementById("RSI_message").style.display = "none";
+			document.getElementById("RSI_message").innerHTML = "...";
+			document.getElementById("RSI_preview").style.display = "none";
+			document.getElementById("RSI_preview").innerHTML = "...";
+			document.getElementById("RSI_scheme").classList.add("hide");
+			document.getElementById("proceed_RSI_div").style.display = "none";
+			document.getElementById("RSI_displayschemebutton").style.display = "none";
+			document.getElementById("card_cet0_new").style.display = "none";
+			document.getElementById("card_RSI_contents").classList.remove("expandheight");
+			document.getElementById("prompts_container").classList.add("RSImode");
+		}
+		//dexmedetomidine resets
+		if (drug_sets[0].drug_name == "Dexmedetomidine") {
+			document.getElementById("tableInitialBolus0").style.display = "none";
+			document.getElementById("tableInfusionRate0").classList.remove("line");
+			//update max rate
+			drug_sets[0].max_rate = orig_max_rate;
+		}
 	}
 }
 
