@@ -21,7 +21,14 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
 - To help deliver TCI in a setting where TCI pumps are not available
 
 ### Changelog
- Version 5.0 (Build 125) 🎄 Current
+ Version 5.1 (Build 143) Current
+ - RSI mode: facilitates RSI using TIVA. User entry of CE target, time to reach CE, and bolus speed. Infusion scheme with bolus size, pause time, with display of expected CE overshoot at peak.
+ - Dexmedetomidine (Hannivoort model): CP/CE/Manual modes. Safety feature: bolus speed for loading dose (if any) is limited <6mcg/kg/h
+ - Fullscreen mode bug fixes and visual improvements
+ - CP targeting infusion scheme time delay bug fixed
+ - Vertical (Y-axis) scale can now be adjusted
+   
+ Version 5.0 (Build 125) 
  - UI/UX improvement: status bar with next change prompt for CPT/CET modes
  - UI/UX in iOS: optimized landscape display with compliance to "safe areas"
  - Performance improvements: deleted fontawesome-regular file and optimized loading times; division into smaller sections of CSS/JS files
