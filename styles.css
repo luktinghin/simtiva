@@ -4642,7 +4642,9 @@ body.dark #preview-expand-box > div > div.timespan {
 }
 
 #cornerblock2 {
-  position:relative;width:100%;background:#7b8092;
+  position:relative;
+  width:calc(100% + 1px);
+  background:#7b8092;
   padding-top:4px;
   padding-right:0.5rem;
   display:flex;
@@ -4654,18 +4656,18 @@ body.dark #preview-expand-box > div > div.timespan {
 
 #cornerblock2:before {
   content: "";
-  position:absolute;top:-40px;left:0;height:40px;width:10px;
+  position:absolute;top:-40px;left:1px;height:40px;width:10px;
   background-color:transparent;
   border-bottom-left-radius:9px;
-  box-shadow:0 10px 0 0 #7B8092;
+  box-shadow:-1px 10px 0 0 #7B8092;
 }
 
 #cornerblock2:after {
   content: "";
-  position:absolute;top:-40px;right:0;height:40px;width:10px;
+  position:absolute;top:-40px;right:1px;height:40px;width:10px;
   background-color:transparent;
   border-bottom-right-radius:9px;
-  box-shadow:0 10px 0 0 #7B8092;
+  box-shadow:1px 10px 0 0 #7B8092;
 }
 
 #cornermessage {
@@ -4704,13 +4706,13 @@ body.dark #cornerblock2 {
 }
 
 body.dark #cornerblock2:before {
-  box-shadow:0 10px 0 0 #000;
+  box-shadow:-1px 10px 0 0 #000;
   border-left:1px solid #666;
   border-bottom:1px solid #666;
 }
 
 body.dark #cornerblock2:after {
-  box-shadow:0 10px 0 0 #000;
+  box-shadow:1px 10px 0 0 #000;
   border-right:1px solid #666;
   border-bottom:1px solid #666;
 }
