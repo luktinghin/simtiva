@@ -5599,15 +5599,13 @@ function processrange(rangenum) {
 function setcustomconc(inputval) {
 	chartprofileconc = 1;
 	maxconc = inputval * 1;
-	if (popupon == true) {
-		popupchart.options.scales.y.max = maxconc;
-		updatechart(popupchart);
-		document.getElementById("isConcAutomatic2").checked = false;
-	} else {
-		myChart.options.scales.y.max = maxconc;
-		updatechart(myChart);
-		document.getElementById("isConcAutomatic").checked = false;
-	}
+	myChart.options.scales.y.max = maxconc;
+	popupchart.options.scales.y.max = maxconc;	
+	updatechart(myChart);
+	updatechart(popupchart);
+	document.getElementById("isConcAutomatic2").checked = false;
+	document.getElementById("isConcAutomatic").checked = false;
+	
 }
 
 function chartOptionsToggle() {
