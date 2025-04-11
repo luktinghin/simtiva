@@ -4656,7 +4656,7 @@ body.dark #preview-expand-box > div > div.timespan {
 
 #cornerblock2:before {
   content: "";
-  position:absolute;top:-40px;left:1px;height:40px;width:10px;
+  position:absolute;top:-40px;left:0.5px;height:40px;width:10px;
   background-color:transparent;
   border-bottom-left-radius:9px;
   box-shadow:-1px 10px 0 0 #7B8092;
@@ -4664,7 +4664,7 @@ body.dark #preview-expand-box > div > div.timespan {
 
 #cornerblock2:after {
   content: "";
-  position:absolute;top:-40px;right:1px;height:40px;width:10px;
+  position:absolute;top:-40px;right:0.5px;height:40px;width:10px;
   background-color:transparent;
   border-bottom-right-radius:9px;
   box-shadow:1px 10px 0 0 #7B8092;
@@ -4707,13 +4707,13 @@ body.dark #cornerblock2 {
 
 body.dark #cornerblock2:before {
   box-shadow:-1px 10px 0 0 #000;
-  border-left:1px solid #666;
+  border-left:1px solid #6666;
   border-bottom:1px solid #666;
 }
 
 body.dark #cornerblock2:after {
   box-shadow:1px 10px 0 0 #000;
-  border-right:1px solid #666;
+  border-right:1px solid #6666;
   border-bottom:1px solid #666;
 }
 
