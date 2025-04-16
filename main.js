@@ -611,10 +611,6 @@ function initsubmit() {
 			if (document.getElementById("select_eleveldopioid").value == "1") {opioid = 1} else {opioid = 0};
 		}
 		readmodel(ElModel.value,0);
-		//infusate_concentration goes here
-		drug_sets[0].infusate_concentration = 10; //defaults 10 for propofol
-
-
 
 		//see if need to display emulation eleveld
 		if (((drug_sets[0].model_name == "Marsh") || (drug_sets[0].model_name == "Schnider")) && (height>0)) {
@@ -656,6 +652,24 @@ function initsubmit() {
 		document.getElementById("modalScreen2").style.paddingTop = "";
 		document.getElementById("modalScreen2content").style.width = "";
 		document.getElementById("simplemodeselection").style.display = "";
+		//infusate concentration determination
+		if (paedi_mode == 0) {
+			if ((document.getElementById("select_model").value == "Marsh") || (document.getElementById("select_model").value == "Schnider") || (document.getElementById("select_model").value == "Eleveld") || (document.getElementById("select_model").value == "Paedfusor")) {
+				if (document.getElementById("select_propdilution").value == "custom") {
+					drug_sets[0].infusate_concentration = document.getElementById("propdilution").innerHTML *1;
+				} else {
+					drug_sets[0].infusate_concentration = document.getElementById("select_propdilution").value * 1;
+				}
+			} 
+		} else {
+			if ((document.getElementById("select_model_paedi").value == "Paedfusor") ||  (document.getElementById("select_model_paedi").value == "Eleveld")) {
+				if (document.getElementById("select_propdilution").value == "custom") {
+					drug_sets[0].infusate_concentration = document.getElementById("propdilution").innerHTML *1;
+				} else {
+					drug_sets[0].infusate_concentration = document.getElementById("select_propdilution").value * 1;
+				}
+			}
+		}
 		if (paedi_mode == 0) {
 			if ((document.getElementById("select_model").value === "Minto") || (document.getElementById("select_model").value === "Eleveld-Remifentanil")) {
 				if (document.getElementById("select_remidilution").value == "custom") {
@@ -745,6 +759,18 @@ function initsubmit() {
 			//need change the following - bolus templates
 			}
 
+		if (((paedi_mode == 0) && (
+				(document.getElementById("select_model").value == "Marsh") || 
+				(document.getElementById("select_model").value == "Schnider") ||
+				(document.getElementById("select_model").value == "Eleveld") ||
+				(document.getElementById("select_model").value == "Paedfusor")
+			)) || ((paedi_mode == 1) && (
+				(document.getElementById("select_model_paedi").value == "Eleveld") ||
+				(document.getElementById("select_model_paedi").value == "Paedfusor")
+			))) {
+				//is propofol
+				document.getElementById("drugname").innerHTML = "Propofol <span style='opacity:0.5'>(" + drug_sets[drug_sets_index].infusate_concentration + "mg/ml)</span>";
+		}
 	  if (paedi_mode == 0) {
 			if ((document.getElementById("select_model").value === "Minto") || (document.getElementById("select_model").value === "Eleveld-Remifentanil")) {
 	  		document.getElementById("drugname").innerHTML = "Remifentanil <span style='opacity:0.5'>(" + drug_sets[drug_sets_index].infusate_concentration + "mcg/ml)</span>";
@@ -1960,10 +1986,9 @@ function switchpaedimode(arg) {
 
 
 		El6 = document.getElementById("btn_initProceed");
-
-
 		El6.classList.add("disabled");
 		El6.removeEventListener("click", toPageTwo);
+		sendToValidate(0);
 }
 
 
@@ -2084,7 +2109,7 @@ function sendToValidate(arg) {
 			document.getElementById("row_gender").style.display = "table-row";
 			document.getElementById("row_height").style.display = "table-row";
 	}
-	conditions = (age<0 || age>=100) || (weight<=0 || weight>=200);
+	conditions = (age<=0 || age>=100) || (weight<=0 || weight>=200);
 	if (conditions)	{
 		clearTimeout(timeoutVal);
 		El1.classList.remove("valClose");

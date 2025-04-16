@@ -646,10 +646,8 @@ function parseobject(input_uid,external,extObject) {
 		document.getElementById("modeldescription").innerHTML = drug_sets[0].modeltext;
 	}
 
-
 	//drug_sets[0].drug_name = object.P_patient[1];
 	if (object.P_patient[9]!=undefined) drug_sets[0].infusate_concentration = object.P_patient[9];
-
 
 	if ((object.P_patient[0] === "Minto") || (object.P_patient[0] === "Eleveld-Remifentanil")) {
   	document.getElementById("drugname").innerHTML = "Remifentanil <span style='opacity:0.5'>(" + drug_sets[0].infusate_concentration + "mcg/ml)</span>";

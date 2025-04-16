@@ -1015,11 +1015,11 @@ body.dark #modalInitial, body.dark #modalLoad {
   height:2.7rem;
 }
 .table-Init.paedimode tr {
-  height:2.6rem;
+  height:2.5rem;
 }
 .table-Init.paedimode td {
-  padding-top:2px;
-  padding-bottom:2px;
+  padding-top:1.5px;
+  padding-bottom:1.5px;
 }
 
 .IB_elements {
