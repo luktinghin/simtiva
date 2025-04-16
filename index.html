@@ -56,7 +56,7 @@
     <meta name="keywords" content="simtiva, tiva, tci, free, simulator, calculator, terence, luk, propofol, remifentanil, alfentanil, app, smartphones, apple, android">
     <meta name="author" content="Terence Luk">
     <title>SimTIVA | Free TIVA Simulation App to Simulate Target-Controlled Infusion | Simple TCI Calculator</title>
-	<script defer src="https://cloud.umami.is/script.js" data-website-id="fe14ba98-f4c0-4536-94fa-9a0a4c1ed75e"></script>
+	<!--<script defer src="https://cloud.umami.is/script.js" data-website-id="fe14ba98-f4c0-4536-94fa-9a0a4c1ed75e"></script>-->
 </head>
 <body class="" id="windowbody">
 		<div id="rescuebuttons">
@@ -156,6 +156,17 @@
 								<option value="1">Yes, with opioid</option>
 								<option value="0">No, propofol alone</option>
 							</select>
+						</td>
+					</tr>
+					<tr id="row_propofoldilution"><td style="letter-spacing:-0.5px">Concentration <span style="font-size:85%">(mg/ml)</span></td>
+						<td>
+							<select id="select_propdilution" onchange="change_propdilution(this.value)">
+								<option value="10" selected>10mg/ml</option>
+								<option value="20">20mg/ml</option>
+								<option value="custom">Custom</option>
+							</select>
+							<div id="custom_propdilution" onclick="popup_dilution('propdilution','propofol')">
+								<span id="propdilution">_</span>mg/ml
 						</td>
 					</tr>
 					<tr id="row_remidilution"><td style="letter-spacing:-0.5px">Concentration <span style="font-size: 85%">(mcg/ml)</span></td>

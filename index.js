@@ -581,7 +581,7 @@ const xInputCardsHTML = `
 									<a class="infusionratedropdownitem" id="bolusoptioncopy2_0" onclick="setBolusUnit(2)"><i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml</a>
 								</div>
 						</td>
-						<td width="30px"><input type="number" id="inputBolus0" min="0" max="2000" step="0.01" placeholder=" "></td>
+						<td width="30px"><input type="number" inputmode="decimal" id="inputBolus0" min="0" max="2000" step="0.01" placeholder=" "></td>
 						<td><a class="button custom" id="" onclick="bolusadmin(custombolus(0),0);">Go!</button></a></td>
 					</tr></table>
 				
@@ -606,7 +606,7 @@ const xInputCardsHTML = `
 								</div>
 							</div>
 						</td>
-						<td width="30px"><input type="number" id="inputBolus1" min="0" max="2000" step="0.01" placeholder=" " ></td>
+						<td width="30px"><input type="number" inputmode="decimal" id="inputBolus1" min="0" max="2000" step="0.01" placeholder=" " ></td>
 						<td><a class="button custom" id="" onclick="bolusadmin(custombolus(1),1);">Go!</button></a></td>
 					</tr></table>
 				
