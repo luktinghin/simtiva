@@ -4424,6 +4424,15 @@ function change_propdilution(paramprop) {
 	}
 }
 
+function change_prop2dilution(paramprop) {
+	if (paramprop=="custom") {
+		document.getElementById("custom_prop2dilution").style.display = 'inline-block';
+		popup_dilution('prop2dilution','propofol');
+	} else {
+		document.getElementById("custom_prop2dilution").style.display = 'none';
+	}
+}
+
 function change_dexdilution(paramdex) {
 	if (paramdex=="custom") {
 		document.getElementById("custom_dexdilution").style.display = 'inline-block';
@@ -4501,6 +4510,9 @@ function popup_dilution(targetid,targetname) {
 					document.getElementById("select_opioiddilution").value = "100";
 					document.getElementById("custom_opioiddilution").style.display = "none";
 				}
+			} if (targetid == "prop2dilution") {
+					document.getElementById("select_prop2dilution").value = "10";
+					document.getElementById("custom_prop2dilution").style.display = "none";	
 			} else {
 				if (targetname == "fentanyl") {
 					document.getElementById("select_fendilution").value = "10";
@@ -4524,6 +4536,9 @@ function popup_dilution(targetid,targetname) {
 			if (targetid == "opioiddilution") { 
 					document.getElementById("select_opioiddilution").value = "custom";
 					document.getElementById("custom_opioiddilution").style.display = "inline-block";
+			} else if (targetid == "prop2dilution") {
+					document.getElementById("select_prop2dilution").value = "custom";
+					document.getElementById("custom_prop2dilution").style.display = "inline-block";		
 			} else {
 				if (targetname == "fentanyl") {
 					document.getElementById("select_fendilution").value = "custom";

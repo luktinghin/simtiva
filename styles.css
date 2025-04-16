@@ -522,7 +522,17 @@ input[type=number]:not(:placeholder-shown):focus:valid {
   margin-bottom: 4px;
   cursor: pointer;
 }
-
+#custom_prop2dilution {
+  display: none;
+  font-size: 90%;
+  background: rgb(213,237,214);
+  font-weight: bold;
+  border-radius: 1rem;
+  padding: 0 5px;
+  line-height: 24px;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
 #custom_opioiddilution {
   display: none;
   font-size: 90%;
@@ -1020,6 +1030,13 @@ body.dark #modalInitial, body.dark #modalLoad {
 .table-Init.paedimode td {
   padding-top:1.5px;
   padding-bottom:1.5px;
+}
+.complextable tr {
+  height: 2.5rem;
+}
+.complextable td {
+  padding-top:2px;
+  padding-bottom:2px;
 }
 
 .IB_elements {
