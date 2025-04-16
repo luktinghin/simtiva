@@ -1032,11 +1032,10 @@ body.dark #modalInitial, body.dark #modalLoad {
   padding-bottom:1.5px;
 }
 .complextable tr {
-  height: 2.5rem;
+
 }
 .complextable td {
-  padding-top:2px;
-  padding-bottom:2px;
+
 }
 
 .IB_elements {
