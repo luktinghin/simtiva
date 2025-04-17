@@ -2531,25 +2531,25 @@ const chartInfRateLayer = {
 								if (bolusArray[bolusArray.length-1] - bolusArray[bolusArray.length-2] < 600) {
 									if (textheight < textsize * 6) {
 										textheight = textheight + textsize * 1.33;
-										ctx.fillText(bolustext, x0+10, 50+textheight);	
+										ctx.fillText(bolustext, x0+12, 50+textheight);	
 										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-										ctx.fillText("\uf063", x0-5, 50+textheight);	
+										ctx.fillText("\uf48e", x0-6, 50+textheight);	
 									} else {
 										textheight = 0;
-										ctx.fillText(bolustext, x0+10, 50);
+										ctx.fillText(bolustext, x0+12, 50);
 										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-										ctx.fillText("\uf063", x0-5, 50);	
+										ctx.fillText("\uf48e", x0-6, 50);
 									}
 								} else {
-									ctx.fillText(bolustext, x0+10, 50);
+									ctx.fillText(bolustext, x0+12, 50);
 									textheight = 0;
 									ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-									ctx.fillText("\uf063", x0-5, 50);	
+									ctx.fillText("\uf48e", x0-6, 50);	
 								}
 							} else {
-								ctx.fillText(bolustext, x0+10, 50);
+								ctx.fillText(bolustext, x0+12, 50);
 								ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-								ctx.fillText("\uf063", x0-5, 50);	
+								ctx.fillText("\uf48e", x0-6, 50);
 							}
 						}
 					} else {
