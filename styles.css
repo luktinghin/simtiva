@@ -586,7 +586,7 @@ input[type=number]:not(:placeholder-shown):focus:valid {
   font-size:0.9rem;
 }
 
-body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom_opioiddilution, body.dark #custom_dexdilution, body.dark #PMA_explanation, body.dark #modelSelector {
+body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom_opioiddilution, body.dark #custom_dexdilution, body.dark #custom_propdilution, body.dark #custom_prop2dilution, body.dark #PMA_explanation, body.dark #modelSelector {
   background: #187f18;
   color: white;
 }

@@ -5738,7 +5738,6 @@ function readmodel(x, drug_set_index) {
 		"k21 = " + drug_sets[drug_set_index].k21 + "<br>" +
 		"k31 = " + drug_sets[drug_set_index].k31 + "<br>" +
 		"ke0 = " + drug_sets[drug_set_index].k41 + "<br>";
-		//"use of the Eleveld model in this app limited to >6 months old as the app did not account for CLmaturation, which requires PMA as covariate";
 
 		drug_sets[drug_set_index].drug_name = "Propofol";
 		drug_sets[drug_set_index].conc_units = "mcg";

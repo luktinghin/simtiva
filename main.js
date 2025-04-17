@@ -840,7 +840,7 @@ function initsubmit() {
 
 		if (document.getElementById("select_remidilution").value == "custom") {
 			temp = document.getElementById("remidilution").innerHTML * 1 ;
-			if (temp > 100 || temp < 0.1) {
+			if (isNaN(temp) || (temp > 100 || temp < 0.1)) {
 				validateText = validateText.concat("Invalid remifentanil dilution: must be within 0.1-100mcg/ml" + "<br>");
 				document.getElementById("select_remidilution").value = "20";
 				document.getElementById("custom_remidilution").style.display = "none";
@@ -848,7 +848,7 @@ function initsubmit() {
 		}
 		if (document.getElementById("select_fendilution").value == "custom") {
 			temp = document.getElementById("fendilution").innerHTML * 1 ;
-			if (temp > 100 || temp < 0.1) {
+			if (isNaN(temp) || (temp > 100 || temp < 0.1)) {
 				validateText = validateText.concat("Invalid fentanyl dilution: must be within 0.1-100mcg/ml" + "<br>");
 				document.getElementById("select_fendilution").value = "10";
 				document.getElementById("custom_fendilution").style.display = "none";
@@ -856,10 +856,26 @@ function initsubmit() {
 		}
 		if (document.getElementById("select_alfendilution").value == "custom") {
 			temp = document.getElementById("alfendilution").innerHTML * 1 ;
-			if (temp > 500 || temp < 0.1) {
+			if (isNaN(temp) || (temp > 500 || temp < 0.1)) {
 				validateText = validateText.concat("Invalid fentanyl dilution: must be within 0.1-500mcg/ml" + "<br>");
 				document.getElementById("select_alfendilution").value = "100";
 				document.getElementById("custom_alfendilution").style.display = "none";
+			}			
+		}
+		if (document.getElementById("select_dexdilution").value == "custom") {
+			temp = document.getElementById("dexdilution").innerHTML * 1 ;
+			if (isNaN(temp) || (temp > 20 || temp < 0.1)) {
+				validateText = validateText.concat("Invalid dexmedetomidine dilution: must be within 0.1-20mcg/ml" + "<br>");
+				document.getElementById("select_dexdilution").value = "4";
+				document.getElementById("custom_dexdilution").style.display = "none";
+			}			
+		}
+		if (document.getElementById("select_propdilution").value == "custom") {
+			temp = document.getElementById("propdilution").innerHTML * 1 ;
+			if (isNaN(temp) || (temp > 20 || temp < 0.1)) {
+				validateText = validateText.concat("Invalid propofol dilution: must be within 0.1-20mg/ml" + "<br>");
+				document.getElementById("select_propdilution").value = "10";
+				document.getElementById("custom_propdilution").style.display = "none";
 			}			
 		}
 
@@ -4394,6 +4410,7 @@ function change_fendilution(paramfen) {
 		popup_dilution('fendilution','fentanyl');
 	} else {
 		document.getElementById("custom_fendilution").style.display = 'none';
+		sendToValidate(0);
 	}
 }
 
@@ -4403,6 +4420,7 @@ function change_remidilution(paramremi) {
 		popup_dilution('remidilution','remifentanil');
 	} else {
 		document.getElementById("custom_remidilution").style.display = 'none';
+		sendToValidate(0);
 	}
 }
 
@@ -4412,6 +4430,7 @@ function change_alfendilution(paramalfen) {
 		popup_dilution('alfendilution','alfentanil');
 	} else {
 		document.getElementById("custom_alfendilution").style.display = 'none';
+		sendToValidate(0);
 	}
 }
 
@@ -4421,6 +4440,7 @@ function change_propdilution(paramprop) {
 		popup_dilution('propdilution','propofol');
 	} else {
 		document.getElementById("custom_propdilution").style.display = 'none';
+		sendToValidate(0);
 	}
 }
 
@@ -4430,6 +4450,7 @@ function change_prop2dilution(paramprop) {
 		popup_dilution('prop2dilution','propofol');
 	} else {
 		document.getElementById("custom_prop2dilution").style.display = 'none';
+		sendToValidate(0);
 	}
 }
 
@@ -4439,6 +4460,7 @@ function change_dexdilution(paramdex) {
 		popup_dilution('dexdilution','dexmedetomidine');
 	} else {
 		document.getElementById("custom_dexdilution").style.display = 'none';
+		sendToValidate(0);
 	}
 }
 
@@ -4556,6 +4578,7 @@ function popup_dilution(targetid,targetname) {
 					document.getElementById("select_propdilution").value = "custom";
 					document.getElementById("custom_propdilution").style.display = "inline-block";					
 				}
+				sendToValidate(0);
 			}
 			document.getElementById("popup_dilution_message").innerText = "&nbsp;";
 			ElTarget.innerHTML = temp;
