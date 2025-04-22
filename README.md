@@ -21,7 +21,12 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
 - To help deliver TCI in a setting where TCI pumps are not available
 
 ### Changelog
- Version 5.1 (Build 143) Current
+ Version 5.2 (Build 150) Current
+ - Propofol concentration: 10mg/ml, 20mg/ml, and custom dilution
+ - Bugfix: Visual fixes and data validation on initial page
+ - Visual improvements and bugfixes for fullscreen mode
+
+ Version 5.1 (Build 143) 
  - RSI mode: facilitates RSI using TIVA. User entry of CE target, time to reach CE, and bolus speed. Infusion scheme with bolus size, pause time, with display of expected CE overshoot at peak.
  - Dexmedetomidine (Hannivoort model): CP/CE/Manual modes. Safety feature: bolus speed for loading dose (if any) is limited <6mcg/kg/h
  - Fullscreen mode bug fixes and visual improvements
