@@ -646,10 +646,8 @@ function parseobject(input_uid,external,extObject) {
 		document.getElementById("modeldescription").innerHTML = drug_sets[0].modeltext;
 	}
 
-
 	//drug_sets[0].drug_name = object.P_patient[1];
 	if (object.P_patient[9]!=undefined) drug_sets[0].infusate_concentration = object.P_patient[9];
-
 
 	if ((object.P_patient[0] === "Minto") || (object.P_patient[0] === "Eleveld-Remifentanil")) {
   	document.getElementById("drugname").innerHTML = "Remifentanil <span style='opacity:0.5'>(" + drug_sets[0].infusate_concentration + "mcg/ml)</span>";
@@ -1532,6 +1530,11 @@ function parsedisplay(t,sex,model,VI,d,mode) {
 		document.getElementById("drugname").innerHTML = drug_sets[0].drug_name;
 		document.getElementById("modelname").innerHTML = drug_sets[0].model_name;
 		document.getElementById("modeldescription").innerHTML = drug_sets[0].modeltext;
+
+		if (drug_sets[0].drug_name == "Propofol") {
+				//is propofol
+				document.getElementById("drugname").innerHTML = "Propofol <span style='opacity:0.5'>(" + drug_sets[0].infusate_concentration + "mg/ml)</span>";
+		}
 
 	if (drug_sets[0].drug_name == "Remifentanil") {
   	document.getElementById("drugname").innerHTML = "Remifentanil <span style='opacity:0.5'>(" + drug_sets[0].infusate_concentration + "mcg/ml)</span>";
@@ -2528,25 +2531,25 @@ const chartInfRateLayer = {
 								if (bolusArray[bolusArray.length-1] - bolusArray[bolusArray.length-2] < 600) {
 									if (textheight < textsize * 6) {
 										textheight = textheight + textsize * 1.33;
-										ctx.fillText(bolustext, x0+10, 50+textheight);	
+										ctx.fillText(bolustext, x0+12, 50+textheight);	
 										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-										ctx.fillText("\uf063", x0-5, 50+textheight);	
+										ctx.fillText("\uf48e", x0-6, 50+textheight);	
 									} else {
 										textheight = 0;
-										ctx.fillText(bolustext, x0+10, 50);
+										ctx.fillText(bolustext, x0+12, 50);
 										ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-										ctx.fillText("\uf063", x0-5, 50);	
+										ctx.fillText("\uf48e", x0-6, 50);
 									}
 								} else {
-									ctx.fillText(bolustext, x0+10, 50);
+									ctx.fillText(bolustext, x0+12, 50);
 									textheight = 0;
 									ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-									ctx.fillText("\uf063", x0-5, 50);	
+									ctx.fillText("\uf48e", x0-6, 50);	
 								}
 							} else {
-								ctx.fillText(bolustext, x0+10, 50);
+								ctx.fillText(bolustext, x0+12, 50);
 								ctx.font = 'normal 900 ' + textsize + 'px "Font Awesome 5 Free"';
-								ctx.fillText("\uf063", x0-5, 50);	
+								ctx.fillText("\uf48e", x0-6, 50);
 							}
 						}
 					} else {
@@ -5599,15 +5602,13 @@ function processrange(rangenum) {
 function setcustomconc(inputval) {
 	chartprofileconc = 1;
 	maxconc = inputval * 1;
-	if (popupon == true) {
-		popupchart.options.scales.y.max = maxconc;
-		updatechart(popupchart);
-		document.getElementById("isConcAutomatic2").checked = false;
-	} else {
-		myChart.options.scales.y.max = maxconc;
-		updatechart(myChart);
-		document.getElementById("isConcAutomatic").checked = false;
-	}
+	myChart.options.scales.y.max = maxconc;
+	popupchart.options.scales.y.max = maxconc;	
+	updatechart(myChart);
+	updatechart(popupchart);
+	document.getElementById("isConcAutomatic2").checked = false;
+	document.getElementById("isConcAutomatic").checked = false;
+	
 }
 
 function chartOptionsToggle() {
@@ -5838,16 +5839,21 @@ function proceedComplex() {
 		if (age>15 && model0=="Paedfusor") {
 			validateText = validateText.concat("Invalid model: Paedfusor not suitable for adults." + "<br>");
 		}
-
+		if (document.getElementById("select_prop2dilution").value == "custom") {
+			tempP = document.getElementById("prop2dilution").innerHTML * 1 ;
+			if (tempP > 20 || tempP < 0.1) {
+				validateText = validateText.concat("Invalid propofol dilution: must be within 0.1-20mg/ml" + "<br>");
+				document.getElementById("select_prop2dilution").value = "10";
+				document.getElementById("custom_prop2dilution").style.display = "none";
+			}
+		}
 		if (document.getElementById("select_opioiddilution").value == "custom") {
-
 			temp = document.getElementById("opioiddilution").innerHTML * 1 ;
 			if (temp > 500 || temp < 0.1) {
 				validateText = validateText.concat("Invalid opioid dilution: must be within 0.1-500mcg/ml" + "<br>");
 				document.getElementById("select_opioiddilution").value = "10";
 				document.getElementById("custom_opioiddilution").style.display = "none";
 			}
-
 		}
 
 	if (validateText != "") {
@@ -5855,7 +5861,11 @@ function proceedComplex() {
 	} else {
 
 		readmodel(model0,0);
-		drug_sets[0].infusate_concentration = 10; //defaults 10 for propofol
+		if (document.getElementById("select_prop2dilution").value == "custom") {
+			drug_sets[0].infusate_concentration=document.getElementById("prop2dilution").innerHTML *1;	
+		} else {
+			drug_sets[0].infusate_concentration=document.getElementById("select_prop2dilution").value *1;	
+		}
 		if (mode0 == 0) {
 			initcpt();
 		} else if (mode0 == 1) {
@@ -5868,14 +5878,11 @@ function proceedComplex() {
 
 	//opioid code
 		readmodel(model1,1);
-
 		if (document.getElementById("select_opioiddilution").value == "custom") {
 			drug_sets[1].infusate_concentration=document.getElementById("opioiddilution").innerHTML *1;	
 		} else {
 			drug_sets[1].infusate_concentration=document.getElementById("select_opioiddilution").value *1;	
 		}
-
-		
 		if (document.getElementById("model_opioid").value === "Shafer") {
 			if (select_fen_weightadjusted1.value == "0") {
 	  		drug_sets[1].fentanyl_weightadjusted_flag = 0;
@@ -5976,6 +5983,7 @@ function complexinterface_init() {
 		document.getElementById("sharebutton").classList.add("complex");
 		document.getElementById("darkmodebutton").classList.add("complex");
 	}
+	document.getElementById("drugname").innerHTML = "Propofol <span style='opacity:0.5'>(" + drug_sets[0].infusate_concentration + "mg/ml)</span>";
 
 	//chart line border change
 	myChart.data.datasets[2].borderDash = [2,2];
@@ -6848,6 +6856,7 @@ function tabswitch(index) {
 			document.getElementById("historywrapper").innerHTML = drug_sets[0].historytext;
 			document.getElementById("historywrapperCOPY").innerHTML = drug_sets[0].historytext;
 		}
+		document.getElementById("drugname").innerHTML = "Propofol <span style='opacity:0.5'>(" + drug_sets[0].infusate_concentration + "mg/ml)</span>";
 		document.querySelector(".leftbar").classList.remove("opioid");
 		document.querySelector(".leftbar").classList.add("propofol");
 		document.querySelector(".druglabelcontainer.propofol").classList.add("active");
@@ -6903,7 +6912,7 @@ function tabswitch(index) {
 		//switch to 1
 		active_drug_set_index = 1;
 		alt_drug_set_index = 0;
-		document.getElementById("drugname").innerHTML = drug_sets[1].drug_name + "<span style='opacity:0.5'>(" + drug_sets[1].infusate_concentration + "mcg/ml)</span>";
+		document.getElementById("drugname").innerHTML = drug_sets[1].drug_name + " <span style='opacity:0.5'>(" + drug_sets[1].infusate_concentration + "mcg/ml)</span>";
 		if (drug_sets[1].model_name == "Eleveld-Remifentanil") {
 			document.getElementById("modelname").innerHTML = "Eleveld";	
 		} else {
@@ -7079,7 +7088,7 @@ function tabswitch(index) {
 	}
 	document.getElementById("cornermessage").innerHTML = "";
 	updatechart(myChart);
-	updateBolusSpeedOptions();
+	if (parseloading == 0) updateBolusSpeedOptions();
 }
 
 function toggleshowPTOLmargins() {

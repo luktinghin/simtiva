@@ -611,10 +611,6 @@ function initsubmit() {
 			if (document.getElementById("select_eleveldopioid").value == "1") {opioid = 1} else {opioid = 0};
 		}
 		readmodel(ElModel.value,0);
-		//infusate_concentration goes here
-		drug_sets[0].infusate_concentration = 10; //defaults 10 for propofol
-
-
 
 		//see if need to display emulation eleveld
 		if (((drug_sets[0].model_name == "Marsh") || (drug_sets[0].model_name == "Schnider")) && (height>0)) {
@@ -656,6 +652,24 @@ function initsubmit() {
 		document.getElementById("modalScreen2").style.paddingTop = "";
 		document.getElementById("modalScreen2content").style.width = "";
 		document.getElementById("simplemodeselection").style.display = "";
+		//infusate concentration determination
+		if (paedi_mode == 0) {
+			if ((document.getElementById("select_model").value == "Marsh") || (document.getElementById("select_model").value == "Schnider") || (document.getElementById("select_model").value == "Eleveld") || (document.getElementById("select_model").value == "Paedfusor")) {
+				if (document.getElementById("select_propdilution").value == "custom") {
+					drug_sets[0].infusate_concentration = document.getElementById("propdilution").innerHTML *1;
+				} else {
+					drug_sets[0].infusate_concentration = document.getElementById("select_propdilution").value * 1;
+				}
+			} 
+		} else {
+			if ((document.getElementById("select_model_paedi").value == "Paedfusor") ||  (document.getElementById("select_model_paedi").value == "Eleveld")) {
+				if (document.getElementById("select_propdilution").value == "custom") {
+					drug_sets[0].infusate_concentration = document.getElementById("propdilution").innerHTML *1;
+				} else {
+					drug_sets[0].infusate_concentration = document.getElementById("select_propdilution").value * 1;
+				}
+			}
+		}
 		if (paedi_mode == 0) {
 			if ((document.getElementById("select_model").value === "Minto") || (document.getElementById("select_model").value === "Eleveld-Remifentanil")) {
 				if (document.getElementById("select_remidilution").value == "custom") {
@@ -745,6 +759,18 @@ function initsubmit() {
 			//need change the following - bolus templates
 			}
 
+		if (((paedi_mode == 0) && (
+				(document.getElementById("select_model").value == "Marsh") || 
+				(document.getElementById("select_model").value == "Schnider") ||
+				(document.getElementById("select_model").value == "Eleveld") ||
+				(document.getElementById("select_model").value == "Paedfusor")
+			)) || ((paedi_mode == 1) && (
+				(document.getElementById("select_model_paedi").value == "Eleveld") ||
+				(document.getElementById("select_model_paedi").value == "Paedfusor")
+			))) {
+				//is propofol
+				document.getElementById("drugname").innerHTML = "Propofol <span style='opacity:0.5'>(" + drug_sets[drug_sets_index].infusate_concentration + "mg/ml)</span>";
+		}
 	  if (paedi_mode == 0) {
 			if ((document.getElementById("select_model").value === "Minto") || (document.getElementById("select_model").value === "Eleveld-Remifentanil")) {
 	  		document.getElementById("drugname").innerHTML = "Remifentanil <span style='opacity:0.5'>(" + drug_sets[drug_sets_index].infusate_concentration + "mcg/ml)</span>";
@@ -814,7 +840,7 @@ function initsubmit() {
 
 		if (document.getElementById("select_remidilution").value == "custom") {
 			temp = document.getElementById("remidilution").innerHTML * 1 ;
-			if (temp > 100 || temp < 0.1) {
+			if (isNaN(temp) || (temp > 100 || temp < 0.1)) {
 				validateText = validateText.concat("Invalid remifentanil dilution: must be within 0.1-100mcg/ml" + "<br>");
 				document.getElementById("select_remidilution").value = "20";
 				document.getElementById("custom_remidilution").style.display = "none";
@@ -822,7 +848,7 @@ function initsubmit() {
 		}
 		if (document.getElementById("select_fendilution").value == "custom") {
 			temp = document.getElementById("fendilution").innerHTML * 1 ;
-			if (temp > 100 || temp < 0.1) {
+			if (isNaN(temp) || (temp > 100 || temp < 0.1)) {
 				validateText = validateText.concat("Invalid fentanyl dilution: must be within 0.1-100mcg/ml" + "<br>");
 				document.getElementById("select_fendilution").value = "10";
 				document.getElementById("custom_fendilution").style.display = "none";
@@ -830,10 +856,26 @@ function initsubmit() {
 		}
 		if (document.getElementById("select_alfendilution").value == "custom") {
 			temp = document.getElementById("alfendilution").innerHTML * 1 ;
-			if (temp > 500 || temp < 0.1) {
+			if (isNaN(temp) || (temp > 500 || temp < 0.1)) {
 				validateText = validateText.concat("Invalid fentanyl dilution: must be within 0.1-500mcg/ml" + "<br>");
 				document.getElementById("select_alfendilution").value = "100";
 				document.getElementById("custom_alfendilution").style.display = "none";
+			}			
+		}
+		if (document.getElementById("select_dexdilution").value == "custom") {
+			temp = document.getElementById("dexdilution").innerHTML * 1 ;
+			if (isNaN(temp) || (temp > 20 || temp < 0.1)) {
+				validateText = validateText.concat("Invalid dexmedetomidine dilution: must be within 0.1-20mcg/ml" + "<br>");
+				document.getElementById("select_dexdilution").value = "4";
+				document.getElementById("custom_dexdilution").style.display = "none";
+			}			
+		}
+		if (document.getElementById("select_propdilution").value == "custom") {
+			temp = document.getElementById("propdilution").innerHTML * 1 ;
+			if (isNaN(temp) || (temp > 20 || temp < 0.1)) {
+				validateText = validateText.concat("Invalid propofol dilution: must be within 0.1-20mg/ml" + "<br>");
+				document.getElementById("select_propdilution").value = "10";
+				document.getElementById("custom_propdilution").style.display = "none";
 			}			
 		}
 
@@ -1806,6 +1848,7 @@ function switchpaedimode(arg) {
 		document.querySelector(".table-Init").classList.remove("paedimode");
 		document.getElementById("row_age_paedimode").style.display = "none";
 		document.getElementById("row_PMA_paedimode").style.display = "none";
+		document.getElementById("logo").style.display = "";
 		document.getElementById("row_age_adultmode").style.display = "table-row";
 		document.getElementById("paedimode0").classList.add("active");
 		document.getElementById("paedimode1").classList.remove("active");
@@ -1874,8 +1917,9 @@ function switchpaedimode(arg) {
 				document.getElementById("row_height").style.display = "none";
 				document.getElementById("row_dexdilution").style.display = "table-row";
 			}
+			document.getElementById("row_propofoldilution").style.display = "none";
 		} else {
-			//not fentanyl or remi
+			//is propofol
 			document.getElementById("row_alfendilution").style.display = "none";
 			document.getElementById("row_remidilution").style.display = "none";
 			document.getElementById("row_fendilution").style.display = "none";
@@ -1887,14 +1931,14 @@ function switchpaedimode(arg) {
 			} else {
 				document.getElementById("row_eleveldopioid").style.display = "none";	
 			}
-			
-
+			document.getElementById("row_propofoldilution").style.display = "table-row";
 		}
 		paedi_mode = 0;
 	} else {
 		//paedi mode 1
 		document.querySelector(".table-Init").classList.add("paedimode");
 		document.getElementById("row_age_paedimode").style.display = "table-row";
+		document.getElementById("logo").style.display = "none";
 		//update model selector display
 		tempmodel = document.getElementById("select_model_paedi").value;
 		if (tempmodel == "Eleveld") {
@@ -1936,23 +1980,31 @@ function switchpaedimode(arg) {
 			document.getElementById("row_dexdilution").style.display = "none";
 		//on or off remi depend on model paedi
 		if (document.getElementById("select_model_paedi").value == "Eleveld-Remifentanil") {
-			document.getElementById("row_PMA_paedimode").style.display = "none";
+			
 			document.getElementById("row_remidilution").style.display = "table-row";
+		} else {
+			document.getElementById("row_remidilution").style.display = "none";
 		}
 		if (document.getElementById("select_model_paedi").value == "Eleveld") {
 				document.getElementById("row_eleveldopioid").style.display = "table-row";	
-			} else {
+				document.getElementById("row_PMA_paedimode").style.display = "table-row";
+		} else {
 				document.getElementById("row_eleveldopioid").style.display = "none";	
-			}
+				document.getElementById("row_PMA_paedimode").style.display = "none";
+		}
+		if ((document.getElementById("select_model_paedi").value == "Eleveld") || (document.getElementById("select_model_paedi").value == "Paedfusor")) {
+			document.getElementById("row_propofoldilution").style.display = "table-row";	
+		} else {
+			document.getElementById("row_propofoldilution").style.display = "none";	
+		}
 		paedi_mode = 1;
 	}
 
 
 		El6 = document.getElementById("btn_initProceed");
-
-
 		El6.classList.add("disabled");
 		El6.removeEventListener("click", toPageTwo);
+		sendToValidate(0);
 }
 
 
@@ -2031,10 +2083,15 @@ function sendToValidate(arg) {
 		} else {
 			document.getElementById("row_eleveldopioid").style.display = "none";	
 		}
+		if ((document.getElementById("select_model_paedi").value == "Paedfusor") || (document.getElementById("select_model_paedi").value == "Eleveld")) {
+			//is propofol
+			document.getElementById("row_propofoldilution").style.display = "table-row";
+		} else {
+			document.getElementById("row_propofoldilution").style.display = "none";
+		}
 	}
 	if (paedi_mode == 0) {
 		if (document.getElementById("select_model").value === "Shafer") {
-		
 			document.getElementById("row_gender").style.display = "none";
 			document.getElementById("row_height").style.display = "none";
 			document.getElementById("row_fendilution").style.display = "table-row";
@@ -2057,12 +2114,18 @@ function sendToValidate(arg) {
 		} else {
 			document.getElementById("row_dexdilution").style.display = "none";
 		}
+		if ((document.getElementById("select_model").value == "Marsh") || (document.getElementById("select_model").value == "Schnider") || (document.getElementById("select_model").value == "Paedfusor") || (document.getElementById("select_model").value == "Eleveld")) {
+			//is propofol
+			document.getElementById("row_propofoldilution").style.display = "table-row";
+		} else {
+			document.getElementById("row_propofoldilution").style.display = "none";
+		}
 	}
 	if ((paedi_mode == 0) && (document.getElementById("select_model").value != "Shafer") && (document.getElementById("select_model").value != "Maitre") && (document.getElementById("select_model").value != "Hannivoort")) {
 			document.getElementById("row_gender").style.display = "table-row";
 			document.getElementById("row_height").style.display = "table-row";
 	}
-	conditions = (age<0 || age>=100) || (weight<=0 || weight>=200);
+	conditions = (age<=0 || age>=100) || (weight<=0 || weight>=200);
 	if (conditions)	{
 		clearTimeout(timeoutVal);
 		El1.classList.remove("valClose");
@@ -2135,7 +2198,12 @@ function displayModelOptions() {
 
 	displayWarning("Choose model", text);
 	//program the model option buttons
-	value = document.getElementById("select_model").value;
+	if (paedi_mode == 0) {
+		value = document.getElementById("select_model").value;	
+	} else {
+		value = document.getElementById("select_model_paedi").value;	
+	}
+	
 	ElList = document.getElementsByClassName("modelOption");
 	for (dmmc = 0; dmmc<ElList.length; dmmc++) {
 		if (ElList[dmmc].id.slice(5) == value) {
@@ -4342,6 +4410,7 @@ function change_fendilution(paramfen) {
 		popup_dilution('fendilution','fentanyl');
 	} else {
 		document.getElementById("custom_fendilution").style.display = 'none';
+		sendToValidate(0);
 	}
 }
 
@@ -4351,6 +4420,7 @@ function change_remidilution(paramremi) {
 		popup_dilution('remidilution','remifentanil');
 	} else {
 		document.getElementById("custom_remidilution").style.display = 'none';
+		sendToValidate(0);
 	}
 }
 
@@ -4360,6 +4430,27 @@ function change_alfendilution(paramalfen) {
 		popup_dilution('alfendilution','alfentanil');
 	} else {
 		document.getElementById("custom_alfendilution").style.display = 'none';
+		sendToValidate(0);
+	}
+}
+
+function change_propdilution(paramprop) {
+	if (paramprop=="custom") {
+		document.getElementById("custom_propdilution").style.display = 'inline-block';
+		popup_dilution('propdilution','propofol');
+	} else {
+		document.getElementById("custom_propdilution").style.display = 'none';
+		sendToValidate(0);
+	}
+}
+
+function change_prop2dilution(paramprop) {
+	if (paramprop=="custom") {
+		document.getElementById("custom_prop2dilution").style.display = 'inline-block';
+		popup_dilution('prop2dilution','propofol');
+	} else {
+		document.getElementById("custom_prop2dilution").style.display = 'none';
+		sendToValidate(0);
 	}
 }
 
@@ -4369,6 +4460,7 @@ function change_dexdilution(paramdex) {
 		popup_dilution('dexdilution','dexmedetomidine');
 	} else {
 		document.getElementById("custom_dexdilution").style.display = 'none';
+		sendToValidate(0);
 	}
 }
 
@@ -4404,6 +4496,9 @@ function popup_dilution(targetid,targetname) {
 	} else if (targetname == "dexmedetomidine") {
 		targetnamecaps = "Dexmedetomidine";
 		upperlimit = 20;
+	} else if (targetname == "propofol") {
+		targetnamecaps = "Propofol";
+		upperlimit = 20;
 	}
 	displayWarning(`Custom ${targetname} dilution`,
 		`
@@ -4437,6 +4532,9 @@ function popup_dilution(targetid,targetname) {
 					document.getElementById("select_opioiddilution").value = "100";
 					document.getElementById("custom_opioiddilution").style.display = "none";
 				}
+			} if (targetid == "prop2dilution") {
+					document.getElementById("select_prop2dilution").value = "10";
+					document.getElementById("custom_prop2dilution").style.display = "none";	
 			} else {
 				if (targetname == "fentanyl") {
 					document.getElementById("select_fendilution").value = "10";
@@ -4447,6 +4545,12 @@ function popup_dilution(targetid,targetname) {
 				} else if (targetname == "alfentanil") {
 					document.getElementById("select_alfendilution").value = "100";
 					document.getElementById("custom_alfendilution").style.display = "none";
+				} else if (targetname == "dexmedetomidine") {
+					document.getElementById("select_dexdilution").value = "4";
+					document.getElementById("custom_dexdilution").style.display = "none";
+				} else if (targetname == "propofol") {
+					document.getElementById("select_propdilution").value = "10";
+					document.getElementById("custom_propdilution").style.display = "none";					
 				}
 			}
 			document.getElementById("popup_dilution_message").innerText = text;
@@ -4454,6 +4558,9 @@ function popup_dilution(targetid,targetname) {
 			if (targetid == "opioiddilution") { 
 					document.getElementById("select_opioiddilution").value = "custom";
 					document.getElementById("custom_opioiddilution").style.display = "inline-block";
+			} else if (targetid == "prop2dilution") {
+					document.getElementById("select_prop2dilution").value = "custom";
+					document.getElementById("custom_prop2dilution").style.display = "inline-block";		
 			} else {
 				if (targetname == "fentanyl") {
 					document.getElementById("select_fendilution").value = "custom";
@@ -4464,7 +4571,14 @@ function popup_dilution(targetid,targetname) {
 				} else if (targetname == "alfentanil") {
 					document.getElementById("select_alfendilution").value = "custom";
 					document.getElementById("custom_alfendilution").style.display = "inline-block";
+				} else if (targetname == "dexmedetomidine") {
+					document.getElementById("select_dexdilution").value = "custom";
+					document.getElementById("custom_dexdilution").style.display = "inline-block";
+				} else if (targetname == "propofol") {
+					document.getElementById("select_propdilution").value = "custom";
+					document.getElementById("custom_propdilution").style.display = "inline-block";					
 				}
+				sendToValidate(0);
 			}
 			document.getElementById("popup_dilution_message").innerText = "&nbsp;";
 			ElTarget.innerHTML = temp;
