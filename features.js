@@ -5607,8 +5607,7 @@ function setcustomconc(inputval) {
 	updatechart(myChart);
 	updatechart(popupchart);
 	document.getElementById("isConcAutomatic2").checked = false;
-	document.getElementById("isConcAutomatic").checked = false;
-	
+	document.getElementById("isConcAutomatic").checked = false;	
 }
 
 function chartOptionsToggle() {

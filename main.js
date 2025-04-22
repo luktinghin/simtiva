@@ -4237,19 +4237,24 @@ function toggleautotime() {
 function toggleautoconc() {
 	if (popupon == true) {
 		valuect = document.getElementById("customconcselect2").value;
+		value = document.getElementById("isConcAutomatic2").checked ? 1:0;
 	} else {
 		valuect = document.getElementById("customconcselect").value;
+		value = document.getElementById("isConcAutomatic").checked ? 1:0;
 	}
-	if (chartprofileconc == 0) {
-		setcustomconc(valuect);
-		chartprofileconc = 1;
-		updatechart(myChart);
-	} else {
-		chartprofileconc = 0;
-		updatechart(myChart);
-	}
-	if (popupon == true) {
-		updatechart(popupchart);
+	alert(value);
+	if (chartprofileconc != value) {
+		if (chartprofileconc == 0) {
+			setcustomconc(valuect);
+			chartprofileconc = 1;
+			updatechart(myChart);
+		} else {
+			chartprofileconc = 0;
+			updatechart(myChart);
+		}
+		if (popupon == true) {
+			updatechart(popupchart);
+		}
 	}
 }
 
