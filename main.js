@@ -4244,7 +4244,7 @@ function toggleautoconc() {
 	}
 	alert(value);
 	if (chartprofileconc != value) {
-		if (chartprofileconc == 0) {
+		if (value == 1) {
 			setcustomconc(valuect);
 			chartprofileconc = 1;
 			updatechart(myChart);
