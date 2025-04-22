@@ -4242,7 +4242,6 @@ function toggleautoconc() {
 		valuect = document.getElementById("customconcselect").value;
 		value = document.getElementById("isConcAutomatic").checked ? 1:0;
 	}
-	alert(value);
 	if (chartprofileconc != value) {
 		if (value == 1) {
 			setcustomconc(valuect);
