@@ -4243,7 +4243,7 @@ function toggleautoconc() {
 		value = document.getElementById("isConcAutomatic").checked ? 1:0;
 	}
 	if (chartprofileconc != value) {
-		if (value == 1) {
+		if (value == 0) {
 			setcustomconc(valuect);
 			chartprofileconc = 1;
 			updatechart(myChart);
