@@ -4242,19 +4242,19 @@ function toggleautoconc() {
 		valuect = document.getElementById("customconcselect").value;
 		value = document.getElementById("isConcAutomatic").checked ? 1:0;
 	}
-	if (chartprofileconc != value) {
-		if (value == 0) {
-			setcustomconc(valuect);
-			chartprofileconc = 1;
-			updatechart(myChart);
-		} else {
-			chartprofileconc = 0;
-			updatechart(myChart);
-		}
-		if (popupon == true) {
-			updatechart(popupchart);
-		}
+	// checked true = automatic -> profile 0
+	if (value == 0) {
+		setcustomconc(valuect);
+		chartprofileconc = 1;
+		updatechart(myChart);
+	} else {
+		chartprofileconc = 0;
+		updatechart(myChart);
 	}
+	if (popupon == true) {
+		updatechart(popupchart);
+	}
+	
 }
 
 function toggleEffectEst() {
