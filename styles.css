@@ -3165,7 +3165,6 @@ body.dark .modal-body a.button_paedimode:hover {
   display:flex;
   align-items:center;
   height:60px;
-  overflow:hidden;
 }
 
 #parallax1 {
@@ -3235,10 +3234,10 @@ body.dark .modal-body a.button_paedimode:hover {
 .topleft {
   flex-basis:40px;
   background: #4caf50;
-  border-radius: 50%;
+  border-radius: 500px;
   color:white;
   margin-right: 6px;
-  margin_left: 4px;
+  margin-left: 4px;
   height: 40px;
   width: 40px;
   text-align:center;
