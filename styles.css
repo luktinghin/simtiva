@@ -3246,7 +3246,7 @@ body.dark .modal-body a.button_paedimode:hover {
 
   box-shadow: 0 0 0 0 rgba(76, 175, 80, 1);
   transform: scale(1);
-  animation: pulse 2s infinite;
+  animation: pulse 8s infinite;
 }
 
 .warningborder {
@@ -3263,17 +3263,17 @@ body.dark .modal-body a.button_paedimode:hover {
 
 @keyframes pulse {
   0% {
-    transform: scale(0.95);
+    /*transform: scale(0.95);*/
     box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
   }
 
   70% {
-    transform: scale(1);
+    /*transform: scale(1);*/
     box-shadow: 0 0 0 20px rgba(76, 175, 80, 0);
   }
 
   100% {
-    transform: scale(0.95);
+    /*transform: scale(0.95);*/
     box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
   }
 }
