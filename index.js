@@ -195,8 +195,8 @@ function displayAbout2(aboutparam) {
 			<div class='banneritem' style='background:#a5d0a8'>
 				<div class='bannericon' style='background:#356038'><img class='' src="users.webp"></div>
 					<div class='bannertextouter'>
-						<div class='bannertextinner1'><b>2070</b> Monthly Users</div>
-						<div class='bannertextinner2'>Total 2680 simulations performed in March 2025</div>
+						<div class='bannertextinner1'><b>2350</b> Monthly Users</div>
+						<div class='bannertextinner2'>Total 2870 simulations performed in April 2025</div>
 					</div>
 		</div>
 	`

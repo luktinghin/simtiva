@@ -4509,7 +4509,7 @@ function popup_dilution(targetid,targetname) {
 			<table style='width:70%'>
 				<tr class='fr'>
 					<td>${targetnamecaps} dilution (mcg/ml)</td>
-					<td><input type='number' step='0.001' oninput='' id='popup_dilution_input'></td>
+					<td><input type='number' step='0.001' inputmode='decimal' oninput='' id='popup_dilution_input'></td>
 				</tr>
 			</table>
 			<div><span id='popup_dilution_message' style='padding-top:6px;padding-bottom:6px;opacity:0.7;font-size:0.8rem;font-style:italic'>&nbsp;</span></div>
