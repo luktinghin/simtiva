@@ -4649,6 +4649,18 @@ body.dark #preview-expand-box > div > div.timespan {
   border-color: #999;
 }
 
+#offlineindicator {
+  position:fixed;
+  top:0;
+  right:0;
+  font-size:7px;
+  line-height:8px;
+  font-weight:bold;
+  z-index:999;
+  color:white;
+  display:none;
+}
+
 #logo {
   position:fixed;width:100%;left:0;bottom:63px;z-index:91;
 }
