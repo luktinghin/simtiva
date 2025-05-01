@@ -437,6 +437,7 @@ if ("serviceWorker" in navigator) {
   			console.log("network change - network on is " + navigator.onLine);
   		}
   	}
+  	handleNetworkChange();
   	window.addEventListener("online", handleNetworkChange);
   	window.addEventListener("offline", handleNetworkChange);
   })
