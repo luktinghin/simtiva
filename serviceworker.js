@@ -1,4 +1,4 @@
-const cacheName = "simtiva-v5-155-plusmanualv2";
+const cacheName = "simtiva-v5-156-plusmanualv2";
 
 const assets = [
 	"/",

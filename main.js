@@ -429,7 +429,6 @@ if ("serviceWorker" in navigator) {
   });
   window.addEventListener("load", function() {
   	function handleNetworkChange(event) {
-  		alert("fired");
   		if (navigator.onLine) {
   			document.getElementById("offlineindicator").style.display = "block";
   			console.log("network change - network on is " + navigator.onLine);
