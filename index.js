@@ -236,14 +236,14 @@ function displayModalOptions() {
 		<table class="table-control">
 					<tr class="fr" id=""><td>Unit <i class="fas fa-question ring tooltip2"><span class="tooltiptext">Preferred secondary unit for propofol infusion.</span></i></td>
 						<td>
-							<select id="" onchange="document.getElementById('select_unit').value=this.value">
+							<select id="" onchange="document.getElementById('select_unit').value=this.value;unitlinkage(1);">
 								<option value="mgh" ${(optionsarray[0][0]==1) ? 'selected':''}>mg/kg/h</option>
 								<option value="mcgmin" ${(optionsarray[0][1]==1) ? 'selected':''}>mcg/kg/m</option>
 							</select>
 						</td>
 					<tr class="" id=""><td>Default rate unit  <i class="fas fa-question ring tooltip background"><span class="tooltiptext" style="width:160px">Unit for entering manual mode infusion rate, e.g. "ml/h" vs "mg/kg/h" (or appropriate units)</span></i></td>
 						<td>
-							<select id="" onchange="document.getElementById('select_defaultrateunit').value=this.value">
+							<select id="select_defaultrateunit1" onchange="document.getElementById('select_defaultrateunit').value=this.value">
 								<option value="mlh" ${(optionsarray_infusionunit[0][0]==1) ? 'selected':''}>ml/h</option>
 								<option value="unitkgtime" ${(optionsarray_infusionunit[0][0]!=1) ? 'selected':''}>${temp_unit}</option>
 							</select>
@@ -1138,7 +1138,7 @@ const xCardsHTML = `
 					</tr>
 					<tr id="option_unit_row"><td>Unit for propofol <i class="fas fa-question tooltip background ring"><span class="tooltiptext" style="width:160px">Secondary unit for propofol infusion rate apart from ml/h. Refresh your CPT/CET target after change.</span></i></td>
 						<td>
-							<select id="select_unit">
+							<select id="select_unit" onchange="unitlinkage(0)">
 								<option value="mgh">mg/kg/h</option>
 								<option value="mcgmin">mcg/kg/m</option>
 							</select>
