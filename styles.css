@@ -4655,6 +4655,8 @@ body.dark #preview-expand-box > div > div.timespan {
   right:0;
   font-size:0.5rem;
   font-weight:bold;
+  z-index:999;
+  color:white;
 }
 
 #logo {
