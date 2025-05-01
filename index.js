@@ -1789,7 +1789,7 @@ const xModalsHTML =
 document.getElementById('inputBW').addEventListener('blur',dynamicLoad);
 //triggers dynamic load with 3s delay
 if (document.title != "SimTIVA Viewer") {
-	window.onload = setTimeout(dynamicLoad,3000);	
+	//window.onload = setTimeout(dynamicLoad,3000);	
 }
 
 
