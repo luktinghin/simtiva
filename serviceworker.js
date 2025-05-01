@@ -1,4 +1,4 @@
-const cacheName = "simtiva-v5-156-plusmanualv2";
+const cacheName = "simtiva-v5-158-plusmanualv2";
 
 const assets = [
 	"/",
@@ -77,6 +77,8 @@ self.addEventListener("install", installEvent => {
 
 
 //ref: https://web.dev/offline-cookbook/#network-falling-back-to-cache
+//off for now, testing
+/*
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     fetch(event.request).catch(function() {
@@ -84,4 +86,21 @@ self.addEventListener('fetch', function(event) {
     })
   );
 });
+*/
 
+
+//alternative fetch: race function from web.dev
+function promiseAny(promises) {
+  return new Promise((resolve, reject) => {
+    // make sure promises are all promises
+    promises = promises.map((p) => Promise.resolve(p));
+    // resolve this promise as soon as one resolves
+    promises.forEach((p) => p.then(resolve));
+    // reject if all promises reject
+    promises.reduce((a, b) => a.catch(() => b)).catch(() => reject(Error('All failed')));
+  });
+}
+
+self.addEventListener('fetch', function (event) {
+  event.respondWith(promiseAny([caches.match(event.request), fetch(event.request)]));
+});
