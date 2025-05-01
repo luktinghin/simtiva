@@ -7,8 +7,6 @@ const assets = [
 	"/main.js",
 	"/features.js",
 	"/pharmacology.js",
-	"/manifest.json",
-	"/favicon.ico",
 	"/index.js",
 	"/chartjs-plugin-crosshair.min.js",
 	"/styles.css",
