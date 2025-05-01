@@ -1,4 +1,4 @@
-const cacheName = "simtiva-v5-158-plusmanualv2";
+const cacheName = "simtiva-v5-159-plusmanualv2";
 
 const assets = [
 	"/",
@@ -89,18 +89,11 @@ self.addEventListener('fetch', function(event) {
 */
 
 
-//alternative fetch: race function from web.dev
-function promiseAny(promises) {
-  return new Promise((resolve, reject) => {
-    // make sure promises are all promises
-    promises = promises.map((p) => Promise.resolve(p));
-    // resolve this promise as soon as one resolves
-    promises.forEach((p) => p.then(resolve));
-    // reject if all promises reject
-    promises.reduce((a, b) => a.catch(() => b)).catch(() => reject(Error('All failed')));
-  });
-}
-
+//alternative fetch: cache fallback to network from web.dev
 self.addEventListener('fetch', function (event) {
-  event.respondWith(promiseAny([caches.match(event.request), fetch(event.request)]));
+  event.respondWith(
+    caches.match(event.request).then(function (response) {
+      return response || fetch(event.request);
+    }),
+  );
 });
