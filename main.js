@@ -426,6 +426,19 @@ if ("serviceWorker" in navigator) {
       .register("/serviceworker.js")
       .then(res => console.log("service worker registered"))
       .catch(err => console.log("service worker not registered", err))
+  });
+  window.addEventListener("load", function() {
+  	function handleNetworkChange(event) {
+  		if (navigator.onLine) {
+  			document.getElementById("offlineindicator").style.display = "none";
+  			console.log("network change - network on is " + navigator.onLine);
+  		} else {
+  			document.getElementById("offlineindicator").style.display = "block";
+  			console.log("network change - network on is " + navigator.onLine);
+  		}
+  	}
+  	window.addEventListener("online", handleNetworkChange);
+  	window.addEventListener("offline", handleNetworkChange);
   })
 }
 
