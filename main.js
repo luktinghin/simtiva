@@ -2956,6 +2956,7 @@ function loadoptions(reset) {
 		} else if (optionsarray[0].indexOf(1) == 1) {
 			//secondaryunit = 1;
 			document.getElementById("select_unit").value ="mcgmin";
+			unitlinkage(0);
 		}
 
 		if (optionsarray[1].indexOf(1) == 0) {
@@ -3081,7 +3082,16 @@ function guessInfusionUnit() {
 		}
 	} else {
 		//this has already been initiated.
-		temp_unit = drug_sets[0].inf_rate_permass_unit;
+		//old code delete
+		//temp_unit = drug_sets[0].inf_rate_permass_unit;
+		temp_drug = drug_sets[active_drug_set_index].drug_name;
+		if (temp_drug == "Propofol") {
+			if (document.getElementById("select_unit").value == "mcgmin") temp_unit = "mcg/kg/m";
+		} else if (temp_drug == "Fentanyl") {
+			temp_unit = "mcg/kg/h";
+		} else {
+			temp_unit = "mcg/kg/m";
+		}
 		temp_unit_bolus = drug_sets[0].infused_units;
 	}
 	//if there's complex mode and see if it's been initiated.
@@ -4703,6 +4713,62 @@ function dropdownhide() {
 		document.getElementById("bolusdropdowncopy1").style.display = "none";	
 		document.getElementById("bolusselectorcopy1").setAttribute("onclick", "dropdownshowbolus(1,'copy')");
     }	
+}
+
+function unitlinkage(param) {
+	if (param == 0) param = "";
+	temp_unit = "mg/kg/h";
+	if (drug_sets.length == 0) {
+		//un-initialized
+		if (
+			 (paedi_mode == 0 
+			  &&
+			  (document.getElementById("select_model").value == "Marsh"
+			   || document.getElementById("select_model").value == "Schnider"
+			   || document.getElementById("select_model").value == "Eleveld"
+			   || document.getElementById("select_model").value == "Paedfusor"
+			  )
+			 ) || (
+			  paedi_mode == 1
+			  &&
+			  (document.getElementById("select_model_paedi").value == "Paedfusor"
+			   || document.getElementById("select_model_paedi").value == "Eleveld"
+			  )
+			 )
+			) { // this is propofol
+			temp_unit = "mg/kg/h";
+			if (document.getElementById("select_unit").value == "mcgmin") temp_unit = "mcg/kg/m";
+		} else if (paedi_mode == 0 && document.getElementById("select_model").value == "Shafer") {
+			temp_unit = "mcg/kg/h";
+		} else if ((paedi_mode == 0 && document.getElementById("select_model").value == "Complex") ||
+				   (paedi_mode == 1 && document.getElementById("select_model_paedi").value == "Complex")) {
+			//this is complex mode
+			//assume this is like propofol
+			if (document.getElementById("select_unit").value == "mcgmin") {
+				temp_unit = "mcg/kg/m";
+			} else {
+				temp_unit = "mg/kg/h";
+			}
+		} else {
+			//all others is mcg/kg/m
+			temp_unit = "mcg/kg/m";
+		}
+	} else {
+		//this has already been initiated.
+		temp_drug = drug_sets[active_drug_set_index].drug_name;
+		if (temp_drug == "Propofol") {
+			if (document.getElementById("select_unit").value == "mcgmin") temp_unit = "mcg/kg/m";
+		} else if (temp_drug == "Fentanyl") {
+			temp_unit = "mcg/kg/h";
+		} else {
+			temp_unit = "mcg/kg/m";
+		}
+	}
+	//link the default rate unit textcontent to this
+	if (param == 1) {
+		document.getElementById("select_defaultrateunit" + param).options[1].textContent = temp_unit;	
+	}
+	document.getElementById("select_defaultrateunit").options[1].textContent = temp_unit;
 }
 
 function setInfusionUnit(parameter) {

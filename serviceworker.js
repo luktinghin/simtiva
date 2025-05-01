@@ -1,4 +1,4 @@
-const cacheName = "simtiva-v5-157-plusmanualv2";
+const cacheName = "simtiva-v5-160-plusmanualv2";
 
 const assets = [
 	"/",
@@ -24,7 +24,12 @@ const assets = [
 	"/fonts/SourceSans3-It.otf.woff2",
 	"/fonts/SourceSans3-BoldIt.otf.woff2",
 	"/lz-string.js",
-	"/iconintubation.png"
+	"/iconintubation.png",
+	"/preview.gif",
+	"/preview2.gif",
+	"/pwa.webp",
+	"/offermoney.webp",
+	"/users.webp"
 ]
 
 self.addEventListener('activate', event => {
@@ -77,6 +82,8 @@ self.addEventListener("install", installEvent => {
 
 
 //ref: https://web.dev/offline-cookbook/#network-falling-back-to-cache
+//off for now, testing
+/*
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     fetch(event.request).catch(function() {
@@ -84,4 +91,14 @@ self.addEventListener('fetch', function(event) {
     })
   );
 });
+*/
 
+
+//alternative fetch: cache fallback to network from web.dev (cache first)
+self.addEventListener('fetch', function (event) {
+  event.respondWith(
+    caches.match(event.request).then(function (response) {
+      return response || fetch(event.request);
+    }),
+  );
+});
