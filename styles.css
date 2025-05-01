@@ -4652,7 +4652,7 @@ body.dark #preview-expand-box > div > div.timespan {
 #offlineindicator {
   position:fixed;
   top:0;
-  right:0;
+  right:8px;
   font-size:7px;
   line-height:8px;
   font-weight:bold;

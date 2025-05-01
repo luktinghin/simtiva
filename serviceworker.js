@@ -89,7 +89,7 @@ self.addEventListener('fetch', function(event) {
 */
 
 
-//alternative fetch: cache fallback to network from web.dev
+//alternative fetch: cache fallback to network from web.dev (cache first)
 self.addEventListener('fetch', function (event) {
   event.respondWith(
     caches.match(event.request).then(function (response) {
