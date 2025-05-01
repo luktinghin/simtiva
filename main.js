@@ -430,10 +430,10 @@ if ("serviceWorker" in navigator) {
   window.addEventListener("load", function() {
   	function handleNetworkChange(event) {
   		if (navigator.onLine) {
-  			document.getElementById("offlineindicator").style.display = "block";
+  			document.getElementById("offlineindicator").style.display = "none";
   			console.log("network change - network on is " + navigator.onLine);
   		} else {
-  			document.getElementById("offlineindicator").style.display = "none";
+  			document.getElementById("offlineindicator").style.display = "block";
   			console.log("network change - network on is " + navigator.onLine);
   		}
   	}
