@@ -1,4 +1,4 @@
-const cacheName = "simtiva-v5-154-plusmanualv2";
+const cacheName = "simtiva-v5-155-plusmanualv2";
 
 const assets = [
 	"/",
@@ -7,6 +7,8 @@ const assets = [
 	"/main.js",
 	"/features.js",
 	"/pharmacology.js",
+	"/manifest.json",
+	"/favicon.ico",
 	"/index.js",
 	"/chartjs-plugin-crosshair.min.js",
 	"/styles.css",
