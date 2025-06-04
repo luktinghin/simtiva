@@ -21,6 +21,10 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
 - To help deliver TCI in a setting where TCI pumps are not available
 
 ### Changelog
+ Version 5.3 (Build 160) 
+ - Offline access: fully support offline access with "cache first" service worker
+ - Bugfix: mcg/kg/m unit in manual mode
+   
  Version 5.2 (Build 150) Current
  - Propofol concentration: 10mg/ml, 20mg/ml, and custom dilution
  - Bugfix: Visual fixes and data validation on initial page
