@@ -2395,7 +2395,7 @@ body.dark #timecopy {
   display:block;
   position:absolute;
   left:0; top:0;
-  z-index: 3;
+  z-index: 91;
   color: #dedede;
   opacity:0;
   transition:all 0.3s ease;
@@ -2406,7 +2406,7 @@ body.dark #timecopy {
 }
 #chartoverlayoptions.show {
   opacity: 1;
-  pointer-events:  auto;
+  
 }
 #chartoverlayoptions2 {
   width:100%;
@@ -2433,6 +2433,9 @@ body.dark #timecopy {
   background: #000B;
   padding: 3px 10px;
   display: block;
+}
+#chartoverlayoptions.show > #chartoverlayoptionscontent {
+  pointer-events: auto;
 }
 #chartoverlayoptions2content {
   width: 50%;

@@ -5617,8 +5617,10 @@ function chartOptionsToggle() {
 	if (time_in_s > 0) {
 		ElOptions = document.getElementById("chartoverlayoptions");
 		if (ElOptions.classList.contains("show")) {
+			optionsactive = false;
 			ElOptions.classList.remove("show");
 		} else {
+			optionsactive = true;
 			if (chartprofile == 2) {
 				document.getElementById("isTimeAutomatic").checked = false;
 			} else {
@@ -5626,13 +5628,13 @@ function chartOptionsToggle() {
 			}
 			preparerange(); 
 			ElOptions.classList.add("show");
+			if (chartprofileconc == 0) {
+				document.getElementById("isConcAutomatic").checked = true;
+			} else {
+				document.getElementById("isConcAutomatic").checked = false;
+			}
+			updateConcOptions();
 		}
-		if (chartprofileconc == 0) {
-			document.getElementById("isConcAutomatic").checked = true;
-		} else {
-			document.getElementById("isConcAutomatic").checked = false;
-		}
-		updateConcOptions();
 	}
 }
 
@@ -5640,8 +5642,10 @@ function togglepopupoptions() {
 	if (time_in_s > 0) {
 		ElOptions = document.getElementById("chartoverlayoptions2");
 		if (ElOptions.classList.contains("show")) {
+			optionsactive = false;
 			ElOptions.classList.remove("show");
 		} else {
+			optionsactive = true;
 			if (chartprofile == 2) {
 				document.getElementById("isTimeAutomatic2").checked = false;
 			} else {
@@ -5649,13 +5653,13 @@ function togglepopupoptions() {
 			}
 			preparerange();
 			ElOptions.classList.add("show");
+			if (chartprofileconc == 0) {
+				document.getElementById("isConcAutomatic2").checked = true;
+			} else {
+				document.getElementById("isConcAutomatic2").checked = false;
+			}
+			updateConcOptions();
 		}
-		if (chartprofileconc == 0) {
-			document.getElementById("isConcAutomatic2").checked = true;
-		} else {
-			document.getElementById("isConcAutomatic2").checked = false;
-		}
-		updateConcOptions();
 	}
 }
 

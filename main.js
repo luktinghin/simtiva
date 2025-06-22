@@ -175,6 +175,8 @@ var yxratio; //for use in myChart2 to calculate angle of arrow
 var RSI_mode = false;
 var RSI_interval = 60;
 var preview_chart = new Array();
+var dropdownactive = false;
+var optionsactive = false;
 preview_chart.push([]);
 preview_chart.push([]);
 preview_chart.push([]);//index 2 for max CE and dur
@@ -451,6 +453,99 @@ window.addEventListener("resize", function() {
 screen.orientation.addEventListener("change", (event) => {
 	setTimeout(updatechartview2,500); //workaround for chartjs background problem
 })
+
+//GLOBAL UI code below:
+
+window.onclick = function(event) {
+  if ((event.target == modal) && (modal.id != "modalInitial") && (modal.id != "modalScreen2") && (modal.id != "modalLoad")) {
+    if (modal.id == "modalShare") {
+	  	clearInterval(canvasUpdateInterval);
+	  	canvasUpdateInterval = null;
+	  }
+    modalcontent = document.getElementById(modal.id + "content");
+    modal.classList.remove("fadein");
+    modalcontent.classList.remove("open");
+    modal = undefined;
+  }
+}
+
+document.addEventListener('touchstart', function(event){
+  if ((event.target == modal) && (modal.id != "modalInitial") && (modal.id != "modalScreen2") && (modal.id != "modalLoad")) {
+    if (modal.id == "modalShare") {
+	  	clearInterval(canvasUpdateInterval);
+	  	canvasUpdateInterval = null;
+	  }
+    modalcontent = document.getElementById(modal.id + "content");
+    modal.classList.remove("fadein");
+    modalcontent.classList.remove("open");
+    modal = undefined;
+  }
+});
+
+//infusion unit selector destruction & chart options destruction
+
+document.addEventListener('touchstart', function(event) {
+    if (event.target.className != "infusionratedropdownitem") {
+      	if (event.target.parentElement.classList.contains("infusionrateselector")) {
+      		//this is to avoid interfering with dropdown selector code
+      	} else {
+      		dropdownhide();
+      	}
+    } else {
+    }
+    if (optionsactive) {
+    	if (event.target.classList.contains("optitem")) {
+    		//do nothing
+    	} else {
+    		//hide the options panel
+    		if (popupon) {
+	    		if (event.target.parentElement.id != "pop_button_options") {
+	    			if (event.target.id != "pop_button_options") {
+	    				togglepopupoptions();	
+	    			}
+	    		}
+    		} else {
+	    		if (event.target.parentElement.id != "chartoptions") {
+	    			if (event.target.id != "chartoptions") {
+	    				chartOptionsToggle();	
+	    			}
+	    		}
+    		}
+    	}
+    }
+})
+
+document.addEventListener('mousedown', function(event) {
+    if (event.target.className != "infusionratedropdownitem") {
+      	if (event.target.parentElement.classList.contains("infusionrateselector")) {
+      		//this is to avoid interfering with dropdown selector code
+      	} else {
+      		dropdownhide();
+      	}
+    } else {
+    }
+    if (optionsactive) {
+    	if (event.target.classList.contains("optitem")) {
+    		//do nothing
+    	} else {
+    		//hide the options panel
+    		if (popupon) {
+	    		if (event.target.parentElement.id != "pop_button_options") {
+	    			if (event.target.id != "pop_button_options") {
+	    				togglepopupoptions();	
+	    			}
+	    		}
+    		} else {
+	    		if (event.target.parentElement.id != "chartoptions") {
+	    			if (event.target.id != "chartoptions") {
+	    				chartOptionsToggle();	
+	    			}
+	    		}
+    		}
+    	}
+    }
+})
+
 
 //for tooltip destruction on touchend for mobile devices
 document.addEventListener('touchend', function(event) {
@@ -2901,37 +2996,7 @@ function setmodal(modalname) {
   //document.getElementById("bodywrapper").classList.add("blurry");
 }
 
-window.onclick = function(event) {
-  if ((event.target == modal) && (modal.id != "modalInitial") && (modal.id != "modalScreen2") && (modal.id != "modalLoad")) {
-    //document.getElementById("bodywrapper").classList.remove("blurry");
 
-    if (modal.id == "modalShare") {
-	  	clearInterval(canvasUpdateInterval);
-	  	canvasUpdateInterval = null;
-	  }
-
-    modalcontent = document.getElementById(modal.id + "content");
-    modal.classList.remove("fadein");
-    modalcontent.classList.remove("open");
-    modal = undefined;
-    
-  }
-}
-document.addEventListener('touchstart', function(event){
-  if ((event.target == modal) && (modal.id != "modalInitial") && (modal.id != "modalScreen2") && (modal.id != "modalLoad")) {
-    //document.getElementById("bodywrapper").classList.remove("blurry");
-
-    if (modal.id == "modalShare") {
-	  	clearInterval(canvasUpdateInterval);
-	  	canvasUpdateInterval = null;
-	  }
-    modalcontent = document.getElementById(modal.id + "content");
-    modal.classList.remove("fadein");
-    modalcontent.classList.remove("open");
-    modal = undefined;
-    //document.getElementById("bodywrapper").classList.remove("blurry");
-  }
-});
 
 //other options code goes here
 
@@ -4632,7 +4697,7 @@ function popup_reset() {
 
 function dropdownshow(ind) {
 	dropdownhide();
-
+	dropdownactive = true;
 	//load option and load unit
 	temp_unit = drug_sets[active_drug_set_index].inf_rate_permass_unit;
 	temp_parameter = (optionsarray_infusionunit[0][0] == 1) ? 0 : 1;
@@ -4660,7 +4725,7 @@ function dropdownshow(ind) {
 
 function dropdownshowbolus(ind, source) {
 	dropdownhide();
-
+	dropdownactive = true;
 	//load option and load unit
 	temp_unit = drug_sets[active_drug_set_index].infused_units;
 	if (optionsarray_infusionunit[1][0] == 1) {
@@ -4713,6 +4778,7 @@ function dropdownhide() {
 		document.getElementById("bolusdropdowncopy1").style.display = "none";	
 		document.getElementById("bolusselectorcopy1").setAttribute("onclick", "dropdownshowbolus(1,'copy')");
     }	
+    dropdownactive = false;
 }
 
 function unitlinkage(param) {

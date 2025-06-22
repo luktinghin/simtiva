@@ -687,18 +687,18 @@ const xInputCardsHTML = `
 					<a id="chartzoomout" onclick="chartZoomToggle(0);"><i class="fas fa-search-minus"></i></a>
 				</div>
 				<div id="chartoverlayoptions">
-					<div id="chartoverlayoptionscontent">
-						<div id="closeoptions" onclick="chartOptionsToggle();">&times;</div>
-						<div id="chartoptionscheckbox">
-				      <label class="container labeloptionscontainer" style="margin-top:10px;width:60%">Display events
-				          <input type="checkbox" onChange="toggleshowevents();" id="isShowEvents" checked><span class="checkmark"></span>
+					<div id="chartoverlayoptionscontent" class="optitem">
+						<div id="closeoptions" class="optitem" onclick="chartOptionsToggle();">&times;</div>
+						<div id="chartoptionscheckbox" class="optitem">
+				      <label class="container labeloptionscontainer optitem" style="margin-top:10px;width:60%">Display events
+				          <input type="checkbox" onChange="toggleshowevents();" id="isShowEvents" class="optitem" checked><span class="checkmark optitem"></span>
 				      </label>
-				      <label class="container labeloptionscontainer" style="margin-top:6px">Auto. concentration scale (y-axis)
-				          <input type="checkbox" onChange="toggleautoconc()" id="isConcAutomatic" checked><span class="checkmark"></span>
+				      <label class="container labeloptionscontainer optitem" style="margin-top:6px">Auto. concentration scale (y-axis)
+				          <input type="checkbox" onChange="toggleautoconc()" id="isConcAutomatic" class="optitem" checked><span class="checkmark optitem"></span>
 				      </label>
-				      <div style="padding-left:30px">
+				      <div style="padding-left:30px" class="optitem">
 				      	Custom max concentration:
-				      	<select id="customconcselect" style="" onChange="setcustomconc(this.value)">
+				      	<select id="customconcselect" style="" onChange="setcustomconc(this.value)" class="optitem">
 				      	<option value="15">15mcg/ml</option>
 				      	<option value="14">14mcg/ml</option>
 				      	<option value="13">13mcg/ml</option>
@@ -714,26 +714,26 @@ const xInputCardsHTML = `
 				      	<option value="3">3mcg/ml</option>
 				      	</select>
 				      </div>
-				      <label class="container labeloptionscontainer" style="margin-top:6px">Auto. time scale (x-axis)
-				          <input type="checkbox" id="isTimeAutomatic" onChange="toggleautotime();" checked><span class="checkmark"></span>
+				      <label class="container labeloptionscontainer optitem" style="margin-top:6px">Auto. time scale (x-axis)
+				          <input type="checkbox" id="isTimeAutomatic" onChange="toggleautotime();" class="optitem" checked><span class="checkmark optitem"></span>
 				      </label>
 						</div>
-						<div style="padding-left:30px">Custom time range (min):</div>
-						<div id="timerangeslider">
-							<div id="leftslidercontainer">
-								<input id="range0" value="10" min="0" max="30" step="5" type="range" oninput="processrange(0);">
-								<div class="timerangetext" id="rangetext0">0</div>
+						<div style="padding-left:30px" class="optitem">Custom time range (min):</div>
+						<div id="timerangeslider" class="optitem">
+							<div id="leftslidercontainer" class="optitem">
+								<input id="range0" value="10" min="0" max="30" step="5" type="range" oninput="processrange(0);" class="optitem">
+								<div class="timerangetext optitem" id="rangetext0">0</div>
 							</div>
-							<div id="rightslidercontainer">
-								<input id="range1" value="90" min="30" max="120" step="5" type="range" oninput="processrange(1);">
-								<div class="timerangetext" id="rangetext1">30</div>
+							<div id="rightslidercontainer" class="optitem">
+								<input id="range1" value="90" min="30" max="120" step="5" type="range" oninput="processrange(1);" class="optitem">
+								<div class="timerangetext optitem" id="rangetext1">30</div>
 							</div>		
 						</div>
-						<div style="margin-top:30px" id="PD_options_group">
-				      <label class="container labeloptionscontainer" style="margin-bottom:0px">PD Effect estimation
-				          <input type="checkbox" id="isEffectEstimationOn" onChange="toggleEffectEst();" checked><span class="checkmark"></span>
+						<div style="margin-top:30px" id="PD_options_group" class="optitem">
+				      <label class="container labeloptionscontainer optitem" style="margin-bottom:0px">PD Effect estimation
+				          <input type="checkbox" id="isEffectEstimationOn" onChange="toggleEffectEst();" class="optitem" checked><span class="checkmark optitem"></span>
 				      </label>
-				      <select id="select_effect_measure" style="margin-left:30px;width:calc(100% - 30px)" onChange="toggleEffectEst();">
+				      <select id="select_effect_measure" style="margin-left:30px;width:calc(100% - 30px)" onChange="toggleEffectEst();" class="optitem">
 				      	<option value="bis">BIS 40-60</option>
 				      	<option value="ptol">PTOL 50-90</option>
 				      	<option value="nsri">NSRI 20-50</option>
