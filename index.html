@@ -141,6 +141,7 @@
 									<option value="Maitre">Alfentanil (Maitre)</option>
 									<option value="Shafer">Fentanyl (Shafer)</option>
 									<option value="Hannivoort">Dexmedetomidine (Hannivoort)</option>
+									<option value="Kamp">Ketamine (Kamp)</option>
 									<option value="Complex">Complex (Dual mode)</option>
 								
 							</select>
@@ -220,6 +221,18 @@
 							</select>
 							<div id="custom_fendilution" onclick="popup_dilution('fendilution','fentanyl')">
 								<span id="fendilution">_</span>mcg/ml
+							</div>
+						</td>
+					</tr>
+					<tr id="row_ketdilution"><td style="letter-spacing:-0.5px">Concentration <span style="font-size: 85%">(mg/ml)</span></td>
+						<td>
+							<select id="select_ketdilution" onchange="change_ketdilution(this.value)">
+								<option value="5">5mg/ml</option>
+								<option value="10" selected>10mg/ml</option>
+								<option value="custom">Custom</option>
+							</select>
+							<div id="custom_ketdilution" onclick="popup_dilution('ketdilution','ketamine')">
+								<span id="ketdilution">_</span>mg/ml
 							</div>
 						</td>
 					</tr>

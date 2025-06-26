@@ -207,6 +207,11 @@ td { padding: 4px 0px 4px 2px; border-top: 1px solid #ccc;}
   height: 1rem;
 }
 
+#row_ketdilution {
+  display: none;
+  height: 1rem;
+}
+
 select {
   height: 30px;
   border: 1px solid #aaa;
@@ -511,6 +516,17 @@ input[type=number]:not(:placeholder-shown):focus:valid {
   margin-bottom: 4px;
   cursor: pointer;
 }
+#custom_ketdilution {
+  display: none;
+  font-size: 90%;
+  background: rgb(213,237,214);
+  font-weight: bold;
+  border-radius: 1rem;
+  padding: 0 5px;
+  line-height: 24px;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
 #custom_propdilution {
   display: none;
   font-size: 90%;
@@ -586,7 +602,7 @@ input[type=number]:not(:placeholder-shown):focus:valid {
   font-size:0.9rem;
 }
 
-body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom_opioiddilution, body.dark #custom_dexdilution, body.dark #custom_propdilution, body.dark #custom_prop2dilution, body.dark #PMA_explanation, body.dark #modelSelector {
+body.dark #custom_fendilution, body.dark #custom_remidilution, body.dark #custom_opioiddilution, body.dark #custom_dexdilution, body.dark #custom_ketdilution, body.dark #custom_propdilution, body.dark #custom_prop2dilution, body.dark #PMA_explanation, body.dark #modelSelector {
   background: #187f18;
   color: white;
 }

@@ -868,6 +868,17 @@ function initsubmit() {
 			//need change the following - bolus templates
 			}
 
+		if ((paedi_mode == 0) && (document.getElementById("select_model").value == "Kamp")) {
+			if (document.getElementById("select_ketdilution").value == "custom") {
+				drug_sets[0].infusate_concentration = document.getElementById("ketdilution").innerHTML *1;
+			} else {
+				drug_sets[0].infusate_concentration = document.getElementById("select_ketdilution").value * 1;
+			}
+	  	document.getElementById("drugname").innerHTML = "Ketamine <span style='opacity:0.5'>(" + drug_sets[drug_sets_index].infusate_concentration + "mg/ml)</span>";
+	  	document.getElementById("card_retrospective").style.display = "none";
+	  	document.getElementById("card_wakeup").style.display = "none";
+		}
+
 		if (((paedi_mode == 0) && (
 				(document.getElementById("select_model").value == "Marsh") || 
 				(document.getElementById("select_model").value == "Schnider") ||
@@ -977,6 +988,14 @@ function initsubmit() {
 				validateText = validateText.concat("Invalid dexmedetomidine dilution: must be within 0.1-20mcg/ml" + "<br>");
 				document.getElementById("select_dexdilution").value = "4";
 				document.getElementById("custom_dexdilution").style.display = "none";
+			}			
+		}
+		if (document.getElementById("select_ketdilution").value == "custom") {
+			temp = document.getElementById("ketdilution").innerHTML * 1 ;
+			if (isNaN(temp) || (temp > 50 || temp < 0.1)) {
+				validateText = validateText.concat("Invalid ketamine dilution: must be within 0.1-50mcg/ml" + "<br>");
+				document.getElementById("select_ketdilution").value = "10";
+				document.getElementById("custom_ketdilution").style.display = "none";
 			}			
 		}
 		if (document.getElementById("select_propdilution").value == "custom") {
@@ -1942,7 +1961,7 @@ function getce(x,ind) {
 }
 
 function displayresult(x,y) {
-	if (drug_sets[active_drug_set_index].drug_name == "Alfentanil") {
+	if ((drug_sets[active_drug_set_index].drug_name == "Alfentanil") || (drug_sets[active_drug_set_index].drug_name == "Ketamine")) {
 		document.getElementById("cp").innerHTML = Math.round(x);
 		document.getElementById("ce").innerHTML = Math.round(y);
 	} else {
@@ -1981,6 +2000,8 @@ function switchpaedimode(arg) {
 			temptext = `<div class="modelOptionLine1">Alfentanil</div><div class="modelOptionLine2">Maitre</div>`;
 		} else if (tempmodel == "Hannivoort") {
 			temptext = `<div class="modelOptionLine1">Dexmedetomidine</div><div class="modelOptionLine2">Hannivoort</div>`;
+		} else if (tempmodel == "Kamp") {
+			temptext = `<div class="modelOptionLine1">Ketamine</div><div class="modelOptionLine2">Kamp</div>`;
 		} else if (tempmodel == "Complex") {
 			temptext = `<div class="modelOptionLine1">Propofol + Opioid</div><div class="modelOptionLine2">Complex</div>`;
 		}
@@ -1994,6 +2015,7 @@ function switchpaedimode(arg) {
 				document.getElementById("row_alfendilution").style.display = "none";
 				document.getElementById("row_height").style.display = "table-row";
 				document.getElementById("row_dexdilution").style.display = "none";
+				document.getElementById("row_ketdilution").style.display = "none";
 			}
 			if (document.getElementById("select_model").value == "Minto") {
 				document.getElementById("row_remidilution").style.display = "table-row";
@@ -2002,6 +2024,7 @@ function switchpaedimode(arg) {
 				document.getElementById("row_alfendilution").style.display = "none";	
 				document.getElementById("row_height").style.display = "table-row";
 				document.getElementById("row_dexdilution").style.display = "none";
+				document.getElementById("row_ketdilution").style.display = "none";
 			}
 			if (document.getElementById("select_model").value == "Shafer") {
 				document.getElementById("row_remidilution").style.display = "none";
@@ -2011,6 +2034,7 @@ function switchpaedimode(arg) {
 				document.getElementById("row_fen_weightadjusted").style.display = "table-row";
 				document.getElementById("row_height").style.display = "none";
 				document.getElementById("row_dexdilution").style.display = "none";
+				document.getElementById("row_ketdilution").style.display = "none";
 			}
 			if (document.getElementById("select_model").value == "Maitre") {
 				document.getElementById("row_remidilution").style.display = "none";
@@ -2018,6 +2042,7 @@ function switchpaedimode(arg) {
 				document.getElementById("row_alfendilution").style.display = "table-row";	
 				document.getElementById("row_height").style.display = "none";
 				document.getElementById("row_dexdilution").style.display = "none";
+				document.getElementById("row_ketdilution").style.display = "none";
 			}
 			if (document.getElementById("select_model").value == "Hannivoort") {
 				document.getElementById("row_remidilution").style.display = "none";
@@ -2025,6 +2050,15 @@ function switchpaedimode(arg) {
 				document.getElementById("row_alfendilution").style.display = "none";	
 				document.getElementById("row_height").style.display = "none";
 				document.getElementById("row_dexdilution").style.display = "table-row";
+				document.getElementById("row_ketdilution").style.display = "none";
+			}
+			if (document.getElementById("select_model").value == "Kamp") {
+				document.getElementById("row_remidilution").style.display = "none";
+				document.getElementById("row_fendilution").style.display = "none";
+				document.getElementById("row_alfendilution").style.display = "none";	
+				document.getElementById("row_height").style.display = "none";
+				document.getElementById("row_dexdilution").style.display = "none";
+				document.getElementById("row_ketdilution").style.display = "table-row";
 			}
 			document.getElementById("row_propofoldilution").style.display = "none";
 		} else {
@@ -2087,6 +2121,7 @@ function switchpaedimode(arg) {
 			document.getElementById("row_fen_weightadjusted").style.display = "none";
 			document.getElementById("row_alfendilution").style.display = "none";
 			document.getElementById("row_dexdilution").style.display = "none";
+			document.getElementById("row_ketdilution").style.display = "none";
 		//on or off remi depend on model paedi
 		if (document.getElementById("select_model_paedi").value == "Eleveld-Remifentanil") {
 			
@@ -2223,6 +2258,13 @@ function sendToValidate(arg) {
 		} else {
 			document.getElementById("row_dexdilution").style.display = "none";
 		}
+		if (document.getElementById("select_model").value === "Kamp") {
+			document.getElementById("row_gender").style.display = "none";
+			document.getElementById("row_height").style.display = "none";
+			document.getElementById("row_ketdilution").style.display = "table-row";
+		} else {
+			document.getElementById("row_ketdilution").style.display = "none";
+		}
 		if ((document.getElementById("select_model").value == "Marsh") || (document.getElementById("select_model").value == "Schnider") || (document.getElementById("select_model").value == "Paedfusor") || (document.getElementById("select_model").value == "Eleveld")) {
 			//is propofol
 			document.getElementById("row_propofoldilution").style.display = "table-row";
@@ -2230,7 +2272,7 @@ function sendToValidate(arg) {
 			document.getElementById("row_propofoldilution").style.display = "none";
 		}
 	}
-	if ((paedi_mode == 0) && (document.getElementById("select_model").value != "Shafer") && (document.getElementById("select_model").value != "Maitre") && (document.getElementById("select_model").value != "Hannivoort")) {
+	if ((paedi_mode == 0) && (document.getElementById("select_model").value != "Shafer") && (document.getElementById("select_model").value != "Maitre") && (document.getElementById("select_model").value != "Hannivoort") && (document.getElementById("select_model").value != "Kamp")) {
 			document.getElementById("row_gender").style.display = "table-row";
 			document.getElementById("row_height").style.display = "table-row";
 	}
@@ -2283,6 +2325,7 @@ function displayModelOptions() {
 					<div class="modelOption" id="modelMarsh"><div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Marsh</div></div>
 					<div class="modelOption" id="modelSchnider"><div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Schnider</div></div>
 					<div class="modelOption" id="modelPaedfusor"><div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Paedfusor</div></div>
+					<div class="modelOption" id="modelKamp"><div class="modelOptionLine1">Ketamine</div><div class="modelOptionLine2">Kamp</div></div>
 				</div>
 				<div class="modelOptionContainer">
 					<div class="modelOption" id="modelMinto"><div class="modelOptionLine1">Remifentanil</div><div class="modelOptionLine2">Minto</div></div>
@@ -4557,6 +4600,16 @@ function change_dexdilution(paramdex) {
 	}
 }
 
+function change_ketdilution(paramket) {
+	if (paramket=="custom") {
+		document.getElementById("custom_ketdilution").style.display = 'inline-block';
+		popup_dilution('ketdilution','ketamine');
+	} else {
+		document.getElementById("custom_ketdilution").style.display = 'none';
+		sendToValidate(0);
+	}
+}
+
 function change_opioiddilution(paramo) {
 	if (paramo=="custom") {
 		document.getElementById("custom_opioiddilution").style.display = 'inline-block';
@@ -4577,27 +4630,37 @@ function popup_dilution(targetid,targetname) {
 	
 	let lowerlimit = 0.1;
 	let upperlimit;
+	let tempunit;
 	if (targetname == "fentanyl") {
 		targetnamecaps = "Fentanyl";
 		upperlimit = 100;
+		tempunit = "mcg";
 	} else if (targetname == "remifentanil") {
 		targetnamecaps = "Remifentanil";
 		upperlimit = 100;
+		tempunit = "mcg";
 	} else if (targetname == "alfentanil") {
 		targetnamecaps = "Alfentanil";
 		upperlimit = 500;
+		tempunit = "mcg";
 	} else if (targetname == "dexmedetomidine") {
 		targetnamecaps = "Dexmedetomidine";
 		upperlimit = 20;
+		tempunit = "mcg";
 	} else if (targetname == "propofol") {
 		targetnamecaps = "Propofol";
 		upperlimit = 20;
+		tempunit = "mg";
+	} else if (targetname == "ketamine") {
+		targetnamecaps = "Ketamine";
+		upperlimit = 50;
+		tempunit = "mg";
 	}
 	displayWarning(`Custom ${targetname} dilution`,
 		`
 			<table style='width:70%'>
 				<tr class='fr'>
-					<td>${targetnamecaps} dilution (mcg/ml)</td>
+					<td>${targetnamecaps} dilution (${tempunit}/ml)</td>
 					<td><input type='number' step='0.001' inputmode='decimal' oninput='' id='popup_dilution_input'></td>
 				</tr>
 			</table>
@@ -4644,6 +4707,10 @@ function popup_dilution(targetid,targetname) {
 				} else if (targetname == "propofol") {
 					document.getElementById("select_propdilution").value = "10";
 					document.getElementById("custom_propdilution").style.display = "none";					
+				} else if (targetname == "ketamine") {
+					document.getElementById("select_ketdilution").value = "10";
+					document.getElementById("custom_ketdilution").style.display = "none";					
+
 				}
 			}
 			document.getElementById("popup_dilution_message").innerText = text;
@@ -4670,6 +4737,9 @@ function popup_dilution(targetid,targetname) {
 				} else if (targetname == "propofol") {
 					document.getElementById("select_propdilution").value = "custom";
 					document.getElementById("custom_propdilution").style.display = "inline-block";					
+				} else if (targetname == "ketamine") {
+					document.getElementById("select_ketdilution").value = "custom";
+					document.getElementById("custom_ketdilution").style.display = "inline-block";										
 				}
 				sendToValidate(0);
 			}

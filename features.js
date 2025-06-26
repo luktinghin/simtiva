@@ -4315,7 +4315,7 @@ function updatechart(chart) {
 				chart.options.scales.y.max = 15;
 				chart.options.scales.y.ticks.stepSize = 1;				
 			} 
-			if (drug_sets[active_drug_set_index].drug_name == "Alfentanil") {
+			if ((drug_sets[active_drug_set_index].drug_name == "Alfentanil") || (drug_sets[active_drug_set_index].drug_name == "Ketamine")) {
 				if (corY<=70) {
 					chart.options.scales.y.max = 100;
 					chart.options.scales.y.ticks.stepSize = 25;
@@ -4328,12 +4328,18 @@ function updatechart(chart) {
 				} else if (corY>180 && corY<=280) {
 					chart.options.scales.y.max = 300;
 					chart.options.scales.y.ticks.stepSize = 50;
-				} else if (corY>280 && corY<400) {
+				} else if (corY>280 && corY<=400) {
 					chart.options.scales.y.max = 500;
 					chart.options.scales.y.ticks.stepSize = 50;
+				} else if (corY>400 && corY<=700)  {
+					chart.options.scales.y.max = 800;
+					chart.options.scales.y.ticks.stepSize = 100;
+				} else if (corY>700 && corY<1200)  {
+					chart.options.scales.y.max = 1000;
+					chart.options.scales.y.ticks.stepSize = 100;
 				} else {
-					chart.options.scales.y.max = 600;
-					chart.options.scales.y.ticks.stepSize = 50;
+					chart.options.scales.y.max = 2000;
+					chart.options.scales.y.ticks.stepSize = 200;
 				}
 			}
 			//end auto conc scale
@@ -4349,6 +4355,13 @@ function updatechart(chart) {
 					chart.options.scales.y.ticks.stepSize = 25;
 				} else {
 					chart.options.scales.y.ticks.stepSize = 50;
+				}
+			}
+			if (drug_sets[active_drug_set_index].drug_name == "Ketamine") {
+				if (chart.options.scales.y.max <= 400) {
+					chart.options.scales.y.ticks.stepSize = 50;
+				} else {
+					chart.options.scales.y.ticks.stepSize = 100;
 				}
 			}
 			if (drug_sets[active_drug_set_index].drug_name == "Dexmedetomidine") {
@@ -5805,6 +5818,33 @@ function updateConcOptions() {
 		el.options[11].textContent = "0.8ng/ml";
 		el.options[12].value = "0.6";
 		el.options[12].textContent = "0.6ng/ml";
+	} else if (drug == "Ketamine") {
+		el.options[0].value = "1400";
+		el.options[0].textContent = "1400ng/ml";
+		el.options[1].value = "1300";
+		el.options[1].textContent = "1300ng/ml";
+		el.options[2].value = "1200";
+		el.options[2].textContent = "1200ng/ml";
+		el.options[3].value = "1100";
+		el.options[3].textContent = "1100ng/ml";
+		el.options[4].value = "1000";
+		el.options[4].textContent = "1000ng/ml";
+		el.options[5].value = "900";
+		el.options[5].textContent = "900ng/ml";
+		el.options[6].value = "800";
+		el.options[6].textContent = "800ng/ml";
+		el.options[7].value = "700";
+		el.options[7].textContent = "700ng/ml";
+		el.options[8].value = "600";
+		el.options[8].textContent = "600ng/ml";
+		el.options[9].value = "500";
+		el.options[9].textContent = "500ng/ml";
+		el.options[10].value = "400";
+		el.options[10].textContent = "400ng/ml";
+		el.options[11].value = "300";
+		el.options[11].textContent = "300ng/ml";
+		el.options[12].value = "200";
+		el.options[12].textContent = "200ng/ml";
 	}
 	if (popupon == true) {
 		el.value = popupchart.options.scales.y.max;
