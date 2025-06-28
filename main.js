@@ -485,6 +485,7 @@ document.addEventListener('touchstart', function(event){
 //infusion unit selector destruction & chart options destruction
 
 document.addEventListener('touchstart', function(event) {
+	if (initiated) {
     if (event.target.className != "infusionratedropdownitem") {
       	if (event.target.parentElement.classList.contains("infusionrateselector")) {
       		//this is to avoid interfering with dropdown selector code
@@ -513,9 +514,11 @@ document.addEventListener('touchstart', function(event) {
     		}
     	}
     }
+  }
 })
 
 document.addEventListener('mousedown', function(event) {
+	if (initiated) {
     if (event.target.className != "infusionratedropdownitem") {
       	if (event.target.parentElement.classList.contains("infusionrateselector")) {
       		//this is to avoid interfering with dropdown selector code
@@ -544,6 +547,7 @@ document.addEventListener('mousedown', function(event) {
     		}
     	}
     }
+  }
 })
 
 

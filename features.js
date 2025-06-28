@@ -2446,6 +2446,8 @@ const chartInfRateLayer = {
 				ymax = 3;
 			} else if (drug_sets[active_drug_set_index].drug_name == "Alfentanil") {
 				ymax = 90;
+			} else if (drug_sets[active_drug_set_index].drug_name == "Ketamine") {
+				ymax = 700;
 			} else {
 				ymax = 5;
 			}
@@ -2937,7 +2939,11 @@ function createCharts(chartparam) {
 	                    	if (label) {
 	                    		if ((label == "Cp-Prop") || (label == "Cp-Remi") || (label == "Cp-Fen") || (label == "Cp-Alfen")) label = "Cp:";
 	                    		if ((label == "Ce-Prop") || (label == "Ce-Remi") || (label == "Ce-Fen") || (label == "Ce-Alfen")) label = "Ce:";
-		                    	label += Math.round(context.parsed.y * 100) / 100;
+	                    		if ((drug_sets[active_drug_set_index].drug_name == "Alfentanil") || (drug_sets[active_drug_set_index].drug_name == "Ketamine")) {
+	                    			label += Math.round(context.parsed.y);
+	                    		} else {
+		                    		label += Math.round(context.parsed.y * 100) / 100;
+		                    	}
 		                    	return label;
 	                    	}
 	                	},
