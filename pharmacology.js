@@ -1230,12 +1230,18 @@ function preview_cpt(x,ind) {
 	} else if (drug_sets[ind].drug_name == "Ketamine") {
 		if (cpt_threshold_auto == 1) {
 			if (drug_sets[ind].cpt_rates[5]*360 > 10) {
-				cpt_threshold = 0.25;
+				cpt_threshold = 0.15;
 				cpt_avgfactor = 0.5;
 			} else {
-				cpt_threshold = 0.15;
-				cpt_avgfactor = 0.75;
+				cpt_threshold = 0.1;
+				cpt_avgfactor = 0.65;
 			}
+		} else if (optionsarray[2][1] == 1) { //lazy
+				cpt_threshold = 0.15;
+				cpt_avgfactor = 0.5;
+		} else if (optionsarray[2][2] == 1) { //accurate
+				cpt_threshold = 0.1;
+				cpt_avgfactor = 0.65;
 		}
 	} else {
 		if (cpt_threshold_auto == 1) {
@@ -1768,14 +1774,14 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 
 	//backup current P state and E state s
 	if (drug_sets[ind].cpt_cp.length>0) {
-		p_state[1] = drug_sets[ind].cpt_cp[working_clock-1][0];
-		p_state[2] = drug_sets[ind].cpt_cp[working_clock-1][1];
-		p_state[3] = drug_sets[ind].cpt_cp[working_clock-1][2];
+		p_state[1] = drug_sets[ind].cpt_cp[drug_sets[ind].cpt_cp.length-1][0];
+		p_state[2] = drug_sets[ind].cpt_cp[drug_sets[ind].cpt_cp.length-1][1];
+		p_state[3] = drug_sets[ind].cpt_cp[drug_sets[ind].cpt_cp.length-1][2];
 
-		e_state[1] = drug_sets[ind].cpt_ce[working_clock-1][0];
-		e_state[2] = drug_sets[ind].cpt_ce[working_clock-1][1];
-		e_state[3] = drug_sets[ind].cpt_ce[working_clock-1][2];
-		e_state[4] = drug_sets[ind].cpt_ce[working_clock-1][3];
+		e_state[1] = drug_sets[ind].cpt_ce[drug_sets[ind].cpt_ce.length-1][0];
+		e_state[2] = drug_sets[ind].cpt_ce[drug_sets[ind].cpt_ce.length-1][1];
+		e_state[3] = drug_sets[ind].cpt_ce[drug_sets[ind].cpt_ce.length-1][2];
+		e_state[4] = drug_sets[ind].cpt_ce[drug_sets[ind].cpt_ce.length-1][3];
 		//for fentanyl correction:
 		//since we have downscaled CP/CE from original, then we now need to revert CP/CE back to its actual form 
 		//by upscaling it using *1/correction_factor
@@ -1789,6 +1795,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 			e_state[4] *= 1/drug_sets[ind].fentanyl_weightadjusted_factor;
 		}
 	}
+	console.log(p_state[1]+ p_state[2] + p_state[3]);
 
 	//special scenario when CPT is invoked from CP approximates CE in CET mode of Fen-Wt adjusted program
 	//here the p_ and e_states are continued from next_time and these need to be upscaled before use
@@ -1862,6 +1869,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		console.log("estate2 - " + e_state2[2]);
 		console.log("estate3 - " + e_state2[3]);
 		console.log("estate4 - " + e_state2[4]);
+		console.log(p_state2[1]+ p_state2[2] + p_state2[3]);
 		console.log(e_state2[1]+ e_state2[2] + e_state2[3] + e_state2[4]);
 	}
 	
@@ -2037,7 +2045,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 			
 				est_cp = p_state2[1] + p_state2[2] + p_state2[3];
 
-				//console.log("-----" + converttime(i*120) + "------");
+				console.log("-----" + converttime(i*120) + "------");
 
 				trial_cp = virtual_model( //need real lambda
 				 p_state2[1] * Math.exp(-drug_sets[ind].lambda[1]) + drug_sets[ind].p_coef[1] * test_rate * (1 - Math.exp(-drug_sets[ind].lambda[1])),
@@ -2054,10 +2062,10 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 
 				//var is_steady = (old_rate_pred_cp < (desired*1.05)) && (old_rate_pred_cp > (desired * 0.99));
 
-				//console.log("estCp" + est_cp);
-				//console.log("trialcp" + trial_cp);
-				//console.log("testrate" + test_rate);
-				//console.log("trialrate" + trial_rate);
+				console.log("estCp" + est_cp);
+				console.log("trialcp" + trial_cp);
+				console.log("testrate" + test_rate);
+				console.log("trialrate" + trial_rate);
 				//console.log("--> oldratepredcp = " + old_rate_pred_cp);
 				//console.log("--> is_steady = " + is_steady);
 				
@@ -2138,11 +2146,17 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		if (cpt_threshold_auto == 1) {
 			if (drug_sets[ind].cpt_rates[5]*360 > 10) {
 				cpt_threshold = 0.15;
-				cpt_avgfactor = 0.55;
+				cpt_avgfactor = 0.5;
 			} else {
 				cpt_threshold = 0.1;
 				cpt_avgfactor = 0.65;
 			}
+		} else if (optionsarray[2][1] == 1) { //lazy
+				cpt_threshold = 0.15;
+				cpt_avgfactor = 0.5;
+		} else if (optionsarray[2][2] == 1) { //accurate
+				cpt_threshold = 0.1;
+				cpt_avgfactor = 0.65;
 		}
 	} else {
 		if (cpt_threshold_auto == 1) {
@@ -3092,7 +3106,7 @@ function preview_cet(x,ind) {
 				p_state3[1] = p_state2[1];
 				p_state3[2] = p_state2[2];
 				p_state3[3] = p_state2[3];
-
+				console.log("current CP ", p_state3[1] + p_state3[2] + p_state3[3]);
 				e_state3[1] = e_state2[1];
 				e_state3[2] = e_state2[2];
 				e_state3[3] = e_state2[3];
@@ -3186,6 +3200,7 @@ function preview_cet(x,ind) {
 			//reset temp_peak
 			if (drug_sets[ind].drug_name == "Dexmedetomidine") temp_peak = real_peak;
 			if (RSI_mode == true) temp_peak = real_peak;
+			console.log("current CP ", p_state3[1] + p_state3[2] + p_state3[3]);
 			deliver_cpt_alt();
 		}//end normal CET algorithm
 	}// end desired higher than CE part else
@@ -3208,7 +3223,7 @@ function preview_cet(x,ind) {
 			var look_l2 = Math.exp(-drug_sets[ind].lambda[2] * cpt_interval);
 			var look_l3 = Math.exp(-drug_sets[ind].lambda[3] * cpt_interval);
 			var look_l4 = Math.exp(-drug_sets[ind].lambda[4] * cpt_interval);
-
+			console.log("current CP ", p_state2[1] + p_state2[2] + p_state2[3]);
 			//first pass
 			for (i=0; i<60; i++) {
 
@@ -3273,6 +3288,22 @@ function preview_cet(x,ind) {
 				} else if (optionsarray[2][2] == 1) { //accurate
 						cpt_threshold = 0.15;
 						cpt_avgfactor = 0.75;
+				}
+			} else if (drug_sets[ind].drug_name == "Ketamine") {
+				if (cpt_threshold_auto == 1) {
+					if (drug_sets[ind].cpt_rates[5]*360 > 10) {
+						cpt_threshold = 0.15;
+						cpt_avgfactor = 0.5;
+					} else {
+						cpt_threshold = 0.1;
+						cpt_avgfactor = 0.65;
+					}
+				} else if (optionsarray[2][1] == 1) { //lazy
+						cpt_threshold = 0.15;
+						cpt_avgfactor = 0.5;
+				} else if (optionsarray[2][2] == 1) { //accurate
+						cpt_threshold = 0.1;
+						cpt_avgfactor = 0.65;
 				}
 			} else {
 				if (cpt_threshold_auto == 1) {
@@ -3900,6 +3931,8 @@ function deliver_cet_real(x, ind) {
 						}
 					}
 				}
+				console.log("before leaving deliver CET, CP is ", temp_result);
+				console.log(drug_sets[ind].cpt_cp);
 				//try off the following lines to improve performance
 				//myChart.data.datasets[ind*2+2].hidden = false;
 				//myChart.data.datasets[ind*2+3].hidden = false;
@@ -5982,7 +6015,7 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].k13 = cl3 / drug_sets[drug_set_index].vc ;
 		drug_sets[drug_set_index].k21 = cl2 / v2 ;
 		drug_sets[drug_set_index].k31 = cl3 / v3 ;
-		drug_sets[drug_set_index].modeltext = "Kamp model (Anesthesiology )" + "<br>" +
+		drug_sets[drug_set_index].modeltext = "Kamp model (Anesthesiology 2020;133(6):1192-1213)" + "<br>" +
 		"vc = " + drug_sets[drug_set_index].vc + "<br>" +
 		"k10 = " + drug_sets[drug_set_index].k10 + "<br>" + 
 		"k12 = " + drug_sets[drug_set_index].k12 + "<br>" +
@@ -5990,7 +6023,7 @@ function readmodel(x, drug_set_index) {
 		"k21 = " + drug_sets[drug_set_index].k21 + "<br>" +
 		"k31 = " + drug_sets[drug_set_index].k31 + "<br>" +
 		"ke0 = " + drug_sets[drug_set_index].k41 + ";<br>" +
-		"ke0 ()";
+		"ke0 (analgesia nociception index) from Navarette (J Clin Monit Comput 2025;39(2):349-354)";
 	}
 	/*
 	if (x == "Shafer (Weight adjusted)") {

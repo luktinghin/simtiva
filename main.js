@@ -2329,18 +2329,25 @@ function displayModelOptions() {
 					<div class="modelOption" id="modelMarsh"><div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Marsh</div></div>
 					<div class="modelOption" id="modelSchnider"><div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Schnider</div></div>
 					<div class="modelOption" id="modelPaedfusor"><div class="modelOptionLine1">Propofol</div><div class="modelOptionLine2">Paedfusor</div></div>
-					<div class="modelOption" id="modelKamp"><div class="modelOptionLine1">Ketamine</div><div class="modelOptionLine2">Kamp</div></div>
 				</div>
 				<div class="modelOptionContainer">
 					<div class="modelOption" id="modelMinto"><div class="modelOptionLine1">Remifentanil</div><div class="modelOptionLine2">Minto</div></div>
 					<div class="modelOption" id="modelEleveld-Remifentanil"><div class="modelOptionLine1">Remifentanil</div><div class="modelOptionLine2">Eleveld</div></div>
 					<div class="modelOption" id="modelShafer"><div class="modelOptionLine1">Fentanyl</div><div class="modelOptionLine2">Shafer</div></div>
-					<div class="modelOption" id="modelMaitre"><div class="modelOptionLine1">Alfentanil</div><div class="modelOptionLine2">Maitre</div></div>
-					<div class="modelOption" id="modelHannivoort"><div class="modelOptionLine1">Dexmedetomidine</div><div class="modelOptionLine2">Hannivoort</div></div>				
+					<div class="modelOption" id="modelMaitre"><div class="modelOptionLine1">Alfentanil</div><div class="modelOptionLine2">Maitre</div></div>	
 				</div>
 			</div>
 			<div class="modelHR"></div>
 			<div class="modelOption" id="modelComplex"><div class="modelOptionLine1">Propofol + Opioid</div><div class="modelOptionLine2">Complex</div></div>
+			<div class="modelHR"></div>
+			<div class="modelOptionContainerOuter">
+				<div class="modelOptionContainer">
+					<div class="modelOption" id="modelKamp"><div class="modelOptionLine1">Ketamine</div><div class="modelOptionLine2">Kamp</div></div>
+				</div>
+				<div class="modelOptionContainer">
+					<div class="modelOption" id="modelHannivoort"><div class="modelOptionLine1">Dexmedetomidine</div><div class="modelOptionLine2">Hannivoort</div></div>				
+				</div>
+			</div>
 		`;
 	} else {
 		text = `
