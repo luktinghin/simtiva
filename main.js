@@ -2337,7 +2337,6 @@ function displayModelOptions() {
 					<div class="modelOption" id="modelMaitre"><div class="modelOptionLine1">Alfentanil</div><div class="modelOptionLine2">Maitre</div></div>	
 				</div>
 			</div>
-			<div class="modelHR"></div>
 			<div class="modelOption" id="modelComplex"><div class="modelOptionLine1">Propofol + Opioid</div><div class="modelOptionLine2">Complex</div></div>
 			<div class="modelHR"></div>
 			<div class="modelOptionContainerOuter">
@@ -2463,19 +2462,30 @@ function toPageTwo() {
 		}
 		if (height>0) {El9.innerHTML = El9.innerHTML.concat(", BH: " + height + "cm")} else {};
 		El10.innerHTML = document.getElementById("valRightContainer2").innerHTML;
-		if (document.getElementById("select_model").value == "Hannivoort") {
-			dex_populate_speed();
-			sendToUpdateMaxDex(6);
-			document.getElementById("page2selectmaxratedex").style.display = "block";			
-			document.getElementById("page2selectmaxrate").style.display = "none";
-			document.getElementById("page2IB").style.display = "none";
-
+		if (paedi_mode == 0) {
+			if (document.getElementById("select_model").value == "Hannivoort") {
+				dex_populate_speed();
+				sendToUpdateMaxDex(6);
+				document.getElementById("page2selectmaxratedex").style.display = "block";			
+				document.getElementById("page2selectmaxrate").style.display = "none";
+				document.getElementById("page2IB").style.display = "none";
+			} else if (document.getElementById("select_model").value == "Kamp") {
+				document.getElementById("page2bolustext").innerHTML = "Flash: assume bolus given instantaneously. Ideal for manual rapid bolus.";
+				document.getElementById("page2selectmaxrate").style.display = "block";
+				document.getElementById("page2selectmaxratedex").style.display = "none";
+				document.getElementById("page2IB").style.display = "none";
+				//off IB for ketamine: low dose of ketamine will cause erratic bolus behaviour
+			} else {
+				document.getElementById("page2bolustext").innerHTML = "Flash: assume bolus given instantaneously. Ideal for manual rapid bolus.";
+				document.getElementById("page2selectmaxrate").style.display = "block";
+				document.getElementById("page2selectmaxratedex").style.display = "none";
+				document.getElementById("page2IB").style.display = "block";
+			}
 		} else {
-			document.getElementById("page2bolustext").innerHTML = "Flash: assume bolus given instantaneously. Ideal for manual rapid bolus.";
-			document.getElementById("page2selectmaxrate").style.display = "block";
-			document.getElementById("page2selectmaxratedex").style.display = "none";
-			document.getElementById("page2IB").style.display = "block";
-			
+				document.getElementById("page2bolustext").innerHTML = "Flash: assume bolus given instantaneously. Ideal for manual rapid bolus.";
+				document.getElementById("page2selectmaxrate").style.display = "block";
+				document.getElementById("page2selectmaxratedex").style.display = "none";
+				document.getElementById("page2IB").style.display = "block";
 		}
 		toPageTwoTransition();
 		document.getElementById("rescuebuttons").style.display="none";

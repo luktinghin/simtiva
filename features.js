@@ -6587,10 +6587,11 @@ function resetPtolLabels() {
 function timeFxReset() {
 	conditions = ((time_in_s>1) && (drug_sets[0].cpt_rates_real.length > 1));
 	if (conditions) {
-		if (drug_sets[0].drug_name == "Dexmedetomidine") {
+		//if (drug_sets[0].drug_name == "Dexmedetomidine") {
 			//get orig max rate
 			orig_max_rate = drug_sets[0].max_rate;
-		}
+		//}
+
 		document.getElementById("timeFxRowSuspend").classList.remove("hide");
 		document.getElementById("timeFxRowResume").classList.add("hide");
 		timeFxSuspend();
@@ -6676,9 +6677,10 @@ function timeFxReset() {
 		if (drug_sets[0].drug_name == "Dexmedetomidine") {
 			document.getElementById("tableInitialBolus0").style.display = "none";
 			document.getElementById("tableInfusionRate0").classList.remove("line");
+
+		}
 			//update max rate
 			drug_sets[0].max_rate = orig_max_rate;
-		}
 	}
 }
 
