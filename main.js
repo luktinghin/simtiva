@@ -813,12 +813,12 @@ function initsubmit() {
 				vc = ${drug_sets[0].vc} <br>
 				v2 = 28.1 <br>
 				v3 = 228 <br>
-				k10 = ${drug_sets[0].k10} <br>
-				k12 = ${drug_sets[0].k12} <br>
-				k13 = ${drug_sets[0].k13} <br>
-				k21 = ${drug_sets[0].k21} <br>
-				k31 = ${drug_sets[0].k31} <br>
-				ke0 = ${drug_sets[0].k41} <br>
+				k10 = ${rnd3(drug_sets[0].k10)} <br>
+				k12 = ${rnd3(drug_sets[0].k12)} <br>
+				k13 = ${rnd3(drug_sets[0].k13)} <br>
+				k21 = ${rnd3(drug_sets[0].k21)} <br>
+				k31 = ${rnd3(drug_sets[0].k31)} <br>
+				ke0 = ${rnd3(drug_sets[0].k41)} <br>
 				ke0 derived from t1/2ke0 of 6.6min (Scott & Stanski, Anesthesiology 1991;74:34042)
 				`;
 	  		drug_sets[0].fentanyl_weightadjusted_flag = 0;
@@ -829,12 +829,12 @@ function initsubmit() {
 				vc = ${drug_sets[0].vc} <br>
 				v2 = 28.1 <br>
 				v3 = 228 <br>
-				k10 = ${drug_sets[0].k10} <br>
-				k12 = ${drug_sets[0].k12} <br>
-				k13 = ${drug_sets[0].k13} <br>
-				k21 = ${drug_sets[0].k21} <br>
-				k31 = ${drug_sets[0].k31} <br>
-				ke0 = ${drug_sets[0].k41} <br>
+				k10 = ${rnd3(drug_sets[0].k10)} <br>
+				k12 = ${rnd3(drug_sets[0].k12)} <br>
+				k13 = ${rnd3(drug_sets[0].k13)} <br>
+				k21 = ${rnd3(drug_sets[0].k21)} <br>
+				k31 = ${rnd3(drug_sets[0].k31)} <br>
+				ke0 = ${rnd3(drug_sets[0].k41)} <br>
 				ke0 derived from t1/2ke0 of 6.6min (Scott & Stanski, Anesthesiology 1991;74:34042)
 				`;
 	  		drug_sets[0].fentanyl_weightadjusted_factor = (1+(196.4*Math.exp(-0.025*mass)-53.66)/100);
@@ -921,6 +921,21 @@ function initsubmit() {
 
 	  	document.getElementById("card_retrospective").style.display = "none";
 	  	document.getElementById("card_wakeup").style.display = "none";
+	  }
+
+	  //determine initial scaling
+	  if ((paedi_mode == 0) && ((document.getElementById("select_model").value == "Kamp") || (document.getElementById("select_model").value == "Maitre"))) {
+	  	if (document.getElementById("select_model").value == "Kamp") {
+	  		myChart.options.scales.y.max = 500;
+				myChart.update();
+	  	} else if (document.getElementById("select_model").value == "Maitre") {
+	  		myChart.options.scales.y.max = 200;
+				myChart.update();
+	  	}
+	  } else {
+	  	myChart.options.scales.y.max = 5;
+	  	myChart.update();
+	  	//not alfen or ketamine
 	  }
 
 		var conc_units_fields = document.getElementsByClassName("conc_units");

@@ -1557,6 +1557,8 @@ function parsedisplay(t,sex,model,VI,d,mode) {
 	} else {
 		myChart.options.scales.y.title.text = "Concentration (ng/ml)";
 	}
+
+
   if (modal != undefined) hideallmodal();
 }
 
@@ -4321,7 +4323,7 @@ function updatechart(chart) {
 				chart.options.scales.y.max = 15;
 				chart.options.scales.y.ticks.stepSize = 1;				
 			} 
-			if ((drug_sets[active_drug_set_index].drug_name == "Alfentanil") || (drug_sets[active_drug_set_index].drug_name == "Ketamine")) {
+			if (drug_sets[active_drug_set_index].drug_name == "Alfentanil") {
 				if (corY<=70) {
 					chart.options.scales.y.max = 100;
 					chart.options.scales.y.ticks.stepSize = 25;
@@ -4341,6 +4343,27 @@ function updatechart(chart) {
 					chart.options.scales.y.max = 800;
 					chart.options.scales.y.ticks.stepSize = 100;
 				} else if (corY>700 && corY<1200)  {
+					chart.options.scales.y.max = 1000;
+					chart.options.scales.y.ticks.stepSize = 100;
+				} else {
+					chart.options.scales.y.max = 2000;
+					chart.options.scales.y.ticks.stepSize = 200;
+				}
+			}
+			if (drug_sets[active_drug_set_index].drug_name == "Ketamine") {
+				if (corY<=70) {
+					chart.options.scales.y.max = 300;
+					chart.options.scales.y.ticks.stepSize = 25;
+				} else if (corY>70 && corY<=120) {
+					chart.options.scales.y.max = 400;
+					chart.options.scales.y.ticks.stepSize = 25;
+				} else if (corY>120 && corY<=180) {
+					chart.options.scales.y.max = 500;
+					chart.options.scales.y.ticks.stepSize = 50;
+				} else if (corY>180 && corY<=400) {
+					chart.options.scales.y.max = 600;
+					chart.options.scales.y.ticks.stepSize = 50;
+				} else if (corY>400 && corY<1200)  {
 					chart.options.scales.y.max = 1000;
 					chart.options.scales.y.ticks.stepSize = 100;
 				} else {
