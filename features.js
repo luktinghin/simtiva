@@ -1555,7 +1555,7 @@ function parsedisplay(t,sex,model,VI,d,mode) {
   	document.getElementById("drugname").innerHTML = "Dexmedetomidine <span style='opacity:0.5'>(" + drug_sets[0].infusate_concentration + "mcg/ml)</span>";
   }
   if (drug_sets[0].drug_name == "Ketamine") {
-  	document.getElementById("drugname").innerHTML = "Ketamine <span style='opacity:0.5'>(" + drug_sets[0].infusate_concentration + "mcg/ml)</span>";
+  	document.getElementById("drugname").innerHTML = "Ketamine <span style='opacity:0.5'>(" + drug_sets[0].infusate_concentration + "mg/ml)</span>";
   }
 
   	if (drug_sets[0].drug_name == "Propofol") {
