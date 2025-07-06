@@ -743,7 +743,7 @@ function start_cpt() {
 		if (document.getElementById("inputDesired0").value>0) {
 			offset = Date.now();
 		
-			desired = document.getElementById("inputDesired0").value *1;
+			desired = document.getElementById("inputDesired0").value * 1;
 		
 			drug_sets[active_drug_set_index].cpt_active = 1;
 
@@ -1045,11 +1045,11 @@ function preview_cpt(x,ind) {
 
 
 		if (max_rate_input == 0) {
-			if (drug_sets[ind].cpt_rates_real.length == 0) {
-				drug_sets[ind].cpt_bolus = (drug_sets[ind].desired-(p_state[1]+p_state[2]+p_state[3])) * drug_sets[ind].vc;  //bolus round up to 10mg
-			} else {
+			//if (drug_sets[ind].cpt_rates_real.length == 0) {
+			//	drug_sets[ind].cpt_bolus = (drug_sets[ind].desired-(p_state[1]+p_state[2]+p_state[3])) * drug_sets[ind].vc;  //bolus round up to 10mg
+			//} else {
 				drug_sets[ind].cpt_bolus = (drug_sets[ind].desired-(p_state[1]+p_state[2]+p_state[3]))/drug_sets[ind].p_udf[1];
-			}
+			//}
 			if (drug_sets[ind].cpt_bolus>=90) {
 				drug_sets[ind].cpt_bolus = Math.round(drug_sets[ind].cpt_bolus/10)*10;
 			} else if (drug_sets[ind].cpt_bolus>1) {
@@ -1226,6 +1226,22 @@ function preview_cpt(x,ind) {
 		} else if (optionsarray[2][2] == 1) { //accurate
 				cpt_threshold = 0.15;
 				cpt_avgfactor = 0.75;
+		}
+	} else if (drug_sets[ind].drug_name == "Ketamine") {
+		if (cpt_threshold_auto == 1) {
+			if (drug_sets[ind].cpt_rates[5]*360 > 10) {
+				cpt_threshold = 0.15;
+				cpt_avgfactor = 0.5;
+			} else {
+				cpt_threshold = 0.1;
+				cpt_avgfactor = 0.65;
+			}
+		} else if (optionsarray[2][1] == 1) { //lazy
+				cpt_threshold = 0.15;
+				cpt_avgfactor = 0.5;
+		} else if (optionsarray[2][2] == 1) { //accurate
+				cpt_threshold = 0.1;
+				cpt_avgfactor = 0.65;
 		}
 	} else {
 		if (cpt_threshold_auto == 1) {
@@ -1758,14 +1774,14 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 
 	//backup current P state and E state s
 	if (drug_sets[ind].cpt_cp.length>0) {
-		p_state[1] = drug_sets[ind].cpt_cp[working_clock-1][0];
-		p_state[2] = drug_sets[ind].cpt_cp[working_clock-1][1];
-		p_state[3] = drug_sets[ind].cpt_cp[working_clock-1][2];
+		p_state[1] = drug_sets[ind].cpt_cp[drug_sets[ind].cpt_cp.length-1][0];
+		p_state[2] = drug_sets[ind].cpt_cp[drug_sets[ind].cpt_cp.length-1][1];
+		p_state[3] = drug_sets[ind].cpt_cp[drug_sets[ind].cpt_cp.length-1][2];
 
-		e_state[1] = drug_sets[ind].cpt_ce[working_clock-1][0];
-		e_state[2] = drug_sets[ind].cpt_ce[working_clock-1][1];
-		e_state[3] = drug_sets[ind].cpt_ce[working_clock-1][2];
-		e_state[4] = drug_sets[ind].cpt_ce[working_clock-1][3];
+		e_state[1] = drug_sets[ind].cpt_ce[drug_sets[ind].cpt_ce.length-1][0];
+		e_state[2] = drug_sets[ind].cpt_ce[drug_sets[ind].cpt_ce.length-1][1];
+		e_state[3] = drug_sets[ind].cpt_ce[drug_sets[ind].cpt_ce.length-1][2];
+		e_state[4] = drug_sets[ind].cpt_ce[drug_sets[ind].cpt_ce.length-1][3];
 		//for fentanyl correction:
 		//since we have downscaled CP/CE from original, then we now need to revert CP/CE back to its actual form 
 		//by upscaling it using *1/correction_factor
@@ -1852,6 +1868,7 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		console.log("estate2 - " + e_state2[2]);
 		console.log("estate3 - " + e_state2[3]);
 		console.log("estate4 - " + e_state2[4]);
+		console.log(p_state2[1]+ p_state2[2] + p_state2[3]);
 		console.log(e_state2[1]+ e_state2[2] + e_state2[3] + e_state2[4]);
 	}
 	
@@ -1870,11 +1887,12 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		bolus_duration = 0;
 		if (effect_flag == 0) {
 			if (max_rate_input == 0) {
-				if (drug_sets[ind].cpt_rates_real.length == 0) {
-					drug_sets[ind].cpt_bolus = (drug_sets[ind].desired-(p_state[1]+p_state[2]+p_state[3])) * drug_sets[ind].vc;  //bolus round up to 10mg
-				} else {
+				//if (drug_sets[ind].cpt_rates_real.length == 0) {
+					//drug_sets[ind].cpt_bolus = (drug_sets[ind].desired-(p_state[1]+p_state[2]+p_state[3])) * drug_sets[ind].vc;  //old code. not compatible with ketamine. delete.
 					drug_sets[ind].cpt_bolus = (drug_sets[ind].desired-(p_state[1]+p_state[2]+p_state[3]))/drug_sets[ind].p_udf[1];
-				}
+				//} else {
+				//	drug_sets[ind].cpt_bolus = (drug_sets[ind].desired-(p_state[1]+p_state[2]+p_state[3]))/drug_sets[ind].p_udf[1];
+				//}
 					if (drug_sets[ind].cpt_bolus>=90) {
 						drug_sets[ind].cpt_bolus = Math.round(drug_sets[ind].cpt_bolus/10)*10;
 					} else if (drug_sets[ind].cpt_bolus>1) {
@@ -2037,18 +2055,12 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 					trial_rate = (drug_sets[ind].desired - trial_cp)/drug_sets[ind].p_udf[cpt_interval];
 				} else { trial_rate = 0;}
 
-				//var old_rate_pred_cp = p_state2[1] * look_l1 + p_coef[1] * test_rate * (1 - look_l1)
-				// + p_state2[2] * look_l2 + p_coef[2] * test_rate * (1 - look_l2)
-				// + p_state2[3] * look_l3 + p_coef[3] * test_rate * (1 - look_l3);
-
-				//var is_steady = (old_rate_pred_cp < (desired*1.05)) && (old_rate_pred_cp > (desired * 0.99));
-
+				
 				//console.log("estCp" + est_cp);
 				//console.log("trialcp" + trial_cp);
 				//console.log("testrate" + test_rate);
 				//console.log("trialrate" + trial_rate);
-				//console.log("--> oldratepredcp = " + old_rate_pred_cp);
-				//console.log("--> is_steady = " + is_steady);
+
 				
 				test_rate = trial_rate;
 				drug_sets[ind].cpt_rates.push(test_rate);
@@ -2122,6 +2134,22 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		} else if (optionsarray[2][2] == 1) { //accurate
 				cpt_threshold = 0.15;
 				cpt_avgfactor = 0.75;
+		}
+	} else if (drug_sets[ind].drug_name == "Ketamine") {
+		if (cpt_threshold_auto == 1) {
+			if (drug_sets[ind].cpt_rates[5]*360 > 10) {
+				cpt_threshold = 0.15;
+				cpt_avgfactor = 0.5;
+			} else {
+				cpt_threshold = 0.1;
+				cpt_avgfactor = 0.65;
+			}
+		} else if (optionsarray[2][1] == 1) { //lazy
+				cpt_threshold = 0.15;
+				cpt_avgfactor = 0.5;
+		} else if (optionsarray[2][2] == 1) { //accurate
+				cpt_threshold = 0.1;
+				cpt_avgfactor = 0.65;
 		}
 	} else {
 		if (cpt_threshold_auto == 1) {
@@ -3071,7 +3099,7 @@ function preview_cet(x,ind) {
 				p_state3[1] = p_state2[1];
 				p_state3[2] = p_state2[2];
 				p_state3[3] = p_state2[3];
-
+				console.log("current CP ", p_state3[1] + p_state3[2] + p_state3[3]);
 				e_state3[1] = e_state2[1];
 				e_state3[2] = e_state2[2];
 				e_state3[3] = e_state2[3];
@@ -3165,6 +3193,7 @@ function preview_cet(x,ind) {
 			//reset temp_peak
 			if (drug_sets[ind].drug_name == "Dexmedetomidine") temp_peak = real_peak;
 			if (RSI_mode == true) temp_peak = real_peak;
+			console.log("current CP ", p_state3[1] + p_state3[2] + p_state3[3]);
 			deliver_cpt_alt();
 		}//end normal CET algorithm
 	}// end desired higher than CE part else
@@ -3187,7 +3216,7 @@ function preview_cet(x,ind) {
 			var look_l2 = Math.exp(-drug_sets[ind].lambda[2] * cpt_interval);
 			var look_l3 = Math.exp(-drug_sets[ind].lambda[3] * cpt_interval);
 			var look_l4 = Math.exp(-drug_sets[ind].lambda[4] * cpt_interval);
-
+			console.log("current CP ", p_state2[1] + p_state2[2] + p_state2[3]);
 			//first pass
 			for (i=0; i<60; i++) {
 
@@ -3252,6 +3281,22 @@ function preview_cet(x,ind) {
 				} else if (optionsarray[2][2] == 1) { //accurate
 						cpt_threshold = 0.15;
 						cpt_avgfactor = 0.75;
+				}
+			} else if (drug_sets[ind].drug_name == "Ketamine") {
+				if (cpt_threshold_auto == 1) {
+					if (drug_sets[ind].cpt_rates[5]*360 > 10) {
+						cpt_threshold = 0.15;
+						cpt_avgfactor = 0.5;
+					} else {
+						cpt_threshold = 0.1;
+						cpt_avgfactor = 0.65;
+					}
+				} else if (optionsarray[2][1] == 1) { //lazy
+						cpt_threshold = 0.15;
+						cpt_avgfactor = 0.5;
+				} else if (optionsarray[2][2] == 1) { //accurate
+						cpt_threshold = 0.1;
+						cpt_avgfactor = 0.65;
 				}
 			} else {
 				if (cpt_threshold_auto == 1) {
@@ -3879,6 +3924,8 @@ function deliver_cet_real(x, ind) {
 						}
 					}
 				}
+				console.log("before leaving deliver CET, CP is ", temp_result);
+				console.log(drug_sets[ind].cpt_cp);
 				//try off the following lines to improve performance
 				//myChart.data.datasets[ind*2+2].hidden = false;
 				//myChart.data.datasets[ind*2+3].hidden = false;
@@ -5464,6 +5511,16 @@ function calculate_udfs(drug_sets_index) {
 			(drug_sets[drug_sets_index].lambda[1] - drug_sets[drug_sets_index].k41) / 
 			(drug_sets[drug_sets_index].lambda[2] - drug_sets[drug_sets_index].k41) / 
 			(drug_sets[drug_sets_index].lambda[3] - drug_sets[drug_sets_index].k41) / drug_sets[drug_sets_index].vc;
+
+		if (drug_sets[drug_sets_index].drug_name == "Ketamine") {
+			drug_sets[drug_sets_index].p_coef[1] *= 1000;
+			drug_sets[drug_sets_index].p_coef[2] *= 1000;
+			drug_sets[drug_sets_index].p_coef[3] *= 1000;
+			drug_sets[drug_sets_index].e_coef[1] *= 1000;
+			drug_sets[drug_sets_index].e_coef[2] *= 1000;
+			drug_sets[drug_sets_index].e_coef[3] *= 1000;
+			drug_sets[drug_sets_index].e_coef[4] *= 1000;
+		}
 		
 
 	temp1 = 0;
@@ -5579,12 +5636,12 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].k31 = 0.0033;
 		drug_sets[drug_set_index].k41 = 1.21;
 		drug_sets[drug_set_index].modeltext = "Marsh model (BJA 1991;67:41-8), 'fast' ke0 (Anesthesiology 2000;92:399-406)" + "<br>" +
-		"vc = " + drug_sets[drug_set_index].vc + "<br>" +
-		"k10 = " + drug_sets[drug_set_index].k10 + "<br>" +
-		"k12 = " + drug_sets[drug_set_index].k12 + "<br>" +
-		"k13 = " + drug_sets[drug_set_index].k13 + "<br>" +
-		"k21 = " + drug_sets[drug_set_index].k21 + "<br>" +
-		"k31 = " + drug_sets[drug_set_index].k31 + "<br>" +
+		"vc = " + rnd3(drug_sets[drug_set_index].vc) + "<br>" +
+		"k10 = " + rnd3(drug_sets[drug_set_index].k10) + "<br>" +
+		"k12 = " + rnd3(drug_sets[drug_set_index].k12) + "<br>" +
+		"k13 = " + rnd3(drug_sets[drug_set_index].k13) + "<br>" +
+		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
+		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
 		"ke0 = 1.21";
 
 		drug_sets[drug_set_index].drug_name = "Propofol";
@@ -5618,13 +5675,13 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].k41 = 0.456; //ke0
 		drug_sets[drug_set_index].modeltext = "Schnider model (Anesthesiology 1998;88:1170-82)" + "<br>" +
 		"vc = 4.27"+ "<br>" +
-		"v2 = " + v2 + "<br>" +
-		"v3 = " + v3 + "<br>" +
-		"k10 = " + drug_sets[drug_set_index].k10 + "<br>" +
-		"k12 = " + drug_sets[drug_set_index].k12 + "<br>" +
-		"k13 = " + drug_sets[drug_set_index].k13 + "<br>" +
-		"k21 = " + drug_sets[drug_set_index].k21 + "<br>" +
-		"k31 = " + drug_sets[drug_set_index].k31 + "<br>" +
+		"v2 = " + rnd3(v2) + "<br>" +
+		"v3 = " + rnd3(v3) + "<br>" +
+		"k10 = " + rnd3(drug_sets[drug_set_index].k10) + "<br>" +
+		"k12 = " + rnd3(drug_sets[drug_set_index].k12) + "<br>" +
+		"k13 = " + rnd3(drug_sets[drug_set_index].k13) + "<br>" +
+		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
+		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
 		"ke0 = 0.456";
 
 		drug_sets[drug_set_index].drug_name = "Propofol";
@@ -5658,13 +5715,13 @@ function readmodel(x, drug_set_index) {
 			drug_sets[drug_set_index].k10 = 0.119;		
 		}
 		drug_sets[drug_set_index].modeltext = "Paedfusor model (BJA 2003;91(4)507-513)" + "<br>" +
-		"vc = " + drug_sets[drug_set_index].vc + "<br>" +
-		"k10 = " + drug_sets[drug_set_index].k10 + "<br>" +
-		"k12 = " + drug_sets[drug_set_index].k12 + "<br>" +
-		"k13 = " + drug_sets[drug_set_index].k13 + "<br>" +
-		"k21 = " + drug_sets[drug_set_index].k21 + "<br>" +
-		"k31 = " + drug_sets[drug_set_index].k31 + "<br>" +
-		"ke0 = " + drug_sets[drug_set_index].k41 + "<br>" +
+		"vc = " + rnd3(drug_sets[drug_set_index].vc) + "<br>" +
+		"k10 = " + rnd3(drug_sets[drug_set_index].k10) + "<br>" +
+		"k12 = " + rnd3(drug_sets[drug_set_index].k12) + "<br>" +
+		"k13 = " + rnd3(drug_sets[drug_set_index].k13) + "<br>" +
+		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
+		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
+		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + "<br>" +
 		"ke0 calculated by Tpeak method (age-dependent: 0.91min-1 at 1y to 0.15min-1 at 16y) (BJA 2008;100(4):509-516)";
 
 		drug_sets[drug_set_index].drug_name = "Propofol";
@@ -5729,15 +5786,15 @@ function readmodel(x, drug_set_index) {
 		
 		drug_sets[drug_set_index].modeltext = "Eleveld model (BJA 2018;120:942-959)" + "<br>" +
 		opioidtext + "<br>" +
-		"vc = " + drug_sets[drug_set_index].vc + "<br>" +
-		"v2 = " + v2 + "<br>" + 
-		"v3 = " + v3 + "<br>" + 
-		"k10 = " + drug_sets[drug_set_index].k10 + "<br>" + 
-		"k12 = " + drug_sets[drug_set_index].k12 + "<br>" +
-		"k13 = " + drug_sets[drug_set_index].k13 + "<br>" +
-		"k21 = " + drug_sets[drug_set_index].k21 + "<br>" +
-		"k31 = " + drug_sets[drug_set_index].k31 + "<br>" +
-		"ke0 = " + drug_sets[drug_set_index].k41 + "<br>";
+		"vc = " + rnd3(drug_sets[drug_set_index].vc) + "<br>" +
+		"v2 = " + rnd3(v2) + "<br>" + 
+		"v3 = " + rnd3(v3) + "<br>" + 
+		"k10 = " + rnd3(drug_sets[drug_set_index].k10) + "<br>" + 
+		"k12 = " + rnd3(drug_sets[drug_set_index].k12) + "<br>" +
+		"k13 = " + rnd3(drug_sets[drug_set_index].k13) + "<br>" +
+		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
+		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
+		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + "<br>";
 
 		drug_sets[drug_set_index].drug_name = "Propofol";
 		drug_sets[drug_set_index].conc_units = "mcg";
@@ -5773,15 +5830,15 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].inf_rate_permass_dp = 100;
 
 		drug_sets[drug_set_index].modeltext = "Minto model (Anesthesiology 1997;86:10-23)" + "<br>" +
-		"vc = " + drug_sets[drug_set_index].vc + "<br>" +
-		"v2 = " + v2 + "<br>" + 
-		"v3 = " + v3 + "<br>" + 
-		"k10 = " + drug_sets[drug_set_index].k10 + "<br>" + 
-		"k12 = " + drug_sets[drug_set_index].k12 + "<br>" +
-		"k13 = " + drug_sets[drug_set_index].k13 + "<br>" +
-		"k21 = " + drug_sets[drug_set_index].k21 + "<br>" +
-		"k31 = " + drug_sets[drug_set_index].k31 + "<br>" +
-		"ke0 = " + drug_sets[drug_set_index].k41 + "<br>";
+		"vc = " + rnd3(drug_sets[drug_set_index].vc) + "<br>" +
+		"v2 = " + rnd3(v2) + "<br>" + 
+		"v3 = " + rnd3(v3) + "<br>" + 
+		"k10 = " + rnd3(drug_sets[drug_set_index].k10) + "<br>" + 
+		"k12 = " + rnd3(drug_sets[drug_set_index].k12) + "<br>" +
+		"k13 = " + rnd3(drug_sets[drug_set_index].k13) + "<br>" +
+		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
+		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
+		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + "<br>";
 	}
 	if (x == "Eleveld-Remifentanil") {
 		var ffmref = (0.88 + (1-0.88)/(1 + Math.pow((35/13.4),-12.7))) * ((9270 * 70)/(6680+216*24.22145));
@@ -5818,15 +5875,15 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].inf_rate_permass_dp = 100;
 
 		drug_sets[drug_set_index].modeltext = "Eleveld model (Remifentanil) (Anesthesiology 2017;126:1005-18)" + "<br>" +
-		"vc = " + drug_sets[drug_set_index].vc + "<br>" +
-		"v2 = " + v2 + "<br>" + 
-		"v3 = " + v3 + "<br>" + 
-		"k10 = " + drug_sets[drug_set_index].k10 + "<br>" + 
-		"k12 = " + drug_sets[drug_set_index].k12 + "<br>" +
-		"k13 = " + drug_sets[drug_set_index].k13 + "<br>" +
-		"k21 = " + drug_sets[drug_set_index].k21 + "<br>" +
-		"k31 = " + drug_sets[drug_set_index].k31 + "<br>" +
-		"ke0 = " + drug_sets[drug_set_index].k41 + "<br>";
+		"vc = " + rnd3(drug_sets[drug_set_index].vc) + "<br>" +
+		"v2 = " + rnd3(v2) + "<br>" + 
+		"v3 = " + rnd3(v3) + "<br>" + 
+		"k10 = " + rnd3(drug_sets[drug_set_index].k10) + "<br>" + 
+		"k12 = " + rnd3(drug_sets[drug_set_index].k12) + "<br>" +
+		"k13 = " + rnd3(drug_sets[drug_set_index].k13) + "<br>" +
+		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
+		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
+		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + "<br>";
 
 		if (age<=16) {
 			drug_sets[drug_set_index].modeltext = drug_sets[drug_set_index].modeltext + 
@@ -5882,13 +5939,13 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].inf_rate_permass_unit = "mcg/kg/h";
 		drug_sets[drug_set_index].inf_rate_permass_dp = 1;
 		drug_sets[drug_set_index].modeltext = "Maitre model (Anesthesiology 1987;66:3-12)" + "<br>" +
-		"vc = " + drug_sets[drug_set_index].vc + "<br>" +
-		"k10 = " + drug_sets[drug_set_index].k10 + "<br>" + 
-		"k12 = " + drug_sets[drug_set_index].k12 + "<br>" +
-		"k13 = " + drug_sets[drug_set_index].k13 + "<br>" +
-		"k21 = " + drug_sets[drug_set_index].k21 + "<br>" +
-		"k31 = " + drug_sets[drug_set_index].k31 + "<br>" +
-		"ke0 = " + drug_sets[drug_set_index].k41 + ";<br>" +
+		"vc = " + rnd3(drug_sets[drug_set_index].vc) + "<br>" +
+		"k10 = " + rnd3(drug_sets[drug_set_index].k10) + "<br>" + 
+		"k12 = " + rnd3(drug_sets[drug_set_index].k12) + "<br>" +
+		"k13 = " + rnd3(drug_sets[drug_set_index].k13) + "<br>" +
+		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
+		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
+		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + "<br>" +
 		"ke0 derived from Scott & Stanski (J Pharmacol Exp Ther 1987;240:159-166)";
 	}
 	if (x == "Hannivoort") {
@@ -5913,13 +5970,13 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].inf_rate_permass_unit = "mcg/kg/h";
 		drug_sets[drug_set_index].inf_rate_permass_dp = 100;
 		drug_sets[drug_set_index].modeltext = "Hannivoort model (Anesthesiology 2015;123:357-367)" + "<br>" +
-		"vc = " + drug_sets[drug_set_index].vc + "<br>" +
-		"k10 = " + drug_sets[drug_set_index].k10 + "<br>" + 
-		"k12 = " + drug_sets[drug_set_index].k12 + "<br>" +
-		"k13 = " + drug_sets[drug_set_index].k13 + "<br>" +
-		"k21 = " + drug_sets[drug_set_index].k21 + "<br>" +
-		"k31 = " + drug_sets[drug_set_index].k31 + "<br>" +
-		"ke0 = " + drug_sets[drug_set_index].k41 + ";<br>" +
+		"vc = " + rnd3(drug_sets[drug_set_index].vc) + "<br>" +
+		"k10 = " + rnd3(drug_sets[drug_set_index].k10) + "<br>" + 
+		"k12 = " + rnd3(drug_sets[drug_set_index].k12) + "<br>" +
+		"k13 = " + rnd3(drug_sets[drug_set_index].k13) + "<br>" +
+		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
+		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
+		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + "<br>" +
 		"ke0 (MOAA-Sedation scale): from Colin et al (BJA 2017; 119:200-210)";
 		console.log("Dex");
 		console.log(drug_sets[drug_set_index].vc);
@@ -5928,6 +5985,38 @@ function readmodel(x, drug_set_index) {
 		console.log(cl1);
 		console.log(cl2);
 		console.log(cl3);
+	}
+	if (x == "Kamp") {
+		//from Kamp, Anaesthesiology 2020; DOI 10.1097/ALN.0000000000003577
+		drug_sets[drug_set_index].drug_name = "Ketamine";
+		drug_sets[drug_set_index].conc_units = "ng";
+		drug_sets[drug_set_index].infused_units = "mg";
+		drug_sets[drug_set_index].inf_rate_permass_factor = 1;
+		drug_sets[drug_set_index].inf_rate_permass_unit = "mg/kg/h";
+		drug_sets[drug_set_index].inf_rate_permass_dp = 100;
+		//change model rate unit from h-1 to min-1
+		cl1 = 84/60 * Math.pow(mass/70, 0.75);
+		cl2 = 161/60 * Math.pow(mass/70, 0.75);
+		cl3 = 79/60 * Math.pow(mass/70, 0.75);
+		drug_sets[drug_set_index].vc = 25 * mass/70 ;
+		v2 = 56 * mass/70 ;
+		v3 = 157 * mass/70 ;
+		drug_sets[drug_set_index].k41 = 0.238;
+		//from Navarette, JCMC, 2025; doi 10.1007/s10877-024-01240-4 
+		drug_sets[drug_set_index].k10 = cl1 / drug_sets[drug_set_index].vc ;
+		drug_sets[drug_set_index].k12 = cl2 / drug_sets[drug_set_index].vc ;
+		drug_sets[drug_set_index].k13 = cl3 / drug_sets[drug_set_index].vc ;
+		drug_sets[drug_set_index].k21 = cl2 / v2 ;
+		drug_sets[drug_set_index].k31 = cl3 / v3 ;
+		drug_sets[drug_set_index].modeltext = "Kamp model (Anesthesiology 2020;133(6):1192-1213)" + "<br>" +
+		"vc = " + rnd3(drug_sets[drug_set_index].vc) + "<br>" +
+		"k10 = " + rnd3(drug_sets[drug_set_index].k10) + "<br>" + 
+		"k12 = " + rnd3(drug_sets[drug_set_index].k12) + "<br>" +
+		"k13 = " + rnd3(drug_sets[drug_set_index].k13) + "<br>" +
+		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
+		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
+		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + "<br>" +
+		"ke0 (analgesia nociception index) from Navarette (J Clin Monit Comput 2025;39(2):349-354)";
 	}
 	/*
 	if (x == "Shafer (Weight adjusted)") {
@@ -5980,6 +6069,10 @@ function readmodel(x, drug_set_index) {
 		document.getElementById("modeldescription").innerHTML = drug_sets[0].modeltext;
 
 	}
+}
+
+function rnd3(inputparam) {
+	return Math.round(inputparam * 1000)/1000;
 }
 
 

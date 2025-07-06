@@ -141,6 +141,7 @@
 									<option value="Maitre">Alfentanil (Maitre)</option>
 									<option value="Shafer">Fentanyl (Shafer)</option>
 									<option value="Hannivoort">Dexmedetomidine (Hannivoort)</option>
+									<option value="Kamp">Ketamine (Kamp)</option>
 									<option value="Complex">Complex (Dual mode)</option>
 								
 							</select>
@@ -223,6 +224,18 @@
 							</div>
 						</td>
 					</tr>
+					<tr id="row_ketdilution"><td style="letter-spacing:-0.5px">Concentration <span style="font-size: 85%">(mg/ml)</span></td>
+						<td>
+							<select id="select_ketdilution" onchange="change_ketdilution(this.value)">
+								<option value="5">5mg/ml</option>
+								<option value="10" selected>10mg/ml</option>
+								<option value="custom">Custom</option>
+							</select>
+							<div id="custom_ketdilution" onclick="popup_dilution('ketdilution','ketamine')">
+								<span id="ketdilution">_</span>mg/ml
+							</div>
+						</td>
+					</tr>
 					<tr id="row_dexdilution"><td style="letter-spacing:-0.5px">Concentration <span style="font-size: 85%">(mcg/ml)</span></td>
 						<td>
 							<select id="select_dexdilution" onchange="change_dexdilution(this.value)">
@@ -289,13 +302,13 @@
 						
 						<a id="page2cet" class="page2subheading button huge" onclick="pageTwoFunction(1)"><span style="border-bottom:1px solid green">CE</span> TARGETING<i class="fas fa-brain fa-fw" style="color:green;"></i></a>
 						
-						<a id="page2manual" class="page2subheading button huge" onclick="initmanual(0);hideallmodal();document.getElementById('card_controlpanel').style.display='block';">MANUAL<i class="fas fa-syringe fa-fw" style="color:rgb(81 203 238)"></i></a>
+						<a id="page2manual" class="page2subheading button huge" onclick="initmanual(0);hidemodal('modalScreen2');document.getElementById('card_controlpanel').style.display='block';">MANUAL<i class="fas fa-syringe fa-fw" style="color:rgb(81 203 238)"></i></a>
 						
 						<a id="page2IB" class="page2subheading button huge" onclick="initcetbolus(0);hideallmodal();">INTERMITTENT BOLUS<i class="fas fa-hourglass-half fa-fw" style="color:#c19f14"></i></a>
 						<div id="page2maxrate" class="">
 							<table class="table-Init" style="text-align:left">
 								<tr class="fr" style="height:2rem">
-									<td style="padding:0;width:50%">Max bolus speed:</td>
+									<td style="padding:0;width:60%">Max bolus speed:</td>
 									<td style="padding:0">
 										<select id="page2selectmaxrate" onchange="sendToUpdateMax(this.value);">
 											<option value="0" selected>Flash</option>
@@ -648,15 +661,15 @@
 					</div>
 				</div>
 				<div id="chartoverlayoptions2" >
-					<div id="chartoverlayoptions2content">
-						<div id="closeoptions2" onclick="togglepopupoptions();">&times;</div>
-						<div id="chartoptionscheckbox2">
-					      <label class="container labeloptionscontainer" style="margin-top:6px; max-width:70%">Auto. concentration scale (y-axis)
-					          <input type="checkbox" onChange="toggleautoconc()" id="isConcAutomatic2" checked><span class="checkmark"></span>
+					<div id="chartoverlayoptions2content" class="optitem">
+						<div id="closeoptions2" class="optitem" onclick="togglepopupoptions();">&times;</div>
+						<div id="chartoptionscheckbox2" class="optitem">
+					      <label class="container labeloptionscontainer optitem" style="margin-top:6px; max-width:70%">Auto. concentration scale (y-axis)
+					          <input type="checkbox" onChange="toggleautoconc()" id="isConcAutomatic2" class="optitem" checked><span class="checkmark optitem"></span>
 					      </label>
-					      <div style="padding-left:32px">
+					      <div style="padding-left:32px" class="optitem">
 					      	Custom max concentration:
-					      	<select id="customconcselect2" style="" onChange="setcustomconc(this.value)">
+					      	<select id="customconcselect2" class="optitem" style="" onChange="setcustomconc(this.value)">
 					      	<option value="15">15mcg/ml</option>
 					      	<option value="14">14mcg/ml</option>
 					      	<option value="13">13mcg/ml</option>
@@ -672,26 +685,26 @@
 					      	<option value="3">3mcg/ml</option>
 					      	</select>
 					      </div>
-					      <label class="container labeloptionscontainer" style="">Auto. time scale (x-axis)
-					          <input type="checkbox" id="isTimeAutomatic2" onChange="toggleautotime();" checked><span class="checkmark"></span>
+					      <label class="container labeloptionscontainer optitem" style="">Auto. time scale (x-axis)
+					          <input type="checkbox" id="isTimeAutomatic2" class="optitem" onChange="toggleautotime();" checked><span class="checkmark optitem"></span>
 					      </label>
 						</div>
-						<div style="padding-left:32px">Custom time range (min):</div>
-						<div id="timerangeslider2">
-							<div id="leftslidercontainer2">
-								<input id="range0copy" value="10" min="0" max="30" step="5" type="range" oninput="processrange(0);">
-								<div class="timerangetext" id="rangetext0copy">0</div>
+						<div style="padding-left:32px" class="optitem">Custom time range (min):</div>
+						<div id="timerangeslider2" class="optitem">
+							<div id="leftslidercontainer2" class="optitem">
+								<input id="range0copy" value="10" min="0" max="30" step="5" type="range" class="optitem" oninput="processrange(0);">
+								<div class="timerangetext optitem" id="rangetext0copy">0</div>
 							</div>
-							<div id="rightslidercontainer2">
-								<input id="range1copy" value="90" min="30" max="120" step="5" type="range" oninput="processrange(1);">
-								<div class="timerangetext" id="rangetext1copy">30</div>
+							<div id="rightslidercontainer2" class="optitem">
+								<input id="range1copy" class="optitem" value="90" min="30" max="120" step="5" type="range" oninput="processrange(1);">
+								<div class="timerangetext optitem" id="rangetext1copy">30</div>
 							</div>		
 						</div>
-						<div style="margin-top:30px" id="PD_options_group2">
-				      <label class="container labeloptionscontainer" style="margin-bottom:0px">PD Effect estimation
-				          <input type="checkbox" id="isEffectEstimationOn2" onChange="if (document.getElementById('isEffectEstimationOn').checked == true) {document.getElementById('isEffectEstimationOn').checked = false} else {document.getElementById('isEffectEstimationOn').checked = true;}toggleEffectEst();" checked><span class="checkmark"></span>
+						<div style="margin-top:30px" id="PD_options_group2" class="optitem">
+				      <label class="container labeloptionscontainer optitem" style="margin-bottom:0px">PD Effect estimation
+				          <input type="checkbox" class="optitem" id="isEffectEstimationOn2" onChange="if (document.getElementById('isEffectEstimationOn').checked == true) {document.getElementById('isEffectEstimationOn').checked = false} else {document.getElementById('isEffectEstimationOn').checked = true;}toggleEffectEst();" checked><span class="checkmark optitem"></span>
 				      </label>
-				      <select id="select_effect_measure2" style="margin-left:32px;width:calc(100% - 30px)" onChange="document.getElementById('select_effect_measure').value=document.getElementById('select_effect_measure2').value;toggleEffectEst();">
+				      <select id="select_effect_measure2" class="optitem" style="margin-left:32px;width:calc(100% - 30px)" onChange="document.getElementById('select_effect_measure').value=document.getElementById('select_effect_measure2').value;toggleEffectEst();">
 				      	<option value="bis">BIS 40-60</option>
 				      	<option value="ptol">PTOL 50-90</option>
 				      	<option value="nsri">NSRI 20-50</option>
@@ -810,7 +823,6 @@
 			<div style="font-weight:bold; letter-spacing:2px; font-stretch:110%; text-shadow:1px 1px 2px #0005">SimTIVA <span style="opacity:0.3">| Terence Luk 2025</span></div>
 		</div>
 	</div><!--bodywrapper-->
-	
 	<script src="main.js"></script>
 	<script src="pharmacology.js" defer></script>
 	<script src="index.js" defer></script>

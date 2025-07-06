@@ -1551,12 +1551,20 @@ function parsedisplay(t,sex,model,VI,d,mode) {
   if (drug_sets[0].drug_name == "Alfentanil") {
   	document.getElementById("drugname").innerHTML = "Alfentanil <span style='opacity:0.5'>(" + drug_sets[0].infusate_concentration + "mcg/ml)</span>";
   }
+  if (drug_sets[0].drug_name == "Dexmedetomidine") {
+  	document.getElementById("drugname").innerHTML = "Dexmedetomidine <span style='opacity:0.5'>(" + drug_sets[0].infusate_concentration + "mcg/ml)</span>";
+  }
+  if (drug_sets[0].drug_name == "Ketamine") {
+  	document.getElementById("drugname").innerHTML = "Ketamine <span style='opacity:0.5'>(" + drug_sets[0].infusate_concentration + "mg/ml)</span>";
+  }
 
   	if (drug_sets[0].drug_name == "Propofol") {
 		myChart.options.scales.y.title.text = "Concentration (mcg/ml)";
 	} else {
 		myChart.options.scales.y.title.text = "Concentration (ng/ml)";
 	}
+
+
   if (modal != undefined) hideallmodal();
 }
 
@@ -2446,6 +2454,8 @@ const chartInfRateLayer = {
 				ymax = 3;
 			} else if (drug_sets[active_drug_set_index].drug_name == "Alfentanil") {
 				ymax = 90;
+			} else if (drug_sets[active_drug_set_index].drug_name == "Ketamine") {
+				ymax = 700;
 			} else {
 				ymax = 5;
 			}
@@ -2937,7 +2947,11 @@ function createCharts(chartparam) {
 	                    	if (label) {
 	                    		if ((label == "Cp-Prop") || (label == "Cp-Remi") || (label == "Cp-Fen") || (label == "Cp-Alfen")) label = "Cp:";
 	                    		if ((label == "Ce-Prop") || (label == "Ce-Remi") || (label == "Ce-Fen") || (label == "Ce-Alfen")) label = "Ce:";
-		                    	label += Math.round(context.parsed.y * 100) / 100;
+	                    		if ((drug_sets[active_drug_set_index].drug_name == "Alfentanil") || (drug_sets[active_drug_set_index].drug_name == "Ketamine")) {
+	                    			label += Math.round(context.parsed.y);
+	                    		} else {
+		                    		label += Math.round(context.parsed.y * 100) / 100;
+		                    	}
 		                    	return label;
 	                    	}
 	                	},
@@ -4328,12 +4342,39 @@ function updatechart(chart) {
 				} else if (corY>180 && corY<=280) {
 					chart.options.scales.y.max = 300;
 					chart.options.scales.y.ticks.stepSize = 50;
-				} else if (corY>280 && corY<400) {
+				} else if (corY>280 && corY<=400) {
 					chart.options.scales.y.max = 500;
 					chart.options.scales.y.ticks.stepSize = 50;
+				} else if (corY>400 && corY<=700)  {
+					chart.options.scales.y.max = 800;
+					chart.options.scales.y.ticks.stepSize = 100;
+				} else if (corY>700 && corY<1200)  {
+					chart.options.scales.y.max = 1000;
+					chart.options.scales.y.ticks.stepSize = 100;
 				} else {
+					chart.options.scales.y.max = 2000;
+					chart.options.scales.y.ticks.stepSize = 200;
+				}
+			}
+			if (drug_sets[active_drug_set_index].drug_name == "Ketamine") {
+				if (corY<=70) {
+					chart.options.scales.y.max = 300;
+					chart.options.scales.y.ticks.stepSize = 25;
+				} else if (corY>70 && corY<=120) {
+					chart.options.scales.y.max = 400;
+					chart.options.scales.y.ticks.stepSize = 25;
+				} else if (corY>120 && corY<=180) {
+					chart.options.scales.y.max = 500;
+					chart.options.scales.y.ticks.stepSize = 50;
+				} else if (corY>180 && corY<=400) {
 					chart.options.scales.y.max = 600;
 					chart.options.scales.y.ticks.stepSize = 50;
+				} else if (corY>400 && corY<1200)  {
+					chart.options.scales.y.max = 1000;
+					chart.options.scales.y.ticks.stepSize = 100;
+				} else {
+					chart.options.scales.y.max = 2000;
+					chart.options.scales.y.ticks.stepSize = 200;
 				}
 			}
 			//end auto conc scale
@@ -4349,6 +4390,13 @@ function updatechart(chart) {
 					chart.options.scales.y.ticks.stepSize = 25;
 				} else {
 					chart.options.scales.y.ticks.stepSize = 50;
+				}
+			}
+			if (drug_sets[active_drug_set_index].drug_name == "Ketamine") {
+				if (chart.options.scales.y.max <= 400) {
+					chart.options.scales.y.ticks.stepSize = 50;
+				} else {
+					chart.options.scales.y.ticks.stepSize = 100;
 				}
 			}
 			if (drug_sets[active_drug_set_index].drug_name == "Dexmedetomidine") {
@@ -5617,8 +5665,10 @@ function chartOptionsToggle() {
 	if (time_in_s > 0) {
 		ElOptions = document.getElementById("chartoverlayoptions");
 		if (ElOptions.classList.contains("show")) {
+			optionsactive = false;
 			ElOptions.classList.remove("show");
 		} else {
+			optionsactive = true;
 			if (chartprofile == 2) {
 				document.getElementById("isTimeAutomatic").checked = false;
 			} else {
@@ -5626,13 +5676,13 @@ function chartOptionsToggle() {
 			}
 			preparerange(); 
 			ElOptions.classList.add("show");
+			if (chartprofileconc == 0) {
+				document.getElementById("isConcAutomatic").checked = true;
+			} else {
+				document.getElementById("isConcAutomatic").checked = false;
+			}
+			updateConcOptions();
 		}
-		if (chartprofileconc == 0) {
-			document.getElementById("isConcAutomatic").checked = true;
-		} else {
-			document.getElementById("isConcAutomatic").checked = false;
-		}
-		updateConcOptions();
 	}
 }
 
@@ -5640,8 +5690,10 @@ function togglepopupoptions() {
 	if (time_in_s > 0) {
 		ElOptions = document.getElementById("chartoverlayoptions2");
 		if (ElOptions.classList.contains("show")) {
+			optionsactive = false;
 			ElOptions.classList.remove("show");
 		} else {
+			optionsactive = true;
 			if (chartprofile == 2) {
 				document.getElementById("isTimeAutomatic2").checked = false;
 			} else {
@@ -5649,13 +5701,13 @@ function togglepopupoptions() {
 			}
 			preparerange();
 			ElOptions.classList.add("show");
+			if (chartprofileconc == 0) {
+				document.getElementById("isConcAutomatic2").checked = true;
+			} else {
+				document.getElementById("isConcAutomatic2").checked = false;
+			}
+			updateConcOptions();
 		}
-		if (chartprofileconc == 0) {
-			document.getElementById("isConcAutomatic2").checked = true;
-		} else {
-			document.getElementById("isConcAutomatic2").checked = false;
-		}
-		updateConcOptions();
 	}
 }
 
@@ -5801,6 +5853,33 @@ function updateConcOptions() {
 		el.options[11].textContent = "0.8ng/ml";
 		el.options[12].value = "0.6";
 		el.options[12].textContent = "0.6ng/ml";
+	} else if (drug == "Ketamine") {
+		el.options[0].value = "1400";
+		el.options[0].textContent = "1400ng/ml";
+		el.options[1].value = "1300";
+		el.options[1].textContent = "1300ng/ml";
+		el.options[2].value = "1200";
+		el.options[2].textContent = "1200ng/ml";
+		el.options[3].value = "1100";
+		el.options[3].textContent = "1100ng/ml";
+		el.options[4].value = "1000";
+		el.options[4].textContent = "1000ng/ml";
+		el.options[5].value = "900";
+		el.options[5].textContent = "900ng/ml";
+		el.options[6].value = "800";
+		el.options[6].textContent = "800ng/ml";
+		el.options[7].value = "700";
+		el.options[7].textContent = "700ng/ml";
+		el.options[8].value = "600";
+		el.options[8].textContent = "600ng/ml";
+		el.options[9].value = "500";
+		el.options[9].textContent = "500ng/ml";
+		el.options[10].value = "400";
+		el.options[10].textContent = "400ng/ml";
+		el.options[11].value = "300";
+		el.options[11].textContent = "300ng/ml";
+		el.options[12].value = "200";
+		el.options[12].textContent = "200ng/ml";
 	}
 	if (popupon == true) {
 		el.value = popupchart.options.scales.y.max;
@@ -6537,10 +6616,11 @@ function resetPtolLabels() {
 function timeFxReset() {
 	conditions = ((time_in_s>1) && (drug_sets[0].cpt_rates_real.length > 1));
 	if (conditions) {
-		if (drug_sets[0].drug_name == "Dexmedetomidine") {
+		//if (drug_sets[0].drug_name == "Dexmedetomidine") {
 			//get orig max rate
 			orig_max_rate = drug_sets[0].max_rate;
-		}
+		//}
+
 		document.getElementById("timeFxRowSuspend").classList.remove("hide");
 		document.getElementById("timeFxRowResume").classList.add("hide");
 		timeFxSuspend();
@@ -6626,9 +6706,10 @@ function timeFxReset() {
 		if (drug_sets[0].drug_name == "Dexmedetomidine") {
 			document.getElementById("tableInitialBolus0").style.display = "none";
 			document.getElementById("tableInfusionRate0").classList.remove("line");
+
+		}
 			//update max rate
 			drug_sets[0].max_rate = orig_max_rate;
-		}
 	}
 }
 
