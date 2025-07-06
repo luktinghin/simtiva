@@ -1551,6 +1551,12 @@ function parsedisplay(t,sex,model,VI,d,mode) {
   if (drug_sets[0].drug_name == "Alfentanil") {
   	document.getElementById("drugname").innerHTML = "Alfentanil <span style='opacity:0.5'>(" + drug_sets[0].infusate_concentration + "mcg/ml)</span>";
   }
+  if (drug_sets[0].drug_name == "Dexmedetomidine") {
+  	document.getElementById("drugname").innerHTML = "Dexmedetomidine <span style='opacity:0.5'>(" + drug_sets[0].infusate_concentration + "mcg/ml)</span>";
+  }
+  if (drug_sets[0].drug_name == "Ketamine") {
+  	document.getElementById("drugname").innerHTML = "Ketamine <span style='opacity:0.5'>(" + drug_sets[0].infusate_concentration + "mcg/ml)</span>";
+  }
 
   	if (drug_sets[0].drug_name == "Propofol") {
 		myChart.options.scales.y.title.text = "Concentration (mcg/ml)";
