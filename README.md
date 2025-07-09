@@ -21,7 +21,13 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
 - To help deliver TCI in a setting where TCI pumps are not available
 
 ### Changelog
- Version 5.3 (Build 160) Current
+ Version 5.4 (Build 169) Current
+ - Ketamine (Kamp model) added.
+ - UI: clicking outside of graph options panel will dismiss options popup
+ - UI: clicking outside of manual mode unit selector dropdown (ml/h, mg/kg/h etc) will dismiss dropdown box
+ - Bugfix: fixed issue of preview_CPT vs deliver_CPT rate schemes mismatched due to timestamp miscalculation; viewer app: drug concentration properly displayed; fixed issue of failure to proceed to manual mode after extreme body habitus warning popup box dismissed; rounding of model parameters to 2 decimal places; improved initial graph scaling for alfentanil and ketamine
+   
+ Version 5.3 (Build 160) 
  - Offline access: fully support offline access with "cache first" service worker
  - Bugfix: mcg/kg/m unit in manual mode
    
