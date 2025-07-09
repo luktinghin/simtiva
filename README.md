@@ -6,11 +6,17 @@
 ### About
 SimTIVA is a computer simulation program to simulate the delivery of TCI/TIVA. It is a progressive web app and can be run in desktop and mobile browsers across all platforms. Broad cross platform support based on modern web technology means it can be accessed on a wide range of devices. In addition, a simple installation process enables SimTIVA to be run like a native app on your device, and even without internet access. 
 
-This is an open source project; created by Terence Luk 2024; licensed under GNU General Public License v3.0.
+This is an open source project (released on GitHub since Nov 2023); created by Terence Luk (since [2020](https://www.facebook.com/luktinghin/posts/pfbid0TdPSFNjXcDJWWjFct3oNePPo9WGNZnvn91E8idgDesUB78E2m2dqAuU9sijDVPBYl)); licensed under GNU General Public License v3.0.
 
 Coding is done in JavaScript. The code to mathematical calculations are based on STANPUMP, created by Dr. Steven Shafer, freely available on [OpenTCI](http://opentci.org/code/stanpump).
 
-The pharmacological models include Marsh, Schnider, Paedfusor and Eleveld for propofol, Minto & Eleveld for remifentanil, Shafer for fentanyl, and Maitre for alfentanil.
+The pharmacological models include the following:
+- Marsh, Schnider, Eleveld and Paefusor (Propofol)
+- Shafer (Fentanyl)
+- Minto & Eleveld (Remifentanil)
+- Maitre (Alfentanil)
+- Dexmedetomidine (Hannivoort)
+- Kamp (Ketamine)
 
 Several modes are available on SimTIVA app. CP/CE targeting is useful if you want to emulate the behavior of a TCI pump. An infusion scheme will be generated to guide you to achieve a CP or CE target using any ordinary syringe pump without TCI functionality. Manual mode allows you to input bolus and infusion doses and SimTIVA will calculate the CE/CP in response to these doses and plot the result over time. 
 
