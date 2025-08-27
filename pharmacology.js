@@ -3076,11 +3076,11 @@ function preview_cet(x,ind) {
 				if (drug_sets[ind].cpt_rates_real.length > 0) {
 					drug_sets[ind].preview_bolus = trial_rate;
 				}
-				if (mass>15)  {
-					drug_sets[ind].preview_bolus = Math.ceil(drug_sets[ind].preview_bolus/5)*5
-				} else {
-					drug_sets[ind].preview_bolus = Math.ceil(drug_sets[ind].preview_bolus)
-				}; // round up to the next 5mg bolus if bw big 
+				//if (mass>15)  {
+				//	drug_sets[ind].preview_bolus = Math.ceil(drug_sets[ind].preview_bolus/5)*5
+				//} else {
+					drug_sets[ind].preview_bolus = Math.ceil(drug_sets[ind].preview_bolus);
+				//}; // round up to the next 5mg bolus if bw big 
 
 				preview_cetpause = temp_peak;
 				console.log(temp1e + " " + temp2e + " " + temp3e + " " + temp4e);
@@ -3827,11 +3827,11 @@ function deliver_cet_real(x, ind) {
 				if (drug_sets[ind].cpt_rates_real.length > 0) {
 					drug_sets[ind].cet_bolus = trial_rate;
 				}
-				if (mass>15)  {
-					drug_sets[ind].cet_bolus = Math.ceil(drug_sets[ind].cet_bolus/5)*5
-				} else {
-					drug_sets[ind].cet_bolus = Math.ceil(drug_sets[ind].cet_bolus)
-				}; // round up to the next 5mg bolus if bw big 
+				//if (mass>15)  {
+				//	drug_sets[ind].cet_bolus = Math.ceil(drug_sets[ind].cet_bolus/5)*5
+				//} else {
+					drug_sets[ind].cet_bolus = Math.ceil(drug_sets[ind].cet_bolus);
+				//}; // round up to the next 5mg bolus if bw big 
 
 				bolusadmin(drug_sets[ind].cet_bolus,ind,max_rate_input);
 				
@@ -6001,7 +6001,21 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].vc = 25 * mass/70 ;
 		v2 = 56 * mass/70 ;
 		v3 = 157 * mass/70 ;
-		drug_sets[drug_set_index].k41 = 0.238;
+
+		//alternative KE0 testing
+		//drug_sets[drug_set_index].k41 = 1.39;
+		//ke0 1.39 for bw 70kg
+		//drug_sets[drug_set_index].k41 = 1.26;
+		//ke0 1.26 for bw 35kg
+		//drug_sets[drug_set_index].k41 = 1.52;
+		//ke0 1.52 for 140kg
+		//ke0 of 1.39 matches peak_time of 96s for KE0-Domino - for 70kg.
+
+		drug_sets[drug_set_index].k41 = 0.1876 * Math.log(mass) + 0.5932;;
+
+		//drug_sets[drug_set_index].k41 = 0.238;
+		//ke0 0.238 for domino equals peak time of 1.6
+
 		//from Navarette, JCMC, 2025; doi 10.1007/s10877-024-01240-4 
 		drug_sets[drug_set_index].k10 = cl1 / drug_sets[drug_set_index].vc ;
 		drug_sets[drug_set_index].k12 = cl2 / drug_sets[drug_set_index].vc ;
@@ -6009,6 +6023,34 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].k21 = cl2 / v2 ;
 		drug_sets[drug_set_index].k31 = cl3 / v3 ;
 		drug_sets[drug_set_index].modeltext = "Kamp model (Anesthesiology 2020;133(6):1192-1213)" + "<br>" +
+		"vc = " + rnd3(drug_sets[drug_set_index].vc) + "<br>" +
+		"k10 = " + rnd3(drug_sets[drug_set_index].k10) + "<br>" + 
+		"k12 = " + rnd3(drug_sets[drug_set_index].k12) + "<br>" +
+		"k13 = " + rnd3(drug_sets[drug_set_index].k13) + "<br>" +
+		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
+		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
+		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + "<br>" +
+		"ke0 (analgesia nociception index) from Navarette (J Clin Monit Comput 2025;39(2):349-354)";
+	}
+	if (x == "Domino") {
+		//from ...
+		drug_sets[drug_set_index].drug_name = "Ketamine";
+		drug_sets[drug_set_index].conc_units = "ng";
+		drug_sets[drug_set_index].infused_units = "mg";
+		drug_sets[drug_set_index].inf_rate_permass_factor = 1;
+		drug_sets[drug_set_index].inf_rate_permass_unit = "mg/kg/h";
+		drug_sets[drug_set_index].inf_rate_permass_dp = 100;
+		
+		drug_sets[drug_set_index].vc = 0.063 * mass;
+		drug_sets[drug_set_index].k10 = 0.4381;
+		drug_sets[drug_set_index].k12 = 0.5921;
+		drug_sets[drug_set_index].k13 = 0.59;
+		drug_sets[drug_set_index].k21 = 0.247;
+		drug_sets[drug_set_index].k31 = 0.0146;
+		drug_sets[drug_set_index].k41 = 0.238;
+		//from Navarette, JCMC, 2025; doi 10.1007/s10877-024-01240-4 
+
+		drug_sets[drug_set_index].modeltext = "Domino model (...)" +
 		"vc = " + rnd3(drug_sets[drug_set_index].vc) + "<br>" +
 		"k10 = " + rnd3(drug_sets[drug_set_index].k10) + "<br>" + 
 		"k12 = " + rnd3(drug_sets[drug_set_index].k12) + "<br>" +

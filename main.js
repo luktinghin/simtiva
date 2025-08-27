@@ -883,6 +883,17 @@ function initsubmit() {
 	  	document.getElementById("card_wakeup").style.display = "none";
 		}
 
+		if ((paedi_mode == 0) && (document.getElementById("select_model").value == "Domino")) {
+			if (document.getElementById("select_ketdilution").value == "custom") {
+				drug_sets[0].infusate_concentration = document.getElementById("ketdilution").innerHTML *1;
+			} else {
+				drug_sets[0].infusate_concentration = document.getElementById("select_ketdilution").value * 1;
+			}
+	  	document.getElementById("drugname").innerHTML = "Ketamine <span style='opacity:0.5'>(" + drug_sets[drug_sets_index].infusate_concentration + "mg/ml)</span>";
+	  	document.getElementById("card_retrospective").style.display = "none";
+	  	document.getElementById("card_wakeup").style.display = "none";
+		}
+
 		if (((paedi_mode == 0) && (
 				(document.getElementById("select_model").value == "Marsh") || 
 				(document.getElementById("select_model").value == "Schnider") ||
