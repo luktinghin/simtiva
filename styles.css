@@ -173,6 +173,16 @@ table {
   max-height:45vh;
 }
 
+.modelboxcontainer {
+  overflow-x:auto;
+  background:rgb(128,128,128,0.1);
+  font-size:0.8rem;
+}
+
+.modelbox {
+  min-width:600px;
+}
+
 tr {border-left: 0; border-right: 0; }
 tr.fr td { border:0; }
 th { padding: 4px 0px 4px 2px;  }

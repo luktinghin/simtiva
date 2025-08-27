@@ -93,7 +93,7 @@ function displayDisclaimer() {
 
 function displayAbout() {
 	//obsolete
-	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 9/7/2025 (V5.4) Build 169.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
+	text = "<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1><br><b>Written by Terence Luk</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>. Please contact <a href='https://github.com/luktinghin/simtiva' target='_blank'>me</a> for any feedback. Your suggestions and ideas are greatly appreciated!<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.<br>Last updated 9/7/2025 (V5.4) Build 169.<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i><br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>";
 	displayWarning("About", text);
 }
 
@@ -138,16 +138,16 @@ function displayAbout2(aboutparam) {
 	let ElAbout = document.createElement("div");
 	ElAbout.classList.add("customAboutText");
 	ElAbout.innerHTML = `<h1>SimTIVA is a computer simulation program to simulate delivery of total intravenous anaesthesia (TIVA) using a target-controlled infusion (TCI) pump. This progressive web app (PWA) is designed for use on smartphones, tablets and computers.</h1>
-		<br><b>Written by Terence Luk</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>, or contact me on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a> for ideas, suggestions or comments. Your advice is greatly appreciated!
+		<br><b>Written by Terence Luk</b>. This work is licensed under GNU General Public License v3.0. Read more about the project <a href='https://simtiva.blogspot.com/2021/10/welcome.html' target='_blank'>here</a>.
 		<br><br>Contributed by:
 		<br> - George Zhong (@propofoldream)
 		<br> - Eric Ng 
 		<br> - David Lam
 		<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.
-		<br>Last updated 2/5/2025 (V5.3) Build 160.
+		<br>Last updated 9/5/2025 (V5.4) Build 169.
 		<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i>
-		<br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, and Minto and Eleveld for remifentanil. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.
-		<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on <a href='https://twitter.com/simtiva_app' target='_blank'>Twitter/X</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>`;
+		<br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, Minto and Eleveld for remifentanil, Shafer for fentanyl, Maitre for alfentanil, Hannivoort for dexmedetomidine and Kamp for ketamine. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.
+		<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on the Social Links listed <a href='https://github.com/luktinghin/simtiva' target='_blank'>here</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>`;
 	let ElQuickGuide = document.createElement("div");
 	ElQuickGuide.classList.add("customAboutQuickGuideText");
 	ElQuickGuide.innerHTML = `
@@ -1295,43 +1295,48 @@ const xModalsHTML =
 					<br>A pharmacokinetic model is a mathematical description of the distribution, metabolism and elimination of a drug in the body. The pharmacokinetic behaviour of most anaesthetic drugs used for TIVA can be predicted with a three‐compartment model. The drug is administered into the central compartment (V1), which represents the initial volume of distribution. The second (V2) and third (V3) compartments are mathematical constructs explaining rapid and slow redistribution of drug from V1 into highly perfused and less well perfused tissues, respectively. Rate constants describe the proportion of drug moving between compartments. A summary of the models used for propofol is available from this resource: Principles of total intravenous anaesthesia: basic pharmacokinetics and model descriptions by Al-Rifai Z et al. <a href="https://doi.org/10.1093/bjaceaccp/mkv021"  target="_blank">https://doi.org/10.1093/bjaceaccp/mkv021</a> In this app, the specific model parameters (vc, v2-3, k10 and other rate constants, ke0) are given in the 'Model parameters' section after initial data entry.
 					<br>
 					<br>List of references for models:
-					<br>Marsh - (BJA 1991;67:41-8), 'fast' ke0 (Anesthesiology 2000;92:399-406)
-					<br>Schnider - (Anesthesiology 1998;88:1170-82)
-					<br>Paedfusor - (BJA 2003;91(4)507-513), Tpeak method (age-dependent: 0.91min-1 at 1y to 0.15min-1 at 16y) (BJA 2008;100(4):509-516)
-					<br>Eleveld (Propofol) - (BJA 2018:120:942-959)
-					<br>Minto - (Anesthesiology 1997;86:10-23)
-					<br>Eleveld (Remifentanil) - (Anesthesiology 2017;126:1005-18)
+					<br><b>Marsh (Propofol)</b> - (BJA 1991;67:41-8), 'fast' ke0 (Anesthesiology 2000;92:399-406)
+					<br><b>Schnider (Propofol)</b> - (Anesthesiology 1998;88:1170-82)
+					<br><b>Paedfusor (Propofol)</b> - (BJA 2003;91(4)507-513), Tpeak method (age-dependent: 0.91min-1 at 1y to 0.15min-1 at 16y) (BJA 2008;100(4):509-516)
+					<br><b>Eleveld (Propofol)</b> - (BJA 2018:120:942-959)
+					<br><b>Minto (Propofol)</b> - (Anesthesiology 1997;86:10-23)
+					<br><b>Eleveld (Remifentanil)</b> - (Anesthesiology 2017;126:1005-18)
+					<br><b>Shafer (Fentanyl)</b> - (Original model, no coparameters: Anesthesiology 1990;73(6):1091-1102, Weight-adjusted model: Anesthesiology 2004;101:603-13), derived from t1/2ke0 of 6.6min (Scott & Stanski, Anesthesiology 1991;74:34042)
+					<br><b>Maitre (Alfentanil)</b> - (Anesthesiology 1987;66:3-12), ke0 derived from Scott & Stanski (J Pharmacol Exp Ther 1987;240:159-166)
+					<br><b>Hannivoort (Dexmedetomidine)</b> - (Anesthesiology 2015;123:357-367), ke0 (MOAA-Sedation scale) from Colin (BJA 2017; 119:200-210)
+					<br><b>Kamp (Ketamine)</b> - (Anesthesiology 2020;133(6):1192-1213), ke0 (analgesia nociception index) from Navarette (J Clin Monit Comput 2025;39(2):349-354)
 					<div class="collapsible">Model calculations in details</div>
               			<div class="collapsiblecontent">
               				<b>Marsh</b>
-              				<br>vc = 0.228 * mass;
-							<br>k10 = 0.119;
-							<br>k12 = 0.112;
-							<br>k13 = 0.0419;
-							<br>k21 = 0.055;
-							<br>k31 = 0.0033;
-							<br>ke0 = 1.21;
+              				<br><b>vc</b> = 0.228 * mass;
+							<br><b>k10</b> = 0.119;
+							<br><b>k12</b> = 0.112;
+							<br><b>k13</b> = 0.0419;
+							<br><b>k21</b> = 0.055;
+							<br><b>k31</b> = 0.0033;
+							<br><b>ke0</b> = 1.21;
 							<br>
 							<br><b>Schnider</b>
-							<br>vc = 4.27;
-							<br>v2 = 18.9-0.391*(age-53);
-							<br>v3 = 238;
-							<br>cl1 = 1.89+0.0456*(mass-77)-0.0681*(lbm-59)+0.0264*(height-177);
-							<br>cl2 = 1.29-0.024*(age-53); 
-							<br>cl3 = 0.836;
+							<br><b>vc</b> = 4.27;
+							<br><b>v2</b> = 18.9-0.391*(age-53);
+							<br><b>v3</b> = 238;
+							<br><b>cl1</b> = 1.89+0.0456*(mass-77)-0.0681*(lbm-59)+0.0264*(height-177);
+							<br><b>cl2</b> = 1.29-0.024*(age-53); 
+							<br><b>cl3</b> = 0.836;
+							<br><b>ke0</b> = 0.456;
+							<br>where rate constants are:
 							<br>k10 = cl1 / vc;
 							<br>k12 = cl2 / vc;
 							<br>k13 = cl3 / vc;
 							<br>k21 = cl2 / v2;
 							<br>k31 = cl3 / v3;
-							<br>ke0 = 0.456;
 							<br>
 							<br><b>Paedfusor</b>
-							<br>k12 = 0.114;
-							<br>k13 = 0.0419;
-							<br>k21 = 0.055;
-							<br>k31 = 0.0033;
-							<br>ke0 = 1.03*Math.exp(-0.12*age);
+							<br><b>k12</b> = 0.114;
+							<br><b>k13</b> = 0.0419;
+							<br><b>k21</b> = 0.055;
+							<br><b>k31</b> = 0.0033;
+							<br><b>ke0</b> = 1.03*Math.exp(-0.12*age);
 							<br>if (age<13) { vc = 0.458 * mass; k10 = 0.153 * Math.pow(mass, -0.3);}
 							<br>&nbsp;&nbsp;else if (age>=13 && age<14) {vc = 0.4 * mass; k10 = 0.0678;}
 							<br>&nbsp;&nbsp;else if (age>=14 && age<15) {vc = 0.342 * mass; k10 = 0.0792;}	
@@ -1339,18 +1344,62 @@ const xModalsHTML =
 							<br>&nbsp;&nbsp;else if (age>=16) {vc = 0.229 * mass; k10 = 0.119;}
 							<br>
 							<br><b>Eleveld (Propofol)</b>
-							<div class="imageholder">
-								<img src="eleveld1.gif" class="imagecontent" loading="lazy"><img src="eleveld2.gif" class="imagecontent" loading="lazy">
+							<div class='modelboxcontainer'>
+							<div class='modelbox'>
+							<b>vc</b> = 6.28 * fcentral(mass)/fcentral(70);
+							<br><b>v2</b> = 25.5 * mass/70 * fageing(-0.0156);
+							<br>if (opioid == 1) 
+							<br>&nbsp;&nbsp;{<b>v3</b> = 273 * <b>fffm()</b>/ffmref*Math.exp(-0.0138*age)}
+							<br>&nbsp;&nbsp;else {<b>v3</b> = 273 * <b>fffm()</b>/ffmref}
+							<br>if (male)
+							<br>&nbsp;&nbsp;if (opioid == 1)
+							<br>&nbsp;&nbsp;&nbsp;&nbsp;{<b>cl1</b> = 1.79 * Math.pow(mass/70,0.75) * (<b>fclmaturation</b>(PMA)/<b>fclmaturation</b>(35*toweeks+40))* Math.exp(-0.00286*age)}
+							<br>&nbsp;&nbsp;&nbsp;&nbsp;else {<b>cl1</b> = 1.79 * Math.pow(mass/70,0.75) * (<b>fclmaturation</b>(PMA)/<b>fclmaturation</b>(35*toweeks+40))}
+							<br>if (female)
+							<br>&nbsp;&nbsp;if (opioid == 1)
+							<br>&nbsp;&nbsp;&nbsp;&nbsp;{<b>cl1</b> = 2.1 * Math.pow(mass/70,0.75) * (<b>fclmaturation</b>(PMA)/<b>fclmaturation</b>(35*toweeks+40))* Math.exp(-0.00286*age)}
+							<br>&nbsp;&nbsp;&nbsp;&nbsp;else {<b>cl1</b> = 2.1 * Math.pow(mass/70,0.75) * (<b>fclmaturation(PMA)</b>/<b>fclmaturation</b>(35*toweeks+40))}
+							<br><b>cl2</b> = 1.75 * Math.pow(v2/v2ref,0.75)* (1 + 1.3*(1-<b>fq3maturation</b>(age*toweeks)));
+							<br><b>cl3</b> = 1.11 * Math.pow(v3/v3ref,0.75)*(<b>fq3maturation</b>(age*toweeks)/<b>fq3maturation</b>(35*toweeks));
+							<br><b>ke0</b> = 0.146 * Math.pow(mass/70,-0.25); 
+							<br>where constants are defined as: v2ref = 25.5; v3ref = 273; ffmref = (0.88 + (1-0.88)/(1 + Math.pow((35/13.4),-12.7))) * ((9270 * 70)/(6680+216*24.22145)); 
+							<br>where rate constants are:
+							<br>k10 = cl1 / vc;
+							<br>k12 = cl2 / vc;
+							<br>k13 = cl3 / vc;
+							<br>k21 = cl2 / v2;
+							<br>k31 = cl3 / v3;
+							<br>where the mathematical functions for fcentral, fffm, fageing, fclmaturation and fq3maturation are defined as follows:
+							<br>fcentral(x) = fsigmoid(x,33.6,1);
+							<br>fffm() = 0.88 + (1-0.88)/(1 + Math.pow((age/13.4),-12.7))) * ((9270 * mass)/(6680+216*bmi) for males;
+							<br>fffm() = 1.11 + (1-1.11)/(1 + Math.pow((age/7.1),-1.1))) * ((9270 * mass)/(8780+244*bmi) for females;
+							<br>&nbsp;&nbsp;where bmi = mass / Math.pow((height/100),2);
+							<br>fageing(x) = Math.exp(x*(age-35));
+							<br>fclmaturation(x) = fsigmoid(x,42.3,9.06);
+							<br>fq3maturation(x) = fsigmoid(x+40, 68.3, 1);
+							<br>where the sigmoid function fsigmoid is defined as:
+							<br>fsigmoid(x,y,z) = Math.pow(x,z) / (Math.pow(x,z) + Math.pow(y,z));
+							<br>where PMA is post-menstrual age (in weeks) and the constant toweeks is 52.1429 and PMA defaulted to age*toweeks+40 arbitrarily where PMA not specified.
+							<br>other notes: 
+							<br>v3 and cl1 are dependant on the presence and absence of concomitant opioid, as defined by opioid=1 or opioid=0 respectively. 
+							<br>v3 is dependent on ffm, which is in turn dependent on gender. cl1 is dependent on gender.
+							</div>
 							</div>
 							<br>
 							<br><b>Minto</b>
-							<br>vc = 5.1-0.0201*(age-40)+0.072*(lbm-55)
-							<br>v2=9.82-0.0811*(age-40)+0.108*(lbm-55)
-							<br>v3=5.42
-							<br>cl1=2.6-0.0162*(age-40)+0.0191*(lbm-55)
-							<br>cl2=2.05-0.0301*(age-40)
-							<br>cl3=0.076-0.00113*(age-40)
-							<br>ke0=0.595-0.007*(age-40)
+							<br><b>vc</b> = 5.1-0.0201*(age-40)+0.072*(lbm-55)
+							<br><b>v2</b> = 9.82-0.0811*(age-40)+0.108*(lbm-55)
+							<br><b>v3</b> = 5.42
+							<br><b>cl1</b> = 2.6-0.0162*(age-40)+0.0191*(lbm-55)
+							<br><b>cl2</b> = 2.05-0.0301*(age-40)
+							<br><b>cl3</b> = 0.076-0.00113*(age-40)
+							<br>where rate constants are:
+							<br>k10 = cl1 / vc;
+							<br>k12 = cl2 / vc;
+							<br>k13 = cl3 / vc;
+							<br>k21 = cl2 / v2;
+							<br>k31 = cl3 / v3;
+							<br><b>ke0</b> = 0.595-0.007*(age-40)
 							<br>
 							<br><b>Eleveld (Remifentanil)</b>
 							<div class="imageholder">
