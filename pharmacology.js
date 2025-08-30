@@ -5986,9 +5986,10 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].k31 = cl3 / v3;
 
 		//custom ke0 prediction tool to apply PD-Navarette-Dyck to Hannivoort
-		var_coeff = -0.0000314*height - 0.000895;
-		var_const = 0.0002094*height + 0.038875;
+		var_const = 0.036013*Math.log(height) - 0.1103923;
+		var_coeff = -0.00003167*height - 0.00083989;
 		var_ke0 = var_const + var_coeff * Math.log(mass);
+		var_tpeak = -406.5*Math.log(height) + 2804.5;
 		drug_sets[drug_set_index].k41 = var_ke0;
 		//Colin 2017, for MOAA/S : ke0 = 0.0428 (for Dyck)
 		//Colin 2017, for BIS : ke0 = 0.12 (for Dyck)
@@ -5998,9 +5999,10 @@ function readmodel(x, drug_set_index) {
 		//Dyck tpeak 717 for height 170
 		//Dyck tpeak 693 for height 180
 		//Dyck tpeak 672 for height 190
-		//height 160 (tpeak 741): ke0 0.05125 for 35kg, ke0 0.04738 for 70kg, 0.04305 for 140kg
-		//height 170 (tpeak 717): ke0 0.05225 for 35kg, ke0 0.04815 for 70kg, 0.04363 for 140kg
-		//height 180 (tpeak 693): ke0 0.05329 for 35kg, ke0 0.04891 for 70kg, 0.04418 for 140kg
+		//height 150 (tpeak 768): ke0 0.05015 for 35kg, ke0 0.04653 for 70kg, 0.04242 for 150kg
+		//height 160 (tpeak 741): ke0 0.05125 for 35kg, ke0 0.04738 for 70kg, 0.04305 for 140kg, 0.04828 for 60kg
+		//height 170 (tpeak 717): ke0 0.05225 for 35kg, ke0 0.04815 for 70kg, 0.04363 for 140kg, 0.04730 for 80kg
+		//height 180 (tpeak 693): ke0 0.05329 for 35kg, ke0 0.04891 for 70kg, 0.04418 for 140kg, 0.04804 for 80kg
 		//height 190 (tpeak 672): ke0 0.05419 for 35kg, ke0 0.04960 for 70kg, 0.04470 for 140kg
 		var_tpeak = 2804.5 - 406.5*Math.log(height);
 		drug_sets[drug_set_index].drug_name = "Dexmedetomidine";
@@ -6016,7 +6018,7 @@ function readmodel(x, drug_set_index) {
 		"k13 = " + rnd3(drug_sets[drug_set_index].k13) + "<br>" +
 		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
 		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
-		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + "<br>" +
+		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + " (Tpeak " + converttime(var_tpeak) + ")<br>" +
 		"ke0 (MOAA-Sedation scale): from Colin et al (BJA 2017; 119:200-210)";
 
 	}
