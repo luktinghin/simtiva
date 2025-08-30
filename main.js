@@ -872,6 +872,21 @@ function initsubmit() {
 			//need change the following - bolus templates
 			}
 
+		if ((paedi_mode == 0) && (document.getElementById("select_model").value == "Dyck")) {
+			if (document.getElementById("select_dexdilution").value == "custom") {
+				drug_sets[0].infusate_concentration = document.getElementById("dexdilution").innerHTML *1;
+			} else {
+				drug_sets[0].infusate_concentration = document.getElementById("select_dexdilution").value * 1;
+			}
+	  	document.getElementById("drugname").innerHTML = "Dexmedetomidine <span style='opacity:0.5'>(" + drug_sets[drug_sets_index].infusate_concentration + "mcg/ml)</span>";
+	  	document.getElementById("card_retrospective").style.display = "none";
+	  	document.getElementById("card_wakeup").style.display = "none";
+			//} else {
+			//	drug_sets[0].infusate_concentration = document.getElementById("select_alfendilution").value * 1;
+			//}
+			//need change the following - bolus templates
+			}
+
 		if ((paedi_mode == 0) && (document.getElementById("select_model").value == "Kamp")) {
 			if (document.getElementById("select_ketdilution").value == "custom") {
 				drug_sets[0].infusate_concentration = document.getElementById("ketdilution").innerHTML *1;
@@ -2489,7 +2504,7 @@ function toPageTwo() {
 		if (height>0) {El9.innerHTML = El9.innerHTML.concat(", BH: " + height + "cm")} else {};
 		El10.innerHTML = document.getElementById("valRightContainer2").innerHTML;
 		if (paedi_mode == 0) {
-			if (document.getElementById("select_model").value == "Hannivoort") {
+			if ((document.getElementById("select_model").value == "Hannivoort") || (document.getElementById("select_model").value == "Dyck")) {
 				dex_populate_speed();
 				sendToUpdateMaxDex(6);
 				document.getElementById("page2selectmaxratedex").style.display = "block";			
