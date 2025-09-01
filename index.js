@@ -1308,16 +1308,22 @@ const xModalsHTML =
 					<div class="collapsible">Model calculations in details</div>
               			<div class="collapsiblecontent">
               				<b>Marsh</b>
-              				<br><b>vc</b> = 0.228 * mass;
+              				<div class='modelboxcontainer'>
+              				<div class='modelbox'>
+              				<b>vc</b> = 0.228 * mass;
 							<br><b>k10</b> = 0.119;
 							<br><b>k12</b> = 0.112;
 							<br><b>k13</b> = 0.0419;
 							<br><b>k21</b> = 0.055;
 							<br><b>k31</b> = 0.0033;
 							<br><b>ke0</b> = 1.21;
+							</div>
+							</div>
 							<br>
 							<br><b>Schnider</b>
-							<br><b>vc</b> = 4.27;
+							<div class='modelboxcontainer'>
+							<div class='modelbox'>
+							<b>vc</b> = 4.27;
 							<br><b>v2</b> = 18.9-0.391*(age-53);
 							<br><b>v3</b> = 238;
 							<br><b>cl1</b> = 1.89+0.0456*(mass-77)-0.0681*(lbm-59)+0.0264*(height-177);
@@ -1330,9 +1336,13 @@ const xModalsHTML =
 							<br>k13 = cl3 / vc;
 							<br>k21 = cl2 / v2;
 							<br>k31 = cl3 / v3;
+							</div>
+							</div>
 							<br>
 							<br><b>Paedfusor</b>
-							<br><b>k12</b> = 0.114;
+							<div class='modelboxcontainer'>
+							<div class='modelbox'>
+							<b>k12</b> = 0.114;
 							<br><b>k13</b> = 0.0419;
 							<br><b>k21</b> = 0.055;
 							<br><b>k31</b> = 0.0033;
@@ -1342,9 +1352,11 @@ const xModalsHTML =
 							<br>&nbsp;&nbsp;else if (age>=14 && age<15) {vc = 0.342 * mass; k10 = 0.0792;}	
 							<br>&nbsp;&nbsp;else if (age>=15 && age<16) {vc = 0.284 * mass;	k10 = 0.0954;}
 							<br>&nbsp;&nbsp;else if (age>=16) {vc = 0.229 * mass; k10 = 0.119;}
+							</div>
+							</div>
 							<br>
 							<br><b>Eleveld (Propofol)</b>
-							<div class='modelboxcontainer'>
+							<div class='modelboxcontainer wide'>
 							<div class='modelbox'>
 							<b>vc</b> = 6.28 * fcentral(mass)/fcentral(70);
 							<br><b>v2</b> = 25.5 * mass/70 * fageing(-0.0156);
@@ -1387,7 +1399,9 @@ const xModalsHTML =
 							</div>
 							<br>
 							<br><b>Minto</b>
-							<br><b>vc</b> = 5.1-0.0201*(age-40)+0.072*(lbm-55)
+							<div class='modelboxcontainer'>
+							<div class='modelbox'>
+							<b>vc</b> = 5.1-0.0201*(age-40)+0.072*(lbm-55)
 							<br><b>v2</b> = 9.82-0.0811*(age-40)+0.108*(lbm-55)
 							<br><b>v3</b> = 5.42
 							<br><b>cl1</b> = 2.6-0.0162*(age-40)+0.0191*(lbm-55)
@@ -1400,10 +1414,29 @@ const xModalsHTML =
 							<br>k21 = cl2 / v2;
 							<br>k31 = cl3 / v3;
 							<br><b>ke0</b> = 0.595-0.007*(age-40)
+							</div>
+							</div>
 							<br>
 							<br><b>Eleveld (Remifentanil)</b>
-							<div class="imageholder">
-								<img src="eleveld-r.png" class="imagecontent" loading="lazy">
+							<div class='modelboxcontainer wide'>
+							<div class='modelbox'>
+							<b>vc</b> = 5.81 * size * fageing(-0.00554);
+							<br><b>v2</b> = 8.82 * size * fageing(-0.00327) * ksex;
+							<br><b>v3</b> = 5.03 * size * fageing(-0.0315) * Math.exp((-0.026)*(mass-70));
+							<br><b>cl1</b> = 2.58 * Math.pow(size,0.75) * (fsigmoid(mass,2.88,2)/fsigmoid(70,2.88,2)) * ksex * fageing(-0.00327);
+							<br><b>cl2</b> = 1.72 * Math.pow(v2/8.82,0.75) * fageing(-0.00554) * ksex;
+							<br><b>cl3</b> = 0.124 * Math.pow(v3/5.03,0.75) * fageing(-0.00554);
+							<br><b>ke0</b> = 1.09 * fageing(-0.0289);
+							<br>where the custom variable size is defined as [fffm()/ffmref] and the custom constant ksex is defined as: 
+							<br>if (male) {
+							<br>&nbsp;&nbsp;ksex = 1;
+							<br>} else {
+							<br>&nbsp;&nbsp;ksex = 1 + 0.47 * fsigmoid(age,12,6) * (1 - fsigmoid(age,45,6));
+							<br>}
+							<br>and where the constant ffmref, and the custom functions: fffm(), fageing, fsigmoid are defined in the same way as the Eleveld-Propofol model above.
+							<br>
+		}
+							</div>
 							</div>
               			</div>
 					<div style="padding-top:1rem; text-align:center">

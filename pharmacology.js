@@ -5878,12 +5878,7 @@ function readmodel(x, drug_set_index) {
 		cl1 = 2.58 * Math.pow(size,0.75) * (fsigmoid(mass,2.88,2)/fsigmoid(70,2.88,2)) * ksex * fageing(-0.00327);
 		cl2 = 1.72 * Math.pow(v2/8.82,0.75) * fageing(-0.00554) * ksex;
 		cl3 = 0.124 * Math.pow(v3/5.03,0.75) * fageing(-0.00554);
-
-		if (age<=16) {
-			drug_sets[drug_set_index].k41 = 0.71; // pharmacodynamic modelling of bispectral index response to propofol-based anaesthesia during general surgery in children Jeleazcov 2008 BJA
-		} else {
-			drug_sets[drug_set_index].k41 = 1.09 * fageing(-0.0289);
-		}
+		drug_sets[drug_set_index].k41 = 1.09 * fageing(-0.0289);
 
 		drug_sets[drug_set_index].k10 = cl1 / drug_sets[drug_set_index].vc;
 		drug_sets[drug_set_index].k12 = cl2 / drug_sets[drug_set_index].vc;
@@ -5908,11 +5903,6 @@ function readmodel(x, drug_set_index) {
 		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
 		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
 		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + "<br>";
-
-		if (age<=16) {
-			drug_sets[drug_set_index].modeltext = drug_sets[drug_set_index].modeltext + 
-			"ke0 in children 1-16y is 0.71min-1 and t1/2ke0 is 1.0min, according to Jeleazcov (BJA 2008;100:509-516)";
-		}
 	}
 	if (x == "Shafer") {
 		drug_sets[drug_set_index].vc = 6.09;

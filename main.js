@@ -987,8 +987,12 @@ function initsubmit() {
 			validateText = validateText.concat("Invalid body weight (accepted range >0 to <200kg)" + "<br>");
 			document.getElementById("inputBW").value = "";
 		}
-		if ((height<=0 || height>=250) && (ElModel.value=="Schnider" || ElModel.value=="Eleveld")) {
-			validateText = validateText.concat("Invalid body height (accepted range >0 to <250cm)" + "<br>");
+		if ((height<=0 || height>=250) && (ElModel.value=="Schnider" || ElModel.value=="Eleveld" || ElModel.value=="Hannivoort")) {
+			if (ElModel.value=="Hannivoort") {
+				validateText = validateText.concat("Invalid body height (accepted range >0 to <250cm). Remarks: body height is not required for Hannivoort model itself but used for ke0 calculations as the ke0 is predicted using Tpeak method from Navarette-Dyck model." + "<br>");	
+			} else {
+				validateText = validateText.concat("Invalid body height (accepted range >0 to <250cm)" + "<br>");	
+			}
 			document.getElementById("inputBH").value = "";
 		}
 		if (age<12 && (ElModel.value=="Marsh" || ElModel.value=="Schnider" || ElModel.value=="Minto" || ElModel.value=="Shafer" || ElModel.value=="Maitre")) {
@@ -2093,7 +2097,7 @@ function switchpaedimode(arg) {
 				document.getElementById("row_remidilution").style.display = "none";
 				document.getElementById("row_fendilution").style.display = "none";
 				document.getElementById("row_alfendilution").style.display = "none";	
-				document.getElementById("row_height").style.display = "none";
+				document.getElementById("row_height").style.display = "table-row";
 				document.getElementById("row_dexdilution").style.display = "table-row";
 				document.getElementById("row_ketdilution").style.display = "none";
 			}
@@ -2298,7 +2302,7 @@ function sendToValidate(arg) {
 		}
 		if (document.getElementById("select_model").value === "Hannivoort") {
 			document.getElementById("row_gender").style.display = "none";
-			document.getElementById("row_height").style.display = "none";
+			document.getElementById("row_height").style.display = "table-row";
 			document.getElementById("row_dexdilution").style.display = "table-row";
 		} else {
 			document.getElementById("row_dexdilution").style.display = "none";
