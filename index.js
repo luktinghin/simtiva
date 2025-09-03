@@ -1319,7 +1319,6 @@ const xModalsHTML =
 							<br><b>ke0</b> = 1.21;
 							</div>
 							</div>
-							<br>
 							<br><b>Schnider</b>
 							<div class='modelboxcontainer'>
 							<div class='modelbox'>
@@ -1338,7 +1337,6 @@ const xModalsHTML =
 							<br>k31 = cl3 / v3;
 							</div>
 							</div>
-							<br>
 							<br><b>Paedfusor</b>
 							<div class='modelboxcontainer'>
 							<div class='modelbox'>
@@ -1354,7 +1352,6 @@ const xModalsHTML =
 							<br>&nbsp;&nbsp;else if (age>=16) {vc = 0.229 * mass; k10 = 0.119;}
 							</div>
 							</div>
-							<br>
 							<br><b>Eleveld (Propofol)</b>
 							<div class='modelboxcontainer wide'>
 							<div class='modelbox'>
@@ -1397,7 +1394,6 @@ const xModalsHTML =
 							<br>v3 is dependent on ffm, which is in turn dependent on gender. cl1 is dependent on gender.
 							</div>
 							</div>
-							<br>
 							<br><b>Minto</b>
 							<div class='modelboxcontainer'>
 							<div class='modelbox'>
@@ -1416,7 +1412,6 @@ const xModalsHTML =
 							<br><b>ke0</b> = 0.595-0.007*(age-40)
 							</div>
 							</div>
-							<br>
 							<br><b>Eleveld (Remifentanil)</b>
 							<div class='modelboxcontainer wide'>
 							<div class='modelbox'>
