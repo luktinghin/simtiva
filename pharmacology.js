@@ -1229,16 +1229,16 @@ function preview_cpt(x,ind) {
 		}
 	} else if (drug_sets[ind].drug_name == "Ketamine") {
 		if (cpt_threshold_auto == 1) {
-			if (drug_sets[ind].cpt_rates[5]*360 > 10) {
+			if (drug_sets[ind].cpt_rates[5]*360 > 5) {
 				cpt_threshold = 0.15;
-				cpt_avgfactor = 0.5;
+				cpt_avgfactor = 0.52;
 			} else {
 				cpt_threshold = 0.1;
 				cpt_avgfactor = 0.65;
 			}
 		} else if (optionsarray[2][1] == 1) { //lazy
 				cpt_threshold = 0.15;
-				cpt_avgfactor = 0.5;
+				cpt_avgfactor = 0.52;
 		} else if (optionsarray[2][2] == 1) { //accurate
 				cpt_threshold = 0.1;
 				cpt_avgfactor = 0.65;
@@ -2137,16 +2137,16 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		}
 	} else if (drug_sets[ind].drug_name == "Ketamine") {
 		if (cpt_threshold_auto == 1) {
-			if (drug_sets[ind].cpt_rates[5]*360 > 10) {
+			if (drug_sets[ind].cpt_rates[5]*360 > 5) {
 				cpt_threshold = 0.15;
-				cpt_avgfactor = 0.5;
+				cpt_avgfactor = 0.52;
 			} else {
 				cpt_threshold = 0.1;
 				cpt_avgfactor = 0.65;
 			}
 		} else if (optionsarray[2][1] == 1) { //lazy
 				cpt_threshold = 0.15;
-				cpt_avgfactor = 0.5;
+				cpt_avgfactor = 0.52;
 		} else if (optionsarray[2][2] == 1) { //accurate
 				cpt_threshold = 0.1;
 				cpt_avgfactor = 0.65;
@@ -3284,16 +3284,16 @@ function preview_cet(x,ind) {
 				}
 			} else if (drug_sets[ind].drug_name == "Ketamine") {
 				if (cpt_threshold_auto == 1) {
-					if (drug_sets[ind].cpt_rates[5]*360 > 10) {
+					if (drug_sets[ind].cpt_rates[5]*360 > 5) {
 						cpt_threshold = 0.15;
-						cpt_avgfactor = 0.5;
+						cpt_avgfactor = 0.52;
 					} else {
 						cpt_threshold = 0.1;
 						cpt_avgfactor = 0.65;
 					}
 				} else if (optionsarray[2][1] == 1) { //lazy
 						cpt_threshold = 0.15;
-						cpt_avgfactor = 0.5;
+						cpt_avgfactor = 0.52;
 				} else if (optionsarray[2][2] == 1) { //accurate
 						cpt_threshold = 0.1;
 						cpt_avgfactor = 0.65;
