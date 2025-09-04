@@ -176,10 +176,13 @@ table {
 .modelboxcontainer {
   overflow-x:auto;
   background:rgb(128,128,128,0.1);
+  border:1px solid rgb(128,128,128,0.2);
+  padding:2px;
+  border-radius:9px;
   font-size:0.8rem;
 }
 
-.modelbox {
+.modelboxcontainer.wide .modelbox {
   min-width:600px;
 }
 

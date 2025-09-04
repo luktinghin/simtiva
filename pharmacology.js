@@ -1229,16 +1229,16 @@ function preview_cpt(x,ind) {
 		}
 	} else if (drug_sets[ind].drug_name == "Ketamine") {
 		if (cpt_threshold_auto == 1) {
-			if (drug_sets[ind].cpt_rates[5]*360 > 10) {
+			if (drug_sets[ind].cpt_rates[5]*360 > 5) {
 				cpt_threshold = 0.15;
-				cpt_avgfactor = 0.5;
+				cpt_avgfactor = 0.52;
 			} else {
 				cpt_threshold = 0.1;
 				cpt_avgfactor = 0.65;
 			}
 		} else if (optionsarray[2][1] == 1) { //lazy
 				cpt_threshold = 0.15;
-				cpt_avgfactor = 0.5;
+				cpt_avgfactor = 0.52;
 		} else if (optionsarray[2][2] == 1) { //accurate
 				cpt_threshold = 0.1;
 				cpt_avgfactor = 0.65;
@@ -2137,16 +2137,16 @@ function deliver_cpt(x, effect_flag, compensation, ind, continuation_fen_weighta
 		}
 	} else if (drug_sets[ind].drug_name == "Ketamine") {
 		if (cpt_threshold_auto == 1) {
-			if (drug_sets[ind].cpt_rates[5]*360 > 10) {
+			if (drug_sets[ind].cpt_rates[5]*360 > 5) {
 				cpt_threshold = 0.15;
-				cpt_avgfactor = 0.5;
+				cpt_avgfactor = 0.52;
 			} else {
 				cpt_threshold = 0.1;
 				cpt_avgfactor = 0.65;
 			}
 		} else if (optionsarray[2][1] == 1) { //lazy
 				cpt_threshold = 0.15;
-				cpt_avgfactor = 0.5;
+				cpt_avgfactor = 0.52;
 		} else if (optionsarray[2][2] == 1) { //accurate
 				cpt_threshold = 0.1;
 				cpt_avgfactor = 0.65;
@@ -3076,11 +3076,11 @@ function preview_cet(x,ind) {
 				if (drug_sets[ind].cpt_rates_real.length > 0) {
 					drug_sets[ind].preview_bolus = trial_rate;
 				}
-				if (mass>15)  {
-					drug_sets[ind].preview_bolus = Math.ceil(drug_sets[ind].preview_bolus/5)*5
-				} else {
-					drug_sets[ind].preview_bolus = Math.ceil(drug_sets[ind].preview_bolus)
-				}; // round up to the next 5mg bolus if bw big 
+				//if (mass>15)  {
+				//	drug_sets[ind].preview_bolus = Math.ceil(drug_sets[ind].preview_bolus/5)*5
+				//} else {
+					drug_sets[ind].preview_bolus = Math.ceil(drug_sets[ind].preview_bolus);
+				//}; // round up to the next 5mg bolus if bw big 
 
 				preview_cetpause = temp_peak;
 				console.log(temp1e + " " + temp2e + " " + temp3e + " " + temp4e);
@@ -3284,16 +3284,16 @@ function preview_cet(x,ind) {
 				}
 			} else if (drug_sets[ind].drug_name == "Ketamine") {
 				if (cpt_threshold_auto == 1) {
-					if (drug_sets[ind].cpt_rates[5]*360 > 10) {
+					if (drug_sets[ind].cpt_rates[5]*360 > 5) {
 						cpt_threshold = 0.15;
-						cpt_avgfactor = 0.5;
+						cpt_avgfactor = 0.52;
 					} else {
 						cpt_threshold = 0.1;
 						cpt_avgfactor = 0.65;
 					}
 				} else if (optionsarray[2][1] == 1) { //lazy
 						cpt_threshold = 0.15;
-						cpt_avgfactor = 0.5;
+						cpt_avgfactor = 0.52;
 				} else if (optionsarray[2][2] == 1) { //accurate
 						cpt_threshold = 0.1;
 						cpt_avgfactor = 0.65;
@@ -3827,11 +3827,11 @@ function deliver_cet_real(x, ind) {
 				if (drug_sets[ind].cpt_rates_real.length > 0) {
 					drug_sets[ind].cet_bolus = trial_rate;
 				}
-				if (mass>15)  {
-					drug_sets[ind].cet_bolus = Math.ceil(drug_sets[ind].cet_bolus/5)*5
-				} else {
-					drug_sets[ind].cet_bolus = Math.ceil(drug_sets[ind].cet_bolus)
-				}; // round up to the next 5mg bolus if bw big 
+				//if (mass>15)  {
+				//	drug_sets[ind].cet_bolus = Math.ceil(drug_sets[ind].cet_bolus/5)*5
+				//} else {
+					drug_sets[ind].cet_bolus = Math.ceil(drug_sets[ind].cet_bolus);
+				//}; // round up to the next 5mg bolus if bw big 
 
 				bolusadmin(drug_sets[ind].cet_bolus,ind,max_rate_input);
 				
@@ -5697,22 +5697,46 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].k13 = 0.0419;
 		drug_sets[drug_set_index].k21 = 0.055;
 		drug_sets[drug_set_index].k31 = 0.0033;
-		drug_sets[drug_set_index].k41 = 1.03*Math.exp(-0.12*age); //Pharmacodynamic modelling of the bispectral index response to propofol-based anaesthesia during general surgery in children C. Jeleazcov, H. Ihmsen, J. Schmidt, C. Ammon, H. Schwilden, J. Schüttler, J. Fechner Author Notes BJA: British Journal of Anaesthesia, Volume 100, Issue 4, April 2008, Pages 509–516, https://doi.org/10.1093/bja/aem408
+		//drug_sets[drug_set_index].k41 = 1.03*Math.exp(-0.12*age); 
+		//Pharmacodynamic modelling of the bispectral index response to propofol-based anaesthesia during general surgery in children C. Jeleazcov, H. Ihmsen, J. Schmidt, C. Ammon, H. Schwilden, J. Schüttler, J. Fechner Author Notes BJA: British Journal of Anaesthesia, Volume 100, Issue 4, April 2008, Pages 509–516, https://doi.org/10.1093/bja/aem408
+		//tpeak formula tpeak = 0.14*age + 2.08
+		var_tpeak = converttime(Math.round((0.14*age + 2.08)*60));
 		if (age<13) {
-			drug_sets[drug_set_index].vc = 0.458 * mass;
-			drug_sets[drug_set_index].k10 = 0.153 * Math.pow(mass, -0.3);
+			drug_sets[drug_set_index].vc = 0.4584 * mass;
+			drug_sets[drug_set_index].k10 = 0.1527 * Math.pow(mass, -0.3);
+			var_const = 0.7751*Math.exp(-0.099*age);
+			drug_sets[drug_set_index].k41 = 0.0351 * Math.log(mass) + var_const;
+			//tpeak figures from study used to generate ke0 values from SimTIVA
+			//ke0 0.381 for 11yo 30kg, 0.385 for 35kg, 0.39 for 40kg -> tpeak 217
+			//ke0 0.408 for 10yo 30kg, 0.402 for 25kg, 0.411 for 35kg -> tpeak 209
+			//ke0 0.438 for 9yo 30kg, 0.434 for 25kg, 0.441 for 35kg -> tpeak 200
+			//ke0 0.458 for 8yo 20kg, 0.466 for 25kg, 0.47 for 30kg -> tpeak 192
+			//ke0 0.483 for 7yo 15kg,  0.468 for 10kg, 0.489 for 20kg -> tpeak 184
+			//ke0 0.525 for 6yo 15kg, 0.51 for 10kg, 0.535 for 20kg -> tpeak 175 
+			//ke0 0.565 for 5yo 15kg, 0.550 for 10kg, 0.575 for 20kg -> tpeak 167
+			//ke0 0.62 for 4yo 15kg, 0.60 for 10kg, 0.63 for 20kg -> tpeak 158
+			//ke0 0.675 for 3yo 15kg, 0.655 for 10kg, 0.685 for 20kg -> tpeak 150
+			
 		} else if (age>=13 && age<14) {
 			drug_sets[drug_set_index].vc = 0.4 * mass;
 			drug_sets[drug_set_index].k10 = 0.0678;	
+			drug_sets[drug_set_index].k41 = 0.319;
+			//ke0 0.319 -> tpeak 234; fixed because k10 fixed
 		} else if (age>=14 && age<15) {
 			drug_sets[drug_set_index].vc = 0.342 * mass;
-			drug_sets[drug_set_index].k10 = 0.0792;		
+			drug_sets[drug_set_index].k10 = 0.0792;	
+			drug_sets[drug_set_index].k41 = 0.286;	
+			//tpeak 242
 		} else if (age>=15 && age<16) {
 			drug_sets[drug_set_index].vc = 0.284 * mass;
 			drug_sets[drug_set_index].k10 = 0.0954;	
+			drug_sets[drug_set_index].k41 = 0.251;
+			//tpeak 251	
 		} else if (age>=16) {
 			drug_sets[drug_set_index].vc = 0.229 * mass;
 			drug_sets[drug_set_index].k10 = 0.119;		
+			drug_sets[drug_set_index].k41 = 1.21;
+			//=modified Marsh
 		}
 		drug_sets[drug_set_index].modeltext = "Paedfusor model (BJA 2003;91(4)507-513)" + "<br>" +
 		"vc = " + rnd3(drug_sets[drug_set_index].vc) + "<br>" +
@@ -5721,8 +5745,8 @@ function readmodel(x, drug_set_index) {
 		"k13 = " + rnd3(drug_sets[drug_set_index].k13) + "<br>" +
 		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
 		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
-		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + "<br>" +
-		"ke0 calculated by Tpeak method (age-dependent: 0.91min-1 at 1y to 0.15min-1 at 16y) (BJA 2008;100(4):509-516)";
+		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + " (Tpeak = " + var_tpeak + ")<br>" +
+		"ke0 calculated by Tpeak method (age-dependent) and converted for use for Paedfusor model (BJA 2008;100(4):509-516)";
 
 		drug_sets[drug_set_index].drug_name = "Propofol";
 		drug_sets[drug_set_index].conc_units = "mcg";
@@ -5854,12 +5878,7 @@ function readmodel(x, drug_set_index) {
 		cl1 = 2.58 * Math.pow(size,0.75) * (fsigmoid(mass,2.88,2)/fsigmoid(70,2.88,2)) * ksex * fageing(-0.00327);
 		cl2 = 1.72 * Math.pow(v2/8.82,0.75) * fageing(-0.00554) * ksex;
 		cl3 = 0.124 * Math.pow(v3/5.03,0.75) * fageing(-0.00554);
-
-		if (age<=16) {
-			drug_sets[drug_set_index].k41 = 0.71; // pharmacodynamic modelling of bispectral index response to propofol-based anaesthesia during general surgery in children Jeleazcov 2008 BJA
-		} else {
-			drug_sets[drug_set_index].k41 = 1.09 * fageing(-0.0289);
-		}
+		drug_sets[drug_set_index].k41 = 1.09 * fageing(-0.0289);
 
 		drug_sets[drug_set_index].k10 = cl1 / drug_sets[drug_set_index].vc;
 		drug_sets[drug_set_index].k12 = cl2 / drug_sets[drug_set_index].vc;
@@ -5884,11 +5903,6 @@ function readmodel(x, drug_set_index) {
 		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
 		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
 		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + "<br>";
-
-		if (age<=16) {
-			drug_sets[drug_set_index].modeltext = drug_sets[drug_set_index].modeltext + 
-			"ke0 in children 1-16y is 0.71min-1 and t1/2ke0 is 1.0min, according to Jeleazcov (BJA 2008;100:509-516)";
-		}
 	}
 	if (x == "Shafer") {
 		drug_sets[drug_set_index].vc = 6.09;
@@ -5960,9 +5974,27 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].k13 = cl3 / drug_sets[drug_set_index].vc;
 		drug_sets[drug_set_index].k21 = cl2 / v2;
 		drug_sets[drug_set_index].k31 = cl3 / v3;
-		drug_sets[drug_set_index].k41 = 0.0428;
-		//Colin 2017, for MOAA/S : ke0 = 0.0428
-		//Colin 2017, for BIS : ke0 = 0.12
+
+		//custom ke0 prediction tool to apply PD-Navarette-Dyck to Hannivoort
+		var_const = 0.036013*Math.log(height) - 0.1103923;
+		var_coeff = -0.00003167*height - 0.00083989;
+		var_ke0 = var_const + var_coeff * Math.log(mass);
+		var_tpeak = -406.5*Math.log(height) + 2804.5;
+		drug_sets[drug_set_index].k41 = var_ke0;
+		//Colin 2017, for MOAA/S : ke0 = 0.0428 (for Dyck)
+		//Colin 2017, for BIS : ke0 = 0.12 (for Dyck)
+		//ke0 0.0428 for Navarette-Dyck->
+		//Dyck tpeak 768 for height 150
+		//Dyck tpeak 741 for height 160
+		//Dyck tpeak 717 for height 170
+		//Dyck tpeak 693 for height 180
+		//Dyck tpeak 672 for height 190
+		//height 150 (tpeak 768): ke0 0.05015 for 35kg, ke0 0.04653 for 70kg, 0.04242 for 150kg
+		//height 160 (tpeak 741): ke0 0.05125 for 35kg, ke0 0.04738 for 70kg, 0.04305 for 140kg, 0.04828 for 60kg
+		//height 170 (tpeak 717): ke0 0.05225 for 35kg, ke0 0.04815 for 70kg, 0.04363 for 140kg, 0.04730 for 80kg
+		//height 180 (tpeak 693): ke0 0.05329 for 35kg, ke0 0.04891 for 70kg, 0.04418 for 140kg, 0.04804 for 80kg
+		//height 190 (tpeak 672): ke0 0.05419 for 35kg, ke0 0.04960 for 70kg, 0.04470 for 140kg
+		var_tpeak = 2804.5 - 406.5*Math.log(height);
 		drug_sets[drug_set_index].drug_name = "Dexmedetomidine";
 		drug_sets[drug_set_index].conc_units = "ng";
 		drug_sets[drug_set_index].infused_units = "mcg";
@@ -5976,15 +6008,9 @@ function readmodel(x, drug_set_index) {
 		"k13 = " + rnd3(drug_sets[drug_set_index].k13) + "<br>" +
 		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
 		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
-		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + "<br>" +
+		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + " (Tpeak " + converttime(var_tpeak) + ")<br>" +
 		"ke0 (MOAA-Sedation scale): from Colin et al (BJA 2017; 119:200-210)";
-		console.log("Dex");
-		console.log(drug_sets[drug_set_index].vc);
-		console.log(v2);
-		console.log(v3);
-		console.log(cl1);
-		console.log(cl2);
-		console.log(cl3);
+
 	}
 	if (x == "Kamp") {
 		//from Kamp, Anaesthesiology 2020; DOI 10.1097/ALN.0000000000003577
@@ -6001,7 +6027,21 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].vc = 25 * mass/70 ;
 		v2 = 56 * mass/70 ;
 		v3 = 157 * mass/70 ;
-		drug_sets[drug_set_index].k41 = 0.238;
+
+		//alternative KE0 testing
+		//drug_sets[drug_set_index].k41 = 1.39;
+		//ke0 1.39 for bw 70kg
+		//drug_sets[drug_set_index].k41 = 1.26;
+		//ke0 1.26 for bw 35kg
+		//drug_sets[drug_set_index].k41 = 1.52;
+		//ke0 1.52 for 140kg
+		//ke0 of 1.39 matches peak_time of 96s for KE0-Domino - for 70kg.
+
+		drug_sets[drug_set_index].k41 = 0.1876 * Math.log(mass) + 0.5932;;
+
+		//drug_sets[drug_set_index].k41 = 0.238;
+		//ke0 0.238 for domino equals peak time of 1.6
+
 		//from Navarette, JCMC, 2025; doi 10.1007/s10877-024-01240-4 
 		drug_sets[drug_set_index].k10 = cl1 / drug_sets[drug_set_index].vc ;
 		drug_sets[drug_set_index].k12 = cl2 / drug_sets[drug_set_index].vc ;
@@ -6015,8 +6055,67 @@ function readmodel(x, drug_set_index) {
 		"k13 = " + rnd3(drug_sets[drug_set_index].k13) + "<br>" +
 		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
 		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
+		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + " (Tpeak 1.6min) <br>" +
+		"ke0 based on analgesia nociception index from Navarette, applied to Kamp model using Tpeak method (J Clin Monit Comput 2025;39(2):349-354)";
+	}
+	if (x == "Domino") {
+		//from ...
+		drug_sets[drug_set_index].drug_name = "Ketamine";
+		drug_sets[drug_set_index].conc_units = "ng";
+		drug_sets[drug_set_index].infused_units = "mg";
+		drug_sets[drug_set_index].inf_rate_permass_factor = 1;
+		drug_sets[drug_set_index].inf_rate_permass_unit = "mg/kg/h";
+		drug_sets[drug_set_index].inf_rate_permass_dp = 100;
+		
+		drug_sets[drug_set_index].vc = 0.063 * mass;
+		drug_sets[drug_set_index].k10 = 0.4381;
+		drug_sets[drug_set_index].k12 = 0.5921;
+		drug_sets[drug_set_index].k13 = 0.59;
+		drug_sets[drug_set_index].k21 = 0.247;
+		drug_sets[drug_set_index].k31 = 0.0146;
+		drug_sets[drug_set_index].k41 = 0.238;
+		//from Navarette, JCMC, 2025; doi 10.1007/s10877-024-01240-4 
+
+		drug_sets[drug_set_index].modeltext = "Domino model (...)" +
+		"vc = " + rnd3(drug_sets[drug_set_index].vc) + "<br>" +
+		"k10 = " + rnd3(drug_sets[drug_set_index].k10) + "<br>" + 
+		"k12 = " + rnd3(drug_sets[drug_set_index].k12) + "<br>" +
+		"k13 = " + rnd3(drug_sets[drug_set_index].k13) + "<br>" +
+		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
+		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
 		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + "<br>" +
 		"ke0 (analgesia nociception index) from Navarette (J Clin Monit Comput 2025;39(2):349-354)";
+	}
+	if (x == "Dyck") {
+		drug_sets[drug_set_index].vc = 7.99;
+		v2 = 13.8;
+		v3 = 187;
+		cl1 = 0.00791*height - 0.927;
+		cl2 = 2.26;
+		cl3 = 1.99;
+		drug_sets[drug_set_index].k10 = cl1 / drug_sets[drug_set_index].vc;
+		drug_sets[drug_set_index].k12 = cl2 / drug_sets[drug_set_index].vc;
+		drug_sets[drug_set_index].k13 = cl3 / drug_sets[drug_set_index].vc;
+		drug_sets[drug_set_index].k21 = cl2 / v2;
+		drug_sets[drug_set_index].k31 = cl3 / v3;
+		drug_sets[drug_set_index].k41 = 0.0428;
+		//Colin 2017, for MOAA/S : ke0 = 0.0428
+		//Colin 2017, for BIS : ke0 = 0.12
+		drug_sets[drug_set_index].drug_name = "Dexmedetomidine";
+		drug_sets[drug_set_index].conc_units = "ng";
+		drug_sets[drug_set_index].infused_units = "mcg";
+		drug_sets[drug_set_index].inf_rate_permass_factor = 1;
+		drug_sets[drug_set_index].inf_rate_permass_unit = "mcg/kg/h";
+		drug_sets[drug_set_index].inf_rate_permass_dp = 100;
+		drug_sets[drug_set_index].modeltext = "Dyck model (...)" + "<br>" +
+		"vc = " + rnd3(drug_sets[drug_set_index].vc) + "<br>" +
+		"k10 = " + rnd3(drug_sets[drug_set_index].k10) + "<br>" + 
+		"k12 = " + rnd3(drug_sets[drug_set_index].k12) + "<br>" +
+		"k13 = " + rnd3(drug_sets[drug_set_index].k13) + "<br>" +
+		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
+		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
+		"ke0 = " + rnd3(drug_sets[drug_set_index].k41) + "<br>" +
+		"ke0 (MOAA-Sedation scale): from Colin et al (BJA 2017; 119:200-210)";
 	}
 	/*
 	if (x == "Shafer (Weight adjusted)") {
