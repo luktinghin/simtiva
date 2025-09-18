@@ -4857,7 +4857,7 @@ body.dark #cornerblock2:after {
 @media (max-height:480px) and (min-width:768px) {
   /*wide screen phone with reduced height, e.g. landscape*/
   #controlpanel {
-    margin-top:10px;
+    margin-top:16px;
     padding-top:80px;
   }
   #parallax1container {
@@ -5353,8 +5353,8 @@ body.dark #chart2wrapper {
   }
   #parallax1container {
     box-shadow:0px 6px 6px -5px rgb(0 0 0 / 15%);
-    border-radius: 9px 0 0 0;
-    background:#fff;
+    border-radius: 16px 0 0 0;
+    background:#eee;
     width:calc(50% - 50px);
     height:95px;
     border-bottom:2px solid #ddd;
@@ -5387,8 +5387,8 @@ body.dark #chart2wrapper {
     padding-right:0;
     padding-left:0.5rem;
     padding-top:0.5rem;
-    border-radius: 0 9px 0 0 ;
-    background:#fff;
+    border-radius: 0 16px 0 0 ;
+    background:#eee;
     height:95px;
     box-shadow:0px 6px 6px -5px rgb(0 0 0 / 15%);
     border-bottom:2px solid #ddd;
