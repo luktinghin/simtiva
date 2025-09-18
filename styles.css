@@ -852,12 +852,10 @@ body.dark .ring {
 
 #modalInitial, #modalLoad {
   padding-top: 5vw; /*this is deliberate to make the top, left, right paddings the same*/
-  /*background: radial-gradient(circle at -50px -50px, #7b8092 0%, #000000 180%);*/
-  background-color:  #000;
+  background-color:  #222;
 }
 
 body.dark #modalInitial, body.dark #modalLoad {
-  background:radial-gradient(circle at -50% -80%, #7b8092 0%, #000000 110%);
   background-color: #222
 }
 
@@ -4678,7 +4676,7 @@ body.dark #preview-expand-box > div > div.timespan {
 }
 
 #logo {
-  position:fixed;width:100%;left:0;bottom:63px;z-index:91;
+  position:fixed;width:100%;left:0;bottom:63px;z-index:91;color:#333;
 }
 
 #logo2 {
@@ -5407,14 +5405,14 @@ body.dark #chart2wrapper {
     width: calc(100% - 100px - 1rem);
     padding-left: 0;
     margin-left: calc(100px + 0.5rem);
-    background: #7B8092;
+    background: #000;
   }
 
   .narrowbodywrapper>#parallax2 {
     width: calc(100% - 100px - 0.5rem);
     margin-left: calc(100px + 0.5rem);
     padding-left: 0;
-    background: #7B8092;
+    background: #000;
   }
 
   .narrowbodywrapper>#controlpanel {
