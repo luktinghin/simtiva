@@ -228,7 +228,8 @@ td { padding: 4px 0px 4px 2px; border-top: 1px solid #ccc;}
 select {
   height: 30px;
   border: 1px solid #aaa;
-  margin: 2px 0px 2px 0px; padding:0px; 
+  margin: 2px 0px 2px 0px; 
+  padding:0px 2px; 
   outline: none;
   vertical-align:bottom;
   border-radius:4px;
