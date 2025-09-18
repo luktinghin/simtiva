@@ -5075,7 +5075,6 @@ body.dark .modal-header.alt {
 body.dark #controlpanel {
   background: #222;
   border: 1px solid #666;
-  border-bottom:0;
 }
 
 body.dark td {
