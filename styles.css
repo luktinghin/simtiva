@@ -3219,7 +3219,7 @@ body.dark .modal-body a.button_paedimode:hover {
   background:#000;
   position:fixed;
   z-index:10;
-  padding-top:16px;
+  padding-top:calc(20px + env(safe-area-inset-top));
   height:80px;
   width:100%;
   transition: all 0.3s ease;
@@ -3368,7 +3368,7 @@ body.dark .modal-body a.button_paedimode:hover {
   transition: 0.3s opacity ease;
   transition-delay: 0.5s;
   position: absolute;
-  top: 28px;
+  top: calc(32px + env(safe-area-inset-top));
   /*font-size:130%;
   font-weight:bold;
   line-height:1.2;*/
@@ -3740,7 +3740,7 @@ body.dark .modal-body a.button_paedimode:hover {
   position:fixed;
   z-index:89;
   cursor: pointer;
-  top:28px;
+  top: calc(32px + env(safe-area-inset-top));
   right:5px;
   display:inline-block;
   width:38px;
@@ -4683,12 +4683,22 @@ body.dark #preview-expand-box > div > div.timespan {
   display:flex; align-items:center; justify-content:center;height:60px;color:white;opacity:0.7;
 }
 
-.narrowbodywrapper #cornerblock {
-  padding-left:0;
-}
-
 #sharebutton {
   display:none;
+}
+
+#footerdiv {
+  font-size: 12px;
+  width:100%;
+  padding-right:16px;
+}
+
+#footerdivright {
+  justify-content:flex-end;
+  color:#eee;
+  display:flex;
+  gap: 10px;
+  padding-top: 10px;
 }
 body.dark #cornerblock2 {
   background:#000;
@@ -5278,10 +5288,6 @@ body.dark #chart2wrapper {
     right: calc((100% - 768px)/2 + 16px);
   }
 
-  .narrowbodywrapper #cornerblock {
-    width: calc(100% - 100px - 0.5rem);
-    margin-left: calc(100px + 0.5rem);
-  }
   .menuwrapper {
     padding-left:100px;
   }
@@ -5547,9 +5553,6 @@ body.dark #pastschemeCOPY {
   }
   #prompts_container {
     position:absolute;
-  }
-  #cornerblock {
-    position:static;
   }
   #parallax3 {
     display:none;
