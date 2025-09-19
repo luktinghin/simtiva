@@ -3627,11 +3627,11 @@ body.dark .modal-body a.button_paedimode:hover {
   @supports (bottom: env(safe-area-inset-bottom)) {
     bottom: calc(env(safe-area-inset-bottom) + 3rem);
   }
-  left: 1rem;
+  left: calc(50% - 70px);
   text-align: center;
   width: 140px;
   height: 40px;
-  opacity: 0.6;
+  opacity: 0.7;
   font-size: 20px;
   border: 1px solid #bbb;
   cursor: pointer;
