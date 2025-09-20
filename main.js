@@ -2446,6 +2446,7 @@ function displayModelOptions() {
 }
 
 function toPageOne() {
+	jumpStart();
   setTimeout(function(){setmodal("modalInitial")},200);
   document.getElementById("modalScreen2").classList.remove("fadein");
   document.getElementById("modalScreen2content").classList.remove("open");
@@ -2462,6 +2463,7 @@ function toPageOne() {
 }
 
 function toPageTwo() {
+	jumpEnd();
 	if (myChart == undefined) {
 		dynamicLoad();
 		createCharts();
@@ -5339,5 +5341,9 @@ function jumpStart() {
 }
 
 function jumpRestore() {
-	window.scrollTo(0,scrollpos);
+	if (scrollpos>0) {
+		window.scrollTo(0,scrollpos);	
+	} else {
+		window.scrollTo(0,0);
+	}
 }
