@@ -2446,6 +2446,8 @@ function displayModelOptions() {
 }
 
 function toPageOne() {
+	document.getElementById("bodywrapper").style.opacity = 0;
+	document.getElementById("parallax3").style.opacity = 0;
 	jumpStart();
   setTimeout(function(){setmodal("modalInitial")},200);
   document.getElementById("modalScreen2").classList.remove("fadein");
@@ -2463,6 +2465,8 @@ function toPageOne() {
 }
 
 function toPageTwo() {
+	document.getElementById("bodywrapper").style.opacity = 1;
+	document.getElementById("parallax3").style.opacity = 1;
 	jumpEnd();
 	if (myChart == undefined) {
 		dynamicLoad();

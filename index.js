@@ -1879,8 +1879,6 @@ function dynamicLoad() {
 	document.querySelector(".social").innerHTML = socialHTML;
 	collapsiblefunction();
 	document.getElementById("hamburger").style.display = "block";
-	document.getElementById("bodywrapper").style.opacity = 1;
-	document.getElementById("parallax3").style.opacity = 1;
 	initiated = true;
 	}
 }
