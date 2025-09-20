@@ -415,8 +415,6 @@ for (i=0; i<tops.length; i++) {
 	
 	if (localStorage.getItem("colourMode") == "dark") {
 		isDark = true;
-		var metaThemeColor = document.querySelector("meta[name=theme-color]");
-		metaThemeColor.setAttribute("content", "#000");
 		document.body.classList.add("dark");
 		document.getElementById("darkmodebutton").innerHTML = "<i class='fas fa-adjust fa-fw'></i>";
 	}
