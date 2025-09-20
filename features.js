@@ -5129,12 +5129,13 @@ function confirmNumpad(parameter) {
 
 function cancelNumpad() {
 	//need to reset original desired conc too to prevent error
-	if (drug_sets[active_drug_set_index].fentanyl_weightadjusted_flag == 1) {
-		drug_sets[active_drug_set_index].fentanyl_weightadjusted_target_uncorrected = numpadOrig;
-	} else {
-		drug_sets[active_drug_set_index].desired = numpadOrig;
+	if (numpadOrig != undefined) {
+		if (drug_sets[active_drug_set_index].fentanyl_weightadjusted_flag == 1) {
+			drug_sets[active_drug_set_index].fentanyl_weightadjusted_target_uncorrected = numpadOrig;
+		} else {
+			drug_sets[active_drug_set_index].desired = numpadOrig;
+		}
 	}
-
 	hideNumpad();
 }
 function hideNumpad() { // 
