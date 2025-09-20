@@ -4278,8 +4278,6 @@ function showNotification(text,indicator) {
 function goDark(arg) {
 	isDark = document.body.classList.contains("dark");
 	if (!isDark) {
-		var metaThemeColor = document.querySelector("meta[name=theme-color]");
-		metaThemeColor.setAttribute("content", "#000");
 		document.getElementById("darkmodebutton").innerHTML = "<i class='fas fa-adjust fa-fw'></i>";
 		document.getElementById("windowbody").classList.add("dark");
 		if (myChart != undefined) {
@@ -4335,8 +4333,6 @@ function goDark(arg) {
 		}
 			isDark = true;
 	} else {
-		var metaThemeColor = document.querySelector("meta[name=theme-color]");
-		metaThemeColor.setAttribute("content", "#7B8092");
 		document.getElementById("darkmodebutton").innerHTML = "<i class='fas fa-moon fa-fw'></i>";
 		document.getElementById("windowbody").classList.remove("dark");
 		if (myChart != undefined) {
