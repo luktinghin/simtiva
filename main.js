@@ -5351,3 +5351,28 @@ function jumpRestore() {
 		window.scrollTo(0,0);
 	}
 }
+
+function jumpLoad() {
+	//this is triggered on clicking of rescue or loading a simfile
+	document.getElementById("bodywrapper").style.opacity = 1;
+	document.getElementById("parallax3").style.opacity = 1;
+	jumpStart();
+}
+
+function iOS() {
+  return [
+    'iPad Simulator',
+    'iPhone Simulator',
+    'iPod Simulator',
+    'iPad',
+    'iPhone',
+    'iPod'
+  ].includes(navigator.platform)
+  // iPad on iOS 13 detection
+  || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+}
+
+if (iOS()) {
+	r = document.querySelector(":root");
+	r.style.setProperty('--extrapad', '8px');
+}

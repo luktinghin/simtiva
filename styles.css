@@ -38,6 +38,10 @@
    unicode-range: U+000-5FF;
 }
 
+:root {
+  --extrapad: 0px;
+}
+
 * {
    -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
@@ -852,12 +856,12 @@ body.dark .ring {
 
 #modalInitial, #modalLoad {
   padding-top: 5vw; /*this is deliberate to make the top, left, right paddings the same*/
-  background: linear-gradient(180deg, rgb(20,20,20) 0%, rgb(20,20,20) 75%, rgb(0,0,0) 100%);
+  background: linear-gradient(180deg, rgb(40,40,60) 0%, rgb(40,40,60) 65%, rgb(0,0,0) 100%);
   background-color: #222;
 }
 
 body.dark #modalInitial, body.dark #modalLoad {
-  background: linear-gradient(180deg, rgb(20,20,20) 0%, rgb(20,20,20) 75%, rgb(0,0,0) 100%);
+  background: linear-gradient(180deg, rgb(20,20,25) 0%, rgb(20,20,25) 65%, rgb(0,0,0) 100%);
   background-color: #222;
 }
 
@@ -3184,7 +3188,6 @@ body.dark .modal-body a.button_paedimode:hover {
 }
 
 .top-bar-container {
-  
   padding: 0 0.5rem 0 0.5rem;
   display:flex;
   align-items:center;
@@ -3221,7 +3224,7 @@ body.dark .modal-body a.button_paedimode:hover {
   background:#000;
   position:fixed;
   z-index:10;
-  padding-top:calc(20px + env(safe-area-inset-top));
+  padding-top:calc(var(--extrapad) + 12px + env(safe-area-inset-top));
   height:80px;
   width:100%;
   transition: all 0.3s ease;
@@ -3412,6 +3415,9 @@ body.dark .modal-body a.button_paedimode:hover {
 }
 .top_title_box.infrate {
   border-color: rgb(251,192,45);
+}
+.top_title_box.infrate.blue {
+  border-color: rgb(21,101,192);
 }
 .top_title_box.cp::after {
   content: 'Cp';
@@ -3742,7 +3748,7 @@ body.dark .modal-body a.button_paedimode:hover {
   position:fixed;
   z-index:89;
   cursor: pointer;
-  top: calc(32px + env(safe-area-inset-top));
+  top: calc(var(--extrapad) + 24px + env(safe-area-inset-top));
   right:5px;
   display:inline-block;
   width:38px;
@@ -4683,10 +4689,16 @@ body.dark #preview-expand-box > div > div.timespan {
 
 #logo2 {
   display:flex; align-items:center; justify-content:center;height:60px;color:white;opacity:0.7;
+  margin-bottom:24px;
 }
 
 #sharebutton {
   display:none;
+  cursor:pointer;
+}
+
+#darkmodebutton {
+  cursor:pointer;
 }
 
 #footerdiv {

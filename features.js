@@ -6947,6 +6947,7 @@ function tabswitch(index) {
 		document.querySelector(".druglabelcontainer.opioid").classList.remove("active");
 		document.querySelector(".druglabeltext.opioid").classList.remove("active");
 		document.getElementById("modeldescription").innerHTML = drug_sets[0].modeltext;
+		document.getElementById("top_infrate").classList.remove("blue");
 
 		myChart.data.datasets[2].hidden = false;
 		myChart.data.datasets[3].hidden = false;
@@ -7012,6 +7013,7 @@ function tabswitch(index) {
 		document.querySelector(".druglabelcontainer.opioid").classList.add("active");
 		document.querySelector(".druglabeltext.opioid").classList.add("active");
 		document.getElementById("modeldescription").innerHTML = drug_sets[1].modeltext;
+		document.getElementById("top_infrate").classList.add("blue");
 
 		myChart.data.datasets[2].hidden = true;
 		myChart.data.datasets[3].hidden = true;
