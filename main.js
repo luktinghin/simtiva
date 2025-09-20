@@ -5329,3 +5329,10 @@ function sound(src) {
     this.sound.pause();
   }
 }
+
+//new scripts
+function jumpEnd() {
+	//store scrollpos
+	scrollpos = window.scrollY;
+	window.scrollTo(0,10000);
+}
