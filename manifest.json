@@ -3,7 +3,7 @@
     "short_name": "SimTIVA",
     "orientation": "any",
     "start_url": "index.html",
-    "theme_color": "#7B8092",
+    "theme_color": "#000000",
     "scope": "/",
     "icons": [
       {
