@@ -324,12 +324,10 @@ function togglemenu() {
   document.getElementById("hamburger").classList.toggle("change");
   if (document.getElementById("hamburger").classList.contains("change")) {
     document.getElementById("menu").classList.add("open");
-    //document.getElementById("bodywrapper").classList.add("blurry");
-    //navscrollable = false;
+    jumpEnd();
   } else {
     document.getElementById("menu").classList.remove("open");
-    //document.getElementById("bodywrapper").classList.remove("blurry");
-    //navscrollable = true;
+    jumpRestore();
   }
 
 }

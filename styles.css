@@ -852,11 +852,13 @@ body.dark .ring {
 
 #modalInitial, #modalLoad {
   padding-top: 5vw; /*this is deliberate to make the top, left, right paddings the same*/
-  background-color:  #222;
+  background: linear-gradient(180deg, rgb(20,20,20) 0%, rgb(20,20,20) 75%, rgb(0,0,0) 100%);
+  background-color: #222;
 }
 
 body.dark #modalInitial, body.dark #modalLoad {
-  background-color: #222
+  background: linear-gradient(180deg, rgb(20,20,20) 0%, rgb(20,20,20) 75%, rgb(0,0,0) 100%);
+  background-color: #222;
 }
 
 #modalInitialcontent, #modalLoadcontent {
@@ -3784,7 +3786,7 @@ body.dark .modal-body a.button_paedimode:hover {
   z-index:20;
   top:0;
   left:0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.8) 80%, rgba(0,0,0,0.9) 100%);
+  background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.85) 75%, rgb(0,0,0) 100%);
   overflow-y:hidden;
     -webkit-transform: translateY(-100%);
       transform: translateY(-100%);

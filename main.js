@@ -177,6 +177,7 @@ var RSI_interval = 60;
 var preview_chart = new Array();
 var dropdownactive = false;
 var optionsactive = false;
+var scrollpos = 0;
 preview_chart.push([]);
 preview_chart.push([]);
 preview_chart.push([]);//index 2 for max CE and dur
@@ -2652,6 +2653,7 @@ function sendToUpdateMaxDex(input) {
 
 function cptevent() {
 	initcpt();
+	jumpStart();
 	if (drug_sets[0].drug_name != "Dexmedetomidine") drug_sets[0].max_rate = document.getElementById("page2selectmaxrate").value *1;
 	x = document.getElementById("page2selectmaintenance").value * 1;
 	document.getElementById("select_threshold").value = x;
@@ -2662,6 +2664,7 @@ function cptevent() {
 
 function cetevent() {
 	initcet();
+	jumpStart();
 	if (drug_sets[0].drug_name != "Dexmedetomidine") drug_sets[0].max_rate = document.getElementById("page2selectmaxrate").value *1;
 	x = document.getElementById("page2selectmaintenance").value * 1;
 	document.getElementById("select_threshold").value = x;
@@ -5329,4 +5332,12 @@ function jumpEnd() {
 	//store scrollpos
 	scrollpos = window.scrollY;
 	window.scrollTo(0,10000);
+}
+
+function jumpStart() {
+	window.scrollTo(0,0);
+}
+
+function jumpRestore() {
+	window.scrollTo(0,scrollpos);
 }
