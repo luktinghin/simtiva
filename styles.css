@@ -3373,7 +3373,7 @@ body.dark .modal-body a.button_paedimode:hover {
   transition: 0.3s opacity ease;
   transition-delay: 0.5s;
   position: absolute;
-  top: calc(32px + env(safe-area-inset-top));
+  top: calc(var(--extrapad) + 24px + env(safe-area-inset-top));
   /*font-size:130%;
   font-weight:bold;
   line-height:1.2;*/
