@@ -324,9 +324,11 @@ function togglemenu() {
   document.getElementById("hamburger").classList.toggle("change");
   if (document.getElementById("hamburger").classList.contains("change")) {
     document.getElementById("menu").classList.add("open");
+    dim(1);
     jumpEnd();
   } else {
     document.getElementById("menu").classList.remove("open");
+    dim(0);
     jumpRestore();
   }
 

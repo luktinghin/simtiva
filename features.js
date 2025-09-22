@@ -6666,6 +6666,11 @@ function timeFxReset() {
 		myChart.update();
 		drug_sets[0].firstrun = -1;
 		time_of_stop = -1;
+		if (BIS_array.length>0) {
+			BIS_array.length = 0;
+			clearInterval(updateBIS);
+			updateBIS = null;
+		}
 		//interface changes
 		document.getElementById("iconplay").style.display = "block";
 		document.getElementById("iconplay").classList.add("stop");

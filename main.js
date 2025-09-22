@@ -3089,8 +3089,8 @@ function hideallmodal() {
 	  modal.classList.remove("fadein");
 	  modalcontent.classList.remove("open");
 	  modal = undefined;
-
 	}
+	dim(0);
 }
 function hidemodal(param) {
 		if (param == "modalShare") {
@@ -3100,21 +3100,22 @@ function hidemodal(param) {
 	document.getElementById(param + "content").classList.remove("open");
 	document.getElementById(param).classList.remove("fadein");
 	modal = undefined;
+	dim(0);
 }
 function hidewarningmodal() {
   document.getElementById("modalWarning").classList.remove("fadein");
   document.getElementById("modalWarningcontent").classList.remove("open");
   modal = undefined;
+  dim(0);
 }
+
 function setmodal(modalname) {
   modal = document.getElementById(modalname);
   modalcontent = document.getElementById(modalname + "content");
   modal.classList.add("fadein");
   modalcontent.classList.add("open");
-  //document.getElementById("bodywrapper").classList.add("blurry");
+  dim(1);
 }
-
-
 
 //other options code goes here
 
@@ -5336,31 +5337,47 @@ function sound(src) {
 //new scripts
 function jumpEnd() {
 	//store scrollpos
-	scrollpos = window.scrollY;
-	window.scrollTo(0,10000);
+	if (iOS()) {
+		scrollpos = window.scrollY;
+		window.scrollTo(0,10000);
+	}
 }
 
 function jumpStart() {
-	window.scrollTo(0,0);
+	if (iOS()) {
+		window.scrollTo(0,0);
+	}
 }
 
 function jumpRestore() {
-	if (scrollpos>0) {
-		window.scrollTo(0,scrollpos);	
-	} else {
-		window.scrollTo(0,0);
+	if (iOS()) {
+		if (scrollpos>0) {
+			window.scrollTo(0,scrollpos);	
+		} else {
+			window.scrollTo(0,0);
+		}
 	}
 }
 
 function jumpLoad() {
 	//this is triggered on clicking of rescue or loading a simfile
-	document.getElementById("bodywrapper").style.opacity = 1;
-	document.getElementById("parallax3").style.opacity = 1;
-	jumpStart();
+	if (iOS()) {
+		document.getElementById("bodywrapper").style.opacity = 1;
+		document.getElementById("parallax3").style.opacity = 1;
+		jumpStart();
+	}
+}
+
+function dim(variable) {
+	if (variable == 1) {
+		document.getElementById("blackBanner").style.display = "block";
+	} else {
+		document.getElementById("blackBanner").style.display = "none";
+	}
 }
 
 function iOS() {
-  return [
+	return [
     'iPad Simulator',
     'iPhone Simulator',
     'iPod Simulator',

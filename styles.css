@@ -5773,7 +5773,7 @@ body.dark #addeventtext{
 
 /* new suspend banner styles */
 .suspendbanner {
-  z-index: 999;
+  z-index: 19;
   width: 100%;
   position: fixed;
   height: 100px;
@@ -5784,6 +5784,20 @@ body.dark #addeventtext{
   left: 0;
   display: none;
   background: linear-gradient(0deg, rgba(92,92,92,1) 0%, rgba(255,255,255,0) 100%);
+}
+.blackbanner {
+  z-index: 19;
+  width: 100%;
+  position: fixed;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 0;
+  left: 0;
+  display:none;
+  animation: fadeeffect 0.5s;
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
 }
 /* new warning banner styles */
 .warningbanner {
