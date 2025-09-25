@@ -27,7 +27,12 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
 - To help deliver TCI in a setting where TCI pumps are not available
 
 ### Changelog
- Version 5.4 (Build 169) Current
+ Version 5.5 (Build 176) Current 
+ - Pharmacology: re-calibrated ke0 values for Kamp, Paedfusor and Hannivoort models based on time-to-peak-effect (Tpeak) method. (Minto 2003)
+ - UI/UX: visual improvements in response to latest iOS update (iOS 26) causing misalignment of visual elements
+ - Various bugfixes in fullscreen mode
+   
+ Version 5.4 (Build 169)
  - Ketamine (Kamp model) added.
  - UI: clicking outside of graph options panel will dismiss options popup
  - UI: clicking outside of manual mode unit selector dropdown (ml/h, mg/kg/h etc) will dismiss dropdown box
