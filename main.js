@@ -5363,9 +5363,9 @@ function jumpRestore() {
 
 function jumpLoad() {
 	//this is triggered on clicking of rescue or loading a simfile
+	document.getElementById("bodywrapper").style.opacity = 1;
+	document.getElementById("parallax3").style.opacity = 1;
 	if (iOS()) {
-		document.getElementById("bodywrapper").style.opacity = 1;
-		document.getElementById("parallax3").style.opacity = 1;
 		jumpStart();
 	}
 }
