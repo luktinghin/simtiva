@@ -1144,31 +1144,6 @@ function common_start_calls() {
 		trk();
 }
 
-var displaymode = '';
-
-function getPWADisplayMode() {
-  if (document.referrer.startsWith('android-app://'))
-    return 'twa';
-  if (window.matchMedia('(display-mode: browser)').matches)
-    return 'net-browser';
-  if (window.matchMedia('(display-mode: standalone)').matches)
-    return 'PWA-standalone';
-  if (window.matchMedia('(display-mode: minimal-ui)').matches)
-    return 'PWA-minimal-ui';
-  if (window.matchMedia('(display-mode: fullscreen)').matches)
-    return 'PWA-fullscreen';
-  if (window.matchMedia('(display-mode: window-controls-overlay)').matches)
-    return 'PWA-window-controls-overlay';
-
-  return 'unknown';
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-  // Log launch display mode to analytics
-  displaymode = getPWADisplayMode();
-  console.log(displaymode);
-});
-
 function trk() {
 	if (umami != undefined) {
 		//custom umami tracker function
@@ -1217,7 +1192,7 @@ function trk() {
 				temptext += 'Manual';
 			}
 			temptext += drug_sets[1].model_name;
-			trackerprops.mode = temptext;
+			//trackerprops.mode = temptext;
 		}
 		//patient data 
 		if (bmi != undefined) {
@@ -1259,13 +1234,12 @@ function trk() {
 		combinedtext1 = "Age: " + trackerprops.age + "; Sex: " + trackerprops.sex + "; BMI: " + trackerprops.BMI;
 		trackerprops.string_model = combinedtext;
 		trackerprops.string_demographics = combinedtext1;
-		trackerprops.displaymode = displaymode;
 		if (parseloading == 0) {
 			umami.track('run', trackerprops);
 		} else {
-			umami.track('view', trackerprops);	
+			//umami.track('view', trackerprops);	
 		}
-		umami.identify(trackerprops);
+		//umami.identify(trackerprops);
 	}
 }
 
