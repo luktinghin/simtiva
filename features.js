@@ -6982,9 +6982,6 @@ function tabswitch(index) {
 		myChart.data.datasets[4].hidden = true;
 		myChart.data.datasets[5].hidden = true;
 
-
-
-
 		if (parseloading == 0) {
 			document.getElementById("card_cpt0").classList.remove("hide");
 			document.getElementById("card_cet0").classList.remove("hide");
@@ -7177,7 +7174,6 @@ function tabswitch(index) {
 	} else {
 		myChart.options.scales.y.title.text = "Concentration (ng/ml)";
 	}
-	document.getElementById("cornermessage").innerHTML = "";
 	updatechart(myChart);
 	if (parseloading == 0) updateBolusSpeedOptions();
 }
