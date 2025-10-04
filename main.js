@@ -1152,17 +1152,17 @@ function trk() {
 			temptext0 = 'Simple';
 			trackerprops.model = drug_sets[0].model_name;
 			if (drug_sets[0].cpt_active > 0) {
-				trackerprops.mode = 'CPT';
+				tempmode = 'CPT';
 			} else if (drug_sets[0].cet_active > 0) {
 				if (drug_sets[0].IB_active > 0) {
-					trackerprops.mode = 'IB';	
+					tempmode = 'IB';	
 				} else {
-					trackerprops.mode = 'CET';	
+					tempmode = 'CET';	
 				}
 			} else if (drug_sets[0].manualmode_active > 0) {
-				trackerprops.mode = 'Manual';
+				tempmode = 'Manual';
 			}
-			temptext = trackerprops.mode + trackerprops.model;
+			temptext = tempmode + trackerprops.model;
 		} else {
 			trackerprops.model = 'Complex';
 			temptext0 = 'Complex';
@@ -1192,7 +1192,6 @@ function trk() {
 				temptext += 'Manual';
 			}
 			temptext += drug_sets[1].model_name;
-			//trackerprops.mode = temptext;
 		}
 		//patient data 
 		if (bmi != undefined) {
