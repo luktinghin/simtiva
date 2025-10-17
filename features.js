@@ -7494,8 +7494,7 @@ function emulatePopulateRatio() {
 //outputdataobject - has P_hx which incl [2,0,time,conc]
 //P_ev, P_length
 
-function TSget(isEditParam) {
-	if (isEditParam == undefined) {
+function TSget() {
 		param1 = document.getElementById("TSinputdate").value;
 		param2 = document.getElementById("TSinputtime").value;
 		param3 = document.getElementById("TSinputconc").value * 1;
@@ -7507,10 +7506,6 @@ function TSget(isEditParam) {
 		} else {
 			TSpush(paramtime,param3);
 		}
-	} else {
-
-	}
-
 }
 
 function TSpush(inputtime,inputconc,isFirst) {
@@ -7549,9 +7544,9 @@ function TSedit(index) {
 	corrected_m = tempdate.getMonth()+1; //Jan gives 0
 	MM = ((corrected_m) < 10) ? "0" + corrected_m : corrected_m;
 	DD = (tempdate.getDate() < 10) ? "0" + tempdate.getDate() : tempdate.getDate();
-	HH = ((tempdate.getHours() < 10) ? "0" + tempdate.getHours() : tempdate.getHours();
-	MinMin = ((tempdate.getMinutes() < 10) ? "0" + tempdate.getMinutes() : tempdate.getMinutes();
-		console.log(MinMin);
+	HH = (tempdate.getHours() < 10) ? "0" + tempdate.getHours() : tempdate.getHours();
+	MinMin = (tempdate.getMinutes() < 10) ? "0" + tempdate.getMinutes() : tempdate.getMinutes();
+		
 	document.getElementById("TSinputdate").value = tempdate.getFullYear() + "-" + MM + "-" + DD;
 	document.getElementById("TSinputtime").value = HH + ":" + MinMin;
 	document.getElementById("TSinputconc").value = itemconc;
