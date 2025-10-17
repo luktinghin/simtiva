@@ -615,6 +615,18 @@ const xInputCardsHTML = `
 				<a class="button bolus" id="bolus1_1" onclick="bolusadmin(10,1);"><div class="bolus_outside">Bolus</div><div class="bolus_inside">10<span class="infused_units"></span></div></a>
 			</div>
 		</div>
+		<div class="card" id="card_TS">
+			<div class="cardtitle">INFUSULATOR - TIME SERIES</div>
+			<div class="cardcontents">
+				<div class="TStable">
+				</div>
+				<div class="TSactions">
+					<div><button onclick="TSshowentry()">Add</div>
+					<div><button onclick="TSrunsim()">Run sim</div>
+					<div><button onclick="TSreset()">Reset</div>
+				</div>
+			</div>
+		</div>
 		<div class="card hide" id="card_reanimate">
 			<div class="cardtitle">RESUME SIMULATION</div>
 			<div class="cardcontents">
@@ -1247,6 +1259,29 @@ const xModalsHTML =
 					<div style="padding-top:1rem; text-align:center">
 					<a class="button wide invert" onclick="confirmretrospective();">Confirm</a>
 					<a class="button" onclick="hideallmodal();hidemodal('modalRetrospective')">Cancel</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="modalTSEntry" class="modal">
+			<div class="modal-content" id="modalTSEntrycontent">
+				<div class="modal-header">Time Series Data 1</div>
+				<div class="modal-body">
+					<div class="TSentry">
+						<div>Date</div>
+						<div><input id="TSinputdate" type="date" style="width:50%;padding:10px"></div>
+					</div>
+					<div class="TSentry">
+						<div>Time</div>
+						<div><input id="TSinputtime" type="time" style="width:50%;padding:10px"></div>
+					</div>
+					<div class="TSentry">
+						<div>Concentration</div>
+						<div><input id="TSinputconc" type="number"></div>
+					</div>
+					<div style="padding-top:1rem">
+						<a class="button wide invert" onclick="TSget();TSupdateview();" id="TSconfirmbtn">Add</a>
+						<a class="button" onclick="hideallmodal();">Cancel</a>
 					</div>
 				</div>
 			</div>

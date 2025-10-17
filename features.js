@@ -531,7 +531,6 @@ function parseobject(input_uid,external,extObject) {
 		parse_historyarray1 = object.P_hx[1];
 		createCharts(1);
 	}
-
 	
 	d = object.P_d;
 	working_clock = object.P_time;
@@ -7487,4 +7486,141 @@ function emulatePopulateRatio() {
 	document.getElementById("emulateRatioX5start").innerHTML = Math.round(10/ratio*10)/10;
 	document.getElementById("emulateCE50").innerHTML = Math.round(BIS_Ce50()*10)/10;
 
+}
+
+//infusulator
+
+//P_d time stamp
+//outputdataobject - has P_hx which incl [2,0,time,conc]
+//P_ev, P_length
+
+function TSget(isEditParam) {
+	if (isEditParam == undefined) {
+		param1 = document.getElementById("TSinputdate").value;
+		param2 = document.getElementById("TSinputtime").value;
+		param3 = document.getElementById("TSinputconc").value * 1;
+		paramtime = Date.parse(param1 + "T" + param2);
+		console.log(paramtime/1000);
+		//input validation code;
+		if (window.TSarray == undefined) {
+			TSpush(paramtime,param3,true);
+		} else {
+			TSpush(paramtime,param3);
+		}
+	} else {
+
+	}
+
+}
+
+function TSpush(inputtime,inputconc,isFirst) {
+    if (isFirst) {
+        window.TSarray = new Array();
+        window.TSoriginE = inputtime;
+        window.TSoriginD = new Date(inputtime);
+    }
+    if (drug_sets[0].cet_active > 0) mode = 2;
+	if (drug_sets[0].cpt_active > 0) mode = 1;
+    TSarray.push([mode,0,(inputtime-TSoriginE)/1000,inputconc]);
+}
+
+function TSoutput() {
+	name = "";
+	P_time = 0;
+	P_patient = outputpatientstring();
+	P_length = 60000;
+	P_d = TSoriginD.toLocaleDateString() + " " + TSoriginD.toLocaleTimeString();
+	P_hx = TSarray;
+	let outputobject = {
+		name: name,
+		P_time: P_time,
+		P_patient: P_patient,
+		P_d: P_d,
+		P_hx: P_hx,
+		P_length: P_length
+	}
+	return outputobject;
+}
+
+function TSedit(index) {
+	itemtimestamp = TSarray[index][2];
+	itemconc = TSarray[index][3];
+	tempdate = TScalcdatetime(itemtimestamp);
+	corrected_m = tempdate.getMonth()+1; //Jan gives 0
+	MM = ((corrected_m) < 10) ? "0" + corrected_m : corrected_m;
+	DD = (tempdate.getDate() < 10) ? "0" + tempdate.getDate() : tempdate.getDate();
+	HH = ((tempdate.getHours() < 10) ? "0" + tempdate.getHours() : tempdate.getHours();
+	MinMin = ((tempdate.getMinutes() < 10) ? "0" + tempdate.getMinutes() : tempdate.getMinutes();
+		console.log(MinMin);
+	document.getElementById("TSinputdate").value = tempdate.getFullYear() + "-" + MM + "-" + DD;
+	document.getElementById("TSinputtime").value = HH + ":" + MinMin;
+	document.getElementById("TSinputconc").value = itemconc;
+	elHeader = document.querySelector("#modalTSEntry .modal-header");
+	elHeader.innerHTML = "Edit Time Series Data " + (index+1);
+	document.getElementById("TSconfirmbtn").setAttribute("onclick","TSsubmitedit(" + index + ");TSupdateview()");
+	setmodal("modalTSEntry");
+}
+
+function TSsubmitedit(index) {
+	param1 = document.getElementById("TSinputdate").value;
+	param2 = document.getElementById("TSinputtime").value;
+	param3 = document.getElementById("TSinputconc").value * 1;
+	paramtime = Date.parse(param1 + "T" + param2);
+	if (drug_sets[0].cet_active > 0) mode = 2;
+	if (drug_sets[0].cpt_active > 0) mode = 1;
+	TSarray[index] = [mode,0,(paramtime-TSoriginE)/1000,param3];
+	console.log(index + " " + paramtime/1000);
+}
+
+function TSshowentry() {
+	//resets
+	if (window.TSarray == undefined) {
+		count = 0;
+	} else {
+		count = TSarray.length;
+	}
+	document.querySelector("#modalTSEntry .modal-header").innerHTML = "Add Time Series Data " + count;
+	document.getElementById("TSconfirmbtn").setAttribute("onclick","TSget();TSupdateview()");
+	setmodal('modalTSEntry');
+}
+
+function TSupdateview() {
+	el0 = document.querySelector(".TStable");
+	el0.innerHTML = "";
+	count = TSarray.length;
+	for (i=0; i<count; i++) {
+		rowDiv = document.createElement("div");
+		rowDiv.setAttribute('id','TSrow'+count);
+		rowDiv.setAttribute('class','TSrow');
+		tempdate = TScalcdatetime(TSarray[i][2]);
+		a = tempdate.toLocaleDateString([], { day: 'numeric', month: 'short' });
+		b = tempdate.toLocaleTimeString([],{ hour: "2-digit", minute: "2-digit" });
+		c = TSarray[i][3];
+		rowDiv.innerHTML = `
+							<div id="TS${i}c1" class="TScol1">${a}</div>
+							<div id="TS${i}c2" class="TScol2">${b}</div>
+							<div id="TS${i}c3" class="TScol3">${c}</div>
+							<div id="TS${i}c4" class="TScontrols">
+								<div id="TS${i}control1" class="TScontrol1" onclick="TSedit(${i});"><i class="fas fa-pen"></i></div>
+								<div id="TS${i}control2" class="TScontrol2" onclick="TSdelete(${i});"><i class="fas fa-trash-alt"></i></div>
+							</div>
+		`;
+		el0.appendChild(rowDiv);
+	}
+}
+
+function TSrunsim() {
+	TSupdateview();
+	obj = TSoutput();
+	parseobject(0,true,obj);
+	time_in_s = 1;
+}
+
+function TScalcdatetime(totime) {
+	//output datetime object
+	a = TSoriginE;
+	b = totime * 1000;
+	relativetimestamp = a + b;
+	absolutetime = new Date(relativetimestamp);
+	return absolutetime;
 }

@@ -4714,21 +4714,57 @@ body.dark #preview-expand-box > div > div.timespan {
   gap: 10px;
   padding-top: 10px;
 }
-body.dark #cornerblock2 {
-  background:#000;
-  box-shadow: inset 0 1px 0 0 #666;
+
+/* infusulator time series */
+.TStable {
+  padding: 10px 0;
 }
 
-body.dark #cornerblock2:before {
-  box-shadow:-1px 10px 0 0 #000;
-  border-left:1px solid #6666;
-  border-bottom:1px solid #666;
+.TSrow {
+  display:flex;
+  border-bottom: 1px solid #ccc;
 }
 
-body.dark #cornerblock2:after {
-  box-shadow:1px 10px 0 0 #000;
-  border-right:1px solid #6666;
-  border-bottom:1px solid #666;
+.TSrow:last-child {
+  border-bottom: 0;
+}
+
+.TScol1 {
+  flex-basis:20%;
+  border-right: 1px solid #ccc;
+  padding: 0 2px;
+}
+
+.TScol2 {
+  flex-basis:30%;
+  border-right: 1px solid #ccc;
+  padding: 0 2px;
+}
+
+.TScol3 {
+  flex-basis:30%;
+  border-right: 1px solid #ccc;
+  padding: 0 2px;
+}
+
+.TScontrols {
+  flex-basis:20%;
+  display: flex;
+  padding: 0 2px;
+}
+
+.TScontrol1 {
+  width: 25px;
+  text-align: center;
+}
+
+.TScontrol2 {
+  width: 25px;
+  text-align: center;
+}
+
+.TSactions {
+  display:flex;
 }
 
 @media (max-height:700px) {
@@ -4818,9 +4854,7 @@ body.dark #cornerblock2:after {
 
 @media (max-height:480px) and (min-width:610px) and (max-width:767px) {
   /*narrow screen phone with reduced height - landscape*/
-  #cornerblock {
-    position:static;
-  }
+
   #controlpanel {
     margin-top:10px;
     padding-top:80px;
