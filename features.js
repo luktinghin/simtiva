@@ -1669,12 +1669,6 @@ function output(resolution, duration) {
 
 const csv = outputarray.map(row => row.map(item => (typeof item === 'string' && item.indexOf(',') >= 0) ? `"${item}"`: String(item)).join(',')).join('\n');
 
-
-
-
-
-
-
 const blob = new Blob([csv], {type: 'text/csv'});
 if(window.navigator.msSaveOrOpenBlob) {
 	window.navigator.msSaveBlob(blob, 'export.csv');
@@ -7562,7 +7556,7 @@ function TSvalidate(inputdate,inputtime,inputconc,editIndex) {
 				errormsg += "Invalid time: cannot be over 6h after the previous (programming limitation)."
 			}
 		}
-		if (editIndex > 0) {
+		if (editIndex >= 0) {
 			//cannot be later than next
 			if (editIndex < TSarray.length-1) {
 				nextitem = editIndex + 1;
@@ -7732,6 +7726,7 @@ function TSrunsim() {
 	obj = TSoutput();
 	parseobject(0,true,obj);
 	time_in_s = 1;
+	document.getElementById("TStabledisplay").innerHTML = TSformattable(TSoutputtable(document.getElementById("TSresolution").value*1));
 }
 
 function TSreset() {
@@ -7743,13 +7738,20 @@ function TSreset() {
 	TSupdateview();
 }
 
-function TScalcdatetime(totime) {
+function TScalcdatetime(totime, short) {
 	//output datetime object
 	a = TSoriginE;
 	b = totime * 1000;
 	relativetimestamp = a + b;
 	absolutetime = new Date(relativetimestamp);
-	return absolutetime;
+	if (short) {
+		HH = (absolutetime.getHours() < 10) ? "0" + absolutetime.getHours() : absolutetime.getHours();
+		MinMin = (absolutetime.getMinutes() < 10) ? "0" + absolutetime.getMinutes() : absolutetime.getMinutes();
+		temp = HH + ":" + MinMin;
+		return temp;
+	} else {
+		return absolutetime;	
+	}
 }
 
 function TSchangemode() {
@@ -7763,6 +7765,8 @@ function TSchangemode() {
 		document.getElementById("card_TimeEstimation").style.display = "none";
 		document.getElementById("card_VolumeEstimation").style.display = "none";
 		document.getElementById("card_wakeup").style.display = "none";
+		document.getElementById("card_TS").style.display = "block";
+		document.getElementById("card_output").style.display = "block";
 		document.getElementById("page2manual").style.display = "none";
 		document.getElementById("page2IB").style.display = "none";
 	} else {
@@ -7772,7 +7776,63 @@ function TSchangemode() {
 		document.getElementById("card_TimeEstimation").style.display = "";
 		document.getElementById("card_VolumeEstimation").style.display = "";
 		document.getElementById("card_wakeup").style.display = "";
+		document.getElementById("card_TS").style.display = "block";
+		document.getElementById("card_output").style.display = "block";
 		document.getElementById("page2manual").style.display = "";
 		document.getElementById("page2IB").style.display = "";
+	}
+}
+
+function TSoutputtable(resolution, duration) {
+	if (resolution == undefined) {
+		resolution = 60;
+	} else {
+		resolution = resolution *60;
+	}
+	if (duration == undefined) {
+		duration = drug_sets[0].cpt_cp.length-1;
+	}
+	outputarr = new Array();
+	for (i=0; i<drug_sets[0].cpt_cp.length; i++) {
+		if (i % resolution == 0) {
+			outputarr.push(
+				[TScalcdatetime(i,true),getcp(i,0),getce(i,0),drug_sets[0].volinf[i]]
+			);
+		}
+	}
+	return outputarr;
+}
+
+function TSformattable(entries) {
+	//predefined 2dp
+	decpl = 100;
+	outputstr = "";
+	outputstr += "<table>";
+	outputstr += "<tr><td>Time</td><td>Cp</td><td>Ce</td><td>Vol. Infused</td></tr>"
+	for (i=0; i<entries.length; i++) {
+		outputstr += "<tr>";
+		outputstr += "<td>" + entries[i][0] + "</td>";
+		outputstr += "<td>" + Math.round(entries[i][1]*decpl)/decpl + "</td>";
+		outputstr += "<td>" + Math.round(entries[i][2]*decpl)/decpl + "</td>";
+		outputstr += "<td>" + Math.round(entries[i][3]*decpl)/decpl + "</td>";
+		outputstr += "</tr>";
+	}
+	outputstr += "</table>";
+	return outputstr;
+}
+
+function TSexportcsv() {
+	outputarray = TSoutputtable(document.getElementById("TSresolution").value*1);
+	const csv = outputarray.map(row => row.map(item => (typeof item === 'string' && item.indexOf(',') >= 0) ? `"${item}"`: String(item)).join(',')).join('\n');
+	const blob = new Blob([csv], {type: 'text/csv'});
+	if(window.navigator.msSaveOrOpenBlob) {
+		window.navigator.msSaveBlob(blob, 'export.csv');
+	} else {
+		var elem = document.getElementById('downloadfile');
+		elem.href = window.URL.createObjectURL(blob);
+		elem.download = 'export.csv';
+		//document.body.appendChild(elem);
+		elem.click();
+		//document.body.removeChild(elem);
 	}
 }

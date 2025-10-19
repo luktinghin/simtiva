@@ -1951,8 +1951,6 @@ function converttime(relativeclock) {
 	}
 }
 
-
-
 function swapCetCodeForFentanyl() {
 
 }

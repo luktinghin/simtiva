@@ -4772,6 +4772,11 @@ body.dark #preview-expand-box > div > div.timespan {
   display:flex;
 }
 
+#TStabledisplay table {
+  width: 100%;
+  font-size: 0.8rem;
+}
+
 @media (max-height:700px) {
   #logo {display:none}
 }

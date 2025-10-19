@@ -964,7 +964,25 @@ const xCardsHTML = `
 					<a id="pastschemebuttonCOPY" onclick="displaymodalhistory();"><i class="fas fa-history"></i> Past Schemes</a>
 				</div>
 		</div>
-
+		<div class="card" id="card_output">
+			<div class="cardtitle">OUTPUT</div>
+			<div class="cardcontents" style="max-height:50vh;overflow-y:scroll">
+				<div id="TStablecontrols">
+					Resolution:
+					<select id="TSresolution" onchange="document.getElementById('TStabledisplay').innerHTML = TSformattable(TSoutputtable(this.value * 1))">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="5">5</option>
+						<option value="10">10</option>
+						<option value="15">15</option>
+						<option value="30">30</option>
+					</select>
+					<button onclick="TSexportcsv();">To CSV</button>
+				</div>
+				<div id="TStabledisplay">
+				</div>
+			</div>
+		</div>
 		<div class="card" id="card_retrospective">
 			<div class="cardtitle collapsiblecard">RETROSPECTIVE</div>
 			<div class="cardcontents">
