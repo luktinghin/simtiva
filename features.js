@@ -7569,7 +7569,7 @@ function TSvalidate(inputdate,inputtime,inputconc,editIndex) {
 			}
 		}
 	}
-	if (inputconc <= 0) {
+	if (inputconc < 0) {
 		errormsg += "Invalid concentration entry. <br>"
 	}
 	return errormsg;
