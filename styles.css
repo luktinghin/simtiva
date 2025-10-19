@@ -4725,6 +4725,11 @@ body.dark #preview-expand-box > div > div.timespan {
   border-bottom: 1px solid #ccc;
 }
 
+.TSrow .firstrow {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
 .TSrow:last-child {
   border-bottom: 0;
 }
@@ -4732,25 +4737,25 @@ body.dark #preview-expand-box > div > div.timespan {
 .TScol1 {
   flex-basis:20%;
   border-right: 1px solid #ccc;
-  padding: 0 2px;
+  padding: 0 4px 0 0;
 }
 
 .TScol2 {
   flex-basis:30%;
   border-right: 1px solid #ccc;
-  padding: 0 2px;
+  padding: 0 4px;
 }
 
 .TScol3 {
   flex-basis:30%;
   border-right: 1px solid #ccc;
-  padding: 0 2px;
+  padding: 0 4px;
 }
 
 .TScontrols {
   flex-basis:20%;
   display: flex;
-  padding: 0 2px;
+  padding: 0 0 0 4px;
 }
 
 .TScontrol1 {
@@ -5508,7 +5513,7 @@ body.dark #chart2wrapper {
   .cardscontainer div {
     break-inside:avoid;
   }
-  #card_infusion0, #card_cpt0, #card_cet0, #schemecopy, #card_reanimate, #card_RSI {
+  #card_infusion0, #card_cpt0, #card_cet0, #schemecopy, #card_reanimate, #card_RSI, #card_TS {
     margin-top:0px;
   }
   #card_infusion1, #card_cpt1, #card_cet1 {

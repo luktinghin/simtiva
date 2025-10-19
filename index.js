@@ -619,6 +619,14 @@ const xInputCardsHTML = `
 			<div class="cardtitle">INFUSULATOR - TIME SERIES</div>
 			<div class="cardcontents">
 				<div class="TStable">
+					<div class="TSrow firstrow">
+						<div class="TScol1">Date</div>
+						<div class="TScol2">Time</div>
+						<div class="TScol3">Conc</div>
+						<div class="TScol4"></div>
+					</div>
+					<div class="tablecontents">
+					</div>
 				</div>
 				<div class="TSactions">
 					<div><button onclick="TSshowentry()">Add</div>
@@ -1279,8 +1287,10 @@ const xModalsHTML =
 						<div>Concentration</div>
 						<div><input id="TSinputconc" type="number"></div>
 					</div>
+					<div class="TSvalidatemsg">
+					</div>
 					<div style="padding-top:1rem">
-						<a class="button wide invert" onclick="TSget();TSupdateview();" id="TSconfirmbtn">Add</a>
+						<a class="button invert" onclick="TSget();TSupdateview();" id="TSconfirmbtn">Add</a>
 						<a class="button" onclick="hideallmodal();">Cancel</a>
 					</div>
 				</div>

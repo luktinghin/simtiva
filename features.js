@@ -7501,16 +7501,90 @@ function TSget() {
 		paramtime = Date.parse(param1 + "T" + param2);
 		console.log(paramtime/1000);
 		//input validation code;
-		if (window.TSarray == undefined) {
-			TSpush(paramtime,param3,true);
+		errormsg = TSvalidate(param1,param2,param3);
+		if (errormsg=="") {
+			if ((window.TSarray == undefined) || (window.TSarray.length == 0)) {
+				TSpush(paramtime,param3,true);
+			} else {
+				TSpush(paramtime,param3);
+			}
+			//proceed with confirmation
+			TSupdateview();
+			hideallmodal();
 		} else {
-			TSpush(paramtime,param3);
+			//display error message;
+			document.querySelector(".TSvalidatemsg").innerHTML = errormsg;
 		}
+}
+
+function TSvalidate(inputdate,inputtime,inputconc,editIndex) {
+	errormsg = "";
+	if ((window.TSarray == undefined) || (window.TSarray.length == 0)) {
+		isFirst = true;
+	} else {
+		if (editIndex == undefined) {
+			isFirst = false;
+		} else {
+			if (editIndex == 0) {
+				isFirst = true;
+			} else {
+				isFirst = false;		
+			}
+		}
+	}
+	if (inputdate.value == "") {
+		errormsg += "Invalid date entry. <br>"
+	} else {
+
+	}
+	if (inputtime.value == "") {
+		errormsg += "Invalid time entry. <br>"
+	} else {
+
+	}
+	//cannot be earlier than last
+	if (errormsg == "") {
+		if (!isFirst) {
+			if (editIndex == undefined) {
+				lastitem = TSarray.length - 1;
+			} else {
+				lastitem = editIndex - 1;
+			}
+			last = TScalcdatetime(TSarray[lastitem][2]).getTime();
+			tempdate0 = new Date(param1 + "T" + param2)
+			tempdate = tempdate0.getTime();
+			if (tempdate<=last) {
+				errormsg += "Invalid time: cannot be earlier than previous."
+			}
+			//also cannot be 6h later than the last
+			limit = TScalcdatetime(21600).getTime();
+			if (tempdate>=limit) {
+				errormsg += "Invalid time: cannot be over 6h after the previous (programming limitation)."
+			}
+		}
+		if (editIndex > 0) {
+			//cannot be later than next
+			if (editIndex < TSarray.length-1) {
+				nextitem = editIndex + 1;
+				next = TScalcdatetime(TSarray[nextitem][2]).getTime();
+				tempdate0 = new Date(param1 + "T" + param2)
+				tempdate = tempdate0.getTime();
+				if (tempdate>=next) {
+					errormsg += "Invalid time: cannot be later than next."
+				}
+			}
+		}
+	}
+	if (inputconc <= 0) {
+		errormsg += "Invalid concentration entry. <br>"
+	}
+	return errormsg;
 }
 
 function TSpush(inputtime,inputconc,isFirst) {
     if (isFirst) {
         window.TSarray = new Array();
+        TSarray.length = 0;
         window.TSoriginE = inputtime;
         window.TSoriginD = new Date(inputtime);
     }
@@ -7552,8 +7626,15 @@ function TSedit(index) {
 	document.getElementById("TSinputconc").value = itemconc;
 	elHeader = document.querySelector("#modalTSEntry .modal-header");
 	elHeader.innerHTML = "Edit Time Series Data " + (index+1);
-	document.getElementById("TSconfirmbtn").setAttribute("onclick","TSsubmitedit(" + index + ");TSupdateview()");
+	document.getElementById("TSconfirmbtn").innerHTML = "Submit";
+	document.getElementById("TSconfirmbtn").setAttribute("onclick","TSsubmitedit(" + index + ");");
+	document.querySelector(".TSvalidatemsg").innerHTML = "";
 	setmodal("modalTSEntry");
+}
+
+function TSdelete(index) {
+	TSarray.splice(index,1);
+	TSupdateview();
 }
 
 function TSsubmitedit(index) {
@@ -7563,24 +7644,52 @@ function TSsubmitedit(index) {
 	paramtime = Date.parse(param1 + "T" + param2);
 	if (drug_sets[0].cet_active > 0) mode = 2;
 	if (drug_sets[0].cpt_active > 0) mode = 1;
-	TSarray[index] = [mode,0,(paramtime-TSoriginE)/1000,param3];
+	errormsg = TSvalidate(param1,param2,param3,index);
+	if (errormsg == "") {
+		if (index>0) {
+			TSarray[index] = [mode,0,(paramtime-TSoriginE)/1000,param3];	
+		} else {
+			//reset origin
+			old = TSoriginE;
+	        TSoriginE = paramtime;
+	        TSoriginD = new Date(paramtime);
+	        //set the origin data
+	        TSarray[index] = [mode,0,0,param3];
+	        tempoffset = (paramtime - old)/1000;
+	        //recalc the other timestamps of all data series
+	        if (TSarray.length>0) {
+	        	for (i=1; i<TSarray.length; i++) {
+	        		temptime = TSarray[i][2];
+	        		console.log("to offset by " + tempoffset);
+	        		TSarray[i][2] = temptime - tempoffset;
+	        	}	
+	        }
+		}
+		TSupdateview();
+		hideallmodal();
+	} else {
+		//display error message
+		document.querySelector(".TSvalidatemsg").innerHTML = errormsg;
+	}
 	console.log(index + " " + paramtime/1000);
 }
 
 function TSshowentry() {
 	//resets
 	if (window.TSarray == undefined) {
-		count = 0;
+		count = 1;
 	} else {
-		count = TSarray.length;
+		count = TSarray.length + 1;
 	}
 	document.querySelector("#modalTSEntry .modal-header").innerHTML = "Add Time Series Data " + count;
-	document.getElementById("TSconfirmbtn").setAttribute("onclick","TSget();TSupdateview()");
+	document.getElementById("TSconfirmbtn").innerHTML = "Add";
+	document.querySelector(".TSvalidatemsg").innerHTML = "";
+	document.getElementById("TSconfirmbtn").setAttribute("onclick","TSget();");
 	setmodal('modalTSEntry');
 }
 
 function TSupdateview() {
-	el0 = document.querySelector(".TStable");
+	el0 = document.querySelector(".TStable .tablecontents");
 	el0.innerHTML = "";
 	count = TSarray.length;
 	for (i=0; i<count; i++) {
@@ -7591,7 +7700,17 @@ function TSupdateview() {
 		a = tempdate.toLocaleDateString([], { day: 'numeric', month: 'short' });
 		b = tempdate.toLocaleTimeString([],{ hour: "2-digit", minute: "2-digit" });
 		c = TSarray[i][3];
-		rowDiv.innerHTML = `
+		if (i==0) {
+			rowDiv.innerHTML = `
+							<div id="TS${i}c1" class="TScol1">${a}</div>
+							<div id="TS${i}c2" class="TScol2">${b}</div>
+							<div id="TS${i}c3" class="TScol3">${c}</div>
+							<div id="TS${i}c4" class="TScontrols">
+								<div id="TS${i}control1" class="TScontrol1" onclick="TSedit(${i});"><i class="fas fa-pen"></i></div>
+							</div>
+			`;
+		} else {
+			rowDiv.innerHTML = `
 							<div id="TS${i}c1" class="TScol1">${a}</div>
 							<div id="TS${i}c2" class="TScol2">${b}</div>
 							<div id="TS${i}c3" class="TScol3">${c}</div>
@@ -7599,16 +7718,29 @@ function TSupdateview() {
 								<div id="TS${i}control1" class="TScontrol1" onclick="TSedit(${i});"><i class="fas fa-pen"></i></div>
 								<div id="TS${i}control2" class="TScontrol2" onclick="TSdelete(${i});"><i class="fas fa-trash-alt"></i></div>
 							</div>
-		`;
+			`;
+		}
 		el0.appendChild(rowDiv);
 	}
 }
 
 function TSrunsim() {
+	//clear chart views
+	myChart.data.datasets[2].data.length = 0;
+	myChart.data.datasets[3].data.length = 0;
 	TSupdateview();
 	obj = TSoutput();
 	parseobject(0,true,obj);
 	time_in_s = 1;
+}
+
+function TSreset() {
+	//clear chart views
+	myChart.data.datasets[2].data.length = 0;
+	myChart.data.datasets[3].data.length = 0;
+	updatechart(myChart);
+	TSarray.length = 0;
+	TSupdateview();
 }
 
 function TScalcdatetime(totime) {
@@ -7618,4 +7750,29 @@ function TScalcdatetime(totime) {
 	relativetimestamp = a + b;
 	absolutetime = new Date(relativetimestamp);
 	return absolutetime;
+}
+
+function TSchangemode() {
+	TSon = document.getElementById("TSmodebox").checked;
+	if (TSon) {
+		//hide unnecessary items
+		document.getElementById("card_cpt0").style.display = "none";
+		document.getElementById("card_cet0_new").style.display = "none";
+		document.getElementById("card_controlpanel").style.display = "none";
+		document.getElementById("card_retrospective").style.display = "none";
+		document.getElementById("card_TimeEstimation").style.display = "none";
+		document.getElementById("card_VolumeEstimation").style.display = "none";
+		document.getElementById("card_wakeup").style.display = "none";
+		document.getElementById("page2manual").style.display = "none";
+		document.getElementById("page2IB").style.display = "none";
+	} else {
+		document.getElementById("card_cpt0").style.display = "";
+		document.getElementById("card_controlpanel").style.display = "";
+		document.getElementById("card_retrospective").style.display = "";
+		document.getElementById("card_TimeEstimation").style.display = "";
+		document.getElementById("card_VolumeEstimation").style.display = "";
+		document.getElementById("card_wakeup").style.display = "";
+		document.getElementById("page2manual").style.display = "";
+		document.getElementById("page2IB").style.display = "";
+	}
 }

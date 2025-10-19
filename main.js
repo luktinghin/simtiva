@@ -2516,6 +2516,7 @@ function toPageTwo() {
 				document.getElementById("page2IB").style.display = "block";
 		}
 		toPageTwoTransition();
+		TSchangemode();
 		document.getElementById("rescuebuttons").style.display="none";
 		loadoptions();
 		if (complex_mode==0) applyoptions();
