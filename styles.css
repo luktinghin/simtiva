@@ -4772,9 +4772,52 @@ body.dark #preview-expand-box > div > div.timespan {
   display:flex;
 }
 
+.TSvalidatemsg {
+  width:100%;
+  border-radius: 9px;
+  border: 1px solid black;
+  background: #e4c4d4;
+  font-weight:bold;
+  padding:10px;
+  margin-top:10px;
+}
+
+.TSentry {
+  margin-bottom:10px;
+}
+
 #TStabledisplay table {
   width: 100%;
   font-size: 0.8rem;
+}
+
+#TSinputdate {
+  min-width:200px;
+  border:1px solid #ccc;
+  border-radius:4px;
+  padding:4px;
+}
+
+#TSinputtime {
+  min-width:200px;
+  border:1px solid #ccc;
+  border-radius: 4px;
+  padding:4px;
+}
+
+#TSinputconc {
+  padding:4px;
+  min-width: 200px;
+}
+
+a.button.TSbutton {
+  background: #ccc;
+  border-radius:1rem;
+  font-weight:bold;
+  font-size:0.8rem;
+  border:0;
+  color:black;
+  padding:4px;
 }
 
 @media (max-height:700px) {

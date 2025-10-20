@@ -629,9 +629,9 @@ const xInputCardsHTML = `
 					</div>
 				</div>
 				<div class="TSactions">
-					<div><button onclick="TSshowentry()">Add</div>
-					<div><button onclick="TSrunsim()">Run sim</div>
-					<div><button onclick="TSreset()">Reset</div>
+					<a class="TSbutton button" onclick="TSshowentry()">Add</a>
+					<a class="TSbutton button" onclick="TSrunsim()">Run sim</a>
+					<a class="TSbutton button" onclick="TSreset()">Reset</a>
 				</div>
 			</div>
 		</div>
@@ -1295,15 +1295,15 @@ const xModalsHTML =
 				<div class="modal-body">
 					<div class="TSentry">
 						<div>Date</div>
-						<div><input id="TSinputdate" type="date" style="width:50%;padding:10px"></div>
+						<div><input id="TSinputdate" type="date" style=""></div>
 					</div>
 					<div class="TSentry">
 						<div>Time</div>
-						<div><input id="TSinputtime" type="time" style="width:50%;padding:10px"></div>
+						<div><input id="TSinputtime" type="time" style=""></div>
 					</div>
 					<div class="TSentry">
 						<div>Concentration</div>
-						<div><input id="TSinputconc" type="number"></div>
+						<div><input id="TSinputconc" type="number" step="0.01"></div>
 					</div>
 					<div class="TSvalidatemsg">
 					</div>

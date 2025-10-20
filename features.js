@@ -7508,6 +7508,7 @@ function TSget() {
 		} else {
 			//display error message;
 			document.querySelector(".TSvalidatemsg").innerHTML = errormsg;
+			document.querySelector(".TSvalidatemsg").style.display = "block";
 		}
 }
 
@@ -7526,12 +7527,12 @@ function TSvalidate(inputdate,inputtime,inputconc,editIndex) {
 			}
 		}
 	}
-	if (inputdate.value == "") {
+	if (inputdate == "") {
 		errormsg += "Invalid date entry. <br>"
 	} else {
 
 	}
-	if (inputtime.value == "") {
+	if (inputtime == "") {
 		errormsg += "Invalid time entry. <br>"
 	} else {
 
@@ -7551,9 +7552,9 @@ function TSvalidate(inputdate,inputtime,inputconc,editIndex) {
 				errormsg += "Invalid time: cannot be earlier than previous."
 			}
 			//also cannot be 6h later than the last
-			limit = TScalcdatetime(21600).getTime();
+			limit = TScalcdatetime(TSarray[lastitem][2] + 21600).getTime();
 			if (tempdate>=limit) {
-				errormsg += "Invalid time: cannot be over 6h after the previous (programming limitation)."
+				errormsg += "Invalid time: cannot be over >6h after the previous (programming limitation)."
 			}
 		}
 		if (editIndex >= 0) {
@@ -7565,6 +7566,36 @@ function TSvalidate(inputdate,inputtime,inputconc,editIndex) {
 				tempdate = tempdate0.getTime();
 				if (tempdate>=next) {
 					errormsg += "Invalid time: cannot be later than next."
+				}
+			}
+			//even if in the range between last and previous,
+			//it cannot be 6h away from either end, in editing mode
+			if (editIndex == 0) {
+				tempdate0 = new Date(param1 + "T" + param2)
+				tempdate = tempdate0.getTime();
+				if (TSarray.length >= 2) {
+					limit = TScalcdatetime(TSarray[1][2] - 21600).getTime();
+					if (tempdate <= limit) {
+						errormsg += "Invalid time: cannot be >6h earlier than the next (programming limitation)."
+					}
+				}
+			} else {
+				tempdate0 = new Date(param1 + "T" + param2)
+				tempdate = tempdate0.getTime();
+				if (TSarray.length >= 3) {
+					limit1 = TScalcdatetime(TSarray[editIndex-1][2] + 21600).getTime();
+					if (tempdate >= limit1) {
+						if (errormsg == "") {
+							errormsg += "Invalid time: cannot be >6h later than the previous (programming limitation)."	
+						}
+					}
+					if (editIndex < TSarray.length-1) {
+						//not last
+						limit2 = TScalcdatetime(TSarray[editIndex+1][2] - 21600).getTime();
+						if (tempdate <= limit2) {
+							errormsg += "Invalid time: cannot be >6h earlier than the next (programming limitation)."
+						}
+					}
 				}
 			}
 		}
@@ -7623,6 +7654,7 @@ function TSedit(index) {
 	document.getElementById("TSconfirmbtn").innerHTML = "Submit";
 	document.getElementById("TSconfirmbtn").setAttribute("onclick","TSsubmitedit(" + index + ");");
 	document.querySelector(".TSvalidatemsg").innerHTML = "";
+	document.querySelector(".TSvalidatemsg").style.display = "none";
 	setmodal("modalTSEntry");
 }
 
@@ -7678,6 +7710,7 @@ function TSshowentry() {
 	document.querySelector("#modalTSEntry .modal-header").innerHTML = "Add Time Series Data " + count;
 	document.getElementById("TSconfirmbtn").innerHTML = "Add";
 	document.querySelector(".TSvalidatemsg").innerHTML = "";
+	document.querySelector(".TSvalidatemsg").style.display = "none";
 	document.getElementById("TSconfirmbtn").setAttribute("onclick","TSget();");
 	setmodal('modalTSEntry');
 }
@@ -7776,8 +7809,8 @@ function TSchangemode() {
 		document.getElementById("card_TimeEstimation").style.display = "";
 		document.getElementById("card_VolumeEstimation").style.display = "";
 		document.getElementById("card_wakeup").style.display = "";
-		document.getElementById("card_TS").style.display = "block";
-		document.getElementById("card_output").style.display = "block";
+		document.getElementById("card_TS").style.display = "none";
+		document.getElementById("card_output").style.display = "none";
 		document.getElementById("page2manual").style.display = "";
 		document.getElementById("page2IB").style.display = "";
 	}
