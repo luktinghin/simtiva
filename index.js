@@ -629,9 +629,9 @@ const xInputCardsHTML = `
 					</div>
 				</div>
 				<div class="TSactions">
-					<a class="TSbutton button" onclick="TSshowentry()">Add</a>
-					<a class="TSbutton button" onclick="TSrunsim()">Run sim</a>
-					<a class="TSbutton button" onclick="TSreset()">Reset</a>
+					<a class="TSbutton button" onclick="TSshowentry()"><i class="fas fa-plus-circle"></i> Add</a>
+					<a class="TSbutton button" onclick="TSrunsim()"><i class="fas fa-play"></i> Run</a>
+					<a class="TSbutton button" onclick="TSreset()"><i class="fas fa-undo-alt"></i> Reset</a>
 				</div>
 			</div>
 		</div>
