@@ -4770,6 +4770,10 @@ body.dark #preview-expand-box > div > div.timespan {
 
 .TSactions {
   display:flex;
+  justify-content:center;
+  padding:10px;
+  border-radius:0 0 9px 9px;
+  background:#eee;
 }
 
 .TSvalidatemsg {
@@ -4811,13 +4815,16 @@ body.dark #preview-expand-box > div > div.timespan {
 }
 
 a.button.TSbutton {
-  background: #ccc;
+  background:#fff;
   border-radius:1rem;
   font-weight:bold;
   font-size:0.8rem;
-  border:0;
-  color:black;
   padding:4px;
+}
+
+a.button.TSbutton:hover, a.button.TSbutton:active {
+  background:rgb(213,237,214);
+  color:black;
 }
 
 @media (max-height:700px) {
