@@ -616,7 +616,7 @@ const xInputCardsHTML = `
 			</div>
 		</div>
 		<div class="card" id="card_TS">
-			<div class="cardtitle">INFUSULATOR - TIME SERIES</div>
+			<div class="cardtitle">INFUSULATOR</div>
 			<div class="cardcontents">
 				<div class="TStable">
 					<div class="TSrow firstrow">
@@ -626,6 +626,7 @@ const xInputCardsHTML = `
 						<div class="TScol4"></div>
 					</div>
 					<div class="tablecontents">
+						<div id="TSplaceholder">Add an entry to start.</div>
 					</div>
 				</div>
 				<div class="TSactions">
@@ -968,16 +969,17 @@ const xCardsHTML = `
 			<div class="cardtitle">OUTPUT</div>
 			<div class="cardcontents" style="max-height:50vh;overflow-y:scroll">
 				<div id="TStablecontrols">
-					Resolution:
-					<select id="TSresolution" onchange="document.getElementById('TStabledisplay').innerHTML = TSformattable(TSoutputtable(this.value * 1))">
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="5">5</option>
-						<option value="10">10</option>
-						<option value="15">15</option>
-						<option value="30">30</option>
+					<div style="display:flex;align-items:center">Resolution: &nbsp;&nbsp;
+					<select id="TSresolution" style="height:28px" onchange="document.getElementById('TStabledisplay').innerHTML = TSformattable(TSoutputtable(this.value * 1))">
+						<option value="1">1min</option>
+						<option value="2">2min</option>
+						<option value="5">5min</option>
+						<option value="10">10min</option>
+						<option value="15">15min</option>
+						<option value="30">30min</option>
 					</select>
-					<button onclick="TSexportcsv();">To CSV</button>
+					</div>
+					<div><a class="button TSbutton" onclick="TSexportcsv();">Export to CSV</a></div>
 				</div>
 				<div id="TStabledisplay">
 				</div>

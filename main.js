@@ -2639,7 +2639,8 @@ function cptevent() {
 	x = document.getElementById("page2selectmaintenance").value * 1;
 	document.getElementById("select_threshold").value = x;
 	applyoptions();
-	hidemodal('modalScreen2');document.getElementById('card_controlpanel').style.display='block';
+	hidemodal('modalScreen2');
+	if (!TSon) document.getElementById('card_controlpanel').style.display='block';
 	updateBolusSpeedOptions()
 }
 
@@ -2650,7 +2651,8 @@ function cetevent() {
 	x = document.getElementById("page2selectmaintenance").value * 1;
 	document.getElementById("select_threshold").value = x;
 	applyoptions();
-	hidemodal('modalScreen2');document.getElementById('card_controlpanel').style.display='block';
+	hidemodal('modalScreen2');
+	if (!TSon) document.getElementById('card_controlpanel').style.display='block';
 	updateBolusSpeedOptions()
 }
 

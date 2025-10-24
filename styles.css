@@ -4725,7 +4725,7 @@ body.dark #preview-expand-box > div > div.timespan {
   border-bottom: 1px solid #ccc;
 }
 
-.TSrow .firstrow {
+.TSrow.firstrow {
   font-size: 0.8rem;
   font-weight: bold;
 }
@@ -4761,11 +4761,29 @@ body.dark #preview-expand-box > div > div.timespan {
 .TScontrol1 {
   width: 25px;
   text-align: center;
+  color: #ccc;
 }
 
 .TScontrol2 {
   width: 25px;
   text-align: center;
+  color: #ccc;
+}
+
+#TStablecontrols {
+  display:flex;
+  height: 40px;
+  align-items:center;
+  justify-content: space-between;
+  background: #eee;
+}
+
+#TSplaceholder {
+  background:#eee;
+  margin:20px;
+  padding:20px;
+  text-align:center;
+  border-radius:4rem;
 }
 
 .TSactions {
@@ -4813,6 +4831,7 @@ body.dark #preview-expand-box > div > div.timespan {
   padding:4px;
   min-width: 200px;
 }
+
 
 a.button.TSbutton {
   background:#fff;

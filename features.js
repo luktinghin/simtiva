@@ -5434,7 +5434,7 @@ function preparerange() {
 	}
 
 	//modify from chartprofile 1
-		if (corX>0 && corX<=7) {  						//new
+		if (corX>=0 && corX<=7) {  						//new
 			xmin = 0;														//new
 			xmax = 20;													//new
 		} else if (corX>7 && corX<=25) {
@@ -5656,7 +5656,7 @@ function setcustomconc(inputval) {
 }
 
 function chartOptionsToggle() {
-	if (time_in_s > 0) {
+	if ((time_in_s > 0) || (parseloading==1)) {
 		ElOptions = document.getElementById("chartoverlayoptions");
 		if (ElOptions.classList.contains("show")) {
 			optionsactive = false;
@@ -5681,7 +5681,7 @@ function chartOptionsToggle() {
 }
 
 function togglepopupoptions() {
-	if (time_in_s > 0) {
+	if ((time_in_s > 0) || (parseloading==1)) {
 		ElOptions = document.getElementById("chartoverlayoptions2");
 		if (ElOptions.classList.contains("show")) {
 			optionsactive = false;
@@ -7612,6 +7612,7 @@ function TSpush(inputtime,inputconc,isFirst) {
         TSarray.length = 0;
         window.TSoriginE = inputtime;
         window.TSoriginD = new Date(inputtime);
+        document.getElementById("TSplaceholder").style.display = "none";
     }
     if (drug_sets[0].cet_active > 0) mode = 2;
 	if (drug_sets[0].cpt_active > 0) mode = 1;
@@ -7758,8 +7759,9 @@ function TSrunsim() {
 	TSupdateview();
 	obj = TSoutput();
 	parseobject(0,true,obj);
-	time_in_s = 1;
 	document.getElementById("TStabledisplay").innerHTML = TSformattable(TSoutputtable(document.getElementById("TSresolution").value*1));
+	time_in_s = 0;
+	TSinitiate();
 }
 
 function TSreset() {
@@ -7802,6 +7804,8 @@ function TSchangemode() {
 		document.getElementById("card_output").style.display = "block";
 		document.getElementById("page2manual").style.display = "none";
 		document.getElementById("page2IB").style.display = "none";
+		document.getElementById("ptolcard").style.display = "none";
+		document.getElementById("card_options").style.display = "none";
 	} else {
 		document.getElementById("card_cpt0").style.display = "";
 		document.getElementById("card_controlpanel").style.display = "";
@@ -7813,6 +7817,7 @@ function TSchangemode() {
 		document.getElementById("card_output").style.display = "none";
 		document.getElementById("page2manual").style.display = "";
 		document.getElementById("page2IB").style.display = "";
+		document.getElementById("card_options").style.display = "block";
 	}
 }
 
@@ -7868,4 +7873,22 @@ function TSexportcsv() {
 		elem.click();
 		//document.body.removeChild(elem);
 	}
+}
+
+function TSinitiate() {
+	//prepare the display changes
+	//off displayleft, display right no line
+	//display fullscreen button
+	//set chart view to ?120min
+	document.querySelector(".displayleft").style.display = "none";
+	document.querySelector(".displayright").style.borderLeft = "0";
+	document.getElementById("expandbutton").style.display = "block";
+	tempmax = TSarray[TSarray.length-1][2]/60 + 60;
+	tempmax = Math.ceil(tempmax/15)*15;
+	chartviewarray[1] = tempmax;
+	updatechartview(myChart);
+	myChart.update();
+	document.getElementById("chartinfooverlay").style.display = "none";
+	document.getElementById("ptolcard").style.display = "none";
+	document.getElementById("top_subtitle2").innerHTML = "Research"
 }
