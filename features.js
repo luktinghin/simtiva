@@ -7616,7 +7616,12 @@ function TSpush(inputtime,inputconc,isFirst) {
     }
     if (drug_sets[0].cet_active > 0) mode = 2;
 	if (drug_sets[0].cpt_active > 0) mode = 1;
-    TSarray.push([mode,0,(inputtime-TSoriginE)/1000,inputconc]);
+	if (drug_sets[0].max_rate > 0) {
+		TSarray.push([mode,0,(inputtime-TSoriginE)/1000,inputconc,drug_sets[0].max_rate]);	
+	} else {
+		TSarray.push([mode,0,(inputtime-TSoriginE)/1000,inputconc])
+	}
+    
 }
 
 function TSoutput() {
@@ -7828,10 +7833,10 @@ function TSoutputtable(resolution, duration) {
 		resolution = resolution *60;
 	}
 	if (duration == undefined) {
-		duration = drug_sets[0].cpt_cp.length-1;
+		duration = drug_sets[0].cpt_rates_real.length-1;
 	}
 	outputarr = new Array();
-	for (i=0; i<drug_sets[0].cpt_cp.length; i++) {
+	for (i=0; i<drug_sets[0].cpt_rates_real.length; i++) {
 		if (i % resolution == 0) {
 			outputarr.push(
 				[TScalcdatetime(i,true),getcp(i,0),getce(i,0),drug_sets[0].volinf[i]]
