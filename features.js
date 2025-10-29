@@ -7702,6 +7702,7 @@ function TSsubmitedit(index) {
 	} else {
 		//display error message
 		document.querySelector(".TSvalidatemsg").innerHTML = errormsg;
+		document.querySelector(".TSvalidatemsg").style.display = "block";
 	}
 	console.log(index + " " + paramtime/1000);
 }

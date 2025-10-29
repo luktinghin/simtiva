@@ -3089,11 +3089,12 @@ function preview_cet(x,ind) {
 				console.log("debug cet, cet_bolus= " + drug_sets[ind].preview_bolus);
 				console.log("debug cet, temp_peak= " + temp_peak);
 				console.log("debug cet, current= " + current);
-
+				if (drug_sets[ind].drug_name == "Dexmedetomidine") {
+					real_peak = temp_peak;
+				}
 				if (drug_sets[ind].preview_bolus > 0) scheme_bolusadmin(drug_sets[ind].preview_bolus,ind,max_rate_input);
 				if (drug_sets[ind].drug_name == "Dexmedetomidine") {
 					//set pause time to zero
-					real_peak = temp_peak;
 					temp_peak = bolus_duration;
 				}
 				p_state3[1] = p_state2[1];
@@ -3191,8 +3192,11 @@ function preview_cet(x,ind) {
 
 			compensation = 0;
 			//reset temp_peak
-			if (drug_sets[ind].drug_name == "Dexmedetomidine") temp_peak = real_peak;
 			if (RSI_mode == true) temp_peak = real_peak;
+			if (drug_sets[ind].drug_name == "Dexmedetomidine") {
+					temp_peak = real_peak;
+					drug_sets[ind].prior_peak_time = temp_peak;
+			}
 			console.log("current CP ", p_state3[1] + p_state3[2] + p_state3[3]);
 			deliver_cpt_alt();
 		}//end normal CET algorithm
@@ -3832,12 +3836,12 @@ function deliver_cet_real(x, ind) {
 				//} else {
 					drug_sets[ind].cet_bolus = Math.ceil(drug_sets[ind].cet_bolus);
 				//}; // round up to the next 5mg bolus if bw big 
-
+				if (drug_sets[ind].drug_name == "Dexmedetomidine") {
+					real_peak = temp_peak;
+				}
 				bolusadmin(drug_sets[ind].cet_bolus,ind,max_rate_input);
-				
 				if (drug_sets[ind].drug_name == "Dexmedetomidine") {
 					//set pause time to zero
-					real_peak = temp_peak;
 					temp_peak = bolus_duration;
 				}
 				drug_sets[ind].prior_peak_time = temp_peak;
