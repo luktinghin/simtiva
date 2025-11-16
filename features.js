@@ -8212,7 +8212,7 @@ function TSchangemode() {
 		document.getElementById("card_TS").style.display = "none";
 		document.getElementById("card_output").style.display = "none";
 		document.getElementById("card_infusion0").style.display = "";
-		document.getElementById("page2IB").style.display = "";
+		if (document.getElementById("select_model").value != "Hannivoort") document.getElementById("page2IB").style.display = "";
 		document.getElementById("card_options").style.display = "block";
 		document.getElementById("TSmodetext").innerHTML = "Research mode: Off";
 	}
