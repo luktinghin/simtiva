@@ -285,7 +285,9 @@ function initmanual(ind) {
 
 		//unhide if this is propofol, first run
 		if (ind==0) {
-			document.getElementById("card_infusion" + ind).classList.remove("hide");
+			if (!TSon) {
+				document.getElementById("card_infusion" + ind).classList.remove("hide");
+			}
 		}
 		//off bolus for dexmedetomidine
 		if (drug_sets[0].drug_name == "Dexmedetomidine") {

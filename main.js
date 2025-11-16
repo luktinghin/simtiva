@@ -241,6 +241,7 @@ var popupUpdateInterval;
 var numpadValue = 0;
 var numpadOrig;
 var opioid = 1; //arbitrary default opioid = 1 for eleveld. to be re-set to 0 or 1 at first input screen
+var TSon = false;
 
 function toggleCard(x) {
 	var content = x.nextElementSibling;
@@ -2000,7 +2001,7 @@ function switchpaedimode(arg) {
 		document.querySelector(".table-Init").classList.remove("paedimode");
 		document.getElementById("row_age_paedimode").style.display = "none";
 		document.getElementById("row_PMA_paedimode").style.display = "none";
-		document.getElementById("logo").style.display = "";
+		if (!TSon) document.getElementById("logo").style.display = "";
 		document.getElementById("row_age_adultmode").style.display = "table-row";
 		document.getElementById("paedimode0").classList.add("active");
 		document.getElementById("paedimode1").classList.remove("active");
@@ -2201,12 +2202,14 @@ function sendToValidate(arg) {
 		} else if (ageunit == "y") {
 			age = document.getElementById("inputAgePaedi").value*1;
 		}
-		if (age <= 0.5) {
-			document.getElementById("PMA_entry").style.display = "inline-block";
-			document.getElementById("PMA_explanation").style.display = "none";
-		} else if (age > 0.5) {
-			document.getElementById("PMA_entry").style.display = "none";
-			document.getElementById("PMA_explanation").style.display = "inline-block";
+		if (document.getElementById("inputAgePaedi").value != "") {
+			if (age <= 0.5) {
+				document.getElementById("PMA_entry").style.display = "inline-block";
+				document.getElementById("PMA_explanation").style.display = "none";
+			} else if (age > 0.5) {
+				document.getElementById("PMA_entry").style.display = "none";
+				document.getElementById("PMA_explanation").style.display = "inline-block";
+			}
 		}
 	}
 	weight = document.getElementById("inputBW").value*1;

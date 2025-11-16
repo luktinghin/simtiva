@@ -273,16 +273,18 @@
 					
 					<div>
 						<a class="button invert disabled" id="btn_initProceed">Proceed</a>
+						<a class="button muted" id="btn_labs" onclick="labsbutton();"><svg class="iconsvg flask" viewBox="0 0 640 640"><path d="M184.6 475.5C181.5 482.8 179.2 490.4 177.8 498.1C163.3 506.9 146.3 512 128 512C75 512 32 469 32 416L32 128C14.3 128 0 113.7 0 96C0 78.3 14.3 64 32 64L224 64C241.7 64 256 78.3 256 96C256 113.7 241.7 128 224 128L224 383.6L184.6 475.5zM96 128L96 256L160 256L160 128L96 128zM352 64L512 64C529.7 64 544 78.3 544 96C544 113.7 529.7 128 512 128L512 281.4L603.3 494.4C605.6 499.8 607.1 505.5 607.7 511.4L608 512L607.7 512C607.9 513.8 608 515.6 608 517.4C608 549.7 581.8 576 549.4 576L282.5 576C250.2 576 223.9 549.8 223.9 517.4C223.9 515.6 224 513.8 224.2 512L223.9 512L224.2 511.4C224.8 505.6 226.3 499.8 228.6 494.4L320 281.4L320 128C302.3 128 288 113.7 288 96C288 78.3 302.3 64 320 64L352 64zM453.2 306.6C449.8 298.6 448 290.1 448 281.4L448 128L384 128L384 281.4C384 290.1 382.2 298.6 378.8 306.6L345.6 384L486.3 384L453.1 306.6z"/></svg></a>
 						<a class="button muted right" id="btn_disclaimer" onclick="displayDisclaimer();">Disclaimer</a>
 						<a class="button muted right" id="btn_about" onclick="displayAbout2();">
 							<svg class="iconsvg question-circle" viewBox="0 0 512 512"><path d="M504 256c0 137-111 248-248 248S8 393 8 256C8 119.1 119 8 256 8s248 111.1 248 248zM262.7 90c-54.5 0-89.3 23-116.5 63.8-3.5 5.3-2.4 12.4 2.7 16.3l34.7 26.3c5.2 3.9 12.6 3 16.7-2.1 17.9-22.7 30.1-35.8 57.3-35.8 20.4 0 45.7 13.1 45.7 33 0 15-12.4 22.7-32.5 34C247.1 238.5 216 254.9 216 296v4c0 6.6 5.4 12 12 12h56c6.6 0 12-5.4 12-12v-1.3c0-28.5 83.2-29.6 83.2-106.7 0-58-60.2-102-116.5-102zM256 338c-25.4 0-46 20.6-46 46 0 25.4 20.6 46 46 46s46-20.6 46-46c0-25.4-20.6-46-46-46z"/></svg>
 						Help</a>
 					</div>
 
-					<div style="margin: 10px 0; background: #eee; padding:10px 0">
-				      <label class="container" style="">Infusulator / Research mode
-				          <input type="checkbox" onChange="" id="TSmodebox" class="" ><span class="checkmark"></span>
+					<div style="" id="TSresearchmodediv">
+				      <label class="container" style=""><span id="TSmodetext">Research mode: Off</span>
+				          <input type="checkbox" onChange="TSchangemode()" id="TSmodebox" class="" ><span class="checkmark"></span>
 				      </label>
+				      <div>This mode activates the infusulator, a retrospective time-series data entry tool, and an export module.</div>
 					</div>
 
 			</div>
@@ -310,7 +312,7 @@
 						
 						<a id="page2cet" class="page2subheading button huge" onclick="pageTwoFunction(1)"><span style="border-bottom:1px solid green">CE</span> TARGETING<i class="fas fa-brain fa-fw" style="color:green;"></i></a>
 						
-						<a id="page2manual" class="page2subheading button huge" onclick="initmanual(0);hidemodal('modalScreen2');document.getElementById('card_controlpanel').style.display='block';jumpStart();">MANUAL<i class="fas fa-syringe fa-fw" style="color:rgb(81 203 238)"></i></a>
+						<a id="page2manual" class="page2subheading button huge" onclick="initmanual(0);hidemodal('modalScreen2');if (!TSon) document.getElementById('card_controlpanel').style.display='block';jumpStart();">MANUAL<i class="fas fa-syringe fa-fw" style="color:rgb(81 203 238)"></i></a>
 						
 						<a id="page2IB" class="page2subheading button huge" onclick="initcetbolus(0);hideallmodal();jumpStart();">INTERMITTENT BOLUS<i class="fas fa-hourglass-half fa-fw" style="color:#c19f14"></i></a>
 						<div id="page2maxrate" class="">

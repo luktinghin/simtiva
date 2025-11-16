@@ -410,9 +410,9 @@ input[type=number]:not(:placeholder-shown):focus:valid {
 .container {
   display: block;
   position: relative;
-  padding: 1px 0 0 2px;
+  padding: 3px 0 0 2px;
   margin: 0px 0 0.75rem 30px;
-  border-bottom: 2px dotted transparent;
+  /*border-bottom: 2px dotted transparent;*/
   cursor: pointer;
   /*font-size: 22px;*/
   -webkit-user-select: none;
@@ -1203,7 +1203,6 @@ a.button.tinybutton > i {
 #btn_bolusconverter {
   float:right;
   min-width:40px;
-
 }
 .bolus_outside {
   font-size:85%;
@@ -4716,6 +4715,21 @@ body.dark #preview-expand-box > div > div.timespan {
 }
 
 /* infusulator time series */
+#btn_labs {
+  padding:4px 9px;
+}
+#btn_labs .iconsvg {
+  height:15px;
+  width:15px;
+  transform:translateY(2px);
+}
+#TSresearchmodediv {
+  margin: 10px 0; 
+  background: #eee; 
+  padding:9px;
+  border-radius:9px;
+  display:none;
+}
 .TStable {
   padding: 10px 0;
 }
@@ -4887,7 +4901,6 @@ a.button.TSbutton:hover, a.button.TSbutton:active {
     opacity: 0;
     pointer-events: none;
   }
-
   .sharebutton.complex {
     opacity: 0;
     pointer-events: none;

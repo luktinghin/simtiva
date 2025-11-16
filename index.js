@@ -622,12 +622,13 @@ const xInputCardsHTML = `
 					<div class="TSrow firstrow">
 						<div class="TScol1">Date</div>
 						<div class="TScol2">Time</div>
-						<div class="TScol3">Conc</div>
+						<div class="TScol3"><span id="col3row1">Conc</span></div>
 						<div class="TScol4"></div>
 					</div>
 					<div class="tablecontents">
-						<div id="TSplaceholder">Add an entry to start.</div>
+						
 					</div>
+					<div id="TSplaceholder">Add an entry to start.</div>
 				</div>
 				<div class="TSactions">
 					<a class="TSbutton button" onclick="TSshowentry()"><i class="fas fa-plus-circle"></i> Add</a>
@@ -1303,9 +1304,26 @@ const xModalsHTML =
 						<div>Time</div>
 						<div><input id="TSinputtime" type="time" style=""></div>
 					</div>
-					<div class="TSentry">
-						<div>Concentration</div>
+					<div class="TSentry" id="TSinputconcdiv">
+						<div id="TSinputconclabel">Concentration</div>
 						<div><input id="TSinputconc" type="number" step="0.01"></div>
+					</div>
+					<div class="TSentry" id="TSoptionbolusinf">
+						<div>Bolus or Infusion?</div>
+						<div><select id="TSselectbolusinf" onchange="TSchangebolusinf()">
+								<option value="0">Give bolus & change infusion rate</option>
+								<option value="1">Administer a bolus</option>
+								<option value="2">Change the infusion rate</option>
+							</select>
+						</div>
+					</div>
+					<div class="TSentry" id="TSinputbolusdiv">
+						<div id="TSinputboluslabel">Bolus (mg)</div>
+						<div><input id="TSinputbolus" type="number" step="0.01"></div>
+					</div>
+					<div class="TSentry" id="TSinputinfdiv">
+						<div>Infusion rate (ml/h)</div>
+						<div><input id="TSinputinf" type="number" step="0.01"></div>
 					</div>
 					<div class="TSvalidatemsg">
 					</div>

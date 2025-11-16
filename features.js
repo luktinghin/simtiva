@@ -897,13 +897,11 @@ function parseobject(input_uid,external,extObject) {
 				parsebolusadmin(parse_historyarray[count][3],0); 
 				lookahead(1,duration,0);
 				console.log("infusingafterbolus");
-				
 			}
 
 			if (count>0) {
 				if (parse_historyarray[count-1][1] == 1) { //bolus just given
 					console.log("bolusskip");
-
 				} else if (parse_historyarray[count][1] == 2) { // this is infusion and not after a bolus
 					if (count+1 < parse_historyarray.length) { //this is not last
 						duration = parse_historyarray[count+1][2] + 180;
@@ -5325,7 +5323,7 @@ function setnow(input__time) {
 		for (k=0; k<ElToHide.length; k++) {
 			ElToHide[k].style.display = "none";
 		} 
-
+		document.getElementById("hh").value = "0";
 	} else {
 		ElToHide = document.getElementsByClassName("hidehours");
 		for (k=0; k<ElToHide.length; k++) {
@@ -7489,6 +7487,7 @@ function emulatePopulateRatio() {
 //P_ev, P_length
 
 function TSget() {
+	if (!drug_sets[0].manualmode_active>0) {
 		param1 = document.getElementById("TSinputdate").value;
 		param2 = document.getElementById("TSinputtime").value;
 		param3 = document.getElementById("TSinputconc").value * 1;
@@ -7510,9 +7509,44 @@ function TSget() {
 			document.querySelector(".TSvalidatemsg").innerHTML = errormsg;
 			document.querySelector(".TSvalidatemsg").style.display = "block";
 		}
+	} else {
+		//for manual mode
+		param1 = document.getElementById("TSinputdate").value;
+		param2 = document.getElementById("TSinputtime").value;
+		param3 = document.getElementById("TSselectbolusinf").value * 1;
+		param4 = document.getElementById("TSinputbolus").value * 1;
+		param5 = document.getElementById("TSinputinf").value * 1;
+		paramtime = Date.parse(param1 + "T" + param2);
+		errormsg = TSvalidate(param1,param2,0,undefined,param3,param4,param5);
+		if (errormsg=="") {
+			if ((window.TSarray == undefined) || (window.TSarray.length == 0)) {
+				if (param3 == 0) {
+					TSpush(paramtime,undefined,true,0,param4,param5);	
+				} else if (param3 == 1) {
+					TSpush(paramtime,undefined,true,1,param4);
+				} else {
+					TSpush(paramtime,undefined,true,2,undefined,param5);
+				}
+			} else {
+				if (param3 == 0) {
+					TSpush(paramtime,undefined,false,0,param4,param5);	
+				} else if (param3 == 1) {
+					TSpush(paramtime,undefined,false,1,param4);
+				} else {
+					TSpush(paramtime,undefined,false,2,undefined,param5);
+				}
+			}
+			TSupdateview();
+			hideallmodal();
+		} else {
+			//display error message;
+			document.querySelector(".TSvalidatemsg").innerHTML = errormsg;
+			document.querySelector(".TSvalidatemsg").style.display = "block";
+		}
+	}
 }
 
-function TSvalidate(inputdate,inputtime,inputconc,editIndex) {
+function TSvalidate(inputdate,inputtime,inputconc,editIndex,manual_bolusorinf,manual_bolus,manual_infusion) {
 	errormsg = "";
 	if ((window.TSarray == undefined) || (window.TSarray.length == 0)) {
 		isFirst = true;
@@ -7540,73 +7574,234 @@ function TSvalidate(inputdate,inputtime,inputconc,editIndex) {
 	//cannot be earlier than last
 	if (errormsg == "") {
 		if (!isFirst) {
-			if (editIndex == undefined) {
-				lastitem = TSarray.length - 1;
+			if (manual_bolusorinf == undefined) {
+				if (editIndex == undefined) {
+					lastitem = TSarray.length - 1;
+				} else {
+					lastitem = editIndex - 1;
+				}
+				last = TScalcdatetime(TSarray[lastitem][2]).getTime();
+				tempdate0 = new Date(param1 + "T" + param2)
+				tempdate = tempdate0.getTime();
+				if (tempdate<=last) {
+					errormsg += "Invalid time: cannot be earlier than previous."
+				}
+				//also cannot be 6h later than the last
+				limit = TScalcdatetime(TSarray[lastitem][2] + 21600).getTime();
+				if (tempdate>=limit) {
+					errormsg += "Invalid time: cannot be over >6h after the previous (programming limitation)."
+				}
 			} else {
-				lastitem = editIndex - 1;
-			}
-			last = TScalcdatetime(TSarray[lastitem][2]).getTime();
-			tempdate0 = new Date(param1 + "T" + param2)
-			tempdate = tempdate0.getTime();
-			if (tempdate<=last) {
-				errormsg += "Invalid time: cannot be earlier than previous."
-			}
-			//also cannot be 6h later than the last
-			limit = TScalcdatetime(TSarray[lastitem][2] + 21600).getTime();
-			if (tempdate>=limit) {
-				errormsg += "Invalid time: cannot be over >6h after the previous (programming limitation)."
+				//need to see if true first as this might be a pairing
+				//need to see if bolusskip
+				if (editIndex == undefined) {
+					lastitem = TSarray.length - 1;	
+				} else {
+					lastitem = -1;
+					if (manual_bolusorinf == 2) {
+						if (TSarray.length > 1) {
+							if (TSarray.length > 2) {
+								if (TSarray[editIndex-1][1] == 1) {
+									lastitem = editIndex-2;
+								} else if (TSarray[editIndex-1][1] == 2) {
+									lastitem = editIndex-1;
+								}
+							} else {
+								if (TSarray[editIndex-1][1] == 2) {
+									lastitem = editIndex-1;
+								}
+							}
+						}
+					} else {
+						lastitem = editIndex-1;	
+					}
+					if (lastitem != -1) {
+						last = TScalcdatetime(TSarray[lastitem][2]).getTime();
+						tempdate0 = new Date(param1 + "T" + param2)
+						tempdate = tempdate0.getTime();
+						if (tempdate<=last) {
+							errormsg += "Invalid time: cannot be earlier than previous."
+						}
+						//also cannot be 6h later than the last
+						limit = TScalcdatetime(TSarray[lastitem][2] + 21600).getTime();
+						if (tempdate>=limit) {
+							errormsg += "Invalid time: cannot be over >6h after the previous (programming limitation)."
+						}
+					}
+				}
 			}
 		}
 		if (editIndex >= 0) {
 			//cannot be later than next
-			if (editIndex < TSarray.length-1) {
-				nextitem = editIndex + 1;
-				next = TScalcdatetime(TSarray[nextitem][2]).getTime();
-				tempdate0 = new Date(param1 + "T" + param2)
-				tempdate = tempdate0.getTime();
-				if (tempdate>=next) {
-					errormsg += "Invalid time: cannot be later than next."
+			if (manual_bolusorinf == undefined) {
+				if (editIndex < TSarray.length-1) {
+					nextitem = editIndex + 1;
+					next = TScalcdatetime(TSarray[nextitem][2]).getTime();
+					tempdate0 = new Date(param1 + "T" + param2)
+					tempdate = tempdate0.getTime();
+					if (tempdate>=next) {
+						errormsg += "Invalid time: cannot be later than next."
+					}
+				}
+			} else {
+				if (manual_bolusorinf == 2) {
+					if (editIndex < TSarray.length-1) {
+						nextitem = editIndex + 1;
+						next = TScalcdatetime(TSarray[nextitem][2]).getTime();
+						tempdate0 = new Date(param1 + "T" + param2)
+						tempdate = tempdate0.getTime();
+						if (tempdate>=next) {
+							errormsg += "Invalid time: cannot be later than next."
+						}
+					}
+				} else if (manual_bolusorinf == 1) {
+					if (editIndex < TSarray.length-2) {
+						nextitem = editIndex + 2;
+						next = TScalcdatetime(TSarray[nextitem][2]).getTime();
+						tempdate0 = new Date(param1 + "T" + param2)
+						tempdate = tempdate0.getTime();
+						if (tempdate>=next) {
+							errormsg += "Invalid time: cannot be later than next."
+						}
+					}
 				}
 			}
 			//even if in the range between last and previous,
 			//it cannot be 6h away from either end, in editing mode
 			if (editIndex == 0) {
-				tempdate0 = new Date(param1 + "T" + param2)
-				tempdate = tempdate0.getTime();
-				if (TSarray.length >= 2) {
-					limit = TScalcdatetime(TSarray[1][2] - 21600).getTime();
-					if (tempdate <= limit) {
-						errormsg += "Invalid time: cannot be >6h earlier than the next (programming limitation)."
-					}
-				}
-			} else {
-				tempdate0 = new Date(param1 + "T" + param2)
-				tempdate = tempdate0.getTime();
-				if (TSarray.length >= 3) {
-					limit1 = TScalcdatetime(TSarray[editIndex-1][2] + 21600).getTime();
-					if (tempdate >= limit1) {
-						if (errormsg == "") {
-							errormsg += "Invalid time: cannot be >6h later than the previous (programming limitation)."	
-						}
-					}
-					if (editIndex < TSarray.length-1) {
-						//not last
-						limit2 = TScalcdatetime(TSarray[editIndex+1][2] - 21600).getTime();
-						if (tempdate <= limit2) {
+				if (manual_bolusorinf == undefined) {
+					tempdate0 = new Date(param1 + "T" + param2)
+					tempdate = tempdate0.getTime();
+					if (TSarray.length >= 2) {
+						limit = TScalcdatetime(TSarray[1][2] - 21600).getTime();
+						if (tempdate <= limit) {
 							errormsg += "Invalid time: cannot be >6h earlier than the next (programming limitation)."
 						}
+					}
+				} else {
+					tempdate0 = new Date(param1 + "T" + param2)
+					tempdate = tempdate0.getTime();
+					if (manual_bolusorinf == 1) {
+						if (TSarray.length >= 3) {
+							limit = TScalcdatetime(TSarray[2][2] - 21600).getTime();
+							if (tempdate <= limit) {
+								errormsg += "Invalid time: cannot be >6h earlier than the next (programming limitation)."
+							}
+						}
+					} else if (manual_bolusorinf == 2) {
+						if (TSarray.length >= 2) {
+							limit = TScalcdatetime(TSarray[2][2] - 21600).getTime();
+							if (tempdate <= limit) {
+								errormsg += "Invalid time: cannot be >6h earlier than the next (programming limitation)."
+							}
+						}
+					}
+				}
+
+			} else {
+				//editing the index 0 entry
+				if (manual_bolusorinf == undefined) {
+					tempdate0 = new Date(param1 + "T" + param2)
+					tempdate = tempdate0.getTime();
+					if (TSarray.length >= 3) {
+						limit1 = TScalcdatetime(TSarray[editIndex-1][2] + 21600).getTime();
+						if (tempdate >= limit1) {
+							if (errormsg == "") {
+								errormsg += "Invalid time: cannot be >6h later than the previous (programming limitation)."	
+							}
+						}
+						if (editIndex < TSarray.length-1) {
+							//not last
+							limit2 = TScalcdatetime(TSarray[editIndex+1][2] - 21600).getTime();
+							if (tempdate <= limit2) {
+								errormsg += "Invalid time: cannot be >6h earlier than the next (programming limitation)."
+							}
+						}
+					}					
+				} else {
+					tempdate0 = new Date(param1 + "T" + param2)
+					tempdate = tempdate0.getTime();
+					if ((editIndex == 1) && (manual_bolusorinf == 2) && (TSarray[0][1] == 1)) {
+						//this is the pair of inf of bolus
+						tempdate1 = TScalcdatetime(TSarray[editIndex][2]).getTime();
+						if (tempdate != tempdate1) {
+							errormsg += "Time cannot be altered for this entry.";
+						}
+					} else {
+						if (TSarray.length >= 3) {
+							if (manual_bolusorinf == 1) {
+								limit1 = TScalcdatetime(TSarray[editIndex-1][2] + 21600).getTime();
+								if (tempdate >= limit1) {
+									if (errormsg == "") {
+										errormsg += "Invalid time: cannot be >6h later than the previous (programming limitation)."	
+									}
+								}
+								if (editIndex < TSarray.length-2) {
+									//not last
+									limit2 = TScalcdatetime(TSarray[editIndex+2][2] - 21600).getTime();
+									if (tempdate <= limit2) {
+										errormsg += "Invalid time: cannot be >6h earlier than the next (programming limitation)."
+									}
+								}
+							} else {
+								//this is inf
+								//check if it's a bolus pairing
+								if (TSarray[editIndex-1][1] == 1) {
+									//this is the pair of inf of bolus
+									tempdate1 = TScalcdatetime(TSarray[editIndex][2]).getTime();
+									if (tempdate != tempdate1) {
+										errormsg += "Time cannot be altered for this entry.";
+									}
+								} else {
+									//not a bolus pairing
+									limit1 = TScalcdatetime(TSarray[editIndex-1][2] + 21600).getTime();
+									if (tempdate >= limit1) {
+										if (errormsg == "") {
+											errormsg += "Invalid time: cannot be >6h later than the previous (programming limitation)."	
+										}
+									}
+									if (editIndex < TSarray.length-1) {
+										//not last
+										limit2 = TScalcdatetime(TSarray[editIndex+1][2] - 21600).getTime();
+										if (tempdate <= limit2) {
+											errormsg += "Invalid time: cannot be >6h earlier than the next (programming limitation)."
+										}
+									}
+								}
+							}
+						}	
 					}
 				}
 			}
 		}
 	}
-	if (inputconc < 0) {
-		errormsg += "Invalid concentration entry. <br>"
+	if (manual_bolusorinf == undefined) {
+		if (inputconc < 0) {
+			errormsg += "Invalid concentration entry. <br>"
+		}
+	} else {
+		if (manual_bolusorinf == 0) {
+			if (manual_bolus < 0) {
+				errormsg += "Invalid bolus entry. <br>"
+			}
+			if (manual_infusion < 0) {
+				errormsg += "Invalid infusion rate entry. <br>"
+			}
+		} else if (manual_bolusorinf == 1) {
+			if (manual_bolus < 0) {
+				errormsg += "Invalid bolus entry. <br>"
+			}
+		} else {
+			if (manual_infusion < 0) {
+				errormsg += "Invalid infusion rate entry. <br>"
+			}
+		}
 	}
+	
 	return errormsg;
 }
 
-function TSpush(inputtime,inputconc,isFirst) {
+function TSpush(inputtime,inputconc,isFirst,manual_bolusorinf,manual_bolus,manual_infusion) {
     if (isFirst) {
         window.TSarray = new Array();
         TSarray.length = 0;
@@ -7616,12 +7811,26 @@ function TSpush(inputtime,inputconc,isFirst) {
     }
     if (drug_sets[0].cet_active > 0) mode = 2;
 	if (drug_sets[0].cpt_active > 0) mode = 1;
-	if (drug_sets[0].max_rate > 0) {
-		TSarray.push([mode,0,(inputtime-TSoriginE)/1000,inputconc,drug_sets[0].max_rate]);	
+	if (drug_sets[0].manualmode_active > 0) mode = 0;
+	if (manual_bolusorinf == undefined) {
+		if (drug_sets[0].max_rate > 0) {
+			TSarray.push([mode,0,(inputtime-TSoriginE)/1000,inputconc,drug_sets[0].max_rate]);	
+		} else {
+			TSarray.push([mode,0,(inputtime-TSoriginE)/1000,inputconc])
+		}
 	} else {
-		TSarray.push([mode,0,(inputtime-TSoriginE)/1000,inputconc])
+		if (manual_bolusorinf == 0) {
+			TSarray.push([mode,1,(inputtime-TSoriginE)/1000,manual_bolus]);
+			TSarray.push([mode,2,(inputtime-TSoriginE)/1000,manual_infusion]);
+		} else if (manual_bolusorinf == 1) {
+			TSarray.push([mode,1,(inputtime-TSoriginE)/1000,manual_bolus]);
+			tempinf = 0;
+			if (TSarray.length>=2) tempinf = TSarray[TSarray.length-2][3];
+			TSarray.push([mode,2,(inputtime-TSoriginE)/1000,tempinf]);
+		} else if (manual_bolusorinf == 2) {
+			TSarray.push([mode,2,(inputtime-TSoriginE)/1000,manual_infusion]);
+		}
 	}
-    
 }
 
 function TSoutput() {
@@ -7644,66 +7853,188 @@ function TSoutput() {
 
 function TSedit(index) {
 	itemtimestamp = TSarray[index][2];
-	itemconc = TSarray[index][3];
 	tempdate = TScalcdatetime(itemtimestamp);
 	corrected_m = tempdate.getMonth()+1; //Jan gives 0
 	MM = ((corrected_m) < 10) ? "0" + corrected_m : corrected_m;
 	DD = (tempdate.getDate() < 10) ? "0" + tempdate.getDate() : tempdate.getDate();
 	HH = (tempdate.getHours() < 10) ? "0" + tempdate.getHours() : tempdate.getHours();
-	MinMin = (tempdate.getMinutes() < 10) ? "0" + tempdate.getMinutes() : tempdate.getMinutes();
-		
+	MinMin = (tempdate.getMinutes() < 10) ? "0" + tempdate.getMinutes() : tempdate.getMinutes();		
 	document.getElementById("TSinputdate").value = tempdate.getFullYear() + "-" + MM + "-" + DD;
 	document.getElementById("TSinputtime").value = HH + ":" + MinMin;
-	document.getElementById("TSinputconc").value = itemconc;
 	elHeader = document.querySelector("#modalTSEntry .modal-header");
 	elHeader.innerHTML = "Edit Time Series Data " + (index+1);
 	document.getElementById("TSconfirmbtn").innerHTML = "Submit";
 	document.getElementById("TSconfirmbtn").setAttribute("onclick","TSsubmitedit(" + index + ");");
 	document.querySelector(".TSvalidatemsg").innerHTML = "";
 	document.querySelector(".TSvalidatemsg").style.display = "none";
+
+	if (drug_sets[0].manualmode_active > 0) {
+		itembolusorinf = TSarray[index][1];
+		itemvalue = TSarray[index][3];
+		document.getElementById("TSinputconcdiv").style.display = "none";
+		document.getElementById("TSoptionbolusinf").style.display = "block";
+		document.getElementById("TSselectbolusinf").disabled = true;
+		document.getElementById("TSselectbolusinf").value = itembolusorinf;
+		if (itembolusorinf == 1) {
+			document.getElementById("TSinputbolusdiv").style.display = "block";	
+			document.getElementById("TSinputinfdiv").style.display = "none";
+			document.getElementById("TSinputbolus").value = itemvalue;
+		} else if (itembolusorinf == 2) {
+			document.getElementById("TSinputbolusdiv").style.display = "none";	
+			document.getElementById("TSinputinfdiv").style.display = "block";	
+			document.getElementById("TSinputinf").value = itemvalue;
+		}
+	} else {
+		itemconc = TSarray[index][3];
+		document.getElementById("TSinputconc").value = itemconc;
+		document.getElementById("TSinputconcdiv").style.display = "block";
+		document.getElementById("TSoptionbolusinf").style.display = "none";
+		document.getElementById("TSinputbolusdiv").style.display = "none";
+		document.getElementById("TSinputinfdiv").style.display = "none";
+	}
+
 	setmodal("modalTSEntry");
 }
 
 function TSdelete(index) {
-	TSarray.splice(index,1);
+	if (drug_sets[0].manualmode_active > 0) {
+		if (index == 1) {
+			if ((TSarray[0][1] == 1) && (TSarray[1][1] == 2)) {
+				displayWarning("Warning", "This action is not allowed.");
+			} else {
+				if (TSarray[index][1] == 1) {
+					TSarray.splice(index,2);		
+				} else {
+					TSarray.splice(index,1);		
+				}
+			}
+		} else {
+			if (TSarray[index][1] == 1) {
+				TSarray.splice(index,2);		
+			} else {
+				TSarray.splice(index,1);		
+			}
+		}
+	} else {
+		TSarray.splice(index,1);	
+	}
+	
 	TSupdateview();
 }
 
 function TSsubmitedit(index) {
 	param1 = document.getElementById("TSinputdate").value;
 	param2 = document.getElementById("TSinputtime").value;
-	param3 = document.getElementById("TSinputconc").value * 1;
 	paramtime = Date.parse(param1 + "T" + param2);
-	if (drug_sets[0].cet_active > 0) mode = 2;
-	if (drug_sets[0].cpt_active > 0) mode = 1;
-	errormsg = TSvalidate(param1,param2,param3,index);
-	if (errormsg == "") {
-		if (index>0) {
-			TSarray[index] = [mode,0,(paramtime-TSoriginE)/1000,param3];	
+	if (drug_sets[0].manualmode_active>0) {
+		manual_bolusorinf = TSarray[index][1];
+		if (manual_bolusorinf == 1) {
+			param3 = document.getElementById("TSinputbolus").value * 1;
+			errormsg = TSvalidate(param1,param2,undefined,index,manual_bolusorinf,param3,undefined);	
 		} else {
-			//reset origin
-			old = TSoriginE;
-	        TSoriginE = paramtime;
-	        TSoriginD = new Date(paramtime);
-	        //set the origin data
-	        TSarray[index] = [mode,0,0,param3];
-	        tempoffset = (paramtime - old)/1000;
-	        //recalc the other timestamps of all data series
-	        if (TSarray.length>0) {
-	        	for (i=1; i<TSarray.length; i++) {
-	        		temptime = TSarray[i][2];
-	        		console.log("to offset by " + tempoffset);
-	        		TSarray[i][2] = temptime - tempoffset;
-	        	}	
-	        }
+			param3 = document.getElementById("TSinputinf").value * 1;
+			errormsg = TSvalidate(param1,param2,undefined,index,manual_bolusorinf,undefined,param3);
 		}
-		TSupdateview();
-		hideallmodal();
+		if (errormsg == "") {
+			if (index > 0) {
+				//to rule out index == 1 and this is a pairing
+				if ((index == 1) && (TSarray[0][1] == 1) && (TSarray[1][1] == 2)) {
+					//reset origin
+					old = TSoriginE;
+			        TSoriginE = paramtime;
+			        TSoriginD = new Date(paramtime);
+			        //set the origin data
+					TSarray[index] = [0,manual_bolusorinf,0,param3];
+					//set also the first bolus data
+					bolusdata = TSarray[0][3];
+					TSarray[0] = [0,1,0,bolusdata];
+			        tempoffset = (paramtime - old)/1000;
+			        //recalc the other timestamps of all data series
+			        if (TSarray.length>0) {
+			        	for (i=1; i<TSarray.length; i++) {
+			        		temptime = TSarray[i][2];
+			        		console.log("to offset by " + tempoffset);
+			        		TSarray[i][2] = temptime - tempoffset;
+			        	}	
+			        }
+				} else {
+					if (manual_bolusorinf == 1) {
+						TSarray[index] = [0,manual_bolusorinf,(paramtime-TSoriginE)/1000,param3];	
+						infdata = TSarray[index+1][3];
+						TSarray[index+1] = [0,2,(paramtime-TSoriginE)/1000,infdata];		
+					} else {
+						TSarray[index] = [0,manual_bolusorinf,(paramtime-TSoriginE)/1000,param3];	
+					}
+				}
+			} else {
+				//reset origin
+				old = TSoriginE;
+		        TSoriginE = paramtime;
+		        TSoriginD = new Date(paramtime);
+		        //set the origin data
+				TSarray[index] = [0,manual_bolusorinf,0,param3];
+				if (manual_bolusorinf == 1) {
+					infdata = TSarray[index+1][3];
+					TSarray[index+1] = [0,2,0,infdata];		
+				}
+				tempoffset = (paramtime - old)/1000;
+		        //recalc the other timestamps of all data series
+		        if (TSarray.length>0) {
+		        	for (i=1; i<TSarray.length; i++) {
+		        		temptime = TSarray[i][2];
+		        		console.log("to offset by " + tempoffset);
+		        		TSarray[i][2] = temptime - tempoffset;
+		        	}	
+		        }
+			}
+			TSupdateview();
+			hideallmodal();
+		} else {
+			document.querySelector(".TSvalidatemsg").innerHTML = errormsg;
+			document.querySelector(".TSvalidatemsg").style.display = "block";
+		}
 	} else {
-		//display error message
-		document.querySelector(".TSvalidatemsg").innerHTML = errormsg;
-		document.querySelector(".TSvalidatemsg").style.display = "block";
+		param3 = document.getElementById("TSinputconc").value * 1;
+		if (drug_sets[0].cet_active > 0) mode = 2;
+		if (drug_sets[0].cpt_active > 0) mode = 1;
+		errormsg = TSvalidate(param1,param2,param3,index);
+		if (errormsg == "") {
+			if (index>0) {
+				if (drug_sets[0].max_rate>0) {
+					TSarray[index] = [mode,0,(paramtime-TSoriginE)/1000,param3,drug_sets[0].max_rate];		
+				} else {
+					TSarray[index] = [mode,0,(paramtime-TSoriginE)/1000,param3];
+				}
+			} else {
+				//reset origin
+				old = TSoriginE;
+		        TSoriginE = paramtime;
+		        TSoriginD = new Date(paramtime);
+		        //set the origin data
+				if (drug_sets[0].max_rate>0) {
+					TSarray[index] = [mode,0,0,param3,drug_sets[0].max_rate];		
+				} else {
+					TSarray[index] = [mode,0,0,param3];
+				}
+		        tempoffset = (paramtime - old)/1000;
+		        //recalc the other timestamps of all data series
+		        if (TSarray.length>0) {
+		        	for (i=1; i<TSarray.length; i++) {
+		        		temptime = TSarray[i][2];
+		        		console.log("to offset by " + tempoffset);
+		        		TSarray[i][2] = temptime - tempoffset;
+		        	}	
+		        }
+			}
+			TSupdateview();
+			hideallmodal();
+		} else {
+			//display error message
+			document.querySelector(".TSvalidatemsg").innerHTML = errormsg;
+			document.querySelector(".TSvalidatemsg").style.display = "block";
+		}		
 	}
+
 	console.log(index + " " + paramtime/1000);
 }
 
@@ -7711,6 +8042,11 @@ function TSshowentry() {
 	//resets
 	if (window.TSarray == undefined) {
 		count = 1;
+		//update units
+		con = drug_sets[0].conc_units;
+		inf = drug_sets[0].infused_units;
+		document.getElementById("TSinputconclabel").innerHTML = "Concentration (" + con + "/ml)";
+		document.getElementById("TSinputboluslabel").innerHTML = "Bolus (" + inf + ")";
 	} else {
 		count = TSarray.length + 1;
 	}
@@ -7719,7 +8055,39 @@ function TSshowentry() {
 	document.querySelector(".TSvalidatemsg").innerHTML = "";
 	document.querySelector(".TSvalidatemsg").style.display = "none";
 	document.getElementById("TSconfirmbtn").setAttribute("onclick","TSget();");
+	if (drug_sets[0].manualmode_active > 0) {
+		document.getElementById("col3row1").innerHTML = "Command";
+		document.getElementById("TSinputconcdiv").style.display = "none";
+		document.getElementById("TSoptionbolusinf").style.display = "block";
+		document.getElementById("TSselectbolusinf").disabled = false;
+		if (count==1) {
+			document.getElementById("TSselectbolusinf").options[0].disabled = false;
+		} else {
+			document.getElementById("TSselectbolusinf").options[0].disabled = true;
+			document.getElementById("TSselectbolusinf").value = "2";
+			document.getElementById("TSinputbolusdiv").style.display = "none";	
+			document.getElementById("TSinputinfdiv").style.display = "block";	
+		}
+	} else {
+		document.getElementById("TSinputconcdiv").style.display = "block";
+		document.getElementById("TSoptionbolusinf").style.display = "none";
+		document.getElementById("TSinputbolusdiv").style.display = "none";
+		document.getElementById("TSinputinfdiv").style.display = "none";
+	}
 	setmodal('modalTSEntry');
+}
+
+function TSchangebolusinf() {
+		if (document.getElementById("TSselectbolusinf").value == "0") {
+			document.getElementById("TSinputbolusdiv").style.display = "block";	
+			document.getElementById("TSinputinfdiv").style.display = "block";
+		} else if (document.getElementById("TSselectbolusinf").value == "1") {
+			document.getElementById("TSinputbolusdiv").style.display = "block";	
+			document.getElementById("TSinputinfdiv").style.display = "none";
+		} else {
+			document.getElementById("TSinputbolusdiv").style.display = "none";	
+			document.getElementById("TSinputinfdiv").style.display = "block";			
+		}
 }
 
 function TSupdateview() {
@@ -7733,7 +8101,21 @@ function TSupdateview() {
 		tempdate = TScalcdatetime(TSarray[i][2]);
 		a = tempdate.toLocaleDateString([], { day: 'numeric', month: 'short' });
 		b = tempdate.toLocaleTimeString([],{ hour: "2-digit", minute: "2-digit" });
-		c = TSarray[i][3];
+		if (drug_sets[0].manualmode_active>0) {
+			if (TSarray[i][1] == 1) {
+				c = "Bolus: " + TSarray[i][3] + drug_sets[0].infused_units;
+			} else if (TSarray[i][1] == 2) {
+				c = "Rate: " + TSarray[i][3] + "ml/h";
+			}
+		} else {
+			c = TSarray[i][3];	
+		}
+		skip = false;
+		if ((drug_sets[0].manualmode_active>0) && (i>1)) {
+			if ((TSarray[i][1] == 2) && (TSarray[i-1][1] == 1)) {
+				skip = true;
+			}
+		}
 		if (i==0) {
 			rowDiv.innerHTML = `
 							<div id="TS${i}c1" class="TScol1">${a}</div>
@@ -7744,7 +8126,8 @@ function TSupdateview() {
 							</div>
 			`;
 		} else {
-			rowDiv.innerHTML = `
+			if (!skip) {
+				rowDiv.innerHTML = `
 							<div id="TS${i}c1" class="TScol1">${a}</div>
 							<div id="TS${i}c2" class="TScol2">${b}</div>
 							<div id="TS${i}c3" class="TScol3">${c}</div>
@@ -7752,28 +8135,34 @@ function TSupdateview() {
 								<div id="TS${i}control1" class="TScontrol1" onclick="TSedit(${i});"><i class="fas fa-pen"></i></div>
 								<div id="TS${i}control2" class="TScontrol2" onclick="TSdelete(${i});"><i class="fas fa-trash-alt"></i></div>
 							</div>
-			`;
+				`;
+			}
 		}
-		el0.appendChild(rowDiv);
+		if (!skip) el0.appendChild(rowDiv);
 	}
 }
 
 function TSrunsim() {
 	//clear chart views
-	myChart.data.datasets[2].data.length = 0;
-	myChart.data.datasets[3].data.length = 0;
-	TSupdateview();
-	obj = TSoutput();
-	parseobject(0,true,obj);
-	document.getElementById("TStabledisplay").innerHTML = TSformattable(TSoutputtable(document.getElementById("TSresolution").value*1));
-	time_in_s = 0;
-	TSinitiate();
+	if (TSarray.length!=0) {
+		myChart.data.datasets[2].data.length = 0;
+		myChart.data.datasets[3].data.length = 0;
+		TSupdateview();
+		obj = TSoutput();
+		parseobject(0,true,obj);
+		document.getElementById("TStabledisplay").innerHTML = TSformattable(TSoutputtable(document.getElementById("TSresolution").value*1));
+		time_in_s = 0;
+		TSinitiate();
+	}
 }
 
 function TSreset() {
 	//clear chart views
 	myChart.data.datasets[2].data.length = 0;
 	myChart.data.datasets[3].data.length = 0;
+	document.getElementById("historywrapper").innerHTML = "";
+	document.getElementById("historywrapperCOPY").innerHTML = "";
+	document.getElementById("TStabledisplay").innerHTML = "";
 	updatechart(myChart);
 	TSarray.length = 0;
 	TSupdateview();
@@ -7808,10 +8197,11 @@ function TSchangemode() {
 		document.getElementById("card_wakeup").style.display = "none";
 		document.getElementById("card_TS").style.display = "block";
 		document.getElementById("card_output").style.display = "block";
-		document.getElementById("page2manual").style.display = "none";
+		document.getElementById("card_infusion0").style.display = "none";
 		document.getElementById("page2IB").style.display = "none";
 		document.getElementById("ptolcard").style.display = "none";
 		document.getElementById("card_options").style.display = "none";
+		document.getElementById("TSmodetext").innerHTML = "Research mode: <b>Active</b>";
 	} else {
 		document.getElementById("card_cpt0").style.display = "";
 		document.getElementById("card_controlpanel").style.display = "";
@@ -7821,9 +8211,10 @@ function TSchangemode() {
 		document.getElementById("card_wakeup").style.display = "";
 		document.getElementById("card_TS").style.display = "none";
 		document.getElementById("card_output").style.display = "none";
-		document.getElementById("page2manual").style.display = "";
+		document.getElementById("card_infusion0").style.display = "";
 		document.getElementById("page2IB").style.display = "";
 		document.getElementById("card_options").style.display = "block";
+		document.getElementById("TSmodetext").innerHTML = "Research mode: Off";
 	}
 }
 
@@ -7896,5 +8287,16 @@ function TSinitiate() {
 	myChart.update();
 	document.getElementById("chartinfooverlay").style.display = "none";
 	document.getElementById("ptolcard").style.display = "none";
-	document.getElementById("top_subtitle2").innerHTML = "Research"
+	document.getElementById("top_subtitle2").innerHTML = "Research";
+
+}
+
+function labsbutton() {
+	if (myChart == undefined) {
+		dynamicLoad();
+		createCharts();
+	}
+	document.getElementById("logo").style.display = "none";
+	document.getElementById("rescuebuttons").style.display = "none";
+	document.getElementById("TSresearchmodediv").style.display = "block";
 }
