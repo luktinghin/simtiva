@@ -2418,6 +2418,10 @@ function displayModelOptions() {
 		setTimeout(function() {
 			hidemodal('modalWarning');
 		},300);
+		//additional checks
+		if (idtemp == "Complex") {
+			if (TSon) TSchangemode();
+		}
 	}
 
 }

@@ -4730,6 +4730,9 @@ body.dark #preview-expand-box > div > div.timespan {
   border-radius:9px;
   display:none;
 }
+body.dark #TSresearchmodediv {
+  background: rgb(9,51,38);
+}
 .TStable {
   padding: 10px 0;
 }
@@ -4792,6 +4795,10 @@ body.dark #preview-expand-box > div > div.timespan {
   background: #eee;
 }
 
+body.dark #TStablecontrols {
+  background: linear-gradient(180deg, transparent, #324036);
+}
+
 #TSplaceholder {
   background:#eee;
   margin:20px;
@@ -4800,12 +4807,20 @@ body.dark #preview-expand-box > div > div.timespan {
   border-radius:4rem;
 }
 
+body.dark #TSplaceholder {
+  background: linear-gradient(180deg, transparent, #324036);
+}
+
 .TSactions {
   display:flex;
   justify-content:center;
   padding:10px;
   border-radius:0 0 9px 9px;
   background:#eee;
+}
+
+body.dark .TSactions {
+  background: linear-gradient(180deg, transparent, #324036);
 }
 
 .TSvalidatemsg {

@@ -7615,18 +7615,18 @@ function TSvalidate(inputdate,inputtime,inputconc,editIndex,manual_bolusorinf,ma
 					} else {
 						lastitem = editIndex-1;	
 					}
-					if (lastitem != -1) {
-						last = TScalcdatetime(TSarray[lastitem][2]).getTime();
-						tempdate0 = new Date(param1 + "T" + param2)
-						tempdate = tempdate0.getTime();
-						if (tempdate<=last) {
-							errormsg += "Invalid time: cannot be earlier than previous."
-						}
-						//also cannot be 6h later than the last
-						limit = TScalcdatetime(TSarray[lastitem][2] + 21600).getTime();
-						if (tempdate>=limit) {
-							errormsg += "Invalid time: cannot be over >6h after the previous (programming limitation)."
-						}
+				}
+				if (lastitem != -1) {
+					last = TScalcdatetime(TSarray[lastitem][2]).getTime();
+					tempdate0 = new Date(param1 + "T" + param2)
+					tempdate = tempdate0.getTime();
+					if (tempdate<=last) {
+						errormsg += "Invalid time: cannot be earlier than previous."
+					}
+					//also cannot be 6h later than the last
+					limit = TScalcdatetime(TSarray[lastitem][2] + 21600).getTime();
+					if (tempdate>=limit) {
+						errormsg += "Invalid time: cannot be over >6h after the previous (programming limitation)."
 					}
 				}
 			}
@@ -7973,10 +7973,6 @@ function TSsubmitedit(index) {
 		        TSoriginD = new Date(paramtime);
 		        //set the origin data
 				TSarray[index] = [0,manual_bolusorinf,0,param3];
-				if (manual_bolusorinf == 1) {
-					infdata = TSarray[index+1][3];
-					TSarray[index+1] = [0,2,0,infdata];		
-				}
 				tempoffset = (paramtime - old)/1000;
 		        //recalc the other timestamps of all data series
 		        if (TSarray.length>0) {
@@ -7986,6 +7982,10 @@ function TSsubmitedit(index) {
 		        		TSarray[i][2] = temptime - tempoffset;
 		        	}	
 		        }
+				if (manual_bolusorinf == 1) {
+					infdata = TSarray[index+1][3];
+					TSarray[index+1] = [0,2,0,infdata];		
+				}
 			}
 			TSupdateview();
 			hideallmodal();
@@ -8034,7 +8034,6 @@ function TSsubmitedit(index) {
 			document.querySelector(".TSvalidatemsg").style.display = "block";
 		}		
 	}
-
 	console.log(index + " " + paramtime/1000);
 }
 
@@ -8064,6 +8063,13 @@ function TSshowentry() {
 			document.getElementById("TSselectbolusinf").options[0].disabled = false;
 		} else {
 			document.getElementById("TSselectbolusinf").options[0].disabled = true;
+			document.getElementById("TSselectbolusinf").value = "2";
+			document.getElementById("TSinputbolusdiv").style.display = "none";	
+			document.getElementById("TSinputinfdiv").style.display = "block";	
+		}
+		if (drug_sets[0].drug_name == "Dexmedetomidine") {
+			document.getElementById("TSselectbolusinf").options[0].disabled = true;
+			document.getElementById("TSselectbolusinf").options[1].disabled = true;
 			document.getElementById("TSselectbolusinf").value = "2";
 			document.getElementById("TSinputbolusdiv").style.display = "none";	
 			document.getElementById("TSinputinfdiv").style.display = "block";	
@@ -8204,6 +8210,7 @@ function TSchangemode() {
 		document.getElementById("TSmodetext").innerHTML = "Research mode: <b>Active</b>";
 	} else {
 		document.getElementById("card_cpt0").style.display = "";
+		document.getElementById("card_cet0_new").style.display = "";
 		document.getElementById("card_controlpanel").style.display = "";
 		document.getElementById("card_retrospective").style.display = "";
 		document.getElementById("card_TimeEstimation").style.display = "";
@@ -8215,6 +8222,23 @@ function TSchangemode() {
 		if (document.getElementById("select_model").value != "Hannivoort") document.getElementById("page2IB").style.display = "";
 		document.getElementById("card_options").style.display = "block";
 		document.getElementById("TSmodetext").innerHTML = "Research mode: Off";
+	}
+	//force off if complex
+	if (((paedi_mode==0) && (document.getElementById("select_model").value=="Complex")) || ((paedi_mode==1) && (document.getElementById("select_model_paedi").value=="Complex"))) {
+		document.getElementById("card_cpt0").style.display = "";
+		document.getElementById("card_cet0_new").style.display = "";
+		document.getElementById("card_controlpanel").style.display = "";
+		document.getElementById("card_retrospective").style.display = "";
+		document.getElementById("card_TimeEstimation").style.display = "";
+		document.getElementById("card_VolumeEstimation").style.display = "";
+		document.getElementById("card_wakeup").style.display = "";
+		document.getElementById("card_TS").style.display = "none";
+		document.getElementById("card_output").style.display = "none";
+		document.getElementById("card_infusion0").style.display = "";
+		document.getElementById("page2IB").style.display = "";
+		document.getElementById("card_options").style.display = "block";
+		document.getElementById("TSmodetext").innerHTML = "Research mode: Off";
+		document.getElementById("TSmodebox").checked = false;
 	}
 }
 
