@@ -8237,7 +8237,7 @@ function TSchangemode() {
 		document.getElementById("card_infusion0").style.display = "";
 		document.getElementById("page2IB").style.display = "";
 		document.getElementById("card_options").style.display = "block";
-		document.getElementById("TSmodetext").innerHTML = "Research mode: Off";
+		document.getElementById("TSmodetext").innerHTML = "Research mode: Off (Not available for complex mode simulation)";
 		document.getElementById("TSmodebox").checked = false;
 	}
 }

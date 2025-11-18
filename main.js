@@ -729,7 +729,7 @@ function initsubmit() {
 
 		//see if need to display emulation eleveld
 		if (((drug_sets[0].model_name == "Marsh") || (drug_sets[0].model_name == "Schnider")) && (height>0)) {
-			document.getElementById("emulatecard").style.display = "block";
+			if (!TSon) document.getElementById("emulatecard").style.display = "block";
 		} else {
 			document.getElementById("emulatecard").style.display = "none";
 		}
@@ -2418,10 +2418,7 @@ function displayModelOptions() {
 		setTimeout(function() {
 			hidemodal('modalWarning');
 		},300);
-		//additional checks
-		if (idtemp == "Complex") {
-			if (TSon) TSchangemode();
-		}
+		TSchangemode();
 	}
 
 }
@@ -2567,8 +2564,6 @@ function pageTwoFunction(arg) {
 	      document.getElementById("page2proceed").addEventListener('click', cptevent);
 	      document.getElementById("page2proceed").classList.add("wide");
 	      document.getElementById("page2RSI").style.display = "none";
-	      
-
 	  }
 	  if (arg == 1) {
 	      document.getElementById("page2cet").classList.add("active");
@@ -2580,7 +2575,7 @@ function pageTwoFunction(arg) {
 	      //show RSI mode if needed
 	      if ((drug_sets[0].drug_name == "Propofol") && ((drug_sets[0].model_name=="Marsh")||(drug_sets[0].model_name=="Eleveld"))) {
 	      	document.getElementById("page2proceed").classList.remove("wide");
-	      	document.getElementById("page2RSI").style.display = "inline-block";
+	      	if (!TSon) document.getElementById("page2RSI").style.display = "inline-block";
 	      }
 	  }
 	  if (optionsarray[2][0] == 1) {

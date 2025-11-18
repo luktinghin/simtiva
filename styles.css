@@ -4731,7 +4731,8 @@ body.dark #preview-expand-box > div > div.timespan {
   display:none;
 }
 body.dark #TSresearchmodediv {
-  background: rgb(9,51,38);
+  background: #222;
+  border: 1px solid #555;
 }
 .TStable {
   padding: 10px 0;
