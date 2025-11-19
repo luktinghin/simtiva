@@ -4845,16 +4845,20 @@ body.dark .TSactions {
 
 #TSinputdate {
   min-width:200px;
+  -webkit-min-logical-width: calc(200px - 16px);
   border:1px solid #ccc;
   border-radius:4px;
   padding:4px;
+  display:block;
 }
 
 #TSinputtime {
   min-width:200px;
+  -webkit-min-logical-width: calc(200px - 16px);
   border:1px solid #ccc;
   border-radius: 4px;
   padding:4px;
+  display:block;
 }
 
 #TSinputconc {

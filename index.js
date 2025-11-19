@@ -1310,7 +1310,7 @@ const xModalsHTML =
 					</div>
 					<div class="TSentry" id="TSinputconcdiv">
 						<div id="TSinputconclabel">Concentration</div>
-						<div><input id="TSinputconc" type="number" step="0.01"></div>
+						<div><input id="TSinputconc" type="number" inputmode="decimal" step="0.01"></div>
 					</div>
 					<div class="TSentry" id="TSoptionbolusinf">
 						<div>Bolus or Infusion?</div>
@@ -1323,11 +1323,11 @@ const xModalsHTML =
 					</div>
 					<div class="TSentry" id="TSinputbolusdiv">
 						<div id="TSinputboluslabel">Bolus (mg)</div>
-						<div><input id="TSinputbolus" type="number" step="0.01"></div>
+						<div><input id="TSinputbolus" inputmode="decimal" type="number" step="0.01"></div>
 					</div>
 					<div class="TSentry" id="TSinputinfdiv">
 						<div>Infusion rate (ml/h)</div>
-						<div><input id="TSinputinf" type="number" step="0.01"></div>
+						<div><input id="TSinputinf" inputmode="decimal" type="number" step="0.01"></div>
 					</div>
 					<div class="TSvalidatemsg">
 					</div>
