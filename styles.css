@@ -4845,27 +4845,28 @@ body.dark .TSactions {
 
 #TSinputdate {
   min-width:200px;
-  -webkit-min-logical-width: calc(200px - 16px);
   border:1px solid #ccc;
   border-radius:4px;
   padding:4px;
   display:block;
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
 }
 
 #TSinputtime {
   min-width:200px;
-  -webkit-min-logical-width: calc(200px - 16px);
   border:1px solid #ccc;
   border-radius: 4px;
   padding:4px;
   display:block;
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
 }
 
-#TSinputconc {
+#TSinputconc, #TSinputbolus, #TSinputinf {
   padding:4px;
   min-width: 200px;
 }
-
 
 a.button.TSbutton {
   background:#fff;
