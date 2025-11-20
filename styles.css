@@ -4715,6 +4715,9 @@ body.dark #preview-expand-box > div > div.timespan {
 }
 
 /* infusulator time series */
+#card_TS, #card_output {
+  display:none;
+}
 #btn_labs {
   padding:4px 9px;
 }
@@ -4780,12 +4783,14 @@ body.dark #TSresearchmodediv {
   width: 25px;
   text-align: center;
   color: #ccc;
+  cursor:pointer;
 }
 
 .TScontrol2 {
   width: 25px;
   text-align: center;
   color: #ccc;
+  cursor:pointer;
 }
 
 #TStablecontrols {

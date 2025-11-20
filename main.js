@@ -4463,21 +4463,22 @@ function toggleEffectEst() {
 					popupchart.data.datasets[11].hidden = false;
 				}
 			}
-			document.getElementById("ptolcard").style.display = "flex";
-			
-			document.getElementById("ptoltitle").innerHTML = "eBIS";
-			document.getElementById("ptoldesc").innerHTML = "Estimated BIS from Eleveld PD model";
-			document.getElementById("ptolcard_right").innerHTML = "";
-			document.getElementById("ptolcard").classList.add("greenborder");
-			setTimeout(function() {
-						document.getElementById("ptolcard").classList.remove("greenborder");
-					},1100);
-			if (updateBIS == null) {
-				if (BIS_array.length > 0) {
-					BIS_update(1000);
-				} else {
-					//this is when BIS array not yet started i.e. no BIS data
-					document.getElementById("ptolcard_right").innerHTML = "";
+			if (!TSon) {
+				document.getElementById("ptolcard").style.display = "flex";			
+				document.getElementById("ptoltitle").innerHTML = "eBIS";
+				document.getElementById("ptoldesc").innerHTML = "Estimated BIS from Eleveld PD model";
+				document.getElementById("ptolcard_right").innerHTML = "";
+				document.getElementById("ptolcard").classList.add("greenborder");
+				setTimeout(function() {
+							document.getElementById("ptolcard").classList.remove("greenborder");
+						},1100);
+				if (updateBIS == null) {
+					if (BIS_array.length > 0) {
+						BIS_update(1000);
+					} else {
+						//this is when BIS array not yet started i.e. no BIS data
+						document.getElementById("ptolcard_right").innerHTML = "";
+					}
 				}
 			}
 		} else if (select_effect_measure.value == "ptol") {
@@ -4503,7 +4504,6 @@ function toggleEffectEst() {
 				popupchart.data.datasets[11].hidden = true;
 			}
 			document.getElementById("ptolcard").style.display = "flex";
-			
 			document.getElementById("ptoltitle").innerHTML = "PTOL";
 			document.getElementById("ptoldesc").innerHTML = "Probability of tolerance to laryngoscopy (%)";
 			clearInterval(updateBIS);
