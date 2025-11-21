@@ -1132,7 +1132,7 @@ function initshare() {
 function common_start_calls() {
 		document.getElementById("top_subtitle").classList.add("topClose");
 		document.getElementById("top_title").classList.add("topOpen");
-
+		myChart.options.plugins.tooltip.enabled = true;
 			loop1 = setInterval(update, 500);
 			if (complex_mode == 1) {
 				loop2 = setInterval(runinfusion_complex, refresh_interval);

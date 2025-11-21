@@ -4703,7 +4703,19 @@ body.dark #preview-expand-box > div > div.timespan {
 #footerdiv {
   font-size: 12px;
   width:100%;
-  padding-right:16px;
+  padding:0 16px;
+  display:flex;
+  justify-content:space-between;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  margin-bottom:3rem;
+}
+
+#footerdivleft {
+  justify-content:flex-start;
+  color:#eee;
+  padding-top:10px;
 }
 
 #footerdivright {

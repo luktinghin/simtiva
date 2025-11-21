@@ -48,6 +48,7 @@ function updatedatatext() {
 	clearTimeout(texttimeout);
 	texttimeout = setTimeout(function() {
 		savefile_patient();
+		document.getElementById("footerdivleft").innerText = document.getElementById("inputFileName").value;
 		document.getElementById("sharedatatext").value = 'https://simtiva.app/view.html?P=' + LZString.compressToEncodedURIComponent(outputstring());	
 	},500);
 }
@@ -510,6 +511,7 @@ function cloneCanvas(oldCanvas, filename) {
 function parseobject(input_uid,external,extObject) {
 	parseloading = 1;
 	document.getElementById("status").innerHTML = "Loading PK data...";
+	myChart.options.plugins.tooltip.enabled = true;
 	if (external == true) {
 		object = extObject;
 	} else {
@@ -2862,7 +2864,15 @@ function createCharts(chartparam) {
 	    			max: 5,
 					title: {
 						display: true,
-						text:'Concentration'
+						text:'Concentration',
+						font: {
+							family: 'SourceSans'
+						}
+					},
+					ticks: {
+						font: {
+							family: 'SourceSans'
+						}
 					}
 	    		},
 	    		x: {
@@ -2873,7 +2883,15 @@ function createCharts(chartparam) {
 	    			max:20,
 					title: {
 						display: true,
-						text:'Time (minutes)'
+						text:'Time (minutes)',
+						font: {
+							family: 'SourceSans'
+						}
+					},
+					ticks: {
+						font: {
+							family: 'SourceSans'
+						}
 					}
 	    		}
 	    	},
@@ -2901,10 +2919,16 @@ function createCharts(chartparam) {
 				    		} else {
 				    			return true;
 				    		}
+				    	},
+				    	labels: {
+					    	font: {
+					    		family: 'SourceSans'
+					    	}
 				    	}
 			    	}
 			    },
 			    tooltip: {
+			    	enabled: false,
 			    	mode: 'index',
 			    	intersect: false,
 			    	footerFont: {
@@ -2930,11 +2954,8 @@ function createCharts(chartparam) {
 								return converttime(title);
 							}
 						},
-						
 	                	label: function(context) {
-	                		
 	                    	var label = context.dataset.label || '';
-
 	                    	if (label) {
 	                    		if ((label == "Cp-Prop") || (label == "Cp-Remi") || (label == "Cp-Fen") || (label == "Cp-Alfen")) label = "Cp:";
 	                    		if ((label == "Ce-Prop") || (label == "Ce-Remi") || (label == "Ce-Fen") || (label == "Ce-Alfen")) label = "Ce:";
@@ -2946,7 +2967,6 @@ function createCharts(chartparam) {
 		                    	return label;
 	                    	}
 	                	},
-
 	                	footer: function(tooltipItems) {
 	                			if ((tooltipItems[0].dataset.label == "Preview-CP") || (tooltipItems[0].dataset.label == "Preview-CE")) {
 	                			} else {
@@ -2972,8 +2992,16 @@ function createCharts(chartparam) {
 		                		}
 
 	                	}
-	                	
-	                }
+	                },
+	                titleFont: {
+                		family: 'SourceSans'
+                	},
+                	bodyFont: {
+                		family: 'SourceSans'
+                	},
+                	footerFont: {
+                		family: 'SourceSans'
+                	}
 			    },
 		    	crosshair: {
 		    		line: {
@@ -3915,10 +3943,8 @@ function createCharts(chartparam) {
 							}
 						},
 						
-	                	label: function(context) {
-	                		
+	                	label: function(context) {	                		
 	                    	var label = context.dataset.label || '';
-
 	                    	if (label) {
 	                    		label += Math.round(context.parsed.y * 100) / 100;
 		                    	return label;
@@ -3926,26 +3952,17 @@ function createCharts(chartparam) {
 	                	},
 
 	                	footer: function(tooltipItems) {
-
 	                		var infrate = "Inf rate: ";
-
 	                		var vitext = "VI: ";
-
 	                		var parsedx = tooltipItems[0].parsed.x;
-
 	                		infrate = infrate + getinfusionrate(parsedx * 60,active_drug_set_index) + "ml/h";
-
 	                		vitext = vitext + Math.round(drug_sets[active_drug_set_index].volinf[Math.round(parsedx*60)]*10)/10 + "ml";
-
 	                		if (BIS_array.length>0) {
 	                			PD_text = "eBIS: " + BIS_array[Math.round(parsedx*60)];
 	                			return [infrate, vitext, PD_text];
 	                		} else {
 	                			return [infrate, vitext];	
 	                		}
-
-	                		
-
 	                	}
 	                	
 	                }
