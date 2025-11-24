@@ -1237,9 +1237,12 @@ function trk() {
 		if (parseloading == 0) {
 			umami.track('run', trackerprops);
 		} else {
-			//umami.track('view', trackerprops);	
+			if (TSon) {
+				umami.track('infusulator');		
+			} else {
+				umami.track('view');
+			}	
 		}
-		//umami.identify(trackerprops);
 	}
 }
 
