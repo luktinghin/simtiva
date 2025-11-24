@@ -143,11 +143,15 @@ function displayAbout2(aboutparam) {
 		<br> - George Zhong (@propofoldream)
 		<br> - Eric Ng 
 		<br> - David Lam
+		<br> - Matthew Hart
 		<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.
-		<br>Last updated 20/9/2025 (V5.5) Build 176.
+		<br>Last updated 24/11/2025 (V5.6) Build 186.
 		<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i>
 		<br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, Minto and Eleveld for remifentanil, Shafer for fentanyl, Maitre for alfentanil, Hannivoort for dexmedetomidine and Kamp for ketamine. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.
-		<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on the Social Links listed <a href='https://github.com/luktinghin/simtiva' target='_blank'>here</a>.<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>`;
+		<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on the Social Links listed <a href='https://github.com/luktinghin/simtiva' target='_blank'>here</a>.
+		<br><br><b>Acknowledgements</b><br>I would like to thank Dr. Matthew Hart for his contribution to the "Infusulator", an interface to calculate pharmacokinetic information based on entry of retrospective time series data of CP or CE targets. I would also like to thank Dr. George Zhong, Dr. Eric Ng, and Dr. David Lam for their contribution in user interface improvement, pharmacological algorithm, and bugfixes.
+		<div class='' style='width:100%; margin-top:2rem; margin-bottom:1rem; background:rgba(128,128,128,0.4); border-bottom:1px solid #198964; font-weight:bold'>Licenses & Legal</div><div class=''>Acknowledgments: this project is made possible with the following-<br><br><b>STANPUMP by Steven L. Shafer</b><br>Freely available at <a href='http://opentci.org/code/stanpump' target='_blank'>OpenTCI-STANPUMP</a><br><br><b>Chart.js</b><br><a href='http://chartjs.org'  target='_blank'>Chart.js</a> is open source and available under the MIT license.<br><br><b>Font Awesome Free</b><br>SIL OFL 1.1 license applies to all icons packaged as font files. <a href='https://github.com/FortAwesome/Font-Awesome' target='_blank'>Source/License</a><br><br><b>WHO Child Growth Standards</b><br>Copyright World Health Organization (WHO), 2021; all rights reserved. Growth chart data (weight & length for age and BMI) from <a href='https://www.who.int/tools/child-growth-standards/standards' target='_blank'>WHO website</a> used for data validation. Computational method using LMS method described <a href='https://www.who.int/growthref/computation.pdf' target='_blank'>here</a>.<br><br><b>LZ-String</b><br>Copyright Pieroxy (2013) under MIT license, from <a href='https://pieroxy.net/blog/pages/lz-string/index.html' target='_blank'>pieroxy.net</a>, used for Javascript string compression.<br><br><span style='color:#ccc'>Source Sans font: Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries, licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).</span></div><div style='padding-top:1rem;'></div>
+		`;
 	let ElQuickGuide = document.createElement("div");
 	ElQuickGuide.classList.add("customAboutQuickGuideText");
 	ElQuickGuide.innerHTML = `
@@ -195,8 +199,8 @@ function displayAbout2(aboutparam) {
 			<div class='banneritem' style='background:#a5d0a8'>
 				<div class='bannericon' style='background:#356038'><img class='' src="users.webp"></div>
 					<div class='bannertextouter'>
-						<div class='bannertextinner1'><b>2420</b> Monthly Users</div>
-						<div class='bannertextinner2'>Total 2717 simulations performed in June 2025</div>
+						<div class='bannertextinner1'><b>3440</b> Monthly Users</div>
+						<div class='bannertextinner2'>Total 4010 simulations performed in Oct 2025</div>
 					</div>
 		</div>
 	`
@@ -615,6 +619,28 @@ const xInputCardsHTML = `
 				<a class="button bolus" id="bolus1_1" onclick="bolusadmin(10,1);"><div class="bolus_outside">Bolus</div><div class="bolus_inside">10<span class="infused_units"></span></div></a>
 			</div>
 		</div>
+		<div class="card" id="card_TS">
+			<div class="cardtitle">INFUSULATOR</div>
+			<div class="cardcontents">
+				<div class="TStable">
+					<div class="TSrow firstrow">
+						<div class="TScol1">Date</div>
+						<div class="TScol2">Time</div>
+						<div class="TScol3"><span id="col3row1">Conc</span></div>
+						<div class="TScol4"></div>
+					</div>
+					<div class="tablecontents">
+						
+					</div>
+					<div id="TSplaceholder">Add an entry to start.</div>
+				</div>
+				<div class="TSactions">
+					<a class="TSbutton button" onclick="TSshowentry()"><i class="fas fa-plus-circle"></i> Add</a>
+					<a class="TSbutton button" onclick="TSrunsim()"><i class="fas fa-play"></i> Run</a>
+					<a class="TSbutton button" onclick="TSreset()"><i class="fas fa-undo-alt"></i> Reset</a>
+				</div>
+			</div>
+		</div>
 		<div class="card hide" id="card_reanimate">
 			<div class="cardtitle">RESUME SIMULATION</div>
 			<div class="cardcontents">
@@ -944,7 +970,26 @@ const xCardsHTML = `
 					<a id="pastschemebuttonCOPY" onclick="displaymodalhistory();"><i class="fas fa-history"></i> Past Schemes</a>
 				</div>
 		</div>
-
+		<div class="card" id="card_output">
+			<div class="cardtitle">OUTPUT</div>
+			<div class="cardcontents" style="max-height:50vh;overflow-y:scroll">
+				<div id="TStablecontrols">
+					<div style="display:flex;align-items:center">Resolution: &nbsp;&nbsp;
+					<select id="TSresolution" style="height:28px" onchange="document.getElementById('TStabledisplay').innerHTML = TSformattable(TSoutputtable(this.value * 1))">
+						<option value="1">1min</option>
+						<option value="2">2min</option>
+						<option value="5">5min</option>
+						<option value="10">10min</option>
+						<option value="15">15min</option>
+						<option value="30">30min</option>
+					</select>
+					</div>
+					<div><a class="button TSbutton" onclick="TSexportcsv();">Export to CSV</a></div>
+				</div>
+				<div id="TStabledisplay">
+				</div>
+			</div>
+		</div>
 		<div class="card" id="card_retrospective">
 			<div class="cardtitle collapsiblecard">RETROSPECTIVE</div>
 			<div class="cardcontents">
@@ -1247,6 +1292,48 @@ const xModalsHTML =
 					<div style="padding-top:1rem; text-align:center">
 					<a class="button wide invert" onclick="confirmretrospective();">Confirm</a>
 					<a class="button" onclick="hideallmodal();hidemodal('modalRetrospective')">Cancel</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="modalTSEntry" class="modal">
+			<div class="modal-content" id="modalTSEntrycontent">
+				<div class="modal-header">Time Series Data 1</div>
+				<div class="modal-body">
+					<div class="TSentry">
+						<div>Date</div>
+						<div><input id="TSinputdate" type="date" style=""></div>
+					</div>
+					<div class="TSentry">
+						<div>Time</div>
+						<div><input id="TSinputtime" type="time" style=""></div>
+					</div>
+					<div class="TSentry" id="TSinputconcdiv">
+						<div id="TSinputconclabel">Concentration</div>
+						<div><input id="TSinputconc" type="number" inputmode="decimal" step="0.01"></div>
+					</div>
+					<div class="TSentry" id="TSoptionbolusinf">
+						<div>Bolus or Infusion?</div>
+						<div><select id="TSselectbolusinf" onchange="TSchangebolusinf()">
+								<option value="0">Give bolus & change infusion rate</option>
+								<option value="1">Administer a bolus</option>
+								<option value="2">Change the infusion rate</option>
+							</select>
+						</div>
+					</div>
+					<div class="TSentry" id="TSinputbolusdiv">
+						<div id="TSinputboluslabel">Bolus (mg)</div>
+						<div><input id="TSinputbolus" inputmode="decimal" type="number" step="0.01"></div>
+					</div>
+					<div class="TSentry" id="TSinputinfdiv">
+						<div>Infusion rate (ml/h)</div>
+						<div><input id="TSinputinf" inputmode="decimal" type="number" step="0.01"></div>
+					</div>
+					<div class="TSvalidatemsg">
+					</div>
+					<div style="padding-top:1rem">
+						<a class="button invert" onclick="TSget();TSupdateview();" id="TSconfirmbtn">Add</a>
+						<a class="button" onclick="hideallmodal();">Cancel</a>
 					</div>
 				</div>
 			</div>

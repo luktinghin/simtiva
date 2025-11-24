@@ -410,9 +410,9 @@ input[type=number]:not(:placeholder-shown):focus:valid {
 .container {
   display: block;
   position: relative;
-  padding: 1px 0 0 2px;
+  padding: 3px 0 0 2px;
   margin: 0px 0 0.75rem 30px;
-  border-bottom: 2px dotted transparent;
+  /*border-bottom: 2px dotted transparent;*/
   cursor: pointer;
   /*font-size: 22px;*/
   -webkit-user-select: none;
@@ -1203,7 +1203,6 @@ a.button.tinybutton > i {
 #btn_bolusconverter {
   float:right;
   min-width:40px;
-
 }
 .bolus_outside {
   font-size:85%;
@@ -4704,7 +4703,19 @@ body.dark #preview-expand-box > div > div.timespan {
 #footerdiv {
   font-size: 12px;
   width:100%;
-  padding-right:16px;
+  padding:0 16px;
+  display:flex;
+  justify-content:space-between;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  margin-bottom:3rem;
+}
+
+#footerdivleft {
+  justify-content:flex-start;
+  color:#eee;
+  padding-top:10px;
 }
 
 #footerdivright {
@@ -4714,21 +4725,181 @@ body.dark #preview-expand-box > div > div.timespan {
   gap: 10px;
   padding-top: 10px;
 }
-body.dark #cornerblock2 {
-  background:#000;
-  box-shadow: inset 0 1px 0 0 #666;
+
+/* infusulator time series */
+#card_TS, #card_output {
+  display:none;
+}
+#btn_labs {
+  padding:4px 9px;
+}
+#btn_labs .iconsvg {
+  height:15px;
+  width:15px;
+  transform:translateY(2px);
+}
+#TSresearchmodediv {
+  margin: 10px 0; 
+  background: #eee; 
+  padding:9px;
+  border-radius:9px;
+  display:none;
+}
+body.dark #TSresearchmodediv {
+  background: #222;
+  border: 1px solid #555;
+}
+.TStable {
+  padding: 10px 0;
 }
 
-body.dark #cornerblock2:before {
-  box-shadow:-1px 10px 0 0 #000;
-  border-left:1px solid #6666;
-  border-bottom:1px solid #666;
+.TSrow {
+  display:flex;
+  border-bottom: 1px solid #ccc;
 }
 
-body.dark #cornerblock2:after {
-  box-shadow:1px 10px 0 0 #000;
-  border-right:1px solid #6666;
-  border-bottom:1px solid #666;
+.TSrow.firstrow {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.TSrow:last-child {
+  border-bottom: 0;
+}
+
+.TScol1 {
+  flex-basis:22%;
+  border-right: 1px solid #ccc;
+  padding: 0 4px 0 0;
+}
+
+.TScol2 {
+  flex-basis:25%;
+  border-right: 1px solid #ccc;
+  padding: 0 4px;
+}
+
+.TScol3 {
+  flex-basis:35%;
+  border-right: 1px solid #ccc;
+  padding: 0 4px;
+}
+
+.TScontrols {
+  flex-basis:18%;
+  display: flex;
+  padding: 0 0 0 4px;
+}
+
+.TScontrol1 {
+  width: 25px;
+  text-align: center;
+  color: #ccc;
+  cursor:pointer;
+}
+
+.TScontrol2 {
+  width: 25px;
+  text-align: center;
+  color: #ccc;
+  cursor:pointer;
+}
+
+#TStablecontrols {
+  display:flex;
+  height: 40px;
+  align-items:center;
+  justify-content: space-between;
+  background: #eee;
+}
+
+body.dark #TStablecontrols {
+  background: linear-gradient(180deg, transparent, #324036);
+}
+
+body.dark .TSrow, body.dark .TScol1, body.dark .TScol2, body.dark .TScol3 {
+  border-color: #5f5f5f;
+}
+
+#TSplaceholder {
+  background:#eee;
+  margin:20px;
+  padding:20px;
+  text-align:center;
+  border-radius:4rem;
+}
+
+body.dark #TSplaceholder {
+  background: linear-gradient(180deg, transparent, #324036);
+}
+
+.TSactions {
+  display:flex;
+  justify-content:center;
+  padding:10px;
+  border-radius:0 0 9px 9px;
+  background:#eee;
+}
+
+body.dark .TSactions {
+  background: linear-gradient(180deg, transparent, #324036);
+}
+
+.TSvalidatemsg {
+  width:100%;
+  border-radius: 9px;
+  border: 1px solid black;
+  background: #e4c4d4;
+  font-weight:bold;
+  padding:10px;
+  margin-top:10px;
+}
+
+.TSentry {
+  margin-bottom:10px;
+}
+
+#TStabledisplay table {
+  width: 100%;
+  font-size: 0.8rem;
+}
+
+#TSinputdate {
+  min-width:200px;
+  border:1px solid #ccc;
+  border-radius:4px;
+  padding:4px;
+  display:block;
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+#TSinputtime {
+  min-width:200px;
+  border:1px solid #ccc;
+  border-radius: 4px;
+  padding:4px;
+  display:block;
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+#TSinputconc, #TSinputbolus, #TSinputinf {
+  padding:4px;
+  min-width: 200px;
+}
+
+a.button.TSbutton {
+  background:#fff;
+  border-radius:1rem;
+  font-weight:bold;
+  font-size:0.8rem;
+  padding:4px;
+}
+
+a.button.TSbutton:hover, a.button.TSbutton:active {
+  background:rgb(213,237,214);
+  color:black;
 }
 
 @media (max-height:700px) {
@@ -4772,7 +4943,6 @@ body.dark #cornerblock2:after {
     opacity: 0;
     pointer-events: none;
   }
-
   .sharebutton.complex {
     opacity: 0;
     pointer-events: none;
@@ -4818,9 +4988,7 @@ body.dark #cornerblock2:after {
 
 @media (max-height:480px) and (min-width:610px) and (max-width:767px) {
   /*narrow screen phone with reduced height - landscape*/
-  #cornerblock {
-    position:static;
-  }
+
   #controlpanel {
     margin-top:10px;
     padding-top:80px;
@@ -5474,7 +5642,7 @@ body.dark #chart2wrapper {
   .cardscontainer div {
     break-inside:avoid;
   }
-  #card_infusion0, #card_cpt0, #card_cet0, #schemecopy, #card_reanimate, #card_RSI {
+  #card_infusion0, #card_cpt0, #card_cet0, #schemecopy, #card_reanimate, #card_RSI, #card_TS {
     margin-top:0px;
   }
   #card_infusion1, #card_cpt1, #card_cet1 {

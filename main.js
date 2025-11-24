@@ -241,6 +241,7 @@ var popupUpdateInterval;
 var numpadValue = 0;
 var numpadOrig;
 var opioid = 1; //arbitrary default opioid = 1 for eleveld. to be re-set to 0 or 1 at first input screen
+var TSon = false;
 
 function toggleCard(x) {
 	var content = x.nextElementSibling;
@@ -728,7 +729,7 @@ function initsubmit() {
 
 		//see if need to display emulation eleveld
 		if (((drug_sets[0].model_name == "Marsh") || (drug_sets[0].model_name == "Schnider")) && (height>0)) {
-			document.getElementById("emulatecard").style.display = "block";
+			if (!TSon) document.getElementById("emulatecard").style.display = "block";
 		} else {
 			document.getElementById("emulatecard").style.display = "none";
 		}
@@ -1131,7 +1132,7 @@ function initshare() {
 function common_start_calls() {
 		document.getElementById("top_subtitle").classList.add("topClose");
 		document.getElementById("top_title").classList.add("topOpen");
-
+		myChart.options.plugins.tooltip.enabled = true;
 			loop1 = setInterval(update, 500);
 			if (complex_mode == 1) {
 				loop2 = setInterval(runinfusion_complex, refresh_interval);
@@ -1950,8 +1951,6 @@ function converttime(relativeclock) {
 	}
 }
 
-
-
 function swapCetCodeForFentanyl() {
 
 }
@@ -2001,7 +2000,7 @@ function switchpaedimode(arg) {
 		document.querySelector(".table-Init").classList.remove("paedimode");
 		document.getElementById("row_age_paedimode").style.display = "none";
 		document.getElementById("row_PMA_paedimode").style.display = "none";
-		document.getElementById("logo").style.display = "";
+		if (!TSon) document.getElementById("logo").style.display = "";
 		document.getElementById("row_age_adultmode").style.display = "table-row";
 		document.getElementById("paedimode0").classList.add("active");
 		document.getElementById("paedimode1").classList.remove("active");
@@ -2202,12 +2201,14 @@ function sendToValidate(arg) {
 		} else if (ageunit == "y") {
 			age = document.getElementById("inputAgePaedi").value*1;
 		}
-		if (age <= 0.5) {
-			document.getElementById("PMA_entry").style.display = "inline-block";
-			document.getElementById("PMA_explanation").style.display = "none";
-		} else if (age > 0.5) {
-			document.getElementById("PMA_entry").style.display = "none";
-			document.getElementById("PMA_explanation").style.display = "inline-block";
+		if (document.getElementById("inputAgePaedi").value != "") {
+			if (age <= 0.5) {
+				document.getElementById("PMA_entry").style.display = "inline-block";
+				document.getElementById("PMA_explanation").style.display = "none";
+			} else if (age > 0.5) {
+				document.getElementById("PMA_entry").style.display = "none";
+				document.getElementById("PMA_explanation").style.display = "inline-block";
+			}
 		}
 	}
 	weight = document.getElementById("inputBW").value*1;
@@ -2416,6 +2417,7 @@ function displayModelOptions() {
 		setTimeout(function() {
 			hidemodal('modalWarning');
 		},300);
+		TSchangemode();
 	}
 
 }
@@ -2437,6 +2439,7 @@ function toPageOne() {
 	if (document.getElementById("rescuebuttons").style.display=="none") {
 		document.getElementById("rescuebuttons").style.display="block";
 	}
+	pageTwoFunction(); // resets
 }
 
 function toPageTwo() {
@@ -2515,6 +2518,7 @@ function toPageTwo() {
 				document.getElementById("page2IB").style.display = "block";
 		}
 		toPageTwoTransition();
+		TSchangemode();
 		document.getElementById("rescuebuttons").style.display="none";
 		loadoptions();
 		if (complex_mode==0) applyoptions();
@@ -2560,8 +2564,6 @@ function pageTwoFunction(arg) {
 	      document.getElementById("page2proceed").addEventListener('click', cptevent);
 	      document.getElementById("page2proceed").classList.add("wide");
 	      document.getElementById("page2RSI").style.display = "none";
-	      
-
 	  }
 	  if (arg == 1) {
 	      document.getElementById("page2cet").classList.add("active");
@@ -2573,7 +2575,9 @@ function pageTwoFunction(arg) {
 	      //show RSI mode if needed
 	      if ((drug_sets[0].drug_name == "Propofol") && ((drug_sets[0].model_name=="Marsh")||(drug_sets[0].model_name=="Eleveld"))) {
 	      	document.getElementById("page2proceed").classList.remove("wide");
-	      	document.getElementById("page2RSI").style.display = "inline-block";
+	      	if (!TSon) document.getElementById("page2RSI").style.display = "inline-block";
+	      } else {
+	        document.getElementById("page2RSI").style.display = "none";
 	      }
 	  }
 	  if (optionsarray[2][0] == 1) {
@@ -2639,7 +2643,8 @@ function cptevent() {
 	x = document.getElementById("page2selectmaintenance").value * 1;
 	document.getElementById("select_threshold").value = x;
 	applyoptions();
-	hidemodal('modalScreen2');document.getElementById('card_controlpanel').style.display='block';
+	hidemodal('modalScreen2');
+	if (!TSon) document.getElementById('card_controlpanel').style.display='block';
 	updateBolusSpeedOptions()
 }
 
@@ -2650,7 +2655,8 @@ function cetevent() {
 	x = document.getElementById("page2selectmaintenance").value * 1;
 	document.getElementById("select_threshold").value = x;
 	applyoptions();
-	hidemodal('modalScreen2');document.getElementById('card_controlpanel').style.display='block';
+	hidemodal('modalScreen2');
+	if (!TSon) document.getElementById('card_controlpanel').style.display='block';
 	updateBolusSpeedOptions()
 }
 
@@ -4459,21 +4465,22 @@ function toggleEffectEst() {
 					popupchart.data.datasets[11].hidden = false;
 				}
 			}
-			document.getElementById("ptolcard").style.display = "flex";
-			
-			document.getElementById("ptoltitle").innerHTML = "eBIS";
-			document.getElementById("ptoldesc").innerHTML = "Estimated BIS from Eleveld PD model";
-			document.getElementById("ptolcard_right").innerHTML = "";
-			document.getElementById("ptolcard").classList.add("greenborder");
-			setTimeout(function() {
-						document.getElementById("ptolcard").classList.remove("greenborder");
-					},1100);
-			if (updateBIS == null) {
-				if (BIS_array.length > 0) {
-					BIS_update(1000);
-				} else {
-					//this is when BIS array not yet started i.e. no BIS data
-					document.getElementById("ptolcard_right").innerHTML = "";
+			if (!TSon) {
+				document.getElementById("ptolcard").style.display = "flex";			
+				document.getElementById("ptoltitle").innerHTML = "eBIS";
+				document.getElementById("ptoldesc").innerHTML = "Estimated BIS from Eleveld PD model";
+				document.getElementById("ptolcard_right").innerHTML = "";
+				document.getElementById("ptolcard").classList.add("greenborder");
+				setTimeout(function() {
+							document.getElementById("ptolcard").classList.remove("greenborder");
+						},1100);
+				if (updateBIS == null) {
+					if (BIS_array.length > 0) {
+						BIS_update(1000);
+					} else {
+						//this is when BIS array not yet started i.e. no BIS data
+						document.getElementById("ptolcard_right").innerHTML = "";
+					}
 				}
 			}
 		} else if (select_effect_measure.value == "ptol") {
@@ -4499,7 +4506,6 @@ function toggleEffectEst() {
 				popupchart.data.datasets[11].hidden = true;
 			}
 			document.getElementById("ptolcard").style.display = "flex";
-			
 			document.getElementById("ptoltitle").innerHTML = "PTOL";
 			document.getElementById("ptoldesc").innerHTML = "Probability of tolerance to laryngoscopy (%)";
 			clearInterval(updateBIS);
