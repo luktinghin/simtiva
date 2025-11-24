@@ -8092,6 +8092,7 @@ function TSshowentry() {
 			document.getElementById("TSinputinfdiv").style.display = "block";	
 		}
 	} else {
+		document.getElementById("col3row1").innerHTML = "Conc (" + drug_sets[0].conc_units + "/ml)";
 		document.getElementById("TSinputconcdiv").style.display = "block";
 		document.getElementById("TSoptionbolusinf").style.display = "none";
 		document.getElementById("TSinputbolusdiv").style.display = "none";

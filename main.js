@@ -2440,6 +2440,7 @@ function toPageOne() {
 	if (document.getElementById("rescuebuttons").style.display=="none") {
 		document.getElementById("rescuebuttons").style.display="block";
 	}
+	pageTwoFunction(); // resets
 }
 
 function toPageTwo() {
@@ -2576,6 +2577,8 @@ function pageTwoFunction(arg) {
 	      if ((drug_sets[0].drug_name == "Propofol") && ((drug_sets[0].model_name=="Marsh")||(drug_sets[0].model_name=="Eleveld"))) {
 	      	document.getElementById("page2proceed").classList.remove("wide");
 	      	if (!TSon) document.getElementById("page2RSI").style.display = "inline-block";
+	      } else {
+	        document.getElementById("page2RSI").style.display = "none";
 	      }
 	  }
 	  if (optionsarray[2][0] == 1) {
