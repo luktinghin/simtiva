@@ -26,8 +26,17 @@ A complex (dual) mode is also available. It explores the PD interaction of propo
 - To simulate TCI and TIVA pharmacokinetics for educational purpose
 - To help deliver TCI in a setting where TCI pumps are not available
 
+### Acknowledgements
+I would like to thank Dr. Matthew Hart for his contribution to the "Infusulator", an interface to calculate pharmacokinetic information based on entry of retrospective time series data of CP or CE targets. I would also like to thank Dr. George Zhong, Dr. Eric Ng, and Dr. David Lam for their contribution in user interface improvement, pharmacological algorithm, and bugfixes.
+
 ### Changelog
- Version 5.5 (Build 176) Current 
+ Version 5.6 (Build 186) Current
+ - Research mode: by activating this, the user can enable the infusulator and the export module (export of simulation data to CSV file)
+ - Infusulator: A program first created by Matthew Hart, to calculate pharmacokinetic information based on entry of retrospective time series data of CP or CE targets. For example, a chart and table of CP/CE/Volume are generated based on a raw list of CE targets over time.
+ - Bugfixes: event editing bug for >1h simulation, dexmedetomidine CE targeting, main graph tooltip hidden by default before starting, screen for choosing mode showing incorrect visual elements, viewer app bottom elements visual alignment
+ - Visual changes: font of graph is standardized, footer displays simulation title
+   
+ Version 5.5 (Build 176) 
  - Pharmacology: re-calibrated ke0 values for Kamp, Paedfusor and Hannivoort models based on time-to-peak-effect (Tpeak) method. (Minto 2003)
  - UI/UX: visual improvements in response to latest iOS update (iOS 26) causing misalignment of visual elements
  - Various bugfixes in fullscreen mode
