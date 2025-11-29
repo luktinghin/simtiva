@@ -6456,15 +6456,15 @@ function lookaheadfill(ind, inputTime, maxDuration) {
 	//}
 }
 
-lookahead_timeout = null;
-lookahead_hide_timeout = null;
+var lookahead_timeout = null;
+var lookahead_hide_timeout = null;
 
 function lookaheadpreview_debounce(ind,is_bolus) {
 	clearTimeout(lookahead_timeout);
 	lookahead_timeout = setTimeout(lookaheadpreview2,700,ind,is_bolus);
 	if (drug_sets[ind].firstrun > -1) {
 		clearTimeout(lookahead_hide_timeout);
-		lookahead_hide_timeout = setTimeout(lookaheadpreviewhide,12*1000);
+		lookahead_hide_timeout = setTimeout(lookaheadpreviewhide,15*1000);
 	}
 }
 
@@ -6473,6 +6473,10 @@ function lookaheadpreviewhide() {
 	myChart.data.datasets[13].hidden = true;
 	myChart.data.datasets[12].data.length = 0;
 	myChart.data.datasets[13].data.length = 0;
+	clearTimeout(lookahead_timeout);
+	clearTimeout(lookahead_hide_timeout);
+    lookahead_timeout = null;
+    lookahead_hide_timeout = null;
 }
 
 function lookaheadpreview2(ind,is_bolus) {
@@ -6502,7 +6506,11 @@ function lookaheadpreview2(ind,is_bolus) {
 				infvalue = tempinf/drug_sets[ind].infusate_concentration/drug_sets[ind].inf_rate_permass_factor*mass;
 			}
 		}
-		lookaheadpreview(bolusvalue,infvalue,ind);
+		if ((tempbolus > 0) || (tempinf > 0)) {
+			lookaheadpreview(bolusvalue,infvalue,ind);	
+		} else {
+			lookaheadpreviewhide();
+		}
 	} else {
 		if (is_bolus) {
 			tempbolus = 0;
@@ -6563,7 +6571,14 @@ function lookaheadpreview(bolusvalue,infvalue,ind) {
 					e_state[3] *= 1/drug_sets[ind].fentanyl_weightadjusted_factor;
 					e_state[4] *= 1/drug_sets[ind].fentanyl_weightadjusted_factor;
 			}
+			est_cp = p_state[1]+p_state[2]+p_state[3];
+			est_ce = e_state[1]+e_state[2]+e_state[3]+e_state[4];
+			preview_chart[0].push({x:(working_clock)/60, y:est_cp});
+			preview_chart[1].push({x:(working_clock)/60, y:est_ce});
 		}
+	} else {
+			preview_chart[0].push({x:(working_clock)/60, y:0});
+			preview_chart[1].push({x:(working_clock)/60, y:0});
 	}
 	p_state2[1] = p_state[1];
 	p_state2[2] = p_state[2];
@@ -6577,8 +6592,7 @@ function lookaheadpreview(bolusvalue,infvalue,ind) {
 	var look_l3 = Math.exp(-drug_sets[ind].lambda[3]);
 	var look_l4 = Math.exp(-drug_sets[ind].lambda[4]);
 	//push current
-	preview_chart[0].push({x:(working_clock)/60, y:getcp(working_clock,ind)});
-	preview_chart[1].push({x:(working_clock)/60, y:getce(working_clock,ind)});
+
 	startvalue = 1;
 	if (bolusvalue > 0) {
 		p_state2[1] = p_state2[1] * look_l1 + drug_sets[ind].p_coef[1] * bolusvalue * (1 - look_l1);
@@ -6624,15 +6638,21 @@ function lookaheadpreview(bolusvalue,infvalue,ind) {
 		}
 	}
 	//visuals
-	myChart.data.datasets[12].borderColor = myChart.data.datasets[ind*2+2].borderColor;
-	myChart.data.datasets[13].borderColor = myChart.data.datasets[ind*2+3].borderColor;
+	if (complex_mode == 1) {
+		if (ind==0) {
+			myChart.data.datasets[12].borderColor = 'rgba(255,202,40,0.55)';
+			myChart.data.datasets[13].borderColor = 'rgba(251,192,45,0.8)';
+		} else {
+			myChart.data.datasets[12].borderColor = 'rgba(21,101,192,0.55)';
+			myChart.data.datasets[13].borderColor = 'rgba(94,146,243,0.8)';			
+		}
+	}
 	myChart.data.datasets[12].data = preview_chart[0];
 	myChart.data.datasets[13].data = preview_chart[1];
 	myChart.data.datasets[12].hidden = false;
 	myChart.data.datasets[13].hidden = false;
 	myChart.options.plugins.tooltip.enabled = true;
 	myChart.update();	
-
 }
 
 function sendtowakeup(conc) {

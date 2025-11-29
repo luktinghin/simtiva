@@ -2832,21 +2832,21 @@ function createCharts(chartparam) {
 	    	},{ //index = 12 for preview
 	    		label: 'Preview-CP',
 	    		data: [],
-	    		borderWidth:5,
+	    		borderWidth:4,
 	    		pointRadius:0,
 	    		borderJoinStyle: 'round',
 	    		borderColor: 'rgb(255,0,0,0.75)',
-	    		borderDash: [6,3],
+	    		borderDash: [3,3],
 	    		fill: false,
 	    		parsing: false
 	    	},{
 	    		label: 'Preview-CE',
 	    		data: [],
-	    		borderWidth:5,
+	    		borderWidth:2,
 	    		pointRadius:0,
 	    		borderJoinStyle: 'round',
 	    		borderColor: 'rgb(0,192,0,0.75)',
-	    		borderDash: [6,3],
+	    		borderDash: [10,4],
 	    		fill: false,
 	    		parsing:false
 
@@ -7182,8 +7182,9 @@ function tabswitch(index) {
 	} else {
 		myChart.options.scales.y.title.text = "Concentration (ng/ml)";
 	}
-	updatechart(myChart);
 	if (parseloading == 0) updateBolusSpeedOptions();
+	if (parseloading == 0) lookaheadpreviewhide();
+	updatechart(myChart);
 }
 
 function toggleshowPTOLmargins() {

@@ -408,7 +408,7 @@ const xInputCardsHTML = `
 								</div>
 							</div>
 						</td>
-						<td><input type="number" inputmode="decimal" id="inputInfusion1" min="0" max="1200" step="0.01" placeholder=" " onchange=""></td></tr>
+						<td><input type="number" inputmode="decimal" id="inputInfusion1" min="0" max="1200" step="0.01" placeholder=" " oninput="lookaheadpreview_debounce(1)"></td></tr>
 				</table>
 				<table class="table-control space" id="tableInitialBolus1">
 					<tr class="fr">
@@ -423,7 +423,7 @@ const xInputCardsHTML = `
 								</div>
 							</div>
 						</td>
-						<td><input type="number" inputmode="decimal" id="inputBolus_initial1" min="0" max="2000" step="0.01" placeholder=" " ></td></tr>
+						<td><input type="number" inputmode="decimal" id="inputBolus_initial1" min="0" max="2000" step="0.01" placeholder=" " oninput="lookaheadpreview_debounce(1)"></td></tr>
 				</table>
 				<a class="button" id="btn_start1" onclick="start_manual(1);">Start</a>
 				<a class="button" id="btn_pause1" onclick="pause(1);">Pause</a>
@@ -610,7 +610,7 @@ const xInputCardsHTML = `
 								</div>
 							</div>
 						</td>
-						<td width="30px"><input type="number" inputmode="decimal" id="inputBolus1" min="0" max="2000" step="0.01" placeholder=" " ></td>
+						<td width="30px"><input type="number" inputmode="decimal" id="inputBolus1" min="0" max="2000" step="0.01" placeholder=" " oninput="lookaheadpreview_debounce(1,true)"></td>
 						<td><a class="button custom" id="" onclick="bolusadmin(custombolus(1),1);">Go!</button></a></td>
 					</tr></table>
 				
