@@ -374,7 +374,7 @@ const xInputCardsHTML = `
 								</div>
 							</div>
 						</td>
-						<td><input type="number" inputmode="decimal" id="inputInfusion0" min="0" max="1200" step="0.01" placeholder=" " onchange=""></td></tr>
+						<td><input type="number" inputmode="decimal" id="inputInfusion0" min="0" max="1200" step="0.01" placeholder=" " oninput="lookaheadpreview_debounce(0)"></td></tr>
 				</table>
 				<table class="table-control space" id="tableInitialBolus0">
 					<tr class="fr">
@@ -388,7 +388,7 @@ const xInputCardsHTML = `
 									<a class="infusionratedropdownitem" id="bolusoption2_0" onclick="setBolusUnit(2)"><i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml</a>
 								</div>
 							</div>
-						</td><td><input type="number" inputmode="decimal" id="inputBolus_initial0" min="0" max="2000" step="0.01" placeholder=" " ></td></tr>
+						</td><td><input type="number" inputmode="decimal" id="inputBolus_initial0" min="0" max="2000" step="0.01" placeholder=" " oninput="lookaheadpreview_debounce(0)"></td></tr>
 				</table>
 				<a class="button" id="btn_start0" onclick="start_manual(0);">Start</a>
 				<a class="button" id="btn_pause0" onclick="pause(0);">Pause</a>
@@ -585,7 +585,7 @@ const xInputCardsHTML = `
 									<a class="infusionratedropdownitem" id="bolusoptioncopy2_0" onclick="setBolusUnit(2)"><i class="fas fa-circle infusioncheck ring blank"></i>&nbsp; ml</a>
 								</div>
 						</td>
-						<td width="30px"><input type="number" inputmode="decimal" id="inputBolus0" min="0" max="2000" step="0.01" placeholder=" "></td>
+						<td width="30px"><input type="number" inputmode="decimal" id="inputBolus0" min="0" max="2000" step="0.01" placeholder=" " oninput="lookaheadpreview_debounce(0,true)"></td>
 						<td><a class="button custom" id="" onclick="bolusadmin(custombolus(0),0);">Go!</button></a></td>
 					</tr></table>
 				
