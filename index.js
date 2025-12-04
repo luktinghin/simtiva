@@ -145,7 +145,7 @@ function displayAbout2(aboutparam) {
 		<br> - David Lam
 		<br> - Matthew Hart
 		<br><br>This is an open source project and the source code is published on <a href='https://github.com/luktinghin/simtiva/' target='_blank'>GitHub</a>.
-		<br>Last updated 24/11/2025 (V5.6) Build 186.
+		<br>Last updated 4/12/2025 (V5.6) Build 188.
 		<br><br>The purposes are: (1) <i> To simulate TCI/TIVA for educational purposes</i>, and (2) <i>Potentially, to help deliver TCI/TIVA in a low resource setting with no TCI pumps available.</i>
 		<br>Coding is done in Javascript. The code to the mathematical calculations are based on 'STANPUMP', which is freely available from the link below. The pharmacokinetic models available in this program are Marsh, Schnider, Paedfusor and Eleveld for propofol, Minto and Eleveld for remifentanil, Shafer for fentanyl, Maitre for alfentanil, Hannivoort for dexmedetomidine and Kamp for ketamine. For instructions on using this app, visit the 'Help' page. For documentation of the pharmacological details, visit the 'Documentation' page.
 		<br><br>Contact us via our <a href='https://simtiva.blogspot.com/p/feedback.html' target='_blank'>blog</a> page; or get in touch on the Social Links listed <a href='https://github.com/luktinghin/simtiva' target='_blank'>here</a>.
