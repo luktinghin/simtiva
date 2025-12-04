@@ -6638,13 +6638,21 @@ function lookaheadpreview(bolusvalue,infvalue,ind) {
 		}
 	}
 	//visuals
-	if (complex_mode == 1) {
+	if (complex_mode == 1) {//ref: behind position, complex interface init
 		if (ind==0) {
-			myChart.data.datasets[12].borderColor = 'rgba(255,202,40,0.55)';
-			myChart.data.datasets[13].borderColor = 'rgba(251,192,45,0.8)';
+			myChart.data.datasets[12].borderColor = 'rgba(199,154,0,0.45)';
+			myChart.data.datasets[13].borderColor = 'rgba(196,144,0,0.45)';
+			myChart.data.datasets[12].borderDash = [2,2];
+			myChart.data.datasets[13].borderDash = [0];
+			myChart.data.datasets[12].borderWidth = 2;
+			myChart.data.datasets[13].borderWidth = 2;
 		} else {
-			myChart.data.datasets[12].borderColor = 'rgba(21,101,192,0.55)';
-			myChart.data.datasets[13].borderColor = 'rgba(94,146,243,0.8)';			
+			myChart.data.datasets[12].borderColor = 'rgba(94,146,243,0.45)';
+			myChart.data.datasets[13].borderColor = 'rgba(3,169,244,0.45)';	
+			myChart.data.datasets[12].borderDash = [2,2];
+			myChart.data.datasets[13].borderDash = [0];	
+			myChart.data.datasets[12].borderWidth = 2;
+			myChart.data.datasets[13].borderWidth = 2;	
 		}
 	}
 	myChart.data.datasets[12].data = preview_chart[0];
