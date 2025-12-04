@@ -6491,9 +6491,9 @@ function lookaheadpreview2(ind,is_bolus) {
 			if (optionsarray_infusionunit[1][0] == 1) {
 				bolusvalue = tempbolus;
 			} else if (optionsarray_infusionunit[1][1] == 1) {
-				bolusvalue = temp_bolus * mass;
+				bolusvalue = tempbolus * mass;
 			} else {
-				bolusvalue = temp_bolus * drug_sets[ind].infusate_concentration;
+				bolusvalue = tempbolus * drug_sets[ind].infusate_concentration;
 			}
 		}
 		tempinf = 0;
