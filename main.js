@@ -178,6 +178,7 @@ var preview_chart = new Array();
 var dropdownactive = false;
 var optionsactive = false;
 var scrollpos = 0;
+var t_peak = 0;
 preview_chart.push([]);
 preview_chart.push([]);
 preview_chart.push([]);//index 2 for max CE and dur

@@ -5524,7 +5524,27 @@ function calculate_udfs(drug_sets_index) {
 			drug_sets[drug_sets_index].e_coef[3] *= 1000;
 			drug_sets[drug_sets_index].e_coef[4] *= 1000;
 		}
-		
+	//tpeak calculation
+	if (t_peak>0) {
+		drug_sets[0].k41 = recalculate_ke0();
+		drug_sets[0].lambda[4] = drug_sets[0].k41;
+		drug_sets[0].e_coef[1] = drug_sets[0].p_coef[1] / (drug_sets[0].k41 - drug_sets[0].lambda[1]) * drug_sets[0].k41;
+		drug_sets[0].e_coef[2] = drug_sets[0].p_coef[2] / (drug_sets[0].k41 - drug_sets[0].lambda[2]) * drug_sets[0].k41;
+		drug_sets[0].e_coef[3] = drug_sets[0].p_coef[3] / (drug_sets[0].k41 - drug_sets[0].lambda[3]) * drug_sets[0].k41;
+		drug_sets[0].e_coef[4] = (drug_sets[0].k41 - drug_sets[0].k21) * (drug_sets[0].k41 - drug_sets[0].k31) / 
+			(drug_sets[0].lambda[1] - drug_sets[0].k41) / 
+			(drug_sets[0].lambda[2] - drug_sets[0].k41) / 
+			(drug_sets[0].lambda[3] - drug_sets[0].k41) / drug_sets[0].vc;
+		if (drug_sets[0].model_name == "Schnider") {
+			drug_sets[0].modeltext += "<br>ke0 = " + rnd3(drug_sets[0].k41*60) + " (ke0 recalculated using Tpeak = 1.6min)";
+			document.getElementById("modeldescription").innerHTML = drug_sets[0].modeltext;
+		}
+	} else {
+		if (drug_sets[0].model_name == "Schnider") {
+			drug_sets[0].modeltext += "<br>ke0 = 0.456";
+			document.getElementById("modeldescription").innerHTML = drug_sets[0].modeltext;
+		}		
+	}
 
 	temp1 = 0;
 	temp2 = 0;
@@ -5622,6 +5642,73 @@ function cube(k10, k12, k21, k13, k31, r) {
 }
 
 
+function recalculate_ke0() {
+	tempke0 = drug_sets[0].k41;
+	console.log("---begin recalculate");
+	console.log(tempke0*60 + "/min");
+	too_small = 0;
+	count = 0;
+	too_large = drug_sets[0].k41 * 1.5;
+	while (before_or_after(too_large)>-1) {
+		too_large *= 1.5;
+	}
+	result = before_or_after(tempke0);
+	while (result != 0) {
+		if (result == -1) {
+			too_large = tempke0;
+		} else {
+			too_small = tempke0;
+		}
+		tempke0 = (too_large+too_small)/2;
+		result = before_or_after(tempke0);
+		count++;
+		if (count>100) {
+			break;
+		}
+	}
+	console.log("---end recalculate");
+	console.log(tempke0*60 + "/min");
+	return tempke0;
+}
+
+function before_or_after(tempke0) {
+	drug_sets[0].lambda[4] = tempke0;
+		drug_sets[0].e_coef[1] = drug_sets[0].p_coef[1] / (tempke0 - drug_sets[0].lambda[1]) * tempke0;
+		drug_sets[0].e_coef[2] = drug_sets[0].p_coef[2] / (tempke0 - drug_sets[0].lambda[2]) * tempke0;
+		drug_sets[0].e_coef[3] = drug_sets[0].p_coef[3] / (tempke0 - drug_sets[0].lambda[3]) * tempke0;
+		drug_sets[0].e_coef[4] = (tempke0 - drug_sets[0].k21) * (tempke0 - drug_sets[0].k31) / 
+			(drug_sets[0].lambda[1] - tempke0) / 
+			(drug_sets[0].lambda[2] - tempke0) / 
+			(drug_sets[0].lambda[3] - tempke0) / drug_sets[0].vc;
+	drug_sets[0].e_coef[1] *= drug_sets[0].lambda[1];
+	drug_sets[0].e_coef[2] *= drug_sets[0].lambda[2];
+	drug_sets[0].e_coef[3] *= drug_sets[0].lambda[3];
+	drug_sets[0].e_coef[4] *= drug_sets[0].lambda[4];
+	time1 = t_peak - 0.01;
+	time2 = t_peak;
+	time3 = t_peak + 0.01;
+	result1 = 	drug_sets[0].e_coef[1]*Math.exp(-drug_sets[0].lambda[1]*time1)+
+				drug_sets[0].e_coef[2]*Math.exp(-drug_sets[0].lambda[2]*time1)+
+				drug_sets[0].e_coef[3]*Math.exp(-drug_sets[0].lambda[3]*time1)+
+				drug_sets[0].e_coef[4]*Math.exp(-drug_sets[0].lambda[4]*time1);
+	result2 = 	drug_sets[0].e_coef[1]*Math.exp(-drug_sets[0].lambda[1]*time2)+
+				drug_sets[0].e_coef[2]*Math.exp(-drug_sets[0].lambda[2]*time2)+
+				drug_sets[0].e_coef[3]*Math.exp(-drug_sets[0].lambda[3]*time2)+
+				drug_sets[0].e_coef[4]*Math.exp(-drug_sets[0].lambda[4]*time2);
+	result3 = 	drug_sets[0].e_coef[1]*Math.exp(-drug_sets[0].lambda[1]*time3)+
+				drug_sets[0].e_coef[2]*Math.exp(-drug_sets[0].lambda[2]*time3)+
+				drug_sets[0].e_coef[3]*Math.exp(-drug_sets[0].lambda[3]*time3)+
+				drug_sets[0].e_coef[4]*Math.exp(-drug_sets[0].lambda[4]*time3);
+	if ((result1 < result2) && (result3 < result2)) {
+		return 0;	// peak found
+	}
+	if (result1 > result2) {
+		return -1;  // peak is earlier, must lower ke0
+	} else {
+		return 1;	// peak is later, must raise ke0
+	}
+}
+
 function readmodel(x, drug_set_index) {
 	drug_sets[drug_set_index] = {};
 	drug_sets[drug_set_index].model_name = x;
@@ -5676,6 +5763,7 @@ function readmodel(x, drug_set_index) {
 		drug_sets[drug_set_index].k21 = cl2 / v2;
 		drug_sets[drug_set_index].k31 = cl3 / v3;
 		drug_sets[drug_set_index].k41 = 0.456; //ke0
+
 		drug_sets[drug_set_index].modeltext = "Schnider model (Anesthesiology 1998;88:1170-82)" + "<br>" +
 		"vc = 4.27"+ "<br>" +
 		"v2 = " + rnd3(v2) + "<br>" +
@@ -5684,8 +5772,8 @@ function readmodel(x, drug_set_index) {
 		"k12 = " + rnd3(drug_sets[drug_set_index].k12) + "<br>" +
 		"k13 = " + rnd3(drug_sets[drug_set_index].k13) + "<br>" +
 		"k21 = " + rnd3(drug_sets[drug_set_index].k21) + "<br>" +
-		"k31 = " + rnd3(drug_sets[drug_set_index].k31) + "<br>" +
-		"ke0 = 0.456";
+		"k31 = " + rnd3(drug_sets[drug_set_index].k31);
+		t_peak = 96; // new addtion for fixed TTPE model
 
 		drug_sets[drug_set_index].drug_name = "Propofol";
 		drug_sets[drug_set_index].conc_units = "mcg";
