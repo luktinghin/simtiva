@@ -467,7 +467,7 @@ window.onclick = function(event) {
     modal.classList.remove("fadein");
     modalcontent.classList.remove("open");
     modal = undefined;
-    //dim(0);
+    dim(0);
   }
 }
 
@@ -481,7 +481,7 @@ document.addEventListener('touchstart', function(event){
     modal.classList.remove("fadein");
     modalcontent.classList.remove("open");
     modal = undefined;
-    //dim(0);
+    dim(0);
   }
 });
 
@@ -3075,7 +3075,7 @@ function hideallmodal() {
 	  modalcontent.classList.remove("open");
 	  modal = undefined;
 	}
-	//dim(0);
+	dim(0);
 }
 function hidemodal(param) {
 		if (param == "modalShare") {
@@ -3085,13 +3085,13 @@ function hidemodal(param) {
 	document.getElementById(param + "content").classList.remove("open");
 	document.getElementById(param).classList.remove("fadein");
 	modal = undefined;
-	//dim(0);
+	dim(0);
 }
 function hidewarningmodal() {
   document.getElementById("modalWarning").classList.remove("fadein");
   document.getElementById("modalWarningcontent").classList.remove("open");
   modal = undefined;
-  //dim(0);
+  dim(0);
 }
 
 function setmodal(modalname) {
@@ -3099,7 +3099,7 @@ function setmodal(modalname) {
   modalcontent = document.getElementById(modalname + "content");
   modal.classList.add("fadein");
   modalcontent.classList.add("open");
-  //dim(1);
+  dim(1);
 }
 
 //other options code goes here
