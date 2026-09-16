@@ -5359,13 +5359,13 @@ function jumpLoad() {
 }
 
 function dim(variable) {
-	/* legacy - code for iOS 26 glitches
+	
 	if (variable == 1) {
 		document.getElementById("blackBanner").style.display = "block";
 	} else {
 		document.getElementById("blackBanner").style.display = "none";
 	}
-	*/
+	
 }
 
 /* code block to detect iOS, mainly to correct visual glitches for fixed positioned elements on iOS 26. Now removed after iOS 27 released
